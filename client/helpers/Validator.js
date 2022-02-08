@@ -7,13 +7,13 @@ const Validator = (values) => {
   const emailVa = !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email);
   const passwordV = password === "";
   const rePasswordV = rePassword === "";
-  const minPasswordV = password.length < 6;
-  const minRePasswordV = rePassword.length < 6;
+  const minPasswordV = password?.length < 6;
+  const minRePasswordV = rePassword?.length < 6;
   const samePasswordV = password === rePassword;
 
-  let nameE = nameV && "Nombre is required.";
+  const nameE = nameV && "Nombre is required.";
 
-  let lastNameE = lastNameV && "Apellido es requerido.";
+  const lastNameE = lastNameV && "Apellido es requerido.";
 
   let emailE;
   if (emailV) {
@@ -31,21 +31,31 @@ const Validator = (values) => {
 
   let rePasswordE;
   if (rePasswordV) {
-    rePasswordE = rePasswordV && "Repetir password is required.";
+    rePasswordE = rePasswordV && "Password is required.";
   } else {
-    rePasswordE =
-      minRePasswordV && "Repetir password requiere al menos 6 caracteres.";
+    rePasswordE = minRePasswordV && "Password requiere al menos 6 caracteres.";
   }
 
-  let samePasswordE = !samePasswordV && "Los caracteres deben se ser iguales.";
+  const samePasswordE =
+    !samePasswordV && "Los caracteres deben se ser iguales.";
+
+  const coPasswordE = passwordE ? passwordE : samePasswordE;
+
+  const coRePasswordE = rePasswordE ? rePasswordE : samePasswordE;
+
+  const field = "Campo Correcto";
+
+  // login
+  const passwordL = passwordV && "Password is required.";
 
   return {
     nameE,
     lastNameE,
     emailE,
-    passwordE,
-    rePasswordE,
-    samePasswordE,
+    coPasswordE,
+    coRePasswordE,
+    passwordL,
+    field,
   };
 };
 

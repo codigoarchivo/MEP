@@ -1,9 +1,21 @@
-import { Text } from "@chakra-ui/layout";
 import React from "react";
+import { useRouter } from "next/router";
+import { Button } from "@chakra-ui/react";
 const Home = () => {
+  const router = useRouter();
   return (
     <>
-      <Text as={"h1"} color={"brand.800"}>Hola Mundo</Text>
+      <Button
+        type="button"
+        onClick={() =>
+          router.push({
+            pathname: "/account",
+            query: { v: "login" },
+          })
+        }
+      >
+        enviar
+      </Button>
     </>
   );
 };

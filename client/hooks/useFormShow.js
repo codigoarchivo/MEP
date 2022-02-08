@@ -5,6 +5,7 @@ const data = {
 };
 const useFormShow = () => {
   const [show, setShow] = React.useState(data);
+  
   const handleClick = () => setShow({ ...show, password: !show.password });
   const handleClick2 = () => setShow({ ...show, rePassword: !show.rePassword });
 

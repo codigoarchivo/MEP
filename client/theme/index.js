@@ -1,12 +1,28 @@
-import { extendTheme, withDefaultVariant } from "@chakra-ui/react";
+import {
+  extendTheme,
+  withDefaultVariant,
+  theme as base,
+} from "@chakra-ui/react";
+
+const stylesFonts = {
+  fonts: {
+    heading: `Montserrat ${base.fonts?.heading}`,
+    body: `Roboto ${base.fonts?.body}`,
+  },
+};
 
 const colors = {
   brand: {
-    900: "#00020f",
-    800: "#ffc301",
-    700: "#ffd60a",
-    600: "#e1e1e1",
+    50: "#5965",
+    100: "#443",
+    200: "#8AC",
+    300: "#112",
+    400: "#676",
     500: "#fff",
+    600: "#E9E9E9",
+    700: "#ffd60a",
+    800: "#ffc301",
+    900: "#00020f",
   },
 };
 
@@ -34,6 +50,7 @@ const inputStyles = {
 
 export const theme = extendTheme(
   {
+    ...stylesFonts,
     colors,
     components: { ...inputStyles },
   },
