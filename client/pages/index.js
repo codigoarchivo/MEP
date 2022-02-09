@@ -9,8 +9,8 @@ const Home = () => {
         type="button"
         onClick={() =>
           router.push({
-            pathname: "/account",
-            query: { v: "login" },
+            pathname: "/account/[p]",
+            query: { p: "create-user" },
           })
         }
       >

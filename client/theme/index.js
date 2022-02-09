@@ -25,7 +25,6 @@ const colors = {
     900: "#00020f",
   },
 };
-
 const inputStyles = {
   Input: {
     variants: {

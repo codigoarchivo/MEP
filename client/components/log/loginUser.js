@@ -38,15 +38,13 @@ export const LoginUser = () => {
   const { emailE, passwordL, field } = Validator(values);
   // valores
   const { email, password } = values;
-  // toogle color
-  const { toggleColorMode, colorMode } = useColorMode();
   // mode Color
-  const { bg, textPrimary, textError, bgTextError, bgInput } = ModeColor();
+  const { bg, textError, bgTextError, bgInput } = ModeColor();
 
   return (
     <>
       <VStack
-        py={[10, 5]}
+        py={[10, 10, 5]}
         px={5}
         w={"full"}
         h={"full"}
@@ -57,31 +55,14 @@ export const LoginUser = () => {
           as={"form"}
           templateRows={`repeat(5, 1fr)`}
           templateColumns={`repeat(2, 1fr)`}
-          alignItems={["top", "center"]}
+          alignItems={"center"}
           columnGap={5}
           rowGap={2}
         >
-          <GridItem colSpan={1}>
-            <Heading
-              as="h1"
-              size={"sm"}
-              color={textPrimary}
-              textTransform={"uppercase"}
-            >
-              Crear cuenta
+          <GridItem colSpan={2}>
+            <Heading as="h1" size={"sm"} textTransform={"uppercase"}>
+              Login
             </Heading>
-          </GridItem>
-
-          <GridItem colSpan={1}>
-            <Button
-              onClick={toggleColorMode}
-              bg={bg}
-              color={textPrimary}
-              textTransform={"uppercase"}
-              size={"sm"}
-            >
-              Modo {colorMode === "light" ? "Oscuro" : "Claro"}
-            </Button>
           </GridItem>
           <GridItem colSpan={2}>
             <FormControl isInvalid>
@@ -90,7 +71,7 @@ export const LoginUser = () => {
                   Enter the email you'd like to receive the newsletter on.
                 </FormHelperText>
               )}
-              <FormLabel color={textPrimary} htmlFor="email">
+              <FormLabel htmlFor="email">
                 Email{" "}
                 <Tooltip
                   color={textError}
@@ -115,7 +96,7 @@ export const LoginUser = () => {
           </GridItem>
           <GridItem colSpan={2}>
             <FormControl isInvalid>
-              <FormLabel color={textPrimary} htmlFor="password">
+              <FormLabel htmlFor="password">
                 Contraseña{" "}
                 <Tooltip
                   color={textError}
@@ -143,7 +124,6 @@ export const LoginUser = () => {
                     style={{ boxShadow: "none", background: "none" }}
                     h="1.75rem"
                     onClick={handleClick}
-                    color={textPrimary}
                   >
                     {show.password ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
@@ -158,7 +138,6 @@ export const LoginUser = () => {
               bg={bg}
               w={"100%"}
               type="submit"
-              color={textPrimary}
               textTransform={"uppercase"}
             >
               Registrar

@@ -12,7 +12,6 @@ import {
   InputRightElement,
   Button,
   VStack,
-  useColorMode,
   GridItem,
   Grid,
   Tooltip,
@@ -38,20 +37,23 @@ export const CreateUser = () => {
   // guardar states
   const { values, handleInputChange } = useForm(initialStates);
   // validar
-  const { nameE, lastNameE, emailE, coPasswordE, coRePasswordE, field } = Validator(
-    values
-  );
+  const {
+    nameE,
+    lastNameE,
+    emailE,
+    coPasswordE,
+    coRePasswordE,
+    field,
+  } = Validator(values);
   // valores
   const { name, lastName, email, password, rePassword } = values;
-  // toogle color
-  const { toggleColorMode, colorMode } = useColorMode();
   // mode Color
-  const { bg, textPrimary, textError, bgTextError, bgInput } = ModeColor();
+  const { bg, textError, bgTextError, bgInput } = ModeColor();
 
   return (
     <>
       <VStack
-        py={[10, 5]}
+        py={[10, 10, 5]}
         px={5}
         w={"full"}
         h={"full"}
@@ -62,35 +64,18 @@ export const CreateUser = () => {
           as={"form"}
           templateRows={`repeat(5, 1fr)`}
           templateColumns={`repeat(2, 1fr)`}
-          alignItems={["top", "center"]}
+          alignItems={"center"}
           columnGap={5}
           rowGap={2}
         >
-          <GridItem colSpan={1}>
-            <Heading
-              as="h1"
-              size={"sm"}
-              color={textPrimary}
-              textTransform={"uppercase"}
-            >
+          <GridItem colSpan={2}>
+            <Heading as="h1" size={"md"} textTransform={"uppercase"}>
               Crear cuenta
             </Heading>
           </GridItem>
-
-          <GridItem colSpan={1}>
-            <Button
-              onClick={toggleColorMode}
-              bg={bg}
-              color={textPrimary}
-              textTransform={"uppercase"}
-              size={"sm"}
-            >
-              Modo {colorMode === "light" ? "Oscuro" : "Claro"}
-            </Button>
-          </GridItem>
           <GridItem colSpan={[2, 2, 1]}>
             <FormControl isInvalid>
-              <FormLabel color={textPrimary} htmlFor="name">
+              <FormLabel htmlFor="name">
                 Nombre{" "}
                 <Tooltip
                   color={textError}
@@ -115,7 +100,7 @@ export const CreateUser = () => {
           </GridItem>
           <GridItem colSpan={[2, 2, 1]}>
             <FormControl isInvalid>
-              <FormLabel color={textPrimary} htmlFor="lastName">
+              <FormLabel htmlFor="lastName">
                 Apellido{" "}
                 <Tooltip
                   color={textError}
@@ -144,7 +129,7 @@ export const CreateUser = () => {
                   Enter the email you'd like to receive the newsletter on.
                 </FormHelperText>
               )}
-              <FormLabel color={textPrimary} htmlFor="email">
+              <FormLabel htmlFor="email">
                 Email{" "}
                 <Tooltip
                   color={textError}
@@ -169,7 +154,7 @@ export const CreateUser = () => {
           </GridItem>
           <GridItem colSpan={[2, 2, 1]}>
             <FormControl isInvalid>
-              <FormLabel color={textPrimary} htmlFor="password">
+              <FormLabel htmlFor="password">
                 Contraseña{" "}
                 <Tooltip
                   color={textError}
@@ -197,7 +182,6 @@ export const CreateUser = () => {
                     style={{ boxShadow: "none", background: "none" }}
                     h="1.75rem"
                     onClick={handleClick}
-                    color={textPrimary}
                   >
                     {show.password ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
@@ -207,7 +191,7 @@ export const CreateUser = () => {
           </GridItem>
           <GridItem colSpan={[2, 2, 1]}>
             <FormControl isInvalid>
-              <FormLabel color={textPrimary} htmlFor="rePassword">
+              <FormLabel htmlFor="rePassword">
                 Repetir Contraseña{" "}
                 <Tooltip
                   color={textError}
@@ -235,7 +219,6 @@ export const CreateUser = () => {
                     style={{ boxShadow: "none", background: "none" }}
                     h="1.75rem"
                     onClick={handleClick2}
-                    color={textPrimary}
                   >
                     {show.rePassword ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
@@ -249,7 +232,6 @@ export const CreateUser = () => {
               bg={bg}
               w={"100%"}
               type="submit"
-              color={textPrimary}
               textTransform={"uppercase"}
             >
               Registrar
