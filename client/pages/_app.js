@@ -1,6 +1,9 @@
 import React from "react";
+
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
+
 import { theme } from "../theme";
+
 import Layout from "../components/layout/layout";
 
 const App = ({ Component, pageProps }) => {

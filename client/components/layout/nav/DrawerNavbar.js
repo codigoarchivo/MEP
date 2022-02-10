@@ -10,6 +10,8 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
+import Breakpoints from "../../../helpers/Breakpoints";
+
 export const DrawerNavbar = ({
   onClose,
   isOpen,
@@ -25,6 +27,8 @@ export const DrawerNavbar = ({
   toggleColorMode,
   colorMode,
 }) => {
+  // Breakpoints
+  const { displayOn2 } = Breakpoints();
   return (
     <>
       <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
@@ -39,7 +43,12 @@ export const DrawerNavbar = ({
             alignItems={"center"}
           >
             Basic Drawer
-            <Icon boxSize={6} cursor={"pointer"} onClick={toggleColorMode}>
+            <Icon
+              display={displayOn2}
+              boxSize={6}
+              cursor={"pointer"}
+              onClick={toggleColorMode}
+            >
               {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
             </Icon>
           </DrawerHeader>

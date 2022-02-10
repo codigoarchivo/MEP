@@ -8,9 +8,16 @@ import { LoginUser } from "../../components/log/loginUser";
 import { CreateUser } from "../../components/log/CreateUser";
 import { PageNotFound } from "../../components/err/PageNotFound";
 
+import Breakpoints from "../../helpers/Breakpoints";
+
 const account = () => {
+  // Breakpoints
+  const { auto1 } = Breakpoints();
+  // router
   const router = useRouter();
+  // query
   const data = router.query.p?.toString();
+  // account
   const [account, setAccount] = useState("");
 
   useEffect(() => {
@@ -24,16 +31,12 @@ const account = () => {
   return (
     <>
       <Container maxW="container.xl" p={0}>
-        <Flex
-          h={["auto", "auto", "100vh"]}
-          alignItems={["top", "center"]}
-          justifyContent="center"
-        >
+        <Flex h={auto1} alignItems={["top", "center"]} justifyContent="center">
           {account === "login" && <LoginUser />}
           {!account && <PageNotFound />}
           {account === "create-user" && <CreateUser />}
         </Flex>
-      </Container>  
+      </Container>
     </>
   );
 };

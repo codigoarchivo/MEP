@@ -22,6 +22,7 @@ import useForm from "../../hooks/useForm";
 
 import Validator from "../../helpers/Validator";
 import ModeColor from "../../helpers/ModeColor";
+import Breakpoints from "../../helpers/Breakpoints";
 
 const initialStates = {
   name: "",
@@ -45,35 +46,31 @@ export const CreateUser = () => {
     coRePasswordE,
     field,
   } = Validator(values);
-  // valores
-  const { name, lastName, email, password, rePassword } = values;
   // mode Color
   const { bg, textError, bgTextError, bgInput } = ModeColor();
-
+  // Breakpoints
+  const { points1, points2, repeat1, points3 } = Breakpoints();
+  // valores
+  const { name, lastName, email, password, rePassword } = values;
   return (
     <>
-      <VStack
-        py={[10, 10, 5]}
-        px={5}
-        w={"full"}
-        h={"full"}
-        spacing={0}
-        justifyContent="center"
-      >
+      <VStack py={points2} justifyContent="center">
         <Grid
           as={"form"}
           templateRows={`repeat(5, 1fr)`}
-          templateColumns={`repeat(2, 1fr)`}
+          templateColumns={repeat1}
           alignItems={"center"}
-          columnGap={5}
+          columnGap={points3}
           rowGap={2}
+          maxW={"full"}
+          p={5}
         >
           <GridItem colSpan={2}>
             <Heading as="h1" size={"md"} textTransform={"uppercase"}>
               Crear cuenta
             </Heading>
           </GridItem>
-          <GridItem colSpan={[2, 2, 1]}>
+          <GridItem colSpan={points1}>
             <FormControl isInvalid>
               <FormLabel htmlFor="name">
                 Nombre{" "}
@@ -98,7 +95,7 @@ export const CreateUser = () => {
               />
             </FormControl>
           </GridItem>
-          <GridItem colSpan={[2, 2, 1]}>
+          <GridItem colSpan={points1}>
             <FormControl isInvalid>
               <FormLabel htmlFor="lastName">
                 Apellido{" "}
@@ -152,7 +149,7 @@ export const CreateUser = () => {
               />
             </FormControl>
           </GridItem>
-          <GridItem colSpan={[2, 2, 1]}>
+          <GridItem colSpan={points1}>
             <FormControl isInvalid>
               <FormLabel htmlFor="password">
                 Contraseña{" "}
@@ -189,7 +186,7 @@ export const CreateUser = () => {
               </InputGroup>
             </FormControl>
           </GridItem>
-          <GridItem colSpan={[2, 2, 1]}>
+          <GridItem colSpan={points1}>
             <FormControl isInvalid>
               <FormLabel htmlFor="rePassword">
                 Repetir Contraseña{" "}

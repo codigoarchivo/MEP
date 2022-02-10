@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Image from "next/image";
 
@@ -6,6 +6,7 @@ import {
   Avatar,
   AvatarBadge,
   Box,
+  Flex,
   HStack,
   Icon,
   Input,
@@ -30,22 +31,28 @@ import {
 
 import { HamburgerIcon, MoonIcon, SearchIcon, SunIcon } from "@chakra-ui/icons";
 
-import CartIcon from "../../helpers/IconNew";
-import ModeColor from "../../helpers/ModeColor";
+import { CartIcon } from "../../../helpers/IconNew";
+import ModeColor from "../../../helpers/ModeColor";
+import Breakpoints from "../../../helpers/Breakpoints";
 
 import { DrawerNavbar } from "./DrawerNavbar";
 import { DialogSerchNavbar } from "./DialogSerchNavbar";
 
 const Navbar = () => {
+  // toogle serch
+  const [isSerch, setIsSerch] = useState(false);
   // toogle color
   const { toggleColorMode, colorMode } = useColorMode();
-  // mode Color
-  const { bgInput } = ModeColor();
   // drawer
   const { isOpen, onClose, onOpen } = useDisclosure();
+  // mode Color
+  const { bgInput } = ModeColor();
+  // Breakpoints
+  const { displayOn1, displayOn2, displayOff1, displayOff2 } = Breakpoints();
 
   return (
     <>
+      {/* DrawerNavbar */}
       <DrawerNavbar
         isOpen={isOpen}
         onClose={onClose}
@@ -61,7 +68,16 @@ const Navbar = () => {
         toggleColorMode={toggleColorMode}
         colorMode={colorMode}
       />
-      <DialogSerchNavbar isOpen={isOpen} onClose={onClose} />
+      {/* DialogSerchNavbar */}
+      <DialogSerchNavbar
+        isSerch={isSerch}
+        setIsSerch={setIsSerch}
+        InputGroup={InputGroup}
+        InputLeftElement={InputLeftElement}
+        Input={Input}
+        SearchIcon={SearchIcon}
+        bgInput={bgInput}
+      />
       <Box as={"nav"} px={5}>
         <HStack
           as={"ul"}
@@ -69,12 +85,12 @@ const Navbar = () => {
           justifyContent={"space-around"}
           h={["10vh"]}
         >
-          <Box as={"li"} display={{ base: "block", md: "none" }}>
+          <Box as={"li"} display={displayOn2}>
             <Icon boxSize={6} cursor={"pointer"} onClick={onOpen}>
               <HamburgerIcon />
             </Icon>
           </Box>
-          <Box as={"li"} display={{ base: "none", md: "block" }}>
+          <Box as={"li"} display={displayOff2}>
             <HStack spacing={10}>
               <Image
                 src="/img/EDGARS PENDULUM.png"
@@ -85,7 +101,7 @@ const Navbar = () => {
               <Menu>
                 <MenuButton>Categoria</MenuButton>
                 <Portal>
-                  <MenuList display={{ base: "none", md: "block" }}>
+                  <MenuList display={displayOff2}>
                     <MenuItem>
                       <Link>Chakra UI</Link>
                     </MenuItem>
@@ -103,15 +119,15 @@ const Navbar = () => {
           <Box as={"li"} w={{ base: "full", md: "30%" }}>
             <HStack>
               <Icon
-                onClick={isOpen}
+                onClick={() => setIsSerch(true)}
                 boxSize={4}
-                display={{ base: "block", sm: "none" }}
+                display={displayOn1}
                 cursor={"pointer"}
                 mx={{ base: "5" }}
               >
                 <SearchIcon />
               </Icon>
-              <InputGroup display={{ base: "none", sm: "block" }}>
+              <InputGroup display={displayOff1}>
                 <InputLeftElement
                   pointerEvents="none"
                   children={<SearchIcon color="gray.300" />}
@@ -125,8 +141,8 @@ const Navbar = () => {
             </HStack>
           </Box>
 
-          <Box as={"li"}>
-            <HStack spacing={{ base: 5, md: 20 }}>
+          <Box as={"li"} w={{ base: "50%", sm: "20%" }}>
+            <Flex justifyContent={"space-between"} alignItems={"center"}>
               <Popover isLazy>
                 <PopoverTrigger>
                   <Icon boxSize={{ base: "6", md: "8" }} cursor={"pointer"}>
@@ -148,7 +164,7 @@ const Navbar = () => {
               <Icon
                 boxSize={6}
                 cursor={"pointer"}
-                display={{ base: "none", md: "block" }}
+                display={displayOff2}
                 onClick={toggleColorMode}
               >
                 {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
@@ -179,7 +195,7 @@ const Navbar = () => {
                   </PopoverBody>
                 </PopoverContent>
               </Popover>
-            </HStack>
+            </Flex>
           </Box>
         </HStack>
       </Box>

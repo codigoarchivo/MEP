@@ -1,7 +1,11 @@
 import React from "react";
+
 import { useRouter } from "next/router";
+
 import { Button } from "@chakra-ui/react";
+
 const Home = () => {
+  // router
   const router = useRouter();
   return (
     <>

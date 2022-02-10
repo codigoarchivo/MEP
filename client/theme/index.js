@@ -26,22 +26,20 @@ const colors = {
   },
 };
 const inputStyles = {
-  Input: {
-    variants: {
-      filled: {
-        field: {
-          _focus: {
-            borderColor: "brand.800",
-            boxShadow: "inset 0 2px 4px 0 rgba(0,0,0,0.06)",
-          },
+  variants: {
+    filled: {
+      field: {
+        _focus: {
+          borderColor: "brand.800",
+          boxShadow: "inset 0 2px 4px 0 rgba(0,0,0,0.06)",
         },
       },
     },
-    sizes: {
-      md: {
-        field: {
-          borderRadius: "none",
-        },
+  },
+  sizes: {
+    md: {
+      field: {
+        borderRadius: "none",
       },
     },
   },
@@ -51,7 +49,14 @@ export const theme = extendTheme(
   {
     ...stylesFonts,
     colors,
-    components: { ...inputStyles },
+    components: {
+      Input: {
+        ...inputStyles,
+      },
+      Select: {
+        ...inputStyles,
+      },
+    },
   },
   withDefaultVariant({
     variant: "filled",

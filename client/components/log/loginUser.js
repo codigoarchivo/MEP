@@ -12,7 +12,6 @@ import {
   InputRightElement,
   Button,
   VStack,
-  useColorMode,
   GridItem,
   Grid,
   Tooltip,
@@ -23,6 +22,7 @@ import useForm from "../../hooks/useForm";
 
 import Validator from "../../helpers/Validator";
 import ModeColor from "../../helpers/ModeColor";
+import Breakpoints from "../../helpers/Breakpoints";
 
 const initialStates = {
   email: "",
@@ -36,28 +36,25 @@ export const LoginUser = () => {
   const { values, handleInputChange } = useForm(initialStates);
   // validar
   const { emailE, passwordL, field } = Validator(values);
-  // valores
-  const { email, password } = values;
   // mode Color
   const { bg, textError, bgTextError, bgInput } = ModeColor();
+  // Breakpoints
+  const { points2, repeat1, points3 } = Breakpoints();
+  // valores
+  const { email, password } = values;
 
   return (
     <>
-      <VStack
-        py={[10, 10, 5]}
-        px={5}
-        w={"full"}
-        h={"full"}
-        spacing={0}
-        justifyContent="center"
-      >
+      <VStack py={points2} justifyContent="center">
         <Grid
           as={"form"}
           templateRows={`repeat(5, 1fr)`}
-          templateColumns={`repeat(2, 1fr)`}
+          templateColumns={repeat1}
           alignItems={"center"}
-          columnGap={5}
+          columnGap={points3}
           rowGap={2}
+          maxW={"full"}
+          p={5}
         >
           <GridItem colSpan={2}>
             <Heading as="h1" size={"sm"} textTransform={"uppercase"}>
