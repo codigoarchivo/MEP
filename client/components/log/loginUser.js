@@ -37,7 +37,7 @@ export const LoginUser = () => {
   // validar
   const { emailE, passwordL, field } = Validator(values);
   // mode Color
-  const { bg, textError, bgTextError, bgInput } = ModeColor();
+  const { textError, bgTextError } = ModeColor();
   // Breakpoints
   const { points2, repeat1, points3 } = Breakpoints();
   // valores
@@ -82,7 +82,6 @@ export const LoginUser = () => {
               <Input
                 name="email"
                 id="email"
-                bg={bgInput}
                 onChange={handleInputChange}
                 value={email}
                 type={"email"}
@@ -108,7 +107,6 @@ export const LoginUser = () => {
                 <Input
                   name="password"
                   id="password"
-                  bg={bgInput}
                   onChange={handleInputChange}
                   value={password}
                   pr="4.5rem"
@@ -132,9 +130,9 @@ export const LoginUser = () => {
           <GridItem colSpan={2}>
             <Button
               mt={10}
-              bg={bg}
               w={"100%"}
               type="submit"
+              variant={"primary"}
               textTransform={"uppercase"}
             >
               Registrar

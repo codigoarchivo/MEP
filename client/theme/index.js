@@ -4,6 +4,8 @@ import {
   theme as base,
 } from "@chakra-ui/react";
 
+import { mode } from "@chakra-ui/theme-tools";
+
 const stylesFonts = {
   fonts: {
     heading: `Montserrat ${base.fonts?.heading}`,
@@ -27,14 +29,15 @@ const colors = {
 };
 const inputStyles = {
   variants: {
-    filled: {
+    filled: (props) => ({
       field: {
+        backgroundColor: mode("brand.600", "whiteAlpha.50")(props),
         _focus: {
           borderColor: "brand.800",
           boxShadow: "inset 0 2px 4px 0 rgba(0,0,0,0.06)",
         },
       },
-    },
+    }),
   },
   sizes: {
     md: {
@@ -44,12 +47,62 @@ const inputStyles = {
     },
   },
 };
+const buttonStyles = {
+  variants: {
+    primary: (props) => ({
+      rounded: "none",
+      textDecoration: "none",
+      _focus: {
+        ring: 2,
+        ringColor: "brand.800",
+      },
+      backgroundColor: mode("brand.800", "whiteAlpha.50")(props),
+      color: mode("brand.900", "brand.600")(props),
+      _hover: {
+        backgroundColor: mode("brand.700", "whiteAlpha.100")(props),
+      },
+      _active: {
+        backgroundColor: mode("brand.900", "brand.800")(props),
+        color: mode("brand.700", "brand.600")(props),
+      },
+    }),
+    secondary: (props) => ({
+      backgroundColor: "transparent",
+      color: mode("brand.900", "brand.600")(props),
+      _hover: {
+        color: "brand.800",
+      },
+      _focus: {
+        ring: 2,
+        ringColor: "transparent",
+      },
+    }),
+  },
+};
+
+const globalStyles = {
+  styles: {
+    global: {
+      html: {},
+      body: {},
+      a: {
+        _hover: {
+          textDecoration: "none",
+        },
+      },
+    },
+  },
+};
 
 export const theme = extendTheme(
   {
+    ...globalStyles,
     ...stylesFonts,
     colors,
     components: {
+      Button: {
+        ...buttonStyles,
+      },
       Input: {
         ...inputStyles,
       },

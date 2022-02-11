@@ -47,7 +47,7 @@ export const CreateUser = () => {
     field,
   } = Validator(values);
   // mode Color
-  const { bg, textError, bgTextError, bgInput } = ModeColor();
+  const { textError, bgTextError } = ModeColor();
   // Breakpoints
   const { points1, points2, repeat1, points3 } = Breakpoints();
   // valores
@@ -87,7 +87,6 @@ export const CreateUser = () => {
               <Input
                 name="name"
                 id="name"
-                bg={bgInput}
                 onChange={handleInputChange}
                 value={name}
                 type={"text"}
@@ -111,7 +110,6 @@ export const CreateUser = () => {
               <Input
                 name="lastName"
                 id="lastName"
-                bg={bgInput}
                 onChange={handleInputChange}
                 value={lastName}
                 type={"text"}
@@ -140,7 +138,6 @@ export const CreateUser = () => {
               <Input
                 name="email"
                 id="email"
-                bg={bgInput}
                 onChange={handleInputChange}
                 value={email}
                 type={"email"}
@@ -166,7 +163,6 @@ export const CreateUser = () => {
                 <Input
                   name="password"
                   id="password"
-                  bg={bgInput}
                   onChange={handleInputChange}
                   value={password}
                   pr="4.5rem"
@@ -203,7 +199,6 @@ export const CreateUser = () => {
                 <Input
                   name="rePassword"
                   id="rePassword"
-                  bg={bgInput}
                   onChange={handleInputChange}
                   value={rePassword}
                   pr="4.5rem"
@@ -226,9 +221,9 @@ export const CreateUser = () => {
           <GridItem colSpan={2}>
             <Button
               mt={10}
-              bg={bg}
               w={"100%"}
               type="submit"
+              variant={"primary"}
               textTransform={"uppercase"}
             >
               Registrar

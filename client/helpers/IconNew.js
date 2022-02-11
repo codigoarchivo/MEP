@@ -35,7 +35,6 @@ export const CartIcon = createIcon({
     </svg>
   ),
 });
-
 export const FacebookIcon = createIcon({
   displayName: "facebookIcon",
   viewBox: "0 0 144.000000 144.000000",
@@ -69,7 +68,6 @@ export const FacebookIcon = createIcon({
     </svg>
   ),
 });
-
 export const TelegramIcon = createIcon({
   displayName: "TelegramIcon",
   viewBox: "0 0 150.000000 150.000000",
@@ -100,7 +98,6 @@ c-20 -21 -131 -145 -247 -275 l-212 -237 -44 -118 c-26 -69 -47 -112 -50 -103
     </svg>
   ),
 });
-
 export const InstagramIcon = createIcon({
   displayName: "InstagramIcon",
   viewBox: "0 0 150.000000 150.000000",

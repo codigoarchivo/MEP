@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   Box,
+  Button,
   Container,
   Divider,
   Grid,
@@ -17,6 +18,7 @@ import {
 
 import ModeColor from "../../../helpers/ModeColor";
 import Breakpoints from "../../../helpers/Breakpoints";
+import NavLink from "../../../helpers/Navlink";
 
 import {
   FacebookIcon,
@@ -35,14 +37,19 @@ const Footer = () => {
     points8,
     points9,
     points10,
+    points11,
+    points12,
+    points14,
     content1,
+    content2,
+    content3,
   } = Breakpoints();
   // mode Color
   const { bg2 } = ModeColor();
 
   return (
     <Box as={"form"} w={"full"}>
-      <Container maxW={"container.lg"} px={5} py={{ base: "10", md: "16" }}>
+      <Container maxW={"container.lg"} px={5} py={points12}>
         <Grid
           templateColumns={repeat2}
           columnGap={points3}
@@ -53,45 +60,73 @@ const Footer = () => {
           <GridItem colSpan={points8}>
             <List display="flex" alignItems={"center"} p={5}>
               <ListItem mr={2}>
-                <Icon boxSize={{ base: "6", md: "8" }} cursor={"pointer"}>
-                  <FacebookIcon />
-                </Icon>
+                <Button size="xs" px={0} variant={"secondary"}>
+                  <FacebookIcon boxSize={points11} />
+                </Button>
               </ListItem>
               <ListItem mx={2}>
-                <Icon boxSize={{ base: "6", md: "8" }} cursor={"pointer"}>
-                  <TelegramIcon />
-                </Icon>
+                <Button size="xs" px={0} variant={"secondary"}>
+                  <TelegramIcon boxSize={points11} />
+                </Button>
               </ListItem>
               <ListItem mx={2}>
-                <Icon boxSize={{ base: "6", md: "8" }} cursor={"pointer"}>
-                  <InstagramIcon />
-                </Icon>
+                <Button size="xs" px={0} variant={"secondary"}>
+                  <InstagramIcon boxSize={points11} />
+                </Button>
               </ListItem>
               <ListItem ml={2}>
-                <Icon boxSize={{ base: "6", md: "8" }} cursor={"pointer"}>
-                  <TwitterIcon />
-                </Icon>
+                <Button size="xs" px={0} variant={"secondary"}>
+                  <TwitterIcon boxSize={points11} />
+                </Button>
               </ListItem>
             </List>
           </GridItem>
           <GridItem colSpan={points7}>
             <Stack
-              flexDirection={{ base: "column", sm: "row" }}
+              flexDirection={content3}
               justifyContent="space-evenly"
               alignItems={"center"}
               spacing={0}
             >
-              <List p={5} w="full">
-                <ListItem>Edgars Pendulum &copy;</ListItem>
-                <ListItem>Assumenda</ListItem>
-                <ListItem>Quidem</ListItem>
-                <ListItem>Quidem</ListItem>
+              <List px={points14} py={5} w="full" spacing={1}>
+                <Heading size={"md"} textTransform={"uppercase"}>
+                  Home
+                </Heading>
+                <ListItem>
+                  <Button size="sm" px={0} variant={"secondary"}>
+                    <NavLink href={"/"} name={`Edgars Pendulum`} />
+                  </Button>
+                </ListItem>
+                <ListItem>
+                  <Button size="sm" px={0} variant={"secondary"}>
+                    <NavLink href={"/"} name={`Edgars Pendulum`} />
+                  </Button>
+                </ListItem>
+                <ListItem>
+                  <Button size="sm" px={0} variant={"secondary"}>
+                    <NavLink href={"/"} name={`Edgars Pendulum`} />
+                  </Button>
+                </ListItem>
               </List>
-              <List p={5} w="full">
-                <ListItem>Edgars Pendulum &copy;</ListItem>
-                <ListItem>Assumenda</ListItem>
-                <ListItem>Quidem</ListItem>
-                <ListItem>Quidem</ListItem>
+              <List px={points14} py={5} w="full" spacing={1}>
+                <Heading size={"md"} textTransform={"uppercase"}>
+                  Home
+                </Heading>
+                <ListItem>
+                  <Button size="sm" px={0} variant={"secondary"}>
+                    <NavLink href={"/"} name={`Edgars Pendulum`} />
+                  </Button>
+                </ListItem>
+                <ListItem>
+                  <Button size="sm" px={0} variant={"secondary"}>
+                    <NavLink href={"/"} name={`Edgars Pendulum`} />
+                  </Button>
+                </ListItem>
+                <ListItem>
+                  <Button size="sm" px={0} variant={"secondary"}>
+                    <NavLink href={"/"} name={`Edgars Pendulum`} />
+                  </Button>
+                </ListItem>
               </List>
             </Stack>
           </GridItem>
@@ -116,14 +151,30 @@ const Footer = () => {
           <GridItem colSpan={points5}>
             <List
               display="flex"
-              justifyContent={{ base: "start", lg: "end" }}
-              flexDirection={{ base: "column", sm: "row" }}
+              justifyContent={content2}
+              flexDirection={content3}
               w={"full"}
             >
-              <ListItem mx={2}>Edgars Pendulum &copy;</ListItem>
-              <ListItem mx={2}>Assumenda</ListItem>
-              <ListItem mx={2}>Quidem</ListItem>
-              <ListItem mx={2}>Quidem</ListItem>
+              <ListItem mx={2}>
+                <Button size="sm" px={0} variant={"secondary"}>
+                  <NavLink href={"/"} name={`Edgars Pendulum`} />
+                </Button>
+              </ListItem>
+              <ListItem mx={2}>
+                <Button size="sm" px={0} variant={"secondary"}>
+                  <NavLink href={"/"} name={`Edgars Pendulum`} />
+                </Button>
+              </ListItem>
+              <ListItem mx={2}>
+                <Button size="sm" px={0} variant={"secondary"}>
+                  <NavLink href={"/"} name={`Edgars Pendulum`} />
+                </Button>
+              </ListItem>
+              <ListItem mx={2}>
+                <Button size="sm" px={0} variant={"secondary"}>
+                  <NavLink href={"/"} name={`Edgars Pendulum`} />
+                </Button>
+              </ListItem>
             </List>
           </GridItem>
         </Grid>

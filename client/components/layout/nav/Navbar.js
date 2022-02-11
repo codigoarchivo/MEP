@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 import {
   Avatar,
   AvatarBadge,
   Box,
+  Button,
   Flex,
+  Grid,
+  GridItem,
+  Heading,
   HStack,
   Icon,
   Input,
@@ -25,6 +30,7 @@ import {
   PopoverHeader,
   PopoverTrigger,
   Portal,
+  Text,
   useColorMode,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -34,11 +40,14 @@ import { HamburgerIcon, MoonIcon, SearchIcon, SunIcon } from "@chakra-ui/icons";
 import { CartIcon } from "../../../helpers/IconNew";
 import ModeColor from "../../../helpers/ModeColor";
 import Breakpoints from "../../../helpers/Breakpoints";
+import NavLink from "../../../helpers/Navlink";
 
 import { DrawerNavbar } from "./DrawerNavbar";
 import { DialogSerchNavbar } from "./DialogSerchNavbar";
 
 const Navbar = () => {
+  // router
+  const router = useRouter();
   // toogle serch
   const [isSerch, setIsSerch] = useState(false);
   // toogle color
@@ -48,7 +57,15 @@ const Navbar = () => {
   // mode Color
   const { bgInput } = ModeColor();
   // Breakpoints
-  const { displayOn1, displayOn2, displayOff1, displayOff2 } = Breakpoints();
+  const {
+    displayOn2,
+    displayOff2,
+    points5,
+    points11,
+    points13,
+    points15,
+    points16,
+  } = Breakpoints();
 
   return (
     <>
@@ -78,26 +95,27 @@ const Navbar = () => {
         SearchIcon={SearchIcon}
         bgInput={bgInput}
       />
-      <Box as={"nav"} px={5}>
-        <HStack
-          as={"ul"}
-          listStyleType="none"
-          justifyContent={"space-around"}
-          h={["10vh"]}
-        >
-          <Box as={"li"} display={displayOn2}>
-            <Icon boxSize={6} cursor={"pointer"} onClick={onOpen}>
-              <HamburgerIcon />
-            </Icon>
-          </Box>
-          <Box as={"li"} display={displayOff2}>
-            <HStack spacing={10}>
-              <Image
-                src="/img/EDGARS PENDULUM.png"
-                alt="Picture of the author"
-                width={50}
-                height={50}
-              />
+      <Grid
+        gridTemplateColumns={{ base: "repeat(11, 1fr)", md: "repeat(13, 1fr)" }}
+        rowGap={5}
+        as={"nav"}
+        alignItems={"center"}
+        py={5}
+      >
+        <GridItem colSpan={3} justifyContent={"center"} display={displayOn2}>
+          <Icon boxSize={6} mx={7} cursor={"pointer"} onClick={onOpen}>
+            <HamburgerIcon />
+          </Icon>
+        </GridItem>
+        <GridItem colSpan={points15}>
+          <HStack spacing={8} mx={3} justifyContent="center">
+            <Image
+              src="/img/EDGARS PENDULUM.png"
+              alt="Picture of the author"
+              width={60}
+              height={80}
+            />
+            <Box as={"div"} display={displayOff2}>
               <Menu>
                 <MenuButton>Categoria</MenuButton>
                 <Portal>
@@ -114,91 +132,119 @@ const Navbar = () => {
                   </MenuList>
                 </Portal>
               </Menu>
-            </HStack>
-          </Box>
-          <Box as={"li"} w={{ base: "full", md: "30%" }}>
-            <HStack>
-              <Icon
-                onClick={() => setIsSerch(true)}
-                boxSize={4}
-                display={displayOn1}
-                cursor={"pointer"}
-                mx={{ base: "5" }}
-              >
-                <SearchIcon />
-              </Icon>
-              <InputGroup display={displayOff1}>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<SearchIcon color="gray.300" />}
-                />
-                <Input
-                  bg={bgInput}
-                  type={"search"}
-                  placeholder="Buscar En cualquier parte"
-                />
-              </InputGroup>
-            </HStack>
-          </Box>
+            </Box>
+          </HStack>
+        </GridItem>
+        <GridItem colSpan={points5}>
+          <Icon
+            onClick={() => setIsSerch(true)}
+            boxSize={4}
+            display={displayOn2}
+            cursor={"pointer"}
+            mx={{ base: "5" }}
+          >
+            <SearchIcon />
+          </Icon>
+          <InputGroup display={displayOff2}>
+            <InputLeftElement
+              pointerEvents="none"
+              children={<SearchIcon color="gray.300" />}
+            />
+            <Input bg={bgInput} type={"search"} placeholder="Buscar" />
+          </InputGroup>
+        </GridItem>
+        <GridItem colSpan={1} justifySelf="center">
+          <Popover isLazy>
+            <PopoverTrigger>
+              <Button size="xs" px={0} variant={"secondary"}>
+                <CartIcon boxSize={points11} />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverHeader fontWeight="semibold">
+                Popover placement
+              </PopoverHeader>
+              <PopoverArrow />
+              <PopoverCloseButton />
+              <PopoverBody>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore.
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+        </GridItem>
+        <GridItem colSpan={5} display={displayOff2}>
+          <HStack mx={4} spacing={points16}>
+            <Button
+              size="md"
+              px={0}
+              variant={"secondary"}
+              // onClick={() =>
+              //   router.push({
+              //     pathname: "/account/[p]",
+              //     query: { p: "login" },
+              //   })
+              // }
+            >
+              <NavLink href={"/account/login"} name={"Inicia Sesión"} />
+            </Button>
+            <Button
+              size="md"
+              variant={"primary"}
+              // onClick={() =>
+              //   router.push({
+              //     pathname: "/account/[p]",
+              //     query: { p: "create-user" },
+              //   })
+              // }
+            >
+              <NavLink href={"/account/create"} name={"Regístrate"} />
+            </Button>
 
-          <Box as={"li"} w={{ base: "50%", sm: "20%" }}>
-            <Flex justifyContent={"space-between"} alignItems={"center"}>
-              <Popover isLazy>
-                <PopoverTrigger>
-                  <Icon boxSize={{ base: "6", md: "8" }} cursor={"pointer"}>
-                    <CartIcon />
-                  </Icon>
-                </PopoverTrigger>
-                <PopoverContent>
-                  <PopoverHeader fontWeight="semibold">
-                    Popover placement
-                  </PopoverHeader>
-                  <PopoverArrow />
-                  <PopoverCloseButton />
-                  <PopoverBody>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore.
-                  </PopoverBody>
-                </PopoverContent>
-              </Popover>
-              <Icon
-                boxSize={6}
-                cursor={"pointer"}
-                display={displayOff2}
-                onClick={toggleColorMode}
-              >
-                {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-              </Icon>
-              <Popover isLazy>
-                <PopoverTrigger>
-                  <Avatar
-                    boxSize={{ base: "8", md: "10" }}
-                    src="https://bit.ly/dan-abramov"
-                    name="Dan Abrahmov"
-                    cursor={"pointer"}
-                  >
-                    <AvatarBadge
-                      boxSize={{ base: ".8em", md: "1.10em" }}
-                      bg="green.500"
-                    />
-                  </Avatar>
-                </PopoverTrigger>
-                <PopoverContent>
-                  <PopoverHeader fontWeight="semibold">
-                    Popover placement
-                  </PopoverHeader>
-                  <PopoverArrow />
-                  <PopoverCloseButton />
-                  <PopoverBody>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore.
-                  </PopoverBody>
-                </PopoverContent>
-              </Popover>
-            </Flex>
-          </Box>
-        </HStack>
-      </Box>
+            <Popover isLazy>
+              <PopoverTrigger>
+                <Avatar
+                  boxSize={points13}
+                  src="https://bit.ly/dan-abramov"
+                  name="Dan Abrahmov"
+                  cursor={"pointer"}
+                >
+                  <AvatarBadge
+                    boxSize={{ base: ".8em", md: "1.10em" }}
+                    bg="green.500"
+                  />
+                </Avatar>
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverHeader fontWeight="semibold">
+                  <HStack spacing={6}>
+                    <Heading size={"md"}>Jackson Quintero</Heading>
+                    <Button
+                      onClick={toggleColorMode}
+                      size="xs"
+                      px={0}
+                      variant={"secondary"}
+                    >
+                      {colorMode === "light" ? (
+                        <MoonIcon boxSize={6} />
+                      ) : (
+                        <SunIcon boxSize={6} />
+                      )}
+                    </Button>
+                  </HStack>
+                  <Text fontSize="sm">jackosn@gmail.com</Text>
+                </PopoverHeader>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverBody>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore.
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+          </HStack>
+        </GridItem>
+      </Grid>
     </>
   );
 };

@@ -1,15 +1,15 @@
 import React from "react";
 
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 
-import { Button } from "@chakra-ui/react";
+// import { Button } from "@chakra-ui/react";
 
 const Home = () => {
   // router
-  const router = useRouter();
+  // const router = useRouter();
   return (
     <>
-      <Button
+      {/* <Button
         type="button"
         onClick={() =>
           router.push({
@@ -19,7 +19,7 @@ const Home = () => {
         }
       >
         enviar
-      </Button>
+      </Button> */}
     </>
   );
 };

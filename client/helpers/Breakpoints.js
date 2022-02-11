@@ -14,15 +14,30 @@ const Breakpoints = () => {
   const points8 = { md: 1, lg: 2 };
   const points9 = { base: 1, md: 4, lg: 6 };
   const points10 = { base: 1, md: 4, lg: 2 };
-
+  const points11 = { base: 6, md: 8 };
+  const points12 = { base: 10, md: 16 };
+  const points13 = { base: 8, md: 10 };
+  const points14 = { base: 3, sm: 5 };
+  const points15 = { base: 5, md: 3 };
+  const points16 = { base: 3, lg: 12 };
 
   const auto1 = { base: "auto", md: "90vh" };
 
   const repeat1 = { base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" };
-  const repeat2 = { base: "repeat(1, 1fr)", md: "repeat(4, 1fr)" , lg: "repeat(6, 1fr)" };
-  const repeat3 = { base: "repeat(5, 1fr)", md: "repeat(4, 1fr)" , lg: "repeat(3, 1fr)" };
+  const repeat2 = {
+    base: "repeat(1, 1fr)",
+    md: "repeat(4, 1fr)",
+    lg: "repeat(6, 1fr)",
+  };
+  const repeat3 = {
+    base: "repeat(5, 1fr)",
+    md: "repeat(4, 1fr)",
+    lg: "repeat(3, 1fr)",
+  };
 
   const content1 = { base: "start", lg: "center" };
+  const content2 = { base: "start", lg: "end" };
+  const content3 = { base: "column", sm: "row" };
 
   return {
     displayOn1,
@@ -39,11 +54,19 @@ const Breakpoints = () => {
     points8,
     points9,
     points10,
+    points11,
+    points12,
+    points13,
+    points14,
+    points15,
+    points16,
     auto1,
     repeat1,
     repeat2,
     repeat3,
     content1,
+    content2,
+    content3,
   };
 };
 

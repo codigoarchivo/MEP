@@ -10,7 +10,7 @@ export const PageNotFound = () => {
         <Heading size={"lg"}>That page cannot be found.</Heading>
         <HStack>
           <Text fontSize="lg">Go back to the </Text>
-          <Button size="sm" colorScheme="green" mt="24px">
+          <Button size="sm" variant={"primary"} mt="24px">
             <Link href="/">
               <a>Home</a>
             </Link>
