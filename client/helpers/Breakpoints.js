@@ -34,6 +34,7 @@ const Breakpoints = () => {
     md: "repeat(4, 1fr)",
     lg: "repeat(3, 1fr)",
   };
+  const repeat4 = { base: "repeat(11, 1fr)", md: "repeat(13, 1fr)" };
 
   const content1 = { base: "start", lg: "center" };
   const content2 = { base: "start", lg: "end" };
@@ -64,6 +65,7 @@ const Breakpoints = () => {
     repeat1,
     repeat2,
     repeat3,
+    repeat4,
     content1,
     content2,
     content3,

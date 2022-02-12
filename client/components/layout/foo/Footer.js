@@ -9,7 +9,6 @@ import {
   GridItem,
   Heading,
   HStack,
-  Icon,
   List,
   ListItem,
   Select,
@@ -93,17 +92,17 @@ const Footer = () => {
                   Home
                 </Heading>
                 <ListItem>
-                  <Button size="sm" px={0} variant={"secondary"}>
+                  <Button size="sm" px={0} as={"div"} variant={"secondary"}>
                     <NavLink href={"/"} name={`Edgars Pendulum`} />
                   </Button>
                 </ListItem>
                 <ListItem>
-                  <Button size="sm" px={0} variant={"secondary"}>
+                  <Button size="sm" px={0} as={"div"} variant={"secondary"}>
                     <NavLink href={"/"} name={`Edgars Pendulum`} />
                   </Button>
                 </ListItem>
                 <ListItem>
-                  <Button size="sm" px={0} variant={"secondary"}>
+                  <Button size="sm" px={0} as={"div"} variant={"secondary"}>
                     <NavLink href={"/"} name={`Edgars Pendulum`} />
                   </Button>
                 </ListItem>
@@ -113,17 +112,17 @@ const Footer = () => {
                   Home
                 </Heading>
                 <ListItem>
-                  <Button size="sm" px={0} variant={"secondary"}>
+                  <Button size="sm" px={0} as={"div"} variant={"secondary"}>
                     <NavLink href={"/"} name={`Edgars Pendulum`} />
                   </Button>
                 </ListItem>
                 <ListItem>
-                  <Button size="sm" px={0} variant={"secondary"}>
+                  <Button size="sm" px={0} as={"div"} variant={"secondary"}>
                     <NavLink href={"/"} name={`Edgars Pendulum`} />
                   </Button>
                 </ListItem>
                 <ListItem>
-                  <Button size="sm" px={0} variant={"secondary"}>
+                  <Button size="sm" px={0} as={"div"} variant={"secondary"}>
                     <NavLink href={"/"} name={`Edgars Pendulum`} />
                   </Button>
                 </ListItem>
@@ -156,22 +155,22 @@ const Footer = () => {
               w={"full"}
             >
               <ListItem mx={2}>
-                <Button size="sm" px={0} variant={"secondary"}>
+                <Button size="sm" px={0} as={"div"} variant={"secondary"}>
                   <NavLink href={"/"} name={`Edgars Pendulum`} />
                 </Button>
               </ListItem>
               <ListItem mx={2}>
-                <Button size="sm" px={0} variant={"secondary"}>
+                <Button size="sm" px={0} as={"div"} variant={"secondary"}>
                   <NavLink href={"/"} name={`Edgars Pendulum`} />
                 </Button>
               </ListItem>
               <ListItem mx={2}>
-                <Button size="sm" px={0} variant={"secondary"}>
+                <Button size="sm" px={0} as={"div"} variant={"secondary"}>
                   <NavLink href={"/"} name={`Edgars Pendulum`} />
                 </Button>
               </ListItem>
               <ListItem mx={2}>
-                <Button size="sm" px={0} variant={"secondary"}>
+                <Button size="sm" px={0} as={"div"} variant={"secondary"}>
                   <NavLink href={"/"} name={`Edgars Pendulum`} />
                 </Button>
               </ListItem>

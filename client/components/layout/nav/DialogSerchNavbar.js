@@ -21,7 +21,7 @@ export const DialogSerchNavbar = ({
   bgInput,
 }) => {
   // Breakpoints
-  const { displayOn1 } = Breakpoints();
+  const { displayOn2 } = Breakpoints();
   // cerrar
   const onSerch = () => setIsSerch(false);
   // ref
@@ -30,12 +30,12 @@ export const DialogSerchNavbar = ({
   return (
     <>
       <AlertDialog
-        display={displayOn1}
+        display={displayOn2}
         isOpen={isSerch}
         leastDestructiveRef={cancelRef}
         onClose={onSerch}
       >
-        <AlertDialogOverlay display={displayOn1}>
+        <AlertDialogOverlay display={displayOn2}>
           <AlertDialogContent>
             <AlertDialogHeader>
               <CloseButton size="md" onClick={onSerch} />

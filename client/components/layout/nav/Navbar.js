@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 
 import Image from "next/image";
-import { useRouter } from "next/router";
 
 import {
   Avatar,
   AvatarBadge,
   Box,
   Button,
-  Flex,
   Grid,
   GridItem,
   Heading,
@@ -44,10 +42,9 @@ import NavLink from "../../../helpers/Navlink";
 
 import { DrawerNavbar } from "./DrawerNavbar";
 import { DialogSerchNavbar } from "./DialogSerchNavbar";
+import { BreadcrumbNavbar } from "./BreadcrumbNavbar";
 
 const Navbar = () => {
-  // router
-  const router = useRouter();
   // toogle serch
   const [isSerch, setIsSerch] = useState(false);
   // toogle color
@@ -65,6 +62,7 @@ const Navbar = () => {
     points13,
     points15,
     points16,
+    repeat4,
   } = Breakpoints();
 
   return (
@@ -96,11 +94,12 @@ const Navbar = () => {
         bgInput={bgInput}
       />
       <Grid
-        gridTemplateColumns={{ base: "repeat(11, 1fr)", md: "repeat(13, 1fr)" }}
+        gridTemplateColumns={repeat4}
         rowGap={5}
         as={"nav"}
         alignItems={"center"}
         py={5}
+        boxShadow="md"
       >
         <GridItem colSpan={3} justifyContent={"center"} display={displayOn2}>
           <Icon boxSize={6} mx={7} cursor={"pointer"} onClick={onOpen}>
@@ -110,7 +109,7 @@ const Navbar = () => {
         <GridItem colSpan={points15}>
           <HStack spacing={8} mx={3} justifyContent="center">
             <Image
-              src="/img/EDGARS PENDULUM.png"
+              src="/img/logo.png"
               alt="Picture of the author"
               width={60}
               height={80}
@@ -179,6 +178,7 @@ const Navbar = () => {
               size="md"
               px={0}
               variant={"secondary"}
+              as={"div"}
               // onClick={() =>
               //   router.push({
               //     pathname: "/account/[p]",
@@ -191,6 +191,7 @@ const Navbar = () => {
             <Button
               size="md"
               variant={"primary"}
+              as={"div"}
               // onClick={() =>
               //   router.push({
               //     pathname: "/account/[p]",
@@ -245,6 +246,14 @@ const Navbar = () => {
           </HStack>
         </GridItem>
       </Grid>
+      {/* BreadcrumbNavbar */}
+      <BreadcrumbNavbar
+        Grid={Grid}
+        GridItem={GridItem}
+        NavLink={NavLink}
+        Button={Button}
+        Box={Box}
+      />
     </>
   );
 };
