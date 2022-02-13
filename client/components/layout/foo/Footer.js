@@ -47,7 +47,7 @@ const Footer = () => {
   const { bg2 } = ModeColor();
 
   return (
-    <Box as={"form"} w={"full"}>
+    <Box as={"footer"} w={"full"}>
       <Container maxW={"container.lg"} px={5} py={points12}>
         <Grid
           templateColumns={repeat2}

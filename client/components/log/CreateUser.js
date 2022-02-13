@@ -172,7 +172,7 @@ export const CreateUser = () => {
                 />
                 <InputRightElement width="4.5rem">
                   <Button
-                    style={{ boxShadow: "none", background: "none" }}
+                    variant={"secondary"}
                     h="1.75rem"
                     onClick={handleClick}
                   >
@@ -208,7 +208,7 @@ export const CreateUser = () => {
                 />
                 <InputRightElement width="4.5rem">
                   <Button
-                    style={{ boxShadow: "none", background: "none" }}
+                    variant={"secondary"}
                     h="1.75rem"
                     onClick={handleClick2}
                   >

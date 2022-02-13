@@ -1,40 +1,45 @@
 import React, { useEffect, useState } from "react";
 
-import { Container, Flex, Grid } from "@chakra-ui/react";
+import { Container, Grid } from "@chakra-ui/react";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
+import ListScreen from "../../components/products/ListScreen";
+
 import { store } from "../../data/store";
 
-import ListProducts from "./listProducts";
-
-const products = () => {
+const products = ({ posts }) => {
   // Breakpoints
   const { auto1 } = Breakpoints();
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    if (store) {
-      setList(store);
+    if (posts) {
+      setList(posts);
     } else {
       setList([]);
     }
-  }, [store, setList]);
+  }, [posts, setList]);
 
   return (
     <>
-      <Container maxW="container.lg" p={0} py={50}>
+      <Container maxW="container.lg" my={50}>
         <Grid
-          gridTemplateColumns={"repeat(auto-fit, minmax(250px, 1fr))"}
-          gridGap={20}
-          flex={"auto"}
+          gridTemplateColumns={"repeat(auto-fit, minmax(224px, 1fr))"}
+          gridGap={3}
+          justifyContent="center"
         >
           {list.map((data) => (
-            <ListProducts key={data.id} {...data} />
+            <ListScreen key={data.id} {...data} />
           ))}
         </Grid>
       </Container>
     </>
   );
 };
+
+export async function getStaticProps() {
+  const posts = store;
+  return { props: { posts } };
+}
 export default products;
