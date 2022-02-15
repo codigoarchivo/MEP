@@ -2,11 +2,10 @@ import React, { useState } from "react";
 
 import Image from "next/image";
 
-import { useRouter } from "next/router";
-
 import {
   AspectRatio,
   Box,
+  Button,
   GridItem,
   Stat,
   StatHelpText,
@@ -15,22 +14,34 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-const ListScreen = (props) => {
-  // router
-  const router = useRouter();
-  const [isHovered, toggleHover] = useState(false);
+import NavLink from "../../helpers/Navlink";
 
+import { useModality } from "../../hooks/useModality";
+
+const initialStates = {
+  image: "",
+  name: "",
+  description: "",
+};
+const ListScreen = (props) => {
+  // Modality
+  const { modality, setModality } = useModality();
+  // almacenar cart
+  const [cart, setCart] = useState(initialStates);
+
+  const handleCart = (data) => {
+    setCart({
+      ...cart,
+      image: data.image,
+      name: data.nombre,
+      description: data.descripcion,
+    });
+  };
   return (
     <GridItem
-      height={"392px"}
-      onMouseEnter={() => toggleHover(true)}
-      onMouseLeave={() => toggleHover(false)}
-      onClick={() =>
-        router.push({
-          pathname: `/products/[v]`,
-          query: { v: props.id },
-        })
-      }
+      height={"410px"}
+      onMouseEnter={() => setModality(true)}
+      onMouseLeave={() => setModality(false)}
     >
       <Box width="full" position={"relative"}>
         <VStack
@@ -41,12 +52,11 @@ const ListScreen = (props) => {
           transition={"height .1s ease-out"}
           boxShadow="lg"
           backgroundColor={"Brand.800"}
-          cursor={"pointer"}
           rounded="md"
           margin="auto"
           _hover={{
             height: "auto",
-            maxHeight: "392px",
+            maxHeight: "410px",
             minHeight: "330px",
             zIndex: "2",
             boxShadow: "dark-lg",
@@ -63,12 +73,34 @@ const ListScreen = (props) => {
           <Stat width={"full"} p={3}>
             <StatLabel>{props.nombre}</StatLabel>
             <StatNumber>${props.precio}</StatNumber>
-            {isHovered ? <StatHelpText>{props.descripcion}</StatHelpText> : ""}
+            {modality ? (
+              <StatHelpText mt={2}>
+                <VStack spacing={3}>
+                  <NavLink
+                    href={`/products/cart?v=${props.id}`}
+                    w={"full"}
+                    size={"sm"}
+                    variant={"primary"}
+                    name={"Agregar Carrito"}
+                  />
+
+                  <NavLink
+                    href={`/products/details/?v=${props.id}`}
+                    border={"solid 1px #00020f"}
+                    w={"full"}
+                    size={"sm"}
+                    variant={"secondary"}
+                    name={"Mas Información"}
+                  />
+                </VStack>
+              </StatHelpText>
+            ) : (
+              ""
+            )}
           </Stat>
         </VStack>
       </Box>
     </GridItem>
   );
 };
-
 export default ListScreen;

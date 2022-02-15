@@ -5,6 +5,7 @@ import { Breadcrumb, BreadcrumbItem } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 
 import Breakpoints from "../../../helpers/Breakpoints";
+
 export const BreadcrumbNavbar = ({ NavLink, Grid, GridItem, Button, Box }) => {
   // Breakpoints
   const { displayOff2 } = Breakpoints();
@@ -23,21 +24,19 @@ export const BreadcrumbNavbar = ({ NavLink, Grid, GridItem, Button, Box }) => {
             separator={<ChevronRightIcon color="gray.500" />}
           >
             <BreadcrumbItem>
-              <Button variant={"secondary"} as={"div"}>
-                <NavLink href={"/"} name={"Home"} />
-              </Button>
+              <NavLink variant={"secondary"} href={"/"} name={"Home"} />
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <Button variant={"secondary"} as={"div"}>
-                <NavLink href={"/"} name={"About"} q={"all"} />
-              </Button>
+              <NavLink variant={"secondary"} href={"/"} name={"About"} />
             </BreadcrumbItem>
 
             <BreadcrumbItem isCurrentPage>
-              <Button variant={"secondary"} as={"div"}>
-                <NavLink href={"/products"} name={"Shop All"} />
-              </Button>
+              <NavLink
+                variant={"secondary"}
+                href={"/products"}
+                name={"Shop All"}
+              />
             </BreadcrumbItem>
           </Breadcrumb>
         </GridItem>

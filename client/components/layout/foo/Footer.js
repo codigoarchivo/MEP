@@ -92,19 +92,31 @@ const Footer = () => {
                   Home
                 </Heading>
                 <ListItem>
-                  <Button size="sm" px={0} as={"div"} variant={"secondary"}>
-                    <NavLink href={"/"} name={`Edgars Pendulum`} />
-                  </Button>
+                  <NavLink
+                    size="sm"
+                    px={0}
+                    variant={"secondary"}
+                    href={"/"}
+                    name={`Edgars Pendulum`}
+                  />
                 </ListItem>
                 <ListItem>
-                  <Button size="sm" px={0} as={"div"} variant={"secondary"}>
-                    <NavLink href={"/"} name={`Edgars Pendulum`} />
-                  </Button>
+                  <NavLink
+                    size="sm"
+                    px={0}
+                    variant={"secondary"}
+                    href={"/"}
+                    name={`Edgars Pendulum`}
+                  />
                 </ListItem>
                 <ListItem>
-                  <Button size="sm" px={0} as={"div"} variant={"secondary"}>
-                    <NavLink href={"/"} name={`Edgars Pendulum`} />
-                  </Button>
+                  <NavLink
+                    size="sm"
+                    px={0}
+                    variant={"secondary"}
+                    href={"/"}
+                    name={`Edgars Pendulum`}
+                  />
                 </ListItem>
               </List>
               <List px={points14} py={5} w="full" spacing={1}>
@@ -112,19 +124,31 @@ const Footer = () => {
                   Home
                 </Heading>
                 <ListItem>
-                  <Button size="sm" px={0} as={"div"} variant={"secondary"}>
-                    <NavLink href={"/"} name={`Edgars Pendulum`} />
-                  </Button>
+                  <NavLink
+                    size="sm"
+                    px={0}
+                    variant={"secondary"}
+                    href={"/"}
+                    name={`Edgars Pendulum`}
+                  />
                 </ListItem>
                 <ListItem>
-                  <Button size="sm" px={0} as={"div"} variant={"secondary"}>
-                    <NavLink href={"/"} name={`Edgars Pendulum`} />
-                  </Button>
+                  <NavLink
+                    size="sm"
+                    px={0}
+                    variant={"secondary"}
+                    href={"/"}
+                    name={`Edgars Pendulum`}
+                  />
                 </ListItem>
                 <ListItem>
-                  <Button size="sm" px={0} as={"div"} variant={"secondary"}>
-                    <NavLink href={"/"} name={`Edgars Pendulum`} />
-                  </Button>
+                  <NavLink
+                    size="sm"
+                    px={0}
+                    variant={"secondary"}
+                    href={"/"}
+                    name={`Edgars Pendulum`}
+                  />
                 </ListItem>
               </List>
             </Stack>
@@ -155,24 +179,40 @@ const Footer = () => {
               w={"full"}
             >
               <ListItem mx={2}>
-                <Button size="sm" px={0} as={"div"} variant={"secondary"}>
-                  <NavLink href={"/"} name={`Edgars Pendulum`} />
-                </Button>
+                <NavLink
+                  size="sm"
+                  px={0}
+                  variant={"secondary"}
+                  href={"/"}
+                  name={`Edgars Pendulum`}
+                />
               </ListItem>
               <ListItem mx={2}>
-                <Button size="sm" px={0} as={"div"} variant={"secondary"}>
-                  <NavLink href={"/"} name={`Edgars Pendulum`} />
-                </Button>
+                <NavLink
+                  size="sm"
+                  px={0}
+                  variant={"secondary"}
+                  href={"/"}
+                  name={`Edgars Pendulum`}
+                />
               </ListItem>
               <ListItem mx={2}>
-                <Button size="sm" px={0} as={"div"} variant={"secondary"}>
-                  <NavLink href={"/"} name={`Edgars Pendulum`} />
-                </Button>
+                <NavLink
+                  size="sm"
+                  px={0}
+                  variant={"secondary"}
+                  href={"/"}
+                  name={`Edgars Pendulum`}
+                />
               </ListItem>
               <ListItem mx={2}>
-                <Button size="sm" px={0} as={"div"} variant={"secondary"}>
-                  <NavLink href={"/"} name={`Edgars Pendulum`} />
-                </Button>
+                <NavLink
+                  size="sm"
+                  px={0}
+                  variant={"secondary"}
+                  href={"/"}
+                  name={`Edgars Pendulum`}
+                />
               </ListItem>
             </List>
           </GridItem>

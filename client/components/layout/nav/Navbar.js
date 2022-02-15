@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import Image from "next/image";
 
@@ -44,9 +44,11 @@ import { DrawerNavbar } from "./DrawerNavbar";
 import { DialogSerchNavbar } from "./DialogSerchNavbar";
 import { BreadcrumbNavbar } from "./BreadcrumbNavbar";
 
+import { useModality } from "../../../hooks/useModality";
+
 const Navbar = () => {
-  // toogle serch
-  const [isSerch, setIsSerch] = useState(false);
+  // Modality
+  const { modality, setModality } = useModality();
   // toogle color
   const { toggleColorMode, colorMode } = useColorMode();
   // drawer
@@ -85,8 +87,8 @@ const Navbar = () => {
       />
       {/* DialogSerchNavbar */}
       <DialogSerchNavbar
-        isSerch={isSerch}
-        setIsSerch={setIsSerch}
+        isSerch={modality}
+        setIsSerch={setModality}
         InputGroup={InputGroup}
         InputLeftElement={InputLeftElement}
         Input={Input}
@@ -136,7 +138,7 @@ const Navbar = () => {
         </GridItem>
         <GridItem colSpan={points5}>
           <Icon
-            onClick={() => setIsSerch(true)}
+            onClick={() => setModality(true)}
             boxSize={4}
             display={displayOn2}
             cursor={"pointer"}
@@ -174,34 +176,19 @@ const Navbar = () => {
         </GridItem>
         <GridItem colSpan={5} display={displayOff2}>
           <HStack mx={4} spacing={points16}>
-            <Button
-              size="md"
+            <NavLink
               px={0}
+              size="md"
               variant={"secondary"}
-              as={"div"}
-              // onClick={() =>
-              //   router.push({
-              //     pathname: "/account/[p]",
-              //     query: { p: "login" },
-              //   })
-              // }
-            >
-              <NavLink href={"/account/login"} name={"Inicia Sesión"} />
-            </Button>
-            <Button
+              href={"/account/login"}
+              name={"Inicia Sesión"}
+            />
+            <NavLink
               size="md"
               variant={"primary"}
-              as={"div"}
-              // onClick={() =>
-              //   router.push({
-              //     pathname: "/account/[p]",
-              //     query: { p: "create-user" },
-              //   })
-              // }
-            >
-              <NavLink href={"/account/create"} name={"Regístrate"} />
-            </Button>
-
+              href={"/account/create"}
+              name={"Regístrate"}
+            />
             <Popover isLazy>
               <PopoverTrigger>
                 <Avatar
