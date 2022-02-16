@@ -1,12 +1,14 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import { Breadcrumb, BreadcrumbItem } from "@chakra-ui/react";
 
 import { ChevronRightIcon } from "@chakra-ui/icons";
 
 import Breakpoints from "../../../helpers/Breakpoints";
 
-export const BreadcrumbNavbar = ({ NavLink, Grid, GridItem, Button, Box }) => {
+export const BreadcrumbNavbar = ({ NavLink, Grid, GridItem, Box }) => {
   // Breakpoints
   const { displayOff2 } = Breakpoints();
 
@@ -34,7 +36,7 @@ export const BreadcrumbNavbar = ({ NavLink, Grid, GridItem, Button, Box }) => {
             <BreadcrumbItem isCurrentPage>
               <NavLink
                 variant={"secondary"}
-                href={"/products"}
+                href={"/search"}
                 name={"Shop All"}
               />
             </BreadcrumbItem>
@@ -43,4 +45,11 @@ export const BreadcrumbNavbar = ({ NavLink, Grid, GridItem, Button, Box }) => {
       </Grid>
     </Box>
   );
+};
+
+BreadcrumbNavbar.propTypes = {
+  NavLink: PropTypes.func.isRequired,
+  Grid: PropTypes.object.isRequired,
+  GridItem: PropTypes.object.isRequired,
+  Box: PropTypes.object.isRequired,
 };

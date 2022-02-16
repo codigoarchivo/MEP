@@ -1,5 +1,7 @@
 import React from "react";
+
 import Link from "next/link";
+
 import { Button, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 
 export const PageNotFound = () => {

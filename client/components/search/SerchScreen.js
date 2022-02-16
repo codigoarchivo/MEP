@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 
 import Image from "next/image";
 
 import {
   AspectRatio,
   Box,
-  Button,
   GridItem,
   Stat,
   StatHelpText,
@@ -18,25 +17,10 @@ import NavLink from "../../helpers/Navlink";
 
 import { useModality } from "../../hooks/useModality";
 
-const initialStates = {
-  image: "",
-  name: "",
-  description: "",
-};
-const ListScreen = (props) => {
+const SerchScreen = (props) => {
   // Modality
   const { modality, setModality } = useModality();
-  // almacenar cart
-  const [cart, setCart] = useState(initialStates);
 
-  const handleCart = (data) => {
-    setCart({
-      ...cart,
-      image: data.image,
-      name: data.nombre,
-      description: data.descripcion,
-    });
-  };
   return (
     <GridItem
       height={"410px"}
@@ -77,7 +61,7 @@ const ListScreen = (props) => {
               <StatHelpText mt={2}>
                 <VStack spacing={3}>
                   <NavLink
-                    href={`/products/cart?v=${props.id}`}
+                    href={`/search/cart?v=${props.id}`}
                     w={"full"}
                     size={"sm"}
                     variant={"primary"}
@@ -85,7 +69,7 @@ const ListScreen = (props) => {
                   />
 
                   <NavLink
-                    href={`/products/details/?v=${props.id}`}
+                    href={`/search/details/?v=${props.id}`}
                     border={"solid 1px #00020f"}
                     w={"full"}
                     size={"sm"}
@@ -103,4 +87,5 @@ const ListScreen = (props) => {
     </GridItem>
   );
 };
-export default ListScreen;
+
+export default SerchScreen;

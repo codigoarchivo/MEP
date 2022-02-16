@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
+
+import Proptypes from "prop-types";
 
 import {
   AlertDialog,
@@ -9,8 +11,6 @@ import {
   CloseButton,
 } from "@chakra-ui/react";
 
-import Breakpoints from "../../../helpers/Breakpoints";
-
 export const DialogSerchNavbar = ({
   isSerch,
   setIsSerch,
@@ -18,45 +18,53 @@ export const DialogSerchNavbar = ({
   InputLeftElement,
   Input,
   SearchIcon,
-  bgInput,
+  word,
 }) => {
-  // Breakpoints
-  const { displayOn2 } = Breakpoints();
   // cerrar
   const onSerch = () => setIsSerch(false);
   // ref
-  const cancelRef = React.useRef();
+  const cancelRef = useRef();
 
   return (
     <>
       <AlertDialog
-        display={displayOn2}
         isOpen={isSerch}
         leastDestructiveRef={cancelRef}
         onClose={onSerch}
       >
-        <AlertDialogOverlay display={displayOn2}>
+        <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader>
               <CloseButton size="md" onClick={onSerch} />
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              <InputGroup>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<SearchIcon color="gray.300" />}
-                />
-                <Input
-                  bg={bgInput}
-                  type={"search"}
-                  placeholder="Buscar En cualquier parte"
-                />
-              </InputGroup>
+              {word && (
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<SearchIcon color="gray.300" />}
+                  />
+                  <Input
+                    type={"search"}
+                    placeholder="Buscar En cualquier parte"
+                  />
+                </InputGroup>
+              )}
             </AlertDialogBody>
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
     </>
   );
+};
+
+DialogSerchNavbar.proptypes = {
+  isSerch: Proptypes.func.isRequired,
+  setIsSerch: Proptypes.func.isRequired,
+  InputGroup: Proptypes.object.isRequired,
+  InputLeftElement: Proptypes.object.isRequired,
+  Input: Proptypes.object.isRequired,
+  SearchIcon: Proptypes.object.isRequired,
+  word: Proptypes.string.isRequired,
 };

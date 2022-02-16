@@ -1,5 +1,7 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import {
   Drawer,
   DrawerBody,
@@ -15,6 +17,8 @@ import Breakpoints from "../../../helpers/Breakpoints";
 export const DrawerNavbar = ({
   onClose,
   isOpen,
+  toggleColorMode,
+  colorMode,
   Menu,
   MenuButton,
   Portal,
@@ -24,8 +28,6 @@ export const DrawerNavbar = ({
   Icon,
   SunIcon,
   MoonIcon,
-  toggleColorMode,
-  colorMode,
 }) => {
   // Breakpoints
   const { displayOn2 } = Breakpoints();
@@ -77,4 +79,20 @@ export const DrawerNavbar = ({
       </Drawer>
     </>
   );
+};
+
+DrawerNavbar.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  Portal: PropTypes.func.isRequired,
+  Menu: PropTypes.func.isRequired,
+  toggleColorMode: PropTypes.func.isRequired,
+  colorMode: PropTypes.string.isRequired,
+  MenuButton: PropTypes.object.isRequired,
+  MenuList: PropTypes.object.isRequired,
+  MenuItem: PropTypes.object.isRequired,
+  Link: PropTypes.object.isRequired,
+  Icon: PropTypes.object.isRequired,
+  SunIcon: PropTypes.object.isRequired,
+  MoonIcon: PropTypes.object.isRequired,
 };

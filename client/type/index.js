@@ -1,3 +1,6 @@
 export const types = {
-  productList: "[product] List",
+  close: "[close] Everything",
+
+  serchList: "[serch] List",
+  serchListPerfil: "[perfil] List",
 };
