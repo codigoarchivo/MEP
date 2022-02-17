@@ -3,6 +3,7 @@ const Breakpoints = () => {
   const displayOn2 = { base: "block", md: "none" };
   const displayOff1 = { base: "none", sm: "block" };
   const displayOff2 = { base: "none", md: "block" };
+  const displayOff3 = { base: "none", md: "table-cell" };
 
   const points1 = { base: 2, md: 1 };
   const points2 = { base: 10, md: 5 };
@@ -20,6 +21,9 @@ const Breakpoints = () => {
   const points14 = { base: 3, sm: 5 };
   const points15 = { base: 5, md: 3 };
   const points16 = { base: 3, lg: 12 };
+  const points17 = { base: 5, sm: 0 };
+  const points18 = { base: 4, sm: 6 };
+  const points19 = { base: 1, sm: 3 };
 
   const auto1 = { base: "auto", md: "90vh" };
 
@@ -39,12 +43,14 @@ const Breakpoints = () => {
   const content1 = { base: "start", lg: "center" };
   const content2 = { base: "start", lg: "end" };
   const content3 = { base: "column", sm: "row" };
+  const content4 = { base: "row", sm: "column" };
 
   return {
     displayOn1,
     displayOn2,
     displayOff1,
     displayOff2,
+    displayOff3,
     points1,
     points2,
     points3,
@@ -61,6 +67,9 @@ const Breakpoints = () => {
     points14,
     points15,
     points16,
+    points17,
+    points18,
+    points19,
     auto1,
     repeat1,
     repeat2,
@@ -69,6 +78,7 @@ const Breakpoints = () => {
     content1,
     content2,
     content3,
+    content4,
   };
 };
 

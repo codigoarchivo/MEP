@@ -2,7 +2,7 @@ import { types } from "../type";
 import { store } from "../data/store";
 
 export const listData = () => {
-  // api
+  // TODO api
   return async (dispatch) => {
     await dispatch(dataList(store));
   };
@@ -14,6 +14,7 @@ const dataList = (data) => ({
 });
 
 export const listDataPerfil = (id) => {
+  // TODO api
   return async (dispatch) => {
     const data = store.filter(({ uid }) => {
       return uid.toLowerCase().includes(id);
