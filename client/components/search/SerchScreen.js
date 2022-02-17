@@ -11,21 +11,21 @@ import {
   StatLabel,
   StatNumber,
   VStack,
+  useDisclosure,
+  Collapse,
 } from "@chakra-ui/react";
 
 import NavLink from "../../helpers/Navlink";
 
-import { useModality } from "../../hooks/useModality";
-
 const SerchScreen = (props) => {
-  // Modality
-  const { modality, setModality } = useModality();
+  // disclosure
+  const { isOpen, onToggle } = useDisclosure();
 
   return (
     <GridItem
       height={"410px"}
-      onMouseEnter={() => setModality(true)}
-      onMouseLeave={() => setModality(false)}
+      onMouseEnter={() => onToggle()}
+      onMouseLeave={() => onToggle()}
     >
       <Box width="full" position={"relative"}>
         <VStack
@@ -57,7 +57,7 @@ const SerchScreen = (props) => {
           <Stat width={"full"} p={3}>
             <StatLabel>{props.nombre}</StatLabel>
             <StatNumber>${props.precio}</StatNumber>
-            {modality ? (
+            <Collapse in={isOpen} animateOpacity>
               <StatHelpText mt={2}>
                 <VStack spacing={3}>
                   <NavLink
@@ -78,9 +78,7 @@ const SerchScreen = (props) => {
                   />
                 </VStack>
               </StatHelpText>
-            ) : (
-              ""
-            )}
+            </Collapse>
           </Stat>
         </VStack>
       </Box>

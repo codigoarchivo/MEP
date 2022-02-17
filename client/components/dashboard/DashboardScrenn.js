@@ -28,15 +28,19 @@ import {
 import { DashboardDialogModal } from "./DashboardDialogModal";
 
 const initialStates = {
+  id: "",
   nombre: "",
   precio: "",
   image: "",
   uid: "",
   descripcion: "",
   category: "",
+  cantidad: "",
+  detalles: "",
 };
 
 const DashboardScrenn = (props) => {
+  // disclosure
   const { isOpen, onToggle } = useDisclosure();
   // breakpoints
   const { displayOff3, points18 } = Breakpoints();
@@ -59,6 +63,8 @@ const DashboardScrenn = (props) => {
             word={dataId.word}
             modality={modality}
             setModality={setModality}
+            data={dataId}
+            VStack={VStack}
           />
           <AspectRatio ratio={1} w={70} h={70}>
             <Image

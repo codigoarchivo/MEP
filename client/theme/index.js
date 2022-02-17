@@ -2,6 +2,7 @@ import {
   extendTheme,
   withDefaultVariant,
   theme as base,
+  withDefaultColorScheme,
 } from "@chakra-ui/react";
 
 import { mode } from "@chakra-ui/theme-tools";
@@ -70,7 +71,18 @@ const buttonStyles = {
       backgroundColor: "transparent",
       color: mode("brand.900", "brand.600")(props),
       _hover: {
-        color: "brand.800",
+        color: "brand.700",
+      },
+      _focus: {
+        ring: 2,
+        ringColor: "transparent",
+      },
+    }),
+    outline: (props) => ({
+      backgroundColor: "transparent",
+      color: mode("brand.800", "brand.600")(props),
+      _hover: {
+        color: "brand.700",
       },
       _focus: {
         ring: 2,
@@ -103,6 +115,12 @@ export const theme = extendTheme(
       Button: {
         ...buttonStyles,
       },
+      NumberInput: {
+        ...inputStyles,
+      },
+      NumberInput: {
+        ...inputStyles,
+      },
       Input: {
         ...inputStyles,
       },
@@ -113,6 +131,7 @@ export const theme = extendTheme(
   },
   withDefaultVariant({
     variant: "filled",
-    components: ["Input", "Select"],
-  })
+    components: ["Input", "NumberInput", "PinInput", "Select", "Textarea"],
+  }),
+  withDefaultColorScheme({ colorScheme: "brand" })
 );
