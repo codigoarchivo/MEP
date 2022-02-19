@@ -13,9 +13,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import DashboardScrenn from "../../components/dashboard/DashboardScrenn";
+import ProductScreen from "../../components/product/ProductScreen";
 
-import { listDataPerfil } from "../../actions/search";
+import { listDataUser } from "../../actions/product";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
@@ -23,15 +23,15 @@ const DashboardList = ({ uid }) => {
   // breakpoints
   const { displayOff3, points19 } = Breakpoints();
   // selector
-  const { listPerfil } = useSelector(({ serch }) => serch);
+  const { list } = useSelector(({ product }) => product);
   // dispatch
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(listDataPerfil(uid));
+    dispatch(listDataUser(uid));
   }, [dispatch]);
 
-  if (!listPerfil) return null;
+  if (!list) return null;
 
   return (
     <Container maxW={"container.md"} my={10}>
@@ -52,8 +52,8 @@ const DashboardList = ({ uid }) => {
             </Tr>
           </Thead>
           <Tbody>
-            {listPerfil.map((data) => (
-              <DashboardScrenn key={data.id} {...data} />
+            {list.map((data) => (
+              <ProductScreen key={data.id} {...data} />
             ))}
           </Tbody>
         </Table>

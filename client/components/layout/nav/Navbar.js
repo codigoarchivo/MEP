@@ -238,11 +238,25 @@ const Navbar = () => {
                     <List spacing={3}>
                       <ListItem>
                         <NavLink
-                          href={"/dashboard"}
+                          href={"/category"}
                           fontWeight={"normal"}
                           size={"sm"}
                           variant={"secondary"}
-                          name={"Dashboard"}
+                          name={"Category"}
+                        />
+                      </ListItem>
+                      <Divider
+                        orientation="horizontal"
+                        variant={"dashed"}
+                        bg={bg2}
+                      />
+                      <ListItem>
+                        <NavLink
+                          href={"/product"}
+                          fontWeight={"normal"}
+                          size={"sm"}
+                          variant={"secondary"}
+                          name={"Product"}
                         />
                       </ListItem>
                       <Divider

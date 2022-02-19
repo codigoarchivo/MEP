@@ -3,19 +3,14 @@ import { types } from "../type";
 const initialStates = {
   list: [],
   activeSelect: null,
+  activeImg: null,
 };
-
-export const serchReducer = (states = initialStates, action) => {
+export const productReducer = (states = initialStates, action) => {
   switch (action.type) {
-    case types.serchList:
+    case types.product:
       return {
         ...states,
         list: action.payload,
-      };
-    case types.close:
-      return {
-        list: [],
-        activeSelect: null,
       };
 
     default:

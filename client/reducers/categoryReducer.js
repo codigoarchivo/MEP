@@ -4,18 +4,12 @@ const initialStates = {
   list: [],
   activeSelect: null,
 };
-
-export const serchReducer = (states = initialStates, action) => {
+export const categoryReducer = (states = initialStates, action) => {
   switch (action.type) {
-    case types.serchList:
+    case types.category:
       return {
         ...states,
         list: action.payload,
-      };
-    case types.close:
-      return {
-        list: [],
-        activeSelect: null,
       };
 
     default:

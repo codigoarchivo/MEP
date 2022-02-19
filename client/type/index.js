@@ -2,5 +2,9 @@ export const types = {
   close: "[close] Everything",
 
   serchList: "[serch] List",
-  serchListPerfil: "[perfil] List",
+
+  product: "[product] List",
+  productEdit: "[product] Edit",
+
+  category: "[category] List",
 };

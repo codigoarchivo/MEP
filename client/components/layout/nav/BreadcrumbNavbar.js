@@ -51,5 +51,4 @@ BreadcrumbNavbar.propTypes = {
   NavLink: PropTypes.func.isRequired,
   Grid: PropTypes.object.isRequired,
   GridItem: PropTypes.object.isRequired,
-  Box: PropTypes.object.isRequired,
 };

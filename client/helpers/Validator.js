@@ -1,14 +1,7 @@
 const Validator = (values) => {
+  const { imgsize } = values;
   const { name, lastName, email, password, rePassword } = values;
-  const {
-    nombre,
-    precio,
-    image,
-    detalles,
-    descripcion,
-    cantidad,
-    category,
-  } = values;
+  const { nombre, precio, detalles, descripcion, cantidad, category } = values;
 
   // Register
   const nameV = name === "";
@@ -61,8 +54,8 @@ const Validator = (values) => {
   // DashboardDialogModal
   const mNombre = nombre === "";
   const mPrecio = precio === "";
-  const mImage = image === "";
   const mDetalles = detalles === "";
+  const mImage = Number(imgsize) > 500000;
   const mDescripcion = descripcion === "";
   const mCantidad = Number(cantidad) === 0;
   const mCategory = category === "";
@@ -77,10 +70,11 @@ const Validator = (values) => {
     mCantidad ||
     mCategory
   ) {
-    ErrorRetur = null;
+    ErrorRetur = true;
   }
 
   const fiel = "Campo no debe estar Vacio";
+  const fileE = "Imagen menos de 500kb";
 
   return {
     nameE,
@@ -90,15 +84,16 @@ const Validator = (values) => {
     coRePasswordE,
     passwordL,
     field,
+    mImage,
     mNombre,
     mPrecio,
-    mImage,
     mDetalles,
     mDescripcion,
     mCantidad,
     mCategory,
-    fiel,
     ErrorRetur,
+    fiel,
+    fileE,
   };
 };
 

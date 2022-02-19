@@ -1,11 +1,8 @@
 import React from "react";
 
-import Image from "next/image";
-
 import { useRouter } from "next/router";
 
 import {
-  AspectRatio,
   ScaleFade,
   Td,
   Text,
@@ -25,18 +22,18 @@ import {
   PlusSquareIcon,
 } from "@chakra-ui/icons";
 
-const DashboardScrenn = (props) => {
+const CategoryScreen = (props) => {
   // router
   const router = useRouter();
   // disclosure
   const { isOpen, onToggle } = useDisclosure();
   // breakpoints
-  const { displayOff3, points18 } = Breakpoints();
+  const { points18 } = Breakpoints();
 
   // edit
   const handleEdit = () => {
     router.push({
-      pathname: "/dashboard/[pid]",
+      pathname: "/category/[pid]",
       query: { pid: props.id, word: "Edit" },
     });
   };
@@ -45,23 +42,7 @@ const DashboardScrenn = (props) => {
     <>
       <Tr>
         <Td>
-          <AspectRatio ratio={1} w={70} h={70}>
-            <Image
-              src={`/img/${props.image}.jpg`}
-              alt="Picture of the author"
-              layout="fill"
-              objectFit="contain"
-            />
-          </AspectRatio>
-        </Td>
-        <Td>
           <Text>{props.nombre}</Text>
-        </Td>
-        <Td display={displayOff3}>
-          <Text>{props.precio}$</Text>
-        </Td>
-        <Td display={displayOff3}>
-          <Text>{props.category}</Text>
         </Td>
         <Td
           position={"relative"}
@@ -103,4 +84,4 @@ const DashboardScrenn = (props) => {
   );
 };
 
-export default DashboardScrenn;
+export default CategoryScreen;
