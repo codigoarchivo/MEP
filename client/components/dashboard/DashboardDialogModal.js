@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 
 import Proptypes from "prop-types";
 
+import { useRouter } from "next/router";
+
 import {
   AlertDialog,
   AlertDialogBody,
@@ -13,6 +15,7 @@ import {
   Button,
   CloseButton,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Grid,
   GridItem,
@@ -27,10 +30,10 @@ import {
   NumberInputStepper,
   Select,
   Textarea,
-  Tooltip,
+  VStack,
 } from "@chakra-ui/react";
 
-import { DownloadIcon, QuestionIcon } from "@chakra-ui/icons";
+import { DownloadIcon } from "@chakra-ui/icons";
 
 import Breakpoints from "../../helpers/Breakpoints";
 import ModeColor from "../../helpers/ModeColor";
@@ -52,15 +55,9 @@ const initialStates = {
   detalles: "",
 };
 
-export const DashboardDialogModal = ({
-  modality,
-  setModality,
-  word,
-  data,
-  VStack,
-}) => {
-  // cerrar
-  const onClose = () => setModality(false);
+export const DashboardDialogModal = ({ modality, setModality, word, data }) => {
+  // router
+  const router = useRouter();
   // file
   const file = useRef();
   // ref
@@ -68,11 +65,27 @@ export const DashboardDialogModal = ({
   // Breakpoints
   const { points1, repeat1, points3 } = Breakpoints();
   // mode Color
-  const { textError, bgTextError, bg, brand } = ModeColor();
+  const { bg, brand } = ModeColor();
+
   // guardar states
-  const { values, handleInputChange } = useForm(initialStates);
+  const dataInitial = { ...initialStates, ...data };
+
+  const { values, handleInputChange, handleInputChange2 } = useForm(
+    dataInitial
+  );
   // validar
-  const { nameE } = Validator(values);
+  const {
+    mNombre,
+    mPrecio,
+    mImage,
+    mDetalles,
+    mDescripcion,
+    mCantidad,
+    mCategory,
+    fiel,
+    ErrorRetur,
+  } = Validator(values);
+
   // values
   const {
     nombre,
@@ -83,6 +96,16 @@ export const DashboardDialogModal = ({
     cantidad,
     detalles,
   } = values;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    return ErrorRetur === null ? console.log(fiel) : console.log("hola");
+  };
+  // cerrar
+  const onClose = () => {
+    router.push("/dashboard");
+    setModality(false);
+  };
 
   return (
     <>
@@ -111,9 +134,10 @@ export const DashboardDialogModal = ({
                   columnGap={points3}
                   rowGap={2}
                   w={"full"}
+                  onSubmit={handleSubmit}
                 >
                   <GridItem colSpan={points1}>
-                    <FormControl isInvalid>
+                    <FormControl isInvalid={mImage}>
                       <FormLabel htmlFor="imagen">Image</FormLabel>
 
                       <InputGroup>
@@ -125,24 +149,25 @@ export const DashboardDialogModal = ({
                           fontWeight={"normal"}
                           _hover={{ border: bg }}
                           p={1}
+                          value={image}
+                          onChange={handleInputChange}
                         >
                           Subir
                         </Button>
                         <Box
                           name="imagen"
-                          onChange={handleInputChange}
-                          value={image}
                           type={"file"}
                           ref={file}
                           as={"input"}
                           display="none"
                         />
                       </InputGroup>
+                      <FormErrorMessage>{mImage && fiel}</FormErrorMessage>
                     </FormControl>
                   </GridItem>
 
                   <GridItem colSpan={points1}>
-                    <FormControl isInvalid>
+                    <FormControl isInvalid={mNombre}>
                       <FormLabel htmlFor="nombre">Nombre</FormLabel>
                       <Input
                         name="nombre"
@@ -152,10 +177,12 @@ export const DashboardDialogModal = ({
                         type={"text"}
                         placeholder="Nombre"
                       />
+                      <FormErrorMessage>{mNombre && fiel}</FormErrorMessage>
                     </FormControl>
                   </GridItem>
+
                   <GridItem colSpan={points1}>
-                    <FormControl isInvalid>
+                    <FormControl isInvalid={mPrecio}>
                       <FormLabel htmlFor="precio">Precio</FormLabel>
                       <Input
                         name="precio"
@@ -165,11 +192,12 @@ export const DashboardDialogModal = ({
                         type={"text"}
                         placeholder="Precio"
                       />
+                      <FormErrorMessage>{mPrecio && fiel}</FormErrorMessage>
                     </FormControl>
                   </GridItem>
 
                   <GridItem colSpan={points1}>
-                    <FormControl isInvalid>
+                    <FormControl isInvalid={mDescripcion}>
                       <FormLabel htmlFor="descripcion">Descripcion</FormLabel>
                       <Input
                         name="descripcion"
@@ -179,34 +207,40 @@ export const DashboardDialogModal = ({
                         type={"text"}
                         placeholder="Descripcion"
                       />
+                      <FormErrorMessage>
+                        {mDescripcion && fiel}
+                      </FormErrorMessage>
                     </FormControl>
                   </GridItem>
 
                   <GridItem colSpan={points1}>
-                    <FormControl isInvalid>
+                    <FormControl isInvalid={mCantidad}>
                       <FormLabel htmlFor="cantidad">Cantidad</FormLabel>
                       <NumberInput
-                        // name="cantidad"
-                        // id="cantidad"
-                        // onChange={handleInputChange}
-                        // value={cantidad}
+                        name="cantidad"
+                        id="cantidad"
+                        onChange={handleInputChange2}
                         variant={"filled"}
-                        defaultValue={0}
+                        value={cantidad}
+                        defaultValue={cantidad}
                         min={0}
                         max={20}
                       >
-                        <NumberInputField />
+                        <NumberInputField type="number" />
                         <NumberInputStepper>
                           <NumberIncrementStepper />
                           <NumberDecrementStepper />
                         </NumberInputStepper>
                       </NumberInput>
+                      <FormErrorMessage>{mCantidad && fiel}</FormErrorMessage>
                     </FormControl>
                   </GridItem>
+
                   <GridItem colSpan={points1}>
-                    <FormControl isInvalid>
-                      <FormLabel htmlFor="lastName">Categoria</FormLabel>
+                    <FormControl isInvalid={mCategory}>
+                      <FormLabel htmlFor="category">Categoria</FormLabel>
                       <Select
+                        name="category"
                         variant="filled"
                         placeholder="Options"
                         value={category}
@@ -218,10 +252,12 @@ export const DashboardDialogModal = ({
                           </option>
                         ))}
                       </Select>
+                      <FormErrorMessage>{mCategory && fiel}</FormErrorMessage>
                     </FormControl>
                   </GridItem>
+
                   <GridItem colSpan={2}>
-                    <FormControl isInvalid>
+                    <FormControl isInvalid={mDetalles}>
                       <FormLabel htmlFor="detalles">Detalles</FormLabel>
                       <Textarea
                         bg={bg}
@@ -234,8 +270,10 @@ export const DashboardDialogModal = ({
                         placeholder="Detalles"
                         size="sm"
                       />
+                      <FormErrorMessage>{mDetalles && fiel}</FormErrorMessage>
                     </FormControl>
                   </GridItem>
+
                   <GridItem colSpan={2}>
                     <AlertDialogFooter>
                       <Button
@@ -245,8 +283,8 @@ export const DashboardDialogModal = ({
                       >
                         Close
                       </Button>
-                      <Button variant={"primary"} ml={3}>
-                        Change
+                      <Button variant={"primary"} type="submit" ml={3}>
+                        Enviar
                       </Button>
                     </AlertDialogFooter>
                   </GridItem>

@@ -8,14 +8,16 @@ import SerchScreen from "../../components/search/SerchScreen";
 
 import { listData } from "../../actions/search";
 
-const serchList = () => {
+import { store } from "../../data/store";
+
+const serchList = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
   // selector
   const { list } = useSelector(({ serch }) => serch);
 
   useEffect(() => {
-    dispatch(listData());
+    dispatch(listData(data));
   }, [dispatch]);
 
   return (
@@ -39,5 +41,13 @@ const serchList = () => {
     </>
   );
 };
+
+export async function getStaticProps() {
+  return {
+    props: {
+      data: store,
+    },
+  };
+}
 
 export default serchList;

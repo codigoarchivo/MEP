@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 
 import Image from "next/image";
+
+import { useRouter } from "next/router";
 
 import {
   AspectRatio,
@@ -14,8 +16,6 @@ import {
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import { useModality } from "../../hooks/useModality";
-
 import {
   CheckCircleIcon,
   DeleteIcon,
@@ -25,47 +25,26 @@ import {
   PlusSquareIcon,
 } from "@chakra-ui/icons";
 
-import { DashboardDialogModal } from "./DashboardDialogModal";
-
-const initialStates = {
-  id: "",
-  nombre: "",
-  precio: "",
-  image: "",
-  uid: "",
-  descripcion: "",
-  category: "",
-  cantidad: "",
-  detalles: "",
-};
-
 const DashboardScrenn = (props) => {
+  // router
+  const router = useRouter();
   // disclosure
   const { isOpen, onToggle } = useDisclosure();
   // breakpoints
   const { displayOff3, points18 } = Breakpoints();
-  // modality
-  const { modality, setModality } = useModality();
-  // dataId
-  const [dataId, setDataId] = useState(initialStates);
 
   // edit
-  const handleEdit = (props) => {
-    setDataId({ ...dataId, ...props, word: "edit" });
-    setModality(true);
+  const handleEdit = () => {
+    router.push({
+      pathname: "/dashboard/[pid]",
+      query: { pid: props.id, word: "Edit" },
+    });
   };
 
   return (
     <>
       <Tr>
         <Td>
-          <DashboardDialogModal
-            word={dataId.word}
-            modality={modality}
-            setModality={setModality}
-            data={dataId}
-            VStack={VStack}
-          />
           <AspectRatio ratio={1} w={70} h={70}>
             <Image
               src={`/img/${props.image}.jpg`}
@@ -113,7 +92,7 @@ const DashboardScrenn = (props) => {
               <EditIcon
                 cursor={"pointer"}
                 color={"blue.500"}
-                onClick={() => handleEdit(props)}
+                onClick={handleEdit}
               />
               <DeleteIcon cursor={"pointer"} color={"red.500"} />
             </VStack>

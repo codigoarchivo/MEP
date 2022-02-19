@@ -1,10 +1,10 @@
 import { types } from "../type";
 import { store } from "../data/store";
 
-export const listData = () => {
+export const listData = (data) => {
   // TODO api
   return async (dispatch) => {
-    await dispatch(dataList(store));
+    await dispatch(dataList(data));
   };
 };
 

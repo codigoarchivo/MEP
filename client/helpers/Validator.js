@@ -1,6 +1,16 @@
 const Validator = (values) => {
   const { name, lastName, email, password, rePassword } = values;
+  const {
+    nombre,
+    precio,
+    image,
+    detalles,
+    descripcion,
+    cantidad,
+    category,
+  } = values;
 
+  // Register
   const nameV = name === "";
   const lastNameV = lastName === "";
   const emailV = email === "";
@@ -48,6 +58,30 @@ const Validator = (values) => {
   // login
   const passwordL = passwordV && "Password is required.";
 
+  // DashboardDialogModal
+  const mNombre = nombre === "";
+  const mPrecio = precio === "";
+  const mImage = image === "";
+  const mDetalles = detalles === "";
+  const mDescripcion = descripcion === "";
+  const mCantidad = Number(cantidad) === 0;
+  const mCategory = category === "";
+
+  let ErrorRetur;
+  if (
+    mNombre ||
+    mPrecio ||
+    mImage ||
+    mDetalles ||
+    mDescripcion ||
+    mCantidad ||
+    mCategory
+  ) {
+    ErrorRetur = null;
+  }
+
+  const fiel = "Campo no debe estar Vacio";
+
   return {
     nameE,
     lastNameE,
@@ -56,6 +90,15 @@ const Validator = (values) => {
     coRePasswordE,
     passwordL,
     field,
+    mNombre,
+    mPrecio,
+    mImage,
+    mDetalles,
+    mDescripcion,
+    mCantidad,
+    mCategory,
+    fiel,
+    ErrorRetur,
   };
 };
 
