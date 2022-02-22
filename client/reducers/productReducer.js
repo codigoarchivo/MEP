@@ -12,6 +12,44 @@ export const productReducer = (states = initialStates, action) => {
         ...states,
         list: action.payload,
       };
+    case types.productAdd:
+      return {
+        ...states,
+        list: [action.payload, ...states.list],
+      };
+    case types.notesActive:
+      return {
+        ...states,
+        active: {
+          ...action.payload,
+        },
+      };
+    case types.productImgActive:
+      return {
+        ...states,
+        activeImg: action.payload,
+      };
+    case types.active:
+      return {
+        ...states,
+        activeSelect: action.payload,
+      };
+    case types.productEdit:
+      return {
+        ...states,
+        list: states.list.map((e) =>
+          e.id === action.payload.id ? (e = action.payload) : e
+        ),
+        activeSelect: null,
+        activeimg: null,
+      };
+    case types.productDelete:
+      return {
+        ...states,
+        list: states.list.filter((e) => e.id !== action.payload),
+        activeSelect: null,
+        activeimg: null,
+      };
 
     default:
       return states;

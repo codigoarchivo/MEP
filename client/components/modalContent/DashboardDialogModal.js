@@ -1,8 +1,10 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import Proptypes from "prop-types";
 
 import { useRouter } from "next/router";
+
+import { useDispatch } from "react-redux";
 
 import {
   AlertDialog,
@@ -37,6 +39,13 @@ import { dataCategory } from "../../data/store";
 import { DialogForm } from "./DialogForm";
 import { DialogCategory } from "./DialogCategory";
 
+import {
+  addDataUser,
+  dataActive,
+  deleteDataUser,
+  editDataUser,
+} from "../../actions/product";
+
 const initialStates = {
   id: "",
   nombre: "",
@@ -50,6 +59,8 @@ const initialStates = {
 };
 
 export const DashboardDialogModal = ({ modality, setModality, word, data }) => {
+  // dispatch
+  const dispatch = useDispatch();
   // router
   const router = useRouter();
   // file
@@ -90,12 +101,19 @@ export const DashboardDialogModal = ({ modality, setModality, word, data }) => {
   // values
   const { nombre, precio, descripcion, category, cantidad, detalles } = values;
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    dispatch(dataActive(values));
+  }, [dispatch, dataActive, values]);
+
+  const handleSubmitProduct = (e) => {
     e.preventDefault();
     if (ErrorRetur) {
+      console.log("hola");
       return null;
     } else {
-      console.log("hola");
+      dispatch(addDataUser(values));
+      dispatch(editDataUser(values));
+      dispatch(deleteDataUser(values.id));
     }
 
     onClose();
@@ -179,7 +197,6 @@ export const DashboardDialogModal = ({ modality, setModality, word, data }) => {
                   mPrecio={mPrecio}
                   detalles={detalles}
                   mDetalles={mDetalles}
-                  handleSubmit={handleSubmit}
                   GridItem={GridItem}
                   FormControl={FormControl}
                   FormLabel={FormLabel}
@@ -191,6 +208,7 @@ export const DashboardDialogModal = ({ modality, setModality, word, data }) => {
                   handleInputChange={handleInputChange}
                   handleInputChange2={handleInputChange2}
                   handleInputChange3={handleInputChange3}
+                  handleSubmitProduct={handleSubmitProduct}
                 />
               )}
             </AlertDialogBody>

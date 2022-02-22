@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { startUploading } from "../actions/product";
 
 import Validator from "../helpers/Validator";
 
 const useForm = (initialStates = {}) => {
+  // dispatch
+  const dispatch = useDispatch();
   // selector
-  const { activeimg } = useSelector(({ serch }) => serch);
+  const { activeImg } = useSelector(({ product }) => product);
 
   const [values, setValues] = useState(initialStates);
 
@@ -17,7 +21,6 @@ const useForm = (initialStates = {}) => {
   };
 
   const handleInputChange = ({ target }) => {
-    !activeimg && setValues({ ...values, image: activeimg });
     setValues({ ...values, [target.name]: target.value });
   };
 
@@ -27,10 +30,21 @@ const useForm = (initialStates = {}) => {
 
   const handleInputChange3 = ({ target }) => {
     const { mImage } = Validator({ imgsize: target.files[0].size });
-    if (mImage) setImgenM(mImage);
+
+    if (mImage) {
+      return setImgenM(mImage);
+    }
 
     const file = target.files[0];
+
+    dispatch(startUploading(file));
   };
+
+  useEffect(() => {
+    if (activeImg) {
+      setValues({ ...values, image: activeImg });
+    }
+  }, [activeImg, setValues]);
 
   return {
     values,

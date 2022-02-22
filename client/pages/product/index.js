@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
+  Button,
   Container,
   Table,
   TableCaption,
@@ -13,13 +14,18 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import ProductScreen from "../../components/product/ProductScreen";
+import Markeplace from "../../components/product/ProductScreen";
 
 import { listDataUser } from "../../actions/product";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
+import { useRouter } from "next/router";
+import { SmallAddIcon } from "@chakra-ui/icons";
+
 const DashboardList = ({ uid }) => {
+  // router
+  const router = useRouter();
   // breakpoints
   const { displayOff3, points19 } = Breakpoints();
   // selector
@@ -32,6 +38,14 @@ const DashboardList = ({ uid }) => {
   }, [dispatch]);
 
   if (!list) return null;
+
+  // add
+  const handleAdd = () => {
+    router.push({
+      pathname: "/product/[pid]",
+      query: { pid: "new", word: "Add" },
+    });
+  };
 
   return (
     <Container maxW={"container.md"} my={10}>
@@ -48,12 +62,20 @@ const DashboardList = ({ uid }) => {
               <Th pb={points19} display={displayOff3}>
                 Categoria
               </Th>
-              <Th pb={points19}>Actions</Th>
+              <Th pb={points19}>
+                <Button
+                  onClick={handleAdd}
+                  leftIcon={<SmallAddIcon w={5} h={5} />}
+                  variant={"secondary"}
+                >
+                  Agregar
+                </Button>
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
             {list.map((data) => (
-              <ProductScreen key={data.id} {...data} />
+              <Markeplace key={data.id} {...data} />
             ))}
           </Tbody>
         </Table>

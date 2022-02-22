@@ -2,7 +2,6 @@ import { types } from "../type";
 
 const initialStates = {
   list: [],
-  activeSelect: null,
 };
 
 export const serchReducer = (states = initialStates, action) => {
@@ -15,7 +14,11 @@ export const serchReducer = (states = initialStates, action) => {
     case types.close:
       return {
         list: [],
-        activeSelect: null,
+      };
+    case types.productAdd:
+      return {
+        ...states,
+        list: [action.payload, ...states.list],
       };
 
     default:

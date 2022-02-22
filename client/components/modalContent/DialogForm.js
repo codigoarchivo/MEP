@@ -17,11 +17,9 @@ export const DialogForm = ({
   bg,
   points3,
   repeat1,
-  handleSubmit,
   points1,
   imgenM,
   file,
-  handleInputChange3,
   fileE,
   mNombre,
   nombre,
@@ -45,13 +43,15 @@ export const DialogForm = ({
   Input,
   AlertDialogFooter,
   cancelRef,
-  handleInputChange,
-  handleInputChange2,
   dataCategory,
   brand,
   cantidad,
   mCantidad,
   onClose,
+  handleInputChange,
+  handleInputChange2,
+  handleInputChange3,
+  handleSubmitProduct,
 }) => {
   return (
     <>
@@ -64,7 +64,7 @@ export const DialogForm = ({
           columnGap={points3}
           rowGap={2}
           w={"full"}
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmitProduct}
         >
           <GridItem colSpan={points1}>
             <FormControl isInvalid={imgenM}>
