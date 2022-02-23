@@ -1,6 +1,6 @@
 import React from "react";
 
-export const DialogCategory = ({
+const DialogCategory = ({
   VStack,
   points3,
   repeat1,
@@ -63,3 +63,5 @@ export const DialogCategory = ({
     </>
   );
 };
+
+export default DialogCategory;

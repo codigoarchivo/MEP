@@ -91,7 +91,6 @@ const Navbar = () => {
       />
       {/* DialogSerchNavbar */}
       <DialogSerchNavbar
-        word={"inputSerch"}
         isSerch={modality}
         setIsSerch={setModality}
         InputGroup={InputGroup}

@@ -18,7 +18,6 @@ export const DialogSerchNavbar = ({
   InputLeftElement,
   Input,
   SearchIcon,
-  word,
 }) => {
   // cerrar
   const onSerch = () => setIsSerch(false);
@@ -39,18 +38,16 @@ export const DialogSerchNavbar = ({
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              {word && (
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<SearchIcon color="gray.300" />}
-                  />
-                  <Input
-                    type={"search"}
-                    placeholder="Buscar En cualquier parte"
-                  />
-                </InputGroup>
-              )}
+              <InputGroup>
+                <InputLeftElement
+                  pointerEvents="none"
+                  children={<SearchIcon color="gray.300" />}
+                />
+                <Input
+                  type={"search"}
+                  placeholder="Buscar En cualquier parte"
+                />
+              </InputGroup>
             </AlertDialogBody>
           </AlertDialogContent>
         </AlertDialogOverlay>

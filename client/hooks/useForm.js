@@ -10,7 +10,7 @@ const useForm = (initialStates = {}) => {
   // dispatch
   const dispatch = useDispatch();
   // selector
-  const { activeImg } = useSelector(({ product }) => product);
+  const { activeSelect } = useSelector(({ product }) => product);
 
   const [values, setValues] = useState(initialStates);
 
@@ -41,10 +41,10 @@ const useForm = (initialStates = {}) => {
   };
 
   useEffect(() => {
-    if (activeImg) {
-      setValues({ ...values, image: activeImg });
+    if (activeSelect?.image) {
+      setValues({ ...values, image: activeSelect?.image });
     }
-  }, [activeImg, setValues]);
+  }, [activeSelect?.image, setValues]);
 
   return {
     values,

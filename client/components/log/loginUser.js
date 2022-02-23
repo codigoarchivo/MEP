@@ -29,7 +29,7 @@ const initialStates = {
   password: "",
 };
 
-export const LoginUser = () => {
+const LoginUser = () => {
   // vista de la contraseña
   const { show, handleClick } = useFormShow();
   // guardar states
@@ -143,3 +143,5 @@ export const LoginUser = () => {
     </>
   );
 };
+
+export default LoginUser;

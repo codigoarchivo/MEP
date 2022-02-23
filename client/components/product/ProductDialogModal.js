@@ -36,8 +36,7 @@ import useForm from "../../hooks/useForm";
 
 import { dataCategory } from "../../data/store";
 
-import { DialogForm } from "./DialogForm";
-import { DialogCategory } from "./DialogCategory";
+import DialogProduct from "./DialogProduct";
 
 import {
   addDataUser,
@@ -58,7 +57,7 @@ const initialStates = {
   detalles: "",
 };
 
-export const DashboardDialogModal = ({ modality, setModality, word, data }) => {
+const ProductDialogModal = ({ modality, setModality, word, data }) => {
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -105,10 +104,9 @@ export const DashboardDialogModal = ({ modality, setModality, word, data }) => {
     dispatch(dataActive(values));
   }, [dispatch, dataActive, values]);
 
-  const handleSubmitProduct = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (ErrorRetur) {
-      console.log("hola");
       return null;
     } else {
       dispatch(addDataUser(values));
@@ -120,8 +118,7 @@ export const DashboardDialogModal = ({ modality, setModality, word, data }) => {
   };
   // cerrar
   const onClose = () => {
-    data.category === "category" && router.push("/category");
-    data.product === "product" && router.push("/product");
+    router.push("/product");
     setModality(false);
     setImgenM(false);
     reset();
@@ -145,72 +142,47 @@ export const DashboardDialogModal = ({ modality, setModality, word, data }) => {
               </HStack>
             </AlertDialogHeader>
             <AlertDialogBody>
-              {data.category === "category" && (
-                <DialogCategory
-                  VStack={VStack}
-                  onClose={onClose}
-                  nombre={nombre}
-                  mNombre={mNombre}
-                  repeat1={repeat1}
-                  points3={points3}
-                  handleSubmit={handleSubmit}
-                  handleInputChange={handleInputChange}
-                  fiel={fiel}
-                  Grid={Grid}
-                  GridItem={GridItem}
-                  FormControl={FormControl}
-                  FormErrorMessage={FormErrorMessage}
-                  FormLabel={FormLabel}
-                  Button={Button}
-                  Input={Input}
-                  AlertDialogFooter={AlertDialogFooter}
-                  cancelRef={cancelRef}
-                  dataCategory={dataCategory}
-                />
-              )}
-              {data.product === "product" && (
-                <DialogForm
-                  bg={bg}
-                  Box={Box}
-                  fiel={fiel}
-                  Grid={Grid}
-                  file={file}
-                  Input={Input}
-                  fileE={fileE}
-                  VStack={VStack}
-                  Button={Button}
-                  imgenM={imgenM}
-                  repeat1={repeat1}
-                  points1={points1}
-                  points3={points3}
-                  onClose={onClose}
-                  brand={brand}
-                  nombre={nombre}
-                  mNombre={mNombre}
-                  cantidad={cantidad}
-                  mCantidad={mCantidad}
-                  descripcion={descripcion}
-                  mDescripcion={mDescripcion}
-                  category={category}
-                  mCategory={mCategory}
-                  precio={precio}
-                  mPrecio={mPrecio}
-                  detalles={detalles}
-                  mDetalles={mDetalles}
-                  GridItem={GridItem}
-                  FormControl={FormControl}
-                  FormLabel={FormLabel}
-                  InputGroup={InputGroup}
-                  cancelRef={cancelRef}
-                  dataCategory={dataCategory}
-                  AlertDialogFooter={AlertDialogFooter}
-                  FormErrorMessage={FormErrorMessage}
-                  handleInputChange={handleInputChange}
-                  handleInputChange2={handleInputChange2}
-                  handleInputChange3={handleInputChange3}
-                  handleSubmitProduct={handleSubmitProduct}
-                />
-              )}
+              <DialogProduct
+                bg={bg}
+                Box={Box}
+                fiel={fiel}
+                Grid={Grid}
+                file={file}
+                Input={Input}
+                fileE={fileE}
+                VStack={VStack}
+                Button={Button}
+                imgenM={imgenM}
+                repeat1={repeat1}
+                points1={points1}
+                points3={points3}
+                onClose={onClose}
+                brand={brand}
+                nombre={nombre}
+                mNombre={mNombre}
+                cantidad={cantidad}
+                mCantidad={mCantidad}
+                descripcion={descripcion}
+                mDescripcion={mDescripcion}
+                category={category}
+                mCategory={mCategory}
+                precio={precio}
+                mPrecio={mPrecio}
+                detalles={detalles}
+                mDetalles={mDetalles}
+                GridItem={GridItem}
+                FormControl={FormControl}
+                FormLabel={FormLabel}
+                InputGroup={InputGroup}
+                cancelRef={cancelRef}
+                dataCategory={dataCategory}
+                AlertDialogFooter={AlertDialogFooter}
+                FormErrorMessage={FormErrorMessage}
+                handleInputChange={handleInputChange}
+                handleInputChange2={handleInputChange2}
+                handleInputChange3={handleInputChange3}
+                handleSubmit={handleSubmit}
+              />
             </AlertDialogBody>
           </AlertDialogContent>
         </AlertDialogOverlay>
@@ -219,8 +191,10 @@ export const DashboardDialogModal = ({ modality, setModality, word, data }) => {
   );
 };
 
-DashboardDialogModal.proptypes = {
+ProductDialogModal.proptypes = {
   word: Proptypes.string.isRequired,
   modality: Proptypes.func.isRequired,
   setModality: Proptypes.func.isRequired,
 };
+
+export default ProductDialogModal;

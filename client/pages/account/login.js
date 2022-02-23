@@ -2,7 +2,7 @@ import React from "react";
 
 import { Container, Flex } from "@chakra-ui/react";
 
-import { LoginUser } from "../../components/log/loginUser";
+import LoginUser from "../../components/log/loginUser";
 
 import Breakpoints from "../../helpers/Breakpoints";
 

@@ -26,10 +26,9 @@ import {
   ExternalLinkIcon,
   NotAllowedIcon,
   PlusSquareIcon,
-  SmallAddIcon,
 } from "@chakra-ui/icons";
 
-const DashboardScrenn = (props) => {
+const ProductScrenn = (props) => {
   // router
   const router = useRouter();
   // disclosure
@@ -77,7 +76,7 @@ const DashboardScrenn = (props) => {
         <Td display={displayOff3}>
           <Text>{props.category}</Text>
         </Td>
-        <Td>
+        <Td textAlign={"center"}>
           <Menu matchWidth>
             <MenuButton variant="outline">
               <PlusSquareIcon
@@ -151,22 +150,10 @@ const DashboardScrenn = (props) => {
               </MenuItem>
             </MenuList>
           </Menu>
-
-          {/* <ScaleFade initialScale={0.2} transitionEnd in={isOpen}>
-            <VStack
-              opacity={isOpen ? 1 : 0}
-              zIndex={isOpen ? 100 : 0}
-              position={"absolute"}
-              left={-9}
-              backgroundColor="brand.800"
-              p={1}
-              rounded="sm"
-            ></VStack>
-          </ScaleFade> */}
         </Td>
       </Tr>
     </>
   );
 };
 
-export default DashboardScrenn;
+export default ProductScrenn;

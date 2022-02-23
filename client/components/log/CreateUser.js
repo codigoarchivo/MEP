@@ -32,7 +32,7 @@ const initialStates = {
   rePassword: "",
 };
 
-export const CreateUser = () => {
+const CreateUser = () => {
   // vista de la contraseña
   const { show, handleClick, handleClick2 } = useFormShow();
   // guardar states
@@ -234,3 +234,5 @@ export const CreateUser = () => {
     </>
   );
 };
+
+export default CreateUser;

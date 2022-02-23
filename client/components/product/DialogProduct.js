@@ -12,7 +12,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 
-export const DialogForm = ({
+const DialogProduct = ({
   VStack,
   bg,
   points3,
@@ -48,10 +48,10 @@ export const DialogForm = ({
   cantidad,
   mCantidad,
   onClose,
+  handleSubmit,
   handleInputChange,
   handleInputChange2,
   handleInputChange3,
-  handleSubmitProduct,
 }) => {
   return (
     <>
@@ -61,10 +61,10 @@ export const DialogForm = ({
           templateRows={`repeat(5, 1fr)`}
           templateColumns={repeat1}
           alignItems={"center"}
+          onSubmit={handleSubmit}
           columnGap={points3}
           rowGap={2}
           w={"full"}
-          onSubmit={handleSubmitProduct}
         >
           <GridItem colSpan={points1}>
             <FormControl isInvalid={imgenM}>
@@ -216,3 +216,5 @@ export const DialogForm = ({
     </>
   );
 };
+
+export default DialogProduct;

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { DashboardDialogModal } from "../../components/modalContent/DashboardDialogModal";
+import CategoryDialogModal from "../../components/category/CategoryDialogModal";
 
 import { store } from "../../data/store";
 
@@ -10,7 +10,7 @@ const configDashboard = ({ dataId }) => {
   // modality
   const { modality, setModality } = useModality();
   return (
-    <DashboardDialogModal
+    <CategoryDialogModal
       word={dataId.word}
       modality={() => modality(true)}
       setModality={setModality}

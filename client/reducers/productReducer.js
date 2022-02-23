@@ -3,7 +3,6 @@ import { types } from "../type";
 const initialStates = {
   list: [],
   activeSelect: null,
-  activeImg: null,
 };
 export const productReducer = (states = initialStates, action) => {
   switch (action.type) {
@@ -17,17 +16,10 @@ export const productReducer = (states = initialStates, action) => {
         ...states,
         list: [action.payload, ...states.list],
       };
-    case types.notesActive:
-      return {
-        ...states,
-        active: {
-          ...action.payload,
-        },
-      };
     case types.productImgActive:
       return {
         ...states,
-        activeImg: action.payload,
+        activeSelect: { ...states.activeSelect, image: action.payload },
       };
     case types.active:
       return {

@@ -14,7 +14,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import Markeplace from "../../components/product/ProductScreen";
+import ProductScrenn from "../../components/product/ProductScreen";
 
 import { listDataUser } from "../../actions/product";
 
@@ -62,7 +62,7 @@ const DashboardList = ({ uid }) => {
               <Th pb={points19} display={displayOff3}>
                 Categoria
               </Th>
-              <Th pb={points19}>
+              <Th pb={points19} textAlign={"center"}>
                 <Button
                   onClick={handleAdd}
                   leftIcon={<SmallAddIcon w={5} h={5} />}
@@ -75,7 +75,7 @@ const DashboardList = ({ uid }) => {
           </Thead>
           <Tbody>
             {list.map((data) => (
-              <Markeplace key={data.id} {...data} />
+              <ProductScrenn key={data.id} {...data} />
             ))}
           </Tbody>
         </Table>

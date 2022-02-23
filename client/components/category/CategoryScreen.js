@@ -3,12 +3,15 @@ import React from "react";
 import { useRouter } from "next/router";
 
 import {
-  ScaleFade,
+  HStack,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Td,
   Text,
   Tr,
   useDisclosure,
-  VStack,
 } from "@chakra-ui/react";
 
 import Breakpoints from "../../helpers/Breakpoints";
@@ -38,46 +41,94 @@ const CategoryScreen = (props) => {
     });
   };
 
+  // delete
+  const handleDelete = () => {
+    router.push({
+      pathname: "/category/[pid]",
+      query: { pid: props.id, word: "Delete" },
+    });
+  };
+
   return (
     <>
-      <Tr>
-        <Td>
+      <Tr >
+        <Td p={3}>
           <Text>{props.nombre}</Text>
         </Td>
-        <Td
-          position={"relative"}
-          onMouseEnter={() => onToggle()}
-          onMouseLeave={() => onToggle()}
-        >
-          <PlusSquareIcon
-            w={points18}
-            h={points18}
-            position={"absolute"}
-            top={"35%"}
-            left={"40%"}
-            opacity={isOpen ? 0 : 1}
-            zIndex={isOpen ? 0 : 100}
-          />
-          <ScaleFade initialScale={0.12} in={isOpen}>
-            <VStack opacity={isOpen ? 1 : 0} zIndex={isOpen ? 100 : 0}>
-              {isOpen ? (
-                <CheckCircleIcon cursor={"pointer"} color={"green.500"} />
-              ) : (
-                <NotAllowedIcon cursor={"pointer"} color={"red.500"} />
-              )}
-              <ExternalLinkIcon
-                zIndex={isOpen ? 100 : 0}
-                cursor={"pointer"}
-                color={"blue.500"}
+        <Td textAlign={"center"}>
+          <Menu matchWidth>
+            <MenuButton variant="outline">
+              <PlusSquareIcon
+                w={points18}
+                h={points18}
+                top={"35%"}
+                left={"40%"}
               />
-              <EditIcon
-                cursor={"pointer"}
-                color={"blue.500"}
-                onClick={handleEdit}
-              />
-              <DeleteIcon cursor={"pointer"} color={"red.500"} />
-            </VStack>
-          </ScaleFade>
+            </MenuButton>
+            <MenuList>
+              <MenuItem>
+                {" "}
+                {isOpen ? (
+                  <HStack
+                    spacing={3}
+                    cursor={"pointer"}
+                    fontWeight={"normal"}
+                    width="full"
+                  >
+                    <CheckCircleIcon w={3} h={3} />
+                    <Text>Activo</Text>
+                  </HStack>
+                ) : (
+                  <HStack
+                    spacing={3}
+                    cursor={"pointer"}
+                    fontWeight={"normal"}
+                    width="full"
+                  >
+                    <NotAllowedIcon w={3} h={3} />
+                    <Text>inActivo</Text>
+                  </HStack>
+                )}
+              </MenuItem>
+              <MenuItem>
+                <HStack
+                  spacing={3}
+                  cursor={"pointer"}
+                  fontWeight={"normal"}
+                  width="full"
+                >
+                  <ExternalLinkIcon w={3} h={3} />
+                  <Text>Detalles</Text>
+                </HStack>
+              </MenuItem>
+              <MenuItem>
+                {" "}
+                <HStack
+                  spacing={3}
+                  cursor={"pointer"}
+                  fontWeight={"normal"}
+                  width="full"
+                  onClick={handleEdit}
+                >
+                  <EditIcon w={3} h={3} />
+                  <Text>Editar</Text>
+                </HStack>
+              </MenuItem>
+              <MenuItem>
+                {" "}
+                <HStack
+                  spacing={3}
+                  cursor={"pointer"}
+                  fontWeight={"normal"}
+                  width="full"
+                  onClick={handleDelete}
+                >
+                  <DeleteIcon w={3} h={3} />
+                  <Text>Eliminar</Text>
+                </HStack>
+              </MenuItem>
+            </MenuList>
+          </Menu>
         </Td>
       </Tr>
     </>
