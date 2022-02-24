@@ -1,30 +1,53 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+import { useDispatch } from "react-redux";
+
+import { Container, VStack } from "@chakra-ui/react";
 
 import ProductDialogModal from "../../components/product/ProductDialogModal";
 
 import { store } from "../../data/store";
 
-import { useModality } from "../../hooks/useModality";
+import { dataActive } from "../../actions/product";
+
+const initialStates = {
+  id: "",
+  nombre: "",
+  precio: "",
+  image: "",
+  uid: "",
+  descripcion: "",
+  category: "",
+  cantidad: "",
+  detalles: "",
+};
 
 const configDashboard = ({ dataId }) => {
-  // modality
-  const { modality, setModality } = useModality();
+  // dispatch
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (dataId.data === null) {
+      dispatch(dataActive(initialStates));
+    } else {
+      dispatch(dataActive(dataId.data));
+    }
+  }, [dispatch]);
+
   return (
-    <ProductDialogModal
-      word={dataId.word}
-      modality={() => modality(true)}
-      setModality={setModality}
-      data={dataId}
-    />
+    <Container maxW={"container.sm"}>
+      <VStack p={{ base: 0, sm: 10 }} mt={{ base: 10, sm: 0 }}>
+        <ProductDialogModal dataId={dataId} />
+      </VStack>
+    </Container>
   );
 };
 
 export async function getServerSideProps(context) {
-  const data = store.find((x) => x.id === context.query.pid.toString());
+  const dataR = store.find((x) => x.id === context.query.pid.toString());
   const dataId = {
-    ...data,
+    data: dataR ? dataR : null,
     word: context.query.word.toString(),
-    product: "product",
   };
   return { props: { dataId } };
 }

@@ -1,6 +1,6 @@
 const Validator = (values) => {
   const { imgsize } = values;
-  const { name, lastName, email, password, rePassword } = values;
+  const { name, image, lastName, email, password, rePassword } = values;
   const { nombre, precio, detalles, descripcion, cantidad, category } = values;
 
   // Register
@@ -56,6 +56,7 @@ const Validator = (values) => {
   const mPrecio = precio === "";
   const mDetalles = detalles === "";
   const mImage = Number(imgsize) > 500000;
+  const mImageCero = image === "";
   const mDescripcion = descripcion === "";
   const mCantidad = Number(cantidad) === 0;
   const mCategory = category === "";
@@ -68,15 +69,17 @@ const Validator = (values) => {
     mDetalles ||
     mDescripcion ||
     mCantidad ||
-    mCategory
+    mCategory ||
+    mImageCero
   ) {
     ErrorRetur = true;
   }
 
-  const fiel = "Campo no debe estar Vacio";
-  const fileE = "Imagen menos de 500kb";
+  const fiel = "Revisa si alguno campo esta vacio";
 
   return {
+    fiel,
+    mImage,
     nameE,
     lastNameE,
     emailE,
@@ -92,8 +95,6 @@ const Validator = (values) => {
     mCantidad,
     mCategory,
     ErrorRetur,
-    fiel,
-    fileE,
   };
 };
 

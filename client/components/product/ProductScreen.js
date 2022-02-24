@@ -36,8 +36,6 @@ const ProductScrenn = (props) => {
   // breakpoints
   const { displayOff3, points18 } = Breakpoints();
 
-
-
   // edit
   const handleEdit = () => {
     router.push({
@@ -58,7 +56,7 @@ const ProductScrenn = (props) => {
     <>
       <Tr>
         <Td>
-          <AspectRatio ratio={1} w={50} h={50}>
+          <AspectRatio ratio={1} w={59} h={59}>
             <Image
               src={`/img/${props.image}.jpg`}
               alt="Picture of the author"
@@ -77,7 +75,7 @@ const ProductScrenn = (props) => {
           <Text>{props.category}</Text>
         </Td>
         <Td textAlign={"center"}>
-          <Menu matchWidth>
+          <Menu>
             <MenuButton variant="outline">
               <PlusSquareIcon
                 w={points18}
@@ -86,9 +84,8 @@ const ProductScrenn = (props) => {
                 left={"40%"}
               />
             </MenuButton>
-            <MenuList>
+            <MenuList minWidth={0}>
               <MenuItem>
-                {" "}
                 {isOpen ? (
                   <HStack
                     spacing={3}
@@ -111,6 +108,7 @@ const ProductScrenn = (props) => {
                   </HStack>
                 )}
               </MenuItem>
+
               <MenuItem>
                 <HStack
                   spacing={3}
@@ -122,8 +120,8 @@ const ProductScrenn = (props) => {
                   <Text>Detalles</Text>
                 </HStack>
               </MenuItem>
+
               <MenuItem>
-                {" "}
                 <HStack
                   spacing={3}
                   cursor={"pointer"}
@@ -135,8 +133,8 @@ const ProductScrenn = (props) => {
                   <Text>Editar</Text>
                 </HStack>
               </MenuItem>
+
               <MenuItem>
-                {" "}
                 <HStack
                   spacing={3}
                   cursor={"pointer"}

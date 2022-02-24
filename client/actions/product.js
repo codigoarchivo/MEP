@@ -87,3 +87,8 @@ const dataDeleteUser = (id) => ({
   type: types.productDelete,
   payload: id,
 });
+
+export const closeActive = () => ({
+  type: types.closeActive,
+  payload: null,
+});

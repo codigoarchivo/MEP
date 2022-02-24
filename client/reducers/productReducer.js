@@ -26,6 +26,11 @@ export const productReducer = (states = initialStates, action) => {
         ...states,
         activeSelect: action.payload,
       };
+    case types.closeActive:
+      return {
+        ...states,
+        activeSelect: action.payload,
+      };
     case types.productEdit:
       return {
         ...states,
@@ -33,14 +38,12 @@ export const productReducer = (states = initialStates, action) => {
           e.id === action.payload.id ? (e = action.payload) : e
         ),
         activeSelect: null,
-        activeimg: null,
       };
     case types.productDelete:
       return {
         ...states,
         list: states.list.filter((e) => e.id !== action.payload),
         activeSelect: null,
-        activeimg: null,
       };
 
     default:

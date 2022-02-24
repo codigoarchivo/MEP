@@ -1,6 +1,4 @@
 export const types = {
-  close: "[close] Everything",
-
   serchList: "[serch] List",
 
   product: "[product] List",
@@ -10,6 +8,7 @@ export const types = {
   productDelete: "[product] Delete",
 
   active: "[data] Active",
+  closeActive: "[data] Close",
 
   category: "[category] List",
 };
