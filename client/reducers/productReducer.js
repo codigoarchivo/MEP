@@ -16,12 +16,16 @@ export const productReducer = (states = initialStates, action) => {
         ...states,
         list: [action.payload, ...states.list],
       };
-    case types.productImgActive:
+    case types.activeOrInactive:
       return {
         ...states,
-        activeSelect: { ...states.activeSelect, image: action.payload },
+        list: states.list.map((e) =>
+          e.id === action.payload.id
+            ? { ...e, estado: action.payload.estado }
+            : e
+        ),
       };
-    case types.active:
+    case types.productImgActive:
       return {
         ...states,
         activeSelect: action.payload,

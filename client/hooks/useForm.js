@@ -8,7 +8,18 @@ import { startUploading } from "../actions/product";
 
 import Validator from "../helpers/Validator";
 
-const useForm = (initialStates = {}, dataId) => {
+const initialStates = {
+  nombre: "",
+  precio: "",
+  image: "",
+  uid: "",
+  descripcion: "",
+  category: "",
+  cantidad: "",
+  detalles: "",
+};
+
+const useForm = (dataId) => {
   // dispatch
   const dispatch = useDispatch();
   // selector
@@ -16,22 +27,26 @@ const useForm = (initialStates = {}, dataId) => {
   // values
   const [values, setValues] = useState(initialStates);
 
+  const reset = () => {
+    setValues(initialStates);
+  };
+
   useEffect(() => {
     if (dataId.data === null) {
-      setValues({ ...values, initialStates, word: dataId.word });
+      setValues({
+        ...values,
+        word: dataId.word,
+        image: activeSelect ? activeSelect : "",
+      });
     } else {
       setValues({
         ...values,
         ...dataId.data,
         word: dataId.word,
-        image: activeSelect?.image ? activeSelect?.image : dataId.data.image,
+        image: activeSelect ? activeSelect : dataId.data?.image,
       });
     }
-  }, [setValues]);
-
-  const reset = () => {
-    setValues(initialStates);
-  };
+  }, [activeSelect]);
 
   const handleInputChange = ({ target }) => {
     setValues({ ...values, [target.name]: target.value });

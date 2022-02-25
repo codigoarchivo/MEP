@@ -31,6 +31,9 @@ const activeData = (data) => ({
 });
 
 export const addDataUser = (data) => {
+  delete data.id;
+  delete data.word;
+
   // TODO api Add data
   return async (dispatch) => {
     dispatch(dataAddUser(data));
@@ -65,6 +68,7 @@ const fileImgCont = (fileUrl) => ({
 });
 
 export const editDataUser = (data) => {
+  delete data.word;
   // TODO api update data
   return async (dispatch) => {
     dispatch(dataEditUser(data));
@@ -86,6 +90,18 @@ export const deleteDataUser = (id) => {
 const dataDeleteUser = (id) => ({
   type: types.productDelete,
   payload: id,
+});
+
+export const activeOrInactive = (data) => {
+  // TODO api activeOrInactive
+  return async (dispatch) => {
+    dispatch(InactiveOrActive(data));
+  };
+};
+
+const InactiveOrActive = (data) => ({
+  type: types.activeOrInactive,
+  payload: data,
 });
 
 export const closeActive = () => ({

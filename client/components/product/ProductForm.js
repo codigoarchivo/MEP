@@ -5,8 +5,6 @@ import { DownloadIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
-  FormControl,
-  FormErrorMessage,
   FormLabel,
   Grid,
   GridItem,
@@ -24,6 +22,7 @@ import {
 import ModeColor from "../../helpers/ModeColor";
 
 const DialogProduct = ({
+  word,
   HStack,
   file,
   points3,
@@ -59,7 +58,6 @@ const DialogProduct = ({
       >
         <GridItem colSpan={points1}>
           <FormLabel htmlFor="image">Image</FormLabel>
-
           <InputGroup>
             <Button
               rightIcon={<DownloadIcon w={6} h={6} />}
@@ -167,7 +165,7 @@ const DialogProduct = ({
             value={detalles}
             onChange={handleInputChange}
             placeholder="Detalles"
-            size="sm"
+            size="xs"
           />
         </GridItem>
 

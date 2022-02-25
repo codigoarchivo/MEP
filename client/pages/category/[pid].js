@@ -1,6 +1,6 @@
 import React from "react";
 
-import CategoryDialogModal from "../../components/category/CategoryDialogModal";
+import CategoryDialogModal from "../../components/category/CategoryData";
 
 import { store } from "../../data/store";
 

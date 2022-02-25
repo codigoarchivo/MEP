@@ -25,6 +25,8 @@ const Breakpoints = () => {
   const points18 = { base: 4, sm: 6 };
   const points19 = { base: 1, sm: 3 };
   const points20 = { base: 12, md: 16 };
+  const points21 = { base: 0, sm: 10 };
+  const points22 = { base: 10, sm: 0 };
 
   const auto1 = { base: "auto", md: "90vh" };
 
@@ -72,6 +74,8 @@ const Breakpoints = () => {
     points18,
     points19,
     points20,
+    points21,
+    points22,
     auto1,
     repeat1,
     repeat2,

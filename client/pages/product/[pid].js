@@ -4,40 +4,20 @@ import { useDispatch } from "react-redux";
 
 import { Container, VStack } from "@chakra-ui/react";
 
-import ProductDialogModal from "../../components/product/ProductDialogModal";
+import ProductData from "../../components/product/ProductData";
 
 import { store } from "../../data/store";
 
-import { dataActive } from "../../actions/product";
-
-const initialStates = {
-  id: "",
-  nombre: "",
-  precio: "",
-  image: "",
-  uid: "",
-  descripcion: "",
-  category: "",
-  cantidad: "",
-  detalles: "",
-};
+import Breakpoints from "../../helpers/Breakpoints";
 
 const configDashboard = ({ dataId }) => {
-  // dispatch
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (dataId.data === null) {
-      dispatch(dataActive(initialStates));
-    } else {
-      dispatch(dataActive(dataId.data));
-    }
-  }, [dispatch]);
+  // breakpoints
+  const { points21, points22 } = Breakpoints();
 
   return (
     <Container maxW={"container.sm"}>
-      <VStack p={{ base: 0, sm: 10 }} mt={{ base: 10, sm: 0 }}>
-        <ProductDialogModal dataId={dataId} />
+      <VStack p={points21} mt={points22} boxShadow="2xl">
+        <ProductData dataId={dataId} />
       </VStack>
     </Container>
   );

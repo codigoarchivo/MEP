@@ -18,7 +18,9 @@ import useForm from "../../hooks/useForm";
 
 import { dataCategory } from "../../data/store";
 
-import DialogProduct from "./DialogProduct";
+import ProductForm from "./ProductForm";
+
+import ProductDetails from "./ProductDetails";
 
 import {
   addDataUser,
@@ -27,19 +29,7 @@ import {
   editDataUser,
 } from "../../actions/product";
 
-const initialStates = {
-  id: "",
-  nombre: "",
-  precio: "",
-  image: "",
-  uid: "",
-  descripcion: "",
-  category: "",
-  cantidad: "",
-  detalles: "",
-};
-
-const ProductDialogModal = ({ dataId }) => {
+const ProductData = ({ dataId }) => {
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -55,10 +45,7 @@ const ProductDialogModal = ({ dataId }) => {
     handleInputChange,
     handleInputChange2,
     handleInputChange3,
-    reset,
-  } = useForm(initialStates, dataId);
-
-  console.log(values);
+  } = useForm(dataId);
 
   // validar
   const { fiel, ErrorRetur } = Validator(values);
@@ -72,9 +59,9 @@ const ProductDialogModal = ({ dataId }) => {
     if (ErrorRetur) {
       return Swal.fire("Error", fiel, "error");
     } else {
-      dispatch(addDataUser(values));
-      dispatch(editDataUser(values));
-      dispatch(deleteDataUser(values.id));
+      values.word === "Add" && dispatch(addDataUser(values));
+      values.word === "Edit" && dispatch(editDataUser(values));
+      values.word === "Delete" && dispatch(deleteDataUser(values.id));
     }
 
     onClose();
@@ -83,7 +70,6 @@ const ProductDialogModal = ({ dataId }) => {
   const onClose = () => {
     router.push("/product");
     dispatch(closeActive());
-    reset();
   };
 
   return (
@@ -94,32 +80,43 @@ const ProductDialogModal = ({ dataId }) => {
           {values.word}
         </Heading>
       </HStack>
-      <DialogProduct
-        nombre={nombre}
-        precio={precio}
-        descripcion={descripcion}
-        category={category}
-        cantidad={cantidad}
-        detalles={detalles}
-        HStack={HStack}
-        file={file}
-        repeat1={repeat1}
-        points1={points1}
-        points3={points3}
-        onClose={onClose}
-        dataCategory={dataCategory}
-        handleInputChange={handleInputChange}
-        handleInputChange2={handleInputChange2}
-        handleInputChange3={handleInputChange3}
-        handleSubmit={handleSubmit}
-      />
+      {values.word === "Details" || values.word === "Delete" ? (
+        <ProductDetails
+          handleSubmit={handleSubmit}
+          HStack={HStack}
+          detalles={detalles}
+          word={values.word}
+          onClose={onClose}
+        />
+      ) : (
+        <ProductForm
+          word={values.word}
+          nombre={nombre}
+          precio={precio}
+          descripcion={descripcion}
+          category={category}
+          cantidad={cantidad}
+          detalles={detalles}
+          HStack={HStack}
+          file={file}
+          repeat1={repeat1}
+          points1={points1}
+          points3={points3}
+          onClose={onClose}
+          dataCategory={dataCategory}
+          handleInputChange={handleInputChange}
+          handleInputChange2={handleInputChange2}
+          handleInputChange3={handleInputChange3}
+          handleSubmit={handleSubmit}
+        />
+      )}
     </>
   );
 };
 
-ProductDialogModal.proptypes = {
+ProductData.proptypes = {
   word: Proptypes.string.isRequired,
   modality: Proptypes.func.isRequired,
 };
 
-export default ProductDialogModal;
+export default ProductData;

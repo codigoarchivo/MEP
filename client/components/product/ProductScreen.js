@@ -2,6 +2,8 @@ import React from "react";
 
 import Image from "next/image";
 
+import { useDispatch } from "react-redux";
+
 import { useRouter } from "next/router";
 
 import {
@@ -28,11 +30,15 @@ import {
   PlusSquareIcon,
 } from "@chakra-ui/icons";
 
+import { activeOrInactive } from "../../actions/product";
+
 const ProductScrenn = (props) => {
+  // dispatch
+  const dispatch = useDispatch();
   // router
   const router = useRouter();
   // disclosure
-  const { isOpen, onToggle } = useDisclosure();
+  const { onToggle } = useDisclosure();
   // breakpoints
   const { displayOff3, points18 } = Breakpoints();
 
@@ -50,6 +56,19 @@ const ProductScrenn = (props) => {
       pathname: "/product/[pid]",
       query: { pid: props.id, word: "Delete" },
     });
+  };
+
+  // detalles
+  const handleDetails = () => {
+    router.push({
+      pathname: "/product/[pid]",
+      query: { pid: props.id, word: "Details" },
+    });
+  };
+  // Active or Inactive
+  const handleActiveOrInactive = (data) => {
+    dispatch(activeOrInactive(data));
+    onToggle(data.estado === 1 ? false : true);
   };
 
   return (
@@ -86,12 +105,18 @@ const ProductScrenn = (props) => {
             </MenuButton>
             <MenuList minWidth={0}>
               <MenuItem>
-                {isOpen ? (
+                {props.estado === 1 ? (
                   <HStack
                     spacing={3}
                     cursor={"pointer"}
                     fontWeight={"normal"}
                     width="full"
+                    onClick={() =>
+                      handleActiveOrInactive({
+                        estado: 0,
+                        id: props.id,
+                      })
+                    }
                   >
                     <CheckCircleIcon w={3} h={3} />
                     <Text>Activo</Text>
@@ -102,6 +127,12 @@ const ProductScrenn = (props) => {
                     cursor={"pointer"}
                     fontWeight={"normal"}
                     width="full"
+                    onClick={() =>
+                      handleActiveOrInactive({
+                        estado: 1,
+                        id: props.id,
+                      })
+                    }
                   >
                     <NotAllowedIcon w={3} h={3} />
                     <Text>inActivo</Text>
@@ -115,6 +146,7 @@ const ProductScrenn = (props) => {
                   cursor={"pointer"}
                   fontWeight={"normal"}
                   width="full"
+                  onClick={handleDetails}
                 >
                   <ExternalLinkIcon w={3} h={3} />
                   <Text>Detalles</Text>

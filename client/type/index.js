@@ -6,6 +6,7 @@ export const types = {
   productImgActive: "[product] Active",
   productEdit: "[product] Edit",
   productDelete: "[product] Delete",
+  activeOrInactive: "[product] ActiveOrInactive",
 
   active: "[data] Active",
   closeActive: "[data] Close",
