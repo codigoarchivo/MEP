@@ -43,9 +43,12 @@ const serchList = ({ data }) => {
 };
 
 export async function getStaticProps() {
+  // TODO hacer esta busqueda en la api
+  const data = store.filter(({ estado }) => parseFloat(estado) === 1);
+
   return {
     props: {
-      data: store,
+      data: data,
     },
   };
 }

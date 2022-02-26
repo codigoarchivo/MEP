@@ -88,7 +88,7 @@ const DashboardList = ({ uid }) => {
 
 export async function getStaticProps() {
   // TODO UID perfil
-  const uid = "4945959659595929629".toLowerCase();
+  const uid = "5511952266559595".toLowerCase();
   return {
     props: {
       uid,

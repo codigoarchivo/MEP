@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useRouter } from "next/router";
+
 import Image from "next/image";
 
 import {
@@ -15,17 +17,27 @@ import {
   Collapse,
 } from "@chakra-ui/react";
 
-import NavLink from "../../helpers/Navlink";
-
 const SerchScreen = (props) => {
+  // router
+  const router = useRouter();
   // disclosure
   const { isOpen, onToggle } = useDisclosure();
+
+  // select
+  const handleSelect = () => {
+    router.push({
+      pathname: "/search/details",
+      query: { pid: props.id },
+    });
+  };
 
   return (
     <GridItem
       height={"410px"}
       onMouseEnter={() => onToggle()}
       onMouseLeave={() => onToggle()}
+      onClick={handleSelect}
+      cursor={"pointer"}
     >
       <Box width="full" position={"relative"}>
         <VStack
@@ -58,26 +70,7 @@ const SerchScreen = (props) => {
             <StatLabel>{props.nombre}</StatLabel>
             <StatNumber>${props.precio}</StatNumber>
             <Collapse in={isOpen} animateOpacity>
-              <StatHelpText mt={2}>
-                <VStack spacing={3}>
-                  <NavLink
-                    href={`/search/cart?v=${props.id}`}
-                    w={"full"}
-                    size={"sm"}
-                    variant={"primary"}
-                    name={"Agregar Carrito"}
-                  />
-
-                  <NavLink
-                    href={`/search/details/?v=${props.id}`}
-                    border={"solid 1px #00020f"}
-                    w={"full"}
-                    size={"sm"}
-                    variant={"secondary"}
-                    name={"Mas Información"}
-                  />
-                </VStack>
-              </StatHelpText>
+              <StatHelpText mt={2}>{props.descripcion}</StatHelpText>
             </Collapse>
           </Stat>
         </VStack>

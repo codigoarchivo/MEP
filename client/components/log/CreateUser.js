@@ -1,5 +1,7 @@
 import React from "react";
 
+import Swal from "sweetalert2";
+
 import { QuestionIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 import {
@@ -45,25 +47,39 @@ const CreateUser = () => {
     coPasswordE,
     coRePasswordE,
     field,
+    ErrorLorR,
+    fiel,
   } = Validator(values);
   // mode Color
   const { textError, bgTextError } = ModeColor();
   // Breakpoints
-  const { points1, points2, repeat1, points3 } = Breakpoints();
+  const { points1, points2, repeat1, points3, porcent1 } = Breakpoints();
   // valores
   const { name, lastName, email, password, rePassword } = values;
+
+  // handleSubmit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (ErrorLorR) {
+      return Swal.fire("Error", fiel, "error");
+    } else {
+      console.log("listo");
+    }
+  };
   return (
     <>
-      <VStack py={points2} justifyContent="center">
+      <VStack py={points2} justifyContent="center" w={porcent1} boxShadow="2xl">
         <Grid
           as={"form"}
+          onSubmit={handleSubmit}
           templateRows={`repeat(5, 1fr)`}
           templateColumns={repeat1}
           alignItems={"center"}
           columnGap={points3}
           rowGap={2}
-          maxW={"full"}
           p={5}
+          w={"full"}
         >
           <GridItem colSpan={2}>
             <Heading as="h1" size={"md"} textTransform={"uppercase"}>

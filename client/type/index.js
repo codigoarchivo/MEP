@@ -1,4 +1,7 @@
 export const types = {
+  login: "[Auth]login",
+  logout: "[Auth]logout",
+
   serchList: "[serch] List",
 
   product: "[product] List",

@@ -1,5 +1,9 @@
 import React from "react";
 
+import { useDispatch } from "react-redux";
+
+import Swal from "sweetalert2";
+
 import { QuestionIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 import {
@@ -23,6 +27,9 @@ import useForm from "../../hooks/useForm";
 import Validator from "../../helpers/Validator";
 import ModeColor from "../../helpers/ModeColor";
 import Breakpoints from "../../helpers/Breakpoints";
+import { GoogleIcon } from "../../helpers/IconNew";
+
+import { startGoogleLogin } from "../../actions/auth";
 
 const initialStates = {
   email: "",
@@ -30,34 +37,51 @@ const initialStates = {
 };
 
 const LoginUser = () => {
+  // dispatch
+  const dispatch = useDispatch();
   // vista de la contraseña
   const { show, handleClick } = useFormShow();
   // guardar states
   const { values, handleInputChange } = useForm(initialStates);
   // validar
-  const { emailE, passwordL, field } = Validator(values);
+  const { emailE, passwordL, field, fiel, ErrorLorR } = Validator(values);
   // mode Color
   const { textError, bgTextError } = ModeColor();
   // Breakpoints
-  const { points2, repeat1, points3 } = Breakpoints();
+  const { points2, repeat1, points3, porcent1 } = Breakpoints();
   // valores
   const { email, password } = values;
 
+  // handleSubmit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (ErrorLorR) {
+      return Swal.fire("Error", fiel, "error");
+    } else {
+      console.log("listo");
+    }
+  };
+
+  const handleGooglelogin = () => {
+    dispatch(startGoogleLogin());
+  };
+
   return (
     <>
-      <VStack py={points2} justifyContent="center">
+      <VStack py={points2} justifyContent="center" w={porcent1} boxShadow="2xl">
         <Grid
+          onSubmit={handleSubmit}
           as={"form"}
-          templateRows={`repeat(5, 1fr)`}
+          templateRows={`repeat(4, 1fr)`}
           templateColumns={repeat1}
           alignItems={"center"}
           columnGap={points3}
           rowGap={2}
-          maxW={"full"}
           p={5}
+          w={"full"}
         >
           <GridItem colSpan={2}>
-            <Heading as="h1" size={"sm"} textTransform={"uppercase"}>
+            <Heading as="h1" size={"md"} textTransform={"uppercase"}>
               Login
             </Heading>
           </GridItem>
@@ -116,7 +140,7 @@ const LoginUser = () => {
                 />
                 <InputRightElement width="4.5rem">
                   <Button
-                    style={{ boxShadow: "none", background: "none" }}
+                    variant={"secondary"}
                     h="1.75rem"
                     onClick={handleClick}
                   >
@@ -125,6 +149,19 @@ const LoginUser = () => {
                 </InputRightElement>
               </InputGroup>
             </FormControl>
+          </GridItem>
+
+          <GridItem colSpan={2}>
+            <Button
+              mt={10}
+              w={"100%"}
+              variant="outline"
+              textTransform={"uppercase"}
+              rightIcon={<GoogleIcon />}
+              onClick={handleGooglelogin}
+            >
+              Hacer registro mediante google
+            </Button>
           </GridItem>
 
           <GridItem colSpan={2}>

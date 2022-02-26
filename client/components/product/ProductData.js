@@ -29,6 +29,17 @@ import {
   editDataUser,
 } from "../../actions/product";
 
+const initialStates = {
+  nombre: "",
+  precio: "",
+  image: "",
+  uid: "",
+  descripcion: "",
+  category: "",
+  cantidad: "",
+  detalles: "",
+};
+
 const ProductData = ({ dataId }) => {
   // dispatch
   const dispatch = useDispatch();
@@ -45,7 +56,7 @@ const ProductData = ({ dataId }) => {
     handleInputChange,
     handleInputChange2,
     handleInputChange3,
-  } = useForm(dataId);
+  } = useForm(initialStates, dataId);
 
   // validar
   const { fiel, ErrorRetur } = Validator(values);

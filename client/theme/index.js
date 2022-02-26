@@ -60,7 +60,8 @@ const buttonStyles = {
       backgroundColor: mode("brand.800", "whiteAlpha.50")(props),
       color: mode("brand.900", "brand.600")(props),
       _hover: {
-        backgroundColor: mode("brand.700", "whiteAlpha.100")(props),
+        backgroundColor: mode("brand.700", "brand.700")(props),
+        color: "brand.900",
       },
       _active: {
         backgroundColor: mode("brand.900", "brand.800")(props),
@@ -82,7 +83,8 @@ const buttonStyles = {
       backgroundColor: "transparent",
       color: mode("brand.800", "brand.600")(props),
       _hover: {
-        color: "brand.700",
+        backgroundColor: "brand.800",
+        color: "brand.900",
       },
       _focus: {
         ring: 2,

@@ -14,6 +14,21 @@ const Validator = (values) => {
   const minRePasswordV = rePassword?.length < 6;
   const samePasswordV = password === rePassword;
 
+  let ErrorLorR;
+  if (
+    nameV ||
+    lastNameV ||
+    emailV ||
+    emailVa ||
+    passwordV ||
+    rePasswordV ||
+    minPasswordV ||
+    minRePasswordV ||
+    samePasswordV
+  ) {
+    ErrorLorR = true;
+  }
+
   const nameE = nameV && "Nombre is required.";
 
   const lastNameE = lastNameV && "Apellido es requerido.";
@@ -95,6 +110,7 @@ const Validator = (values) => {
     mCantidad,
     mCategory,
     ErrorRetur,
+    ErrorLorR,
   };
 };
 

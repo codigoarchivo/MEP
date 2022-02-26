@@ -22,7 +22,6 @@ import {
 import ModeColor from "../../helpers/ModeColor";
 
 const DialogProduct = ({
-  word,
   HStack,
   file,
   points3,

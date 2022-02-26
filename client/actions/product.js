@@ -6,9 +6,11 @@ import { types } from "../type";
 export const listDataUser = (id) => {
   // TODO api list uid
   return async (dispatch) => {
-    const data = store.filter(({ uid }) => {
-      return uid.toLowerCase().includes(id);
-    });
+    const data = store.filter(
+      ({ uid, estado }) => (
+        uid.toLowerCase().includes(id), parseFloat(estado) === 1
+      )
+    );
 
     await dispatch(dataListUser(data));
   };

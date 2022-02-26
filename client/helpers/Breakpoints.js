@@ -31,6 +31,7 @@ const Breakpoints = () => {
   const auto1 = { base: "auto", md: "90vh" };
 
   const repeat1 = { base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" };
+
   const repeat2 = {
     base: "repeat(1, 1fr)",
     md: "repeat(4, 1fr)",
@@ -47,6 +48,8 @@ const Breakpoints = () => {
   const content2 = { base: "start", lg: "end" };
   const content3 = { base: "column", sm: "row" };
   const content4 = { base: "row", sm: "column" };
+
+  const porcent1 = { base: "full", sm: "70%", md: "50%" };
 
   return {
     displayOn1,
@@ -85,6 +88,7 @@ const Breakpoints = () => {
     content2,
     content3,
     content4,
+    porcent1,
   };
 };
 

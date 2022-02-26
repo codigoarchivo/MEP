@@ -34,3 +34,6 @@ yarn-error.log*
 
 # helper
 fileUpload.js
+
+# database
+firebase/config.js

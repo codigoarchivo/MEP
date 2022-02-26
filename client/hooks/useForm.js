@@ -19,7 +19,7 @@ const initialStates = {
   detalles: "",
 };
 
-const useForm = (dataId) => {
+const useForm = (initialStates, dataId) => {
   // dispatch
   const dispatch = useDispatch();
   // selector
@@ -32,18 +32,18 @@ const useForm = (dataId) => {
   };
 
   useEffect(() => {
-    if (dataId.data === null) {
+    if (dataId?.data === null) {
       setValues({
         ...values,
-        word: dataId.word,
+        word: dataId?.word,
         image: activeSelect ? activeSelect : "",
       });
     } else {
       setValues({
         ...values,
-        ...dataId.data,
-        word: dataId.word,
-        image: activeSelect ? activeSelect : dataId.data?.image,
+        ...dataId?.data,
+        word: dataId?.word,
+        image: activeSelect ? activeSelect : dataId?.data.image,
       });
     }
   }, [activeSelect]);
