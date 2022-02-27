@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Swal from "sweetalert2";
 
@@ -29,14 +29,16 @@ import ModeColor from "../../helpers/ModeColor";
 import Breakpoints from "../../helpers/Breakpoints";
 import { GoogleIcon } from "../../helpers/IconNew";
 
-import { startGoogleLogin } from "../../actions/auth";
+import { startGoogleLogin, startLoginEmailPassword } from "../../actions/auth";
 
 const initialStates = {
-  email: "",
-  password: "",
+  email: "jackson@gmail.com",
+  password: "123456",
 };
 
 const LoginUser = () => {
+  // selector
+  const { loading } = useSelector(({ ui }) => ui);
   // dispatch
   const dispatch = useDispatch();
   // vista de la contraseña
@@ -44,7 +46,7 @@ const LoginUser = () => {
   // guardar states
   const { values, handleInputChange } = useForm(initialStates);
   // validar
-  const { emailE, passwordL, field, fiel, ErrorLorR } = Validator(values);
+  const { emailE, passwordL, field, fiel, ErrorRorL } = Validator(values);
   // mode Color
   const { textError, bgTextError } = ModeColor();
   // Breakpoints
@@ -55,13 +57,13 @@ const LoginUser = () => {
   // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (ErrorLorR) {
+    if (ErrorRorL) {
       return Swal.fire("Error", fiel, "error");
     } else {
-      console.log("listo");
+      dispatch(startLoginEmailPassword(email, password));
     }
   };
-
+  // handleGooglelogin
   const handleGooglelogin = () => {
     dispatch(startGoogleLogin());
   };
@@ -166,6 +168,7 @@ const LoginUser = () => {
 
           <GridItem colSpan={2}>
             <Button
+              disabled={loading}
               mt={10}
               w={"100%"}
               type="submit"

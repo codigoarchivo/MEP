@@ -1,23 +1,21 @@
 const Validator = (values) => {
   const { imgsize } = values;
-  const { name, image, lastName, email, password, rePassword } = values;
+  const { name, image, email, password, rePassword } = values;
   const { nombre, precio, detalles, descripcion, cantidad, category } = values;
 
   // Register
   const nameV = name === "";
-  const lastNameV = lastName === "";
   const emailV = email === "";
   const emailVa = !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email);
   const passwordV = password === "";
   const rePasswordV = rePassword === "";
   const minPasswordV = password?.length < 6;
   const minRePasswordV = rePassword?.length < 6;
-  const samePasswordV = password === rePassword;
+  const samePasswordV = password !== rePassword;
 
   let ErrorLorR;
   if (
     nameV ||
-    lastNameV ||
     emailV ||
     emailVa ||
     passwordV ||
@@ -29,9 +27,12 @@ const Validator = (values) => {
     ErrorLorR = true;
   }
 
-  const nameE = nameV && "Nombre is required.";
+  let ErrorRorL;
+  if (emailV || passwordV) {
+    ErrorRorL = true;
+  }
 
-  const lastNameE = lastNameV && "Apellido es requerido.";
+  const nameE = nameV && "Nombre is required.";
 
   let emailE;
   if (emailV) {
@@ -96,7 +97,6 @@ const Validator = (values) => {
     fiel,
     mImage,
     nameE,
-    lastNameE,
     emailE,
     coPasswordE,
     coRePasswordE,
@@ -111,6 +111,7 @@ const Validator = (values) => {
     mCategory,
     ErrorRetur,
     ErrorLorR,
+    ErrorRorL,
   };
 };
 

@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useDispatch } from "react-redux";
+
 import Swal from "sweetalert2";
 
 import { QuestionIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -26,15 +28,18 @@ import Validator from "../../helpers/Validator";
 import ModeColor from "../../helpers/ModeColor";
 import Breakpoints from "../../helpers/Breakpoints";
 
+import { startRegisterWithNameEmailPassword } from "../../actions/auth";
+
 const initialStates = {
-  name: "",
-  lastName: "",
-  email: "",
-  password: "",
-  rePassword: "",
+  name: "jackson Quintero",
+  email: "jackson@gmail.com",
+  password: "123456",
+  rePassword: "123456",
 };
 
 const CreateUser = () => {
+  // dispatch
+  const dispatch = useDispatch();
   // vista de la contraseña
   const { show, handleClick, handleClick2 } = useFormShow();
   // guardar states
@@ -42,7 +47,6 @@ const CreateUser = () => {
   // validar
   const {
     nameE,
-    lastNameE,
     emailE,
     coPasswordE,
     coRePasswordE,
@@ -55,7 +59,7 @@ const CreateUser = () => {
   // Breakpoints
   const { points1, points2, repeat1, points3, porcent1 } = Breakpoints();
   // valores
-  const { name, lastName, email, password, rePassword } = values;
+  const { name, email, password, rePassword } = values;
 
   // handleSubmit
   const handleSubmit = (e) => {
@@ -64,7 +68,7 @@ const CreateUser = () => {
     if (ErrorLorR) {
       return Swal.fire("Error", fiel, "error");
     } else {
-      console.log("listo");
+      dispatch(startRegisterWithNameEmailPassword(email, password, name));
     }
   };
   return (
@@ -86,7 +90,7 @@ const CreateUser = () => {
               Crear cuenta
             </Heading>
           </GridItem>
-          <GridItem colSpan={points1}>
+          <GridItem colSpan={2}>
             <FormControl isInvalid>
               <FormLabel htmlFor="name">
                 Nombre{" "}
@@ -107,29 +111,6 @@ const CreateUser = () => {
                 value={name}
                 type={"text"}
                 placeholder="Agrega un nombre"
-              />
-            </FormControl>
-          </GridItem>
-          <GridItem colSpan={points1}>
-            <FormControl isInvalid>
-              <FormLabel htmlFor="lastName">
-                Apellido{" "}
-                <Tooltip
-                  color={textError}
-                  bg={bgTextError}
-                  label={lastNameE ? lastNameE : field}
-                  aria-label="A tooltip"
-                >
-                  <QuestionIcon />
-                </Tooltip>
-              </FormLabel>
-              <Input
-                name="lastName"
-                id="lastName"
-                onChange={handleInputChange}
-                value={lastName}
-                type={"text"}
-                placeholder="Agrega un Apellido"
               />
             </FormControl>
           </GridItem>
