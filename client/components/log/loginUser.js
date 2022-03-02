@@ -2,8 +2,6 @@ import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Swal from "sweetalert2";
-
 import { QuestionIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 import {
@@ -15,10 +13,13 @@ import {
   InputGroup,
   InputRightElement,
   Button,
-  VStack,
   GridItem,
   Grid,
   Tooltip,
+  Text,
+  Flex,
+  chakra,
+  useToast,
 } from "@chakra-ui/react";
 
 import useFormShow from "../../hooks/useFormShow";
@@ -31,12 +32,17 @@ import { GoogleIcon } from "../../helpers/IconNew";
 
 import { startGoogleLogin, startLoginEmailPassword } from "../../actions/auth";
 
+import NavLink from "../../helpers/Navlink";
+import DividerWithText from "../utils/DividerWithText";
+
 const initialStates = {
   email: "jackson@gmail.com",
   password: "123456",
 };
 
-const LoginUser = () => {
+const LoginUser = ({ handleReview }) => {
+  // toast
+  const toast = useToast();
   // selector
   const { loading } = useSelector(({ ui }) => ui);
   // dispatch
@@ -50,7 +56,7 @@ const LoginUser = () => {
   // mode Color
   const { textError, bgTextError } = ModeColor();
   // Breakpoints
-  const { points2, repeat1, points3, porcent1 } = Breakpoints();
+  const { repeat1, points3 } = Breakpoints();
   // valores
   const { email, password } = values;
 
@@ -58,7 +64,12 @@ const LoginUser = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (ErrorRorL) {
-      return Swal.fire("Error", fiel, "error");
+      return toast({
+        description: fiel,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
     } else {
       dispatch(startLoginEmailPassword(email, password));
     }
@@ -70,10 +81,8 @@ const LoginUser = () => {
 
   return (
     <>
-      <VStack py={points2} justifyContent="center" w={porcent1} boxShadow="2xl">
+      <chakra.form onSubmit={handleSubmit} boxShadow="2xl">
         <Grid
-          onSubmit={handleSubmit}
-          as={"form"}
           templateRows={`repeat(4, 1fr)`}
           templateColumns={repeat1}
           alignItems={"center"}
@@ -168,7 +177,7 @@ const LoginUser = () => {
 
           <GridItem colSpan={2}>
             <Button
-              disabled={loading}
+              isLoading={loading}
               mt={10}
               w={"100%"}
               type="submit"
@@ -178,8 +187,35 @@ const LoginUser = () => {
               Registrar
             </Button>
           </GridItem>
+          <GridItem colSpan={2}>
+            <Flex
+              py={2}
+              w={"full"}
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
+              <Text>¿No tienes una cuenta?</Text>
+              <NavLink
+                href={"/account/create"}
+                variant={"secondary"}
+                name={"Regístrate"}
+              />
+            </Flex>
+            <DividerWithText my={3}>OR</DividerWithText>
+            <Flex
+              py={2}
+              w={"full"}
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
+              <Text>¿Forgot password?</Text>
+              <Button variant={"secondary"} onClick={handleReview}>
+                Ingresa
+              </Button>
+            </Flex>
+          </GridItem>
         </Grid>
-      </VStack>
+      </chakra.form>
     </>
   );
 };

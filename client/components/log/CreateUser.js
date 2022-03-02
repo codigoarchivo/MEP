@@ -1,8 +1,6 @@
 import React from "react";
 
-import { useDispatch } from "react-redux";
-
-import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
 
 import { QuestionIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
@@ -15,10 +13,12 @@ import {
   InputGroup,
   InputRightElement,
   Button,
-  VStack,
   GridItem,
   Grid,
   Tooltip,
+  chakra,
+  useToast,
+  Center,
 } from "@chakra-ui/react";
 
 import useFormShow from "../../hooks/useFormShow";
@@ -29,6 +29,8 @@ import ModeColor from "../../helpers/ModeColor";
 import Breakpoints from "../../helpers/Breakpoints";
 
 import { startRegisterWithNameEmailPassword } from "../../actions/auth";
+import DividerWithText from "../utils/DividerWithText";
+import NavLink from "../../helpers/Navlink";
 
 const initialStates = {
   name: "jackson Quintero",
@@ -38,6 +40,10 @@ const initialStates = {
 };
 
 const CreateUser = () => {
+  // toast
+  const toast = useToast();
+  // selector
+  const { loading } = useSelector(({ ui }) => ui);
   // dispatch
   const dispatch = useDispatch();
   // vista de la contraseña
@@ -57,7 +63,7 @@ const CreateUser = () => {
   // mode Color
   const { textError, bgTextError } = ModeColor();
   // Breakpoints
-  const { points1, points2, repeat1, points3, porcent1 } = Breakpoints();
+  const { repeat1, points3 } = Breakpoints();
   // valores
   const { name, email, password, rePassword } = values;
 
@@ -66,17 +72,21 @@ const CreateUser = () => {
     e.preventDefault();
 
     if (ErrorLorR) {
-      return Swal.fire("Error", fiel, "error");
+      return toast({
+        description: fiel,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
     } else {
       dispatch(startRegisterWithNameEmailPassword(email, password, name));
     }
   };
+
   return (
     <>
-      <VStack py={points2} justifyContent="center" w={porcent1} boxShadow="2xl">
+      <chakra.form onSubmit={handleSubmit} boxShadow="2xl">
         <Grid
-          as={"form"}
-          onSubmit={handleSubmit}
           templateRows={`repeat(5, 1fr)`}
           templateColumns={repeat1}
           alignItems={"center"}
@@ -143,7 +153,7 @@ const CreateUser = () => {
               />
             </FormControl>
           </GridItem>
-          <GridItem colSpan={points1}>
+          <GridItem colSpan={2}>
             <FormControl isInvalid>
               <FormLabel htmlFor="password">
                 Contraseña{" "}
@@ -179,7 +189,7 @@ const CreateUser = () => {
               </InputGroup>
             </FormControl>
           </GridItem>
-          <GridItem colSpan={points1}>
+          <GridItem colSpan={2}>
             <FormControl isInvalid>
               <FormLabel htmlFor="rePassword">
                 Repetir Contraseña{" "}
@@ -217,8 +227,9 @@ const CreateUser = () => {
           </GridItem>
           <GridItem colSpan={2}>
             <Button
+              isLoading={loading}
               mt={10}
-              w={"100%"}
+              w={"full"}
               type="submit"
               variant={"primary"}
               textTransform={"uppercase"}
@@ -226,8 +237,14 @@ const CreateUser = () => {
               Registrar
             </Button>
           </GridItem>
+          <GridItem colSpan={2}>
+            <DividerWithText my={3}>OR</DividerWithText>
+            <Center>
+              <NavLink href={"/account"} variant={"secondary"} name={"Login"} />
+            </Center>
+          </GridItem>
         </Grid>
-      </VStack>
+      </chakra.form>
     </>
   );
 };

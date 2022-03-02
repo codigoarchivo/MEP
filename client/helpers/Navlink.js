@@ -4,10 +4,21 @@ import { Button } from "@chakra-ui/react";
 
 import Link from "next/link";
 
-const NavLink = ({ href, name, variant, size, border, w, px, fontWeight }) => {
+const NavLink = ({
+  href,
+  name,
+  variant,
+  size,
+  border,
+  w,
+  px,
+  fontWeight,
+  click,
+}) => {
   return (
     <Link href={href} passHref>
       <Button
+        onClick={click}
         cursor={"pointer"}
         as={"a"}
         size={size}

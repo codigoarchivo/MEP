@@ -2,9 +2,6 @@ import React from "react";
 
 import Head from "next/head";
 
-import Navbar from "./nav/Navbar";
-import Footer from "./foo/Footer";
-
 const Layout = ({ children }) => {
   return (
     <>
@@ -17,9 +14,7 @@ const Layout = ({ children }) => {
           rel="stylesheet"
         />
       </Head>
-      <Navbar />
-      <main>{children}</main>
-      <Footer />
+      {children}
     </>
   );
 };

@@ -49,7 +49,8 @@ const Breakpoints = () => {
   const content3 = { base: "column", sm: "row" };
   const content4 = { base: "row", sm: "column" };
 
-  const porcent1 = { base: "full", sm: "70%", md: "50%" };
+  const porcent1 = { base: "full", sm: "75%", md: "50%", lg: "40%" };
+  const porcent2 = { base: "40%", md: "15%", lg: "35%" };
 
   return {
     displayOn1,
@@ -89,6 +90,7 @@ const Breakpoints = () => {
     content3,
     content4,
     porcent1,
+    porcent2,
   };
 };
 

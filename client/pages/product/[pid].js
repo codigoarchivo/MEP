@@ -1,6 +1,4 @@
-import React, { useEffect } from "react";
-
-import { useDispatch } from "react-redux";
+import React from "react";
 
 import { Container, VStack } from "@chakra-ui/react";
 

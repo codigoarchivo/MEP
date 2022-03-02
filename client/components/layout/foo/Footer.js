@@ -1,7 +1,6 @@
 import React from "react";
 
 import {
-  Box,
   Button,
   Container,
   Divider,
@@ -42,143 +41,56 @@ const Footer = () => {
     content1,
     content2,
     content3,
+    porcent2,
   } = Breakpoints();
   // mode Color
   const { bg2 } = ModeColor();
 
   return (
-    <Box as={"footer"} w={"full"}>
-      <Container maxW={"container.lg"} px={5} py={points12}>
-        <Grid
-          templateColumns={repeat2}
-          columnGap={points3}
-          gridAutoRows={"minmax(50px, auto)"}
-          gap={4}
-          alignItems={"center"}
-        >
-          <GridItem colSpan={points8}>
-            <List display="flex" alignItems={"center"} p={5}>
-              <ListItem mr={2}>
-                <Button size="xs" px={0} variant={"secondary"}>
-                  <FacebookIcon boxSize={points11} />
-                </Button>
-              </ListItem>
-              <ListItem mx={2}>
-                <Button size="xs" px={0} variant={"secondary"}>
-                  <TelegramIcon boxSize={points11} />
-                </Button>
-              </ListItem>
-              <ListItem mx={2}>
-                <Button size="xs" px={0} variant={"secondary"}>
-                  <InstagramIcon boxSize={points11} />
-                </Button>
-              </ListItem>
-              <ListItem ml={2}>
-                <Button size="xs" px={0} variant={"secondary"}>
-                  <TwitterIcon boxSize={points11} />
-                </Button>
-              </ListItem>
-            </List>
-          </GridItem>
-          <GridItem colSpan={points7}>
-            <Stack
-              flexDirection={content3}
-              justifyContent="space-evenly"
-              alignItems={"center"}
-              spacing={0}
-            >
-              <List px={points14} py={5} w="full" spacing={1}>
-                <Heading size={"md"} textTransform={"uppercase"}>
-                  Home
-                </Heading>
-                <ListItem>
-                  <NavLink
-                    size="sm"
-                    px={0}
-                    variant={"secondary"}
-                    href={"/"}
-                    name={`Edgars Pendulum`}
-                  />
-                </ListItem>
-                <ListItem>
-                  <NavLink
-                    size="sm"
-                    px={0}
-                    variant={"secondary"}
-                    href={"/"}
-                    name={`Edgars Pendulum`}
-                  />
-                </ListItem>
-                <ListItem>
-                  <NavLink
-                    size="sm"
-                    px={0}
-                    variant={"secondary"}
-                    href={"/"}
-                    name={`Edgars Pendulum`}
-                  />
-                </ListItem>
-              </List>
-              <List px={points14} py={5} w="full" spacing={1}>
-                <Heading size={"md"} textTransform={"uppercase"}>
-                  Home
-                </Heading>
-                <ListItem>
-                  <NavLink
-                    size="sm"
-                    px={0}
-                    variant={"secondary"}
-                    href={"/"}
-                    name={`Edgars Pendulum`}
-                  />
-                </ListItem>
-                <ListItem>
-                  <NavLink
-                    size="sm"
-                    px={0}
-                    variant={"secondary"}
-                    href={"/"}
-                    name={`Edgars Pendulum`}
-                  />
-                </ListItem>
-                <ListItem>
-                  <NavLink
-                    size="sm"
-                    px={0}
-                    variant={"secondary"}
-                    href={"/"}
-                    name={`Edgars Pendulum`}
-                  />
-                </ListItem>
-              </List>
-            </Stack>
-          </GridItem>
-          <GridItem colSpan={points9}>
-            <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
-          </GridItem>
-          <GridItem colSpan={points10} columnGap={50}>
-            <HStack justifyContent={content1} spacing={3} w={"full"}>
-              <Heading size="sm" mx={2}>
-                Idioma
-              </Heading>{" "}
-              <Select
-                mx={2}
-                placeholder="English"
-                size="xs"
-                w={{ base: "40%", md: "15%", lg: "35%" }}
-              >
-                <option value="option1">Español</option>
-              </Select>
-            </HStack>
-          </GridItem>
-          <GridItem colSpan={points5}>
-            <List
-              display="flex"
-              justifyContent={content2}
-              flexDirection={content3}
-              w={"full"}
-            >
-              <ListItem mx={2}>
+    <Container maxW={"container.lg"} px={5} py={points12}>
+      <Grid
+        templateColumns={repeat2}
+        columnGap={points3}
+        gridAutoRows={"minmax(50px, auto)"}
+        gap={4}
+        alignItems={"center"}
+      >
+        <GridItem colSpan={points8}>
+          <List display="flex" alignItems={"center"} p={5}>
+            <ListItem mr={2}>
+              <Button size="xs" px={0} variant={"secondary"}>
+                <FacebookIcon boxSize={points11} />
+              </Button>
+            </ListItem>
+            <ListItem mx={2}>
+              <Button size="xs" px={0} variant={"secondary"}>
+                <TelegramIcon boxSize={points11} />
+              </Button>
+            </ListItem>
+            <ListItem mx={2}>
+              <Button size="xs" px={0} variant={"secondary"}>
+                <InstagramIcon boxSize={points11} />
+              </Button>
+            </ListItem>
+            <ListItem ml={2}>
+              <Button size="xs" px={0} variant={"secondary"}>
+                <TwitterIcon boxSize={points11} />
+              </Button>
+            </ListItem>
+          </List>
+        </GridItem>
+        <GridItem colSpan={points7}>
+          <Stack
+            flexDirection={content3}
+            justifyContent="space-evenly"
+            alignItems={"center"}
+            spacing={0}
+          >
+            <List px={points14} py={5} w="full" spacing={1}>
+              <Heading size={"md"} textTransform={"uppercase"}>
+                Home
+              </Heading>
+              <ListItem>
                 <NavLink
                   size="sm"
                   px={0}
@@ -187,7 +99,7 @@ const Footer = () => {
                   name={`Edgars Pendulum`}
                 />
               </ListItem>
-              <ListItem mx={2}>
+              <ListItem>
                 <NavLink
                   size="sm"
                   px={0}
@@ -196,16 +108,7 @@ const Footer = () => {
                   name={`Edgars Pendulum`}
                 />
               </ListItem>
-              <ListItem mx={2}>
-                <NavLink
-                  size="sm"
-                  px={0}
-                  variant={"secondary"}
-                  href={"/"}
-                  name={`Edgars Pendulum`}
-                />
-              </ListItem>
-              <ListItem mx={2}>
+              <ListItem>
                 <NavLink
                   size="sm"
                   px={0}
@@ -215,10 +118,105 @@ const Footer = () => {
                 />
               </ListItem>
             </List>
-          </GridItem>
-        </Grid>
-      </Container>
-    </Box>
+            <List px={points14} py={5} w="full" spacing={1}>
+              <Heading size={"md"} textTransform={"uppercase"}>
+                Home
+              </Heading>
+              <ListItem>
+                <NavLink
+                  size="sm"
+                  px={0}
+                  variant={"secondary"}
+                  href={"/"}
+                  name={`Edgars Pendulum`}
+                />
+              </ListItem>
+              <ListItem>
+                <NavLink
+                  size="sm"
+                  px={0}
+                  variant={"secondary"}
+                  href={"/"}
+                  name={`Edgars Pendulum`}
+                />
+              </ListItem>
+              <ListItem>
+                <NavLink
+                  size="sm"
+                  px={0}
+                  variant={"secondary"}
+                  href={"/"}
+                  name={`Edgars Pendulum`}
+                />
+              </ListItem>
+            </List>
+          </Stack>
+        </GridItem>
+        <GridItem colSpan={points9}>
+          <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
+        </GridItem>
+        <GridItem colSpan={points10} columnGap={50}>
+          <HStack justifyContent={content1} spacing={3} w={"full"}>
+            <Heading size="sm" mx={2}>
+              Idioma
+            </Heading>{" "}
+            <Select
+              mx={2}
+              placeholder="English"
+              size="xs"
+              w={porcent2}
+            >
+              <option value="option1">Español</option>
+            </Select>
+          </HStack>
+        </GridItem>
+        <GridItem colSpan={points5}>
+          <List
+            display="flex"
+            justifyContent={content2}
+            flexDirection={content3}
+            w={"full"}
+          >
+            <ListItem mx={2}>
+              <NavLink
+                size="sm"
+                px={0}
+                variant={"secondary"}
+                href={"/"}
+                name={`Edgars Pendulum`}
+              />
+            </ListItem>
+            <ListItem mx={2}>
+              <NavLink
+                size="sm"
+                px={0}
+                variant={"secondary"}
+                href={"/"}
+                name={`Edgars Pendulum`}
+              />
+            </ListItem>
+            <ListItem mx={2}>
+              <NavLink
+                size="sm"
+                px={0}
+                variant={"secondary"}
+                href={"/"}
+                name={`Edgars Pendulum`}
+              />
+            </ListItem>
+            <ListItem mx={2}>
+              <NavLink
+                size="sm"
+                px={0}
+                variant={"secondary"}
+                href={"/"}
+                name={`Edgars Pendulum`}
+              />
+            </ListItem>
+          </List>
+        </GridItem>
+      </Grid>
+    </Container>
   );
 };
 

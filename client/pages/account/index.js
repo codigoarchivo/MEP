@@ -4,11 +4,11 @@ import { useRouter } from "next/router";
 
 import { Container, Flex } from "@chakra-ui/react";
 
-import CreateUser from "../../components/log/CreateUser";
+import LoginUser from "../../components/log/loginUser";
 
 import useAuth from "../../hooks/useAuth";
 
-const create = () => {
+const login = () => {
   // useAuth
   const { isloggedIn } = useAuth();
   // router
@@ -18,13 +18,21 @@ const create = () => {
     router.push("/");
   }
 
+  // handleReview
+  const handleReview = () => {
+    router.push({
+      pathname: "/account/[pid]",
+      query: { pid: "reNew", word: "Email" },
+    });
+  };
+
   return (
-    <Container maxW={"container.sm"}>
+    <Container maxW="container.sm">
       <Flex alignItems={["top", "center"]} justifyContent="center">
-        <CreateUser />
+        <LoginUser handleReview={handleReview} />
       </Flex>
     </Container>
   );
 };
 
-export default create;
+export default login;
