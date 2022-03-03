@@ -80,34 +80,42 @@ export const startGoogleLogin = () => {
 };
 
 export const sendEmail = (email) => {
-  return async () => {
-    await sendPasswordResetEmail(auth, email, {
-      url: `https://localhost:3000`,
-    })
-      .then(function (e) {
-        console.log(e);
-        // Password reset email sent.
+  const actionCodeSettings = {
+    url: "http://localhost:3000/account/reset?mode=action&oobCode=code",
+    handleCodeInApp: true,
+  };
+  return async (dispatch) => {
+    await sendPasswordResetEmail(auth, email, actionCodeSettings)
+      .then(() => {
+        dispatch(emailSend(email));
       })
       .catch(({ message }) => {
-        console.log(message);
-        // Error occurred. Inspect error.code.
+        // error
+        Swal.fire("Error", message, "error");
+      });
+  };
+};
+const emailSend = (data) => ({
+  type: types.active,
+  payload: data,
+});
+
+export const resetPassword = (newPassword, actionCode) => {
+  return async (dispatch) => {
+    await confirmPasswordReset(auth, actionCode, newPassword)
+      .then(() => {
+        dispatch(passwordReset());
+      })
+      .catch(({ message }) => {
+        // error
+        Swal.fire("Error", message, "error");
       });
   };
 };
 
-export const resetPassword = (email, newPassword) => {
-  return async (dispatch) => {
-    await confirmPasswordReset(auth, email, newPassword)
-      .then((e) => {
-        console.log(e);
-        // Password reset email sent.
-      })
-      .catch(({ message }) => {
-        console.log(message);
-        // Error occurred. Inspect error.code.
-      });
-  };
-};
+const passwordReset = () => ({
+  type: types.closeActive,
+});
 
 export const logout = () => {
   return async (dispatch) => {

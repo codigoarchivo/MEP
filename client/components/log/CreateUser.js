@@ -13,12 +13,11 @@ import {
   InputGroup,
   InputRightElement,
   Button,
-  GridItem,
-  Grid,
   Tooltip,
   chakra,
   useToast,
   Center,
+  VStack,
 } from "@chakra-ui/react";
 
 import useFormShow from "../../hooks/useFormShow";
@@ -26,7 +25,6 @@ import useForm from "../../hooks/useForm";
 
 import Validator from "../../helpers/Validator";
 import ModeColor from "../../helpers/ModeColor";
-import Breakpoints from "../../helpers/Breakpoints";
 
 import { startRegisterWithNameEmailPassword } from "../../actions/auth";
 import DividerWithText from "../utils/DividerWithText";
@@ -62,8 +60,6 @@ const CreateUser = () => {
   } = Validator(values);
   // mode Color
   const { textError, bgTextError } = ModeColor();
-  // Breakpoints
-  const { repeat1, points3 } = Breakpoints();
   // valores
   const { name, email, password, rePassword } = values;
 
@@ -85,165 +81,138 @@ const CreateUser = () => {
 
   return (
     <>
-      <chakra.form onSubmit={handleSubmit} boxShadow="2xl">
-        <Grid
-          templateRows={`repeat(5, 1fr)`}
-          templateColumns={repeat1}
-          alignItems={"center"}
-          columnGap={points3}
-          rowGap={2}
-          p={5}
-          w={"full"}
-        >
-          <GridItem colSpan={2}>
-            <Heading as="h1" size={"md"} textTransform={"uppercase"}>
-              Crear cuenta
-            </Heading>
-          </GridItem>
-          <GridItem colSpan={2}>
-            <FormControl isInvalid>
-              <FormLabel htmlFor="name">
-                Nombre{" "}
-                <Tooltip
-                  color={textError}
-                  bg={bgTextError}
-                  label={nameE ? nameE : field}
-                  aria-label="A tooltip"
-                >
-                  <QuestionIcon />
-                </Tooltip>
-              </FormLabel>
+      <chakra.form onSubmit={handleSubmit} boxShadow="2xl" p={5}>
+        <VStack spacing={5}>
+          <Heading w={"full"} as="h1" size={"md"} textTransform={"uppercase"}>
+            Crear cuenta
+          </Heading>
+          <FormControl isInvalid>
+            <FormLabel htmlFor="name">
+              Nombre{" "}
+              <Tooltip
+                color={textError}
+                bg={bgTextError}
+                label={nameE ? nameE : field}
+                aria-label="A tooltip"
+              >
+                <QuestionIcon />
+              </Tooltip>
+            </FormLabel>
 
+            <Input
+              name="name"
+              id="name"
+              onChange={handleInputChange}
+              value={name}
+              type={"text"}
+              placeholder="Agrega un nombre"
+            />
+          </FormControl>
+          <FormControl isInvalid>
+            {!emailE && (
+              <FormHelperText>
+                Enter the email you'd like to receive the newsletter on.
+              </FormHelperText>
+            )}
+            <FormLabel htmlFor="email">
+              Email{" "}
+              <Tooltip
+                color={textError}
+                bg={bgTextError}
+                label={emailE ? emailE : field}
+                aria-label="A tooltip"
+              >
+                <QuestionIcon />
+              </Tooltip>
+            </FormLabel>
+            <Input
+              name="email"
+              id="email"
+              onChange={handleInputChange}
+              value={email}
+              type={"email"}
+              placeholder="Agrega un correo"
+              autoComplete="new-email"
+            />
+          </FormControl>
+          <FormControl isInvalid>
+            <FormLabel htmlFor="password">
+              Contraseña{" "}
+              <Tooltip
+                color={textError}
+                bg={bgTextError}
+                label={coPasswordE ? coPasswordE : field}
+                aria-label="A tooltip"
+              >
+                <QuestionIcon />
+              </Tooltip>
+            </FormLabel>
+            <InputGroup size="md">
               <Input
-                name="name"
-                id="name"
+                name="password"
+                id="password"
                 onChange={handleInputChange}
-                value={name}
-                type={"text"}
-                placeholder="Agrega un nombre"
+                value={password}
+                pr="4.5rem"
+                type={show.password ? "text" : "password"}
+                placeholder="Agregar password"
+                autoComplete="new-password"
               />
-            </FormControl>
-          </GridItem>
-          <GridItem colSpan={2}>
-            <FormControl isInvalid>
-              {!emailE && (
-                <FormHelperText>
-                  Enter the email you'd like to receive the newsletter on.
-                </FormHelperText>
-              )}
-              <FormLabel htmlFor="email">
-                Email{" "}
-                <Tooltip
-                  color={textError}
-                  bg={bgTextError}
-                  label={emailE ? emailE : field}
-                  aria-label="A tooltip"
-                >
-                  <QuestionIcon />
-                </Tooltip>
-              </FormLabel>
+              <InputRightElement width="4.5rem">
+                <Button variant={"secondary"} h="1.75rem" onClick={handleClick}>
+                  {show.password ? <ViewIcon /> : <ViewOffIcon />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          </FormControl>
+          <FormControl isInvalid>
+            <FormLabel htmlFor="rePassword">
+              Repetir Contraseña{" "}
+              <Tooltip
+                color={textError}
+                bg={bgTextError}
+                label={coRePasswordE ? coRePasswordE : field}
+                aria-label="A tooltip"
+              >
+                <QuestionIcon />
+              </Tooltip>
+            </FormLabel>
+            <InputGroup size="md">
               <Input
-                name="email"
-                id="email"
+                name="rePassword"
+                id="rePassword"
                 onChange={handleInputChange}
-                value={email}
-                type={"email"}
-                placeholder="Agrega un correo"
-                autoComplete="new-email"
+                value={rePassword}
+                pr="4.5rem"
+                type={show.rePassword ? "text" : "password"}
+                placeholder="Repetir password"
+                autoComplete="new-rePassword"
               />
-            </FormControl>
-          </GridItem>
-          <GridItem colSpan={2}>
-            <FormControl isInvalid>
-              <FormLabel htmlFor="password">
-                Contraseña{" "}
-                <Tooltip
-                  color={textError}
-                  bg={bgTextError}
-                  label={coPasswordE ? coPasswordE : field}
-                  aria-label="A tooltip"
+              <InputRightElement width="4.5rem">
+                <Button
+                  variant={"secondary"}
+                  h="1.75rem"
+                  onClick={handleClick2}
                 >
-                  <QuestionIcon />
-                </Tooltip>
-              </FormLabel>
-              <InputGroup size="md">
-                <Input
-                  name="password"
-                  id="password"
-                  onChange={handleInputChange}
-                  value={password}
-                  pr="4.5rem"
-                  type={show.password ? "text" : "password"}
-                  placeholder="Agregar password"
-                  autoComplete="new-password"
-                />
-                <InputRightElement width="4.5rem">
-                  <Button
-                    variant={"secondary"}
-                    h="1.75rem"
-                    onClick={handleClick}
-                  >
-                    {show.password ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-          </GridItem>
-          <GridItem colSpan={2}>
-            <FormControl isInvalid>
-              <FormLabel htmlFor="rePassword">
-                Repetir Contraseña{" "}
-                <Tooltip
-                  color={textError}
-                  bg={bgTextError}
-                  label={coRePasswordE ? coRePasswordE : field}
-                  aria-label="A tooltip"
-                >
-                  <QuestionIcon />
-                </Tooltip>
-              </FormLabel>
-              <InputGroup size="md">
-                <Input
-                  name="rePassword"
-                  id="rePassword"
-                  onChange={handleInputChange}
-                  value={rePassword}
-                  pr="4.5rem"
-                  type={show.rePassword ? "text" : "password"}
-                  placeholder="Repetir password"
-                  autoComplete="new-rePassword"
-                />
-                <InputRightElement width="4.5rem">
-                  <Button
-                    variant={"secondary"}
-                    h="1.75rem"
-                    onClick={handleClick2}
-                  >
-                    {show.rePassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-          </GridItem>
-          <GridItem colSpan={2}>
-            <Button
-              isLoading={loading}
-              mt={10}
-              w={"full"}
-              type="submit"
-              variant={"primary"}
-              textTransform={"uppercase"}
-            >
-              Registrar
-            </Button>
-          </GridItem>
-          <GridItem colSpan={2}>
-            <DividerWithText my={3}>OR</DividerWithText>
-            <Center>
-              <NavLink href={"/account"} variant={"secondary"} name={"Login"} />
-            </Center>
-          </GridItem>
-        </Grid>
+                  {show.rePassword ? <ViewIcon /> : <ViewOffIcon />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          </FormControl>
+          <Button
+            isLoading={loading}
+            w={"full"}
+            type="submit"
+            variant={"primary"}
+            textTransform={"uppercase"}
+          >
+            Registrar
+          </Button>
+          <DividerWithText>OR</DividerWithText>
+          <Center>
+            <NavLink href={"/account"} variant={"secondary"} name={"Login"} />
+          </Center>
+        </VStack>
       </chakra.form>
     </>
   );

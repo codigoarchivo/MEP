@@ -2,18 +2,18 @@ import React from "react";
 
 import { Container, Flex } from "@chakra-ui/react";
 
-import ReviewUser from "../../components/log/ReviewUser";
+import ResetPassword from "../../components/log/ResetPassword";
 
-const Review = () => {
+const reset = () => {
   return (
     <>
       <Container maxW={"container.sm"}>
         <Flex alignItems={["top", "center"]} justifyContent="center">
-          <ReviewUser />
+          <ResetPassword />
         </Flex>
       </Container>
     </>
   );
 };
 
-export default Review;
+export default reset;

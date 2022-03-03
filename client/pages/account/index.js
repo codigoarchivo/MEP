@@ -22,7 +22,7 @@ const login = () => {
   const handleReview = () => {
     router.push({
       pathname: "/account/[pid]",
-      query: { pid: "reNew", word: "Email" },
+      query: { pid: "review", word: "Email" },
     });
   };
 

@@ -4,7 +4,7 @@ import { Flex, Box, Divider, useColorModeValue, Text } from "@chakra-ui/react";
 const DividerWithText = (props) => {
   const { children, ...flexProps } = props;
   return (
-    <Flex align="center" color="gray.300" {...flexProps}>
+    <Flex w={"full"} align="center" color="gray.300" {...flexProps}>
       <Box flex="1">
         <Divider borderColor="currentcolor" />
       </Box>

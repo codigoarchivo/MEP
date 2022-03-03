@@ -91,7 +91,7 @@ const Validator = (values) => {
     ErrorRetur = true;
   }
 
-  const fiel = "Revisa si alguno campo esta vacio";
+  const fiel = "Revisa si algun campo esta vacio";
 
   return {
     fiel,
@@ -112,6 +112,7 @@ const Validator = (values) => {
     ErrorRetur,
     ErrorLorR,
     ErrorRorL,
+    passwordV,
   };
 };
 
