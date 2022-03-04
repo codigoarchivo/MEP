@@ -60,22 +60,23 @@ const SerchScreen = (props) => {
         >
           <AspectRatio ratio={1} w="full" h={224}>
             <Image
-              src={`/img/${props.image}.jpg`}
+              src={`/img/${props.im}.jpg`}
               alt="Picture of the author"
               layout="fill"
               objectFit="contain"
             />
           </AspectRatio>
           <Stat width={"full"} p={3}>
-            <StatLabel>{props.nombre}</StatLabel>
-            <StatNumber>${props.precio}</StatNumber>
+            <StatLabel>{props.no}</StatLabel>
+            <StatNumber>${props.pr}</StatNumber>
             <Collapse in={isOpen} animateOpacity>
-              <StatHelpText mt={2}>{props.descripcion}</StatHelpText>
+              <StatHelpText mt={2}>{props.ds}</StatHelpText>
             </Collapse>
           </Stat>
         </VStack>
       </Box>
     </GridItem>
+    
   );
 };
 

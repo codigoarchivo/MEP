@@ -1,6 +1,7 @@
 import React from "react";
 
 import CategoryDialogModal from "../../components/category/CategoryData";
+import Layout from "../../components/layout/layout";
 
 import { store } from "../../data/store";
 
@@ -10,12 +11,14 @@ const configDashboard = ({ dataId }) => {
   // modality
   const { modality, setModality } = useModality();
   return (
-    <CategoryDialogModal
-      word={dataId.word}
-      modality={() => modality(true)}
-      setModality={setModality}
-      data={dataId}
-    />
+    <Layout>
+      <CategoryDialogModal
+        word={dataId.word}
+        modality={() => modality(true)}
+        setModality={setModality}
+        data={dataId}
+      />
+    </Layout>
   );
 };
 

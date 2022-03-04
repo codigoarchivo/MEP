@@ -24,6 +24,9 @@ const useAuth = () => {
       }
       setChecking(false);
     });
+    return () => {
+      setChecking(true);
+    };
   }, [dispatch, setChecking, setIsloggedIn]);
 
   return {

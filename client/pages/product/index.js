@@ -21,6 +21,7 @@ import { listDataUser } from "../../actions/product";
 import Breakpoints from "../../helpers/Breakpoints";
 
 import { useRouter } from "next/router";
+import Layout from "../../components/layout/layout";
 
 const DashboardList = ({ uid }) => {
   // router
@@ -47,42 +48,44 @@ const DashboardList = ({ uid }) => {
   };
 
   return (
-    <Container maxW={"container.md"} my={10}>
-      <Box boxShadow="2xl" p={5}>
-        <Table fontSize={points20} size={{ base: "sm" }}>
-          <TableCaption>Tus publicaciones en nuestro sitio</TableCaption>
-          <Thead>
-            <Tr>
-              <Th pb={points19}>Tienda</Th>
-              <Th pb={points19}>Nombre</Th>
-              <Th pb={points19} display={displayOff3}>
-                Precio
-              </Th>
-              <Th pb={points19} display={displayOff3}>
-                Categoria
-              </Th>
-              <Th pb={points19} textAlign={"center"}>
-                <Button
-                  onClick={handleAdd}
-                  variant={"primary"}
-                  size="sm"
-                  rounded={"sm"}
-                  textTransform="uppercase"
-                  fontSize={points20}
-                >
-                  Agregar
-                </Button>
-              </Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {list.map((data) => (
-              <ProductScrenn key={data.id} {...data} />
-            ))}
-          </Tbody>
-        </Table>
-      </Box>
-    </Container>
+    <Layout>
+      <Container maxW={"container.md"} my={10}>
+        <Box boxShadow="2xl" p={5}>
+          <Table fontSize={points20} size={{ base: "sm" }}>
+            <TableCaption>Tus publicaciones en nuestro sitio</TableCaption>
+            <Thead>
+              <Tr>
+                <Th pb={points19}>Tienda</Th>
+                <Th pb={points19}>Nombre</Th>
+                <Th pb={points19} display={displayOff3}>
+                  Precio
+                </Th>
+                <Th pb={points19} display={displayOff3}>
+                  Categoria
+                </Th>
+                <Th pb={points19} textAlign={"center"}>
+                  <Button
+                    onClick={handleAdd}
+                    variant={"primary"}
+                    size="sm"
+                    rounded={"sm"}
+                    textTransform="uppercase"
+                    fontSize={points20}
+                  >
+                    Agregar
+                  </Button>
+                </Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {list.map((data) => (
+                <ProductScrenn key={data.id} {...data} />
+              ))}
+            </Tbody>
+          </Table>
+        </Box>
+      </Container>
+    </Layout>
   );
 };
 

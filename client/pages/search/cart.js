@@ -5,15 +5,18 @@ import { withRouter } from "next/router";
 import { Container, Flex } from "@chakra-ui/react";
 
 import SerchCart from "../../components/search/SerchCart";
+import Layout from "../../components/layout/layout";
 
 const Cart = (e) => {
   console.log(e);
   return (
-    <Container maxW="container.lg">
-      <Flex width={"full"}>
-        <CartScreen />
-      </Flex>
-    </Container>
+    <Layout>
+      <Container maxW="container.lg">
+        <Flex width={"full"}>
+          <CartScreen />
+        </Flex>
+      </Container>
+    </Layout>
   );
 };
 

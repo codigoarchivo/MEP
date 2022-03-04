@@ -7,6 +7,8 @@ const PopoverUserNavbar = ({
   NavLink,
   bg2,
   porcent2,
+  Button,
+  handleLogout,
 }) => {
   return (
     <>
@@ -36,10 +38,15 @@ const PopoverUserNavbar = ({
             <Heading size="sm" fontWeight={"normal"} px={3}>
               Idioma
             </Heading>{" "}
-            <Select placeholder="English" size="xs" w={porcent2}>
+            <Select placeholder="English" size="sm" w={porcent2}>
               <option value="option1">Español</option>
             </Select>
           </HStack>
+        </ListItem>
+        <ListItem>
+          <Button variant={"secondary"} fontWeight={"normal"} px={3} size="sm" onClick={handleLogout}>
+            Logout
+          </Button>
         </ListItem>
       </List>
     </>

@@ -1,6 +1,15 @@
 import React from "react";
 
+import { Provider } from "react-redux";
+
+import { store } from "../../store";
+
 import Head from "next/head";
+
+import { chakra } from "@chakra-ui/react";
+
+import Navbar from "./nav/Navbar";
+import Footer from "./foo/Footer";
 
 const Layout = ({ children }) => {
   return (
@@ -14,7 +23,17 @@ const Layout = ({ children }) => {
           rel="stylesheet"
         />
       </Head>
-      {children}
+      <Provider store={store}>
+        <chakra.header>
+          <Navbar />
+        </chakra.header>
+
+        {children}
+
+        <chakra.footer w={"full"}>
+          <Footer />
+        </chakra.footer>
+      </Provider>
     </>
   );
 };

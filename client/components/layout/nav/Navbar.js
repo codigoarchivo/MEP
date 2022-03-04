@@ -212,7 +212,7 @@ const Navbar = () => {
                     size="md"
                     variant={"secondary"}
                     href={"/"}
-                    name={"algo"}
+                    name={"Voy Comprar"}
                   />
                 ) : (
                   <NavLink
@@ -226,11 +226,10 @@ const Navbar = () => {
 
                 {isloggedIn ? (
                   <NavLink
-                    click={handleLogout}
                     size="md"
                     variant={"primary"}
                     href={"/"}
-                    name={"Cerrar Sección"}
+                    name={"Voy vender"}
                   />
                 ) : (
                   <NavLink
@@ -283,11 +282,13 @@ const Navbar = () => {
                     />
                     <PopoverBody>
                       <PopoverUserNavbar
+                        handleLogout={handleLogout}
                         HStack={HStack}
                         Heading={Heading}
                         NavLink={NavLink}
                         bg2={bg2}
                         porcent2={porcent2}
+                        Button={Button}
                       />
                     </PopoverBody>
                   </PopoverContent>

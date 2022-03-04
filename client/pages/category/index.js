@@ -25,6 +25,7 @@ import { dataCategory } from "../../data/store";
 import { listDataCategory } from "../../actions/category";
 
 import { SmallAddIcon } from "@chakra-ui/icons";
+import Layout from "../../components/layout/layout";
 
 const category = ({ category }) => {
   // router
@@ -48,34 +49,36 @@ const category = ({ category }) => {
     });
   };
   return (
-    <Container maxW={"container.sm"} my={10}>
-      <VStack>
-        <Table fontSize={{ base: ".7rem", sm: "1rem" }} size={{ base: "sm" }}>
-          <TableCaption>Tus Categorias en nuestro sitio</TableCaption>
-          <Thead>
-            <Tr>
-              <Th pb={points19} display={displayOff3}>
-                Categoria
-              </Th>
-              <Th pb={points19} textAlign={"center"} w={0}>
-                <Button
-                  onClick={handleAdd}
-                  leftIcon={<SmallAddIcon w={5} h={5} />}
-                  variant={"secondary"}
-                >
-                  Agregar
-                </Button>
-              </Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {list.map((data) => (
-              <CategoryScreen key={data.id} {...data} />
-            ))}
-          </Tbody>
-        </Table>
-      </VStack>
-    </Container>
+    <Layout>
+      <Container maxW={"container.sm"} my={10}>
+        <VStack>
+          <Table fontSize={{ base: ".7rem", sm: "1rem" }} size={{ base: "sm" }}>
+            <TableCaption>Tus Categorias en nuestro sitio</TableCaption>
+            <Thead>
+              <Tr>
+                <Th pb={points19} display={displayOff3}>
+                  Categoria
+                </Th>
+                <Th pb={points19} textAlign={"center"} w={0}>
+                  <Button
+                    onClick={handleAdd}
+                    leftIcon={<SmallAddIcon w={5} h={5} />}
+                    variant={"secondary"}
+                  >
+                    Agregar
+                  </Button>
+                </Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {list.map((data) => (
+                <CategoryScreen key={data.id} {...data} />
+              ))}
+            </Tbody>
+          </Table>
+        </VStack>
+      </Container>
+    </Layout>
   );
 };
 

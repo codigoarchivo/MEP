@@ -7,17 +7,20 @@ import ProductData from "../../components/product/ProductData";
 import { store } from "../../data/store";
 
 import Breakpoints from "../../helpers/Breakpoints";
+import Layout from "../../components/layout/layout";
 
 const configDashboard = ({ dataId }) => {
   // breakpoints
   const { points21, points22 } = Breakpoints();
 
   return (
-    <Container maxW={"container.sm"}>
-      <VStack p={points21} mt={points22} boxShadow="2xl">
-        <ProductData dataId={dataId} />
-      </VStack>
-    </Container>
+    <Layout>
+      <Container maxW={"container.sm"}>
+        <VStack p={points21} mt={points22} boxShadow="2xl">
+          <ProductData dataId={dataId} />
+        </VStack>
+      </Container>
+    </Layout>
   );
 };
 
