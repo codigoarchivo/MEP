@@ -7,6 +7,7 @@ import {
   limit,
   getDocs,
   where,
+  onSnapshot,
 } from "firebase/firestore";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -30,6 +31,9 @@ import Layout from "../../components/layout/layout";
 
 import { db } from "../../firebase/config";
 
+const co = collection(db, "serchs");
+const q = query(co, where("es", "==", true), limit(1));
+
 const serchList = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
@@ -38,23 +42,28 @@ const serchList = ({ data }) => {
   // useState
   const [dataList, setDataList] = useState([]);
 
+  const scroll = async () => {
+    const documentSnapshots = await getDocs(q);
+
+    const lastVisible =
+      documentSnapshots.docs[documentSnapshots.docs.length - 1];
+
+    const next = query(
+      collection(db, "serchs"),
+      where("es", "==", true),
+      limit(1),
+      startAfter(lastVisible)
+    );
+
+    onSnapshot(next, (snapshot) => {
+      setDataList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+    });
+  };
+
   useEffect(() => {
     dispatch(listData(!dataList ? dataList : data));
   }, [dispatch]);
 
-  const scroll = () => {
-    const q = query(
-      collection(db, "serchs"),
-      where("es", "==", true),
-      limit(1),
-      startAfter(lastvisibility)
-    );
-
-    onSnapshot(q, (snapshot) => {
-      snapshot.docs[snapshot.docs.length - 1];
-      setDataList(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    });
-  };
   return (
     <>
       <Layout>
@@ -69,11 +78,12 @@ const serchList = ({ data }) => {
                 <Spinner size="xl" color="brand.800" />
               </Center>
             )}
-            {list.map((data) => (
-              <SerchScreen key={data.id} {...data} />
-            ))}
+            {list.map(
+              (data) => console.log(data)
+              // <SerchScreen key={data.id} {...data} />
+            )}
           </Grid>
-          <HStack justifyContent={"space-evenly"} mt={60}>
+          <HStack justifyContent={"space-evenly"}>
             <Button
               // onClick={handleset}
               leftIcon={<ArrowLeftIcon />}
@@ -85,6 +95,7 @@ const serchList = ({ data }) => {
               onClick={scroll}
               rightIcon={<ArrowRightIcon />}
               variant={"primary"}
+              cursor="pointer"
             >
               next page
             </Button>
@@ -96,12 +107,11 @@ const serchList = ({ data }) => {
 };
 
 export async function getStaticProps() {
-  const co = collection(db, "serchs");
-  const q = query(co, where("es", "==", true), limit(1));
   const documentSnapshots = await getDocs(q);
-  const data = documentSnapshots.docs.map((doc) => {
-    return { id: doc.id, ...doc.data() };
-  });
+  const data = documentSnapshots.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
 
   return {
     props: {
