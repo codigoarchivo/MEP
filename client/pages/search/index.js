@@ -8,6 +8,8 @@ import {
   getDocs,
   where,
   onSnapshot,
+  orderBy,
+  startAt,
 } from "firebase/firestore";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -31,9 +33,6 @@ import Layout from "../../components/layout/layout";
 
 import { db } from "../../firebase/config";
 
-const co = collection(db, "serchs");
-const q = query(co, where("es", "==", true), limit(1));
-
 const serchList = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
@@ -42,27 +41,34 @@ const serchList = ({ data }) => {
   // useState
   const [dataList, setDataList] = useState([]);
 
+  useEffect(() => {
+    if (dataList) {
+      dispatch(listData(dataList));
+    }
+  }, [dataList]);
+
+  useEffect(() => {
+    if (data) {
+      setDataList(data);
+    } else {
+      setDataList([]);
+    }
+  }, []);
+
   const scroll = async () => {
-    const documentSnapshots = await getDocs(q);
-
-    const lastVisible =
-      documentSnapshots.docs[documentSnapshots.docs.length - 1];
-
+    const lastVisible = list[list.length - 1];
     const next = query(
       collection(db, "serchs"),
       where("es", "==", true),
       limit(1),
-      startAfter(lastVisible)
+      orderBy("no", "desc"),
+      startAt(lastVisible)
     );
 
     onSnapshot(next, (snapshot) => {
       setDataList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
     });
   };
-
-  useEffect(() => {
-    dispatch(listData(!dataList ? dataList : data));
-  }, [dispatch]);
 
   return (
     <>
@@ -107,6 +113,8 @@ const serchList = ({ data }) => {
 };
 
 export async function getStaticProps() {
+  const co = collection(db, "serchs");
+  const q = query(co, where("es", "==", true), orderBy("no", "desc"), limit(1));
   const documentSnapshots = await getDocs(q);
   const data = documentSnapshots.docs.map((doc) => ({
     id: doc.id,
