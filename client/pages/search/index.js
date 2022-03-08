@@ -3,13 +3,12 @@ import React, { useEffect, useState } from "react";
 import {
   collection,
   query,
-  startAfter,
   limit,
   getDocs,
   where,
   onSnapshot,
+  startAfter,
   orderBy,
-  startAt,
 } from "firebase/firestore";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -33,39 +32,59 @@ import Layout from "../../components/layout/layout";
 
 import { db } from "../../firebase/config";
 
+import { useModality } from "../../hooks/useModality";
+
 const serchList = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
   // selector
   const { list } = useSelector(({ serch }) => serch);
   // useState
-  const [dataList, setDataList] = useState([]);
+  const [dataList, setDataList] = useState(data);
+  
+  const { modality, setModality } = useModality();
+
+
+  // TODO arreglar disable
+  // useEffect(() => {
+  //   const e = list.indexOf(String(data[0].id));
+  //   e ? setModality(true) : setModality(false);
+  // }, [setModality]);
 
   useEffect(() => {
     if (dataList) {
       dispatch(listData(dataList));
     }
-  }, [dataList]);
+  }, [dispatch, dataList]);
 
-  useEffect(() => {
-    if (data) {
-      setDataList(data);
-    } else {
-      setDataList([]);
-    }
-  }, []);
+  const next = () => {
+    const lastVisible = dataList[dataList.length - 1];
 
-  const scroll = async () => {
-    const lastVisible = list[list.length - 1];
-    const next = query(
+    const q = query(
       collection(db, "serchs"),
       where("es", "==", true),
-      limit(1),
       orderBy("no", "desc"),
-      startAt(lastVisible)
+      startAfter(lastVisible.no),
+      limit(2)
     );
 
-    onSnapshot(next, (snapshot) => {
+    onSnapshot(q, (snapshot) => {
+      setDataList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+    });
+  };
+
+  const previous = () => {
+    const firstVisible = dataList[0];
+
+    const q = query(
+      collection(db, "serchs"),
+      where("es", "==", true),
+      orderBy("no", "asc"),
+      startAfter(firstVisible.no),
+      limit(2)
+    );
+
+    onSnapshot(q, (snapshot) => {
       setDataList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
     });
   };
@@ -91,14 +110,15 @@ const serchList = ({ data }) => {
           </Grid>
           <HStack justifyContent={"space-evenly"}>
             <Button
-              // onClick={handleset}
+              onClick={previous}
+              disabled={modality}
               leftIcon={<ArrowLeftIcon />}
               variant={"primary"}
             >
               prev page
             </Button>
             <Button
-              onClick={scroll}
+              onClick={next}
               rightIcon={<ArrowRightIcon />}
               variant={"primary"}
               cursor="pointer"
@@ -113,9 +133,15 @@ const serchList = ({ data }) => {
 };
 
 export async function getStaticProps() {
-  const co = collection(db, "serchs");
-  const q = query(co, where("es", "==", true), orderBy("no", "desc"), limit(1));
+  const q = query(
+    collection(db, "serchs"),
+    where("es", "==", true),
+    orderBy("no", "desc"),
+    limit(2)
+  );
+
   const documentSnapshots = await getDocs(q);
+
   const data = documentSnapshots.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
@@ -125,7 +151,6 @@ export async function getStaticProps() {
     props: {
       data: data,
     },
-    revalidate: 10,
   };
 }
 
