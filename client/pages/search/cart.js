@@ -7,8 +7,7 @@ import { Container, Flex } from "@chakra-ui/react";
 import SerchCart from "../../components/search/SerchCart";
 import Layout from "../../components/layout/layout";
 
-const Cart = (e) => {
-  console.log(e);
+const Cart = () => {
   return (
     <Layout>
       <Container maxW="container.lg">

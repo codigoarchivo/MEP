@@ -19,9 +19,9 @@ import {
   Button,
   Center,
   Container,
-  Grid,
   HStack,
   Spinner,
+  Wrap,
 } from "@chakra-ui/react";
 
 import SerchScreen from "../../components/search/SerchScreen";
@@ -32,30 +32,45 @@ import Layout from "../../components/layout/layout";
 
 import { db } from "../../firebase/config";
 
-import { useModality } from "../../hooks/useModality";
+import { useModality, useModality2 } from "../../hooks/useModality";
+
+import { DissableBotton } from "../../actions/ui";
 
 const serchList = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
   // selector
   const { list } = useSelector(({ serch }) => serch);
+  // selector
+  const { activeDisabled } = useSelector(({ ui }) => ui);
   // useState
-  const [dataList, setDataList] = useState(data);
-  
-  const { modality, setModality } = useModality();
-
-
-  // TODO arreglar disable
-  // useEffect(() => {
-  //   const e = list.indexOf(String(data[0].id));
-  //   e ? setModality(true) : setModality(false);
-  // }, [setModality]);
+  const [dataList, setDataList] = useState([]);
+  // modality
+  const { modality, setModality } = useModality(true);
+  // modality
+  const { modality2, setModality2 } = useModality2();
 
   useEffect(() => {
-    if (dataList) {
-      dispatch(listData(dataList));
-    }
-  }, [dispatch, dataList]);
+    setDataList(data);
+    dispatch(DissableBotton());
+
+    return () => {
+      setModality(true);
+      setModality2(false);
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    setModality(dataList.map((x) => x.id).includes(activeDisabled?.first));
+    setModality2(dataList.map((x) => x.id).includes(activeDisabled?.end));
+
+    activeDisabled?.first && dispatch(listData(dataList));
+
+    return () => {
+      setModality(true);
+      setModality2(false);
+    };
+  }, [dataList, activeDisabled]);
 
   const next = () => {
     const lastVisible = dataList[dataList.length - 1];
@@ -65,12 +80,14 @@ const serchList = ({ data }) => {
       where("es", "==", true),
       orderBy("no", "desc"),
       startAfter(lastVisible.no),
-      limit(2)
+      limit(1)
     );
 
     onSnapshot(q, (snapshot) => {
       setDataList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
     });
+
+    setDataList([]);
   };
 
   const previous = () => {
@@ -81,33 +98,32 @@ const serchList = ({ data }) => {
       where("es", "==", true),
       orderBy("no", "asc"),
       startAfter(firstVisible.no),
-      limit(2)
+      limit(1)
     );
 
     onSnapshot(q, (snapshot) => {
       setDataList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
     });
+
+    setDataList([]);
   };
 
   return (
     <>
       <Layout>
-        <Container maxW="container.lg" my={50}>
-          <Grid
-            gridTemplateColumns={"repeat(auto-fit, minmax(224px, 1fr))"}
-            gridGap={3}
-            justifyContent="center"
-          >
-            {!list[0] && (
-              <Center my={30}>
-                <Spinner size="xl" color="brand.800" />
-              </Center>
-            )}
-            {list.map(
-              (data) => console.log(data)
-              // <SerchScreen key={data.id} {...data} />
-            )}
-          </Grid>
+        <Container maxW="container.lg">
+          {!list[0] && (
+            <Center py={30}>
+              <Spinner size="xl" color="brand.800" />
+            </Center>
+          )}
+
+          <Wrap py={"10"}>
+            {list.map((data) => (
+              <SerchScreen key={data.id} {...data} />
+            ))}
+          </Wrap>
+          
           <HStack justifyContent={"space-evenly"}>
             <Button
               onClick={previous}
@@ -119,6 +135,7 @@ const serchList = ({ data }) => {
             </Button>
             <Button
               onClick={next}
+              disabled={modality2}
               rightIcon={<ArrowRightIcon />}
               variant={"primary"}
               cursor="pointer"
@@ -137,7 +154,7 @@ export async function getStaticProps() {
     collection(db, "serchs"),
     where("es", "==", true),
     orderBy("no", "desc"),
-    limit(2)
+    limit(1)
   );
 
   const documentSnapshots = await getDocs(q);
