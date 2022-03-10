@@ -28,8 +28,8 @@ const Layout = ({ children }) => {
           <Navbar />
         </chakra.header>
 
-        {children}
-
+        <chakra.main>{children}</chakra.main>
+        
         <chakra.footer w={"full"}>
           <Footer />
         </chakra.footer>

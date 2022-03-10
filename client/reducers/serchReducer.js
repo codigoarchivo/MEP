@@ -2,6 +2,7 @@ import { types } from "../type";
 
 const initialStates = {
   list: [],
+  activeList: null,
 };
 
 export const serchReducer = (states = initialStates, action) => {
@@ -10,6 +11,11 @@ export const serchReducer = (states = initialStates, action) => {
       return {
         ...states,
         list: action.payload,
+      };
+    case types.serchActive:
+      return {
+        ...states,
+        activeList: action.payload,
       };
     case types.close:
       return {

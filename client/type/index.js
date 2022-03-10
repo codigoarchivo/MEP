@@ -9,6 +9,8 @@ export const types = {
   uiActiveEnds: "[UI] active ends",
 
   serchList: "[serch] List",
+  serchActive: "[serch] active",
+  serchInactive: "[serch] desactive",
 
   product: "[product] List",
   productAdd: "[product] Add",

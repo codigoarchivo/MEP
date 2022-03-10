@@ -1,3 +1,6 @@
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+
 import { combineReducers } from "redux";
 import { categoryReducer } from "./categoryReducer";
 import { serchReducer } from "./serchReducer";
@@ -12,3 +15,11 @@ export const rootReducer = combineReducers({
   category: categoryReducer,
   product: productReducer,
 });
+
+const persistConfig = {
+  key: "root",
+  storage,
+  blacklist: ["auth", "category", "product", "ui", "serch"],
+};
+
+export const persistedReducer = persistReducer(persistConfig, rootReducer);

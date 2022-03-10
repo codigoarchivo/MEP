@@ -26,7 +26,7 @@ import {
 
 import SerchScreen from "../../components/search/SerchScreen";
 
-import { listData } from "../../actions/search";
+import { activeSerch, listData } from "../../actions/search";
 
 import Layout from "../../components/layout/layout";
 
@@ -34,77 +34,81 @@ import { db } from "../../firebase/config";
 
 import { useModality, useModality2 } from "../../hooks/useModality";
 
-import { DissableBotton } from "../../actions/ui";
-
-const serchList = ({ data }) => {
+const serchList = ({ data, dataB }) => {
   // dispatch
   const dispatch = useDispatch();
   // selector
-  const { list } = useSelector(({ serch }) => serch);
-  // selector
-  const { activeDisabled } = useSelector(({ ui }) => ui);
+  const { list, activeList } = useSelector(({ serch }) => serch);
   // useState
   const [dataList, setDataList] = useState([]);
+  // firstOrEnd
+  const [firstOrEnd, setfirstOrEnd] = useState({});
   // modality
   const { modality, setModality } = useModality(true);
   // modality
   const { modality2, setModality2 } = useModality2();
 
   useEffect(() => {
-    setDataList(data);
-    dispatch(DissableBotton());
+    activeList ? setDataList(activeList) : setDataList(data);
+    dataB && setfirstOrEnd(dataB);
 
     return () => {
       setModality(true);
       setModality2(false);
     };
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
-    setModality(dataList.map((x) => x.id).includes(activeDisabled?.first));
-    setModality2(dataList.map((x) => x.id).includes(activeDisabled?.end));
+    setModality(dataList.map((x) => x.id).includes(firstOrEnd?.first));
+    setModality2(dataList.map((x) => x.id).includes(firstOrEnd?.end));
 
-    activeDisabled?.first && dispatch(listData(dataList));
+    firstOrEnd?.first && dispatch(listData(dataList));
 
     return () => {
       setModality(true);
       setModality2(false);
     };
-  }, [dataList, activeDisabled]);
+  }, [dataList, firstOrEnd]);
 
   const next = () => {
-    const lastVisible = dataList[dataList.length - 1];
+    const lastVisible = dataList && dataList[dataList.length - 1];
 
     const q = query(
       collection(db, "serchs"),
       where("es", "==", true),
       orderBy("no", "desc"),
-      startAfter(lastVisible.no),
-      limit(1)
+      startAfter(lastVisible?.no),
+      limit(2)
     );
 
     onSnapshot(q, (snapshot) => {
       setDataList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
     });
 
-    setDataList([]);
+    closeSave();
   };
 
   const previous = () => {
-    const firstVisible = dataList[0];
+    const firstVisible = dataList && dataList[0];
 
     const q = query(
       collection(db, "serchs"),
       where("es", "==", true),
       orderBy("no", "asc"),
-      startAfter(firstVisible.no),
-      limit(1)
+      startAfter(firstVisible?.no),
+      limit(2)
     );
 
     onSnapshot(q, (snapshot) => {
       setDataList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
     });
 
+    closeSave();
+  };
+
+  const closeSave = () => {
+    dispatch(activeSerch(list));
+    dispatch(listData([]));
     setDataList([]);
   };
 
@@ -123,7 +127,7 @@ const serchList = ({ data }) => {
               <SerchScreen key={data.id} {...data} />
             ))}
           </Wrap>
-          
+
           <HStack justifyContent={"space-evenly"}>
             <Button
               onClick={previous}
@@ -153,20 +157,27 @@ export async function getStaticProps() {
   const q = query(
     collection(db, "serchs"),
     where("es", "==", true),
-    orderBy("no", "desc"),
-    limit(1)
+    orderBy("no", "desc")
   );
 
-  const documentSnapshots = await getDocs(q);
+  const el = await getDocs(q);
 
-  const data = documentSnapshots.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+  const data = el.docs
+    .map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
+    .slice(0, 2);
+
+  const dataBotton = {
+    first: el.docs[0].id,
+    end: el.docs[el.docs.length - 1].id,
+  };
 
   return {
     props: {
       data: data,
+      dataB: dataBotton,
     },
   };
 }

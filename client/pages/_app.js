@@ -2,22 +2,22 @@ import React from "react";
 
 import { Provider } from "react-redux";
 
-import { chakra, ChakraProvider, ColorModeScript } from "@chakra-ui/react";
+import { PersistGate } from "redux-persist/integration/react";
+
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 
 import { theme } from "../theme";
 
-import { store } from "../store";
+import { persistor, store } from "../store";
 
 const App = ({ Component, pageProps }) => {
   return (
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <Provider store={store}>
-
-        <chakra.main>
+        <PersistGate loading={null} persistor={persistor}>
           <Component {...pageProps} />
-        </chakra.main>
-        
+        </PersistGate>
       </Provider>
     </ChakraProvider>
   );
