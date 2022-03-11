@@ -11,27 +11,21 @@ import {
   Td,
   Text,
   Tr,
-  useDisclosure,
 } from "@chakra-ui/react";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
 import {
-  CheckCircleIcon,
   DeleteIcon,
   EditIcon,
-  ExternalLinkIcon,
-  NotAllowedIcon,
   PlusSquareIcon,
 } from "@chakra-ui/icons";
 
-const CategoryScreen = (props) => {
+const CategoryScrenn = (props) => {
   // router
   const router = useRouter();
-  // disclosure
-  const { isOpen, onToggle } = useDisclosure();
   // breakpoints
-  const { points18 } = Breakpoints();
+  const { center, points18 } = Breakpoints();
 
   // edit
   const handleEdit = () => {
@@ -51,12 +45,12 @@ const CategoryScreen = (props) => {
 
   return (
     <>
-      <Tr >
-        <Td p={3}>
-          <Text>{props.nombre}</Text>
+      <Tr>
+        <Td textAlign={center} py={2}>
+          <Text>{props.name}</Text>
         </Td>
-        <Td textAlign={"center"}>
-          <Menu matchWidth>
+        <Td textAlign={center} py={2}>
+          <Menu>
             <MenuButton variant="outline">
               <PlusSquareIcon
                 w={points18}
@@ -65,44 +59,8 @@ const CategoryScreen = (props) => {
                 left={"40%"}
               />
             </MenuButton>
-            <MenuList>
+            <MenuList minWidth={0}>
               <MenuItem>
-                {" "}
-                {isOpen ? (
-                  <HStack
-                    spacing={3}
-                    cursor={"pointer"}
-                    fontWeight={"normal"}
-                    width="full"
-                  >
-                    <CheckCircleIcon w={3} h={3} />
-                    <Text>Activo</Text>
-                  </HStack>
-                ) : (
-                  <HStack
-                    spacing={3}
-                    cursor={"pointer"}
-                    fontWeight={"normal"}
-                    width="full"
-                  >
-                    <NotAllowedIcon w={3} h={3} />
-                    <Text>inActivo</Text>
-                  </HStack>
-                )}
-              </MenuItem>
-              <MenuItem>
-                <HStack
-                  spacing={3}
-                  cursor={"pointer"}
-                  fontWeight={"normal"}
-                  width="full"
-                >
-                  <ExternalLinkIcon w={3} h={3} />
-                  <Text>Detalles</Text>
-                </HStack>
-              </MenuItem>
-              <MenuItem>
-                {" "}
                 <HStack
                   spacing={3}
                   cursor={"pointer"}
@@ -114,8 +72,8 @@ const CategoryScreen = (props) => {
                   <Text>Editar</Text>
                 </HStack>
               </MenuItem>
+
               <MenuItem>
-                {" "}
                 <HStack
                   spacing={3}
                   cursor={"pointer"}
@@ -135,4 +93,4 @@ const CategoryScreen = (props) => {
   );
 };
 
-export default CategoryScreen;
+export default CategoryScrenn;

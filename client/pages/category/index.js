@@ -2,9 +2,8 @@ import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { useRouter } from "next/router";
-
 import {
+  Box,
   Button,
   Container,
   Table,
@@ -13,33 +12,33 @@ import {
   Th,
   Thead,
   Tr,
-  VStack,
 } from "@chakra-ui/react";
 
-import CategoryScreen from "../../components/category/CategoryScreen";
+import CategoryScrenn from "../../components/category/CategoryScreen";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import { dataCategory } from "../../data/store";
-
+import { useRouter } from "next/router";
+import Layout from "../../components/layout/layout";
+import { collection, getDocs, query } from "firebase/firestore";
+import { db } from "../../firebase/config";
 import { listDataCategory } from "../../actions/category";
 
-import { SmallAddIcon } from "@chakra-ui/icons";
-import Layout from "../../components/layout/layout";
-
-const category = ({ category }) => {
+const CategoryList = ({ data }) => {
   // router
   const router = useRouter();
   // breakpoints
-  const { displayOff3, points19 } = Breakpoints();
+  const { center, points19, points20 } = Breakpoints();
   // selector
   const { list } = useSelector(({ category }) => category);
   // dispatch
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(listDataCategory(category));
+    dispatch(listDataCategory(data));
   }, [dispatch]);
+
+  if (!list) return null;
 
   // add
   const handleAdd = () => {
@@ -48,22 +47,26 @@ const category = ({ category }) => {
       query: { pid: "new", word: "Add" },
     });
   };
+
   return (
     <Layout>
       <Container maxW={"container.sm"} my={10}>
-        <VStack>
-          <Table fontSize={{ base: ".7rem", sm: "1rem" }} size={{ base: "sm" }}>
-            <TableCaption>Tus Categorias en nuestro sitio</TableCaption>
+        <Box boxShadow="2xl" p={5}>
+          <Table fontSize={points20} size={{ base: "sm" }}>
+            <TableCaption>Lista de categorias</TableCaption>
             <Thead>
               <Tr>
-                <Th pb={points19} display={displayOff3}>
-                  Categoria
+                <Th pb={points19} textAlign={center}>
+                  Nombre
                 </Th>
-                <Th pb={points19} textAlign={"center"} w={0}>
+                <Th pb={points19} textAlign={center}>
                   <Button
                     onClick={handleAdd}
-                    leftIcon={<SmallAddIcon w={5} h={5} />}
-                    variant={"secondary"}
+                    variant={"primary"}
+                    size="sm"
+                    rounded={"sm"}
+                    textTransform="uppercase"
+                    fontSize={points20}
                   >
                     Agregar
                   </Button>
@@ -72,23 +75,31 @@ const category = ({ category }) => {
             </Thead>
             <Tbody>
               {list.map((data) => (
-                <CategoryScreen key={data.id} {...data} />
+                <CategoryScrenn key={data.id} {...data} />
               ))}
             </Tbody>
           </Table>
-        </VStack>
+        </Box>
       </Container>
     </Layout>
   );
 };
 
 export async function getStaticProps() {
-  // TODO UID perfil
+  const q = query(collection(db, "categories"));
+
+  const el = await getDocs(q);
+
+  const data = el.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
   return {
     props: {
-      category: dataCategory,
+      data: data,
     },
   };
 }
 
-export default category;
+export default CategoryList;

@@ -1,6 +1,6 @@
 export const types = {
-  login: "[Auth]login",
-  logout: "[Auth]logout",
+  login: "[AUTH]login",
+  logout: "[AUTH]logout",
 
   uiSetError: "[UI] Set Error",
   uiRemoveError: "[UI] Remove Error",
@@ -8,19 +8,21 @@ export const types = {
   uiFinishLoading: "[UI] Finish loading",
   uiActiveEnds: "[UI] active ends",
 
-  serchList: "[serch] List",
-  serchActive: "[serch] active",
-  serchInactive: "[serch] desactive",
+  serchList: "[SERCH] List",
+  serchActive: "[SERCH] active",
+  serchInactive: "[SERCH] desactive",
 
-  product: "[product] List",
-  productAdd: "[product] Add",
-  productImgActive: "[product] Active",
-  productEdit: "[product] Edit",
-  productDelete: "[product] Delete",
-  activeOrInactive: "[product] ActiveOrInactive",
+  product: "[PRODUCT] List",
+  productAdd: "[PRODUCT] Add",
+  productImgActive: "[PRODUCT] Active",
+  productEdit: "[PRODUCT] Edit",
+  productDelete: "[PRODUCT] Delete",
+  activeOrInactive: "[PRODUCT] ActiveOrInactive",
 
-  active: "[data] Active",
-  closeActive: "[data] Close",
+  active: "[DATA] Active",
+  closeActive: "[DATA] Close",
 
-  category: "[category] List",
+  category: "[CATEGORY] List",
+  categoryActive: "[CATEGORY] active",
+  categoryClose: "[CATEGORY] active",
 };

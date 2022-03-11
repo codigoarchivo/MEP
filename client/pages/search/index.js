@@ -49,7 +49,12 @@ const serchList = ({ data, dataB }) => {
   const { modality2, setModality2 } = useModality2();
 
   useEffect(() => {
-    activeList ? setDataList(activeList) : setDataList(data);
+    if (activeList) {
+      setDataList(activeList);
+    } else {
+      setDataList(data);
+    }
+
     dataB && setfirstOrEnd(dataB);
 
     return () => {

@@ -8,7 +8,7 @@ import { startUploading } from "../actions/product";
 
 import Validator from "../helpers/Validator";
 
-const useForm = (initialStates, dataId) => {
+const useForm = (initialStates) => {
   // dispatch
   const dispatch = useDispatch();
   // selector

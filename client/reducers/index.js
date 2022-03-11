@@ -8,18 +8,15 @@ import { productReducer } from "./productReducer";
 import { authReducer } from "./authReducer";
 import { uiReducer } from "./uiReducer";
 
+const persistConfig = {
+  key: "category",
+  storage,
+};
+
 export const rootReducer = combineReducers({
   ui: uiReducer,
   auth: authReducer,
   serch: serchReducer,
-  category: categoryReducer,
+  category: persistReducer(persistConfig, categoryReducer) ,
   product: productReducer,
 });
-
-const persistConfig = {
-  key: "root",
-  storage,
-  blacklist: ["auth", "category", "product", "ui", "serch"],
-};
-
-export const persistedReducer = persistReducer(persistConfig, rootReducer);

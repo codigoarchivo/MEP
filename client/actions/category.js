@@ -10,3 +10,12 @@ const categoryDataList = (data) => ({
   type: types.category,
   payload: data,
 });
+
+export const activeCategory = (data) => ({
+  type: types.categoryActive,
+  payload: data,
+});
+
+export const closeCategory = () => ({
+  type: types.closeActive,
+});

@@ -1,30 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
+
+import Swal from "sweetalert2";
 
 import Proptypes from "prop-types";
 
 import { useRouter } from "next/router";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  Button,
-  CloseButton,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Grid,
-  GridItem,
-  Heading,
-  HStack,
-  Input,
-  VStack,
-} from "@chakra-ui/react";
+import { CloseButton, Heading, HStack } from "@chakra-ui/react";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
@@ -32,127 +16,86 @@ import Validator from "../../helpers/Validator";
 
 import useForm from "../../hooks/useForm";
 
-import { dataCategory } from "../../data/store";
+import ProductForm from "./CategoryForm";
 
-import DialogCategory from "./DialogCategory";
+import ProductDetails from "./CategoryDetails";
 
-import {
-  addDataUser,
-  dataActive,
-  deleteDataUser,
-  editDataUser,
-} from "../../actions/product";
+import { closeCategory } from "../../actions/category";
 
 const initialStates = {
-  id: "",
-  nombre: "",
-  precio: "",
-  image: "",
-  uid: "",
-  descripcion: "",
-  category: "",
-  cantidad: "",
-  detalles: "",
+  name: "",
 };
 
-const CategoryDialogModal = ({ modality, setModality, word, data }) => {
+const CategoryData = ({ activeSelect }) => {
   // dispatch
   const dispatch = useDispatch();
   // router
   const router = useRouter();
-  // file
-  const file = useRef();
-  // ref
-  const cancelRef = useRef();
   // Breakpoints
-  const { repeat1, points3 } = Breakpoints();
-
-  // guardar states
-  const dataInitial = { ...initialStates, ...data };
-
-  const { values, handleInputChange, reset, setImgenM } = useForm(dataInitial);
-
+  const { points1, repeat1, points3 } = Breakpoints();
+  // useForm
+  const { values, handleInputChange } = useForm({
+    ...initialStates,
+    ...activeSelect,
+  });
   // validar
-  const { mNombre, fiel, ErrorRetur } = Validator(values);
+  const { fiel, ErrorRetur } = Validator(values);
 
   // values
-  const { nombre } = values;
-
-  useEffect(() => {
-    dispatch(dataActive(values));
-  }, [dispatch, dataActive, values]);
+  const { name } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (ErrorRetur) {
-      return null;
-    } else {
-      dispatch(addDataUser(values));
-      dispatch(editDataUser(values));
-      dispatch(deleteDataUser(values.id));
-    }
 
+    if (ErrorRetur) {
+      return Swal.fire("Error", fiel, "error");
+    } else {
+      word === "Add" && dispatch(addDataUser(values));
+      word === "Edit" && dispatch(editDataUser(values));
+      word === "Delete" && dispatch(deleteDataUser(values.id));
+    }
     onClose();
   };
   // cerrar
   const onClose = () => {
+    dispatch(closeCategory());
     router.push("/category");
-    setModality(false);
-    setImgenM(false);
-    reset();
   };
 
   return (
     <>
-      <AlertDialog
-        isOpen={modality}
-        leastDestructiveRef={cancelRef}
-        onClose={onClose}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <HStack spacing={5}>
-                <CloseButton size="md" onClick={onClose} />
-                <Heading as="h1" size={"md"} textTransform={"uppercase"}>
-                  {word}
-                </Heading>
-              </HStack>
-            </AlertDialogHeader>
-            <AlertDialogBody>
-              <DialogCategory
-                VStack={VStack}
-                onClose={onClose}
-                nombre={nombre}
-                mNombre={mNombre}
-                repeat1={repeat1}
-                points3={points3}
-                handleSubmit={handleSubmit}
-                handleInputChange={handleInputChange}
-                fiel={fiel}
-                Grid={Grid}
-                GridItem={GridItem}
-                FormControl={FormControl}
-                FormErrorMessage={FormErrorMessage}
-                FormLabel={FormLabel}
-                Button={Button}
-                Input={Input}
-                AlertDialogFooter={AlertDialogFooter}
-                cancelRef={cancelRef}
-                dataCategory={dataCategory}
-              />
-            </AlertDialogBody>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
+      <HStack spacing={5} w={"full"}>
+        <CloseButton size="md" onClick={onClose} />
+        <Heading as="h1" size={"md"} textTransform={"uppercase"}>
+          {values.word}
+        </Heading>
+      </HStack>
+      {values.word === "Delete" ? (
+        <ProductDetails
+          handleSubmit={handleSubmit}
+          HStack={HStack}
+          word={values.word}
+          onClose={onClose}
+        />
+      ) : (
+        <ProductForm
+          name={name}
+          HStack={HStack}
+          repeat1={repeat1}
+          points1={points1}
+          points3={points3}
+          onClose={onClose}
+          handleSubmit={handleSubmit}
+          handleInputChange={handleInputChange}
+        />
+      )}
     </>
   );
 };
 
-CategoryDialogModal.proptypes = {
+CategoryData.proptypes = {
   word: Proptypes.string.isRequired,
   modality: Proptypes.func.isRequired,
-  setModality: Proptypes.func.isRequired,
 };
 
-export default CategoryDialogModal;
+export default CategoryData;
