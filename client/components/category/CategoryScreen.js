@@ -47,7 +47,7 @@ const CategoryScrenn = (props) => {
     <>
       <Tr>
         <Td textAlign={center} py={2}>
-          <Text>{props.name}</Text>
+          <Text>{props.na}</Text>
         </Td>
         <Td textAlign={center} py={2}>
           <Menu>

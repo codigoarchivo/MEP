@@ -24,6 +24,14 @@ export const login = (uid, displayName) => ({
   },
 });
 
+export const userRol = (uid, email) => ({
+  type: types.userRol,
+  payload: {
+    uid,
+    email,
+  },
+});
+
 export const startLoginEmailPassword = (email, password) => {
   return async (dispatch) => {
     // start
@@ -31,6 +39,7 @@ export const startLoginEmailPassword = (email, password) => {
     // login
     await signInWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
+        // console.log(user.email);
         dispatch(login(user.uid, user.displayName));
         // end
         dispatch(finishLoading());

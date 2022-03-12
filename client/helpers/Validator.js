@@ -1,36 +1,24 @@
 const Validator = (values) => {
-  const { imgsize } = values;
-  const { name, image, email, password, rePassword } = values;
-  const { nombre, precio, detalles, descripcion, cantidad, category } = values;
-
   // Register
-  const nameV = name === "";
-  const emailV = email === "";
-  const emailVa = !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email);
-  const passwordV = password === "";
-  const rePasswordV = rePassword === "";
-  const minPasswordV = password?.length < 6;
-  const minRePasswordV = rePassword?.length < 6;
-  const samePasswordV = password !== rePassword;
-
-  let ErrorLorR;
-  if (
-    nameV ||
-    emailV ||
-    emailVa ||
-    passwordV ||
-    rePasswordV ||
-    minPasswordV ||
-    minRePasswordV ||
-    samePasswordV
-  ) {
-    ErrorLorR = true;
-  }
-
-  let ErrorRorL;
-  if (emailV || passwordV) {
-    ErrorRorL = true;
-  }
+  const nameV = values?.name === "";
+  const naV = values?.na === "";
+  const emailV = values?.email === "";
+  const emailVa = !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
+    values?.email
+  );
+  const passwordV = values?.password === "";
+  const rePasswordV = values?.rePassword === "";
+  const minPasswordV = values?.password?.length < 6;
+  const minRePasswordV = values?.rePassword?.length < 6;
+  const samePasswordV = values?.password !== values?.rePassword;
+  const mNombre = values?.nombre === "";
+  const mPrecio = values?.precio === "";
+  const mDetalles = values?.detalles === "";
+  const mImage = Number(values?.imgsize) > 500000;
+  const mImageCero = values?.image === "";
+  const mDescripcion = values?.descripcion === "";
+  const mCantidad = Number(values?.cantidad) === 0;
+  const mCategory = values?.category === "";
 
   const nameE = nameV && "Nombre is required.";
 
@@ -67,15 +55,24 @@ const Validator = (values) => {
   // login
   const passwordL = passwordV && "Password is required.";
 
-  // DashboardDialogModal
-  const mNombre = nombre === "";
-  const mPrecio = precio === "";
-  const mDetalles = detalles === "";
-  const mImage = Number(imgsize) > 500000;
-  const mImageCero = image === "";
-  const mDescripcion = descripcion === "";
-  const mCantidad = Number(cantidad) === 0;
-  const mCategory = category === "";
+  let ErrorLorR;
+  if (
+    nameV ||
+    emailV ||
+    emailVa ||
+    passwordV ||
+    rePasswordV ||
+    minPasswordV ||
+    minRePasswordV ||
+    samePasswordV
+  ) {
+    ErrorLorR = true;
+  }
+
+  let ErrorRorL;
+  if (emailV || passwordV) {
+    ErrorRorL = true;
+  }
 
   let ErrorRetur;
   if (
@@ -89,6 +86,12 @@ const Validator = (values) => {
     mImageCero
   ) {
     ErrorRetur = true;
+  }
+  // CategoryData
+
+  let ErrorCatData;
+  if (naV) {
+    ErrorCatData = true;
   }
 
   const fiel = "Revisa si algun campo esta vacio";
@@ -113,6 +116,7 @@ const Validator = (values) => {
     ErrorLorR,
     ErrorRorL,
     passwordV,
+    ErrorCatData,
   };
 };
 

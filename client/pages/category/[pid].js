@@ -4,7 +4,7 @@ import { withRouter } from "next/router";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { Container, VStack } from "@chakra-ui/react";
+import { Center, Container, Spinner, VStack } from "@chakra-ui/react";
 
 import CategoryData from "../../components/category/CategoryData";
 
@@ -12,41 +12,49 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import Layout from "../../components/layout/layout";
 
-import { getDataId } from "../../selectors/getDataId";
-
 import { activeCategory } from "../../actions/category";
 
 const configCategory = ({ router: { query } }) => {
   // selector
-  const { list, activeSelect } = useSelector(({ category }) => category);
+  const { activeSelect, list } = useSelector(({ category }) => category);
   // dispatch
   const dispatch = useDispatch();
 
-  const { pid, word } = query;
-
   useEffect(() => {
-    if (word?.toString() === "Add") {
-      dispatch(activeCategory(query));
-    } else {
-      const { idData } = getDataId(list, pid?.toString());
+    if (query?.word?.toString() === "Add") {
       dispatch(
         activeCategory({
-          name: idData?.name,
-          word: word?.toString(),
-          pid: pid?.toString(),
+          word: query?.word?.toString(),
+          na: "",
         })
       );
     }
-  }, [query]);
 
+    if (query?.word?.toString() !== "Add") {
+      const idData = list.find((x) => x.id === query?.pid?.toString());
+
+      dispatch(
+        activeCategory({
+          na: idData?.na,
+          pid: idData?.id,
+          word: query?.word?.toString(),
+        })
+      );
+    }
+  }, [dispatch, query, list]);
   // breakpoints
   const { points21, points22 } = Breakpoints();
-
   return (
     <Layout>
       <Container maxW={"container.sm"}>
         <VStack p={points21} mt={points22} boxShadow="2xl">
-          <CategoryData activeSelect={activeSelect} />
+          {!activeSelect && (
+            <Center py={30}>
+              <Spinner size="xl" color="brand.800" />
+            </Center>
+          )}
+
+          {activeSelect && <CategoryData activeSelect={activeSelect} />}
         </VStack>
       </Container>
     </Layout>

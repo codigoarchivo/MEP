@@ -38,8 +38,6 @@ const CategoryList = ({ data }) => {
     dispatch(listDataCategory(data));
   }, [dispatch]);
 
-  if (!list) return null;
-
   // add
   const handleAdd = () => {
     router.push({

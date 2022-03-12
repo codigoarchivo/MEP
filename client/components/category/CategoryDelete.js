@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, Heading, VStack } from "@chakra-ui/react";
+import { Button, Heading, chakra } from "@chakra-ui/react";
 
-const CategoryDelete = ({ HStack, onClose, handleSubmit, word }) => {
+const CategoryDelete = ({ HStack, onClose, handleSubmit, word, VStack }) => {
   return (
     <>
-      <HStack py={5}>
-        <VStack as={"form"} onSubmit={handleSubmit}>
+      <chakra.form onSubmit={handleSubmit} w="full" p={3}>
+        <VStack spacing={7}>
           <Heading mb={6} size={"lg"}>
             Esta seguro que desea eliminar
           </Heading>
@@ -18,7 +18,7 @@ const CategoryDelete = ({ HStack, onClose, handleSubmit, word }) => {
             </Button>
           </HStack>
         </VStack>
-      </HStack>
+      </chakra.form>
     </>
   );
 };

@@ -2,59 +2,46 @@ import React from "react";
 
 import {
   Button,
+  chakra,
+  FormControl,
   FormLabel,
-  Grid,
-  GridItem,
   Input,
 } from "@chakra-ui/react";
 
 const CategoryForm = ({
-  name,
+  na,
+  word,
   HStack,
-  repeat1,
-  points1,
-  points3,
+  VStack,
   onClose,
   handleSubmit,
   handleInputChange,
-
 }) => {
-
   return (
     <>
-      <Grid
-        as={"form"}
-        templateRows={`repeat(2, 1fr)`}
-        templateColumns={repeat1}
-        alignItems={"center"}
-        onSubmit={handleSubmit}
-        columnGap={points3}
-        rowGap={2}
-        w={"full"}
-      >
-        <GridItem colSpan={points1}>
-          <FormLabel htmlFor="name">Nombre</FormLabel>
-          <Input
-            name="name"
-            id="name"
-            onChange={handleInputChange}
-            value={name}
-            type={"text"}
-            placeholder="Nombre"
-          />
-        </GridItem>
-
-        <GridItem colSpan={2}>
-          <HStack w={"full"} justifyContent="flex-end" spacing={10}>
+      <chakra.form onSubmit={handleSubmit} w="full" p={3}>
+        <VStack spacing={7}>
+          <FormControl >
+            <FormLabel htmlFor="na">Nombre</FormLabel>
+            <Input
+              name="na"
+              id="na"
+              onChange={handleInputChange}
+              value={na}
+              type={"text"}
+              placeholder="Nombre"
+            />
+          </FormControl>
+          <HStack w={"full"} justifyContent="flex-end">
             <Button variant={"secondary"} onClick={onClose}>
               Close
             </Button>
             <Button variant={"primary"} type="submit" ml={3}>
-              Enviar
+              {word}
             </Button>
           </HStack>
-        </GridItem>
-      </Grid>
+        </VStack>
+      </chakra.form>
     </>
   );
 };

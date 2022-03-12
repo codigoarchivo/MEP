@@ -1,41 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Swal from "sweetalert2";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { startUploading } from "../actions/product";
 
 import Validator from "../helpers/Validator";
 
-const useForm = (initialStates) => {
+const useForm = (initialStates = {}) => {
+  // console.log(initialStates);
   // dispatch
   const dispatch = useDispatch();
-  // selector
-  // const { activeSelect } = useSelector(({ product }) => product);
-  // values
+
   const [values, setValues] = useState(initialStates);
 
-  const reset = () => {
+  const reset = (newFormState = initialStates) => {
     setValues(initialStates);
   };
-
-  // useEffect(() => {
-  //   if (dataId?.data === null) {
-  //     setValues({
-  //       ...values,
-  //       word: dataId?.word,
-  //       image: activeSelect ? activeSelect : "",
-  //     });
-  //   } else {
-  //     setValues({
-  //       ...values,
-  //       ...dataId?.data,
-  //       word: dataId?.word,
-  //       image: activeSelect ? activeSelect : dataId?.data.image,
-  //     });
-  //   }
-  // }, [activeSelect]);
 
   const handleInputChange = ({ target }) => {
     setValues({ ...values, [target.name]: target.value });

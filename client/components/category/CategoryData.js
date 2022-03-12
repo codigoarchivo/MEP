@@ -6,9 +6,9 @@ import Proptypes from "prop-types";
 
 import { useRouter } from "next/router";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { CloseButton, Heading, HStack } from "@chakra-ui/react";
+import { CloseButton, Heading, HStack, VStack } from "@chakra-ui/react";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
@@ -18,13 +18,9 @@ import useForm from "../../hooks/useForm";
 
 import ProductForm from "./CategoryForm";
 
-import ProductDetails from "./CategoryDetails";
+import CategoryDelete from "./CategoryDelete";
 
-import { closeCategory } from "../../actions/category";
-
-const initialStates = {
-  name: "",
-};
+import { addCategory, closeCategory } from "../../actions/category";
 
 const CategoryData = ({ activeSelect }) => {
   // dispatch
@@ -34,25 +30,21 @@ const CategoryData = ({ activeSelect }) => {
   // Breakpoints
   const { points1, repeat1, points3 } = Breakpoints();
   // useForm
-  const { values, handleInputChange } = useForm({
-    ...initialStates,
-    ...activeSelect,
-  });
+  const { values, handleInputChange } = useForm(activeSelect);
   // validar
-  const { fiel, ErrorRetur } = Validator(values);
-
+  const { fiel, ErrorCatData } = Validator(values);
   // values
-  const { name } = values;
+  const { na, pid, word } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (ErrorRetur) {
+    if (ErrorCatData) {
       return Swal.fire("Error", fiel, "error");
     } else {
-      word === "Add" && dispatch(addDataUser(values));
-      word === "Edit" && dispatch(editDataUser(values));
-      word === "Delete" && dispatch(deleteDataUser(values.id));
+      word === "Add" && dispatch(addCategory(na));
+      word === "Edit" && dispatch(editDataUser({ na, pid }));
+      word === "Delete" && dispatch(deleteDataUser(pid));
     }
     onClose();
   };
@@ -67,23 +59,23 @@ const CategoryData = ({ activeSelect }) => {
       <HStack spacing={5} w={"full"}>
         <CloseButton size="md" onClick={onClose} />
         <Heading as="h1" size={"md"} textTransform={"uppercase"}>
-          {values.word}
+          {word}
         </Heading>
       </HStack>
       {values.word === "Delete" ? (
-        <ProductDetails
-          handleSubmit={handleSubmit}
+        <CategoryDelete
+          word={word}
           HStack={HStack}
-          word={values.word}
+          VStack={VStack}
           onClose={onClose}
+          handleSubmit={handleSubmit}
         />
       ) : (
         <ProductForm
-          name={name}
+          na={na}
+          word={word}
           HStack={HStack}
-          repeat1={repeat1}
-          points1={points1}
-          points3={points3}
+          VStack={VStack}
           onClose={onClose}
           handleSubmit={handleSubmit}
           handleInputChange={handleInputChange}
@@ -94,8 +86,7 @@ const CategoryData = ({ activeSelect }) => {
 };
 
 CategoryData.proptypes = {
-  word: Proptypes.string.isRequired,
-  modality: Proptypes.func.isRequired,
+  activeSelect: Proptypes.object.isRequired,
 };
 
 export default CategoryData;

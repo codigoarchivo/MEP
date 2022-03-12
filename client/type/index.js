@@ -23,6 +23,9 @@ export const types = {
   closeActive: "[DATA] Close",
 
   category: "[CATEGORY] List",
+  categoryAdd: "[CATEGORY] Add",
   categoryActive: "[CATEGORY] active",
   categoryClose: "[CATEGORY] active",
+
+  userRol: "[ROL] roles",
 };
