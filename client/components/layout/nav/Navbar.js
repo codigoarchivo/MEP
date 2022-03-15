@@ -229,7 +229,7 @@ const Navbar = () => {
                     size="md"
                     variant={"primary"}
                     href={"/"}
-                    name={"Voy vender"}
+                    name={"Para algo"}
                   />
                 ) : (
                   <NavLink

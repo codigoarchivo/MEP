@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-import { auth, provider } from "../firebase/config";
+import { auth, db, provider } from "../firebase/config";
 
 import { types } from "../type";
 
@@ -16,19 +16,15 @@ import {
   updateProfile,
 } from "firebase/auth";
 
-export const login = (uid, displayName) => ({
+import { doc, setDoc } from "firebase/firestore";
+
+export const login = (uid, displayName, email, rol) => ({
   type: types.login,
   payload: {
     uid,
     displayName,
-  },
-});
-
-export const userRol = (uid, email) => ({
-  type: types.userRol,
-  payload: {
-    uid,
     email,
+    rol,
   },
 });
 
@@ -39,9 +35,7 @@ export const startLoginEmailPassword = (email, password) => {
     // login
     await signInWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
-        // console.log(user.email);
         dispatch(login(user.uid, user.displayName));
-        // end
         dispatch(finishLoading());
       })
       .catch(({ message }) => {
@@ -62,6 +56,11 @@ export const startRegisterWithNameEmailPassword = (email, password, name) => {
       .then(async ({ user }) => {
         await updateProfile(auth.currentUser, { displayName: name });
         dispatch(login(user.uid, user.displayName));
+        // rol
+        setDoc(doc(db, "users", `${user.uid}`), {
+          correo: user.email,
+          rol: "user",
+        });
         // end
         dispatch(finishLoading());
       })
