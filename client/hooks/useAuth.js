@@ -17,9 +17,9 @@ const useAuth = () => {
   const [isloggedIn, setIsloggedIn] = useState(false);
 
   async function getRol(email) {
-    const q = query(collection(db, "users"), where("correo", "==", email));
+    const q = query(collection(db, "users"), where("em", "==", email));
     const el = await getDocs(q);
-    const data = el.docs[0].data().rol;
+    const data = el?.docs[0]?.data().rol;
     return data;
   }
 
