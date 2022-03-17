@@ -2,6 +2,7 @@ import { Divider, List, ListItem, Select } from "@chakra-ui/react";
 import React from "react";
 
 const PopoverUserNavbar = ({
+  rol,
   HStack,
   Heading,
   NavLink,
@@ -13,16 +14,20 @@ const PopoverUserNavbar = ({
   return (
     <>
       <List spacing={3} py={5}>
-        <ListItem>
-          <NavLink
-            href={"/category"}
-            fontWeight={"normal"}
-            size={"sm"}
-            variant={"secondary"}
-            name={"Category"}
-          />
-        </ListItem>
-        <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
+        {rol === "owner" && (
+          <>
+            <ListItem>
+              <NavLink
+                href={"/category"}
+                fontWeight={"normal"}
+                size={"sm"}
+                variant={"secondary"}
+                name={"Category"}
+              />
+            </ListItem>
+            <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
+          </>
+        )}
         <ListItem>
           <NavLink
             href={"/product"}
@@ -44,7 +49,13 @@ const PopoverUserNavbar = ({
           </HStack>
         </ListItem>
         <ListItem>
-          <Button variant={"secondary"} fontWeight={"normal"} px={3} size="sm" onClick={handleLogout}>
+          <Button
+            variant={"secondary"}
+            fontWeight={"normal"}
+            px={3}
+            size="sm"
+            onClick={handleLogout}
+          >
             Logout
           </Button>
         </ListItem>

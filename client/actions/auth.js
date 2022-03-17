@@ -57,8 +57,8 @@ export const startRegisterWithNameEmailPassword = (email, password, name) => {
         await updateProfile(auth.currentUser, { displayName: name });
         dispatch(login(user.uid, user.displayName));
         // rol
-        setDoc(doc(db, "users", `${String(user.uid)}`), {
-          correo: user.email,
+        setDoc(doc(db, "users", user.uid.toString()), {
+          uid: user.uid,
           rol: "user",
         });
         // end

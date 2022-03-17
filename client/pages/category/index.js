@@ -24,17 +24,30 @@ import { collection, getDocs, query } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import { listDataCategory } from "../../actions/category";
 
-const CategoryList = ({ data }) => {
+const CategoryList = () => {
   // router
   const router = useRouter();
   // breakpoints
   const { center, points19, points20 } = Breakpoints();
   // selector
   const { list } = useSelector(({ category }) => category);
+  // selector
+  const { rol } = useSelector(({ auth }) => auth);
   // dispatch
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  if (rol !== "owner") {
+    router.push("/");
+  }
+
+  useEffect(async () => {
+    const q = query(collection(db, "categories"));
+    const el = rol === "owner" ? await getDocs(q) : "";
+
+    const data = el.docs?.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     dispatch(listDataCategory(data));
   }, [dispatch]);
 
@@ -48,56 +61,43 @@ const CategoryList = ({ data }) => {
 
   return (
     <Layout>
-      <Container maxW={"container.sm"} my={10}>
-        <Box boxShadow="2xl" p={5}>
-          <Table fontSize={points20} size={{ base: "sm" }}>
-            <TableCaption>Lista de categorias</TableCaption>
-            <Thead>
-              <Tr>
-                <Th pb={points19} textAlign={center}>
-                  Nombre
-                </Th>
-                <Th pb={points19} textAlign={center}>
-                  <Button
-                    onClick={handleAdd}
-                    variant={"primary"}
-                    size="sm"
-                    rounded={"sm"}
-                    textTransform="uppercase"
-                    fontSize={points20}
-                  >
-                    Agregar
-                  </Button>
-                </Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {list.map((data) => (
-                <CategoryScrenn key={data.id} {...data} />
-              ))}
-            </Tbody>
-          </Table>
-        </Box>
-      </Container>
+      {rol === "owner" ? (
+        <Container maxW={"container.sm"} my={10}>
+          <Box boxShadow="2xl" p={5}>
+            <Table fontSize={points20} size={{ base: "sm" }}>
+              <TableCaption>Lista de categorias</TableCaption>
+              <Thead>
+                <Tr>
+                  <Th pb={points19} textAlign={center}>
+                    Nombre
+                  </Th>
+                  <Th pb={points19} textAlign={center}>
+                    <Button
+                      onClick={handleAdd}
+                      variant={"primary"}
+                      size="sm"
+                      rounded={"sm"}
+                      textTransform="uppercase"
+                      fontSize={points20}
+                    >
+                      Agregar
+                    </Button>
+                  </Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {list?.map((data) => (
+                  <CategoryScrenn key={data.id} {...data} />
+                ))}
+              </Tbody>
+            </Table>
+          </Box>
+        </Container>
+      ) : (
+        ""
+      )}
     </Layout>
   );
 };
-
-export async function getStaticProps() {
-  const q = query(collection(db, "categories"));
-
-  const el = await getDocs(q);
-
-  const data = el.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-
-  return {
-    props: {
-      data: data,
-    },
-  };
-}
 
 export default CategoryList;
