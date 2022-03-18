@@ -1,6 +1,9 @@
-import { doc, setDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
+
 import Swal from "sweetalert2";
+
 import { db } from "../firebase/config";
+
 import { types } from "../type";
 
 export const listDataCategory = (data) => {
@@ -16,20 +19,25 @@ const categoryDataList = (data) => ({
 
 export const addCategory = (na) => {
   return async (dispatch, getState) => {
-    // getState
-    const { uid } = getState().auth;
-
+    // getState uid
     try {
-      const { id } = await setDoc(doc(db, `${uid}`, "category"), {
-        na,
-      });
-
-      dispatch(
-        categoryAdd({
+      const { activeSelect } = getState().auth;
+      
+      const { id } = await addDoc(
+        collection(db, "categories", `${activeSelect?.uid}`),
+        {
           na,
-          id,
-        })
+        }
       );
+
+      if (id && na) {
+        dispatch(
+          categoryAdd({
+            na,
+            id,
+          })
+        );
+      }
     } catch (error) {
       Swal.fire("Error", error, "error");
     }

@@ -35,9 +35,9 @@ const configCategory = ({ router: { query } }) => {
 
       dispatch(
         activeCategory({
+          word: query?.word?.toString(),
           na: idData?.na,
           pid: idData?.id,
-          word: query?.word?.toString(),
         })
       );
     }

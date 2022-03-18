@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -11,8 +11,6 @@ import { login } from "../actions/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
 const useAuth = () => {
-  // selector
-  const { rol } = useSelector(({ auth }) => auth);
   // dispatch
   const dispatch = useDispatch();
   const [checking, setChecking] = useState(true);
@@ -40,7 +38,7 @@ const useAuth = () => {
     return () => {
       setChecking(true);
     };
-  }, []);
+  }, [dispatch, setIsloggedIn, setChecking]);
 
   return {
     checking,

@@ -28,12 +28,10 @@ yarn-error.log*
 
 # local env files
 .env.local
-.env.development.local
+.env.development
+.env.production
 .env.test.local
-.env.production.local
 
 # helper
 fileUpload.js
 
-# database
-firebase/config.js

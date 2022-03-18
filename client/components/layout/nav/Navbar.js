@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { useRouter } from "next/router";
 
@@ -24,8 +24,6 @@ import {
   InputGroup,
   InputLeftElement,
   Link,
-  List,
-  ListItem,
   Menu,
   MenuButton,
   MenuItem,
@@ -38,7 +36,6 @@ import {
   PopoverHeader,
   PopoverTrigger,
   Portal,
-  Select,
   Text,
   useColorMode,
   useDisclosure,
@@ -68,8 +65,6 @@ const Navbar = () => {
   const router = useRouter();
   // Modality
   const { modality, setModality } = useModality();
-  // selector
-  const { rol } = useSelector(({ auth }) => auth);
   // toogle color
   const { toggleColorMode, colorMode } = useColorMode();
   // drawer
@@ -92,7 +87,11 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    router.push("/");
+
+    if (logout) {
+      router.push("/");
+    }
+    
   };
 
   return (
@@ -284,7 +283,6 @@ const Navbar = () => {
                     />
                     <PopoverBody>
                       <PopoverUserNavbar
-                        rol={rol}
                         handleLogout={handleLogout}
                         HStack={HStack}
                         Heading={Heading}

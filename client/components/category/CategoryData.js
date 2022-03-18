@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Swal from "sweetalert2";
 
@@ -20,7 +20,11 @@ import ProductForm from "./CategoryForm";
 
 import CategoryDelete from "./CategoryDelete";
 
-import { addCategory, closeCategory } from "../../actions/category";
+import {
+  activeCategory,
+  addCategory,
+  closeCategory,
+} from "../../actions/category";
 
 const CategoryData = ({ activeSelect }) => {
   // dispatch
@@ -36,6 +40,15 @@ const CategoryData = ({ activeSelect }) => {
   // values
   const { na, pid, word } = values;
 
+  useEffect(() => {
+    dispatch(
+      activeCategory({
+        ...activeSelect,
+        na,
+      })
+    );
+  }, [dispatch, na]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -50,8 +63,8 @@ const CategoryData = ({ activeSelect }) => {
   };
   // cerrar
   const onClose = () => {
-    dispatch(closeCategory());
     router.push("/category");
+    dispatch(closeCategory());
   };
 
   return (
@@ -62,7 +75,7 @@ const CategoryData = ({ activeSelect }) => {
           {word}
         </Heading>
       </HStack>
-      {values.word === "Delete" ? (
+      {word === "Delete" ? (
         <CategoryDelete
           word={word}
           HStack={HStack}

@@ -2,6 +2,10 @@ import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import { collection, getDocs, query } from "firebase/firestore";
+
+import { useRouter } from "next/router";
+
 import {
   Box,
   Button,
@@ -14,14 +18,14 @@ import {
   Tr,
 } from "@chakra-ui/react";
 
-import CategoryScrenn from "../../components/category/CategoryScreen";
-
 import Breakpoints from "../../helpers/Breakpoints";
 
-import { useRouter } from "next/router";
+import CategoryScrenn from "../../components/category/CategoryScreen";
+
 import Layout from "../../components/layout/layout";
-import { collection, getDocs, query } from "firebase/firestore";
+
 import { db } from "../../firebase/config";
+
 import { listDataCategory } from "../../actions/category";
 
 const CategoryList = () => {
@@ -32,24 +36,25 @@ const CategoryList = () => {
   // selector
   const { list } = useSelector(({ category }) => category);
   // selector
-  const { rol } = useSelector(({ auth }) => auth);
+  const { activeSelect } = useSelector(({ auth }) => auth);
   // dispatch
   const dispatch = useDispatch();
 
-  if (rol !== "owner") {
+  if (activeSelect?.rol === "user") {
     router.push("/");
   }
-
+  // query
+  const q = query(collection(db, "categories"));
   useEffect(async () => {
-    const q = query(collection(db, "categories"));
-    const el = rol === "owner" ? await getDocs(q) : "";
+    const el = activeSelect?.rol === "owner" ? await getDocs(q) : "";
 
     const data = el.docs?.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
-    dispatch(listDataCategory(data));
-  }, [dispatch]);
+
+    dispatch(listDataCategory(data && data));
+  }, [q]);
 
   // add
   const handleAdd = () => {
@@ -61,7 +66,7 @@ const CategoryList = () => {
 
   return (
     <Layout>
-      {rol === "owner" ? (
+      {activeSelect?.rol === "owner" ? (
         <Container maxW={"container.sm"} my={10}>
           <Box boxShadow="2xl" p={5}>
             <Table fontSize={points20} size={{ base: "sm" }}>

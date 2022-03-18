@@ -1,8 +1,15 @@
+import Swal from "sweetalert2";
+
 import { types } from "../type";
 
 export const listData = (data) => {
   return async (dispatch) => {
-    await dispatch(dataList(data));
+    try {
+      await dispatch(dataList(data));
+    } catch (error) {
+      // error
+      Swal.fire("Error", error, "error");
+    }
   };
 };
 const dataList = (data) => ({

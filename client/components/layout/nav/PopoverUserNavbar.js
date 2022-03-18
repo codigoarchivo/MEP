@@ -1,8 +1,10 @@
-import { Divider, List, ListItem, Select } from "@chakra-ui/react";
 import React from "react";
 
+import { Divider, List, ListItem, Select } from "@chakra-ui/react";
+
+import { useSelector } from "react-redux";
+
 const PopoverUserNavbar = ({
-  rol,
   HStack,
   Heading,
   NavLink,
@@ -11,10 +13,13 @@ const PopoverUserNavbar = ({
   Button,
   handleLogout,
 }) => {
+  // selector
+  const { activeSelect } = useSelector(({ auth }) => auth);
+
   return (
     <>
       <List spacing={3} py={5}>
-        {rol === "owner" && (
+        {activeSelect?.rol === "owner" && (
           <>
             <ListItem>
               <NavLink
