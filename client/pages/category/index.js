@@ -28,7 +28,9 @@ import { db } from "../../firebase/config";
 
 import { listDataCategory } from "../../actions/category";
 
-const CategoryList = () => {
+import useAuth from "../../hooks/useAuth";
+
+const CategoryList = ({ data }) => {
   // router
   const router = useRouter();
   // breakpoints
@@ -37,24 +39,20 @@ const CategoryList = () => {
   const { list } = useSelector(({ category }) => category);
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
+  // useAuth
+  const { isloggedIn } = useAuth();
   // dispatch
   const dispatch = useDispatch();
 
   if (activeSelect?.rol === "user") {
     router.push("/");
   }
-  // query
-  const q = query(collection(db, "categories"));
-  useEffect(async () => {
-    const el = activeSelect?.rol === "owner" ? await getDocs(q) : "";
 
-    const data = el.docs?.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    dispatch(listDataCategory(data && data));
-  }, [q]);
+  useEffect(() => {
+    if (data) {
+      dispatch(listDataCategory(data));
+    }
+  }, [dispatch]);
 
   // add
   const handleAdd = () => {
@@ -66,7 +64,7 @@ const CategoryList = () => {
 
   return (
     <Layout>
-      {activeSelect?.rol === "owner" ? (
+      {isloggedIn === true && activeSelect?.rol === "owner" ? (
         <Container maxW={"container.sm"} my={10}>
           <Box boxShadow="2xl" p={5}>
             <Table fontSize={points20} size={{ base: "sm" }}>
@@ -92,7 +90,7 @@ const CategoryList = () => {
               </Thead>
               <Tbody>
                 {list?.map((data) => (
-                  <CategoryScrenn key={data.id} {...data} />
+                  <CategoryScrenn key={data?.id} {...data} />
                 ))}
               </Tbody>
             </Table>
@@ -104,5 +102,19 @@ const CategoryList = () => {
     </Layout>
   );
 };
+
+export async function getStaticProps() {
+  const q = query(collection(db, "categories"));
+  const el = await getDocs(q);
+
+  const data = el.docs?.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  return {
+    props: { data },
+  };
+}
 
 export default CategoryList;

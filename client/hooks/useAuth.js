@@ -26,9 +26,9 @@ const useAuth = () => {
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
+        setIsloggedIn(true);
         await getRol(user.uid).then((rol) => {
           dispatch(login(user.uid, user.displayName, user.email, rol));
-          setIsloggedIn(true);
         });
       } else {
         setIsloggedIn(false);

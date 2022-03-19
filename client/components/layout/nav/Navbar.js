@@ -51,12 +51,12 @@ import NavLink from "../../../helpers/Navlink";
 import { DrawerNavbar } from "./DrawerNavbar";
 import { DialogSerchNavbar } from "./DialogSerchNavbar";
 import { BreadcrumbNavbar } from "./BreadcrumbNavbar";
+import PopoverUserNavbar from "./PopoverUserNavbar";
 
 import { useModality } from "../../../hooks/useModality";
 import useAuth from "../../../hooks/useAuth";
 
 import { logout } from "../../../actions/auth";
-import PopoverUserNavbar from "./PopoverUserNavbar";
 
 const Navbar = () => {
   // dispatch

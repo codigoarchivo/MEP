@@ -21,6 +21,20 @@ export const categoryReducer = (states = initialStates, action) => {
         ...states,
         list: [...states.list, action.payload],
       };
+    case types.categoryEdit:
+      return {
+        ...states,
+        list: states.list.map((e) =>
+          e.id === action.payload.id ? (e = action.payload) : e
+        ),
+        activeSelect: null,
+      };
+    case types.categoryDelete:
+      return {
+        ...states,
+        list: states.list.filter((e) => e.id !== action.payload),
+        activeSelect: null,
+      };
     case types.closeActive:
       return {
         ...states,

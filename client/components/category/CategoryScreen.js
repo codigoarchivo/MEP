@@ -31,7 +31,7 @@ const CategoryScrenn = (props) => {
   const handleEdit = () => {
     router.push({
       pathname: "/category/[pid]",
-      query: { pid: props.id, word: "Edit" },
+      query: { pid: props?.id, word: "Edit" },
     });
   };
 
@@ -39,7 +39,7 @@ const CategoryScrenn = (props) => {
   const handleDelete = () => {
     router.push({
       pathname: "/category/[pid]",
-      query: { pid: props.id, word: "Delete" },
+      query: { pid: props?.id, word: "Delete" },
     });
   };
 

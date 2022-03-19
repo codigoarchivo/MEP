@@ -30,18 +30,20 @@ const configCategory = ({ router: { query } }) => {
       );
     }
 
-    if (query?.word?.toString() !== "Add") {
+    if (
+      query?.word?.toString() === "Edit" ||
+      query?.word?.toString() === "Delete"
+    ) {
       const idData = list.find((x) => x.id === query?.pid?.toString());
-
       dispatch(
         activeCategory({
           word: query?.word?.toString(),
-          na: idData?.na,
-          pid: idData?.id,
+          na: idData?.na?.toString(),
+          id: idData?.id?.toString(),
         })
       );
     }
-  }, [dispatch, query, list]);
+  }, [dispatch]);
   // breakpoints
   const { points21, points22 } = Breakpoints();
   return (

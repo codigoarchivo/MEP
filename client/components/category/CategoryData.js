@@ -24,6 +24,8 @@ import {
   activeCategory,
   addCategory,
   closeCategory,
+  deleteCategory,
+  editCategory,
 } from "../../actions/category";
 
 const CategoryData = ({ activeSelect }) => {
@@ -38,7 +40,7 @@ const CategoryData = ({ activeSelect }) => {
   // validar
   const { fiel, ErrorCatData } = Validator(values);
   // values
-  const { na, pid, word } = values;
+  const { na, id, word } = values;
 
   useEffect(() => {
     dispatch(
@@ -56,10 +58,10 @@ const CategoryData = ({ activeSelect }) => {
       return Swal.fire("Error", fiel, "error");
     } else {
       word === "Add" && dispatch(addCategory(na));
-      word === "Edit" && dispatch(editDataUser({ na, pid }));
-      word === "Delete" && dispatch(deleteDataUser(pid));
+      word === "Edit" && dispatch(editCategory({ na, id }));
+      word === "Delete" && dispatch(deleteCategory(id));
+      onClose();
     }
-    onClose();
   };
   // cerrar
   const onClose = () => {

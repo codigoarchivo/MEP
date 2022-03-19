@@ -24,8 +24,10 @@ export const types = {
 
   category: "[CATEGORY] List",
   categoryAdd: "[CATEGORY] Add",
-  categoryActive: "[CATEGORY] active",
-  categoryClose: "[CATEGORY] active",
+  categoryEdit: "[CATEGORY] Edit",
+  categoryDelete: "[CATEGORY] Delete",
+  categoryActive: "[CATEGORY] Active",
+  categoryClose: "[CATEGORY] Close",
 
   userRol: "[ROL] roles",
 };
