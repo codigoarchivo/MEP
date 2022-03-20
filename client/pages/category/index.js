@@ -26,7 +26,7 @@ import Layout from "../../components/layout/layout";
 
 import { db } from "../../firebase/config";
 
-import { listDataCategory } from "../../actions/category";
+import { activeCategory, listDataCategory } from "../../actions/category";
 
 import useAuth from "../../hooks/useAuth";
 
@@ -56,6 +56,14 @@ const CategoryList = ({ data }) => {
 
   // add
   const handleAdd = () => {
+
+    dispatch(
+      activeCategory({
+        word: "Add",
+        na: "",
+      })
+    );
+
     router.push({
       pathname: "/category/[pid]",
       query: { pid: "new", word: "Add" },
@@ -89,8 +97,8 @@ const CategoryList = ({ data }) => {
                 </Tr>
               </Thead>
               <Tbody>
-                {list?.map((data) => (
-                  <CategoryScrenn key={data?.id} {...data} />
+                {list.map((data) => (
+                  <CategoryScrenn key={data.id} {...data} />
                 ))}
               </Tbody>
             </Table>
@@ -107,7 +115,7 @@ export async function getStaticProps() {
   const q = query(collection(db, "categories"));
   const el = await getDocs(q);
 
-  const data = el.docs?.map((doc) => ({
+  const data = el.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }));

@@ -1,4 +1,10 @@
-import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 
 import Swal from "sweetalert2";
 
@@ -27,40 +33,44 @@ export const addCategory = (na) => {
       const { id } = await addDoc(collection(db, "categories"), {
         na,
       });
-      dispatch(
-        categoryAdd({
-          na,
-          id,
-        })
-      );
+
+      if (id) {
+        dispatch(categoryAdd(id, na));
+      }
     } catch (error) {
       Swal.fire("Error", error, "error");
     }
   };
 };
 
-const categoryAdd = (data) => ({
+const categoryAdd = (id, na) => ({
   type: types.categoryAdd,
-  payload: data,
+  payload: {
+    id: id.toString(),
+    na: na.toString(),
+  },
 });
 
-export const editCategory = (data) => {
+export const editCategory = (na, id) => {
   return async (dispatch) => {
     try {
-      const dataRef = doc(db, "categories", data?.id);
+      const dataRef = doc(db, "categories", id);
       await updateDoc(dataRef, {
-        na: data?.na,
+        na,
       });
-      dispatch(categoryEdit(data));
+      dispatch(categoryEdit(na, id));
     } catch (error) {
       Swal.fire("Error", error, "error");
     }
   };
 };
 
-const categoryEdit = (data) => ({
+const categoryEdit = (na, id) => ({
   type: types.categoryEdit,
-  payload: data,
+  payload: {
+    id: id.toString(),
+    na: na.toString(),
+  },
 });
 
 export const deleteCategory = (id) => {
@@ -76,7 +86,7 @@ export const deleteCategory = (id) => {
 
 const categoryDelete = (id) => ({
   type: types.categoryDelete,
-  payload: id,
+  payload: { id: id.toString() },
 });
 
 export const activeCategory = (data) => ({

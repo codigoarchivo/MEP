@@ -4,11 +4,9 @@ import { useDispatch } from "react-redux";
 
 import { onAuthStateChanged } from "firebase/auth";
 
-import { auth, db } from "../firebase/config";
+import { auth } from "../firebase/config";
 
 import { login } from "../actions/auth";
-
-import { collection, getDocs, query, where } from "firebase/firestore";
 
 const useAuth = () => {
   // dispatch
@@ -16,20 +14,18 @@ const useAuth = () => {
   const [checking, setChecking] = useState(true);
   const [isloggedIn, setIsloggedIn] = useState(false);
 
-  async function getRol(uid) {
-    const q = query(collection(db, "users"), where("id", "==", uid));
-    const el = await getDocs(q);
-    const data = el?.docs[0]?.data().rol;
-    return data;
-  }
-
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         setIsloggedIn(true);
-        await getRol(user.uid).then((rol) => {
-          dispatch(login(user.uid, user.displayName, user.email, rol));
-        });
+
+        const dA = process.env.NEXT_PUBLIC_ROL_A;
+        const r = user.uid === dA.toString();
+
+        dispatch(
+          login(user.uid, user.displayName, user.email, r ? "owner" : "user")
+        );
+        
       } else {
         setIsloggedIn(false);
       }

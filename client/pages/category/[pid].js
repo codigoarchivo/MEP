@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { withRouter } from "next/router";
 
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 
 import { Center, Container, Spinner, VStack } from "@chakra-ui/react";
 
@@ -12,40 +12,13 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import Layout from "../../components/layout/layout";
 
-import { activeCategory } from "../../actions/category";
-
-const configCategory = ({ router: { query } }) => {
+const configCategory = () => {
   // selector
-  const { activeSelect, list } = useSelector(({ category }) => category);
-  // dispatch
-  const dispatch = useDispatch();
+  const { activeSelect } = useSelector(({ category }) => category);
 
-  useEffect(() => {
-    if (query?.word?.toString() === "Add") {
-      dispatch(
-        activeCategory({
-          word: query?.word?.toString(),
-          na: "",
-        })
-      );
-    }
-
-    if (
-      query?.word?.toString() === "Edit" ||
-      query?.word?.toString() === "Delete"
-    ) {
-      const idData = list.find((x) => x.id === query?.pid?.toString());
-      dispatch(
-        activeCategory({
-          word: query?.word?.toString(),
-          na: idData?.na?.toString(),
-          id: idData?.id?.toString(),
-        })
-      );
-    }
-  }, [dispatch]);
   // breakpoints
   const { points21, points22 } = Breakpoints();
+
   return (
     <Layout>
       <Container maxW={"container.sm"}>

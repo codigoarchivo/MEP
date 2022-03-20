@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useDispatch } from "react-redux";
+
 import { useRouter } from "next/router";
 
 import {
@@ -15,31 +17,46 @@ import {
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import {
-  DeleteIcon,
-  EditIcon,
-  PlusSquareIcon,
-} from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon, PlusSquareIcon } from "@chakra-ui/icons";
+
+import { activeCategory } from "../../actions/category";
 
 const CategoryScrenn = (props) => {
+  // dispatch
+  const dispatch = useDispatch();
   // router
   const router = useRouter();
   // breakpoints
   const { center, points18 } = Breakpoints();
 
   // edit
-  const handleEdit = () => {
+  const handleEdit = ({ id, na }) => {
+    dispatch(
+      activeCategory({
+        word: "Edit",
+        na: na.toString(),
+        id: id.toString(),
+      })
+    );
+
     router.push({
       pathname: "/category/[pid]",
-      query: { pid: props?.id, word: "Edit" },
+      query: { pid: id, word: "Edit" },
     });
   };
 
   // delete
-  const handleDelete = () => {
+  const handleDelete = ({ id }) => {
+    dispatch(
+      activeCategory({
+        word: "Delete",
+        id: id.toString(),
+      })
+    );
+
     router.push({
       pathname: "/category/[pid]",
-      query: { pid: props?.id, word: "Delete" },
+      query: { pid: id, word: "Delete" },
     });
   };
 
@@ -47,7 +64,7 @@ const CategoryScrenn = (props) => {
     <>
       <Tr>
         <Td textAlign={center} py={2}>
-          <Text>{props.na}</Text>
+          <Text>{props?.na}</Text>
         </Td>
         <Td textAlign={center} py={2}>
           <Menu>
@@ -66,7 +83,7 @@ const CategoryScrenn = (props) => {
                   cursor={"pointer"}
                   fontWeight={"normal"}
                   width="full"
-                  onClick={handleEdit}
+                  onClick={() => handleEdit(props)}
                 >
                   <EditIcon w={3} h={3} />
                   <Text>Editar</Text>
@@ -79,7 +96,7 @@ const CategoryScrenn = (props) => {
                   cursor={"pointer"}
                   fontWeight={"normal"}
                   width="full"
-                  onClick={handleDelete}
+                  onClick={() => handleDelete(props)}
                 >
                   <DeleteIcon w={3} h={3} />
                   <Text>Eliminar</Text>

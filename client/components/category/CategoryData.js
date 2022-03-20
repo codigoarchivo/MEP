@@ -45,11 +45,10 @@ const CategoryData = ({ activeSelect }) => {
   useEffect(() => {
     dispatch(
       activeCategory({
-        ...activeSelect,
-        na,
+        ...values,
       })
     );
-  }, [dispatch, na]);
+  }, [dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -58,10 +57,10 @@ const CategoryData = ({ activeSelect }) => {
       return Swal.fire("Error", fiel, "error");
     } else {
       word === "Add" && dispatch(addCategory(na));
-      word === "Edit" && dispatch(editCategory({ na, id }));
+      word === "Edit" && dispatch(editCategory(na, id));
       word === "Delete" && dispatch(deleteCategory(id));
-      onClose();
     }
+    onClose();
   };
   // cerrar
   const onClose = () => {

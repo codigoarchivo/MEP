@@ -4,44 +4,44 @@ const initialStates = {
   list: [],
   activeSelect: null,
 };
-export const categoryReducer = (states = initialStates, action) => {
+export const categoryReducer = (state = initialStates, action) => {
   switch (action.type) {
     case types.category:
       return {
-        ...states,
-        list: action.payload,
+        ...state,
+        list: [...action.payload],
       };
     case types.categoryActive:
       return {
-        ...states,
+        ...state,
         activeSelect: action.payload,
       };
     case types.categoryAdd:
       return {
-        ...states,
-        list: [...states.list, action.payload],
+        ...state,
+        list: [...state.list, action.payload],
       };
     case types.categoryEdit:
       return {
-        ...states,
-        list: states.list.map((e) =>
+        ...state,
+        activeSelect: null,
+        list: state.list.map((e) =>
           e.id === action.payload.id ? (e = action.payload) : e
         ),
-        activeSelect: null,
       };
     case types.categoryDelete:
       return {
-        ...states,
-        list: states.list.filter((e) => e.id !== action.payload),
+        ...state,
         activeSelect: null,
+        list: state.list.filter((e) => e.id !== action.payload),
       };
     case types.closeActive:
       return {
-        ...states,
+        ...state,
         activeSelect: null,
       };
 
     default:
-      return states;
+      return state;
   }
 };

@@ -1,5 +1,5 @@
-import { persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+// import { persistReducer } from "redux-persist";
+// import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
 import { combineReducers } from "redux";
 import { categoryReducer } from "./categoryReducer";
@@ -8,15 +8,15 @@ import { productReducer } from "./productReducer";
 import { authReducer } from "./authReducer";
 import { uiReducer } from "./uiReducer";
 
-const persistConfig = {
-  key: "category",
-  storage,
-};
-
+// const persistConfig = {
+//   key: "category",
+//   storage,
+// };
+// persistReducer(persistConfig, serchReducer),
 export const rootReducer = combineReducers({
   ui: uiReducer,
   auth: authReducer,
   serch: serchReducer,
-  category: persistReducer(persistConfig, categoryReducer) ,
+  category: categoryReducer,
   product: productReducer,
 });
