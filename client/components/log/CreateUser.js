@@ -47,7 +47,7 @@ const CreateUser = () => {
   // vista de la contraseña
   const { show, handleClick, handleClick2 } = useFormShow();
   // guardar states
-  const { values, handleInputChange } = useForm(initialStates);
+  const [values, handleInputChange] = useForm(initialStates);
   // validar
   const {
     nameE,

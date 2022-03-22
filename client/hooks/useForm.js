@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Swal from "sweetalert2";
 
@@ -8,12 +8,17 @@ import { startUploading } from "../actions/product";
 
 import Validator from "../helpers/Validator";
 
-const useForm = (initialStates = {}) => {
-  // console.log(initialStates);
+const useForm = (initialStates = {}, data) => {
   // dispatch
   const dispatch = useDispatch();
 
   const [values, setValues] = useState(initialStates);
+
+  useEffect(() => {
+    if (data) {
+      setValues({ ...values, ...data });
+    }
+  }, [setValues]);
 
   const reset = (newFormState = initialStates) => {
     setValues(newFormState);
@@ -42,13 +47,13 @@ const useForm = (initialStates = {}) => {
     dispatch(startUploading(file));
   };
 
-  return {
+  return [
     values,
     handleInputChange,
     handleInputChange2,
     handleInputChange3,
     reset,
-  };
+  ];
 };
 
 export default useForm;

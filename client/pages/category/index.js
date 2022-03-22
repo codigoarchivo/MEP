@@ -52,15 +52,13 @@ const CategoryList = ({ data }) => {
     if (data) {
       dispatch(listDataCategory(data));
     }
-  }, [dispatch]);
+  }, [data]);
 
   // add
   const handleAdd = () => {
-
     dispatch(
       activeCategory({
         word: "Add",
-        na: "",
       })
     );
 
@@ -111,7 +109,7 @@ const CategoryList = ({ data }) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const q = query(collection(db, "categories"));
   const el = await getDocs(q);
 

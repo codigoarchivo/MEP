@@ -6,7 +6,7 @@ import Proptypes from "prop-types";
 
 import { useRouter } from "next/router";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { CloseButton, Heading, HStack, VStack } from "@chakra-ui/react";
 
@@ -16,7 +16,7 @@ import Validator from "../../helpers/Validator";
 
 import useForm from "../../hooks/useForm";
 
-import ProductForm from "./CategoryForm";
+import CategoryForm from "./CategoryForm";
 
 import CategoryDelete from "./CategoryDelete";
 
@@ -28,7 +28,15 @@ import {
   editCategory,
 } from "../../actions/category";
 
-const CategoryData = ({ activeSelect }) => {
+const initialStates = {
+  id: "",
+  na: "",
+  word: "",
+};
+
+const CategoryData = () => {
+  // selector
+  const { activeSelect } = useSelector(({ category }) => category);
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -36,7 +44,7 @@ const CategoryData = ({ activeSelect }) => {
   // Breakpoints
   const { points1, repeat1, points3 } = Breakpoints();
   // useForm
-  const { values, handleInputChange } = useForm(activeSelect);
+  const [values, handleInputChange] = useForm(initialStates, activeSelect);
   // validar
   const { fiel, ErrorCatData } = Validator(values);
   // values
@@ -76,6 +84,7 @@ const CategoryData = ({ activeSelect }) => {
           {word}
         </Heading>
       </HStack>
+      
       {word === "Delete" ? (
         <CategoryDelete
           word={word}
@@ -85,7 +94,7 @@ const CategoryData = ({ activeSelect }) => {
           handleSubmit={handleSubmit}
         />
       ) : (
-        <ProductForm
+        <CategoryForm
           na={na}
           word={word}
           HStack={HStack}

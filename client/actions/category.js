@@ -33,9 +33,9 @@ export const addCategory = (na) => {
       const { id } = await addDoc(collection(db, "categories"), {
         na,
       });
-
       if (id) {
-        dispatch(categoryAdd(id, na));
+        const data = { id, na };
+        dispatch(categoryAdd(data));
       }
     } catch (error) {
       Swal.fire("Error", error, "error");
@@ -43,12 +43,9 @@ export const addCategory = (na) => {
   };
 };
 
-const categoryAdd = (id, na) => ({
+const categoryAdd = (data) => ({
   type: types.categoryAdd,
-  payload: {
-    id: id.toString(),
-    na: na.toString(),
-  },
+  payload: data,
 });
 
 export const editCategory = (na, id) => {
@@ -58,19 +55,18 @@ export const editCategory = (na, id) => {
       await updateDoc(dataRef, {
         na,
       });
-      dispatch(categoryEdit(na, id));
+
+      const data = { id, na };
+      dispatch(categoryEdit(data));
     } catch (error) {
       Swal.fire("Error", error, "error");
     }
   };
 };
 
-const categoryEdit = (na, id) => ({
+const categoryEdit = (data) => ({
   type: types.categoryEdit,
-  payload: {
-    id: id.toString(),
-    na: na.toString(),
-  },
+  payload: data,
 });
 
 export const deleteCategory = (id) => {
@@ -86,7 +82,7 @@ export const deleteCategory = (id) => {
 
 const categoryDelete = (id) => ({
   type: types.categoryDelete,
-  payload: { id: id.toString() },
+  payload: id,
 });
 
 export const activeCategory = (data) => ({

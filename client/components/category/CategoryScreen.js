@@ -21,7 +21,7 @@ import { DeleteIcon, EditIcon, PlusSquareIcon } from "@chakra-ui/icons";
 
 import { activeCategory } from "../../actions/category";
 
-const CategoryScrenn = (props) => {
+const CategoryScrenn = ({ id, na }) => {
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -30,12 +30,12 @@ const CategoryScrenn = (props) => {
   const { center, points18 } = Breakpoints();
 
   // edit
-  const handleEdit = ({ id, na }) => {
+  const handleEdit = () => {
     dispatch(
       activeCategory({
         word: "Edit",
-        na: na.toString(),
-        id: id.toString(),
+        na,
+        id,
       })
     );
 
@@ -46,11 +46,12 @@ const CategoryScrenn = (props) => {
   };
 
   // delete
-  const handleDelete = ({ id }) => {
+  const handleDelete = () => {
     dispatch(
       activeCategory({
         word: "Delete",
-        id: id.toString(),
+        na,
+        id,
       })
     );
 
@@ -64,7 +65,7 @@ const CategoryScrenn = (props) => {
     <>
       <Tr>
         <Td textAlign={center} py={2}>
-          <Text>{props?.na}</Text>
+          <Text>{na}</Text>
         </Td>
         <Td textAlign={center} py={2}>
           <Menu>
@@ -83,7 +84,7 @@ const CategoryScrenn = (props) => {
                   cursor={"pointer"}
                   fontWeight={"normal"}
                   width="full"
-                  onClick={() => handleEdit(props)}
+                  onClick={handleEdit}
                 >
                   <EditIcon w={3} h={3} />
                   <Text>Editar</Text>
@@ -96,7 +97,7 @@ const CategoryScrenn = (props) => {
                   cursor={"pointer"}
                   fontWeight={"normal"}
                   width="full"
-                  onClick={() => handleDelete(props)}
+                  onClick={handleDelete}
                 >
                   <DeleteIcon w={3} h={3} />
                   <Text>Eliminar</Text>
