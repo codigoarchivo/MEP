@@ -53,10 +53,8 @@ const serchList = ({ data, dataB }) => {
       setDataList(activeList);
     } else {
       setDataList(data);
+      setfirstOrEnd(dataB);
     }
-
-    dataB && setfirstOrEnd(dataB);
-
     return () => {
       setModality(true);
       setModality2(false);

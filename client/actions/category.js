@@ -85,6 +85,11 @@ const categoryDelete = (id) => ({
   payload: id,
 });
 
+export const activeCategoryOld = (data) => ({
+  type: types.categoryActiveOld,
+  payload: data,
+});
+
 export const activeCategory = (data) => ({
   type: types.categoryActive,
   payload: data,

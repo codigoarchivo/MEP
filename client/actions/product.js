@@ -94,14 +94,12 @@ const dataDeleteUser = (id) => ({
   payload: id,
 });
 
-export const activeOrInactive = (data) => {
-  // TODO api activeOrInactive
-  return async (dispatch) => {
-    dispatch(InactiveOrActive(data));
-  };
-};
+export const activeProduct = (data) => ({
+  type: types.productActive,
+  payload: data,
+});
 
-const InactiveOrActive = (data) => ({
+export const activeProductImg = (data) => ({
   type: types.activeOrInactive,
   payload: data,
 });

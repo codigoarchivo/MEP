@@ -14,10 +14,12 @@ export const types = {
 
   product: "[PRODUCT] List",
   productAdd: "[PRODUCT] Add",
-  productImgActive: "[PRODUCT] Active",
   productEdit: "[PRODUCT] Edit",
   productDelete: "[PRODUCT] Delete",
-  activeOrInactive: "[PRODUCT] ActiveOrInactive",
+  productImgActive: "[PRODUCT] Image",
+  productActive: "[PRODUCT] Active",
+  productClose: "[PRODUCT] Close",
+
 
   active: "[DATA] Active",
   closeActive: "[DATA] Close",
@@ -27,6 +29,7 @@ export const types = {
   categoryEdit: "[CATEGORY] Edit",
   categoryDelete: "[CATEGORY] Delete",
   categoryActive: "[CATEGORY] Active",
+  categoryActiveOld: "[CATEGORY] Old",
   categoryClose: "[CATEGORY] Close",
 
   userRol: "[ROL] roles",

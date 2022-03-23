@@ -44,6 +44,12 @@ const ProductScrenn = (props) => {
 
   // edit
   const handleEdit = () => {
+    dispatch(
+      activeProduct({
+        word: "Edit",
+      })
+    );
+
     router.push({
       pathname: "/product/[pid]",
       query: { pid: props.id, word: "Edit" },
@@ -52,6 +58,12 @@ const ProductScrenn = (props) => {
 
   // delete
   const handleDelete = () => {
+    dispatch(
+      activeProduct({
+        word: "Delete",
+      })
+    );
+
     router.push({
       pathname: "/product/[pid]",
       query: { pid: props.id, word: "Delete" },
@@ -60,6 +72,13 @@ const ProductScrenn = (props) => {
 
   // detalles
   const handleDetails = () => {
+    dispatch(
+      activeProduct({
+        word: "Details",
+      })
+    );
+
+
     router.push({
       pathname: "/product/[pid]",
       query: { pid: props.id, word: "Details" },
