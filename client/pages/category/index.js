@@ -4,12 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   collection,
+  endAt,
+  endBefore,
   getDocs,
   limit,
+  limitToLast,
   onSnapshot,
   orderBy,
   query,
   startAfter,
+  startAt,
   where,
 } from "firebase/firestore";
 
@@ -62,8 +66,6 @@ const CategoryList = ({ data, dataBotton }) => {
   const { activeSelect: category } = useSelector(({ auth }) => auth);
   // useState
   const [dataList, setDataList] = useState([]);
-  // firstOrEnd
-  const [firstOrEnd, setfirstOrEnd] = useState(null);
   // modality
   const { modality, setModality } = useModality(true);
   // modality
@@ -76,40 +78,14 @@ const CategoryList = ({ data, dataBotton }) => {
   if (category?.rol === "user") {
     router.push("/");
   }
-
-  // useEffect(async () => {
-  //   const q = query(collection(db, "categories"), orderBy("na", "asc"));
-  //   const el = await getDocs(q);
-  //   const dataBotton = {
-  //     first: el.docs[0].id,
-  //     end: el.docs[el.docs.length - 1].id,
-  //   };
-  //   dataBotton && setfirstOrEnd(dataBotton);
-  // }, []);
-
   useEffect(() => {
     if (activeSelectOld) {
       setDataList(activeSelectOld);
     } else {
-      setDataList(data);
+      // setDataList(data);
+      dispatch(listDataCategory(data));
     }
-    return () => {
-      setModality(true);
-      setModality2(false);
-    };
   }, []);
-
-  useEffect(() => {
-    // setModality(dataList.map((x) => x.id).includes(firstOrEnd?.first));
-    // setModality2(dataList.map((x) => x.id).includes(firstOrEnd?.end));
-
-    firstOrEnd && dispatch(listDataCategory(dataList));
-
-    // return () => {
-    //   setModality(true);
-    //   setModality2(false);
-    // };
-  }, [dataList, firstOrEnd]);
 
   // add
   const handleAdd = () => {
@@ -125,54 +101,58 @@ const CategoryList = ({ data, dataBotton }) => {
     });
   };
 
-  const next = () => {
-    // const lastVisible = dataList[dataList.length - 1];
+  
+  const previous = () => {
+    const firstVisible = list[0].na;
 
     const q = query(
       collection(db, "categories"),
-      orderBy("na", "asc"),
-      startAfter(firstOrEnd?.first),
-      limit(2)
+      orderBy("na"),
+      endAt(firstVisible),
+      limitToLast(4)
     );
-console.log(firstOrEnd?.first);
+
     onSnapshot(q, (snapshot) => {
-      const dataBotton = {
-        first: snapshot.docs[0].id,
-        end: snapshot.docs[snapshot.docs.length - 1].id,
-      };
-      dataBotton && setfirstOrEnd(dataBotton);
-      setDataList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      let data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      console.log(data);
+      if (data.length === 0) {
+        return setModality(true);
+      } else {
+        setModality(false);
+        setModality2(false);
+        dispatch(listDataCategory(data));
+      }
     });
 
     closeSave();
   };
 
-  const previous = () => {
-    // const firstVisible = dataList[0];
+
+  const next = () => {
+    const lastVisible = list[list.length - 1].na;
 
     const q = query(
       collection(db, "categories"),
-      orderBy("na", "desc"),
-      startAfter(firstOrEnd?.end),
-      limit(2)
+      orderBy("na", "asc"),
+      startAt(lastVisible),
+      limit(4)
     );
-
     onSnapshot(q, (snapshot) => {
-      const dataBotton = {
-        first: snapshot.docs[0].id,
-        end: snapshot.docs[snapshot.docs.length - 1].id,
-      };
-      dataBotton && setfirstOrEnd(dataBotton);
-      setDataList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      let data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      if (data.length === 0) {
+        return setModality2(true);
+      } else {
+        setModality(false);
+        setModality2(false);
+        dispatch(listDataCategory(data));
+      }
     });
 
     closeSave();
   };
 
   const closeSave = () => {
-    dispatch(activeCategoryOld(dataList));
-    dispatch(listDataCategory([]));
-    setDataList([]);
+    dispatch(activeCategoryOld(list));
   };
 
   return (
@@ -255,7 +235,7 @@ console.log(firstOrEnd?.first);
 };
 
 export async function getServerSideProps() {
-  const q = query(collection(db, "categories"), limit(2), orderBy("na", "asc"));
+  const q = query(collection(db, "categories"), limit(4), orderBy("na", "asc"));
   const el = await getDocs(q);
 
   const data = el.docs.map((doc) => ({
