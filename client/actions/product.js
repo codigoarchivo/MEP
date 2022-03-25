@@ -1,18 +1,14 @@
 import Swal from "sweetalert2";
 import { fileUpload } from "../helpers/fileUpload";
-import { store } from "../data/store";
 import { types } from "../type";
 
-export const listDataUser = (id) => {
-  // TODO api list uid
+export const listDataUser = (data) => {
   return async (dispatch) => {
-    const data = store.filter(
-      ({ uid, estado }) => (
-        uid.toLowerCase().includes(id), parseFloat(estado) === 1
-      )
-    );
-
-    await dispatch(dataListUser(data));
+    try {
+      await dispatch(dataListUser(data));
+    } catch (error) {
+      Swal.fire("Error", error, "error");
+    }
   };
 };
 

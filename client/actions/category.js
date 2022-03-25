@@ -33,8 +33,8 @@ export const addCategory = (na) => {
       const { id } = await addDoc(collection(db, "categories"), {
         na,
       });
-      if (id) {
-        const data = { id, na };
+      const data = { id, na };
+      if (data) {
         dispatch(categoryAdd(data));
       }
     } catch (error) {

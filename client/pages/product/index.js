@@ -2,6 +2,19 @@ import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import {
+  collection,
+  endBefore,
+  getDocs,
+  limit,
+  limitToLast,
+  onSnapshot,
+  orderBy,
+  query,
+  startAfter,
+  where,
+} from "firebase/firestore";
+
 import { useRouter } from "next/router";
 
 import {
@@ -19,9 +32,17 @@ import {
   Tr,
 } from "@chakra-ui/react";
 
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  RepeatIcon,
+} from "@chakra-ui/icons";
+
 import ProductScrenn from "../../components/product/ProductScreen";
 
 import Layout from "../../components/layout/layout";
+
+import { db } from "../../firebase/config";
 
 import { listDataUser } from "../../actions/product";
 
@@ -29,7 +50,13 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import useAuth from "../../hooks/useAuth";
 
-const ProductList = ({ uid }) => {
+import {
+  useModality,
+  useModality2,
+  useModality3,
+} from "../../hooks/useModality";
+
+const ProductList = ({ data }) => {
   // router
   const router = useRouter();
   // breakpoints
@@ -48,8 +75,8 @@ const ProductList = ({ uid }) => {
   }
 
   useEffect(() => {
-    dispatch(listDataUser(uid));
-  }, [dispatch]);
+    dispatch(listDataUser(data));
+  }, [dispatch, data]);
 
   // add
   const handleAdd = () => {
@@ -125,11 +152,23 @@ const ProductList = ({ uid }) => {
 };
 
 export async function getServerSideProps() {
-  // TODO UID perfil
-  const uid = "5511952266559595".toLowerCase();
+  const q = query(
+    collection(db, "serchs"),
+    where("es", "==", true),
+    orderBy("na", "asc"),
+    limit(2)
+  );
+
+  const el = await getDocs(q);
+
+  const data = el.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
   return {
     props: {
-      uid,
+      data,
     },
   };
 }

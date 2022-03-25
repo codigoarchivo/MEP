@@ -32,7 +32,7 @@ import {
 
 import { activeOrInactive } from "../../actions/product";
 
-const ProductScrenn = (props) => {
+const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -52,9 +52,10 @@ const ProductScrenn = (props) => {
 
     router.push({
       pathname: "/product/[pid]",
-      query: { pid: props.id, word: "Edit" },
+      query: { pid: id, word: "Edit" },
     });
   };
+
 
   // delete
   const handleDelete = () => {
@@ -66,7 +67,7 @@ const ProductScrenn = (props) => {
 
     router.push({
       pathname: "/product/[pid]",
-      query: { pid: props.id, word: "Delete" },
+      query: { pid: id, word: "Delete" },
     });
   };
 
@@ -78,16 +79,15 @@ const ProductScrenn = (props) => {
       })
     );
 
-
     router.push({
       pathname: "/product/[pid]",
-      query: { pid: props.id, word: "Details" },
+      query: { pid: id, word: "Details" },
     });
   };
   // Active or Inactive
   const handleActiveOrInactive = (data) => {
     dispatch(activeOrInactive(data));
-    onToggle(data.estado === 1 ? false : true);
+    onToggle(es ? false : true);
   };
 
   return (
@@ -96,7 +96,7 @@ const ProductScrenn = (props) => {
         <Td>
           <AspectRatio ratio={1} w={59} h={59}>
             <Image
-              src={`/img/${props.image}.jpg`}
+              src={`/img/${im}.jpg`}
               alt="Picture of the author"
               layout="fill"
               objectFit="contain"
@@ -104,13 +104,13 @@ const ProductScrenn = (props) => {
           </AspectRatio>
         </Td>
         <Td>
-          <Text>{props.nombre}</Text>
+          <Text>{na}</Text>
         </Td>
         <Td display={displayOff3}>
-          <Text>{props.precio}$</Text>
+          <Text>{pr}$</Text>
         </Td>
         <Td display={displayOff3}>
-          <Text>{props.category}</Text>
+          <Text>{ct?.na}</Text>
         </Td>
         <Td textAlign={"center"}>
           <Menu>
@@ -124,7 +124,7 @@ const ProductScrenn = (props) => {
             </MenuButton>
             <MenuList minWidth={0}>
               <MenuItem>
-                {props.estado === 1 ? (
+                {es ? (
                   <HStack
                     spacing={3}
                     cursor={"pointer"}
@@ -132,8 +132,8 @@ const ProductScrenn = (props) => {
                     width="full"
                     onClick={() =>
                       handleActiveOrInactive({
-                        estado: 0,
-                        id: props.id,
+                        es: false,
+                        id,
                       })
                     }
                   >
@@ -148,7 +148,7 @@ const ProductScrenn = (props) => {
                     width="full"
                     onClick={() =>
                       handleActiveOrInactive({
-                        estado: 1,
+                        es: true,
                         id: props.id,
                       })
                     }

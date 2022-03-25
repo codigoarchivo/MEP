@@ -10,7 +10,7 @@ export const categoryReducer = (state = initialStates, action) => {
     case types.categoryAdd:
       return {
         ...state,
-        list: [action.payload, ...state.list],
+        list: [...state.list, action.payload],
       };
     case types.categoryActive:
       return {

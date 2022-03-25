@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
 import {
   collection,
-  endAt,
   endBefore,
   getDocs,
   limit,
@@ -13,8 +12,6 @@ import {
   orderBy,
   query,
   startAfter,
-  startAt,
-  where,
 } from "firebase/firestore";
 
 import { useRouter } from "next/router";
@@ -35,6 +32,12 @@ import {
   Tr,
 } from "@chakra-ui/react";
 
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  RepeatIcon,
+} from "@chakra-ui/icons";
+
 import Breakpoints from "../../helpers/Breakpoints";
 
 import CategoryScrenn from "../../components/category/CategoryScreen";
@@ -43,49 +46,42 @@ import Layout from "../../components/layout/layout";
 
 import { db } from "../../firebase/config";
 
-import {
-  activeCategory,
-  activeCategoryOld,
-  listDataCategory,
-} from "../../actions/category";
+import { activeCategory, listDataCategory } from "../../actions/category";
 
 import useAuth from "../../hooks/useAuth";
 
-import { useModality, useModality2 } from "../../hooks/useModality";
+import {
+  useModality,
+  useModality2,
+  useModality3,
+} from "../../hooks/useModality";
 
-import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
-
-const CategoryList = ({ data, dataBotton }) => {
+const CategoryList = ({ data }) => {
   // router
   const router = useRouter();
   // breakpoints
   const { center, points19, points20 } = Breakpoints();
   // selector
-  const { list, activeSelectOld } = useSelector(({ category }) => category);
+  const { list } = useSelector(({ category }) => category);
   // selector
-  const { activeSelect: category } = useSelector(({ auth }) => auth);
-  // useState
-  const [dataList, setDataList] = useState([]);
+  const { activeSelect } = useSelector(({ auth }) => auth);
   // modality
   const { modality, setModality } = useModality(true);
   // modality
   const { modality2, setModality2 } = useModality2();
+  // modality
+  const { modality3, setModality3 } = useModality3(true);
   // useAuth
   const { isloggedIn } = useAuth();
   // dispatch
   const dispatch = useDispatch();
 
-  if (category?.rol === "user") {
+  if (activeSelect?.rol === "user") {
     router.push("/");
   }
   useEffect(() => {
-    if (activeSelectOld) {
-      setDataList(activeSelectOld);
-    } else {
-      // setDataList(data);
-      dispatch(listDataCategory(data));
-    }
-  }, []);
+    dispatch(listDataCategory(data));
+  }, [dispatch, data]);
 
   // add
   const handleAdd = () => {
@@ -101,32 +97,51 @@ const CategoryList = ({ data, dataBotton }) => {
     });
   };
 
-  
+  const home = () => {
+    const firstVisible = list[0].na;
+
+    const q = query(
+      collection(db, "categories"),
+      orderBy("na", "asc"),
+      endBefore(firstVisible),
+      limit(10)
+    );
+
+    onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs
+        .map((doc) => ({ id: doc.id, ...doc.data() }))
+        .slice(0, 10);
+
+      if (data.length === 0) {
+        return setModality(true);
+      } else {
+        handleModality();
+        dispatch(listDataCategory(data));
+      }
+    });
+  };
+
   const previous = () => {
     const firstVisible = list[0].na;
 
     const q = query(
       collection(db, "categories"),
-      orderBy("na"),
-      endAt(firstVisible),
-      limitToLast(4)
+      orderBy("na", "asc"),
+      endBefore(firstVisible),
+      limitToLast(10)
     );
 
     onSnapshot(q, (snapshot) => {
-      let data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      console.log(data);
-      if (data.length === 0) {
-        return setModality(true);
-      } else {
-        setModality(false);
-        setModality2(false);
+      const data = snapshot.docs
+        .map((doc) => ({ id: doc.id, ...doc.data() }))
+        .slice(0, 10);
+
+      if (data.length !== 0) {
+        setModality3(true);
         dispatch(listDataCategory(data));
       }
     });
-
-    closeSave();
   };
-
 
   const next = () => {
     const lastVisible = list[list.length - 1].na;
@@ -134,40 +149,41 @@ const CategoryList = ({ data, dataBotton }) => {
     const q = query(
       collection(db, "categories"),
       orderBy("na", "asc"),
-      startAt(lastVisible),
-      limit(4)
+      startAfter(lastVisible),
+      limit(10)
     );
+
     onSnapshot(q, (snapshot) => {
-      let data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      const data = snapshot.docs
+        .map((doc) => ({ id: doc.id, ...doc.data() }))
+        .slice(0, 10);
       if (data.length === 0) {
         return setModality2(true);
       } else {
-        setModality(false);
-        setModality2(false);
+        handleModality();
         dispatch(listDataCategory(data));
       }
     });
-
-    closeSave();
   };
 
-  const closeSave = () => {
-    dispatch(activeCategoryOld(list));
+  const handleModality = () => {
+    setModality(false);
+    setModality2(false);
+    setModality3(false);
   };
-
+  console.log(list);
   return (
     <Layout>
-      {!list[0] && (
-        <Center py={30}>
-          <Heading size={"sm"} textTransform={"uppercase"}>
-            Agrega una categoria
-          </Heading>
-        </Center>
-      )}
-
-      {isloggedIn === true && category?.rol === "owner" ? (
+      {isloggedIn === true && activeSelect?.rol === "owner" ? (
         <Container maxW={"container.sm"} my={20}>
           <Box boxShadow="2xl" p={5}>
+            {!list[0] && (
+              <Center py={30}>
+                <Heading size={"sm"} textTransform={"uppercase"}>
+                  Agrega una categoria
+                </Heading>
+              </Center>
+            )}
             <Table fontSize={points20} size={{ base: "sm" }}>
               <TableCaption>Lista de categorias</TableCaption>
               <Thead>
@@ -190,21 +206,15 @@ const CategoryList = ({ data, dataBotton }) => {
                 </Tr>
               </Thead>
               <Tbody>
-                {!list && (
-                  <Center py={30}>
-                    <Spinner size="xl" color="brand.800" />
-                  </Center>
-                )}
-
                 {list.map((data) => (
                   <CategoryScrenn key={data.id} {...data} />
                 ))}
               </Tbody>
             </Table>
           </Box>
-          <HStack justifyContent={"space-evenly"} mt={10}>
+          <HStack spacing={10} justifyContent={"center"} mt={10}>
             <Button
-              onClick={previous}
+              onClick={home}
               disabled={modality}
               variant={"primary"}
               cursor="pointer"
@@ -212,7 +222,18 @@ const CategoryList = ({ data, dataBotton }) => {
               background={"transparent"}
               p={1}
             >
-              <ArrowLeftIcon />
+              <RepeatIcon />
+            </Button>
+            <Button
+              onClick={previous}
+              disabled={modality3}
+              variant={"primary"}
+              cursor="pointer"
+              rounded="3xl"
+              background={"transparent"}
+              p={1}
+            >
+              <ChevronLeftIcon w={6} h={6} />
             </Button>
             <Button
               onClick={next}
@@ -223,7 +244,7 @@ const CategoryList = ({ data, dataBotton }) => {
               background={"transparent"}
               p={1}
             >
-              <ArrowRightIcon />
+              <ChevronRightIcon w={6} h={6} />
             </Button>
           </HStack>
         </Container>
@@ -235,7 +256,11 @@ const CategoryList = ({ data, dataBotton }) => {
 };
 
 export async function getServerSideProps() {
-  const q = query(collection(db, "categories"), limit(4), orderBy("na", "asc"));
+  const q = query(
+    collection(db, "categories"),
+    limit(10),
+    orderBy("na", "asc")
+  );
   const el = await getDocs(q);
 
   const data = el.docs.map((doc) => ({
