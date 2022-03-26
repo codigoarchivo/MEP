@@ -44,7 +44,7 @@ import Layout from "../../components/layout/layout";
 
 import { db } from "../../firebase/config";
 
-import { listDataUser } from "../../actions/product";
+import { activeProduct, listDataProduct } from "../../actions/product";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
@@ -75,7 +75,7 @@ const ProductList = ({ data }) => {
   }
 
   useEffect(() => {
-    dispatch(listDataUser(data));
+    dispatch(listDataProduct(data));
   }, [dispatch, data]);
 
   // add
@@ -109,7 +109,7 @@ const ProductList = ({ data }) => {
               <TableCaption>Tus publicaciones en nuestro sitio</TableCaption>
               <Thead>
                 <Tr>
-                  <Th pb={points19}>Tienda</Th>
+                  <Th pb={points19}></Th>
                   <Th pb={points19}>Nombre</Th>
                   <Th pb={points19} display={displayOff3}>
                     Precio
@@ -132,11 +132,6 @@ const ProductList = ({ data }) => {
                 </Tr>
               </Thead>
               <Tbody>
-                {!list && (
-                  <Center py={30}>
-                    <Spinner size="xl" color="brand.800" />
-                  </Center>
-                )}
                 {list.map((data) => (
                   <ProductScrenn key={data.id} {...data} />
                 ))}

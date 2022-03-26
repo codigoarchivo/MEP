@@ -11,14 +11,14 @@ const Validator = (values) => {
   const minPasswordV = values?.password?.length < 6;
   const minRePasswordV = values?.rePassword?.length < 6;
   const samePasswordV = values?.password !== values?.rePassword;
-  const mNombre = values?.nombre === "";
-  const mPrecio = values?.precio === "";
-  const mDetalles = values?.detalles === "";
-  const mImage = Number(values?.imgsize) > 500000;
-  const mImageCero = values?.image === "";
-  const mDescripcion = values?.descripcion === "";
-  const mCantidad = Number(values?.cantidad) === 0;
-  const mCategory = values?.category === "";
+  const mNombre = values?.na === "";
+  const mPrecio = values?.pr === "";
+  const mDetalles = values?.dt === "";
+  const mImage = Number(values?.imgsize) > 5000;
+  const mImageCero = values?.im === "";
+  const mDescripcion = values?.ds === "";
+  const mCantidad = Number(values?.cn) === 0;
+  const mCategory = values?.ct === "";
 
   const nameE = nameV && "Nombre is required.";
 

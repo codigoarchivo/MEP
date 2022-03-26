@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 
 import Swal from "sweetalert2";
 
@@ -6,7 +6,7 @@ import Proptypes from "prop-types";
 
 import { useRouter } from "next/router";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { CloseButton, Heading, HStack } from "@chakra-ui/react";
 
@@ -16,53 +16,55 @@ import Validator from "../../helpers/Validator";
 
 import useForm from "../../hooks/useForm";
 
-import { dataCategory } from "../../data/store";
-
 import ProductForm from "./ProductForm";
 
 import ProductDetails from "./ProductDetails";
 
 import {
-  addDataUser,
+  addProduct,
   closeActive,
   deleteDataUser,
   editDataUser,
 } from "../../actions/product";
 
 const initialStates = {
-  nombre: "",
-  precio: "",
-  image: "",
-  uid: "",
-  descripcion: "",
-  category: "",
-  cantidad: "",
-  detalles: "",
+  na: "",
+  pr: "",
+  ds: "",
+  ct: {},
+  cn: "",
+  dt: "",
+  im: "",
+  word: "",
 };
 
-const ProductData = ({ dataId }) => {
+const ProductData = () => {
+  // selector
+  const { activeSelect } = useSelector(({ product }) => product);
   // dispatch
   const dispatch = useDispatch();
   // router
   const router = useRouter();
-  // file
-  const file = useRef();
   // Breakpoints
   const { points1, repeat1, points3 } = Breakpoints();
 
   // useForm
-  const {
+  const [
     values,
+    urlImage,
+    progress,
     handleInputChange,
     handleInputChange2,
     handleInputChange3,
-  } = useForm(initialStates, dataId);
+    handleInputChange4,
+  ] = useForm(initialStates, activeSelect);
 
   // validar
   const { fiel, ErrorRetur } = Validator(values);
-
+  // agrega imagen
+  values.im = urlImage;
   // values
-  const { nombre, precio, descripcion, category, cantidad, detalles } = values;
+  const { na, pr, ds, ct, cn, dt, im, word } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -70,9 +72,11 @@ const ProductData = ({ dataId }) => {
     if (ErrorRetur) {
       return Swal.fire("Error", fiel, "error");
     } else {
-      values.word === "Add" && dispatch(addDataUser(values));
-      values.word === "Edit" && dispatch(editDataUser(values));
-      values.word === "Delete" && dispatch(deleteDataUser(values.id));
+      word === "Add" &&
+        dispatch(addProduct({ na, pr, ds, ct, cn, dt, im, es: true }));
+      word === "Edit" &&
+        dispatch(editDataUser({ na, pr, ds, ct, cn, dt, im, es, id }));
+      word === "Delete" && dispatch(deleteDataUser(id));
     }
 
     onClose();
@@ -88,36 +92,36 @@ const ProductData = ({ dataId }) => {
       <HStack spacing={5} w={"full"}>
         <CloseButton size="md" onClick={onClose} />
         <Heading as="h1" size={"md"} textTransform={"uppercase"}>
-          {values.word}
+          {word}
         </Heading>
       </HStack>
-      {values.word === "Details" || values.word === "Delete" ? (
+      {word === "Details" || word === "Delete" ? (
         <ProductDetails
           handleSubmit={handleSubmit}
           HStack={HStack}
           detalles={detalles}
-          word={values.word}
+          word={word}
           onClose={onClose}
         />
       ) : (
         <ProductForm
-          word={values.word}
-          nombre={nombre}
-          precio={precio}
-          descripcion={descripcion}
-          category={category}
-          cantidad={cantidad}
-          detalles={detalles}
+          word={word}
+          na={na}
+          pr={pr}
+          ds={ds}
+          ct={ct}
+          cn={cn}
+          dt={dt}
+          progress={progress}
           HStack={HStack}
-          file={file}
           repeat1={repeat1}
           points1={points1}
           points3={points3}
           onClose={onClose}
-          dataCategory={dataCategory}
           handleInputChange={handleInputChange}
           handleInputChange2={handleInputChange2}
           handleInputChange3={handleInputChange3}
+          handleInputChange4={handleInputChange4}
           handleSubmit={handleSubmit}
         />
       )}

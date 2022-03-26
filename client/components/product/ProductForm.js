@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 
 import { DownloadIcon } from "@chakra-ui/icons";
 
@@ -17,168 +19,190 @@ import {
   NumberInputStepper,
   Select,
   Textarea,
+  chakra,
 } from "@chakra-ui/react";
+
+import { db } from "../../firebase/config";
 
 import ModeColor from "../../helpers/ModeColor";
 
 const DialogProduct = ({
+  word,
+  na,
+  pr,
+  ds,
+  ct,
+  cn,
+  dt,
+  progress,
   HStack,
-  file,
   points3,
   repeat1,
   points1,
   onClose,
-  nombre,
-  precio,
-  descripcion,
-  category,
-  detalles,
-  dataCategory,
-  cantidad,
   handleSubmit,
   handleInputChange,
   handleInputChange2,
   handleInputChange3,
+  handleInputChange4,
 }) => {
   // mode Color
   const { bg, brand } = ModeColor();
+  // useState
+  const [selectCategory, setSelectCategory] = useState([]);
+  // file
+  const file = useRef();
+
+  useEffect(async () => {
+    const q = query(collection(db, "categories"), orderBy("na", "asc"));
+    const el = await getDocs(q);
+
+    const data = el.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    if (data.length > 0) {
+      setSelectCategory(data);
+    }
+  }, [setSelectCategory]);
 
   return (
     <>
-      <Grid
-        as={"form"}
-        templateRows={`repeat(5, 1fr)`}
-        templateColumns={repeat1}
-        alignItems={"center"}
-        onSubmit={handleSubmit}
-        columnGap={points3}
-        rowGap={2}
-        w={"full"}
-      >
-        <GridItem colSpan={points1}>
-          <FormLabel htmlFor="image">Image</FormLabel>
-          <InputGroup>
-            <Button
-              rightIcon={<DownloadIcon w={6} h={6} />}
-              variant={"outline"}
-              onClick={() => file.current.click()}
-              size="md"
-              fontWeight={"normal"}
-              _hover={{ border: bg }}
-              p={1}
-            >
-              Subir
-            </Button>
-            <Box
-              onChange={handleInputChange3}
-              name="image"
-              type={"file"}
-              ref={file}
-              as={"input"}
-              display="none"
+      <chakra.form onSubmit={handleSubmit} w={"full"}>
+        <Grid
+          templateRows={`repeat(5, 1fr)`}
+          templateColumns={repeat1}
+          alignItems={"center"}
+          columnGap={points3}
+          rowGap={2}
+        >
+          <GridItem colSpan={points1}>
+            <FormLabel htmlFor="im">Image</FormLabel>
+            <InputGroup>
+              <Button
+                w={"full"}
+                rightIcon={<DownloadIcon w={6} h={6} />}
+                variant={"outline"}
+                textTransform={"uppercase"}
+                onClick={() => file.current.click()}
+                size="md"
+                fontWeight={"normal"}
+                _hover={{ border: bg }}
+                p={1}
+              >
+                Subir: {progress}%
+              </Button>
+              <Box
+                onChange={handleInputChange3}
+                name="im"
+                type={"file"}
+                ref={file}
+                as={"input"}
+                display="none"
+              />
+            </InputGroup>
+          </GridItem>
+
+          <GridItem colSpan={points1}>
+            <FormLabel htmlFor="na">Nombre</FormLabel>
+            <Input
+              name="na"
+              id="na"
+              onChange={handleInputChange}
+              value={na}
+              type={"text"}
+              placeholder="Nombre"
             />
-          </InputGroup>
-        </GridItem>
+          </GridItem>
 
-        <GridItem colSpan={points1}>
-          <FormLabel htmlFor="nombre">Nombre</FormLabel>
-          <Input
-            name="nombre"
-            id="nombre"
-            onChange={handleInputChange}
-            value={nombre}
-            type={"text"}
-            placeholder="Nombre"
-          />
-        </GridItem>
+          <GridItem colSpan={points1}>
+            <FormLabel htmlFor="pr">Precio</FormLabel>
+            <Input
+              name="pr"
+              id="pr"
+              onChange={handleInputChange}
+              value={pr}
+              type={"text"}
+              placeholder="Precio"
+            />
+          </GridItem>
 
-        <GridItem colSpan={points1}>
-          <FormLabel htmlFor="precio">Precio</FormLabel>
-          <Input
-            name="precio"
-            id="precio"
-            onChange={handleInputChange}
-            value={precio}
-            type={"text"}
-            placeholder="Precio"
-          />
-        </GridItem>
+          <GridItem colSpan={points1}>
+            <FormLabel htmlFor="ds">Descripcion</FormLabel>
+            <Input
+              name="ds"
+              id="ds"
+              onChange={handleInputChange}
+              value={ds}
+              type={"text"}
+              placeholder="Descripcion"
+            />
+          </GridItem>
 
-        <GridItem colSpan={points1}>
-          <FormLabel htmlFor="descripcion">Descripcion</FormLabel>
-          <Input
-            name="descripcion"
-            id="descripcion"
-            onChange={handleInputChange}
-            value={descripcion}
-            type={"text"}
-            placeholder="Descripcion"
-          />
-        </GridItem>
+          <GridItem colSpan={points1}>
+            <FormLabel htmlFor="cn">Cantidad</FormLabel>
+            <NumberInput
+              name="cn"
+              id="cn"
+              onChange={handleInputChange2}
+              variant={"filled"}
+              value={cn}
+              min={1}
+              max={20}
+            >
+              <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+          </GridItem>
 
-        <GridItem colSpan={points1}>
-          <FormLabel htmlFor="cantidad">Cantidad</FormLabel>
-          <NumberInput
-            name="cantidad"
-            id="cantidad"
-            onChange={handleInputChange2}
-            variant={"filled"}
-            value={cantidad}
-            defaultValue={cantidad}
-            min={0}
-            max={20}
-          >
-            <NumberInputField type="number" />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-        </GridItem>
+          <GridItem colSpan={points1}>
+            <FormLabel htmlFor="ct">Categoria</FormLabel>
+            <Select
+              name="ct"
+              variant="filled"
+              placeholder="Options"
+              value={ct}
+              onChange={handleInputChange4}
+            >
+              {selectCategory.map(({ id, na }) => (
+                <option key={na} data-value={na} value={id}>
+                  {na}
+                </option>
+              ))}
+            </Select>
+          </GridItem>
 
-        <GridItem colSpan={points1}>
-          <FormLabel htmlFor="category">Categoria</FormLabel>
-          <Select
-            name="category"
-            variant="filled"
-            placeholder="Options"
-            value={category}
-            onChange={handleInputChange}
-          >
-            {dataCategory.map(({ nombre }) => (
-              <option key={nombre} value={nombre}>
-                {nombre}
-              </option>
-            ))}
-          </Select>
-        </GridItem>
+          <GridItem colSpan={2}>
+            <FormLabel htmlFor="dt">Detalles</FormLabel>
+            <Textarea
+              bg={bg}
+              _focus={brand}
+              variant="filled"
+              name="dt"
+              id="dt"
+              value={dt}
+              onChange={handleInputChange}
+              placeholder="Detalles"
+              size="xs"
+            />
+          </GridItem>
 
-        <GridItem colSpan={2}>
-          <FormLabel htmlFor="detalles">Detalles</FormLabel>
-          <Textarea
-            bg={bg}
-            _focus={brand}
-            variant="filled"
-            name="detalles"
-            id="detalles"
-            value={detalles}
-            onChange={handleInputChange}
-            placeholder="Detalles"
-            size="xs"
-          />
-        </GridItem>
-
-        <GridItem colSpan={2}>
-          <HStack w={"full"} justifyContent="flex-end" spacing={10}>
-            <Button variant={"secondary"} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant={"primary"} type="submit" ml={3}>
-              Enviar
-            </Button>
-          </HStack>
-        </GridItem>
-      </Grid>
+          <GridItem colSpan={2}>
+            <HStack w={"full"} justifyContent="flex-end" spacing={10}>
+              <Button variant={"secondary"} onClick={onClose}>
+                Close
+              </Button>
+              <Button variant={"primary"} type="submit" ml={3}>
+                {word}
+              </Button>
+            </HStack>
+          </GridItem>
+        </Grid>
+      </chakra.form>
     </>
   );
 };

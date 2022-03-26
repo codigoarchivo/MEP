@@ -30,7 +30,7 @@ import {
   PlusSquareIcon,
 } from "@chakra-ui/icons";
 
-import { activeOrInactive } from "../../actions/product";
+import { activeOrInactive, activeProduct } from "../../actions/product";
 
 const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
   // dispatch
@@ -47,6 +47,14 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
     dispatch(
       activeProduct({
         word: "Edit",
+        id,
+        na,
+        pr,
+        im,
+        ds,
+        ct,
+        cn,
+        dt,
       })
     );
 
@@ -56,12 +64,19 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
     });
   };
 
-
   // delete
   const handleDelete = () => {
     dispatch(
       activeProduct({
         word: "Delete",
+        id,
+        na,
+        pr,
+        im,
+        ds,
+        ct,
+        cn,
+        dt,
       })
     );
 
@@ -76,6 +91,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
     dispatch(
       activeProduct({
         word: "Details",
+        dt,
       })
     );
 
@@ -95,12 +111,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
       <Tr>
         <Td>
           <AspectRatio ratio={1} w={59} h={59}>
-            <Image
-              src={`/img/${im}.jpg`}
-              alt="Picture of the author"
-              layout="fill"
-              objectFit="contain"
-            />
+            <img src={im} alt="Picture of the author" />
           </AspectRatio>
         </Td>
         <Td>

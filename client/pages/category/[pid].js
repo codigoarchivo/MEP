@@ -1,7 +1,5 @@
 import React from "react";
 
-import { withRouter } from "next/router";
-
 import { useSelector } from "react-redux";
 
 import { Center, Container, Spinner, VStack } from "@chakra-ui/react";
@@ -36,4 +34,4 @@ const configCategory = () => {
   );
 };
 
-export default withRouter(configCategory);
+export default configCategory;

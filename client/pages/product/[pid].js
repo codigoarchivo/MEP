@@ -1,15 +1,18 @@
-import React from "react";
+import React from "react"
+;
+import { useSelector } from "react-redux";
 
-import { Container, VStack } from "@chakra-ui/react";
+import { Center, Container, Spinner, VStack } from "@chakra-ui/react";
 
 import ProductData from "../../components/product/ProductData";
 
-import { store } from "../../data/store";
-
 import Breakpoints from "../../helpers/Breakpoints";
+
 import Layout from "../../components/layout/layout";
 
-const configDashboard = ({ dataId }) => {
+const configDashboard = () => {
+  // selector
+  const { activeSelect } = useSelector(({ product }) => product);
   // breakpoints
   const { points21, points22 } = Breakpoints();
 
@@ -17,19 +20,16 @@ const configDashboard = ({ dataId }) => {
     <Layout>
       <Container maxW={"container.sm"}>
         <VStack p={points21} mt={points22} boxShadow="2xl">
-          <ProductData dataId={dataId} />
+          {!activeSelect && (
+            <Center py={30}>
+              <Spinner size="xl" color="brand.800" />
+            </Center>
+          )}
+
+          {activeSelect && <ProductData />}
         </VStack>
       </Container>
     </Layout>
   );
 };
-
-export async function getServerSideProps(context) {
-  const dataR = store.find((x) => x.id === context.query.pid.toString());
-  const dataId = {
-    data: dataR ? dataR : null,
-    word: context.query.word.toString(),
-  };
-  return { props: { dataId } };
-}
 export default configDashboard;

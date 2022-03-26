@@ -3,10 +3,14 @@ import { types } from "../type";
 const initialStates = {
   list: [],
   activeSelect: null,
-  activeSelectOld: null,
 };
 export const categoryReducer = (state = initialStates, action) => {
   switch (action.type) {
+    case types.category:
+      return {
+        ...state,
+        list: [...action.payload],
+      };
     case types.categoryAdd:
       return {
         ...state,
@@ -16,16 +20,6 @@ export const categoryReducer = (state = initialStates, action) => {
       return {
         ...state,
         activeSelect: action.payload,
-      };
-    case types.categoryActiveOld:
-      return {
-        ...state,
-        activeSelectOld: action.payload,
-      };
-    case types.category:
-      return {
-        ...state,
-        list: [...action.payload],
       };
     case types.categoryEdit:
       return {

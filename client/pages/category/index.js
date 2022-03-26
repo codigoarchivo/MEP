@@ -23,7 +23,6 @@ import {
   Container,
   Heading,
   HStack,
-  Spinner,
   Table,
   TableCaption,
   Tbody,
@@ -171,7 +170,7 @@ const CategoryList = ({ data }) => {
     setModality2(false);
     setModality3(false);
   };
-  console.log(list);
+
   return (
     <Layout>
       {isloggedIn === true && activeSelect?.rol === "owner" ? (
@@ -269,9 +268,7 @@ export async function getServerSideProps() {
   }));
 
   return {
-    props: {
-      data,
-    },
+    props: { data },
   };
 }
 
