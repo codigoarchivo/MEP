@@ -54,6 +54,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
         ds,
         ct,
         cn,
+        es,
         dt,
       })
     );
@@ -76,6 +77,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
         ds,
         ct,
         cn,
+        es,
         dt,
       })
     );
@@ -100,18 +102,35 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
       query: { pid: id, word: "Details" },
     });
   };
-  // Active or Inactive
-  const handleActiveOrInactive = (data) => {
-    dispatch(activeOrInactive(data));
-    onToggle(es ? false : true);
+
+  const handleActive = () => {
+    dispatch(
+      activeOrInactive({
+        es: false,
+        id,
+      })
+    );
   };
 
+  const handleInactive = () => {
+    dispatch(
+      activeOrInactive({
+        es: true,
+        id,
+      })
+    );
+  };
   return (
     <>
       <Tr>
         <Td>
           <AspectRatio ratio={1} w={59} h={59}>
-            <img src={im} alt="Picture of the author" />
+            <Image
+              src={im}
+              alt="Picture of the author"
+              layout="fill"
+              objectFit="contain"
+            />
           </AspectRatio>
         </Td>
         <Td>
@@ -141,12 +160,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
                     cursor={"pointer"}
                     fontWeight={"normal"}
                     width="full"
-                    onClick={() =>
-                      handleActiveOrInactive({
-                        es: false,
-                        id,
-                      })
-                    }
+                    onClick={handleActive}
                   >
                     <CheckCircleIcon w={3} h={3} />
                     <Text>Activo</Text>
@@ -157,12 +171,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
                     cursor={"pointer"}
                     fontWeight={"normal"}
                     width="full"
-                    onClick={() =>
-                      handleActiveOrInactive({
-                        es: true,
-                        id: props.id,
-                      })
-                    }
+                    onClick={handleInactive}
                   >
                     <NotAllowedIcon w={3} h={3} />
                     <Text>inActivo</Text>

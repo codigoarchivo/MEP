@@ -1,4 +1,4 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
 
 import Swal from "sweetalert2";
 
@@ -27,6 +27,7 @@ export const addProduct = (resData) => {
       const { id } = await addDoc(collection(db, "serchs"), {
         ...resData,
       });
+
       const data = { ...id, ...resData };
 
       if (data) {
@@ -43,38 +44,30 @@ const productAdd = (data) => ({
   payload: data,
 });
 
-export const dataActive = (data) => {
+export const editProduct = (data) => {
   return async (dispatch) => {
-    await dispatch(activeData(data));
+    try {
+      await setDoc(doc(db, "serchs", data?.id), data);
+      dispatch(productEdit(data));
+    } catch (error) {
+      Swal.fire("Error", error, "error");
+    }
   };
 };
 
-const activeData = (data) => ({
-  type: types.active,
-  payload: data,
-});
-
-export const editDataUser = (data) => {
-  delete data.word;
-  // TODO api update data
-  return async (dispatch) => {
-    dispatch(dataEditUser(data));
-  };
-};
-
-const dataEditUser = (data) => ({
+const productEdit = (data) => ({
   type: types.productEdit,
   payload: data,
 });
 
-export const deleteDataUser = (id) => {
-  // TODO api delete id
+export const deleteProduct = (id) => {
   return async (dispatch) => {
-    dispatch(dataDeleteUser(id));
+    await deleteDoc(doc(db, "serchs", id));
+    dispatch(productDelete(id));
   };
 };
 
-const dataDeleteUser = (id) => ({
+const productDelete = (id) => ({
   type: types.productDelete,
   payload: id,
 });
@@ -84,7 +77,7 @@ export const activeProduct = (data) => ({
   payload: data,
 });
 
-export const activeProductImg = (data) => ({
+export const activeOrInactive = (data) => ({
   type: types.activeOrInactive,
   payload: data,
 });

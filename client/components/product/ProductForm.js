@@ -26,7 +26,7 @@ import { db } from "../../firebase/config";
 
 import ModeColor from "../../helpers/ModeColor";
 
-const DialogProduct = ({
+const ProductForm = ({
   word,
   na,
   pr,
@@ -54,6 +54,7 @@ const DialogProduct = ({
   const file = useRef();
 
   useEffect(async () => {
+    // TODO colocar un dispatch para para mantener categorias en el state
     const q = query(collection(db, "categories"), orderBy("na", "asc"));
     const el = await getDocs(q);
 
@@ -207,4 +208,4 @@ const DialogProduct = ({
   );
 };
 
-export default DialogProduct;
+export default ProductForm;

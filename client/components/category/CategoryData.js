@@ -18,7 +18,7 @@ import useForm from "../../hooks/useForm";
 
 import CategoryForm from "./CategoryForm";
 
-import CategoryDelete from "./CategoryDelete";
+import CategoryFormWord from "./CategoryFormWord";
 
 import {
   activeCategory,
@@ -86,7 +86,7 @@ const CategoryData = () => {
       </HStack>
       
       {word === "Delete" ? (
-        <CategoryDelete
+        <CategoryFormWord
           word={word}
           HStack={HStack}
           VStack={VStack}

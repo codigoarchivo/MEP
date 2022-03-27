@@ -87,6 +87,10 @@ const Validator = (values) => {
   ) {
     ErrorRetur = true;
   }
+  let ErrorRetur2;
+  if (values.word !== "Add" && values.es === false) {
+    ErrorRetur2 = true;
+  }
   // CategoryData
 
   let ErrorCatData;
@@ -95,10 +99,12 @@ const Validator = (values) => {
   }
 
   const fiel = "Revisa si algun campo esta vacio";
+  const estado = "El estado de la operación es Desactivado";
+  const esImg = "Imagen no tiene que ser mayor a 5mb";
 
   return {
     fiel,
-    mImage,
+    estado,
     nameE,
     emailE,
     coPasswordE,
@@ -106,6 +112,7 @@ const Validator = (values) => {
     passwordL,
     field,
     mImage,
+    esImg,
     mNombre,
     mPrecio,
     mDetalles,
@@ -113,6 +120,7 @@ const Validator = (values) => {
     mCantidad,
     mCategory,
     ErrorRetur,
+    ErrorRetur2,
     ErrorLorR,
     ErrorRorL,
     passwordV,

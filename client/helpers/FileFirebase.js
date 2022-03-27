@@ -8,7 +8,7 @@ import {
 export const FileFirebase = (file, setUrlImage, setProgress) => {
   const storage = getStorage();
 
-  const storageRef = ref(storage, `fotosTienda/${file.name}`);
+  const storageRef = ref(storage, `fotosTienda/${file?.name}`);
 
   const uploadTask = uploadBytesResumable(storageRef, file);
 

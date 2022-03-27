@@ -32,15 +32,16 @@ const useForm = (initialStates = {}, data) => {
   };
 
   const handleInputChange3 = ({ target }) => {
-    const { mImage } = Validator({ imgsize: target.files[0].size });
-    
-    if (mImage)
-      return Swal.fire("Error", "Imagen no tiene que ser mayor a 5mb", "error");
+    const { mImage, esImg } = Validator({ imgsize: target.files[0]?.size });
+
+    if (mImage) return Swal.fire("Error", esImg, "error");
 
     const file = target.files[0];
-    FileFirebase(file, setUrlImage, setProgress);
-  };
 
+    if (file) {
+      FileFirebase(file, setUrlImage, setProgress);
+    }
+  };
 
   const handleInputChange4 = ({ target }) => {
     const ct = {

@@ -1,13 +1,13 @@
 import React from "react";
 import { Button, Heading, Text, VStack } from "@chakra-ui/react";
 
-const ProductDetails = ({ HStack, detalles, word, onClose, handleSubmit }) => {
+const ProductDetails = ({ HStack, dt, word, onClose, handleSubmit }) => {
   return (
     <>
       <HStack py={5}>
         {word === "Details" && (
           <Text lineHeight={2} p={5}>
-            {detalles}
+            {dt}
           </Text>
         )}
         {word === "Delete" && (
@@ -20,7 +20,7 @@ const ProductDetails = ({ HStack, detalles, word, onClose, handleSubmit }) => {
                 Close
               </Button>
               <Button variant={"primary"} type="submit" ml={3}>
-                Enviar
+                {word}
               </Button>
             </HStack>
           </VStack>

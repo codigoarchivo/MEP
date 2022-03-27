@@ -55,9 +55,12 @@ export const editCategory = (na, id) => {
       await updateDoc(dataRef, {
         na,
       });
-
+      
       const data = { id, na };
-      dispatch(categoryEdit(data));
+
+      if (data) {
+        dispatch(categoryEdit(data));
+      }
     } catch (error) {
       Swal.fire("Error", error, "error");
     }

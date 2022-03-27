@@ -18,24 +18,23 @@ import useForm from "../../hooks/useForm";
 
 import ProductForm from "./ProductForm";
 
-import ProductDetails from "./ProductDetails";
+import ProductFormWord from "./ProductFormWord";
 
 import {
   addProduct,
   closeActive,
-  deleteDataUser,
-  editDataUser,
+  deleteProduct,
+  editProduct,
 } from "../../actions/product";
 
 const initialStates = {
   na: "",
   pr: "",
   ds: "",
-  ct: {},
+  ct: "",
   cn: "",
   dt: "",
   im: "",
-  word: "",
 };
 
 const ProductData = () => {
@@ -58,16 +57,18 @@ const ProductData = () => {
     handleInputChange3,
     handleInputChange4,
   ] = useForm(initialStates, activeSelect);
-
-  // validar
-  const { fiel, ErrorRetur } = Validator(values);
   // agrega imagen
-  values.im = urlImage;
+  values.im = urlImage ? urlImage : values.im;
+  // validar
+  const { fiel, estado, ErrorRetur, ErrorRetur2 } = Validator(values);
   // values
-  const { na, pr, ds, ct, cn, dt, im, word } = values;
+  const { na, pr, ds, ct, cn, dt, im, es, id, word } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (ErrorRetur2) {
+      return Swal.fire("Error", estado, "error");
+    }
 
     if (ErrorRetur) {
       return Swal.fire("Error", fiel, "error");
@@ -75,8 +76,8 @@ const ProductData = () => {
       word === "Add" &&
         dispatch(addProduct({ na, pr, ds, ct, cn, dt, im, es: true }));
       word === "Edit" &&
-        dispatch(editDataUser({ na, pr, ds, ct, cn, dt, im, es, id }));
-      word === "Delete" && dispatch(deleteDataUser(id));
+        dispatch(editProduct({ na, pr, ds, ct, cn, dt, im, es, id }));
+      word === "Delete" && dispatch(deleteProduct(id));
     }
 
     onClose();
@@ -96,10 +97,10 @@ const ProductData = () => {
         </Heading>
       </HStack>
       {word === "Details" || word === "Delete" ? (
-        <ProductDetails
+        <ProductFormWord
           handleSubmit={handleSubmit}
           HStack={HStack}
-          detalles={detalles}
+          dt={dt}
           word={word}
           onClose={onClose}
         />
