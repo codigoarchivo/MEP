@@ -2,8 +2,6 @@ import React from "react";
 
 import Swal from "sweetalert2";
 
-import Proptypes from "prop-types";
-
 import { useRouter } from "next/router";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -128,11 +126,6 @@ const ProductData = () => {
       )}
     </>
   );
-};
-
-ProductData.proptypes = {
-  word: Proptypes.string.isRequired,
-  modality: Proptypes.func.isRequired,
 };
 
 export default ProductData;

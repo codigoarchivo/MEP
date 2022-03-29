@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
 
@@ -63,6 +63,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
   // dispatch
   const router = useRouter();
+  // selector
+  const { activeSelect } = useSelector(({ auth }) => auth);
   // Modality
   const { modality, setModality } = useModality();
   // toogle color
@@ -91,7 +93,6 @@ const Navbar = () => {
     if (logout) {
       router.push("/");
     }
-    
   };
 
   return (
@@ -258,7 +259,9 @@ const Navbar = () => {
                   <PopoverContent>
                     <PopoverHeader fontWeight="semibold" borderBottomWidth={0}>
                       <HStack spacing={6}>
-                        <Heading size={"md"}>Jackson Quintero</Heading>
+                        <Heading size={"md"}>
+                          {activeSelect?.displayName}
+                        </Heading>
                         <Button
                           onClick={toggleColorMode}
                           size="xs"
@@ -272,7 +275,7 @@ const Navbar = () => {
                           )}
                         </Button>
                       </HStack>
-                      <Text fontSize="sm">jackosn@gmail.com</Text>
+                      <Text fontSize="sm">{activeSelect?.email}</Text>
                     </PopoverHeader>
                     <PopoverArrow />
                     <PopoverCloseButton />

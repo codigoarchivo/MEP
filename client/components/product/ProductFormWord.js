@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Heading, Text, VStack } from "@chakra-ui/react";
 
-const ProductDetails = ({ HStack, dt, word, onClose, handleSubmit }) => {
+const ProductFormWord = ({ HStack, dt, word, onClose, handleSubmit }) => {
   return (
     <>
       <HStack py={5}>
@@ -30,4 +30,4 @@ const ProductDetails = ({ HStack, dt, word, onClose, handleSubmit }) => {
   );
 };
 
-export default ProductDetails;
+export default ProductFormWord;

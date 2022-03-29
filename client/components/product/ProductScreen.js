@@ -16,7 +16,6 @@ import {
   Td,
   Text,
   Tr,
-  useDisclosure,
 } from "@chakra-ui/react";
 
 import Breakpoints from "../../helpers/Breakpoints";
@@ -30,32 +29,34 @@ import {
   PlusSquareIcon,
 } from "@chakra-ui/icons";
 
-import { activeOrInactive, activeProduct } from "../../actions/product";
+import { activeProduct, productActiveOrInactive } from "../../actions/product";
 
 const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
   // dispatch
   const dispatch = useDispatch();
   // router
   const router = useRouter();
-  // disclosure
-  const { onToggle } = useDisclosure();
   // breakpoints
   const { displayOff3, points18 } = Breakpoints();
+
+  const data = {
+    id,
+    na,
+    pr,
+    im,
+    ds,
+    ct,
+    cn,
+    es,
+    dt,
+  };
 
   // edit
   const handleEdit = () => {
     dispatch(
       activeProduct({
         word: "Edit",
-        id,
-        na,
-        pr,
-        im,
-        ds,
-        ct,
-        cn,
-        es,
-        dt,
+        ...data,
       })
     );
 
@@ -70,15 +71,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
     dispatch(
       activeProduct({
         word: "Delete",
-        id,
-        na,
-        pr,
-        im,
-        ds,
-        ct,
-        cn,
-        es,
-        dt,
+        ...data,
       })
     );
 
@@ -102,36 +95,31 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
       query: { pid: id, word: "Details" },
     });
   };
-
-  const handleActive = () => {
+  
+  // ActiveOrInactive
+  const handleActiveOrInactive = (bol) => {
     dispatch(
-      activeOrInactive({
-        es: false,
-        id,
+      productActiveOrInactive({
+        ...data,
+        es: bol,
       })
     );
   };
 
-  const handleInactive = () => {
-    dispatch(
-      activeOrInactive({
-        es: true,
-        id,
-      })
-    );
-  };
   return (
     <>
       <Tr>
         <Td>
-          <AspectRatio ratio={1} w={59} h={59}>
-            <Image
-              src={im}
-              alt="Picture of the author"
-              layout="fill"
-              objectFit="contain"
-            />
-          </AspectRatio>
+          {im && (
+            <AspectRatio ratio={1} w={59} h={59}>
+              <Image
+                src={im}
+                alt="Picture of the author"
+                layout="fill"
+                objectFit="contain"
+              />
+            </AspectRatio>
+          )}
         </Td>
         <Td>
           <Text>{na}</Text>
@@ -160,7 +148,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
                     cursor={"pointer"}
                     fontWeight={"normal"}
                     width="full"
-                    onClick={handleActive}
+                    onClick={() => handleActiveOrInactive(false)}
                   >
                     <CheckCircleIcon w={3} h={3} />
                     <Text>Activo</Text>
@@ -171,10 +159,10 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
                     cursor={"pointer"}
                     fontWeight={"normal"}
                     width="full"
-                    onClick={handleInactive}
+                    onClick={() => handleActiveOrInactive(true)}
                   >
                     <NotAllowedIcon w={3} h={3} />
-                    <Text>inActivo</Text>
+                    <Text>Pause</Text>
                   </HStack>
                 )}
               </MenuItem>

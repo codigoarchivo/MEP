@@ -54,7 +54,6 @@ const ProductForm = ({
   const file = useRef();
 
   useEffect(async () => {
-    // TODO colocar un dispatch para para mantener categorias en el state
     const q = query(collection(db, "categories"), orderBy("na", "asc"));
     const el = await getDocs(q);
 
@@ -66,7 +65,7 @@ const ProductForm = ({
     if (data.length > 0) {
       setSelectCategory(data);
     }
-  }, [setSelectCategory]);
+  }, []);
 
   return (
     <>

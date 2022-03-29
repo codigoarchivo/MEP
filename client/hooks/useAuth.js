@@ -20,12 +20,17 @@ const useAuth = () => {
         setIsloggedIn(true);
 
         const dA = process.env.NEXT_PUBLIC_ROL_A;
-        const r = user.uid === dA.toString();
 
         dispatch(
-          login(user.uid, user.displayName, user.email, r ? "owner" : "user")
+          login(
+            user.uid,
+            user.displayName,
+            user.photoURL,
+            user.phoneNumber,
+            user.email,
+            user.uid === dA.toString() ? "owner" : "user",
+          )
         );
-        
       } else {
         setIsloggedIn(false);
       }

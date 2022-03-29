@@ -62,8 +62,12 @@ const productEdit = (data) => ({
 
 export const deleteProduct = (id) => {
   return async (dispatch) => {
-    await deleteDoc(doc(db, "serchs", id));
-    dispatch(productDelete(id));
+    try {
+      await deleteDoc(doc(db, "serchs", id));
+      dispatch(productDelete(id));
+    } catch (error) {
+      Swal.fire("Error", error, "error");
+    }
   };
 };
 
@@ -72,13 +76,24 @@ const productDelete = (id) => ({
   payload: id,
 });
 
-export const activeProduct = (data) => ({
-  type: types.productActive,
-  payload: data,
+export const productActiveOrInactive = (data) => {
+  return async (dispatch) => {
+    try {
+      await setDoc(doc(db, "serchs", data?.id), data);
+      dispatch(activeOrInactiveProduct(data));
+    } catch (error) {
+      Swal.fire("Error", error, "error");
+    }
+  };
+};
+
+const activeOrInactiveProduct = (data) => ({
+  type: types.productEdit,
+  payload: data
 });
 
-export const activeOrInactive = (data) => ({
-  type: types.activeOrInactive,
+export const activeProduct = (data) => ({
+  type: types.productActive,
   payload: data,
 });
 

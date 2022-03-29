@@ -257,9 +257,10 @@ const CategoryList = ({ data }) => {
 export async function getServerSideProps() {
   const q = query(
     collection(db, "categories"),
+    orderBy("na", "asc"),
     limit(10),
-    orderBy("na", "asc")
   );
+  
   const el = await getDocs(q);
 
   const data = el.docs.map((doc) => ({

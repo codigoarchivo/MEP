@@ -31,18 +31,29 @@ const PopoverUserNavbar = ({
               />
             </ListItem>
             <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
+            <ListItem>
+              <NavLink
+                href={"/product"}
+                fontWeight={"normal"}
+                size={"sm"}
+                variant={"secondary"}
+                name={"Product"}
+              />
+            </ListItem>
+            <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
           </>
         )}
         <ListItem>
           <NavLink
-            href={"/product"}
+            href={"/user"}
             fontWeight={"normal"}
             size={"sm"}
             variant={"secondary"}
-            name={"Product"}
+            name={"Editar Perfil"}
           />
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
+
         <ListItem>
           <HStack spacing={3} w={"full"}>
             <Heading size="sm" fontWeight={"normal"} px={3}>

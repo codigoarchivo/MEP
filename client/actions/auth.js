@@ -18,13 +18,15 @@ import {
 
 import { doc, setDoc } from "firebase/firestore";
 
-export const login = (uid, displayName, email, rol) => ({
+export const login = (uid, displayName, photoURL, phoneNumber, email, rol) => ({
   type: types.login,
   payload: {
     uid,
     displayName,
     email,
     rol,
+    photoURL,
+    phoneNumber,
   },
 });
 
@@ -171,3 +173,28 @@ export const logout = () => {
 const logoutClose = () => ({
   type: types.logout,
 });
+
+export const changeNameImg = (name, img, tel) => {
+  return async (dispatch) => {
+    try {
+      const auth = getAuth();
+      await updateProfile(auth.currentUser, {
+        displayName: name,
+        photoURL: img,
+        phoneNumber: tel,
+      })
+        .then(() => {
+          // Profile updated!
+          // ...
+        })
+        .catch((error) => {
+          // An error occurred
+          // ...
+        });
+      dispatch(login(user.uid, user.displayName));
+    } catch (error) {
+      // error
+      Swal.fire("Error", error, "error");
+    }
+  };
+};

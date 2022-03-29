@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Heading, chakra } from "@chakra-ui/react";
 
-const CategoryDelete = ({ HStack, onClose, handleSubmit, word, VStack }) => {
+const CategoryFormWord = ({ HStack, onClose, handleSubmit, word, VStack }) => {
   return (
     <>
       <chakra.form onSubmit={handleSubmit} w="full" p={3}>
@@ -23,4 +23,4 @@ const CategoryDelete = ({ HStack, onClose, handleSubmit, word, VStack }) => {
   );
 };
 
-export default CategoryDelete;
+export default CategoryFormWord;

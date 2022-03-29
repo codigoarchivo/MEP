@@ -16,10 +16,8 @@ export const types = {
   productAdd: "[PRODUCT] Add",
   productEdit: "[PRODUCT] Edit",
   productDelete: "[PRODUCT] Delete",
-  activeOrInactive: "[PRODUCT] Active or Inactive",
   productActive: "[PRODUCT] Active",
   productClose: "[PRODUCT] Close",
-
 
   active: "[DATA] Active",
   closeActive: "[DATA] Close",

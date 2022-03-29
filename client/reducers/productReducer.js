@@ -35,14 +35,6 @@ export const productReducer = (state = initialStates, action) => {
         list: state.list.filter((e) => e.id !== action.payload),
         activeSelect: null,
       };
-    case types.activeOrInactive:
-      return {
-        ...state,
-        list: state.list.map((e) =>
-          e.id === action.payload.id ? (e = action.payload) : e
-        ),
-        activeSelect: null,
-      };
     case types.closeActive:
       return {
         ...state,
