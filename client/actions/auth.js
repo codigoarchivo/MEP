@@ -174,24 +174,23 @@ const logoutClose = () => ({
   type: types.logout,
 });
 
-export const changeNameImg = (name, img, tel) => {
+export const changeNameImgTel = (uid, photoURL, displayName, phoneNumber) => {
+  console.log(uid, photoURL, displayName, phoneNumber);
   return async (dispatch) => {
     try {
       const auth = getAuth();
       await updateProfile(auth.currentUser, {
-        displayName: name,
-        photoURL: img,
-        phoneNumber: tel,
+        displayName: displayName && displayName,
+        photoURL: photoURL && photoURL,
+        phoneNumber: phoneNumber && phoneNumber,
       })
         .then(() => {
-          // Profile updated!
-          // ...
+          dispatch(login(uid, displayName, photoURL, phoneNumber));
         })
-        .catch((error) => {
-          // An error occurred
-          // ...
+        .catch(({ message }) => {
+          // error
+          Swal.fire("Error", message, "error");
         });
-      dispatch(login(user.uid, user.displayName));
     } catch (error) {
       // error
       Swal.fire("Error", error, "error");

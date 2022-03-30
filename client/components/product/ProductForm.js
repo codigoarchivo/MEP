@@ -93,12 +93,11 @@ const ProductForm = ({
               >
                 Subir: {progress}%
               </Button>
-              <Box
+              <chakra.input
                 onChange={handleInputChange3}
                 name="im"
                 type={"file"}
                 ref={file}
-                as={"input"}
                 display="none"
               />
             </InputGroup>

@@ -51,7 +51,6 @@ const Validator = (values) => {
   const coRePasswordE = rePasswordE ? rePasswordE : samePasswordE;
 
   const field = "Campo Correcto";
-
   // login
   const passwordL = passwordV && "Password is required.";
 
@@ -87,6 +86,7 @@ const Validator = (values) => {
   ) {
     ErrorRetur = true;
   }
+
   let ErrorRetur2;
   if (values.word !== "Add" && values.es === false) {
     ErrorRetur2 = true;

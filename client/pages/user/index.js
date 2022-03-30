@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 
 import {
   AspectRatio,
+  Avatar,
   Box,
   Button,
   chakra,
@@ -18,17 +19,23 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
+  Select,
   VStack,
 } from "@chakra-ui/react";
 
+import { DownloadIcon } from "@chakra-ui/icons";
+
 import Breakpoints from "../../helpers/Breakpoints";
 import ModeColor from "../../helpers/ModeColor";
+import Code from "../../helpers/Code";
 
 import Layout from "../../components/layout/layout";
 
 import useAuth from "../../hooks/useAuth";
-import { DownloadIcon } from "@chakra-ui/icons";
-import useForm from "../../hooks/useForm";
+
+import useFormUser from "../../hooks/useFormUser";
+
+import { changeNameImgTel } from "../../actions/auth";
 
 const initialStates = {
   uid: "",
@@ -37,7 +44,7 @@ const initialStates = {
   phoneNumber: "",
 };
 
-const CategoryList = () => {
+const User = () => {
   // router
   const router = useRouter();
   // breakpoints
@@ -50,24 +57,34 @@ const CategoryList = () => {
   const dispatch = useDispatch();
   // mode Color
   const { bg, bg2 } = ModeColor();
+  // code
+  const { code } = Code();
   // file
   const file = useRef();
-
-  const { uid, photoURL, displayName, phoneNumber } = activeSelect;
   // useForm
+
   const [
     values,
     urlImage,
     progress,
     handleInputChange,
-    handleInputChange3,
-  ] = useForm(initialStates, activeSelect);
- //TODO Modificar user 
+    handleInputChange2,
+  ] = useFormUser(initialStates, activeSelect);
+  // agrega imagen
+  values.photoURL = urlImage ? urlImage : values.photoURL;
+  // values
+  const { uid, photoURL, displayName, phoneNumber } = values;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(changeNameImgTel(uid, photoURL, displayName, phoneNumber));
+  };
+
   return (
     <Layout>
       {isloggedIn === true && activeSelect?.rol === "owner" ? (
-        <Container maxW={"container.lg"} my={20}>
-          <VStack w={"full"}>
+        <Container maxW={"container.xl"} my={10}>
+          <VStack>
             <Heading size={"lg"} textAlign="center">
               Perfil público
             </Heading>
@@ -77,33 +94,44 @@ const CategoryList = () => {
           </VStack>
           <Divider
             orientation="horizontal"
-            my={10}
+            mt={10}
             variant={"dashed"}
             bg={bg2}
           />
-          <HStack boxShadow="2xl" p={10} spacing={10}>
-            <VStack>
-              {photoURL && (
-                <AspectRatio ratio={16 / 9} w={70} h={70}>
-                  <Image
-                    src={photoURL}
-                    alt="Perfil"
-                    layout="fill"
-                    objectFit="contain"
-                  />
-                </AspectRatio>
-              )}
-              <Heading size={"md"}>Perfil Usuario</Heading>
-              <Heading size={"sm"} fontWeight={"normal"}>
-                {displayName}
-              </Heading>
+          <HStack
+            boxShadow="2xl"
+            justifyContent={"space-around"}
+            p={20}
+            spacing={10}
+          >
+            <VStack spacing={12} h={"full"}>
+              <Box>
+                {!photoURL ? (
+                  <Avatar size="2xl" name={displayName} />
+                ) : (
+                  <AspectRatio ratio={16 / 9} w={70} h={70}>
+                    <Image
+                      src={photoURL}
+                      alt="Perfil"
+                      borderRadius="full"
+                      layout="fill"
+                      objectFit="contain"
+                    />
+                  </AspectRatio>
+                )}
+              </Box>
+              <VStack>
+                <Heading size={"md"}>Perfil Usuario</Heading>
+                <Heading size={"sm"} fontWeight={"normal"}>
+                  {displayName}
+                </Heading>
+              </VStack>
             </VStack>
-            <chakra.form>
-              <VStack spacing={5}>
+            <chakra.form w={"60%"} onSubmit={handleSubmit}>
+              <VStack spacing={10}>
                 <Heading size={"xs"} w={"full"} fontWeight={"normal"}>
                   Información Basica
                 </Heading>
-                <Input placeholder="Escribe tu nombre" />
                 <InputGroup>
                   <Button
                     w={"full"}
@@ -116,21 +144,53 @@ const CategoryList = () => {
                     _hover={{ border: bg }}
                     p={1}
                   >
-                    Subir: {progress}%
+                    Foto de Perfil : {progress}%
                   </Button>
-                  <Box
-                    onChange={handleInputChange3}
-                    name="im"
+                  <chakra.input
+                    onChange={handleInputChange2}
+                    name="photoURL"
                     type={"file"}
                     ref={file}
-                    as={"input"}
                     display="none"
                   />
                 </InputGroup>
-                <InputGroup>
-                  <InputLeftAddon children="+234" />
-                  <Input type="tel" placeholder="phone number" />
-                </InputGroup>
+
+                <Input
+                  onChange={handleInputChange}
+                  value={displayName}
+                  name={"displayName"}
+                  placeholder="Escribe tu nombre"
+                />
+
+                <HStack w={"full"}>
+                  <InputGroup>
+                    <Select
+                      name="phoneNumber"
+                      variant="filled"
+                      value={phoneNumber}
+                      onChange={handleInputChange}
+                      placeholder={"País"}
+                      w={"30%"}
+                    >
+                      {code.map(({ code, name }) => (
+                        <option key={name} value={code}>
+                          {name}: {code}
+                        </option>
+                      ))}
+                    </Select>
+                    <Input
+                      onChange={handleInputChange}
+                      value={phoneNumber}
+                      name={"phoneNumber"}
+                      type="tel"
+                      placeholder="phone number"
+                    />
+                  </InputGroup>
+                </HStack>
+
+                <Button variant={"primary"} type="submit" ml={3}>
+                  Guardar
+                </Button>
               </VStack>
             </chakra.form>
           </HStack>
@@ -142,4 +202,4 @@ const CategoryList = () => {
   );
 };
 
-export default CategoryList;
+export default User;

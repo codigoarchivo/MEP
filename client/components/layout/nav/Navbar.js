@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 
 import {
+  AspectRatio,
   Avatar,
   AvatarBadge,
   Box,
@@ -207,7 +208,7 @@ const Navbar = () => {
               </Popover>
             </GridItem>
             <GridItem colSpan={5} display={displayOff2}>
-              <Flex mx={4} justifyContent="space-around">
+              <Flex mx={4} justifyContent="space-around" alignItems={"center"}>
                 {isloggedIn ? (
                   <NavLink
                     px={0}
@@ -244,17 +245,19 @@ const Navbar = () => {
 
                 <Popover isLazy>
                   <PopoverTrigger>
-                    <Avatar
-                      boxSize={points13}
-                      src="https://bit.ly/dan-abramov"
-                      name="Dan Abrahmov"
-                      cursor={"pointer"}
-                    >
-                      <AvatarBadge
-                        boxSize={{ base: ".8em", md: "1.10em" }}
-                        bg="green.500"
-                      />
-                    </Avatar>
+                    {!activeSelect?.photoURL ? (
+                      <Avatar cursor={"pointer"} name={activeSelect?.displayName} />
+                    ) : (
+                      <AspectRatio ratio={16 / 9} w={70} h={70}>
+                        <Image
+                          src={activeSelect?.photoURL}
+                          alt="Perfil"
+                          borderRadius="full"
+                          boxSize={"sm"}
+                          cursor={"pointer"}
+                        />
+                      </AspectRatio>
+                    )}
                   </PopoverTrigger>
                   <PopoverContent>
                     <PopoverHeader fontWeight="semibold" borderBottomWidth={0}>
