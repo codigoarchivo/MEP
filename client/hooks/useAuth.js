@@ -18,7 +18,6 @@ const useAuth = () => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         setIsloggedIn(true);
-
         const dA = process.env.NEXT_PUBLIC_ROL_A;
 
         dispatch(
@@ -26,7 +25,6 @@ const useAuth = () => {
             user.uid,
             user.displayName,
             user.photoURL,
-            user.phoneNumber,
             user.email,
             user.uid === dA.toString() ? "owner" : "user",
           )

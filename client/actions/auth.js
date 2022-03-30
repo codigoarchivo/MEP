@@ -18,15 +18,14 @@ import {
 
 import { doc, setDoc } from "firebase/firestore";
 
-export const login = (uid, displayName, photoURL, phoneNumber, email, rol) => ({
+export const login = (uid, displayName, photoURL, email, rol) => ({
   type: types.login,
   payload: {
     uid,
     displayName,
+    photoURL,
     email,
     rol,
-    photoURL,
-    phoneNumber,
   },
 });
 
@@ -174,18 +173,15 @@ const logoutClose = () => ({
   type: types.logout,
 });
 
-export const changeNameImgTel = (uid, photoURL, displayName, phoneNumber) => {
-  console.log(uid, photoURL, displayName, phoneNumber);
+export const changeNameImgTel = (uid, photoURL, displayName, email, rol) => {
   return async (dispatch) => {
     try {
-      const auth = getAuth();
       await updateProfile(auth.currentUser, {
-        displayName: displayName && displayName,
-        photoURL: photoURL && photoURL,
-        phoneNumber: phoneNumber && phoneNumber,
+        displayName,
+        photoURL,
       })
         .then(() => {
-          dispatch(login(uid, displayName, photoURL, phoneNumber));
+          dispatch(login(uid, displayName, photoURL, email, rol));
         })
         .catch(({ message }) => {
           // error

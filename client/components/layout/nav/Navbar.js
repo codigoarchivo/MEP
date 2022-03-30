@@ -246,15 +246,23 @@ const Navbar = () => {
                 <Popover isLazy>
                   <PopoverTrigger>
                     {!activeSelect?.photoURL ? (
-                      <Avatar cursor={"pointer"} name={activeSelect?.displayName} />
+                      <Avatar
+                        cursor={"pointer"}
+                        name={activeSelect?.displayName}
+                      />
                     ) : (
-                      <AspectRatio ratio={16 / 9} w={70} h={70}>
+                      <AspectRatio
+                        ratio={16 / 9}
+                        w={30}
+                        h={30}
+                        position={"relative"}
+                        cursor={"pointer"}
+                      >
                         <Image
                           src={activeSelect?.photoURL}
                           alt="Perfil"
-                          borderRadius="full"
-                          boxSize={"sm"}
-                          cursor={"pointer"}
+                          layout="fill"
+                          objectFit="contain"
                         />
                       </AspectRatio>
                     )}

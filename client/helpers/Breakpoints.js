@@ -27,6 +27,7 @@ const Breakpoints = () => {
   const points20 = { base: 12, md: 16 };
   const points21 = { base: 0, sm: 10 };
   const points22 = { base: 10, sm: 0 };
+  const points23 = { base: 5, md: 20 };
 
   const auto1 = { base: "auto", md: "90vh" };
 
@@ -48,9 +49,12 @@ const Breakpoints = () => {
   const content2 = { base: "start", lg: "end" };
   const content3 = { base: "column", sm: "row" };
   const content4 = { base: "row", sm: "column" };
+  const content5 = { base: "column", md: "row" };
 
   const porcent1 = { base: "full", sm: "75%", md: "50%", lg: "40%" };
   const porcent2 = { base: "40%", md: "15%", lg: "35%" };
+  const porcent3 = { base: "100%", md: "60%" };
+  const porcent4 = { base: "100%", md: "40%" };
 
   const center = "center";
 
@@ -82,6 +86,7 @@ const Breakpoints = () => {
     points20,
     points21,
     points22,
+    points23,
     auto1,
     repeat1,
     repeat2,
@@ -93,6 +98,9 @@ const Breakpoints = () => {
     content4,
     porcent1,
     porcent2,
+    porcent3,
+    porcent4,
+    content5,
     center,
   };
 };

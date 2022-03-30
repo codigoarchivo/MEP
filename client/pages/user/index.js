@@ -4,8 +4,6 @@ import Image from "next/image";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { useRouter } from "next/router";
-
 import {
   AspectRatio,
   Avatar,
@@ -18,16 +16,14 @@ import {
   HStack,
   Input,
   InputGroup,
-  InputLeftAddon,
-  Select,
+  Stack,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 
 import { DownloadIcon } from "@chakra-ui/icons";
 
-import Breakpoints from "../../helpers/Breakpoints";
 import ModeColor from "../../helpers/ModeColor";
-import Code from "../../helpers/Code";
 
 import Layout from "../../components/layout/layout";
 
@@ -37,18 +33,17 @@ import useFormUser from "../../hooks/useFormUser";
 
 import { changeNameImgTel } from "../../actions/auth";
 
+import Breakpoints from "../../helpers/Breakpoints";
+
 const initialStates = {
   uid: "",
   photoURL: "",
   displayName: "",
-  phoneNumber: "",
 };
 
 const User = () => {
-  // router
-  const router = useRouter();
-  // breakpoints
-  const { center, points19, points20 } = Breakpoints();
+  // toast
+  const toast = useToast();
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
   // useAuth
@@ -57,11 +52,16 @@ const User = () => {
   const dispatch = useDispatch();
   // mode Color
   const { bg, bg2 } = ModeColor();
-  // code
-  const { code } = Code();
+  // Breakpoints
+  const { content5, points23, porcent3, porcent4 } = Breakpoints();
   // file
   const file = useRef();
   // useForm
+
+  const el = activeSelect;
+  // values
+  el?.photoURL === null ? (el?.photoURL = "") : el?.photoURL;
+  el?.displayName === null ? (el?.displayName = "") : el?.displayName;
 
   const [
     values,
@@ -73,11 +73,17 @@ const User = () => {
   // agrega imagen
   values.photoURL = urlImage ? urlImage : values.photoURL;
   // values
-  const { uid, photoURL, displayName, phoneNumber } = values;
+  const { uid, photoURL, displayName } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(changeNameImgTel(uid, photoURL, displayName, phoneNumber));
+    dispatch(changeNameImgTel(uid, photoURL, displayName, el.email, el.rol));
+    toast({
+      description: "Datos actualizados",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
   };
 
   return (
@@ -98,22 +104,27 @@ const User = () => {
             variant={"dashed"}
             bg={bg2}
           />
-          <HStack
+          <Stack
+            flexDirection={content5}
             boxShadow="2xl"
             justifyContent={"space-around"}
-            p={20}
+            p={points23}
             spacing={10}
           >
-            <VStack spacing={12} h={"full"}>
+            <VStack spacing={12} h={"full"} w={porcent4}>
               <Box>
                 {!photoURL ? (
                   <Avatar size="2xl" name={displayName} />
                 ) : (
-                  <AspectRatio ratio={16 / 9} w={70} h={70}>
+                  <AspectRatio
+                    ratio={16 / 9}
+                    w={70}
+                    h={70}
+                    position={"relative"}
+                  >
                     <Image
                       src={photoURL}
                       alt="Perfil"
-                      borderRadius="full"
                       layout="fill"
                       objectFit="contain"
                     />
@@ -127,7 +138,7 @@ const User = () => {
                 </Heading>
               </VStack>
             </VStack>
-            <chakra.form w={"60%"} onSubmit={handleSubmit}>
+            <chakra.form w={porcent3} onSubmit={handleSubmit}>
               <VStack spacing={10}>
                 <Heading size={"xs"} w={"full"} fontWeight={"normal"}>
                   Información Basica
@@ -161,39 +172,12 @@ const User = () => {
                   name={"displayName"}
                   placeholder="Escribe tu nombre"
                 />
-
-                <HStack w={"full"}>
-                  <InputGroup>
-                    <Select
-                      name="phoneNumber"
-                      variant="filled"
-                      value={phoneNumber}
-                      onChange={handleInputChange}
-                      placeholder={"País"}
-                      w={"30%"}
-                    >
-                      {code.map(({ code, name }) => (
-                        <option key={name} value={code}>
-                          {name}: {code}
-                        </option>
-                      ))}
-                    </Select>
-                    <Input
-                      onChange={handleInputChange}
-                      value={phoneNumber}
-                      name={"phoneNumber"}
-                      type="tel"
-                      placeholder="phone number"
-                    />
-                  </InputGroup>
-                </HStack>
-
                 <Button variant={"primary"} type="submit" ml={3}>
                   Guardar
                 </Button>
               </VStack>
             </chakra.form>
-          </HStack>
+          </Stack>
         </Container>
       ) : (
         ""

@@ -15,9 +15,12 @@ import {
   useDisclosure,
   Collapse,
   WrapItem,
+  Flex,
+  Badge,
+  Text,
 } from "@chakra-ui/react";
 
-const SerchScreen = (props) => {
+const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
   // router
   const router = useRouter();
   // disclosure
@@ -38,6 +41,7 @@ const SerchScreen = (props) => {
       w="280px"
       position={"relative"}
       onClick={handleSelect}
+      p={5}
     >
       <VStack
         onMouseEnter={() => onToggle()}
@@ -45,7 +49,6 @@ const SerchScreen = (props) => {
         cursor={"pointer"}
         width="full"
         position={"absolute"}
-        spacing={5}
         boxShadow="lg"
         rounded="md"
         _hover={{
@@ -54,19 +57,29 @@ const SerchScreen = (props) => {
           boxShadow: "dark-lg",
         }}
       >
-        <AspectRatio w="full" h={224}>
-          <Image
-            src={`/img/${props.im}.jpg`}
-            alt="Picture of the author"
-            layout="fill"
-            objectFit="contain"
-          />
-        </AspectRatio>
+        <Image
+          src={im}
+          alt="Picture of the author"
+          layout="fill"
+          objectFit="contain"
+        />
+        <Flex align="baseline" mt={2} w={"full"} p={3}>
+          <Badge colorScheme="pink">Plus</Badge>
+          <Text
+            ml={2}
+            textTransform="uppercase"
+            fontSize="sm"
+            fontWeight="bold"
+            color="pink.800"
+          >
+            Verified &bull; Cape Town
+          </Text>
+        </Flex>
         <Stat width={"full"} p={3}>
-          <StatLabel>{props.no}</StatLabel>
-          <StatNumber>${props.pr}</StatNumber>
+          <StatLabel>{na}</StatLabel>
+          <StatNumber>${pr}</StatNumber>
           <Collapse in={isOpen} animateOpacity>
-            <StatHelpText mt={2}>{props.ds}</StatHelpText>
+            <StatHelpText mt={2}>{ds}</StatHelpText>
           </Collapse>
         </Stat>
       </VStack>
