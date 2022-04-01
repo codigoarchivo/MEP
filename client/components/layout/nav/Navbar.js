@@ -9,7 +9,6 @@ import Image from "next/image";
 import {
   AspectRatio,
   Avatar,
-  AvatarBadge,
   Box,
   Button,
   chakra,

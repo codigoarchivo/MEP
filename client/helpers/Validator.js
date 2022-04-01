@@ -14,7 +14,7 @@ const Validator = (values) => {
   const mNombre = values?.na === "";
   const mPrecio = values?.pr === "";
   const mDetalles = values?.dt === "";
-  const mImage = Number(values?.imgsize) > 5000;
+  const mImage = Number(values?.imgsize) > 50000;
   const mImageCero = values?.im === "";
   const mDescripcion = values?.ds === "";
   const mCantidad = Number(values?.cn) === 0;

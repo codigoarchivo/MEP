@@ -57,6 +57,7 @@ const Breakpoints = () => {
   const porcent4 = { base: "100%", md: "40%" };
 
   const center = "center";
+  const full = "full";
 
   return {
     displayOn1,
@@ -102,6 +103,7 @@ const Breakpoints = () => {
     porcent4,
     content5,
     center,
+    full,
   };
 };
 
