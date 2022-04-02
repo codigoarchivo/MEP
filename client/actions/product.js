@@ -89,7 +89,7 @@ export const productActiveOrInactive = (data) => {
 
 const activeOrInactiveProduct = (data) => ({
   type: types.productEdit,
-  payload: data
+  payload: data,
 });
 
 export const activeProduct = (data) => ({
@@ -97,9 +97,34 @@ export const activeProduct = (data) => ({
   payload: data,
 });
 
-export const activeProductCart = (data) => ({
+export const activeProductCart = (data) => {
+  return async (dispatch, getState) => {
+    const { activeCartSelect } = await getState().product;
+    try {
+      const match = activeCartSelect.find((obj) => obj?.id === data.id);
+      if (match) {
+        return Swal.fire(
+          "Error",
+          `El producto o servicio con el id: ${data.id}, ya se encuentra en carrito`,
+          "error"
+        );
+      } else {
+        dispatch(cartProductActive(data));
+      }
+    } catch (error) {
+      Swal.fire("Error", error, "error");
+    }
+  };
+};
+
+export const cartProductActive = (data) => ({
   type: types.productActiveCart,
   payload: data,
+});
+
+export const deleteProductCart = (id) => ({
+  type: types.productDeleteCart,
+  payload: id,
 });
 
 export const closeActive = () => ({

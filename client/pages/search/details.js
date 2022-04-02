@@ -62,8 +62,7 @@ const Details = () => {
   const handleSelect = () => {
     const total = pr * input.value;
     const cantidad = input.value;
-    var myIterable = { id, na, pr, cantidad, total }
-    dispatch(activeProductCart(myIterable));
+    dispatch(activeProductCart({ id, na, pr, cantidad, total }));
 
     router.push({
       pathname: "/search/cart",

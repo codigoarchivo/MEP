@@ -51,7 +51,7 @@ const serchList = ({ data }) => {
 };
 
 export async function getStaticProps() {
-  const q = query(collection(db, "serchs"), orderBy("na", "asc"), limit(2));
+  const q = query(collection(db, "serchs"), orderBy("na", "asc"));
 
   const el = await getDocs(q);
 

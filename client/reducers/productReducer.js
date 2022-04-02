@@ -2,8 +2,8 @@ import { types } from "../type";
 
 const initialStates = {
   list: [],
-  activeSelect: null,
   activeCartSelect: [],
+  activeSelect: null,
 };
 export const productReducer = (state = initialStates, action) => {
   switch (action.type) {
@@ -41,10 +41,19 @@ export const productReducer = (state = initialStates, action) => {
         list: state.list.filter((e) => e.id !== action.payload),
         activeSelect: null,
       };
+    case types.productDeleteCart:
+      return {
+        ...state,
+        activeCartSelect: state.activeCartSelect.filter(
+          (e) => e.id !== action.payload
+        ),
+        activeSelect: null,
+      };
     case types.closeActive:
       return {
         ...state,
-        activeSelect: action.payload,
+        // activeSelect: action.payload,
+        activeCartSelect: [],
       };
     default:
       return state;

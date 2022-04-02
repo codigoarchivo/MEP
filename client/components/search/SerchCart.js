@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import { DeleteIcon } from "@chakra-ui/icons";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Table,
@@ -16,10 +16,23 @@ import {
   Tr,
 } from "@chakra-ui/react";
 
+import { deleteProductCart } from "../../actions/product";
+
 const SerchCart = () => {
+  // useDispatch
+  const dispatch = useDispatch();
+  // useRef
+  const inc = useRef(0);
   // selector
-  const { activeSelectCart } = useSelector(({ product }) => product);
-  // const { na, pr, cantidad, total } = activeSelectCart;
+  const { activeCartSelect } = useSelector(({ product }) => product);
+  // sub
+  activeCartSelect.map((item) => (inc.current += item.total));
+  // TODO: Acomodar esta parte codigo
+  const handleDeleteCart = (id) => {
+    dispatch(deleteProductCart(id));
+    activeCartSelect.map((item) => (inc.current -= item.total));
+  };
+
   return (
     <TableContainer w={"full"}>
       <Table variant="simple">
@@ -34,23 +47,31 @@ const SerchCart = () => {
           </Tr>
         </Thead>
         <Tbody>
-          <Tr>
-            <Td>inches</Td>
-            <Td>millimetres (mm)</Td>
-            <Td>25.4</Td>
-            <Td>25.4</Td>
-            <Td isNumeric>
-              <DeleteIcon mx={5} cursor={"pointer"} />
-            </Td>
-          </Tr>
+          {activeCartSelect.map((item) => (
+            <Tr key={item.id}>
+              <Td>{item.na}</Td>
+              <Td>${item.pr}</Td>
+              <Td>{item.cantidad}</Td>
+              <Td>${item.total}</Td>
+              <Td isNumeric>
+                <DeleteIcon
+                  onClick={() => handleDeleteCart(item.id)}
+                  mx={5}
+                  cursor={"pointer"}
+                />
+              </Td>
+            </Tr>
+          ))}
         </Tbody>
         <Tfoot>
           <Tr>
-            <Th></Th>
-            <Th></Th>
-            <Th></Th>
-            <Th></Th>
-            <Th textAlign={"right"}>Subtotal: 25$</Th>
+            <>
+              <Th></Th>
+              <Th></Th>
+              <Th></Th>
+              <Th>Sub Total:${inc.current}</Th>
+              <Th></Th>
+            </>
           </Tr>
         </Tfoot>
       </Table>
