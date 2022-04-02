@@ -97,6 +97,11 @@ export const activeProduct = (data) => ({
   payload: data,
 });
 
+export const activeProductCart = (data) => ({
+  type: types.productActiveCart,
+  payload: data,
+});
+
 export const closeActive = () => ({
   type: types.closeActive,
   payload: null,

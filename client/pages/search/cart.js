@@ -5,6 +5,7 @@ import { withRouter } from "next/router";
 import { Container, Flex } from "@chakra-ui/react";
 
 import SerchCart from "../../components/search/SerchCart";
+
 import Layout from "../../components/layout/layout";
 
 const Cart = () => {
@@ -12,7 +13,7 @@ const Cart = () => {
     <Layout>
       <Container maxW="container.lg">
         <Flex width={"full"}>
-          <CartScreen />
+          <SerchCart />
         </Flex>
       </Container>
     </Layout>

@@ -4,7 +4,7 @@ import { StarIcon } from "@chakra-ui/icons";
 
 import Image from "next/image";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   AspectRatio,
@@ -30,8 +30,14 @@ import Breakpoints from "../../helpers/Breakpoints";
 import { CartIcon } from "../../helpers/IconNew";
 
 import Layout from "../../components/layout/layout";
+import { useRouter } from "next/router";
+import { activeProductCart } from "../../actions/product";
 
 const Details = () => {
+  // dispatch
+  const dispatch = useDispatch();
+  // router
+  const router = useRouter();
   // selector
   const { activeSelect } = useSelector(({ product }) => product);
   // Breakpoints
@@ -52,6 +58,19 @@ const Details = () => {
   const input = getInputProps({ isReadOnly: true });
   // values
   const { id, na, pr, im, ds, ct, cn, es, dt } = activeSelect;
+  // select
+  const handleSelect = () => {
+    const total = pr * input.value;
+    const cantidad = input.value;
+    var myIterable = { id, na, pr, cantidad, total }
+    dispatch(activeProductCart(myIterable));
+
+    router.push({
+      pathname: "/search/cart",
+      query: { pid: id },
+    });
+  };
+
   return (
     <Layout>
       <Container maxW="container.lg">
@@ -79,7 +98,7 @@ const Details = () => {
               <Badge colorScheme="green">En stock ({cn})</Badge>
             </Box>
             <Heading w={full} as="h1" size="md" fontWeight={"normal"}>
-              Precio: ${pr}
+              Precio: ${pr * input.value}
             </Heading>
             <Text w={full}>{ds}</Text>
             <Box w={full}>
@@ -94,7 +113,11 @@ const Details = () => {
               </HStack>
             </Box>
             <Box w={full}>
-              <Button rightIcon={<CartIcon />} variant={"primary"} {...inc}>
+              <Button
+                rightIcon={<CartIcon />}
+                variant={"primary"}
+                onClick={handleSelect}
+              >
                 Añadir
               </Button>
             </Box>

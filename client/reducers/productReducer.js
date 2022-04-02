@@ -3,6 +3,7 @@ import { types } from "../type";
 const initialStates = {
   list: [],
   activeSelect: null,
+  activeCartSelect: [],
 };
 export const productReducer = (state = initialStates, action) => {
   switch (action.type) {
@@ -20,6 +21,11 @@ export const productReducer = (state = initialStates, action) => {
       return {
         ...state,
         activeSelect: action.payload,
+      };
+    case types.productActiveCart:
+      return {
+        ...state,
+        activeCartSelect: [...state.activeCartSelect, action.payload],
       };
     case types.productEdit:
       return {
