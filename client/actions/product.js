@@ -122,6 +122,32 @@ export const cartProductActive = (data) => ({
   payload: data,
 });
 
+export const saveProductCart = (data) => {
+  return async (dispatch, getState) => {
+    const { saveCartSelect } = await getState().product;
+    try {
+      const match = saveCartSelect.find((obj) => obj?.id === data.id);
+      if (match) {
+        dispatch(deleteProductSave(data.id));
+      } else {
+        dispatch(cartProductSave(data));
+      }
+    } catch (error) {
+      Swal.fire("Error", error, "error");
+    }
+  };
+};
+
+const cartProductSave = (data) => ({
+  type: types.productSaveCart,
+  payload: data,
+});
+
+export const deleteProductSave = (id) => ({
+  type: types.productDeleteSave,
+  payload: id,
+});
+
 export const deleteProductCart = (id) => ({
   type: types.productDeleteCart,
   payload: id,

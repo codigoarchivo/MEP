@@ -5,6 +5,7 @@ import { Button } from "@chakra-ui/react";
 import Link from "next/link";
 
 const NavLink = ({
+  rightIcon,
   href,
   name,
   variant,
@@ -18,6 +19,7 @@ const NavLink = ({
   return (
     <Link href={href} passHref>
       <Button
+        rightIcon={rightIcon}
         onClick={click}
         cursor={"pointer"}
         as={"a"}

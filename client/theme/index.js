@@ -99,6 +99,9 @@ const globalStyles = {
     global: {
       html: {},
       body: {},
+      ".css-1xjer9p": {
+        justifyContent: "center",
+      },
       a: {
         _hover: {
           textDecoration: "none",

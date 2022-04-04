@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useRouter } from "next/router";
+
 import { StarIcon } from "@chakra-ui/icons";
 
 import Image from "next/image";
@@ -30,7 +32,7 @@ import Breakpoints from "../../helpers/Breakpoints";
 import { CartIcon } from "../../helpers/IconNew";
 
 import Layout from "../../components/layout/layout";
-import { useRouter } from "next/router";
+
 import { activeProductCart } from "../../actions/product";
 
 const Details = () => {
@@ -42,6 +44,8 @@ const Details = () => {
   const { activeSelect } = useSelector(({ product }) => product);
   // Breakpoints
   const { content5, full } = Breakpoints();
+  // values
+  const { id, na, pr, im, ds, ct, cn, es, dt } = activeSelect;
   // Incremen and Decrement
   const {
     getInputProps,
@@ -51,23 +55,21 @@ const Details = () => {
     step: 1,
     defaultValue: 1,
     min: 1,
-    max: 20,
+    max: cn,
   });
+  // inc
   const inc = getIncrementButtonProps();
+  // dec
   const dec = getDecrementButtonProps();
+  // input
   const input = getInputProps({ isReadOnly: true });
-  // values
-  const { id, na, pr, im, ds, ct, cn, es, dt } = activeSelect;
   // select
   const handleSelect = () => {
     const total = pr * input.value;
     const cantidad = input.value;
-    dispatch(activeProductCart({ id, na, pr, cantidad, total }));
+    dispatch(activeProductCart({ id, na, pr, im, cantidad, total }));
 
-    router.push({
-      pathname: "/search/cart",
-      query: { pid: id },
-    });
+    router.push("/search/cart");
   };
 
   return (

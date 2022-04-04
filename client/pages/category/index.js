@@ -25,6 +25,7 @@ import {
   HStack,
   Table,
   TableCaption,
+  TableContainer,
   Tbody,
   Th,
   Thead,
@@ -59,7 +60,7 @@ const CategoryList = ({ data }) => {
   // router
   const router = useRouter();
   // breakpoints
-  const { center, points19, points20 } = Breakpoints();
+  const { center, points19, points20, bordes } = Breakpoints();
   // selector
   const { list } = useSelector(({ category }) => category);
   // selector
@@ -183,33 +184,35 @@ const CategoryList = ({ data }) => {
                 </Heading>
               </Center>
             )}
-            <Table fontSize={points20} size={{ base: "sm" }}>
-              <TableCaption>Lista de categorias</TableCaption>
-              <Thead>
-                <Tr>
-                  <Th pb={points19} textAlign={center}>
-                    Nombre
-                  </Th>
-                  <Th pb={points19} textAlign={center}>
-                    <Button
-                      onClick={handleAdd}
-                      variant={"primary"}
-                      size="sm"
-                      rounded={"sm"}
-                      textTransform="uppercase"
-                      fontSize={points20}
-                    >
-                      Agregar
-                    </Button>
-                  </Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {list.map((data) => (
-                  <CategoryScrenn key={data.id} {...data} />
-                ))}
-              </Tbody>
-            </Table>
+            <TableContainer border={bordes} >
+              <Table fontSize={points20} size={{ base: "sm" }}>
+                <TableCaption>Lista de categorias</TableCaption>
+                <Thead>
+                  <Tr>
+                    <Th pb={points19} textAlign={center}>
+                      Nombre
+                    </Th>
+                    <Th p={points19} textAlign={center}>
+                      <Button
+                        onClick={handleAdd}
+                        variant={"primary"}
+                        size="sm"
+                        rounded={"sm"}
+                        textTransform="uppercase"
+                        fontSize={points20}
+                      >
+                        Agregar
+                      </Button>
+                    </Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {list.map((data) => (
+                    <CategoryScrenn key={data.id} {...data} />
+                  ))}
+                </Tbody>
+              </Table>
+            </TableContainer>
           </Box>
           <HStack spacing={10} justifyContent={"center"} mt={10}>
             <Button
@@ -258,9 +261,9 @@ export async function getServerSideProps() {
   const q = query(
     collection(db, "categories"),
     orderBy("na", "asc"),
-    limit(10),
+    limit(10)
   );
-  
+
   const el = await getDocs(q);
 
   const data = el.docs.map((doc) => ({

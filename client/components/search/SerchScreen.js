@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
 
@@ -24,9 +24,13 @@ import {
 
 import { StarIcon } from "@chakra-ui/icons";
 
-import { activeProduct } from "../../actions/product";
+import { activeProduct, saveProductCart } from "../../actions/product";
+
+import { LoveIcon } from "../../helpers/IconNew";
 
 const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
+  // selector
+  const { saveCartSelect } = useSelector(({ product }) => product);
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -61,64 +65,75 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
     });
   };
 
-  return (
-    <WrapItem
-      justifyContent="center"
-      height={"410px"}
-      w="250px"
-      position={"relative"}
-      onClick={handleSelect}
-    >
-      <VStack
-        onMouseEnter={() => onToggle()}
-        onMouseLeave={() => onToggle()}
-        cursor={"pointer"}
-        w="250px"
-        position={"absolute"}
-        boxShadow="lg"
-        rounded="md"
-        _hover={{
-          maxHeight: "410px",
-          minHeight: "330px",
-          boxShadow: "dark-lg",
-        }}
-      >
-        <AspectRatio w="250px" h={200} position={"relative"}>
-          <Image
-            src={im}
-            alt="Picture of the author"
-            layout="fill"
-            objectFit="contain"
-          />
-        </AspectRatio>
+  // save
+  const handleSave = () => {
+    dispatch(saveProductCart({ id, na, cn, pr, im }));
+  };
 
-        <Flex align="baseline" pt={3} w={"full"} px={3}>
-          <Badge colorScheme="green">new</Badge>
-          <Text
-            ml={2}
-            textTransform="uppercase"
-            fontSize="sm"
-            fontWeight="bold"
-            color="green.500"
-          >
-            Producto
-          </Text>
-        </Flex>
-        <Flex mt={2} align="center" w={"full"} px={3}>
-          <Box as={StarIcon} color="orange.400" />
-          <Text ml={1} fontSize="sm">
-            <b>4.84</b> (190)
-          </Text>
-        </Flex>
-        <Stat width={"full"} px={3} pb={3}>
-          <StatLabel>{na}</StatLabel>
-          <StatNumber>${pr}</StatNumber>
-          <Collapse in={isOpen} animateOpacity>
-            <StatHelpText mt={2}>{ds}</StatHelpText>
-          </Collapse>
-        </Stat>
-      </VStack>
-    </WrapItem>
+  return (
+    <>
+      <Box position={"relative"} zIndex={"modal"}>
+        <Box
+          as={LoveIcon}
+          color={
+            saveCartSelect.map((x) => x.id).includes(id) ? "red" : "GrayText"
+          }
+          position={"absolute"}
+          zIndex={1}
+          left={3}
+          top={3}
+          cursor={"pointer"}
+          onClick={handleSave}
+        />
+      </Box>
+      <Box
+        height={"410px"}
+        w="250px"
+        position={"relative"}
+        onClick={handleSelect}
+      >
+        <VStack
+          onMouseEnter={() => onToggle()}
+          onMouseLeave={() => onToggle()}
+          cursor={"pointer"}
+          w="250px"
+          position={"absolute"}
+          boxShadow="lg"
+          rounded="md"
+          _hover={{
+            maxHeight: "410px",
+            minHeight: "330px",
+            boxShadow: "dark-lg",
+          }}
+        >
+          <AspectRatio w="250px" h={200} position={"relative"}>
+            <Image
+              src={im}
+              alt="Picture of the author"
+              layout="fill"
+              objectFit="contain"
+            />
+          </AspectRatio>
+
+          <Flex align="baseline" pt={3} w={"full"} px={3}>
+            <Badge colorScheme="green">Producto</Badge>
+          </Flex>
+          <Flex mt={2} align="center" w={"full"} px={3}>
+            <Box as={StarIcon} color="orange.400" />
+            <Text ml={1} fontSize="sm">
+              <b>4.84</b> (190)
+            </Text>
+          </Flex>
+          <Stat width={"full"} px={3} pb={3}>
+            <StatLabel>{na}</StatLabel>
+            <StatNumber>${pr}</StatNumber>
+            <Collapse in={isOpen} animateOpacity>
+              <StatHelpText mt={2}>{ds}</StatHelpText>
+            </Collapse>
+          </Stat>
+        </VStack>
+      </Box>
+    </>
   );
 };
 

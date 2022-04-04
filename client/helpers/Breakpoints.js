@@ -58,6 +58,7 @@ const Breakpoints = () => {
 
   const center = "center";
   const full = "full";
+  const bordes = "1px solid #eaeaea";
 
   return {
     displayOn1,
@@ -104,6 +105,7 @@ const Breakpoints = () => {
     content5,
     center,
     full,
+    bordes,
   };
 };
 

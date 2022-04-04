@@ -4,12 +4,7 @@ import { collection, query, limit, getDocs, orderBy } from "firebase/firestore";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  Center,
-  Container,
-  Spinner,
-  Wrap,
-} from "@chakra-ui/react";
+import { Center, Container, Spinner, Wrap, WrapItem } from "@chakra-ui/react";
 
 import SerchScreen from "../../components/search/SerchScreen";
 
@@ -24,7 +19,7 @@ const serchList = ({ data }) => {
   const dispatch = useDispatch();
   // selector
   const { list } = useSelector(({ product }) => product);
-  
+
   useEffect(() => {
     dispatch(listDataProduct(data));
   }, [dispatch, data]);
@@ -32,16 +27,23 @@ const serchList = ({ data }) => {
   return (
     <>
       <Layout>
-        <Container maxW="container.lg">
+        <Container maxW="container.xs">
           {!list[0] && (
             <Center py={30}>
               <Spinner size="xl" color="brand.800" />
             </Center>
           )}
 
-          <Wrap spacing='30px'>
+          <Wrap
+            spacing={"50px"}
+            display={"flex"}
+            justifyContent={"space-around"}
+            my={20}
+          >
             {list.map((data) => (
-              <SerchScreen key={data.id} {...data} />
+              <WrapItem>
+                <SerchScreen key={data.id} {...data} />
+              </WrapItem>
             ))}
           </Wrap>
         </Container>

@@ -2,7 +2,7 @@ import React from "react";
 
 import { withRouter } from "next/router";
 
-import { Container, Flex } from "@chakra-ui/react";
+import { Container, VStack } from "@chakra-ui/react";
 
 import SerchCart from "../../components/search/SerchCart";
 
@@ -12,9 +12,9 @@ const Cart = () => {
   return (
     <Layout>
       <Container maxW="container.lg">
-        <Flex width={"full"}>
+        <VStack width={"full"}>
           <SerchCart />
-        </Flex>
+        </VStack>
       </Container>
     </Layout>
   );

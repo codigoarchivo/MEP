@@ -2,6 +2,7 @@ import { types } from "../type";
 
 const initialStates = {
   list: [],
+  saveCartSelect: [],
   activeCartSelect: [],
   activeSelect: null,
 };
@@ -21,6 +22,11 @@ export const productReducer = (state = initialStates, action) => {
       return {
         ...state,
         activeSelect: action.payload,
+      };
+    case types.productSaveCart:
+      return {
+        ...state,
+        saveCartSelect: [...state.saveCartSelect, action.payload],
       };
     case types.productActiveCart:
       return {
@@ -45,6 +51,14 @@ export const productReducer = (state = initialStates, action) => {
       return {
         ...state,
         activeCartSelect: state.activeCartSelect.filter(
+          (e) => e.id !== action.payload
+        ),
+        activeSelect: null,
+      };
+    case types.productDeleteSave:
+      return {
+        ...state,
+        saveCartSelect: state.saveCartSelect.filter(
           (e) => e.id !== action.payload
         ),
         activeSelect: null,

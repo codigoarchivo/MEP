@@ -111,7 +111,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
       <Tr>
         <Td>
           {im && (
-            <AspectRatio ratio={1} w={59} h={59}>
+            <AspectRatio ratio={1} w={59} h={59} position={"relative"}>
               <Image
                 src={im}
                 alt="Picture of the author"

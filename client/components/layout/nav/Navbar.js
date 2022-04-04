@@ -57,6 +57,7 @@ import { useModality } from "../../../hooks/useModality";
 import useAuth from "../../../hooks/useAuth";
 
 import { logout } from "../../../actions/auth";
+import NavbarCart from "./NavbarCart";
 
 const Navbar = () => {
   // dispatch
@@ -195,13 +196,13 @@ const Navbar = () => {
                 </PopoverTrigger>
                 <PopoverContent>
                   <PopoverHeader fontWeight="semibold">
-                    Popover placement
+                    Carrito Compras
                   </PopoverHeader>
                   <PopoverArrow />
                   <PopoverCloseButton />
                   <PopoverBody>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore.
+                    {/* cart */}
+                    <NavbarCart />
                   </PopoverBody>
                 </PopoverContent>
               </Popover>
