@@ -1,7 +1,5 @@
 import React from "react";
 
-import { withRouter } from "next/router";
-
 import { Container, VStack } from "@chakra-ui/react";
 
 import SerchCart from "../../components/search/SerchCart";
@@ -20,4 +18,4 @@ const Cart = () => {
   );
 };
 
-export default withRouter(Cart);
+export default Cart;

@@ -53,16 +53,18 @@ const ResetPassword = () => {
       return toast({
         description: fiel,
         status: "error",
-        duration: 9000,
+        duration: 5000,
         isClosable: true,
+        position: "top-right",
       });
     } else {
       dispatch(resetPassword(password, getParameterByName("oobCode")));
       toast({
         description: "Password has been changed, you can login now.",
         status: "success",
-        duration: 9000,
+        duration: 5000,
         isClosable: true,
+        position: "top-right",
       });
     }
   };

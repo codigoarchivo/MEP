@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
 
@@ -13,6 +13,7 @@ import {
   Td,
   Text,
   Tr,
+  useToast,
 } from "@chakra-ui/react";
 
 import Breakpoints from "../../helpers/Breakpoints";
@@ -22,6 +23,10 @@ import { DeleteIcon, EditIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import { activeCategory } from "../../actions/category";
 
 const CategoryScrenn = ({ id, na }) => {
+  // toast
+  const toast = useToast();
+  // selector
+  const { list } = useSelector(({ product }) => product);
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -31,51 +36,72 @@ const CategoryScrenn = ({ id, na }) => {
 
   // edit
   const handleEdit = () => {
-    dispatch(
-      activeCategory({
-        word: "Edit",
-        na,
-        id,
-      })
-    );
+    const match = list
+      .map(({ ct }) => ct.na.toLowerCase().trim())
+      .includes(na.toLowerCase().trim());
+    if (match) {
+      return toast({
+        description: "Category tiene un producto asociado",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+    } else {
+      dispatch(
+        activeCategory({
+          word: "Edit",
+          na,
+          id,
+        })
+      );
 
-    router.push({
-      pathname: "/category/[pid]",
-      query: { pid: id, word: "Edit" },
-    });
+      router.push({
+        pathname: "/category/[pid]",
+        query: { pid: id, word: "Edit" },
+      });
+    }
   };
 
   // delete
   const handleDelete = () => {
-    dispatch(
-      activeCategory({
-        word: "Delete",
-        na,
-        id,
-      })
-    );
+    const match = list
+      .map(({ ct }) => ct.na.toLowerCase().trim())
+      .includes(na.toLowerCase().trim());
+    if (match) {
+      return toast({
+        description: "Categoria tiene un producto asociado",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+    } else {
+      dispatch(
+        activeCategory({
+          word: "Delete",
+          na,
+          id,
+        })
+      );
 
-    router.push({
-      pathname: "/category/[pid]",
-      query: { pid: id, word: "Delete" },
-    });
+      router.push({
+        pathname: "/category/[pid]",
+        query: { pid: id, word: "Delete" },
+      });
+    }
   };
 
   return (
     <>
       <Tr>
-        <Td textAlign={center} py={2}>
+        <Td>
           <Text>{na}</Text>
         </Td>
-        <Td textAlign={center} py={2}>
+        <Td isNumeric>
           <Menu>
             <MenuButton variant="outline">
-              <PlusSquareIcon
-                w={points18}
-                h={points18}
-                top={"35%"}
-                left={"40%"}
-              />
+              <PlusSquareIcon w={6} h={6} />
             </MenuButton>
             <MenuList minWidth={0}>
               <MenuItem>

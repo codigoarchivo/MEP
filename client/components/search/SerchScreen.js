@@ -16,10 +16,11 @@ import {
   VStack,
   useDisclosure,
   Collapse,
-  WrapItem,
   Flex,
   Badge,
   Text,
+  useToast,
+  WrapItem,
 } from "@chakra-ui/react";
 
 import { StarIcon } from "@chakra-ui/icons";
@@ -28,9 +29,17 @@ import { activeProduct, saveProductCart } from "../../actions/product";
 
 import { LoveIcon } from "../../helpers/IconNew";
 
+import Breakpoints from "../../helpers/Breakpoints";
+
 const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
+  // toast
+  const toast = useToast();
+  // Breakpoints
+  const { bordes } = Breakpoints();
   // selector
-  const { saveCartSelect } = useSelector(({ product }) => product);
+  const { activeCartSelect, saveCartSelect } = useSelector(
+    ({ product }) => product
+  );
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -52,87 +61,114 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
 
   // select
   const handleSelect = () => {
-    dispatch(
-      activeProduct({
-        word: "Details",
-        ...data,
-      })
-    );
+    // activeCartSelect
+    const match = activeCartSelect.map((item) => item.id).includes(id);
+    if (match) {
+      return toast({
+        description: "Producto ya esta en el carrito",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+    } else {
+      dispatch(
+        activeProduct({
+          word: "Details",
+          ...data,
+        })
+      );
 
-    router.push({
-      pathname: "/search/details",
-      query: { pid: id },
-    });
+      router.push({
+        pathname: "/search/details",
+        query: { pid: id },
+      });
+    }
   };
 
   // save
   const handleSave = () => {
-    dispatch(saveProductCart({ id, na, cn, pr, im }));
+    // activeCartSelect
+    const match = activeCartSelect.map((item) => item.id).includes(id);
+    if (match) {
+      return toast({
+        description: "Producto ya esta en el carrito",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+    } else {
+      dispatch(saveProductCart({ id, na, cn, pr, im }));
+    }
   };
 
   return (
     <>
-      <Box position={"relative"} zIndex={"modal"}>
+      <WrapItem>
+        <Box position={"relative"}>
+          <Box
+            as={LoveIcon}
+            color={
+              saveCartSelect.map((x) => x.id).includes(id) ? "red" : "GrayText"
+            }
+            position={"absolute"}
+            zIndex={1}
+            left={3}
+            top={3}
+            cursor={"pointer"}
+            onClick={handleSave}
+          />
+        </Box>
         <Box
-          as={LoveIcon}
-          color={
-            saveCartSelect.map((x) => x.id).includes(id) ? "red" : "GrayText"
-          }
-          position={"absolute"}
-          zIndex={1}
-          left={3}
-          top={3}
-          cursor={"pointer"}
-          onClick={handleSave}
-        />
-      </Box>
-      <Box
-        height={"410px"}
-        w="250px"
-        position={"relative"}
-        onClick={handleSelect}
-      >
-        <VStack
-          onMouseEnter={() => onToggle()}
-          onMouseLeave={() => onToggle()}
-          cursor={"pointer"}
+          height={"410px"}
           w="250px"
-          position={"absolute"}
-          boxShadow="lg"
-          rounded="md"
-          _hover={{
-            maxHeight: "410px",
-            minHeight: "330px",
-            boxShadow: "dark-lg",
-          }}
+          position={"relative"}
+          onClick={handleSelect}
         >
-          <AspectRatio w="250px" h={200} position={"relative"}>
-            <Image
-              src={im}
-              alt="Picture of the author"
-              layout="fill"
-              objectFit="contain"
-            />
-          </AspectRatio>
+          <VStack
+            onMouseEnter={() => onToggle()}
+            onMouseLeave={() => onToggle()}
+            cursor={"pointer"}
+            w="250px"
+            position={"absolute"}
+            border={bordes}
+            rounded="md"
+            _hover={{
+              maxHeight: "410px",
+              minHeight: "330px",
+              boxShadow: "lg",
+            }}
+          >
+            <AspectRatio w="250px" h={200} position={"relative"}>
+              <Image
+                src={im}
+                alt="Picture of the author"
+                layout="fill"
+                objectFit="contain"
+                objectPosition="center"
+              />
+            </AspectRatio>
 
-          <Flex align="baseline" pt={3} w={"full"} px={3}>
-            <Badge colorScheme="green">Producto</Badge>
-          </Flex>
-          <Flex mt={2} align="center" w={"full"} px={3}>
-            <Box as={StarIcon} color="orange.400" />
-            <Text ml={1} fontSize="sm">
-              <b>4.84</b> (190)
-            </Text>
-          </Flex>
-          <Stat width={"full"} px={3} pb={3}>
-            <StatLabel>{na}</StatLabel>
-            <StatNumber>${pr}</StatNumber>
-            <Collapse in={isOpen} animateOpacity>
-              <StatHelpText mt={2}>{ds}</StatHelpText>
-            </Collapse>
-          </Stat>
-        </VStack>
-      </Box>
+            <Flex align="baseline" pt={3} w={"full"} px={3}>
+              <Badge colorScheme="green">Producto</Badge>
+            </Flex>
+            <Flex mt={2} align="center" w={"full"} px={3}>
+              <Box as={StarIcon} color="orange.400" />
+              <Text ml={1} fontSize="sm">
+                <b>4.84</b> (190)
+              </Text>
+            </Flex>
+            <Stat width={"full"} px={3} pb={3}>
+              <StatLabel>{na}</StatLabel>
+              <StatNumber>${pr}</StatNumber>
+              <Collapse in={isOpen} animateOpacity>
+                <StatHelpText mt={2}>{ds}</StatHelpText>
+              </Collapse>
+            </Stat>
+          </VStack>
+        </Box>
+      </WrapItem>
     </>
   );
 };

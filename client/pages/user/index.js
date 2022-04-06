@@ -81,8 +81,9 @@ const User = () => {
     toast({
       description: "Datos actualizados",
       status: "success",
-      duration: 3000,
+      duration: 5000,
       isClosable: true,
+      position: "top-right",
     });
   };
 

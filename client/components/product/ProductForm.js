@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { useDispatch, useSelector } from "react-redux";
 
 import { DownloadIcon } from "@chakra-ui/icons";
 
 import {
-  Box,
   Button,
   FormLabel,
   Grid,
@@ -22,9 +21,9 @@ import {
   chakra,
 } from "@chakra-ui/react";
 
-import { db } from "../../firebase/config";
-
 import ModeColor from "../../helpers/ModeColor";
+
+import { listDataCategoryProduct } from "../../actions/category";
 
 const ProductForm = ({
   word,
@@ -48,28 +47,20 @@ const ProductForm = ({
 }) => {
   // mode Color
   const { bg, brand } = ModeColor();
-  // useState
-  const [selectCategory, setSelectCategory] = useState([]);
   // file
   const file = useRef();
+  // dispatch
+  const dispatch = useDispatch();
+  // selector
+  const { list } = useSelector(({ category }) => category);
 
-  useEffect(async () => {
-    const q = query(collection(db, "categories"), orderBy("na", "asc"));
-    const el = await getDocs(q);
-
-    const data = el.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    if (data.length > 0) {
-      setSelectCategory(data);
-    }
-  }, []);
+  useEffect(() => {
+    dispatch(listDataCategoryProduct());
+  }, [dispatch]);
 
   return (
     <>
-      <chakra.form onSubmit={handleSubmit} w={"full"}>
+      <chakra.form onSubmit={handleSubmit} w={"full"} p={3}>
         <Grid
           templateRows={`repeat(5, 1fr)`}
           templateColumns={repeat1}
@@ -167,7 +158,7 @@ const ProductForm = ({
               value={ct}
               onChange={handleInputChange4}
             >
-              {selectCategory.map(({ id, na }) => (
+              {list.map(({ id, na }) => (
                 <option key={na} data-value={na} value={id}>
                   {na}
                 </option>

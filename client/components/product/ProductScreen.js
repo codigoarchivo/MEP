@@ -95,7 +95,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
       query: { pid: id, word: "Details" },
     });
   };
-  
+
   // ActiveOrInactive
   const handleActiveOrInactive = (bol) => {
     dispatch(
@@ -124,13 +124,13 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
         <Td>
           <Text>{na}</Text>
         </Td>
-        <Td display={displayOff3}>
+        <Td>
           <Text>{pr}$</Text>
         </Td>
-        <Td display={displayOff3}>
+        <Td >
           <Text>{ct?.na}</Text>
         </Td>
-        <Td textAlign={"center"}>
+        <Td isNumeric>
           <Menu>
             <MenuButton variant="outline">
               <PlusSquareIcon

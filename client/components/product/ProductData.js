@@ -1,12 +1,16 @@
 import React from "react";
 
-import Swal from "sweetalert2";
-
 import { useRouter } from "next/router";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { CloseButton, Heading, HStack } from "@chakra-ui/react";
+import {
+  CloseButton,
+  Heading,
+  HStack,
+  useToast,
+  VStack,
+} from "@chakra-ui/react";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
@@ -18,12 +22,7 @@ import ProductForm from "./ProductForm";
 
 import ProductFormWord from "./ProductFormWord";
 
-import {
-  addProduct,
-  closeActive,
-  deleteProduct,
-  editProduct,
-} from "../../actions/product";
+import { addProduct, deleteProduct, editProduct } from "../../actions/product";
 
 const initialStates = {
   na: "",
@@ -36,6 +35,8 @@ const initialStates = {
 };
 
 const ProductData = () => {
+  // toast
+  const toast = useToast();
   // selector
   const { activeSelect } = useSelector(({ product }) => product);
   // dispatch
@@ -43,7 +44,7 @@ const ProductData = () => {
   // router
   const router = useRouter();
   // Breakpoints
-  const { points1, repeat1, points3 } = Breakpoints();
+  const { points1, repeat1, points3, bordes } = Breakpoints();
 
   // useForm
   const [
@@ -65,11 +66,23 @@ const ProductData = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (ErrorRetur2) {
-      return Swal.fire("Error", estado, "error");
+      return toast({
+        description: estado,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
     }
 
     if (ErrorRetur) {
-      return Swal.fire("Error", fiel, "error");
+      return toast({
+        description: fiel,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
     } else {
       word === "Add" &&
         dispatch(addProduct({ na, pr, ds, ct, cn, dt, im, es: true }));
@@ -82,48 +95,49 @@ const ProductData = () => {
   };
   // cerrar
   const onClose = () => {
-    router.push("/product");
-    dispatch(closeActive());
+    router.back();
   };
 
   return (
     <>
-      <HStack spacing={5} w={"full"}>
-        <CloseButton size="md" onClick={onClose} />
-        <Heading as="h1" size={"md"} textTransform={"uppercase"}>
-          {word}
-        </Heading>
-      </HStack>
-      {word === "Details" || word === "Delete" ? (
-        <ProductFormWord
-          handleSubmit={handleSubmit}
-          HStack={HStack}
-          dt={dt}
-          word={word}
-          onClose={onClose}
-        />
-      ) : (
-        <ProductForm
-          word={word}
-          na={na}
-          pr={pr}
-          ds={ds}
-          ct={ct}
-          cn={cn}
-          dt={dt}
-          progress={progress}
-          HStack={HStack}
-          repeat1={repeat1}
-          points1={points1}
-          points3={points3}
-          onClose={onClose}
-          handleInputChange={handleInputChange}
-          handleInputChange2={handleInputChange2}
-          handleInputChange3={handleInputChange3}
-          handleInputChange4={handleInputChange4}
-          handleSubmit={handleSubmit}
-        />
-      )}
+      <VStack spacing={5} w={"full"} border={bordes} p={3}>
+        <HStack w={"full"}>
+          <CloseButton size="md" onClick={onClose} />
+          <Heading as="h1" size={"md"} textTransform={"uppercase"}>
+            {word}
+          </Heading>
+        </HStack>
+        {word === "Details" || word === "Delete" ? (
+          <ProductFormWord
+            handleSubmit={handleSubmit}
+            HStack={HStack}
+            dt={dt}
+            word={word}
+            onClose={onClose}
+          />
+        ) : (
+          <ProductForm
+            word={word}
+            na={na}
+            pr={pr}
+            ds={ds}
+            ct={ct}
+            cn={cn}
+            dt={dt}
+            progress={progress}
+            HStack={HStack}
+            repeat1={repeat1}
+            points1={points1}
+            points3={points3}
+            onClose={onClose}
+            handleInputChange={handleInputChange}
+            handleInputChange2={handleInputChange2}
+            handleInputChange3={handleInputChange3}
+            handleInputChange4={handleInputChange4}
+            handleSubmit={handleSubmit}
+          />
+        )}
+      </VStack>
     </>
   );
 };

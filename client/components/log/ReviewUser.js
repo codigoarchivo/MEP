@@ -52,16 +52,18 @@ const ReviewUser = () => {
       return toast({
         description: fiel,
         status: "error",
-        duration: 9000,
+        duration: 5000,
         isClosable: true,
+        position: "top-right",
       });
     } else {
       dispatch(sendEmail(email));
       toast({
         description: `An email is sent to ${email} for password reset instructions.`,
         status: "success",
-        duration: 9000,
+        duration: 5000,
         isClosable: true,
+        position: "top-right",
       });
     }
   };

@@ -3,6 +3,9 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDocs,
+  orderBy,
+  query,
   updateDoc,
 } from "firebase/firestore";
 
@@ -16,6 +19,28 @@ export const listDataCategory = (data) => {
   return async (dispatch) => {
     try {
       dispatch(categoryDataList(data));
+    } catch (error) {
+      Swal.fire("Error", error, "error");
+    }
+  };
+};
+
+export const listDataCategoryProduct = () => {
+  return async (dispatch, getState) => {
+    try {
+      const { list } = getState().category;
+      if (list.length > 0) {
+        return;
+      } else {
+        const q = query(collection(db, "categories"), orderBy("na", "asc"));
+        const el = await getDocs(q);
+        const data = el.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        dispatch(categoryDataList(data));
+      }
     } catch (error) {
       Swal.fire("Error", error, "error");
     }
@@ -55,7 +80,7 @@ export const editCategory = (na, id) => {
       await updateDoc(dataRef, {
         na,
       });
-      
+
       const data = { id, na };
 
       if (data) {

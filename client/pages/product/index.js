@@ -25,6 +25,7 @@ import {
   HStack,
   Table,
   TableCaption,
+  TableContainer,
   Tbody,
   Th,
   Thead,
@@ -59,7 +60,7 @@ const ProductList = ({ data }) => {
   // router
   const router = useRouter();
   // breakpoints
-  const { displayOff3, points19, points20 } = Breakpoints();
+  const { displayOff3, points19, points20, bordes } = Breakpoints();
   // selector
   const { list } = useSelector(({ product }) => product);
   // selector
@@ -174,49 +175,46 @@ const ProductList = ({ data }) => {
 
   return (
     <Layout>
-      {!list[0] && (
-        <Center py={30}>
-          <Heading size={"sm"} textTransform={"uppercase"}>
-            Agrega una producto
-          </Heading>
-        </Center>
-      )}
-
       {isloggedIn === true && activeSelect?.rol === "owner" ? (
-        <Container maxW={"container.md"} my={10}>
-          <Box boxShadow="2xl" p={5}>
-            <Table fontSize={points20} size={{ base: "sm" }}>
-              <TableCaption>Tus publicaciones en nuestro sitio</TableCaption>
-              <Thead>
-                <Tr>
-                  <Th pb={points19}></Th>
-                  <Th pb={points19}>Nombre</Th>
-                  <Th pb={points19} display={displayOff3}>
-                    Precio
-                  </Th>
-                  <Th pb={points19} display={displayOff3}>
-                    Categoria
-                  </Th>
-                  <Th pb={points19} textAlign={"center"}>
-                    <Button
-                      onClick={handleAdd}
-                      variant={"primary"}
-                      size="sm"
-                      rounded={"sm"}
-                      textTransform="uppercase"
-                      fontSize={points20}
-                    >
-                      Agregar
-                    </Button>
-                  </Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {list.map((data) => (
-                  <ProductScrenn key={data.id} {...data} />
-                ))}
-              </Tbody>
-            </Table>
+        <Container maxW={"container.lg"} my={10}>
+          <Box p={5}>
+            {!list[0] && (
+              <Center border={bordes} py={30}>
+                <Heading size={"sm"} textTransform={"uppercase"}>
+                  Agrega una producto
+                </Heading>
+              </Center>
+            )}
+            <TableContainer w={"full"} border={bordes}>
+              <Table>
+                <TableCaption>Tus publicaciones en nuestro sitio</TableCaption>
+                <Thead>
+                  <Tr>
+                    <Th></Th>
+                    <Th>Nombre</Th>
+                    <Th>Precio</Th>
+                    <Th>Categoria</Th>
+                    <Th isNumeric>
+                      <Button
+                        onClick={handleAdd}
+                        variant={"primary"}
+                        size="sm"
+                        rounded={"sm"}
+                        textTransform="uppercase"
+                        fontSize={"x-small"}
+                      >
+                        Agregar
+                      </Button>
+                    </Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {list.map((data) => (
+                    <ProductScrenn key={data.id} {...data} />
+                  ))}
+                </Tbody>
+              </Table>
+            </TableContainer>
           </Box>
           <HStack spacing={10} justifyContent={"center"} mt={10}>
             <Button

@@ -1,6 +1,8 @@
-import React, { useRef } from "react";
+import React, { useMemo, useRef } from "react";
 
 import { DeleteIcon } from "@chakra-ui/icons";
+
+import Image from "next/image";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,8 +22,8 @@ import {
 import { deleteProductCart } from "../../actions/product";
 
 import SerchCartSave from "./SerchCartSave";
+
 import Breakpoints from "../../helpers/Breakpoints";
-import Image from "next/image";
 
 const SerchCart = () => {
   // Breakpoints
@@ -34,8 +36,8 @@ const SerchCart = () => {
   const { activeCartSelect, saveCartSelect } = useSelector(
     ({ product }) => product
   );
-  // inc
-  activeCartSelect.map((item) => (inc.current += item.total));
+  // incrementa y encapsula información para evitar que se actualice 
+  inc.current = activeCartSelect.reduce((total, item) => total + item.total, 0);
   // delete cart
   const handleDeleteCart = (id) => {
     dispatch(deleteProductCart(id));

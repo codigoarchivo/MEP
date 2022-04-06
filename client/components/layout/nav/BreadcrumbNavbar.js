@@ -8,12 +8,18 @@ import { ChevronRightIcon } from "@chakra-ui/icons";
 
 import Breakpoints from "../../../helpers/Breakpoints";
 
-export const BreadcrumbNavbar = ({ NavLink, Grid, GridItem, Box }) => {
+export const BreadcrumbNavbar = ({
+  NavLink,
+  Grid,
+  GridItem,
+  Box,
+  activeSelect,
+}) => {
   // Breakpoints
   const { displayOff2 } = Breakpoints();
 
   return (
-    <Box display={displayOff2}>
+    <Box display={displayOff2} mb={16}>
       <Grid
         gridTemplateColumns={"repeat(1, 1fr)"}
         alignItems={"center"}
@@ -32,6 +38,25 @@ export const BreadcrumbNavbar = ({ NavLink, Grid, GridItem, Box }) => {
             <BreadcrumbItem>
               <NavLink variant={"secondary"} href={"/"} name={"About"} />
             </BreadcrumbItem>
+
+            {activeSelect?.rol === "owner" && (
+              <BreadcrumbItem>
+                <NavLink
+                  variant={"secondary"}
+                  href={"/product"}
+                  name={"product"}
+                />
+              </BreadcrumbItem>
+            )}
+            {activeSelect?.rol === "owner" && (
+              <BreadcrumbItem>
+                <NavLink
+                  variant={"secondary"}
+                  href={"/category"}
+                  name={"category"}
+                />
+              </BreadcrumbItem>
+            )}
 
             <BreadcrumbItem isCurrentPage>
               <NavLink

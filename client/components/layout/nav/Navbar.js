@@ -82,7 +82,6 @@ const Navbar = () => {
     displayOff2,
     points5,
     points11,
-    points13,
     points15,
     repeat4,
     porcent2,
@@ -188,13 +187,13 @@ const Navbar = () => {
               </InputGroup>
             </GridItem>
             <GridItem colSpan={1} justifySelf="center">
-              <Popover isLazy>
+              <Popover isLazy z> 
                 <PopoverTrigger>
                   <Button size="xs" px={0} variant={"secondary"}>
                     <CartIcon boxSize={points11} />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent>
+                <PopoverContent >
                   <PopoverHeader fontWeight="semibold">
                     Carrito Compras
                   </PopoverHeader>
@@ -316,6 +315,7 @@ const Navbar = () => {
 
       {/* BreadcrumbNavbar */}
       <BreadcrumbNavbar
+        activeSelect={activeSelect}
         Heading={Heading}
         HStack={HStack}
         Grid={Grid}

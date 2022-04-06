@@ -63,8 +63,9 @@ const LoginUser = ({ handleReview }) => {
       return toast({
         description: fiel,
         status: "error",
-        duration: 9000,
+        duration: 5000,
         isClosable: true,
+        position: "top-right",
       });
     } else {
       dispatch(startLoginEmailPassword(email, password));

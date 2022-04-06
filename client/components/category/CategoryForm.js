@@ -26,10 +26,10 @@ const CategoryForm = ({
             <Input
               name="na"
               id="na"
-              onChange={handleInputChange}
               value={na}
               type={"text"}
               placeholder="Nombre"
+              onChange={handleInputChange}
             />
           </FormControl>
           <HStack w={"full"} justifyContent="flex-end">

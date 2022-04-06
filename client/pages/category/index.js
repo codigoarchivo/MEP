@@ -175,31 +175,29 @@ const CategoryList = ({ data }) => {
   return (
     <Layout>
       {isloggedIn === true && activeSelect?.rol === "owner" ? (
-        <Container maxW={"container.sm"} my={20}>
-          <Box boxShadow="2xl" p={5}>
+        <Container maxW={"container.sm"} my={10}>
+          <Box p={5}>
             {!list[0] && (
-              <Center py={30}>
+              <Center border={bordes} py={30}>
                 <Heading size={"sm"} textTransform={"uppercase"}>
                   Agrega una categoria
                 </Heading>
               </Center>
             )}
-            <TableContainer border={bordes} >
-              <Table fontSize={points20} size={{ base: "sm" }}>
-                <TableCaption>Lista de categorias</TableCaption>
+            <TableContainer w={"full"} border={bordes}>
+              <Table variant="simple" >
+                <TableCaption>Lista de Categorias</TableCaption>
                 <Thead>
                   <Tr>
-                    <Th pb={points19} textAlign={center}>
-                      Nombre
-                    </Th>
-                    <Th p={points19} textAlign={center}>
+                    <Th>Categoria</Th>
+                    <Th isNumeric  textAlign={center}>
                       <Button
                         onClick={handleAdd}
                         variant={"primary"}
                         size="sm"
                         rounded={"sm"}
                         textTransform="uppercase"
-                        fontSize={points20}
+                        fontSize={"x-small"}
                       >
                         Agregar
                       </Button>
