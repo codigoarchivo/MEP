@@ -42,9 +42,7 @@ import {
   useModality3,
 } from "../../hooks/useModality";
 
-const serchList = ({ data }) => {
-  // dispatch
-  const dispatch = useDispatch();
+const serchList = () => {
   // selector
   const { list } = useSelector(({ product }) => product);
   // modality
@@ -53,10 +51,6 @@ const serchList = ({ data }) => {
   const { modality2, setModality2 } = useModality2();
   // modality
   const { modality3, setModality3 } = useModality3(true);
-
-  useEffect(() => {
-    dispatch(listDataProduct(data));
-  }, [dispatch, data]);
 
   const home = () => {
     const firstVisible = list[0].na;
@@ -191,22 +185,5 @@ const serchList = ({ data }) => {
     </>
   );
 };
-
-export async function getStaticProps() {
-  const q = query(collection(db, "serchs"), limit(2), orderBy("na", "asc"));
-
-  const el = await getDocs(q);
-
-  const data = el.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-
-  return {
-    props: {
-      data,
-    },
-  };
-}
 
 export default serchList;

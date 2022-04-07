@@ -28,6 +28,7 @@ const Breakpoints = () => {
   const points21 = { base: 0, sm: 10 };
   const points22 = { base: 10, sm: 0 };
   const points23 = { base: 5, md: 20 };
+  const points24 = { base: 5, md: 10 };
 
   const auto1 = { base: "auto", md: "90vh" };
 
@@ -58,7 +59,7 @@ const Breakpoints = () => {
 
   const center = "center";
   const full = "full";
-  const bordes = "1px solid #eaeaea";
+  const bordes = "1px solid #d0d0d0";
 
   return {
     displayOn1,
@@ -89,6 +90,7 @@ const Breakpoints = () => {
     points21,
     points22,
     points23,
+    points24,
     auto1,
     repeat1,
     repeat2,

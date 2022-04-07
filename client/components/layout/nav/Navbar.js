@@ -125,13 +125,13 @@ const Navbar = () => {
       <Container maxW={"container.xl"}>
         <chakra.nav>
           <Grid
+            as={"ul"}
             gridTemplateColumns={repeat4}
-            rowGap={5}
             alignItems={"center"}
-            py={5}
-            boxShadow="md"
+            py={1}
           >
             <GridItem
+              as={"li"}
               colSpan={3}
               justifyContent={"center"}
               display={displayOn2}
@@ -140,14 +140,20 @@ const Navbar = () => {
                 <HamburgerIcon />
               </Icon>
             </GridItem>
-            <GridItem colSpan={points15}>
-              <HStack spacing={3} mx={7} justifyContent="space-around">
-                <Image
-                  src="/img/logo.png"
-                  alt="Picture of the author"
-                  width={60}
-                  height={80}
-                />
+            <GridItem as={"li"} colSpan={points15}>
+              <HStack mx={4} justifyContent="space-around">
+                <Box
+                  position={"relative"}
+                  display={"flex"}
+                  alignItems={"center"}
+                >
+                  <Image
+                    src={"/img/logo.png"}
+                    alt="Picture of the author"
+                    width={100}
+                    height={70}
+                  />
+                </Box>
                 <Box as={"div"} display={displayOff2}>
                   <Menu>
                     <MenuButton>Categoria</MenuButton>
@@ -168,7 +174,7 @@ const Navbar = () => {
                 </Box>
               </HStack>
             </GridItem>
-            <GridItem colSpan={points5}>
+            <GridItem as={"li"} colSpan={points5}>
               <Icon
                 onClick={() => setModality(true)}
                 boxSize={4}
@@ -186,14 +192,14 @@ const Navbar = () => {
                 <Input type={"search"} placeholder="Buscar" />
               </InputGroup>
             </GridItem>
-            <GridItem colSpan={1} justifySelf="center">
-              <Popover isLazy z> 
+            <GridItem as={"li"} colSpan={1} justifySelf="center">
+              <Popover isLazy z>
                 <PopoverTrigger>
                   <Button size="xs" px={0} variant={"secondary"}>
                     <CartIcon boxSize={points11} />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent >
+                <PopoverContent>
                   <PopoverHeader fontWeight="semibold">
                     Carrito Compras
                   </PopoverHeader>
@@ -206,7 +212,7 @@ const Navbar = () => {
                 </PopoverContent>
               </Popover>
             </GridItem>
-            <GridItem colSpan={5} display={displayOff2}>
+            <GridItem as={"li"} colSpan={5} display={displayOff2}>
               <Flex mx={4} justifyContent="space-around" alignItems={"center"}>
                 {isloggedIn ? (
                   <NavLink

@@ -102,6 +102,9 @@ const globalStyles = {
       ".css-1xjer9p": {
         justifyContent: "center",
       },
+      ul: {
+        listStyle: "none",
+      },
       a: {
         _hover: {
           textDecoration: "none",

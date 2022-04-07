@@ -2,72 +2,71 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
-import { Breadcrumb, BreadcrumbItem } from "@chakra-ui/react";
-
-import { ChevronRightIcon } from "@chakra-ui/icons";
+import { chakra, Stack } from "@chakra-ui/react";
 
 import Breakpoints from "../../../helpers/Breakpoints";
 
-export const BreadcrumbNavbar = ({
-  NavLink,
-  Grid,
-  GridItem,
-  Box,
-  activeSelect,
-}) => {
+export const BreadcrumbNavbar = ({ NavLink, Box, activeSelect }) => {
   // Breakpoints
-  const { displayOff2 } = Breakpoints();
+  const { displayOff2, bordes, content5 } = Breakpoints();
 
   return (
-    <Box display={displayOff2} mb={16}>
-      <Grid
-        gridTemplateColumns={"repeat(1, 1fr)"}
-        alignItems={"center"}
-        justifyItems="center"
-        py={5}
-      >
-        <GridItem colSpan={1} mx={5}>
-          <Breadcrumb
-            spacing="10px"
-            separator={<ChevronRightIcon color="gray.500" />}
-          >
-            <BreadcrumbItem>
-              <NavLink variant={"secondary"} href={"/"} name={"Home"} />
-            </BreadcrumbItem>
-
-            <BreadcrumbItem>
-              <NavLink variant={"secondary"} href={"/"} name={"About"} />
-            </BreadcrumbItem>
-
-            {activeSelect?.rol === "owner" && (
-              <BreadcrumbItem>
-                <NavLink
-                  variant={"secondary"}
-                  href={"/product"}
-                  name={"product"}
-                />
-              </BreadcrumbItem>
-            )}
-            {activeSelect?.rol === "owner" && (
-              <BreadcrumbItem>
-                <NavLink
-                  variant={"secondary"}
-                  href={"/category"}
-                  name={"category"}
-                />
-              </BreadcrumbItem>
-            )}
-
-            <BreadcrumbItem isCurrentPage>
+    <Box display={displayOff2} mb={5} borderTop={bordes}>
+      <chakra.nav boxShadow="md">
+        <Stack
+          spacing={0}
+          as={"ul"}
+          flexDirection={content5}
+          justifyContent={"center"}
+          alignItems={"center"}
+          py={2}
+        >
+          <chakra.li mx={"3"}>
+            <NavLink
+              fontWeight={"normal"}
+              variant={"secondary"}
+              href={"/"}
+              name={"Home"}
+            />
+          </chakra.li>
+          <chakra.li mx={"3"}>
+            <NavLink
+              fontWeight={"normal"}
+              variant={"secondary"}
+              href={"/"}
+              name={"About"}
+            />
+          </chakra.li>
+          {activeSelect?.rol === "owner" && (
+            <chakra.li mx={"3"}>
               <NavLink
+                fontWeight={"normal"}
                 variant={"secondary"}
-                href={"/search"}
-                name={"Shop All"}
+                href={"/product"}
+                name={"product"}
               />
-            </BreadcrumbItem>
-          </Breadcrumb>
-        </GridItem>
-      </Grid>
+            </chakra.li>
+          )}
+          {activeSelect?.rol === "owner" && (
+            <chakra.li mx={"3"}>
+              <NavLink
+                fontWeight={"normal"}
+                variant={"secondary"}
+                href={"/category"}
+                name={"category"}
+              />
+            </chakra.li>
+          )}
+          <chakra.li mx={"3"}>
+            <NavLink
+              fontWeight={"normal"}
+              variant={"secondary"}
+              href={"/search"}
+              name={"Shop All"}
+            />
+          </chakra.li>
+        </Stack>
+      </chakra.nav>
     </Box>
   );
 };

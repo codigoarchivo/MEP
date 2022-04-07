@@ -89,6 +89,11 @@ const Details = () => {
     }
   };
 
+  const property = {
+    reviewCount: 34,
+    rating: 4,
+  };
+
   return (
     <Layout>
       <Container maxW="container.lg">
@@ -106,12 +111,19 @@ const Details = () => {
 
           <VStack p={5} spacing={4}>
             <Heading>{na}</Heading>
-            <HStack w={full}>
-              <Box as={StarIcon} color="orange.400" />
-              <Text ml={1} fontSize="sm">
-                <b>4.84</b> (190)
-              </Text>
-            </HStack>
+            <Box w={"full"} display="flex" mt={2} alignItems="center">
+              {Array(5)
+                .fill("")
+                .map((_, i) => (
+                  <StarIcon
+                    key={i}
+                    color={i < property.rating ? "brand.800" : "gray.300"}
+                  />
+                ))}
+              <Box as="span" ml="2" color="gray.600" fontSize="sm">
+                {property.reviewCount} reviews
+              </Box>
+            </Box>
             <Box w={full}>
               <Badge colorScheme="green">En stock ({cn})</Badge>
             </Box>

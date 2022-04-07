@@ -53,7 +53,7 @@ const User = () => {
   // mode Color
   const { bg, bg2 } = ModeColor();
   // Breakpoints
-  const { content5, points23, porcent3, porcent4 } = Breakpoints();
+  const { content5, points24, porcent3, porcent4, bordes } = Breakpoints();
   // file
   const file = useRef();
   // useForm
@@ -90,7 +90,7 @@ const User = () => {
   return (
     <Layout>
       {isloggedIn === true && activeSelect?.rol === "owner" ? (
-        <Container maxW={"container.xl"} my={10}>
+        <Container maxW={"container.lg"} mt={10}>
           <VStack>
             <Heading size={"lg"} textAlign="center">
               Perfil público
@@ -99,21 +99,14 @@ const User = () => {
               Información Basica
             </Heading>
           </VStack>
-          <Divider
-            orientation="horizontal"
-            mt={10}
-            variant={"dashed"}
-            bg={bg2}
-          />
           <Stack
             flexDirection={content5}
-            boxShadow="2xl"
             justifyContent={"space-around"}
-            p={points23}
-            spacing={10}
+            p={points24}
+            alignItems={"center"}
           >
-            <VStack spacing={12} h={"full"} w={porcent4}>
-              <Box>
+            <VStack spacing={12} h={"full"} p={5} mx={5} w={porcent4}>
+              <Box border={bordes} p={5} rounded={5}>
                 {!photoURL ? (
                   <Avatar size="2xl" name={displayName} />
                 ) : (
@@ -139,7 +132,13 @@ const User = () => {
                 </Heading>
               </VStack>
             </VStack>
-            <chakra.form w={porcent3} onSubmit={handleSubmit}>
+            <chakra.form
+              w={porcent3}
+              p={5}
+              mx={5}
+              border={bordes}
+              onSubmit={handleSubmit}
+            >
               <VStack spacing={10}>
                 <Heading size={"xs"} w={"full"} fontWeight={"normal"}>
                   Información Basica

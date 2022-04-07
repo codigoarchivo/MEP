@@ -103,9 +103,14 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
     }
   };
 
+  const property = {
+    reviewCount: 34,
+    rating: 4,
+  };
+
   return (
     <>
-      <WrapItem>
+      <WrapItem mx={5}>
         <Box position={"relative"}>
           <Box
             as={LoveIcon}
@@ -153,12 +158,19 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
             <Flex align="baseline" pt={3} w={"full"} px={3}>
               <Badge colorScheme="green">Producto</Badge>
             </Flex>
-            <Flex mt={2} align="center" w={"full"} px={3}>
-              <Box as={StarIcon} color="orange.400" />
-              <Text ml={1} fontSize="sm">
-                <b>4.84</b> (190)
-              </Text>
-            </Flex>
+            <Box px={3} w={"full"} display="flex" mt={2} alignItems="center">
+              {Array(5)
+                .fill("")
+                .map((_, i) => (
+                  <StarIcon
+                    key={i}
+                    color={i < property.rating ? "brand.800" : "gray.300"}
+                  />
+                ))}
+              <Box as="span" ml="2" color="gray.600" fontSize="sm">
+                {property.reviewCount} reviews
+              </Box>
+            </Box>
             <Stat width={"full"} px={3} pb={3}>
               <StatLabel>{na}</StatLabel>
               <StatNumber>${pr}</StatNumber>

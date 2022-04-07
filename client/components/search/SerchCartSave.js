@@ -62,7 +62,7 @@ const SerchCartSave = ({ id, na, pr, cn, im }) => {
 
   return (
     <>
-      <Tr key={id}>
+      <Tr>
         <Td>
           <AspectRatio ratio={1} w={59} h={59} position={"relative"}>
             <Image
@@ -90,15 +90,10 @@ const SerchCartSave = ({ id, na, pr, cn, im }) => {
           </Box>
         </Td>
         <Td>${pr * input.value}</Td>
-        <Td textAlign={"center"}>
+        <Td>
           <Menu>
             <MenuButton variant="outline">
-              <PlusSquareIcon
-                w={points18}
-                h={points18}
-                top={"35%"}
-                left={"40%"}
-              />
+              <PlusSquareIcon w={6} h={6} />
             </MenuButton>
             <MenuList minWidth={0}>
               <MenuItem>

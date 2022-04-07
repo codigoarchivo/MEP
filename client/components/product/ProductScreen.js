@@ -127,18 +127,13 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
         <Td>
           <Text>{pr}$</Text>
         </Td>
-        <Td >
+        <Td>
           <Text>{ct?.na}</Text>
         </Td>
         <Td isNumeric>
           <Menu>
             <MenuButton variant="outline">
-              <PlusSquareIcon
-                w={points18}
-                h={points18}
-                top={"35%"}
-                left={"40%"}
-              />
+              <PlusSquareIcon w={6} h={6} />
             </MenuButton>
             <MenuList minWidth={0}>
               <MenuItem>
