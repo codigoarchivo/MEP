@@ -66,6 +66,8 @@ const Navbar = () => {
   const router = useRouter();
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
+  // selector
+  const { list } = useSelector(({ category }) => category);
   // Modality
   const { modality, setModality } = useModality();
   // toogle color
@@ -122,7 +124,7 @@ const Navbar = () => {
         Input={Input}
         SearchIcon={SearchIcon}
       />
-      <Container maxW={"container.xl"}>
+      <Container maxW={"container.xs"}>
         <chakra.nav>
           <Grid
             as={"ul"}
@@ -158,16 +160,12 @@ const Navbar = () => {
                   <Menu>
                     <MenuButton>Categoria</MenuButton>
                     <Portal>
-                      <MenuList display={displayOff2}>
-                        <MenuItem>
-                          <Link>Chakra UI</Link>
-                        </MenuItem>
-                        <MenuItem>
-                          <Link>Chakra UI</Link>
-                        </MenuItem>
-                        <MenuItem>
-                          <Link>Chakra UI</Link>
-                        </MenuItem>
+                      <MenuList display={displayOff2} minWidth={0}>
+                        {list.map((item) => (
+                          <MenuItem key={item.id}>
+                            <Link>{item.na}</Link>
+                          </MenuItem>
+                        ))}
                       </MenuList>
                     </Portal>
                   </Menu>

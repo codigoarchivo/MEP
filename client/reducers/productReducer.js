@@ -4,6 +4,7 @@ const initialStates = {
   list: [],
   saveCartSelect: [],
   activeCartSelect: [],
+  latestCartSelect: [],
   activeSelect: null,
 };
 export const productReducer = (state = initialStates, action) => {
@@ -32,6 +33,11 @@ export const productReducer = (state = initialStates, action) => {
       return {
         ...state,
         activeCartSelect: [...state.activeCartSelect, action.payload],
+      };
+    case types.productSaveLatest:
+      return {
+        ...state,
+        latestCartSelect: [action.payload, ...state.latestCartSelect],
       };
     case types.productEdit:
       return {

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 
 import {
   Box,
+  Button,
   Container,
   Heading,
   HStack,
@@ -22,6 +23,8 @@ import Marquee from "react-fast-marquee";
 
 import Breakpoints from "../helpers/Breakpoints";
 
+import Carousel from "nuka-carousel";
+
 import SerchScreen from "../components/search/SerchScreen";
 
 import { listDataProduct } from "../actions/product";
@@ -29,17 +32,20 @@ import { listDataProduct } from "../actions/product";
 import { db } from "../firebase/config";
 
 import NavLink from "../helpers/Navlink";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { listDataCategory } from "../actions/category";
 
-const Home = ({ data }) => {
+const Home = ({ data, dataC }) => {
   // dispatch
   const dispatch = useDispatch();
   // selector
-  const { list } = useSelector(({ product }) => product);
+  const { list, latestCartSelect } = useSelector(({ product }) => product);
   // Breakpoints
   const { content5, bordes } = Breakpoints();
 
   useEffect(() => {
     dispatch(listDataProduct(data));
+    dispatch(listDataCategory(dataC));
   }, [dispatch]);
 
   return (
@@ -85,7 +91,7 @@ const Home = ({ data }) => {
             </Box>
           </Stack>
         </VStack>
-        <VStack spacing={10} mt={10}>
+        <VStack spacing={10} mt={16}>
           <Stack w={"full"} spacing={10}>
             <Heading w={"full"} size={"lg"}>
               Recorrido De Todos Nuestros Productos
@@ -98,6 +104,63 @@ const Home = ({ data }) => {
               </Marquee>
             </HStack>
           </Stack>
+          {!!latestCartSelect[2] ? (
+            <Stack w={"full"} spacing={10}>
+              <Heading w={"full"} size={"lg"}>
+                Tus Ultimas Visitas A Nuestra Tienda
+              </Heading>
+              <Box position={"relative"}>
+                <Carousel
+                  easing="easeInOutElastic"
+                  wrapAround={true}
+                  slidesToScroll={4}
+                  slidesToShow={4}
+                  cellSpacing={40}
+                  slideWidth={0.75}
+                  cellAlign={"left"}
+                  defaultControlsConfig={{
+                    nextButtonText: (
+                      <Button
+                        as={"div"}
+                        variant={"primary"}
+                        rounded={"full"}
+                        w={11}
+                        fontSize={"2xl"}
+                      >
+                        <ChevronRightIcon />
+                      </Button>
+                    ),
+                    prevButtonText: (
+                      <Button
+                        as={"div"}
+                        variant={"primary"}
+                        rounded={"full"}
+                        w={11}
+                        fontSize={"2xl"}
+                      >
+                        <ChevronLeftIcon />
+                      </Button>
+                    ),
+                    pagingDotsStyle: {
+                      fill: "transparent",
+                    },
+                    nextButtonStyle: {
+                      backgroundColor: "transparent",
+                    },
+                    prevButtonStyle: {
+                      backgroundColor: "transparent",
+                    },
+                  }}
+                >
+                  {latestCartSelect.map((data) => (
+                    <SerchScreen key={data.id} {...data} />
+                  ))}
+                </Carousel>
+              </Box>
+            </Stack>
+          ) : (
+            ""
+          )}
         </VStack>
       </Container>
     </Layout>
@@ -105,8 +168,10 @@ const Home = ({ data }) => {
 };
 
 export async function getStaticProps() {
+  const qC = query(collection(db, "categories"), orderBy("na", "asc"));
   const q = query(collection(db, "serchs"), limit(4), orderBy("na", "asc"));
 
+  const elC = await getDocs(qC);
   const el = await getDocs(q);
 
   const data = el.docs.map((doc) => ({
@@ -114,9 +179,15 @@ export async function getStaticProps() {
     ...doc.data(),
   }));
 
+  const dataC = elC.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
   return {
     props: {
       data,
+      dataC,
     },
   };
 }

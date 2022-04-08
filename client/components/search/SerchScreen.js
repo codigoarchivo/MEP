@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,20 +18,25 @@ import {
   Collapse,
   Flex,
   Badge,
-  Text,
   useToast,
   WrapItem,
 } from "@chakra-ui/react";
 
 import { StarIcon } from "@chakra-ui/icons";
 
-import { activeProduct, saveProductCart } from "../../actions/product";
+import {
+  activeProduct,
+  cartSaveLatest,
+  saveProductCart,
+} from "../../actions/product";
 
 import { LoveIcon } from "../../helpers/IconNew";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
 const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
+  const match = useRef();
+  const matchValid = useRef();
   // toast
   const toast = useToast();
   // Breakpoints
@@ -58,12 +63,14 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
     es,
     dt,
   };
+  // ref
+  match.current = activeCartSelect.map((item) => item.id).includes(id);
+  matchValid.current = saveCartSelect.map((item) => item.id).includes(id);
 
   // select
   const handleSelect = () => {
     // activeCartSelect
-    const match = activeCartSelect.map((item) => item.id).includes(id);
-    if (match) {
+    if (match.current) {
       return toast({
         description: "Producto ya esta en el carrito",
         status: "error",
@@ -83,14 +90,24 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
         pathname: "/search/details",
         query: { pid: id },
       });
+
+      handleSaveLatest();
     }
+  };
+
+  // Latest
+  const handleSaveLatest = () => {
+    dispatch(
+      cartSaveLatest({
+        ...data,
+      })
+    );
   };
 
   // save
   const handleSave = () => {
     // activeCartSelect
-    const match = activeCartSelect.map((item) => item.id).includes(id);
-    if (match) {
+    if (match.current) {
       return toast({
         description: "Producto ya esta en el carrito",
         status: "error",
@@ -99,6 +116,15 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
         position: "top-right",
       });
     } else {
+      toast({
+        description: matchValid.current
+          ? "Eliminado lista deseos"
+          : "Lista de deseos guardada",
+        status: matchValid.current ? "error" : "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
       dispatch(saveProductCart({ id, na, cn, pr, im }));
     }
   };
@@ -114,9 +140,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
         <Box position={"relative"}>
           <Box
             as={LoveIcon}
-            color={
-              saveCartSelect.map((x) => x.id).includes(id) ? "red" : "GrayText"
-            }
+            color={matchValid.current ? "red" : "GrayText"}
             position={"absolute"}
             zIndex={1}
             left={3}

@@ -92,11 +92,6 @@ const activeOrInactiveProduct = (data) => ({
   payload: data,
 });
 
-export const activeProduct = (data) => ({
-  type: types.productActive,
-  payload: data,
-});
-
 export const activeProductCart = (data) => {
   return async (dispatch, getState) => {
     const { activeCartSelect } = await getState().product;
@@ -146,6 +141,30 @@ const cartProductSave = (data) => ({
 export const deleteProductSave = (id) => ({
   type: types.productDeleteSave,
   payload: id,
+});
+
+export const cartSaveLatest = (data) => {
+  return async (dispatch, getState) => {
+    const { latestCartSelect } = await getState().product;
+    try {
+      const match = latestCartSelect.find((obj) => obj?.id === data.id);
+      if (!match) {
+        dispatch(LatestSaveCart(data));
+      }
+    } catch (error) {
+      Swal.fire("Error", error, "error");
+    }
+  };
+};
+
+const LatestSaveCart = (data) => ({
+  type: types.productSaveLatest,
+  payload: data,
+});
+
+export const activeProduct = (data) => ({
+  type: types.productActive,
+  payload: data,
 });
 
 export const deleteProductCart = (id) => ({

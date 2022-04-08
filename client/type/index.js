@@ -21,6 +21,7 @@ export const types = {
   productSaveCart: "[PRODUCT] Save Cart",
   productDeleteCart: "[PRODUCT] Delete Cart",
   productDeleteSave: "[PRODUCT] Delete Save",
+  productSaveLatest: "[PRODUCT] Save Latest",
   productClose: "[PRODUCT] Close",
 
   active: "[DATA] Active",
