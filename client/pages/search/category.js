@@ -28,7 +28,7 @@ import Layout from "../../components/layout/layout";
 
 import { db } from "../../firebase/config";
 
-import { listDataProduct } from "../../actions/product";
+import { productSerchCategoryDataProduct } from "../../actions/product";
 
 import {
   ChevronLeftIcon,
@@ -41,9 +41,9 @@ import {
   useModality3,
 } from "../../hooks/useModality";
 
-const serchList = () => {
+const category = () => {
   // selector
-  const { list } = useSelector(({ product }) => product);
+  const { productSerchCategory } = useSelector(({ product }) => product);
   // modality
   const { modality, setModality } = useModality(true);
   // modality
@@ -52,7 +52,7 @@ const serchList = () => {
   const { modality3, setModality3 } = useModality3(true);
 
   const home = () => {
-    const firstVisible = list[0].na;
+    const firstVisible = productSerchCategory[0].na;
 
     const q = query(
       collection(db, "serchs"),
@@ -76,7 +76,7 @@ const serchList = () => {
   };
 
   const previous = () => {
-    const firstVisible = list[0].na;
+    const firstVisible = productSerchCategory[0].na;
 
     const q = query(
       collection(db, "serchs"),
@@ -97,7 +97,7 @@ const serchList = () => {
     });
   };
   const next = () => {
-    const lastVisible = list[list.length - 1].na;
+    const lastVisible = productSerchCategory[productSerchCategory.length - 1].na;
 
     const q = query(
       collection(db, "serchs"),
@@ -128,7 +128,7 @@ const serchList = () => {
     <>
       <Layout>
         <Container maxW="container.xs">
-          {!list[0] && (
+          {!productSerchCategory[0] && (
             <Center py={30}>
               <Spinner size="xl" color="brand.800" />
             </Center>
@@ -140,7 +140,7 @@ const serchList = () => {
             justifyContent={"space-around"}
             mt={20}
           >
-            {list.map((data) => (
+            {productSerchCategory.map((data) => (
               <SerchScreen key={data.id} {...data} />
             ))}
           </Wrap>
@@ -185,4 +185,4 @@ const serchList = () => {
   );
 };
 
-export default serchList;
+export default category;

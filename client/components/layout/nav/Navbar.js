@@ -58,6 +58,7 @@ import useAuth from "../../../hooks/useAuth";
 
 import { logout } from "../../../actions/auth";
 import NavbarCart from "./NavbarCart";
+import { categorySerchProduct } from "../../../actions/product";
 
 const Navbar = () => {
   // dispatch
@@ -97,6 +98,10 @@ const Navbar = () => {
     }
   };
 
+  const handleSerchCategory = (id) => {
+    dispatch(categorySerchProduct(id));
+  };
+  
   return (
     <>
       {/* DrawerNavbar */}
@@ -163,7 +168,9 @@ const Navbar = () => {
                       <MenuList display={displayOff2} minWidth={0}>
                         {list.map((item) => (
                           <MenuItem key={item.id}>
-                            <Link>{item.na}</Link>
+                            <Link onClick={() => handleSerchCategory(item.id)}>
+                              {item.na}
+                            </Link>
                           </MenuItem>
                         ))}
                       </MenuList>

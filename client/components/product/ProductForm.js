@@ -43,7 +43,6 @@ const ProductForm = ({
   handleInputChange,
   handleInputChange2,
   handleInputChange3,
-  handleInputChange4,
 }) => {
   // mode Color
   const { bg, brand } = ModeColor();
@@ -156,10 +155,10 @@ const ProductForm = ({
               variant="filled"
               placeholder="Options"
               value={ct}
-              onChange={handleInputChange4}
+              onChange={handleInputChange}
             >
               {list.map(({ id, na }) => (
-                <option key={na} data-value={na} value={id}>
+                <option key={id} value={id}>
                   {na}
                 </option>
               ))}

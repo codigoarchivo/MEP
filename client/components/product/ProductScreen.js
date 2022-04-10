@@ -2,7 +2,7 @@ import React from "react";
 
 import Image from "next/image";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
 
@@ -32,6 +32,8 @@ import {
 import { activeProduct, productActiveOrInactive } from "../../actions/product";
 
 const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
+  // selector
+  const { list } = useSelector(({ category }) => category);
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -51,6 +53,9 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
     dt,
   };
 
+  // list Category
+  const listCt = list.filter((item) => item.id === ct);
+  
   // edit
   const handleEdit = () => {
     dispatch(
@@ -128,7 +133,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
           <Text>{pr}$</Text>
         </Td>
         <Td>
-          <Text>{ct?.na}</Text>
+          <Text>{listCt[0].na}</Text>
         </Td>
         <Td isNumeric>
           <Menu>

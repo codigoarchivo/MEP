@@ -1,4 +1,14 @@
-import { addDoc, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  limit,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 
 import Swal from "sweetalert2";
 
@@ -159,6 +169,30 @@ export const cartSaveLatest = (data) => {
 
 const LatestSaveCart = (data) => ({
   type: types.productSaveLatest,
+  payload: data,
+});
+
+export const categorySerchProduct = (id) => {
+  const q = query(collection(db, "serchs"), where("ct", "==", id), limit(25));
+  return async (dispatch) => {
+    try {
+      const el = await getDocs(q);
+      const data = el.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      //TODO realizar una validacion cuando el array esta vacio
+      if (data.length > 0) {
+        dispatch(productSerchCategory(data));
+      }
+    } catch (error) {
+      Swal.fire("Error", error, "error");
+    }
+  };
+};
+
+const productSerchCategory = (data) => ({
+  type: types.productCategory,
   payload: data,
 });
 

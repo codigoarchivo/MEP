@@ -47,10 +47,14 @@ const Details = () => {
   const { activeCartSelect, activeSelect } = useSelector(
     ({ product }) => product
   );
+  // selector
+  const { list } = useSelector(({ category }) => category);
   // Breakpoints
   const { content5, full } = Breakpoints();
   // values
   const { id, na, pr, im, ds, ct, cn, es, dt } = activeSelect;
+  // list Category
+  const listCt = list.filter((item) => item.id === ct);
   // Incremen and Decrement
   const {
     getInputProps,
@@ -155,7 +159,7 @@ const Details = () => {
               <Heading textTransform={"uppercase"} as="h3" size="sm">
                 Categoria:
               </Heading>
-              <Text>{ct?.na}</Text>
+              <Text>{listCt[0].na}</Text>
             </HStack>
           </VStack>
         </Stack>

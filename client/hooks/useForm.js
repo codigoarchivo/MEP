@@ -53,13 +53,6 @@ const useForm = (initialStates = {}, data) => {
     }
   };
 
-  const handleInputChange4 = ({ target }) => {
-    const ct = {
-      id: target.value,
-      na: target.options[target.selectedIndex].text,
-    };
-    setValues({ ...values, ct });
-  };
 
   return [
     values,
@@ -68,7 +61,6 @@ const useForm = (initialStates = {}, data) => {
     handleInputChange,
     handleInputChange2,
     handleInputChange3,
-    handleInputChange4,
     reset,
   ];
 };

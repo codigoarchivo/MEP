@@ -54,7 +54,6 @@ const ProductData = () => {
     handleInputChange,
     handleInputChange2,
     handleInputChange3,
-    handleInputChange4,
   ] = useForm(initialStates, activeSelect);
   // agrega imagen
   values.im = urlImage ? urlImage : values.im;
@@ -133,7 +132,6 @@ const ProductData = () => {
             handleInputChange={handleInputChange}
             handleInputChange2={handleInputChange2}
             handleInputChange3={handleInputChange3}
-            handleInputChange4={handleInputChange4}
             handleSubmit={handleSubmit}
           />
         )}
