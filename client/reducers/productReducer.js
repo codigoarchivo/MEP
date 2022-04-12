@@ -75,6 +75,16 @@ export const productReducer = (state = initialStates, action) => {
         ),
         activeSelect: null,
       };
+    case types.productCategoryClose:
+      return {
+        ...state,
+        productSerchCategory: [],
+      };
+    case types.emptySerch:
+      return {
+        ...state,
+        list: [],
+      };
     case types.closeActive:
       return {
         ...state,

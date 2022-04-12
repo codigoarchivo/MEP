@@ -11,6 +11,7 @@ export const types = {
   serchList: "[SERCH] List",
   serchActive: "[SERCH] active",
   serchInactive: "[SERCH] desactive",
+  emptySerch: "[SERCH] Empty",
 
   product: "[PRODUCT] List",
   productAdd: "[PRODUCT] Add",
@@ -23,6 +24,7 @@ export const types = {
   productDeleteSave: "[PRODUCT] Delete Save",
   productSaveLatest: "[PRODUCT] Save Latest",
   productCategory: "[PRODUCT] Serch Category",
+  productCategoryClose: "[PRODUCT] Close Category",
   productClose: "[PRODUCT] Close",
 
   active: "[DATA] Active",

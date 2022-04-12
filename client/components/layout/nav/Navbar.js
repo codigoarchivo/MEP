@@ -56,9 +56,14 @@ import PopoverUserNavbar from "./PopoverUserNavbar";
 import { useModality } from "../../../hooks/useModality";
 import useAuth from "../../../hooks/useAuth";
 
-import { logout } from "../../../actions/auth";
 import NavbarCart from "./NavbarCart";
-import { categorySerchProduct } from "../../../actions/product";
+
+import { logout } from "../../../actions/auth";
+import {
+  categorySerchProduct,
+  serchProductList,
+} from "../../../actions/product";
+import useFormChange from "../../../hooks/useFormChange";
 
 const Navbar = () => {
   // dispatch
@@ -101,7 +106,18 @@ const Navbar = () => {
   const handleSerchCategory = (id) => {
     dispatch(categorySerchProduct(id));
   };
-  
+
+  // useFormChange
+  const { values, handleInputChange } = useFormChange({ q: "" });
+  const handleSerchProduct = () => {
+    dispatch(serchProductList(values.q));
+
+    router.push({
+      pathname: "/search/category",
+      query: { q: values.q },
+    });
+  };
+
   return (
     <>
       {/* DrawerNavbar */}
@@ -166,11 +182,20 @@ const Navbar = () => {
                     <MenuButton>Categoria</MenuButton>
                     <Portal>
                       <MenuList display={displayOff2} minWidth={0}>
-                        {list.map((item) => (
-                          <MenuItem key={item.id}>
-                            <Link onClick={() => handleSerchCategory(item.id)}>
-                              {item.na}
-                            </Link>
+                        {list.map(({ na, id }) => (
+                          <MenuItem
+                            key={id}
+                            onClick={() => handleSerchCategory(id)}
+                          >
+                            <NavLink
+                              href={{
+                                pathname: "/search/category",
+                                query: { q: na },
+                              }}
+                              name={na}
+                              variant={"secondary"}
+                              fontWeight={"normal"}
+                            />
                           </MenuItem>
                         ))}
                       </MenuList>
@@ -189,13 +214,21 @@ const Navbar = () => {
               >
                 <SearchIcon />
               </Icon>
-              <InputGroup display={displayOff2}>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<SearchIcon color="gray.300" />}
-                />
-                <Input type={"search"} placeholder="Buscar" />
-              </InputGroup>
+              <chakra.form onSubmit={handleSerchProduct}>
+                <InputGroup display={displayOff2}>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<SearchIcon color="gray.300" />}
+                  />
+                  <Input
+                    type={"search"}
+                    placeholder="Buscar"
+                    value={values.q}
+                    name={"q"}
+                    onChange={handleInputChange}
+                  />
+                </InputGroup>
+              </chakra.form>
             </GridItem>
             <GridItem as={"li"} colSpan={1} justifySelf="center">
               <Popover isLazy z>

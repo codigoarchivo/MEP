@@ -5,6 +5,7 @@ import {
   doc,
   getDocs,
   limit,
+  orderBy,
   query,
   setDoc,
   where,
@@ -174,14 +175,16 @@ export const categorySerchProduct = (id) => {
   return async (dispatch) => {
     try {
       const el = await getDocs(q);
+
+      if (el.docs.length === 0) {
+        dispatch(productSerchCategoryClose());
+        return Toast(`Se encontro: ${el.docs.length} resultado`, "info", 5000);
+      }
+
       const data = el.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-
-      if (data.length === 0) {
-        return Toast("No se encontraron resultados", "error", 5000);
-      }
 
       if (data.length > 0) {
         Toast(`Se encotro: ${data.length} resultado`, "success", 5000);
@@ -196,6 +199,41 @@ export const categorySerchProduct = (id) => {
 const productSerchCategory = (data) => ({
   type: types.productCategory,
   payload: data,
+});
+
+const productSerchCategoryClose = () => ({
+  type: types.productCategoryClose,
+});
+
+export const serchProductList = (data) => {
+  const q = query(collection(db, "serchs"), orderBy("na", "asc"));
+  return async (dispatch) => {
+    try {
+      const el = await getDocs(q);
+
+      const filtro = el.docs
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+        .filter((obj) => obj.na.toLowerCase().includes(data.toLowerCase()))
+        .slice(0, 25);
+
+      if (filtro.length === 0) {
+        dispatch(listProductSerch(filtro));
+        return Toast(`Se encontro: ${filtro.length} resultado`, "info", 5000);
+      } else {
+        Toast(`Se encotro: ${filtro.length} resultado`, "success", 5000);
+        dispatch(productDataList(filtro));
+      }
+    } catch (error) {
+      Toast("Al parecer hay un error", "error", 5000);
+    }
+  };
+};
+
+const listProductSerch = () => ({
+  type: types.emptySerch,
 });
 
 export const activeProduct = (data) => ({

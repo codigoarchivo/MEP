@@ -17,8 +17,8 @@ import {
   Button,
   Center,
   Container,
+  Heading,
   HStack,
-  Spinner,
   Wrap,
 } from "@chakra-ui/react";
 
@@ -129,8 +129,10 @@ const serchList = () => {
       <Layout>
         <Container maxW="container.xs">
           {!list[0] && (
-            <Center py={30}>
-              <Spinner size="xl" color="brand.800" />
+            <Center py={40}>
+              <Heading size={"sm"} textTransform={"uppercase"}>
+                Al parecer no encontramos lo que buscas
+              </Heading>
             </Center>
           )}
 
