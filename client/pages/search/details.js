@@ -25,28 +25,24 @@ import {
   Tabs,
   Text,
   useNumberInput,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 
 import Breakpoints from "../../helpers/Breakpoints";
 import { CartIcon } from "../../helpers/IconNew";
+import Toast from "../../helpers/Toast";
 
 import Layout from "../../components/layout/layout";
 
-import { activeProductCart } from "../../actions/product";
+import { activeProductCart, deleteProductSave } from "../../actions/product";
 
 const Details = () => {
-  // toast
-  const toast = useToast();
   // dispatch
   const dispatch = useDispatch();
   // router
   const router = useRouter();
   // selector
-  const { activeCartSelect, activeSelect } = useSelector(
-    ({ product }) => product
-  );
+  const { activeSelect } = useSelector(({ product }) => product);
   // selector
   const { list } = useSelector(({ category }) => category);
   // Breakpoints
@@ -74,23 +70,11 @@ const Details = () => {
   const input = getInputProps({ isReadOnly: true });
   // select
   const handleSelect = () => {
-    // activeCartSelect
-    const match = activeCartSelect.map((item) => item.id).includes(id);
-    if (match) {
-      return toast({
-        description: "Producto ya esta en el carrito",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
-    } else {
-      const total = pr * input.value;
-      const cantidad = input.value;
-      dispatch(activeProductCart({ id, na, pr, im, cantidad, total }));
+    const total = pr * input.value;
+    const cantidad = input.value;
+    dispatch(activeProductCart({ id, na, pr, im, cantidad, total }));
 
-      router.push("/search/cart");
-    }
+    router.push("/search/cart");
   };
 
   const property = {

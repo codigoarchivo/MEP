@@ -15,7 +15,6 @@ import {
   chakra,
   VStack,
   Center,
-  useToast,
 } from "@chakra-ui/react";
 
 import useForm from "../../hooks/useForm";
@@ -26,14 +25,13 @@ import ModeColor from "../../helpers/ModeColor";
 import { sendEmail } from "../../actions/auth";
 import DividerWithText from "../utils/DividerWithText";
 import NavLink from "../../helpers/Navlink";
+import Toast from "../../helpers/Toast";
 
 const initialStates = {
   email: "jacksonescuques@gmail.com",
 };
 
 const ReviewUser = () => {
-  // toast
-  const toast = useToast();
   // dispatch
   const dispatch = useDispatch();
   // guardar states
@@ -49,22 +47,14 @@ const ReviewUser = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (ErrorLorR) {
-      return toast({
-        description: fiel,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
+      return Toast(fiel, "error", 5000);
     } else {
       dispatch(sendEmail(email));
-      toast({
-        description: `An email is sent to ${email} for password reset instructions.`,
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
+      Toast(
+        "An email is sent to ${email} for password reset instructions.",
+        "success",
+        5000
+      );
     }
   };
 

@@ -13,18 +13,17 @@ import {
   Td,
   Text,
   Tr,
-  useToast,
 } from "@chakra-ui/react";
 
 import Breakpoints from "../../helpers/Breakpoints";
+import Toast from "../../helpers/Toast";
+import ValidSave from "../../helpers/ValidSave";
 
 import { DeleteIcon, EditIcon, PlusSquareIcon } from "@chakra-ui/icons";
 
 import { activeCategory } from "../../actions/category";
 
 const CategoryScrenn = ({ id, na }) => {
-  // toast
-  const toast = useToast();
   // selector
   const { list } = useSelector(({ product }) => product);
   // dispatch
@@ -35,18 +34,10 @@ const CategoryScrenn = ({ id, na }) => {
   const { center, points18 } = Breakpoints();
 
   // edit
-  const handleEdit = () => {
-    const match = list
-      .map(({ ct }) => ct.na.toLowerCase().trim())
-      .includes(na.toLowerCase().trim());
-    if (match) {
-      return toast({
-        description: "Category tiene un producto asociado",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
+  const handleEdit = async () => {
+    const { match } = await ValidSave("serchs", "ct", id);
+    if (!match) {
+      return Toast("Category tiene un producto asociado", "error", 5000);
     } else {
       dispatch(
         activeCategory({
@@ -64,18 +55,10 @@ const CategoryScrenn = ({ id, na }) => {
   };
 
   // delete
-  const handleDelete = () => {
-    const match = list
-      .map(({ ct }) => ct.na.toLowerCase().trim())
-      .includes(na.toLowerCase().trim());
-    if (match) {
-      return toast({
-        description: "Categoria tiene un producto asociado",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
+  const handleDelete = async () => {
+    const { match } = await ValidSave("serchs", "ct", id);
+    if (!match) {
+      return Toast("Category tiene un producto asociado", "error", 5000);
     } else {
       dispatch(
         activeCategory({

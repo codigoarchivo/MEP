@@ -18,7 +18,6 @@ import {
   Collapse,
   Flex,
   Badge,
-  useToast,
   WrapItem,
 } from "@chakra-ui/react";
 
@@ -31,14 +30,12 @@ import {
 } from "../../actions/product";
 
 import { LoveIcon } from "../../helpers/IconNew";
-
+import Toast from "../../helpers/Toast";
 import Breakpoints from "../../helpers/Breakpoints";
 
 const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
   const match = useRef();
   const matchValid = useRef();
-  // toast
-  const toast = useToast();
   // Breakpoints
   const { bordes } = Breakpoints();
   // selector
@@ -71,12 +68,14 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
   const handleSelect = () => {
     // activeCartSelect
     if (match.current) {
-      return toast({
-        description: "Producto ya esta en el carrito",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
+      return Toast("Producto ya esta en el carrito", "error", 5000);
+    }
+    // saveCartSelect
+    if (matchValid.current) {
+      Toast("Producto ya esta en la lista deseo", "info", 5000);
+      router.push({
+        pathname: "/search/cart",
+        query: { pid: id },
       });
     } else {
       dispatch(
@@ -108,23 +107,15 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
   const handleSave = () => {
     // activeCartSelect
     if (match.current) {
-      return toast({
-        description: "Producto ya esta en el carrito",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
+      return Toast("Producto ya esta en el carrito", "error", 5000);
     } else {
-      toast({
-        description: matchValid.current
+      Toast(
+        matchValid.current
           ? "Eliminado lista deseos"
           : "Lista de deseos guardada",
-        status: matchValid.current ? "error" : "success",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
+        matchValid.current ? "error" : "success",
+        5000
+      );
       dispatch(saveProductCart({ id, na, cn, pr, im }));
     }
   };

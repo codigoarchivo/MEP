@@ -28,8 +28,6 @@ import Layout from "../../components/layout/layout";
 
 import { db } from "../../firebase/config";
 
-import { productSerchCategoryDataProduct } from "../../actions/product";
-
 import {
   ChevronLeftIcon,
   ChevronRightIcon,

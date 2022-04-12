@@ -13,7 +13,6 @@ import {
   Tooltip,
   chakra,
   VStack,
-  useToast,
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
@@ -31,8 +30,6 @@ const initialStates = {
 };
 
 const ResetPassword = () => {
-  // toast
-  const toast = useToast();
   // dispatch
   const dispatch = useDispatch();
   // vista de la contraseña
@@ -45,27 +42,15 @@ const ResetPassword = () => {
   const { textError, bgTextError } = ModeColor();
   // valores
   const { password } = values;
-  
+
   // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
     if (passwordV) {
-      return toast({
-        description: fiel,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
+      return Toast(fiel, "error", 5000);
     } else {
       dispatch(resetPassword(password, getParameterByName("oobCode")));
-      toast({
-        description: "Password has been changed, you can login now.",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
+      Toast("Password has been changed, you can login now.", "success", 5000);
     }
   };
 

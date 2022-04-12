@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
 
-import { useToast } from "@chakra-ui/react";
-
 import Validator from "../helpers/Validator";
+import Toast from "../helpers/Toast";
 
 import { FileFirebase } from "../helpers/FileFirebase";
 
 const useForm = (initialStates = {}, data) => {
-  // toast
-  const toast = useToast();
-
   const [values, setValues] = useState(initialStates);
 
   const [urlImage, setUrlImage] = useState("");
@@ -37,14 +33,7 @@ const useForm = (initialStates = {}, data) => {
   const handleInputChange3 = ({ target }) => {
     const { mImage, esImg } = Validator({ imgsize: target.files[0]?.size });
 
-    if (mImage)
-      return toast({
-        description: esImg,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
+    if (mImage) return Toast(esImg, "error", 5000);
 
     const file = target.files[0];
 
@@ -52,7 +41,6 @@ const useForm = (initialStates = {}, data) => {
       FileFirebase(file, setUrlImage, setProgress);
     }
   };
-
 
   return [
     values,

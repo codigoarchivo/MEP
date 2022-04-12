@@ -60,7 +60,7 @@ const ProductList = ({ data }) => {
   // router
   const router = useRouter();
   // breakpoints
-  const { displayOff3, points19, points20, bordes } = Breakpoints();
+  const { bordes } = Breakpoints();
   // selector
   const { list } = useSelector(({ product }) => product);
   // selector

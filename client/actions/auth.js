@@ -1,5 +1,3 @@
-import Swal from "sweetalert2";
-
 import { auth, db, provider } from "../firebase/config";
 
 import { types } from "../type";
@@ -17,6 +15,8 @@ import {
 } from "firebase/auth";
 
 import { doc, setDoc } from "firebase/firestore";
+
+import Toast from "../helpers/Toast";
 
 export const login = (uid, displayName, photoURL, email, rol) => ({
   type: types.login,
@@ -44,11 +44,11 @@ export const startLoginEmailPassword = (email, password) => {
           // end
           dispatch(finishLoading());
           // error
-          Swal.fire("Error", message, "error");
+          Toast(message, "error", 5000);
         });
     } catch (error) {
       // error
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -75,11 +75,11 @@ export const startRegisterWithNameEmailPassword = (email, password, name) => {
           // end
           dispatch(finishLoading());
           // error
-          Swal.fire("Error", message, "error");
+          Toast(message, "error", 5000);
         });
     } catch (error) {
       // error
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -94,11 +94,11 @@ export const startGoogleLogin = () => {
         })
         .catch(({ message }) => {
           // error
-          Swal.fire("Error", message, "error");
+          Toast(message, "error", 5000);
         });
     } catch (error) {
       // error
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -116,11 +116,11 @@ export const sendEmail = (email) => {
         })
         .catch(({ message }) => {
           // error
-          Swal.fire("Error", message, "error");
+          Toast(message, "error", 5000);
         });
     } catch (error) {
       // error
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -138,11 +138,11 @@ export const resetPassword = (newPassword, actionCode) => {
         })
         .catch(({ message }) => {
           // error
-          Swal.fire("Error", message, "error");
+          Toast(message, "error", 5000);
         });
     } catch (error) {
       // error
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -160,11 +160,11 @@ export const logout = () => {
         })
         .catch(({ message }) => {
           // error
-          Swal.fire("Error", message, "error");
+          Toast(message, "error", 5000);
         });
     } catch (error) {
       // error
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -185,11 +185,11 @@ export const changeNameImgTel = (uid, photoURL, displayName, email, rol) => {
         })
         .catch(({ message }) => {
           // error
-          Swal.fire("Error", message, "error");
+          Toast(message, "error", 5000);
         });
     } catch (error) {
       // error
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };

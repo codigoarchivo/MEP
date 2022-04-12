@@ -8,12 +8,11 @@ import {
   CloseButton,
   Heading,
   HStack,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 
 import Breakpoints from "../../helpers/Breakpoints";
-
+import Toast from "../../helpers/Toast";
 import Validator from "../../helpers/Validator";
 
 import useForm from "../../hooks/useForm";
@@ -35,8 +34,6 @@ const initialStates = {
 };
 
 const ProductData = () => {
-  // toast
-  const toast = useToast();
   // selector
   const { activeSelect } = useSelector(({ product }) => product);
   // dispatch
@@ -65,23 +62,11 @@ const ProductData = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (ErrorRetur2) {
-      return toast({
-        description: estado,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
+      return Toast(estado, "error", 5000);
     }
 
     if (ErrorRetur) {
-      return toast({
-        description: fiel,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
+      return Toast(fiel, "error", 5000);
     } else {
       word === "Add" &&
         dispatch(addProduct({ na, pr, ds, ct, cn, dt, im, es: true }));

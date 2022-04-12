@@ -9,9 +9,9 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-import Swal from "sweetalert2";
-
 import { db } from "../firebase/config";
+
+import Toast from "../helpers/Toast";
 
 import { types } from "../type";
 
@@ -20,7 +20,7 @@ export const listDataCategory = (data) => {
     try {
       dispatch(categoryDataList(data));
     } catch (error) {
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -42,7 +42,7 @@ export const listDataCategoryProduct = () => {
         dispatch(categoryDataList(data));
       }
     } catch (error) {
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -63,7 +63,7 @@ export const addCategory = (na) => {
         dispatch(categoryAdd(data));
       }
     } catch (error) {
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -87,7 +87,7 @@ export const editCategory = (na, id) => {
         dispatch(categoryEdit(data));
       }
     } catch (error) {
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -103,7 +103,7 @@ export const deleteCategory = (id) => {
       await deleteDoc(doc(db, "categories", id));
       dispatch(categoryDelete(id));
     } catch (error) {
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };

@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 
-import Swal from "sweetalert2";
-
 import Validator from "../helpers/Validator";
 
 import { FileFirebasePerfil } from "../helpers/FileFirebasePerfil";
+import Toast from "../helpers/Toast";
 
 const useFormUser = (initialStates = {}, data) => {
   const [values, setValues] = useState(initialStates);
@@ -30,7 +29,7 @@ const useFormUser = (initialStates = {}, data) => {
   const handleInputChange2 = ({ target }) => {
     const { mImage, esImg } = Validator({ imgsize: target.files[0]?.size });
 
-    if (mImage) return Swal.fire("Error", esImg, "error");
+    if (mImage) return Toast(esImg, "error", 5000);
 
     const file = target.files[0];
 

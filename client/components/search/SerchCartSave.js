@@ -23,6 +23,7 @@ import {
 import { DeleteIcon, PlusSquareIcon, SmallAddIcon } from "@chakra-ui/icons";
 
 import Breakpoints from "../../helpers/Breakpoints";
+import Toast from "../../helpers/Toast";
 
 import { activeProductCart, deleteProductSave } from "../../actions/product";
 
@@ -30,10 +31,11 @@ const SerchCartSave = ({ id, na, pr, cn, im }) => {
   // useDispatch
   const dispatch = useDispatch();
   // Breakpoints
-  const { full, points18 } = Breakpoints();
+  const { full } = Breakpoints();
   // delete Save
   const handleDeleteSave = () => {
     dispatch(deleteProductSave(id));
+    Toast("Eliminado con exito", "error", 5000);
   };
   // Incremen and Decrement
   const {

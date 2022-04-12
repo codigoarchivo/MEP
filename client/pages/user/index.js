@@ -11,19 +11,18 @@ import {
   Button,
   chakra,
   Container,
-  Divider,
   Heading,
-  HStack,
   Input,
   InputGroup,
   Stack,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 
 import { DownloadIcon } from "@chakra-ui/icons";
 
 import ModeColor from "../../helpers/ModeColor";
+import Breakpoints from "../../helpers/Breakpoints";
+import Toast from "../../helpers/Toast";
 
 import Layout from "../../components/layout/layout";
 
@@ -33,8 +32,6 @@ import useFormUser from "../../hooks/useFormUser";
 
 import { changeNameImgTel } from "../../actions/auth";
 
-import Breakpoints from "../../helpers/Breakpoints";
-
 const initialStates = {
   uid: "",
   photoURL: "",
@@ -42,8 +39,6 @@ const initialStates = {
 };
 
 const User = () => {
-  // toast
-  const toast = useToast();
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
   // useAuth
@@ -78,13 +73,7 @@ const User = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(changeNameImgTel(uid, photoURL, displayName, el.email, el.rol));
-    toast({
-      description: "Datos actualizados",
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-      position: "top-right",
-    });
+    Toast("Datos actualizados", "success", 5000);
   };
 
   return (

@@ -24,6 +24,7 @@ import { deleteProductCart } from "../../actions/product";
 import SerchCartSave from "./SerchCartSave";
 
 import Breakpoints from "../../helpers/Breakpoints";
+import Toast from "../../helpers/Toast";
 
 const SerchCart = () => {
   // Breakpoints
@@ -43,6 +44,7 @@ const SerchCart = () => {
     dispatch(deleteProductCart(id));
     // dcr
     activeCartSelect.map((item) => (inc.current -= item.total));
+    Toast("Eliminado con exito", "error", 5000);
   };
 
   return (

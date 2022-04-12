@@ -4,16 +4,10 @@ import { useRouter } from "next/router";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  CloseButton,
-  Heading,
-  HStack,
-  useToast,
-  VStack,
-} from "@chakra-ui/react";
+import { CloseButton, Heading, HStack, VStack } from "@chakra-ui/react";
 
 import Breakpoints from "../../helpers/Breakpoints";
-
+import Toast from "../../helpers/Toast";
 import Validator from "../../helpers/Validator";
 
 import CategoryForm from "./CategoryForm";
@@ -35,10 +29,6 @@ const initialStates = {
 };
 
 const CategoryData = () => {
-  // toast
-  const toast = useToast();
-  // selector
-  const { list } = useSelector(({ product }) => product);
   // selector
   const { activeSelect } = useSelector(({ category }) => category);
   // dispatch
@@ -57,32 +47,11 @@ const CategoryData = () => {
   // values
   const { na, id, word } = values;
 
-  // match
-  const match = list
-    .map(({ ct }) => ct.na.toLowerCase().trim())
-    .includes(na.toLowerCase().trim());
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (ErrorCatData) {
-      return toast({
-        description: fiel,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
-    }
-
-    if (match) {
-      return toast({
-        description: "Categoria ya existe",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
+      return Toast(fiel, "error", 5000);
     }
 
     word === "Add" && dispatch(addCategory(na));

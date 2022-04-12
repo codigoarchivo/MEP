@@ -10,9 +10,9 @@ import {
   where,
 } from "firebase/firestore";
 
-import Swal from "sweetalert2";
-
 import { db } from "../firebase/config";
+
+import Toast from "../helpers/Toast";
 
 import { types } from "../type";
 
@@ -21,7 +21,7 @@ export const listDataProduct = (data) => {
     try {
       await dispatch(productDataList(data));
     } catch (error) {
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -44,7 +44,7 @@ export const addProduct = (resData) => {
         dispatch(productAdd(data));
       }
     } catch (error) {
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -60,7 +60,7 @@ export const editProduct = (data) => {
       await setDoc(doc(db, "serchs", data?.id), data);
       dispatch(productEdit(data));
     } catch (error) {
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -76,7 +76,7 @@ export const deleteProduct = (id) => {
       await deleteDoc(doc(db, "serchs", id));
       dispatch(productDelete(id));
     } catch (error) {
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -92,7 +92,7 @@ export const productActiveOrInactive = (data) => {
       await setDoc(doc(db, "serchs", data?.id), data);
       dispatch(activeOrInactiveProduct(data));
     } catch (error) {
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -106,18 +106,15 @@ export const activeProductCart = (data) => {
   return async (dispatch, getState) => {
     const { activeCartSelect } = await getState().product;
     try {
-      const match = activeCartSelect.find((obj) => obj?.id === data.id);
+      const match = await activeCartSelect.find((obj) => obj.id === data.id);
       if (match) {
-        return Swal.fire(
-          "Error",
-          `El producto o servicio con el id: ${data.id}, ya se encuentra en carrito`,
-          "error"
-        );
-      } else {
-        dispatch(cartProductActive(data));
+        return Toast("Product already added to cart", "error", 5000);
       }
+
+      Toast("Producto agregado al carrito", "success", 5000);
+      dispatch(cartProductActive(data));
     } catch (error) {
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -131,14 +128,14 @@ export const saveProductCart = (data) => {
   return async (dispatch, getState) => {
     const { saveCartSelect } = await getState().product;
     try {
-      const match = saveCartSelect.find((obj) => obj?.id === data.id);
+      const match = await saveCartSelect.find((obj) => obj?.id === data.id);
       if (match) {
         dispatch(deleteProductSave(data.id));
       } else {
         dispatch(cartProductSave(data));
       }
     } catch (error) {
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -157,12 +154,12 @@ export const cartSaveLatest = (data) => {
   return async (dispatch, getState) => {
     const { latestCartSelect } = await getState().product;
     try {
-      const match = latestCartSelect.find((obj) => obj?.id === data.id);
+      const match = await latestCartSelect.find((obj) => obj.id === data.id);
       if (!match) {
         dispatch(LatestSaveCart(data));
       }
     } catch (error) {
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
@@ -181,12 +178,17 @@ export const categorySerchProduct = (id) => {
         id: doc.id,
         ...doc.data(),
       }));
-      //TODO realizar una validacion cuando el array esta vacio
+
+      if (data.length === 0) {
+        return Toast("No se encontraron resultados", "error", 5000);
+      }
+
       if (data.length > 0) {
+        Toast(`Se encotro: ${data.length} resultado`, "success", 5000);
         dispatch(productSerchCategory(data));
       }
     } catch (error) {
-      Swal.fire("Error", error, "error");
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };

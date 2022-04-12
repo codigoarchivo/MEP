@@ -17,7 +17,6 @@ import {
   Text,
   Flex,
   chakra,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 
@@ -27,10 +26,11 @@ import useForm from "../../hooks/useForm";
 import Validator from "../../helpers/Validator";
 import ModeColor from "../../helpers/ModeColor";
 import { GoogleIcon } from "../../helpers/IconNew";
+import Toast from "../../helpers/Toast";
+import NavLink from "../../helpers/Navlink";
 
 import { startGoogleLogin, startLoginEmailPassword } from "../../actions/auth";
 
-import NavLink from "../../helpers/Navlink";
 import DividerWithText from "../utils/DividerWithText";
 
 const initialStates = {
@@ -39,8 +39,6 @@ const initialStates = {
 };
 
 const LoginUser = ({ handleReview }) => {
-  // toast
-  const toast = useToast();
   // selector
   const { loading } = useSelector(({ ui }) => ui);
   // dispatch
@@ -60,13 +58,7 @@ const LoginUser = ({ handleReview }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (ErrorRorL) {
-      return toast({
-        description: fiel,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
+      return Toast(fiel, "error", 5000);
     } else {
       dispatch(startLoginEmailPassword(email, password));
     }

@@ -15,7 +15,6 @@ import {
   Button,
   Tooltip,
   chakra,
-  useToast,
   Center,
   VStack,
 } from "@chakra-ui/react";
@@ -25,10 +24,12 @@ import useForm from "../../hooks/useForm";
 
 import Validator from "../../helpers/Validator";
 import ModeColor from "../../helpers/ModeColor";
+import NavLink from "../../helpers/Navlink";
+import Toast from "../../helpers/Toast";
 
 import { startRegisterWithNameEmailPassword } from "../../actions/auth";
+
 import DividerWithText from "../utils/DividerWithText";
-import NavLink from "../../helpers/Navlink";
 
 const initialStates = {
   name: "jackson Quintero",
@@ -38,8 +39,6 @@ const initialStates = {
 };
 
 const CreateUser = () => {
-  // toast
-  const toast = useToast();
   // selector
   const { loading } = useSelector(({ ui }) => ui);
   // dispatch
@@ -68,13 +67,7 @@ const CreateUser = () => {
     e.preventDefault();
 
     if (ErrorLorR) {
-      return toast({
-        description: fiel,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
+      return Toast(fiel, "error", 5000);
     } else {
       dispatch(startRegisterWithNameEmailPassword(email, password, name));
     }
