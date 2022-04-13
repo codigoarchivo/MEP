@@ -5,7 +5,6 @@ import {
   doc,
   getDocs,
   limit,
-  orderBy,
   query,
   setDoc,
   where,
@@ -170,21 +169,14 @@ const LatestSaveCart = (data) => ({
   payload: data,
 });
 
-export const categorySerchProduct = (id) => {
-  const q = query(collection(db, "serchs"), where("ct", "==", id), limit(25));
+export const categorySerchProduct = (data) => {
   return async (dispatch) => {
     try {
-      const el = await getDocs(q);
-
-      if (el.docs.length === 0) {
+      console.log(data);
+      if (data.length === 0) {
         dispatch(productSerchCategoryClose());
-        return Toast(`Se encontro: ${el.docs.length} resultado`, "info", 5000);
+        return Toast(`Se encontro: ${data.length} resultado`, "info", 5000);
       }
-
-      const data = el.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
 
       if (data.length > 0) {
         Toast(`Se encotro: ${data.length} resultado`, "success", 5000);
@@ -205,26 +197,11 @@ const productSerchCategoryClose = () => ({
   type: types.productCategoryClose,
 });
 
-export const serchProductList = (data) => {
-  const q = query(collection(db, "serchs"), orderBy("na", "asc"));
+export const serchProductList = (filtro) => {
   return async (dispatch) => {
     try {
-      const el = await getDocs(q);
-
-      const filtro = el.docs
-        .map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }))
-        .filter((obj) => obj.na.toLowerCase().includes(data.toLowerCase()))
-        .slice(0, 25);
-
-      if (filtro.length === 0) {
+      if (filtro.length > 0) {
         dispatch(listProductSerch(filtro));
-        return Toast(`Se encontro: ${filtro.length} resultado`, "info", 5000);
-      } else {
-        Toast(`Se encotro: ${filtro.length} resultado`, "success", 5000);
-        dispatch(productDataList(filtro));
       }
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
@@ -232,8 +209,9 @@ export const serchProductList = (data) => {
   };
 };
 
-const listProductSerch = () => ({
-  type: types.emptySerch,
+export const listProductSerch = (data) => ({
+  type: types.serchList,
+  payload: data,
 });
 
 export const activeProduct = (data) => ({

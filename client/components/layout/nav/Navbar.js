@@ -59,10 +59,7 @@ import useAuth from "../../../hooks/useAuth";
 import NavbarCart from "./NavbarCart";
 
 import { logout } from "../../../actions/auth";
-import {
-  categorySerchProduct,
-  serchProductList,
-} from "../../../actions/product";
+import { categorySerchProduct } from "../../../actions/product";
 import useFormChange from "../../../hooks/useFormChange";
 
 const Navbar = () => {
@@ -103,19 +100,16 @@ const Navbar = () => {
     }
   };
 
-  const handleSerchCategory = (id) => {
-    dispatch(categorySerchProduct(id));
-  };
+  const { values, reset, handleInputChange } = useFormChange({ q: "" });
 
-  // useFormChange
-  const { values, handleInputChange } = useFormChange({ q: "" });
-  const handleSerchProduct = () => {
-    dispatch(serchProductList(values.q));
-
+  const handleSerchProduct = (e) => {
+    e.preventDefault();
+    const q = values.q;
     router.push({
-      pathname: "/search/category",
-      query: { q: values.q },
+      pathname: "/search",
+      query: { q },
     });
+    reset();
   };
 
   return (
@@ -183,14 +177,11 @@ const Navbar = () => {
                     <Portal>
                       <MenuList display={displayOff2} minWidth={0}>
                         {list.map(({ na, id }) => (
-                          <MenuItem
-                            key={id}
-                            onClick={() => handleSerchCategory(id)}
-                          >
+                          <MenuItem key={id}>
                             <NavLink
                               href={{
                                 pathname: "/search/category",
-                                query: { q: na },
+                                query: { c: id },
                               }}
                               name={na}
                               variant={"secondary"}

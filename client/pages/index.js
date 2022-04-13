@@ -27,13 +27,17 @@ import Carousel from "nuka-carousel";
 
 import SerchScreen from "../components/search/SerchScreen";
 
-import { listDataProduct } from "../actions/product";
+import { listDataProduct, serchProductList } from "../actions/product";
 
 import { db } from "../firebase/config";
 
 import NavLink from "../helpers/Navlink";
+
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+
 import { listDataCategory } from "../actions/category";
+
+import Toast from "../helpers/Toast";
 
 const Home = ({ data, dataC }) => {
   // dispatch
@@ -44,6 +48,7 @@ const Home = ({ data, dataC }) => {
   const { content5, bordes } = Breakpoints();
 
   useEffect(() => {
+    dispatch(serchProductList(data));
     dispatch(listDataProduct(data));
     dispatch(listDataCategory(dataC));
   }, [dispatch]);
@@ -168,27 +173,32 @@ const Home = ({ data, dataC }) => {
 };
 
 export async function getStaticProps() {
-  const qC = query(collection(db, "categories"), orderBy("na", "asc"));
-  const q = query(collection(db, "serchs"), limit(4), orderBy("na", "asc"));
+  try {
+    const qC = query(collection(db, "categories"), limit(25), orderBy("na", "asc"));
+    const q = query(collection(db, "serchs"), limit(25), orderBy("na", "asc"));
 
-  const elC = await getDocs(qC);
-  const el = await getDocs(q);
+    const elC = await getDocs(qC);
+    const el = await getDocs(q);
 
-  const data = el.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+    const data = el.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
-  const dataC = elC.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+    const dataC = elC.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
-  return {
-    props: {
-      data,
-      dataC,
-    },
-  };
+    return {
+      props: {
+        data,
+        dataC,
+      },
+    };
+  } catch (error) {
+    Toast("Al parecer hay un error", "error", 5000);
+  }
 }
+
 export default Home;

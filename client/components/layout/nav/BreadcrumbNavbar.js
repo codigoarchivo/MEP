@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
 
@@ -6,10 +8,20 @@ import { chakra, Stack } from "@chakra-ui/react";
 
 import Breakpoints from "../../../helpers/Breakpoints";
 
-export const BreadcrumbNavbar = ({ NavLink, Box, activeSelect }) => {
+import { serchProductList } from "../../../actions/product";
+
+export const BreadcrumbNavbar = ({ NavLink, Box, activeSelect, useR }) => {
+  // selector
+  const { list } = useSelector(({ product }) => product);
+  // dispatch
+  const dispatch = useDispatch();
   // Breakpoints
   const { displayOff2, bordes, content5 } = Breakpoints();
 
+  // handleObservator
+  const handleObservator = () => {
+    dispatch(serchProductList(list));
+  };
   return (
     <Box display={displayOff2} mb={5} borderTop={bordes}>
       <chakra.nav boxShadow="md">
@@ -57,7 +69,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box, activeSelect }) => {
               />
             </chakra.li>
           )}
-          <chakra.li mx={"3"}>
+          <chakra.li mx={"3"} onClick={handleObservator}>
             <NavLink
               fontWeight={"normal"}
               variant={"secondary"}

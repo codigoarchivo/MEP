@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+import { useRouter } from "next/router";
 
 import {
   collection,
@@ -9,9 +11,10 @@ import {
   startAfter,
   onSnapshot,
   limitToLast,
+  getDocs,
 } from "firebase/firestore";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Button,
@@ -28,22 +31,33 @@ import Layout from "../../components/layout/layout";
 
 import { db } from "../../firebase/config";
 
-import { listDataProduct } from "../../actions/product";
+import {
+  categorySerchProduct,
+  listDataProduct,
+  serchProductList,
+} from "../../actions/product";
 
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   RepeatIcon,
 } from "@chakra-ui/icons";
+
 import {
   useModality,
   useModality2,
   useModality3,
 } from "../../hooks/useModality";
 
-const serchList = () => {
+import Toast from "../../helpers/Toast";
+
+const serchList = ({ data }) => {
+  // dispatch
+  const dispatch = useDispatch();
+  // dispatch
+  const router = useRouter();
   // selector
-  const { list } = useSelector(({ product }) => product);
+  const { listSerch } = useSelector(({ product }) => product);
   // modality
   const { modality, setModality } = useModality(true);
   // modality
@@ -51,8 +65,31 @@ const serchList = () => {
   // modality
   const { modality3, setModality3 } = useModality3(true);
 
+  useEffect(() => {
+    const r = router.query.q?.toLowerCase();
+
+    const filtro = data
+      .filter((item) => item.na.toLowerCase().includes(r))
+      .slice(0, 25);
+
+    if (filtro.length > 0) {
+      Toast(`Se encotro: ${filtro.length} resultado`, "success", 5000);
+      dispatch(serchProductList(filtro));
+    }
+  }, [r]);
+
+  useEffect(() => {
+    const c = router.query.c?.toLowerCase();
+
+    const filtro = data
+      .filter((item) => item.ct.toLowerCase().includes(c))
+      .slice(0, 25);
+console.log(filtro);
+    dispatch(categorySerchProduct(filtro));
+  }, [c]);
+
   const home = () => {
-    const firstVisible = list[0].na;
+    const firstVisible = listSerch[0].na;
 
     const q = query(
       collection(db, "serchs"),
@@ -76,7 +113,7 @@ const serchList = () => {
   };
 
   const previous = () => {
-    const firstVisible = list[0].na;
+    const firstVisible = listSerch[0].na;
 
     const q = query(
       collection(db, "serchs"),
@@ -96,8 +133,9 @@ const serchList = () => {
       }
     });
   };
+
   const next = () => {
-    const lastVisible = list[list.length - 1].na;
+    const lastVisible = listSerch[listSerch.length - 1].na;
 
     const q = query(
       collection(db, "serchs"),
@@ -124,11 +162,12 @@ const serchList = () => {
     setModality2(false);
     setModality3(false);
   };
+
   return (
     <>
       <Layout>
         <Container maxW="container.xs">
-          {!list[0] && (
+          {!listSerch[0] && (
             <Center py={40}>
               <Heading size={"sm"} textTransform={"uppercase"}>
                 Al parecer no encontramos lo que buscas
@@ -142,7 +181,7 @@ const serchList = () => {
             justifyContent={"space-around"}
             mt={20}
           >
-            {list.map((data) => (
+            {listSerch.map((data) => (
               <SerchScreen key={data.id} {...data} />
             ))}
           </Wrap>
@@ -186,5 +225,26 @@ const serchList = () => {
     </>
   );
 };
+
+export async function getStaticProps() {
+  try {
+    const q = query(collection(db, "serchs"), orderBy("na", "asc"));
+
+    const el = await getDocs(q);
+
+    const data = el.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return {
+      props: {
+        data,
+      },
+    };
+  } catch (error) {
+    Toast("Al parecer hay un error", "error", 5000);
+  }
+}
 
 export default serchList;

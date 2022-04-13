@@ -2,6 +2,7 @@ import { types } from "../type";
 
 const initialStates = {
   list: [],
+  listSerch: [],
   saveCartSelect: [],
   activeCartSelect: [],
   latestCartSelect: [],
@@ -14,6 +15,11 @@ export const productReducer = (state = initialStates, action) => {
       return {
         ...state,
         list: [...action.payload],
+      };
+    case types.serchList:
+      return {
+        ...state,
+        listSerch: [...action.payload],
       };
     case types.productAdd:
       return {
@@ -83,7 +89,7 @@ export const productReducer = (state = initialStates, action) => {
     case types.emptySerch:
       return {
         ...state,
-        list: [],
+        listSerch: [],
       };
     case types.closeActive:
       return {
