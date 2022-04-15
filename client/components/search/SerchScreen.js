@@ -160,7 +160,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
               boxShadow: "lg",
             }}
           >
-            <AspectRatio w="250px" h={200} position={"relative"}>
+            <AspectRatio w="248px" h={200} position={"relative"}>
               <Image
                 src={im}
                 alt="Picture of the author"

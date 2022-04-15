@@ -17,7 +17,6 @@ import {
 
 import Breakpoints from "../../helpers/Breakpoints";
 import Toast from "../../helpers/Toast";
-import ValidSave from "../../helpers/ValidSave";
 
 import { DeleteIcon, EditIcon, PlusSquareIcon } from "@chakra-ui/icons";
 
@@ -35,8 +34,8 @@ const CategoryScrenn = ({ id, na }) => {
 
   // edit
   const handleEdit = async () => {
-    const { match } = await ValidSave("serchs", "ct", id);
-    if (!match) {
+    const match = list.map((item) => item.ct).includes(id);
+    if (match) {
       return Toast("Category tiene un producto asociado", "error", 5000);
     } else {
       dispatch(
@@ -46,7 +45,6 @@ const CategoryScrenn = ({ id, na }) => {
           id,
         })
       );
-
       router.push({
         pathname: "/category/[pid]",
         query: { pid: id, word: "Edit" },
@@ -56,8 +54,8 @@ const CategoryScrenn = ({ id, na }) => {
 
   // delete
   const handleDelete = async () => {
-    const { match } = await ValidSave("serchs", "ct", id);
-    if (!match) {
+    const match = list.map((item) => item.ct).includes(id);
+    if (match) {
       return Toast("Category tiene un producto asociado", "error", 5000);
     } else {
       dispatch(

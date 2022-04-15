@@ -30,6 +30,8 @@ const initialStates = {
 
 const CategoryData = () => {
   // selector
+  const { list } = useSelector(({ category }) => category);
+  // selector
   const { activeSelect } = useSelector(({ category }) => category);
   // dispatch
   const dispatch = useDispatch();
@@ -54,7 +56,22 @@ const CategoryData = () => {
       return Toast(fiel, "error", 5000);
     }
 
-    word === "Add" && dispatch(addCategory(na));
+    if (word === "Add") {
+      const match = list
+        .map((item) => item.na.toLowerCase())
+        .includes(na.toLowerCase());
+
+      if (match) {
+        return Toast(
+          "Hay una categoria asociada al nombre quiere agregar",
+          "error",
+          5000
+        );
+      } else {
+        dispatch(addCategory(na));
+      }
+    }
+
     word === "Edit" && dispatch(editCategory(na, id));
     word === "Delete" && dispatch(deleteCategory(id));
     onClose();

@@ -45,7 +45,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box, activeSelect, useR }) => {
             <NavLink
               fontWeight={"normal"}
               variant={"secondary"}
-              href={"/"}
+              href={"/about"}
               name={"About"}
             />
           </chakra.li>

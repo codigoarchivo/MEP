@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { DownloadIcon } from "@chakra-ui/icons";
 
@@ -22,8 +22,6 @@ import {
 } from "@chakra-ui/react";
 
 import ModeColor from "../../helpers/ModeColor";
-
-import { listDataCategoryProduct } from "../../actions/category";
 
 const ProductForm = ({
   word,
@@ -48,14 +46,8 @@ const ProductForm = ({
   const { bg, brand } = ModeColor();
   // file
   const file = useRef();
-  // dispatch
-  const dispatch = useDispatch();
   // selector
   const { list } = useSelector(({ category }) => category);
-
-  useEffect(() => {
-    dispatch(listDataCategoryProduct());
-  }, [dispatch]);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useRouter } from "next/router";
 
@@ -17,11 +17,22 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import {
+  Box,
   Button,
   Center,
   Container,
   Heading,
   HStack,
+  RangeSlider,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
+  RangeSliderTrack,
+  Stack,
+  Stat,
+  StatGroup,
+  StatLabel,
+  StatNumber,
+  VStack,
   Wrap,
 } from "@chakra-ui/react";
 
@@ -32,8 +43,8 @@ import Layout from "../../components/layout/layout";
 import { db } from "../../firebase/config";
 
 import {
-  categorySerchProduct,
   listDataProduct,
+  listProductSerchClose,
   serchProductList,
 } from "../../actions/product";
 
@@ -50,8 +61,11 @@ import {
 } from "../../hooks/useModality";
 
 import Toast from "../../helpers/Toast";
+import Breakpoints from "../../helpers/Breakpoints";
 
 const serchList = ({ data }) => {
+  // Breakpoints
+  const { bordes } = Breakpoints();
   // dispatch
   const dispatch = useDispatch();
   // dispatch
@@ -64,29 +78,68 @@ const serchList = ({ data }) => {
   const { modality2, setModality2 } = useModality2();
   // modality
   const { modality3, setModality3 } = useModality3(true);
+  // useRef
+  const max = useRef(0);
+  // useRef
+  const min = useRef(0);
+
+  max.current = data.reduce(
+    (n, m) => Math.max(n, Number(m.pr)),
+    -Number.POSITIVE_INFINITY
+  );
+  min.current = data.reduce(
+    (n, m) => Math.min(n, Number(m.pr)),
+    Number.POSITIVE_INFINITY
+  );
+
+  // useState
+  const [listPrice, setListPrice] = useState([min.current, max.current]);
 
   useEffect(() => {
-    const r = router.query.q?.toLowerCase();
+    const c = router.query.c;
+    const q = router.query.q?.toLowerCase();
+    const r = router.query.r;
 
     const filtro = data
-      .filter((item) => item.na.toLowerCase().includes(r))
+      .filter((item) => {
+        return c ? item.ct.includes(c) : item.na.toLowerCase().includes(q);
+      })
       .slice(0, 25);
 
-    if (filtro.length > 0) {
-      Toast(`Se encotro: ${filtro.length} resultado`, "success", 5000);
-      dispatch(serchProductList(filtro));
+    const filtroR = data
+      .filter((item) => {
+        return item.pr >= listPrice[0] && item.pr <= listPrice[1];
+      })
+      .slice(0, 25);
+
+    if (c || q) {
+      if (filtro.length === 0) {
+        return (
+          Toast(
+            `${filtro.length} resultado, reinicia con boton Shop All`,
+            "info",
+            5000
+          ),
+          dispatch(listProductSerchClose(r ? filtroR : filtro))
+        );
+      }
     }
-  }, [r]);
 
-  useEffect(() => {
-    const c = router.query.c?.toLowerCase();
+    if (r) {
+      if (filtroR.length === 0) {
+        return (
+          Toast(
+            `${filtroR.length} resultado, reinicia con boton Shop All`,
+            "info",
+            5000
+          ),
+          dispatch(listProductSerchClose(r ? filtroR : filtro))
+        );
+      }
+    }
 
-    const filtro = data
-      .filter((item) => item.ct.toLowerCase().includes(c))
-      .slice(0, 25);
-console.log(filtro);
-    dispatch(categorySerchProduct(filtro));
-  }, [c]);
+    dispatch(serchProductList(r ? filtroR : filtro));
+  }, [router.query, listPrice]);
 
   const home = () => {
     const firstVisible = listSerch[0].na;
@@ -163,6 +216,14 @@ console.log(filtro);
     setModality3(false);
   };
 
+  const handleChangeEnd = (r) => {
+    router.push({
+      pathname: "/search",
+      query: { r },
+    });
+    setListPrice(r);
+  };
+
   return (
     <>
       <Layout>
@@ -170,21 +231,78 @@ console.log(filtro);
           {!listSerch[0] && (
             <Center py={40}>
               <Heading size={"sm"} textTransform={"uppercase"}>
-                Al parecer no encontramos lo que buscas
+                Al parecer no encontramos lo que buscas, reinicia con boton Shop
+                All
               </Heading>
             </Center>
           )}
+          <Stack flexDirection={"row"}>
+            <VStack
+              as={"aside"}
+              w={"30%"}
+              h={"full"}
+              border={bordes}
+              rounded="md"
+              spacing={"10"}
+              p={5}
+            >
+              <Box borderBottom={bordes} py={5} w={"full"}>
+                <Heading
+                  size={"md"}
+                  textTransform={"uppercase"}
+                  fontWeight={"normal"}
+                >
+                  Buscar Rango precios
+                </Heading>
+              </Box>
 
-          <Wrap
-            spacing={"50px"}
-            display={"flex"}
-            justifyContent={"space-around"}
-            mt={20}
-          >
-            {listSerch.map((data) => (
-              <SerchScreen key={data.id} {...data} />
-            ))}
-          </Wrap>
+              <RangeSlider
+                defaultValue={[min.current, max.current]}
+                min={min.current}
+                max={max.current}
+                step={5}
+                aria-label={["min", "max"]}
+                onChangeEnd={(val) => handleChangeEnd(val)}
+              >
+                <RangeSliderTrack bg="brand.800">
+                  <RangeSliderFilledTrack bg="brand.700" />
+                </RangeSliderTrack>
+                <RangeSliderThumb boxSize={6} index={0}>
+                  <Box color="brand.700" as={ChevronLeftIcon} />
+                </RangeSliderThumb>
+                <RangeSliderThumb boxSize={6} index={1}>
+                  <Box color="brand.700" as={ChevronRightIcon} />
+                </RangeSliderThumb>
+              </RangeSlider>
+
+              <StatGroup w={"full"}>
+                <Stat>
+                  <StatLabel>Min</StatLabel>
+                  <StatNumber fontWeight={"normal"}>
+                    $ {listPrice[0]}
+                  </StatNumber>
+                </Stat>
+
+                <Stat>
+                  <StatLabel>Max</StatLabel>
+                  <StatNumber fontWeight={"normal"}>
+                    $ {listPrice[1]}
+                  </StatNumber>
+                </Stat>
+              </StatGroup>
+            </VStack>
+            <Wrap
+              w={"70%"}
+              spacing={"50px"}
+              display={"flex"}
+              justifyContent={"space-around"}
+            >
+              {listSerch.map((data) => (
+                <SerchScreen key={data.id} {...data} />
+              ))}
+            </Wrap>
+          </Stack>
+
           <HStack spacing={10} justifyContent={"center"}>
             <Button
               onClick={home}

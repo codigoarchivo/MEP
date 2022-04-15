@@ -59,7 +59,7 @@ import useAuth from "../../../hooks/useAuth";
 import NavbarCart from "./NavbarCart";
 
 import { logout } from "../../../actions/auth";
-import { categorySerchProduct } from "../../../actions/product";
+
 import useFormChange from "../../../hooks/useFormChange";
 
 const Navbar = () => {
@@ -180,7 +180,7 @@ const Navbar = () => {
                           <MenuItem key={id}>
                             <NavLink
                               href={{
-                                pathname: "/search/category",
+                                pathname: "/search",
                                 query: { c: id },
                               }}
                               name={na}

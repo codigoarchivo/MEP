@@ -1,14 +1,4 @@
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  limit,
-  query,
-  setDoc,
-  where,
-} from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
 
 import { db } from "../firebase/config";
 
@@ -169,34 +159,6 @@ const LatestSaveCart = (data) => ({
   payload: data,
 });
 
-export const categorySerchProduct = (data) => {
-  return async (dispatch) => {
-    try {
-      console.log(data);
-      if (data.length === 0) {
-        dispatch(productSerchCategoryClose());
-        return Toast(`Se encontro: ${data.length} resultado`, "info", 5000);
-      }
-
-      if (data.length > 0) {
-        Toast(`Se encotro: ${data.length} resultado`, "success", 5000);
-        dispatch(productSerchCategory(data));
-      }
-    } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
-    }
-  };
-};
-
-const productSerchCategory = (data) => ({
-  type: types.productCategory,
-  payload: data,
-});
-
-const productSerchCategoryClose = () => ({
-  type: types.productCategoryClose,
-});
-
 export const serchProductList = (filtro) => {
   return async (dispatch) => {
     try {
@@ -212,6 +174,10 @@ export const serchProductList = (filtro) => {
 export const listProductSerch = (data) => ({
   type: types.serchList,
   payload: data,
+});
+
+export const listProductSerchClose = () => ({
+  type: types.emptySerch,
 });
 
 export const activeProduct = (data) => ({

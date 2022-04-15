@@ -46,6 +46,8 @@ import { db } from "../../firebase/config";
 
 import { activeProduct, listDataProduct } from "../../actions/product";
 
+import { listDataCategory } from "../../actions/category";
+
 import Breakpoints from "../../helpers/Breakpoints";
 
 import useAuth from "../../hooks/useAuth";
@@ -56,7 +58,7 @@ import {
   useModality3,
 } from "../../hooks/useModality";
 
-const ProductList = ({ data }) => {
+const ProductList = ({ data, dataC }) => {
   // router
   const router = useRouter();
   // breakpoints
@@ -82,6 +84,7 @@ const ProductList = ({ data }) => {
 
   useEffect(() => {
     dispatch(listDataProduct(data));
+    dispatch(listDataCategory(dataC));
   }, [dispatch, data]);
 
   // add
@@ -260,20 +263,36 @@ const ProductList = ({ data }) => {
 };
 
 export async function getServerSideProps() {
-  const q = query(collection(db, "serchs"), orderBy("na", "asc"), limit(2));
+  try {
+    const qC = query(
+      collection(db, "categories"),
+      limit(25),
+      orderBy("na", "asc")
+    );
+    const q = query(collection(db, "serchs"), limit(25), orderBy("na", "asc"));
 
-  const el = await getDocs(q);
+    const elC = await getDocs(qC);
+    const el = await getDocs(q);
 
-  const data = el.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+    const data = el.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
-  return {
-    props: {
-      data,
-    },
-  };
+    const dataC = elC.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return {
+      props: {
+        data,
+        dataC,
+      },
+    };
+  } catch (error) {
+    Toast("Al parecer hay un error", "error", 5000);
+  }
 }
 
 export default ProductList;

@@ -3,9 +3,6 @@ import {
   collection,
   deleteDoc,
   doc,
-  getDocs,
-  orderBy,
-  query,
   updateDoc,
 } from "firebase/firestore";
 
@@ -19,28 +16,6 @@ export const listDataCategory = (data) => {
   return async (dispatch) => {
     try {
       dispatch(categoryDataList(data));
-    } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
-    }
-  };
-};
-
-export const listDataCategoryProduct = () => {
-  return async (dispatch, getState) => {
-    try {
-      const { list } = getState().category;
-      if (list.length > 0) {
-        return;
-      } else {
-        const q = query(collection(db, "categories"), orderBy("na", "asc"));
-        const el = await getDocs(q);
-        const data = el.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        dispatch(categoryDataList(data));
-      }
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }

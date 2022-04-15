@@ -55,12 +55,13 @@ import {
   useModality2,
   useModality3,
 } from "../../hooks/useModality";
+import { listDataProduct } from "../../actions/product";
 
-const CategoryList = ({ data }) => {
+const CategoryList = ({ data, dataC }) => {
   // router
   const router = useRouter();
   // breakpoints
-  const { center, points19, points20, bordes } = Breakpoints();
+  const { center, bordes } = Breakpoints();
   // selector
   const { list } = useSelector(({ category }) => category);
   // selector
@@ -80,7 +81,8 @@ const CategoryList = ({ data }) => {
     router.push("/");
   }
   useEffect(() => {
-    dispatch(listDataCategory(data));
+    dispatch(listDataProduct(data));
+    dispatch(listDataCategory(dataC));
   }, [dispatch, data]);
 
   // add
@@ -185,12 +187,12 @@ const CategoryList = ({ data }) => {
               </Center>
             )}
             <TableContainer w={"full"} border={bordes}>
-              <Table variant="simple" >
+              <Table variant="simple">
                 <TableCaption>Lista de Categorias</TableCaption>
                 <Thead>
                   <Tr>
                     <Th>Categoria</Th>
-                    <Th isNumeric  textAlign={center}>
+                    <Th isNumeric textAlign={center}>
                       <Button
                         onClick={handleAdd}
                         variant={"primary"}
@@ -256,22 +258,36 @@ const CategoryList = ({ data }) => {
 };
 
 export async function getServerSideProps() {
-  const q = query(
-    collection(db, "categories"),
-    orderBy("na", "asc"),
-    limit(10)
-  );
+  try {
+    const qC = query(
+      collection(db, "categories"),
+      limit(25),
+      orderBy("na", "asc")
+    );
+    const q = query(collection(db, "serchs"), limit(25), orderBy("na", "asc"));
 
-  const el = await getDocs(q);
+    const elC = await getDocs(qC);
+    const el = await getDocs(q);
 
-  const data = el.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+    const data = el.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
-  return {
-    props: { data },
-  };
+    const dataC = elC.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return {
+      props: {
+        data,
+        dataC,
+      },
+    };
+  } catch (error) {
+    Toast("Al parecer hay un error", "error", 5000);
+  }
 }
 
 export default CategoryList;
