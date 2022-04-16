@@ -97,18 +97,23 @@ const Home = ({ data, dataC }) => {
           </Stack>
         </VStack>
         <VStack spacing={10} mt={16}>
-          <Stack w={"full"} spacing={10}>
-            <Heading w={"full"} size={"lg"}>
-              Recorrido De Todos Nuestros Productos
-            </Heading>
-            <HStack>
-              <Marquee>
-                {list.map((data) => (
-                  <SerchScreen key={data.id} {...data} />
-                ))}
-              </Marquee>
-            </HStack>
-          </Stack>
+          {list[0] ? (
+            <Stack w={"full"} spacing={10}>
+              <Heading w={"full"} size={"lg"}>
+                Recorrido De Todos Nuestros Productos
+              </Heading>
+              <HStack>
+                <Marquee>
+                  {list.map((data) => (
+                    <SerchScreen key={data.id} {...data} />
+                  ))}
+                </Marquee>
+              </HStack>
+            </Stack>
+          ) : (
+            ""
+          )}
+
           {!!latestCartSelect[2] ? (
             <Stack w={"full"} spacing={10}>
               <Heading w={"full"} size={"lg"}>
@@ -174,7 +179,11 @@ const Home = ({ data, dataC }) => {
 
 export async function getStaticProps() {
   try {
-    const qC = query(collection(db, "categories"), limit(25), orderBy("na", "asc"));
+    const qC = query(
+      collection(db, "categories"),
+      limit(25),
+      orderBy("na", "asc")
+    );
     const q = query(collection(db, "serchs"), limit(25), orderBy("na", "asc"));
 
     const elC = await getDocs(qC);

@@ -23,6 +23,9 @@ import {
   Container,
   Heading,
   HStack,
+  List,
+  ListIcon,
+  ListItem,
   RangeSlider,
   RangeSliderFilledTrack,
   RangeSliderThumb,
@@ -52,6 +55,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   RepeatIcon,
+  CheckCircleIcon,
 } from "@chakra-ui/icons";
 
 import {
@@ -61,7 +65,9 @@ import {
 } from "../../hooks/useModality";
 
 import Toast from "../../helpers/Toast";
+
 import Breakpoints from "../../helpers/Breakpoints";
+import NavLink from "../../helpers/Navlink";
 
 const serchList = ({ data }) => {
   // Breakpoints
@@ -72,6 +78,8 @@ const serchList = ({ data }) => {
   const router = useRouter();
   // selector
   const { listSerch } = useSelector(({ product }) => product);
+  // selector
+  const { list } = useSelector(({ category }) => category);
   // modality
   const { modality, setModality } = useModality(true);
   // modality
@@ -120,7 +128,7 @@ const serchList = ({ data }) => {
             "info",
             5000
           ),
-          dispatch(listProductSerchClose(r ? filtroR : filtro))
+          dispatch(listProductSerchClose(filtro))
         );
       }
     }
@@ -133,7 +141,7 @@ const serchList = ({ data }) => {
             "info",
             5000
           ),
-          dispatch(listProductSerchClose(r ? filtroR : filtro))
+          dispatch(listProductSerchClose(filtroR))
         );
       }
     }
@@ -228,79 +236,120 @@ const serchList = ({ data }) => {
     <>
       <Layout>
         <Container maxW="container.xs">
-          {!listSerch[0] && (
-            <Center py={40}>
-              <Heading size={"sm"} textTransform={"uppercase"}>
-                Al parecer no encontramos lo que buscas, reinicia con boton Shop
-                All
-              </Heading>
-            </Center>
-          )}
           <Stack flexDirection={"row"}>
             <VStack
               as={"aside"}
-              w={"30%"}
+              w={"25%"}
               h={"full"}
-              border={bordes}
-              rounded="md"
               spacing={"10"}
-              p={5}
+              mt={2}
+              mr={2}
             >
-              <Box borderBottom={bordes} py={5} w={"full"}>
-                <Heading
-                  size={"md"}
-                  textTransform={"uppercase"}
-                  fontWeight={"normal"}
-                >
-                  Buscar Rango precios
-                </Heading>
-              </Box>
-
-              <RangeSlider
-                defaultValue={[min.current, max.current]}
-                min={min.current}
-                max={max.current}
-                step={5}
-                aria-label={["min", "max"]}
-                onChangeEnd={(val) => handleChangeEnd(val)}
+              <Stack
+                w={"full"}
+                spacing={"10"}
+                border={bordes}
+                rounded="md"
+                p={5}
               >
-                <RangeSliderTrack bg="brand.800">
-                  <RangeSliderFilledTrack bg="brand.700" />
-                </RangeSliderTrack>
-                <RangeSliderThumb boxSize={6} index={0}>
-                  <Box color="brand.700" as={ChevronLeftIcon} />
-                </RangeSliderThumb>
-                <RangeSliderThumb boxSize={6} index={1}>
-                  <Box color="brand.700" as={ChevronRightIcon} />
-                </RangeSliderThumb>
-              </RangeSlider>
+                <Box borderBottom={bordes} py={5} w={"full"}>
+                  <Heading
+                    size={"md"}
+                    textTransform={"uppercase"}
+                    fontWeight={"normal"}
+                  >
+                    Buscar Rango precios
+                  </Heading>
+                </Box>
 
-              <StatGroup w={"full"}>
-                <Stat>
-                  <StatLabel>Min</StatLabel>
-                  <StatNumber fontWeight={"normal"}>
-                    $ {listPrice[0]}
-                  </StatNumber>
-                </Stat>
+                <RangeSlider
+                  defaultValue={[min.current, max.current]}
+                  min={min.current}
+                  max={max.current}
+                  step={5}
+                  aria-label={["min", "max"]}
+                  onChangeEnd={(val) => handleChangeEnd(val)}
+                >
+                  <RangeSliderTrack bg="brand.800">
+                    <RangeSliderFilledTrack bg="brand.700" />
+                  </RangeSliderTrack>
+                  <RangeSliderThumb boxSize={6} index={0}>
+                    <Box color="brand.700" as={ChevronLeftIcon} />
+                  </RangeSliderThumb>
+                  <RangeSliderThumb boxSize={6} index={1}>
+                    <Box color="brand.700" as={ChevronRightIcon} />
+                  </RangeSliderThumb>
+                </RangeSlider>
 
-                <Stat>
-                  <StatLabel>Max</StatLabel>
-                  <StatNumber fontWeight={"normal"}>
-                    $ {listPrice[1]}
-                  </StatNumber>
-                </Stat>
-              </StatGroup>
+                <StatGroup w={"full"}>
+                  <Stat>
+                    <StatLabel>Min</StatLabel>
+                    <StatNumber fontWeight={"normal"}>
+                      $ {listPrice[0]}
+                    </StatNumber>
+                  </Stat>
+
+                  <Stat>
+                    <StatLabel>Max</StatLabel>
+                    <StatNumber fontWeight={"normal"}>
+                      $ {listPrice[1]}
+                    </StatNumber>
+                  </Stat>
+                </StatGroup>
+              </Stack>
+              <Stack
+                w={"full"}
+                spacing={"10"}
+                border={bordes}
+                rounded="md"
+                p={5}
+              >
+                <Box borderBottom={bordes} py={5} w={"full"}>
+                  <Heading
+                    size={"md"}
+                    textTransform={"uppercase"}
+                    fontWeight={"normal"}
+                  >
+                    Todas las categorias
+                  </Heading>
+                </Box>
+                <List spacing={3}>
+                  {list.map((item) => (
+                    <ListItem key={item.id}>
+                      <ListIcon as={CheckCircleIcon} color="brand.700" />
+                      <NavLink
+                        href={{
+                          pathname: "/search",
+                          query: { c: item.id, n: item.na },
+                        }}
+                        name={item.na}
+                        variant={"secondary"}
+                        fontWeight={"normal"}
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+              </Stack>
             </VStack>
-            <Wrap
-              w={"70%"}
-              spacing={"50px"}
-              display={"flex"}
-              justifyContent={"space-around"}
-            >
-              {listSerch.map((data) => (
-                <SerchScreen key={data.id} {...data} />
-              ))}
-            </Wrap>
+            {!listSerch[0] ? (
+              <Center py={"48"} w={"full"}>
+                <Heading size={"sm"} textTransform={"uppercase"}>
+                  Al parecer no encontramos lo que buscas, reinicia con boton
+                  Shop All
+                </Heading>
+              </Center>
+            ) : (
+              <Wrap
+                w={"70%"}
+                spacing={"50px"}
+                display={"flex"}
+                justifyContent={"space-around"}
+              >
+                {listSerch.map((data) => (
+                  <SerchScreen key={data.id} {...data} />
+                ))}
+              </Wrap>
+            )}
           </Stack>
 
           <HStack spacing={10} justifyContent={"center"}>

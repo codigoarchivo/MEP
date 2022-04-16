@@ -181,7 +181,7 @@ const Navbar = () => {
                             <NavLink
                               href={{
                                 pathname: "/search",
-                                query: { c: id },
+                                query: { c: id, n: na },
                               }}
                               name={na}
                               variant={"secondary"}
