@@ -14,6 +14,10 @@ import {
   Stack,
   chakra,
   Box,
+  Button,
+  HStack,
+  Heading,
+  Select,
 } from "@chakra-ui/react";
 
 import Breakpoints from "../../../helpers/Breakpoints";
@@ -22,7 +26,17 @@ import NavLink from "../../../helpers/Navlink";
 
 import { useDispatch, useSelector } from "react-redux";
 import { serchProductList } from "../../../actions/product";
-import { About, Category, Home, Product } from "../../../helpers/IconNew";
+import {
+  About,
+  Category,
+  Home,
+  Product,
+  ShopAll,
+  CategoryAll,
+  Perfil,
+  Global,
+  Logout,
+} from "../../../helpers/IconNew";
 
 export const DrawerNavbar = ({
   onClose,
@@ -33,10 +47,10 @@ export const DrawerNavbar = ({
   MenuButton,
   MenuList,
   MenuItem,
-  Link,
   Icon,
   SunIcon,
   MoonIcon,
+  handleLogout,
 }) => {
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
@@ -75,6 +89,34 @@ export const DrawerNavbar = ({
           </DrawerHeader>
 
           <DrawerBody>
+            <Menu>
+              <MenuButton
+                leftIcon={<CategoryAll />}
+                variant={"primary"}
+                as={Button}
+                textTransform={"uppercase"}
+                w={"full"}
+              >
+                Todas Categorias
+              </MenuButton>
+              <Portal>
+                <MenuList zIndex={"modal"} border={bordes}>
+                  {list.map(({ na, id }) => (
+                    <MenuItem key={id}>
+                      <NavLink
+                        href={{
+                          pathname: "/search",
+                          query: { c: id, n: na },
+                        }}
+                        name={na}
+                        variant={"secondary"}
+                        fontWeight={"normal"}
+                      />
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </Portal>
+            </Menu>
             <VStack alignItems={"flex-start"}>
               <Box mb={5}>
                 <chakra.nav>
@@ -127,35 +169,48 @@ export const DrawerNavbar = ({
                     )}
                     <chakra.li mx={"3"} onClick={handleObservator}>
                       <NavLink
+                        leftIcon={<ShopAll />}
                         fontWeight={"normal"}
                         variant={"secondary"}
                         href={"/search"}
                         name={"Shop All"}
                       />
                     </chakra.li>
+                    <chakra.li mx={"3"} onClick={handleObservator}>
+                      <NavLink
+                        leftIcon={<Perfil />}
+                        href={"/user"}
+                        fontWeight={"normal"}
+                        variant={"secondary"}
+                        name={"Editar Perfil"}
+                      />
+                    </chakra.li>
+                    <chakra.li mx={"3"} onClick={handleObservator}>
+                      <Button
+                        variant={"secondary"}
+                        fontWeight={"normal"}
+                        leftIcon={<Logout />}
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </Button>
+                    </chakra.li>
+                    <chakra.li mx={"3"} onClick={handleObservator}>
+                      <HStack w={"full"} alignItems={"stretch"}>
+                        <Box w={6} h={6} as={Global} />
+
+                        <Heading textTransform={"uppercase"} size="sm">
+                          Idioma
+                        </Heading>
+
+                        <Select placeholder="English" size="sx" fontSize={"sm"}>
+                          <option value="option1">Español</option>
+                        </Select>
+                      </HStack>
+                    </chakra.li>
                   </Stack>
                 </chakra.nav>
               </Box>
-              <Menu>
-                <MenuButton>Categoria</MenuButton>{" "}
-                <Portal>
-                  <MenuList zIndex={"modal"} border={bordes}>
-                    {list.map(({ na, id }) => (
-                      <MenuItem key={id}>
-                        <NavLink
-                          href={{
-                            pathname: "/search",
-                            query: { c: id, n: na },
-                          }}
-                          name={na}
-                          variant={"secondary"}
-                          fontWeight={"normal"}
-                        />
-                      </MenuItem>
-                    ))}
-                  </MenuList>
-                </Portal>
-              </Menu>
             </VStack>
           </DrawerBody>
         </DrawerContent>

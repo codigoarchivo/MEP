@@ -129,6 +129,7 @@ const Navbar = () => {
         MoonIcon={MoonIcon}
         toggleColorMode={toggleColorMode}
         colorMode={colorMode}
+        handleLogout={handleLogout}
       />
       {/* DialogSerchNavbar */}
       <DialogSerchNavbar
@@ -286,7 +287,7 @@ const Navbar = () => {
                     {!activeSelect?.photoURL ? (
                       <Avatar
                         cursor={"pointer"}
-                        name={activeSelect.displayName}
+                        name={activeSelect?.displayName}
                       />
                     ) : (
                       <AspectRatio
@@ -334,6 +335,7 @@ const Navbar = () => {
                       bg={bg2}
                     />
                     <PopoverBody>
+                      {/* PopoverUserNavbar */}
                       <PopoverUserNavbar
                         handleLogout={handleLogout}
                         HStack={HStack}
