@@ -90,6 +90,7 @@ const Navbar = () => {
     points15,
     repeat4,
     porcent2,
+    bordes,
   } = Breakpoints();
 
   const handleLogout = () => {
@@ -120,7 +121,6 @@ const Navbar = () => {
         onClose={onClose}
         Menu={Menu}
         MenuButton={MenuButton}
-        Portal={Portal}
         MenuList={MenuList}
         MenuItem={MenuItem}
         Link={Link}
@@ -175,7 +175,11 @@ const Navbar = () => {
                   <Menu>
                     <MenuButton>Categoria</MenuButton>
                     <Portal>
-                      <MenuList display={displayOff2} minWidth={0}>
+                      <MenuList
+                        display={displayOff2}
+                        minWidth={0}
+                        border={bordes}
+                      >
                         {list.map(({ na, id }) => (
                           <MenuItem key={id}>
                             <NavLink
@@ -222,7 +226,7 @@ const Navbar = () => {
               </chakra.form>
             </GridItem>
             <GridItem as={"li"} colSpan={1} justifySelf="center">
-              <Popover isLazy z>
+              <Popover isLazy>
                 <PopoverTrigger>
                   <Button size="xs" px={0} variant={"secondary"}>
                     <CartIcon boxSize={points11} />
@@ -282,7 +286,7 @@ const Navbar = () => {
                     {!activeSelect?.photoURL ? (
                       <Avatar
                         cursor={"pointer"}
-                        name={activeSelect?.displayName}
+                        name={activeSelect.displayName}
                       />
                     ) : (
                       <AspectRatio
@@ -305,7 +309,7 @@ const Navbar = () => {
                     <PopoverHeader fontWeight="semibold" borderBottomWidth={0}>
                       <HStack spacing={6}>
                         <Heading size={"md"}>
-                          {activeSelect?.displayName}
+                          {activeSelect.displayName}
                         </Heading>
                         <Button
                           onClick={toggleColorMode}
@@ -320,7 +324,7 @@ const Navbar = () => {
                           )}
                         </Button>
                       </HStack>
-                      <Text fontSize="sm">{activeSelect?.email}</Text>
+                      <Text fontSize="sm">{activeSelect.email}</Text>
                     </PopoverHeader>
                     <PopoverArrow />
                     <PopoverCloseButton />

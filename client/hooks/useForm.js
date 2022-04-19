@@ -42,7 +42,7 @@ const useForm = (initialStates = {}, data) => {
     }
   };
 
-  return [
+  return {
     values,
     urlImage,
     progress,
@@ -50,7 +50,7 @@ const useForm = (initialStates = {}, data) => {
     handleInputChange2,
     handleInputChange3,
     reset,
-  ];
+  };
 };
 
 export default useForm;

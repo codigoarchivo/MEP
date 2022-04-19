@@ -29,7 +29,7 @@ import {
   PlusSquareIcon,
 } from "@chakra-ui/icons";
 
-import { activeProduct, productActiveOrInactive } from "../../actions/product";
+import { productActiveOrInactive } from "../../actions/product";
 
 const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
   // selector
@@ -55,49 +55,28 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
 
   // list Category
   const listCt = list.filter((item) => item.id === ct);
-  
+
   // edit
   const handleEdit = () => {
-    dispatch(
-      activeProduct({
-        word: "Edit",
-        ...data,
-      })
-    );
-
     router.push({
       pathname: "/product/[pid]",
-      query: { pid: id, word: "Edit" },
+      query: { pid: "Edit", ...data },
     });
   };
 
   // delete
   const handleDelete = () => {
-    dispatch(
-      activeProduct({
-        word: "Delete",
-        ...data,
-      })
-    );
-
     router.push({
       pathname: "/product/[pid]",
-      query: { pid: id, word: "Delete" },
+      query: { pid: "Delete", id },
     });
   };
 
   // detalles
   const handleDetails = () => {
-    dispatch(
-      activeProduct({
-        word: "Details",
-        dt,
-      })
-    );
-
     router.push({
       pathname: "/product/[pid]",
-      query: { pid: id, word: "Details" },
+      query: { pid: "Details", dt },
     });
   };
 

@@ -80,16 +80,9 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
         query: { pid: id },
       });
     } else {
-      dispatch(
-        activeProduct({
-          word: "Details",
-          ...data,
-        })
-      );
-
       router.push({
         pathname: "/search/details",
-        query: { pid: id },
+        query: { pid: "d", ...data },
       });
 
       handleSaveLatest();

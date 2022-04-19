@@ -2,14 +2,9 @@ import React from "react";
 
 import { useRouter } from "next/router";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import {
-  CloseButton,
-  Heading,
-  HStack,
-  VStack,
-} from "@chakra-ui/react";
+import { CloseButton, Heading, HStack, VStack } from "@chakra-ui/react";
 
 import Breakpoints from "../../helpers/Breakpoints";
 import Toast from "../../helpers/Toast";
@@ -34,8 +29,6 @@ const initialStates = {
 };
 
 const ProductData = () => {
-  // selector
-  const { activeSelect } = useSelector(({ product }) => product);
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -43,21 +36,22 @@ const ProductData = () => {
   // Breakpoints
   const { points1, repeat1, points3, bordes } = Breakpoints();
 
+  const activeSelect = router.query;
   // useForm
-  const [
+  const {
     values,
     urlImage,
     progress,
     handleInputChange,
     handleInputChange2,
     handleInputChange3,
-  ] = useForm(initialStates, activeSelect);
+  } = useForm(initialStates, activeSelect);
   // agrega imagen
   values.im = urlImage ? urlImage : values.im;
   // validar
   const { fiel, estado, ErrorRetur, ErrorRetur2 } = Validator(values);
   // values
-  const { na, pr, ds, ct, cn, dt, im, es, id, word } = values;
+  const { na, pr, ds, ct, cn, dt, im, es, id, pid } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -68,18 +62,18 @@ const ProductData = () => {
     if (ErrorRetur) {
       return Toast(fiel, "error", 5000);
     } else {
-      word === "Add" &&
+      pid === "Add" &&
         dispatch(addProduct({ na, pr, ds, ct, cn, dt, im, es: true }));
-      word === "Edit" &&
+      pid === "Edit" &&
         dispatch(editProduct({ na, pr, ds, ct, cn, dt, im, es, id }));
-      word === "Delete" && dispatch(deleteProduct(id));
+      pid === "Delete" && dispatch(deleteProduct(id));
     }
 
     onClose();
   };
   // cerrar
   const onClose = () => {
-    router.back();
+    router.push("/product");
   };
 
   return (
@@ -88,20 +82,20 @@ const ProductData = () => {
         <HStack w={"full"}>
           <CloseButton size="md" onClick={onClose} />
           <Heading as="h1" size={"md"} textTransform={"uppercase"}>
-            {word}
+            {pid}
           </Heading>
         </HStack>
-        {word === "Details" || word === "Delete" ? (
+        {pid === "Details" || pid === "Delete" ? (
           <ProductFormWord
             handleSubmit={handleSubmit}
             HStack={HStack}
             dt={dt}
-            word={word}
+            pid={pid}
             onClose={onClose}
           />
         ) : (
           <ProductForm
-            word={word}
+            pid={pid}
             na={na}
             pr={pr}
             ds={ds}

@@ -9,7 +9,12 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
   CloseButton,
+  chakra,
 } from "@chakra-ui/react";
+
+import { useRouter } from "next/router";
+
+import useFormChange from "../../../hooks/useFormChange";
 
 export const DialogSerchNavbar = ({
   isSerch,
@@ -23,6 +28,21 @@ export const DialogSerchNavbar = ({
   const onSerch = () => setIsSerch(false);
   // ref
   const cancelRef = useRef();
+  // dispatch
+  const router = useRouter();
+
+  const { values, reset, handleInputChange } = useFormChange({ q: "" });
+
+  const handleSerchProduct = (e) => {
+    e.preventDefault();
+    const q = values.q;
+    router.push({
+      pathname: "/search",
+      query: { q },
+    });
+    reset();
+    onSerch();
+  };
 
   return (
     <>
@@ -38,16 +58,21 @@ export const DialogSerchNavbar = ({
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              <InputGroup>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<SearchIcon color="gray.300" />}
-                />
-                <Input
-                  type={"search"}
-                  placeholder="Buscar En cualquier parte"
-                />
-              </InputGroup>
+              <chakra.form onSubmit={handleSerchProduct}>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<SearchIcon color="gray.300" />}
+                  />
+                  <Input
+                    type={"search"}
+                    placeholder="Buscar"
+                    value={values.q}
+                    name={"q"}
+                    onChange={handleInputChange}
+                  />
+                </InputGroup>
+              </chakra.form>
             </AlertDialogBody>
           </AlertDialogContent>
         </AlertDialogOverlay>

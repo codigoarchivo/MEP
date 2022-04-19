@@ -38,16 +38,9 @@ const CategoryScrenn = ({ id, na }) => {
     if (match) {
       return Toast("Category tiene un producto asociado", "error", 5000);
     } else {
-      dispatch(
-        activeCategory({
-          word: "Edit",
-          na,
-          id,
-        })
-      );
       router.push({
         pathname: "/category/[pid]",
-        query: { pid: id, word: "Edit" },
+        query: { pid: "Edit", na, id },
       });
     }
   };
@@ -58,17 +51,9 @@ const CategoryScrenn = ({ id, na }) => {
     if (match) {
       return Toast("Category tiene un producto asociado", "error", 5000);
     } else {
-      dispatch(
-        activeCategory({
-          word: "Delete",
-          na,
-          id,
-        })
-      );
-
       router.push({
         pathname: "/category/[pid]",
-        query: { pid: id, word: "Delete" },
+        query: { pid: "Delete", id },
       });
     }
   };

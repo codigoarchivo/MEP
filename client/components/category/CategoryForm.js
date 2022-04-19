@@ -10,7 +10,7 @@ import {
 
 const CategoryForm = ({
   na,
-  word,
+  pid,
   HStack,
   VStack,
   onClose,
@@ -37,7 +37,7 @@ const CategoryForm = ({
               Close
             </Button>
             <Button variant={"primary"} type="submit" ml={3}>
-              {word}
+              {pid}
             </Button>
           </HStack>
         </VStack>

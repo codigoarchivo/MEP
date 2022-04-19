@@ -25,20 +25,20 @@ import useFormChange from "../../hooks/useFormChange";
 const initialStates = {
   id: "",
   na: "",
-  word: "",
+  pid: "",
 };
 
 const CategoryData = () => {
   // selector
   const { list } = useSelector(({ category }) => category);
-  // selector
-  const { activeSelect } = useSelector(({ category }) => category);
   // dispatch
   const dispatch = useDispatch();
   // router
   const router = useRouter();
   // Breakpoints
   const { bordes } = Breakpoints();
+
+  const activeSelect = router.query;
   // useForm
   const { values, handleInputChange } = useFormChange(
     initialStates,
@@ -47,7 +47,7 @@ const CategoryData = () => {
   // validar
   const { fiel, ErrorCatData } = Validator(values);
   // values
-  const { na, id, word } = values;
+  const { na, id, pid } = values;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,7 +56,7 @@ const CategoryData = () => {
       return Toast(fiel, "error", 5000);
     }
 
-    if (word === "Add") {
+    if (pid === "Add") {
       const match = list
         .map((item) => item.na.toLowerCase())
         .includes(na.toLowerCase());
@@ -72,13 +72,13 @@ const CategoryData = () => {
       }
     }
 
-    word === "Edit" && dispatch(editCategory(na, id));
-    word === "Delete" && dispatch(deleteCategory(id));
+    pid === "Edit" && dispatch(editCategory(na, id));
+    pid === "Delete" && dispatch(deleteCategory(id));
     onClose();
   };
   // cerrar
   const onClose = () => {
-    router.back();
+    router.push("/category");
   };
 
   return (
@@ -87,13 +87,13 @@ const CategoryData = () => {
         <HStack w={"full"}>
           <CloseButton size="md" onClick={onClose} />
           <Heading as="h1" size={"md"} textTransform={"uppercase"}>
-            {word}
+            {pid}
           </Heading>
         </HStack>
 
-        {word === "Delete" ? (
+        {pid === "Delete" ? (
           <CategoryFormWord
-            word={word}
+            pid={pid}
             HStack={HStack}
             VStack={VStack}
             onClose={onClose}
@@ -102,7 +102,7 @@ const CategoryData = () => {
         ) : (
           <CategoryForm
             na={na}
-            word={word}
+            pid={pid}
             HStack={HStack}
             VStack={VStack}
             onClose={onClose}

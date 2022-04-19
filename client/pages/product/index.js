@@ -89,15 +89,9 @@ const ProductList = ({ data, dataC }) => {
 
   // add
   const handleAdd = () => {
-    dispatch(
-      activeProduct({
-        word: "Add",
-      })
-    );
-
     router.push({
       pathname: "/product/[pid]",
-      query: { pid: "new", word: "Add" },
+      query: { pid: "Add" },
     });
   };
 

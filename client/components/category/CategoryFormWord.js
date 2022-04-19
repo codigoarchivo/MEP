@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Heading, chakra } from "@chakra-ui/react";
 
-const CategoryFormWord = ({ HStack, onClose, handleSubmit, word, VStack }) => {
+const CategoryFormWord = ({ HStack, onClose, handleSubmit, pid, VStack }) => {
   return (
     <>
       <chakra.form onSubmit={handleSubmit} w="full" p={3}>
@@ -14,7 +14,7 @@ const CategoryFormWord = ({ HStack, onClose, handleSubmit, word, VStack }) => {
               Close
             </Button>
             <Button variant={"primary"} type="submit" ml={3}>
-              {word}
+              {pid}
             </Button>
           </HStack>
         </VStack>

@@ -6,6 +6,7 @@ import Link from "next/link";
 
 const NavLink = ({
   rightIcon,
+  leftIcon,
   href,
   name,
   variant,
@@ -20,6 +21,7 @@ const NavLink = ({
     <Link href={href} passHref>
       <Button
         rightIcon={rightIcon}
+        leftIcon={leftIcon}
         onClick={click}
         cursor={"pointer"}
         as={"a"}

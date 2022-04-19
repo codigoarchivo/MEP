@@ -42,11 +42,11 @@ const Details = () => {
   // router
   const router = useRouter();
   // selector
-  const { activeSelect } = useSelector(({ product }) => product);
-  // selector
   const { list } = useSelector(({ category }) => category);
   // Breakpoints
   const { content5, full } = Breakpoints();
+
+  const activeSelect = router.query;
   // values
   const { id, na, pr, im, ds, ct, cn, es, dt } = activeSelect;
   // list Category
@@ -72,6 +72,7 @@ const Details = () => {
   const handleSelect = () => {
     const total = pr * input.value;
     const cantidad = input.value;
+    
     dispatch(activeProductCart({ id, na, pr, im, cantidad, total }));
 
     router.push("/search/cart");
