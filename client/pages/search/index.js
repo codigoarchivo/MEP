@@ -285,14 +285,14 @@ const serchList = ({ data }) => {
                   <Stat>
                     <StatLabel>Min</StatLabel>
                     <StatNumber fontWeight={"normal"}>
-                      $ {listPrice[0]}
+                      $ {listPrice[0] === Infinity ? 0 : listPrice[0]}
                     </StatNumber>
                   </Stat>
 
                   <Stat>
                     <StatLabel>Max</StatLabel>
                     <StatNumber fontWeight={"normal"}>
-                      $ {listPrice[1]}
+                      $ {listPrice[1] === -Infinity ? 0 : listPrice[1]}
                     </StatNumber>
                   </Stat>
                 </StatGroup>
@@ -394,24 +394,20 @@ const serchList = ({ data }) => {
 };
 
 export async function getStaticProps() {
-  try {
-    const q = query(collection(db, "serchs"), orderBy("na", "asc"));
+  const q = query(collection(db, "serchs"), orderBy("na", "asc"));
 
-    const el = await getDocs(q);
+  const el = await getDocs(q);
 
-    const data = el.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+  const data = el.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
 
-    return {
-      props: {
-        data,
-      },
-    };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-  }
+  return {
+    props: {
+      data,
+    },
+  };
 }
 
 export default serchList;

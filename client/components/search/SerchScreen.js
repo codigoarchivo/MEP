@@ -155,15 +155,17 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
               boxShadow: "lg",
             }}
           >
-            <AspectRatio w="248px" h={200} position={"relative"}>
-              <Image
-                src={im}
-                alt="Picture of the author"
-                layout="fill"
-                objectFit="contain"
-                objectPosition="center"
-              />
-            </AspectRatio>
+            {im && (
+              <AspectRatio w="248px" h={200} position={"relative"}>
+                <Image
+                  src={im}
+                  alt="Picture of the author"
+                  layout="fill"
+                  objectFit="contain"
+                  objectPosition="center"
+                />
+              </AspectRatio>
+            )}
 
             <Flex align="baseline" pt={3} w={"full"} px={3}>
               <Badge colorScheme="green">Producto</Badge>

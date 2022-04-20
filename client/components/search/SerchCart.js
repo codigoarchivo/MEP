@@ -1,4 +1,6 @@
-import React, { useMemo, useRef } from "react";
+import React, { useRef } from "react";
+
+import { useRouter } from "next/router";
 
 import { DeleteIcon } from "@chakra-ui/icons";
 
@@ -8,15 +10,18 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   AspectRatio,
+  Button,
+  Heading,
+  Stack,
   Table,
   TableCaption,
   TableContainer,
   Tbody,
   Td,
-  Tfoot,
   Th,
   Thead,
   Tr,
+  VStack,
 } from "@chakra-ui/react";
 
 import { deleteProductCart } from "../../actions/product";
@@ -27,8 +32,10 @@ import Breakpoints from "../../helpers/Breakpoints";
 import Toast from "../../helpers/Toast";
 
 const SerchCart = () => {
+  // dispatch
+  const router = useRouter();
   // Breakpoints
-  const { bordes } = Breakpoints();
+  const { bordes, full } = Breakpoints();
   // useDispatch
   const dispatch = useDispatch();
   // useRef
@@ -37,7 +44,7 @@ const SerchCart = () => {
   const { activeCartSelect, saveCartSelect } = useSelector(
     ({ product }) => product
   );
-  // incrementa y encapsula información para evitar que se actualice 
+  // incrementa y encapsula información para evitar que se actualice
   inc.current = activeCartSelect.reduce((total, item) => total + item.total, 0);
   // delete cart
   const handleDeleteCart = (id) => {
@@ -47,64 +54,68 @@ const SerchCart = () => {
     Toast("Eliminado con exito", "error", 5000);
   };
 
+  const handleCheckout = () => {
+    router.push("/search/checkout");
+  };
   return (
     <>
-      <TableContainer w={"full"} my={20} border={bordes}>
-        <Table variant="simple">
-          <TableCaption>Carrito de Compras</TableCaption>
-          <Thead>
-            <Tr>
-              <Th></Th>
-              <Th>Producto</Th>
-              <Th>Precio</Th>
-              <Th>Cantidad</Th>
-              <Th>Total</Th>
-              <Th isNumeric>Action</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {activeCartSelect.map((item) => (
-              <Tr key={item.id}>
-                <Td>
-                  <AspectRatio ratio={1} w={59} h={59} position={"relative"}>
-                    <Image
-                      src={item.im}
-                      alt="Picture of the author"
-                      layout="fill"
-                      objectFit="contain"
-                    />
-                  </AspectRatio>
-                </Td>
-                <Td>{item.na}</Td>
-                <Td>${item.pr}</Td>
-                <Td>{item.cantidad}</Td>
-                <Td>${item.total}</Td>
-                <Td isNumeric>
-                  <DeleteIcon
-                    onClick={() => handleDeleteCart(item.id)}
-                    mx={5}
-                    cursor={"pointer"}
-                  />
-                </Td>
+      <Stack flexDirection={"row"} w={full}>
+        <TableContainer w={"75%"} my={20} border={bordes}>
+          <Table variant="simple">
+            <TableCaption>Carrito de Compras</TableCaption>
+            <Thead>
+              <Tr>
+                <Th></Th>
+                <Th>Producto</Th>
+                <Th>Precio</Th>
+                <Th>Cantidad</Th>
+                <Th>Total</Th>
+                <Th isNumeric>Action</Th>
               </Tr>
-            ))}
-          </Tbody>
-          <Tfoot>
-            <Tr>
-              <>
-                <Th></Th>
-                <Th></Th>
-                <Th></Th>
-                <Th></Th>
-                <Th>Sub Total: ${inc.current}</Th>
-                <Th></Th>
-              </>
-            </Tr>
-          </Tfoot>
-        </Table>
-      </TableContainer>
+            </Thead>
+            <Tbody>
+              {activeCartSelect.map((item) => (
+                <Tr key={item.id}>
+                  <Td>
+                    <AspectRatio ratio={1} w={59} h={59} position={"relative"}>
+                      <Image
+                        src={item.im}
+                        alt="Picture of the author"
+                        layout="fill"
+                        objectFit="contain"
+                      />
+                    </AspectRatio>
+                  </Td>
+                  <Td>{item.na}</Td>
+                  <Td>${item.pr}</Td>
+                  <Td>{item.cantidad}</Td>
+                  <Td>${item.total}</Td>
+                  <Td isNumeric>
+                    <DeleteIcon
+                      onClick={() => handleDeleteCart(item.id)}
+                      mx={5}
+                      cursor={"pointer"}
+                    />
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+        <VStack py={20} px={1} spacing={0} w={"25%"} style={{ marginTop: 0 }}>
+          <Stack w={full} p={3} spacing={5} border={bordes}>
+            <Heading w={full} size={"md"}>
+              Total:
+            </Heading>
+            <Heading w={full}>{inc.current}$</Heading>
+            <Button variant={"primary"} w={full} onClick={handleCheckout}>
+              Pagar
+            </Button>
+          </Stack>
+        </VStack>
+      </Stack>
 
-      <TableContainer variant="striped" w={"full"} my={10} border={bordes}>
+      <TableContainer variant="striped" w={full} my={10} border={bordes}>
         <Table variant="simple">
           <TableCaption>Lista de deseos</TableCaption>
           <Thead>

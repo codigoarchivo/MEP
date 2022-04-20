@@ -72,7 +72,7 @@ const Details = () => {
   const handleSelect = () => {
     const total = pr * input.value;
     const cantidad = input.value;
-    
+
     dispatch(activeProductCart({ id, na, pr, im, cantidad, total }));
 
     router.push("/search/cart");
@@ -88,14 +88,16 @@ const Details = () => {
       <Container maxW="container.lg">
         <Stack flexDirection={content5}>
           <VStack>
-            <AspectRatio w="500px" h={"auto"} position={"relative"}>
-              <Image
-                src={im}
-                alt="Picture of the author"
-                layout="fill"
-                objectFit="contain"
-              />
-            </AspectRatio>
+            {im && (
+              <AspectRatio w="500px" h={"auto"} position={"relative"}>
+                <Image
+                  src={im}
+                  alt="Picture of the author"
+                  layout="fill"
+                  objectFit="contain"
+                />
+              </AspectRatio>
+            )}
           </VStack>
 
           <VStack p={5} spacing={4}>
@@ -144,7 +146,7 @@ const Details = () => {
               <Heading textTransform={"uppercase"} as="h3" size="sm">
                 Categoria:
               </Heading>
-              <Text>{listCt[0].na}</Text>
+              <Text>{listCt[0]?.na}</Text>
             </HStack>
           </VStack>
         </Stack>
