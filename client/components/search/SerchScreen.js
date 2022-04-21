@@ -24,7 +24,6 @@ import {
 import { StarIcon } from "@chakra-ui/icons";
 
 import {
-  activeProduct,
   cartSaveLatest,
   saveProductCart,
 } from "../../actions/product";

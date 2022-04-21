@@ -192,5 +192,7 @@ export const deleteProductCart = (id) => ({
 
 export const closeActive = () => ({
   type: types.closeActive,
-  payload: null,
+});
+export const closeRevert = () => ({
+  type: types.productRevert,
 });

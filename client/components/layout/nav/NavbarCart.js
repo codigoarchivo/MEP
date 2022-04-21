@@ -42,8 +42,12 @@ const NavbarCart = () => {
   const inc = useRef(0);
   // selector
   const { activeCartSelect } = useSelector(({ product }) => product);
-  // inc
-  activeCartSelect.map((item) => (inc.current += item.total));
+  // incrementa y encapsula información para evitar que se actualice
+  inc.current = activeCartSelect.reduce(
+    (total, item) => (total += Number(item.cn) * Number(item.pr)),
+    0
+  );
+
   const handleDeleteCart = (id) => {
     dispatch(deleteProductCart(id));
     // dcr
@@ -114,13 +118,13 @@ const NavbarCart = () => {
                     <Heading textTransform={"uppercase"} fontSize={"small"}>
                       cantidad:{" "}
                     </Heading>
-                    <Text>{item.cantidad}</Text>
+                    <Text>{item.cn}</Text>
                   </HStack>
                   <HStack w={full}>
                     <Heading textTransform={"uppercase"} fontSize={"small"}>
-                      total:{" "}
+                    Sub Total:{" "}
                     </Heading>
-                    <Text>${item.total}</Text>
+                    <Text>${item.pr * item.cn}</Text>
                   </HStack>
                 </VStack>
               </Td>
@@ -131,7 +135,7 @@ const NavbarCart = () => {
           <Tr>
             <>
               <Th></Th>
-              <Th>Sub Total: ${inc.current}</Th>
+              <Th>Total: ${inc.current}</Th>
             </>
           </Tr>
         </Tfoot>

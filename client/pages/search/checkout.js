@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
+
+import { useRouter } from "next/router";
 
 import {
+  Box,
   Button,
   Container,
   Heading,
@@ -14,14 +17,46 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
+import { useDispatch, useSelector } from "react-redux";
+
 import Layout from "../../components/layout/layout";
 
 import Breakpoints from "../../helpers/Breakpoints";
+
 import { CheckCircleIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 
+import { CartList, WhatsAppIcon } from "../../helpers/IconNew";
+
+import { closeRevert } from "../../actions/product";
+
 const checkout = () => {
+  // dispatch
+  const router = useRouter();
+  // useDispatch
+  const dispatch = useDispatch();
   // Breakpoints
   const { bordes, full } = Breakpoints();
+  // useSelector
+  const { activeSelectCheck } = useSelector(({ product }) => product);
+  // useRef
+  const cat = useRef(0);
+  // useRef
+  const resumen = useRef(0);
+
+  cat.current = activeSelectCheck.reduce(
+    (total, item) => total + Number(item.cn),
+    0
+  );
+  resumen.current = activeSelectCheck.reduce(
+    (total, item) => (total += Number(item.cn) * Number(item.pr)),
+    0
+  );
+
+  const handleRevert = () => {
+    router.push("/");
+    dispatch(closeRevert());
+  };
+
   return (
     <Layout>
       <Container maxW={"container.xl"}>
@@ -49,10 +84,12 @@ const checkout = () => {
               <Text>ehms1975@gmail.com</Text>
             </HStack>
             <HStack w={full}>
-              <Heading size={"sm"}>Telegram:</Heading>
-
-              <Link href="@edgarspendulun" isExternal>
-                Ir a<ExternalLinkIcon mx="2px" />
+              <Heading size={"sm"}>WhatsApp:</Heading>
+              <Link
+                href="https://wa.me/19735108452?text=Hola%20Edgar%20Marcano%20voy%20a%20"
+                isExternal
+              >
+                Ir a<WhatsAppIcon mx="2px" />
               </Link>
             </HStack>
 
@@ -103,6 +140,25 @@ const checkout = () => {
                 <Text>381053465609</Text>
               </HStack>
             </Stack>
+            <HStack w={full}>
+              <Heading size={"sm"}>Paso 3:</Heading>
+              <Text>
+                Una vez corfirmado pago y confirmado el envio, puede calificar
+                el producto o servicio en la plataforma:
+              </Text>
+            </HStack>
+            <List w={full}>
+              <ListItem>
+                <ListIcon as={CheckCircleIcon} color="brand.700" />
+                Calificar al vendedor
+              </ListItem>
+            </List>
+            <Box w={full}>
+              <HStack>
+                <Heading size={"sm"}>Calificar:</Heading>
+                <Button variant={"primary"}>Enviar</Button>
+              </HStack>
+            </Box>
           </VStack>
           <VStack w={"30%"}>
             <Stack w={full} p={3} spacing={5} border={bordes}>
@@ -115,23 +171,44 @@ const checkout = () => {
                 >
                   Resumen
                 </Heading>
-                <HStack w={full} justifyContent={"space-between"}>
-                  <Heading size={"sm"}>Producto 1:</Heading>
-                  <Text size={"sm"}>Camisa</Text>
-                </HStack>
+                {activeSelectCheck.map((item, key) => (
+                  <HStack
+                    key={item.id}
+                    w={full}
+                    justifyContent={"space-between"}
+                  >
+                    <Heading size={"sm"}>
+                      <Box as={CartList} w={5} h={5} />{" "}
+                      {key ? (key += 1) : (key = 1)}:
+                    </Heading>
+                    <Text size={"sm"}>{item.na}</Text>
+                  </HStack>
+                ))}
                 <HStack w={full} justifyContent={"space-between"}>
                   <Heading size={"sm"}>Cantidad Total:</Heading>
-                  <Text size={"sm"}>5</Text>
+                  <Text size={"sm"}>{cat.current}</Text>
                 </HStack>
               </VStack>
 
               <HStack justifyContent={"space-between"}>
-                <Heading size={"md"}>Total:</Heading>
-                <Text size={"md"}>50$</Text>
+                <Heading size={"md"}>Total a Transferir:</Heading>
+                <Text size={"md"}>{resumen.current}$</Text>
               </HStack>
               <Button variant={"primary"} w={full}>
                 Calificar
               </Button>
+
+              <Text>
+                Si sientes que as cometido una equivocación puede revertir
+                haciendo{" "}
+                <Button
+                  onClick={handleRevert}
+                  textTransform={"uppercase"}
+                  variant={"secondary"}
+                >
+                  clik aqui
+                </Button>{" "}
+              </Text>
             </Stack>
           </VStack>
         </Stack>

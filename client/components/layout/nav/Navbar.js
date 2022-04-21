@@ -9,6 +9,7 @@ import Image from "next/image";
 import {
   AspectRatio,
   Avatar,
+  Badge,
   Box,
   Button,
   chakra,
@@ -43,7 +44,7 @@ import {
 
 import { HamburgerIcon, MoonIcon, SearchIcon, SunIcon } from "@chakra-ui/icons";
 
-import { CartIcon } from "../../../helpers/IconNew";
+import { CartIcon, OrdenpagoIcon } from "../../../helpers/IconNew";
 import ModeColor from "../../../helpers/ModeColor";
 import Breakpoints from "../../../helpers/Breakpoints";
 import NavLink from "../../../helpers/Navlink";
@@ -71,6 +72,11 @@ const Navbar = () => {
   const { activeSelect } = useSelector(({ auth }) => auth);
   // selector
   const { list } = useSelector(({ category }) => category);
+  // selector
+  const { activeCartSelect, activeSelectCheck } = useSelector(
+    ({ product }) => product
+  );
+
   // Modality
   const { modality, setModality } = useModality();
   // toogle color
@@ -229,9 +235,26 @@ const Navbar = () => {
             <GridItem as={"li"} colSpan={1} justifySelf="center">
               <Popover isLazy>
                 <PopoverTrigger>
-                  <Button size="xs" px={0} variant={"secondary"}>
-                    <CartIcon boxSize={points11} />
-                  </Button>
+                  <Box position={"relative"}>
+                    <Button size="xs" px={0} variant={"secondary"}>
+                      <CartIcon boxSize={points11} />
+                    </Button>
+                    <Flex
+                      cursor={"pointer"}
+                      right={-1}
+                      top={-2}
+                      border={bordes}
+                      alignItems={"center"}
+                      justifyContent="center"
+                      backgroundColor={"brand.800"}
+                      borderRadius={"full"}
+                      position={"absolute"}
+                      w={5}
+                      h={5}
+                    >
+                      {!activeCartSelect[0] ? 0 : activeCartSelect.length}
+                    </Flex>
+                  </Box>
                 </PopoverTrigger>
                 <PopoverContent>
                   <PopoverHeader fontWeight="semibold">
@@ -249,13 +272,31 @@ const Navbar = () => {
             <GridItem as={"li"} colSpan={5} display={displayOff2}>
               <Flex mx={4} justifyContent="space-around" alignItems={"center"}>
                 {isloggedIn ? (
-                  <NavLink
-                    px={0}
-                    size="md"
-                    variant={"secondary"}
-                    href={"/"}
-                    name={"Voy Comprar"}
-                  />
+                  <>
+                    <Box position={"relative"}>
+                      <NavLink
+                        px={0}
+                        variant={"secondary"}
+                        href={"/search/checkout"}
+                        name={<OrdenpagoIcon boxSize={points11} />}
+                      />
+                      <Flex
+                        cursor={"pointer"}
+                        right={0}
+                        top={0}
+                        border={bordes}
+                        alignItems={"center"}
+                        justifyContent="center"
+                        backgroundColor={"brand.800"}
+                        borderRadius={"full"}
+                        position={"absolute"}
+                        w={5}
+                        h={5}
+                      >
+                        {!activeSelectCheck[0] ? 0 : activeSelectCheck.length}
+                      </Flex>
+                    </Box>
+                  </>
                 ) : (
                   <NavLink
                     px={0}
@@ -310,7 +351,7 @@ const Navbar = () => {
                     <PopoverHeader fontWeight="semibold" borderBottomWidth={0}>
                       <HStack spacing={6}>
                         <Heading size={"md"}>
-                          {activeSelect.displayName}
+                          {activeSelect?.displayName}
                         </Heading>
                         <Button
                           onClick={toggleColorMode}
@@ -325,7 +366,7 @@ const Navbar = () => {
                           )}
                         </Button>
                       </HStack>
-                      <Text fontSize="sm">{activeSelect.email}</Text>
+                      <Text fontSize="sm">{activeSelect?.email}</Text>
                     </PopoverHeader>
                     <PopoverArrow />
                     <PopoverCloseButton />

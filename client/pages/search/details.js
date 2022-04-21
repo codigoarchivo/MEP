@@ -70,10 +70,8 @@ const Details = () => {
   const input = getInputProps({ isReadOnly: true });
   // select
   const handleSelect = () => {
-    const total = pr * input.value;
-    const cantidad = input.value;
-
-    dispatch(activeProductCart({ id, na, pr, im, cantidad, total }));
+    const cn = Number(input.value);
+    dispatch(activeProductCart({ id, na, pr, im, cn }));
 
     router.push("/search/cart");
   };

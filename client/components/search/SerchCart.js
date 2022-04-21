@@ -6,6 +6,8 @@ import { DeleteIcon } from "@chakra-ui/icons";
 
 import Image from "next/image";
 
+import Swal from "sweetalert2";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -18,13 +20,18 @@ import {
   TableContainer,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tr,
   VStack,
 } from "@chakra-ui/react";
 
-import { deleteProductCart } from "../../actions/product";
+import {
+  activeProduct,
+  closeActive,
+  deleteProductCart,
+} from "../../actions/product";
 
 import SerchCartSave from "./SerchCartSave";
 
@@ -40,23 +47,53 @@ const SerchCart = () => {
   const dispatch = useDispatch();
   // useRef
   const inc = useRef(0);
+  // useRef
+  const resumen = useRef([]);
   // selector
   const { activeCartSelect, saveCartSelect } = useSelector(
     ({ product }) => product
   );
   // incrementa y encapsula información para evitar que se actualice
-  inc.current = activeCartSelect.reduce((total, item) => total + item.total, 0);
+  inc.current = activeCartSelect.reduce(
+    (total, item) => (total += Number(item.cn) * Number(item.pr)),
+    0
+  );
   // delete cart
   const handleDeleteCart = (id) => {
     dispatch(deleteProductCart(id));
     // dcr
-    activeCartSelect.map((item) => (inc.current -= item.total));
+    activeCartSelect.map((item) => (inc.current -= Number(item.pr)));
     Toast("Eliminado con exito", "error", 5000);
   };
 
   const handleCheckout = () => {
-    router.push("/search/checkout");
+    Swal.fire({
+      title: "Estas seguro?",
+      text: "No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ffc301",
+      cancelButtonColor: "#00020f",
+      confirmButtonText: "Aceptar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        activeCartSelect.map((item) =>
+          resumen.current.push({
+            id: item.id,
+            cn: item.cn,
+            pr: item.pr,
+            na: item.na,
+          })
+        );
+
+        Swal.fire("Procesado!", "Si, Gracias por su Compra.", "success");
+        dispatch(activeProduct(resumen.current));
+        router.push("/search/checkout");
+        dispatch(closeActive());
+      }
+    });
   };
+
   return (
     <>
       <Stack flexDirection={"row"} w={full}>
@@ -69,7 +106,7 @@ const SerchCart = () => {
                 <Th>Producto</Th>
                 <Th>Precio</Th>
                 <Th>Cantidad</Th>
-                <Th>Total</Th>
+                <Th>Sub Total</Th>
                 <Th isNumeric>Action</Th>
               </Tr>
             </Thead>
@@ -88,8 +125,8 @@ const SerchCart = () => {
                   </Td>
                   <Td>{item.na}</Td>
                   <Td>${item.pr}</Td>
-                  <Td>{item.cantidad}</Td>
-                  <Td>${item.total}</Td>
+                  <Td>{item.cn}</Td>
+                  <Td>${item.cn * item.pr}</Td>
                   <Td isNumeric>
                     <DeleteIcon
                       onClick={() => handleDeleteCart(item.id)}
@@ -108,9 +145,20 @@ const SerchCart = () => {
               Total:
             </Heading>
             <Heading w={full}>{inc.current}$</Heading>
+
             <Button variant={"primary"} w={full} onClick={handleCheckout}>
               Pagar
             </Button>
+            <Text>
+              Si quiere seguir comprando puede hacer{" "}
+              <Button
+                onClick={() => router.push("/search")}
+                textTransform={"uppercase"}
+                variant={"secondary"}
+              >
+                clik aqui
+              </Button>{" "}
+            </Text>
           </Stack>
         </VStack>
       </Stack>

@@ -4,10 +4,10 @@ const initialStates = {
   list: [],
   listSerch: [],
   saveCartSelect: [],
-  activeCartSelect: [],
   latestCartSelect: [],
+  activeCartSelect: [],
+  activeSelectCheck: [],
   productSerchCategory: null,
-  activeSelect: null,
 };
 export const productReducer = (state = initialStates, action) => {
   switch (action.type) {
@@ -29,7 +29,7 @@ export const productReducer = (state = initialStates, action) => {
     case types.productActive:
       return {
         ...state,
-        activeSelect: action.payload,
+        activeSelectCheck: action.payload,
       };
     case types.productSaveCart:
       return {
@@ -57,13 +57,11 @@ export const productReducer = (state = initialStates, action) => {
         list: state.list.map((e) =>
           e.id === action.payload.id ? (e = action.payload) : e
         ),
-        activeSelect: null,
       };
     case types.productDelete:
       return {
         ...state,
         list: state.list.filter((e) => e.id !== action.payload),
-        activeSelect: null,
       };
     case types.productDeleteCart:
       return {
@@ -71,7 +69,6 @@ export const productReducer = (state = initialStates, action) => {
         activeCartSelect: state.activeCartSelect.filter(
           (e) => e.id !== action.payload
         ),
-        activeSelect: null,
       };
     case types.productDeleteSave:
       return {
@@ -79,7 +76,6 @@ export const productReducer = (state = initialStates, action) => {
         saveCartSelect: state.saveCartSelect.filter(
           (e) => e.id !== action.payload
         ),
-        activeSelect: null,
       };
     case types.productCategoryClose:
       return {
@@ -94,8 +90,18 @@ export const productReducer = (state = initialStates, action) => {
     case types.closeActive:
       return {
         ...state,
-        // activeSelect: action.payload,
         activeCartSelect: [],
+      };
+    case types.closeActive:
+      return {
+        ...state,
+        activeCartSelect: [],
+      };
+    case types.productRevert:
+      return {
+        ...state,
+        activeCartSelect: [],
+        activeSelectCheck: [],
       };
     default:
       return state;

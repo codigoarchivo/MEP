@@ -18,6 +18,7 @@ export const types = {
   productEdit: "[PRODUCT] Edit",
   productDelete: "[PRODUCT] Delete",
   productActive: "[PRODUCT] Active",
+  productRevert: "[PRODUCT] Inactive",
   productActiveCart: "[PRODUCT] Active Cart",
   productSaveCart: "[PRODUCT] Save Cart",
   productDeleteCart: "[PRODUCT] Delete Cart",

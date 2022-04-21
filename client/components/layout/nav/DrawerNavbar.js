@@ -145,7 +145,7 @@ export const DrawerNavbar = ({
                         name={"About"}
                       />
                     </chakra.li>
-                    {activeSelect.rol === "owner" && (
+                    {activeSelect?.rol === "owner" && (
                       <chakra.li mx={"3"}>
                         <NavLink
                           leftIcon={<Product />}
@@ -156,7 +156,7 @@ export const DrawerNavbar = ({
                         />
                       </chakra.li>
                     )}
-                    {activeSelect.rol === "owner" && (
+                    {activeSelect?.rol === "owner" && (
                       <chakra.li mx={"3"}>
                         <NavLink
                           leftIcon={<Category />}
