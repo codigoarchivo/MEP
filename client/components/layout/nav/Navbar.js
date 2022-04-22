@@ -42,7 +42,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { HamburgerIcon, MoonIcon, SearchIcon, SunIcon } from "@chakra-ui/icons";
+import {
+  HamburgerIcon,
+  MoonIcon,
+  SearchIcon,
+  SunIcon,
+} from "@chakra-ui/icons";
 
 import { CartIcon, OrdenpagoIcon } from "../../../helpers/IconNew";
 import ModeColor from "../../../helpers/ModeColor";
@@ -62,6 +67,7 @@ import NavbarCart from "./NavbarCart";
 import { logout } from "../../../actions/auth";
 
 import useFormChange from "../../../hooks/useFormChange";
+import Toast from "../../../helpers/Toast";
 
 const Navbar = () => {
   // dispatch
@@ -119,6 +125,9 @@ const Navbar = () => {
     reset();
   };
 
+  const handleSerchProductCart = (data) => {
+    Toast(data, "info", 5000);
+  };
   return (
     <>
       {/* DrawerNavbar */}
@@ -236,9 +245,25 @@ const Navbar = () => {
               <Popover isLazy>
                 <PopoverTrigger>
                   <Box position={"relative"}>
-                    <Button size="xs" px={0} variant={"secondary"}>
-                      <CartIcon boxSize={points11} />
-                    </Button>
+                    {activeSelectCheck.length > 0 ? (
+                      <Button
+                        size="xs"
+                        px={0}
+                        variant={"secondary"}
+                        onClick={() =>
+                          handleSerchProductCart(
+                            "No puede Ingresar hasta que concretes o elimine la oferta en la lista"
+                          )
+                        }
+                      >
+                        <CartIcon boxSize={points11} />
+                      </Button>
+                    ) : (
+                      <Button size="xs" px={0} variant={"secondary"}>
+                        <CartIcon boxSize={points11} />
+                      </Button>
+                    )}
+
                     <Flex
                       cursor={"pointer"}
                       right={-1}
@@ -256,46 +281,83 @@ const Navbar = () => {
                     </Flex>
                   </Box>
                 </PopoverTrigger>
-                <PopoverContent>
-                  <PopoverHeader fontWeight="semibold">
-                    Carrito Compras
-                  </PopoverHeader>
-                  <PopoverArrow />
-                  <PopoverCloseButton />
-                  <PopoverBody>
-                    {/* cart */}
-                    <NavbarCart />
-                  </PopoverBody>
-                </PopoverContent>
+                {activeSelectCheck.length > 0 ? (
+                  ""
+                ) : (
+                  <PopoverContent>
+                    <PopoverHeader fontWeight="semibold">
+                      Carrito Compras
+                    </PopoverHeader>
+                    <PopoverArrow />
+                    <PopoverCloseButton />
+                    <PopoverBody>
+                      {/* cart */}
+                      <NavbarCart />
+                    </PopoverBody>
+                  </PopoverContent>
+                )}
               </Popover>
             </GridItem>
             <GridItem as={"li"} colSpan={5} display={displayOff2}>
               <Flex mx={4} justifyContent="space-around" alignItems={"center"}>
                 {isloggedIn ? (
                   <>
-                    <Box position={"relative"}>
-                      <NavLink
-                        px={0}
-                        variant={"secondary"}
-                        href={"/search/checkout"}
-                        name={<OrdenpagoIcon boxSize={points11} />}
-                      />
-                      <Flex
-                        cursor={"pointer"}
-                        right={0}
-                        top={0}
-                        border={bordes}
-                        alignItems={"center"}
-                        justifyContent="center"
-                        backgroundColor={"brand.800"}
-                        borderRadius={"full"}
-                        position={"absolute"}
-                        w={5}
-                        h={5}
+                    {!activeSelectCheck.length > 0 ? (
+                      <Box
+                        position={"relative"}
+                        onClick={() =>
+                          handleSerchProductCart(
+                            "Direjete a la lista de compras"
+                          )
+                        }
                       >
-                        {!activeSelectCheck[0] ? 0 : activeSelectCheck.length}
-                      </Flex>
-                    </Box>
+                        <NavLink
+                          px={0}
+                          variant={"secondary"}
+                          href={`${router.pathname}`}
+                          name={<OrdenpagoIcon boxSize={points11} />}
+                        />
+                        <Flex
+                          cursor={"pointer"}
+                          right={0}
+                          top={0}
+                          border={bordes}
+                          alignItems={"center"}
+                          justifyContent="center"
+                          backgroundColor={"brand.800"}
+                          borderRadius={"full"}
+                          position={"absolute"}
+                          w={5}
+                          h={5}
+                        >
+                          {!activeSelectCheck[0] ? 0 : activeSelectCheck.length}
+                        </Flex>
+                      </Box>
+                    ) : (
+                      <Box position={"relative"}>
+                        <NavLink
+                          px={0}
+                          variant={"secondary"}
+                          href={"/search/checkout"}
+                          name={<OrdenpagoIcon boxSize={points11} />}
+                        />
+                        <Flex
+                          cursor={"pointer"}
+                          right={0}
+                          top={0}
+                          border={bordes}
+                          alignItems={"center"}
+                          justifyContent="center"
+                          backgroundColor={"brand.800"}
+                          borderRadius={"full"}
+                          position={"absolute"}
+                          w={5}
+                          h={5}
+                        >
+                          {!activeSelectCheck[0] ? 0 : activeSelectCheck.length}
+                        </Flex>
+                      </Box>
+                    )}
                   </>
                 ) : (
                   <NavLink

@@ -19,15 +19,16 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Layout from "../../components/layout/layout";
+import Layout from "../../../components/layout/layout";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import Breakpoints from "../../../helpers/Breakpoints";
 
 import { CheckCircleIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 
-import { CartList, WhatsAppIcon } from "../../helpers/IconNew";
+import { CartList, WhatsAppIcon } from "../../../helpers/IconNew";
 
-import { closeRevert } from "../../actions/product";
+import { closeRevert } from "../../../actions/product";
+import NavLink from "../../../helpers/Navlink";
 
 const checkout = () => {
   // dispatch
@@ -57,7 +58,9 @@ const checkout = () => {
     dispatch(closeRevert());
   };
 
-  return (
+  return !activeSelectCheck.length > 0 ? (
+    <></>
+  ) : (
     <Layout>
       <Container maxW={"container.xl"}>
         <Stack flexDirection={"row"} my={20} w={full}>
@@ -194,10 +197,12 @@ const checkout = () => {
                 <Heading size={"md"}>Total a Transferir:</Heading>
                 <Text size={"md"}>{resumen.current}$</Text>
               </HStack>
-              <Button variant={"primary"} w={full}>
-                Calificar
-              </Button>
-
+              <NavLink
+                name={"Calificar"}
+                href={"/search/checkout/rate"}
+                variant={"primary"}
+                w={full}
+              />
               <Text>
                 Si sientes que as cometido una equivocación puede revertir
                 haciendo{" "}

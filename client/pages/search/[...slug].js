@@ -4,7 +4,7 @@ export const getStaticPaths = () => {
       { params: { slug: ["cart"] } },
       { params: { slug: ["details"] } },
       { params: { slug: ["checkout"] } },
-      { params: { slug: ["cart", "checkout"] } },
+      { params: { slug: ["checkout","rate"] } },
     ],
     fallback: false,
   };

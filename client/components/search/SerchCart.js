@@ -85,7 +85,6 @@ const SerchCart = () => {
             na: item.na,
           })
         );
-
         Swal.fire("Procesado!", "Si, Gracias por su Compra.", "success");
         dispatch(activeProduct(resumen.current));
         router.push("/search/checkout");
