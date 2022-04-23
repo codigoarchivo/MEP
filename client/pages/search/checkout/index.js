@@ -28,11 +28,14 @@ import { CheckCircleIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import { CartList, WhatsAppIcon } from "../../../helpers/IconNew";
 
 import { closeRevert } from "../../../actions/product";
+
 import NavLink from "../../../helpers/Navlink";
 
 const checkout = () => {
   // dispatch
   const router = useRouter();
+  // dispatch
+  const product = useRef([]);
   // useDispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -57,6 +60,8 @@ const checkout = () => {
     router.push("/");
     dispatch(closeRevert());
   };
+  // product
+  activeSelectCheck.map((item) => product.current.push(item.id));
 
   return !activeSelectCheck.length > 0 ? (
     <></>
@@ -199,7 +204,10 @@ const checkout = () => {
               </HStack>
               <NavLink
                 name={"Calificar"}
-                href={"/search/checkout/rate"}
+                href={{
+                  pathname: "/search/checkout/rate",
+                  query: product.current,
+                }}
                 variant={"primary"}
                 w={full}
               />

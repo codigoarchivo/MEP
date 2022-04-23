@@ -40,4 +40,7 @@ export const types = {
   categoryClose: "[CATEGORY] Close",
 
   userRol: "[ROL] roles",
+
+  checkoutAdd: "[CHECKOUT] Add",
+  checkoutList: "[CHECKOUT] List",
 };

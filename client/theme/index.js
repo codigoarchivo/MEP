@@ -98,6 +98,7 @@ const globalStyles = {
   styles: {
     global: {
       html: {},
+      svg: { display: "inline"},
       body: {},
       ".css-1xjer9p": {
         justifyContent: "center",
