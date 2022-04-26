@@ -51,6 +51,7 @@ const Breakpoints = () => {
   const content3 = { base: "column", sm: "row" };
   const content4 = { base: "row", sm: "column" };
   const content5 = { base: "column", md: "row" };
+  const content6 = { base: "row", md: "column" };
 
   const porcent1 = { base: "full", sm: "75%", md: "50%", lg: "40%" };
   const porcent2 = { base: "40%", md: "15%", lg: "35%" };

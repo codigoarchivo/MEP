@@ -10,7 +10,7 @@ import Breakpoints from "../../../helpers/Breakpoints";
 
 import { serchProductList } from "../../../actions/product";
 
-export const BreadcrumbNavbar = ({ NavLink, Box, activeSelect, useR }) => {
+export const BreadcrumbNavbar = ({ NavLink, Box, activeSelect }) => {
   // selector
   const { list } = useSelector(({ product }) => product);
   // dispatch

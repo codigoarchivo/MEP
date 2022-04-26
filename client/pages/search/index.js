@@ -394,20 +394,24 @@ const serchList = ({ data }) => {
 };
 
 export async function getStaticProps() {
-  const q = query(collection(db, "serchs"), orderBy("na", "asc"));
+  try {
+    const q = query(collection(db, "serchs"), orderBy("na", "asc"));
 
-  const el = await getDocs(q);
+    const el = await getDocs(q);
 
-  const data = el.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+    const data = el.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
-  return {
-    props: {
-      data,
-    },
-  };
+    return {
+      props: {
+        data,
+      },
+    };
+  } catch (error) {
+    Toast("Al parecer hay un error", "error", 5000);
+  }
 }
 
 export default serchList;

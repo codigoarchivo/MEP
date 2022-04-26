@@ -76,13 +76,16 @@ const rate = () => {
     "#f1d045",
   ];
   // reseña
-  Object.values(router.query).map((item) => {
-    product.current.push({ id: item, rat: ratingValue, com: value });
-  });
-
-  const handleSubmit = () => {
-    // TODO : add product to checkout
+  product.current = Object.values(router.query).map((item) => ({
+    id: item,
+    rat: ratingValue,
+    com: value,
+  }));
+  // add review
+  const handleSubmit = (e) => {
+    e.preventDefault();
     dispatch(checkoutadd(product.current));
+    router.push("/search");
   };
 
   return (

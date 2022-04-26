@@ -4,12 +4,15 @@ import { useRouter } from "next/router";
 
 import { StarIcon } from "@chakra-ui/icons";
 
+import { collection, getDocs, query } from "firebase/firestore";
+
 import Image from "next/image";
 
 import { useDispatch, useSelector } from "react-redux";
 
 import {
   AspectRatio,
+  Avatar,
   Badge,
   Box,
   Button,
@@ -34,9 +37,11 @@ import Toast from "../../helpers/Toast";
 
 import Layout from "../../components/layout/layout";
 
-import { activeProductCart, deleteProductSave } from "../../actions/product";
+import { activeProductCart } from "../../actions/product";
 
-const Details = () => {
+import { db } from "../../firebase/config";
+
+const Details = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -44,7 +49,7 @@ const Details = () => {
   // selector
   const { list } = useSelector(({ category }) => category);
   // Breakpoints
-  const { content5, full } = Breakpoints();
+  const { content5, full, content6 } = Breakpoints();
 
   const activeSelect = router.query;
   // values
@@ -80,7 +85,7 @@ const Details = () => {
     reviewCount: 34,
     rating: 4,
   };
-
+  console.log(data);
   return (
     <Layout>
       <Container maxW="container.lg">
@@ -152,8 +157,7 @@ const Details = () => {
           <Tabs>
             <TabList>
               <Tab>Detalles</Tab>
-              <Tab>Especificación</Tab>
-              <Tab>Reviews(0)</Tab>
+              <Tab>Valoraciones</Tab>
             </TabList>
 
             <TabPanels>
@@ -161,10 +165,18 @@ const Details = () => {
                 <Text>{dt}</Text>
               </TabPanel>
               <TabPanel>
-                <p>two!</p>
-              </TabPanel>
-              <TabPanel>
-                <p>three!</p>
+                <Stack flexDirection={content6} spacing={0}>
+                  <VStack>
+                    <Avatar
+                      size="md"
+                      name="Dan Abrahmov"
+                      src="https://bit.ly/dan-abramov"
+                    />
+                  </VStack>
+                  <HStack>
+                    <Heading size={"sm"}>Dan Abrahmov</Heading>
+                  </HStack>
+                </Stack>
               </TabPanel>
             </TabPanels>
           </Tabs>
@@ -173,4 +185,24 @@ const Details = () => {
     </Layout>
   );
 };
+
+export async function getServerSideProps(context) {
+  try {
+    const id = context.query.id.toString();
+
+    const q = query(collection(db, "serchs", id, "messages"));
+
+    const el = await getDocs(q);
+
+    const data = el.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return { props: { data } };
+  } catch (error) {
+    Toast("Al parecer hay un error", "error", 5000);
+  }
+}
+
 export default Details;

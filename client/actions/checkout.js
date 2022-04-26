@@ -1,4 +1,4 @@
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 import { db } from "../firebase/config";
 import Toast from "../helpers/Toast";
@@ -19,17 +19,23 @@ export const checkoutadd = (data) => {
   return async (dispatch) => {
     try {
       if (data) {
-        await data.map((item) => {
-          setDoc(doc(db, item.id, "comment"), { rat: item.rat, com: item.com });
-        });
-        // TODO add product to checkout
-        // await dispatch(addcheckout(data));
+        data.map((item) =>
+          setDoc(doc(collection(db, "serchs", item.id, "messages")), {
+            rat: item.rat,
+            com: item.com,
+          })
+        );
+        await dispatch(closeRevert());
       }
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
+export const closeRevert = () => ({
+  type: types.productRevert,
+});
+
 const addcheckout = (data) => ({
   type: types.checkoutAdd,
   payload: data,
