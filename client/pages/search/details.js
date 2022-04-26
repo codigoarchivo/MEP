@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useRef } from "react";
 
 import { useRouter } from "next/router";
 
-import { StarIcon } from "@chakra-ui/icons";
+import { DragHandleIcon, StarIcon } from "@chakra-ui/icons";
+
+import { formatDistanceToNow } from "date-fns";
+
+import localEs from "date-fns/locale/es";
 
 import { collection, getDocs, query } from "firebase/firestore";
+
+import { Rating } from "react-simple-star-rating";
 
 import Image from "next/image";
 
@@ -17,6 +23,7 @@ import {
   Box,
   Button,
   Container,
+  Divider,
   Heading,
   HStack,
   Input,
@@ -27,6 +34,7 @@ import {
   TabPanels,
   Tabs,
   Text,
+  Tooltip,
   useNumberInput,
   VStack,
 } from "@chakra-ui/react";
@@ -40,6 +48,7 @@ import Layout from "../../components/layout/layout";
 import { activeProductCart } from "../../actions/product";
 
 import { db } from "../../firebase/config";
+import Calculate from "../../helpers/Calculate";
 
 const Details = ({ data }) => {
   // dispatch
@@ -47,13 +56,17 @@ const Details = ({ data }) => {
   // router
   const router = useRouter();
   // selector
+  const { activeSelect } = useSelector(({ auth }) => auth);
+  // selector
   const { list } = useSelector(({ category }) => category);
   // Breakpoints
-  const { content5, full, content6 } = Breakpoints();
-
-  const activeSelect = router.query;
+  const { content5, full, content6, bordes } = Breakpoints();
+  // activeSelectQ
+  const activeSelectQ = router.query;
+  // useRef
+  const lis = useRef({ rat: 0, rev: [] });
   // values
-  const { id, na, pr, im, ds, ct, cn, es, dt } = activeSelect;
+  const { id, na, pr, im, ds, ct, cn, es, dt } = activeSelectQ;
   // list Category
   const listCt = list.filter((item) => item.id === ct);
   // Incremen and Decrement
@@ -85,7 +98,27 @@ const Details = ({ data }) => {
     reviewCount: 34,
     rating: 4,
   };
-  console.log(data);
+  lis.current.rat = data.map((item) => ({
+    rat: item.rat,
+    nam: item.rat.toString(),
+  }));
+  lis.current.rev = data.length;
+  // Calculate
+  const { listRat } = Calculate(lis.current.rat);
+
+  console.log(listRat);
+
+  const handleRating = () => {
+    // dispatch(checkoutadd());
+    router.push({
+      pathname: "/search/checkout/rate",
+      query: {
+        id,
+        rat: 60,
+        com: "hola",
+      },
+    });
+  };
   return (
     <Layout>
       <Container maxW="container.lg">
@@ -106,16 +139,15 @@ const Details = ({ data }) => {
           <VStack p={5} spacing={4}>
             <Heading>{na}</Heading>
             <Box w={"full"} display="flex" mt={2} alignItems="center">
-              {Array(5)
-                .fill("")
-                .map((_, i) => (
-                  <StarIcon
-                    key={i}
-                    color={i < property.rating ? "brand.800" : "gray.300"}
-                  />
-                ))}
+              <Box>
+                <Rating
+                  size={25}
+                  ratingValue={lis.current.rat ? lis.current.rat : 0}
+                  readonly={true}
+                />
+              </Box>
               <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                {property.reviewCount} reviews
+                {lis.current.rev ? lis.current.rev : 0} reviews
               </Box>
             </Box>
             <Box w={full}>
@@ -154,10 +186,10 @@ const Details = ({ data }) => {
           </VStack>
         </Stack>
         <HStack>
-          <Tabs>
+          <Tabs w={"full"}>
             <TabList>
               <Tab>Detalles</Tab>
-              <Tab>Valoraciones</Tab>
+              <Tab>({lis.current.rev ? lis.current.rev : 0}) reviews</Tab>
             </TabList>
 
             <TabPanels>
@@ -165,18 +197,74 @@ const Details = ({ data }) => {
                 <Text>{dt}</Text>
               </TabPanel>
               <TabPanel>
-                <Stack flexDirection={content6} spacing={0}>
-                  <VStack>
-                    <Avatar
-                      size="md"
-                      name="Dan Abrahmov"
-                      src="https://bit.ly/dan-abramov"
-                    />
-                  </VStack>
-                  <HStack>
-                    <Heading size={"sm"}>Dan Abrahmov</Heading>
-                  </HStack>
-                </Stack>
+                {data.map((item) => (
+                  <>
+                    <Stack
+                      key={item.id}
+                      flexDirection={content6}
+                      spacing={0}
+                      p={5}
+                    >
+                      <VStack mx={4} h={"full"}>
+                        {!item.pho ? (
+                          <Avatar size="md" name={item.nam} />
+                        ) : (
+                          <AspectRatio
+                            ratio={16 / 9}
+                            w={50}
+                            h={50}
+                            position={"relative"}
+                          >
+                            <Image
+                              src={item.pho}
+                              alt="Perfil"
+                              layout="fill"
+                              objectFit="contain"
+                            />
+                          </AspectRatio>
+                        )}
+                      </VStack>
+                      <VStack mx={4} w={"full"}>
+                        <HStack w={"full"} justifyContent={"space-between"}>
+                          <Heading size={"md"}>{item.nam}</Heading>
+                          {item.uid === activeSelect?.uid ? (
+                            <Tooltip
+                              hasArrow
+                              label="Editar Reseñas"
+                              bg="brand.700"
+                              color={"Background.900"}
+                            >
+                              <Button
+                                variant={"secondary"}
+                                onClick={handleRating}
+                              >
+                                <DragHandleIcon />
+                              </Button>
+                            </Tooltip>
+                          ) : (
+                            ""
+                          )}
+                        </HStack>
+
+                        <HStack w={"full"}>
+                          <Box>
+                            <Rating
+                              size={25}
+                              ratingValue={item.rat}
+                              readonly={true}
+                            />
+                          </Box>
+                          <Box as="span" color="gray.600" fontSize="sm">
+                            hace{" "}
+                            {formatDistanceToNow(item.cre, { locale: localEs })}
+                          </Box>
+                        </HStack>
+                        <Text w={"full"}>{item.com}</Text>
+                      </VStack>
+                    </Stack>
+                    <Divider w={"full"} mt={5} borderBottom={bordes} />
+                  </>
+                ))}
               </TabPanel>
             </TabPanels>
           </Tabs>

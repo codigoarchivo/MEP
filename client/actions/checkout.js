@@ -21,8 +21,14 @@ export const checkoutadd = (data) => {
       if (data) {
         data.map((item) =>
           setDoc(doc(collection(db, "serchs", item.id, "messages")), {
+            uid: item.uid,
             rat: item.rat,
             com: item.com,
+            rat: item.rat,
+            com: item.com,
+            nam: item.nam,
+            pho: item.pho,
+            cre: item.cre,
           })
         );
         await dispatch(closeRevert());

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { useRouter } from "next/router";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Box,
@@ -26,6 +26,8 @@ import Breakpoints from "../../../helpers/Breakpoints";
 import { checkoutadd } from "../../../actions/checkout";
 
 const rate = () => {
+  // selector
+  const { activeSelect } = useSelector(({ auth }) => auth);
   // dispatch
   const dispatch = useDispatch();
   // useRouter
@@ -33,7 +35,7 @@ const rate = () => {
   // useState
   const [ratingValue, setRatingValue] = useState(0);
   // useState
-  const [value, setValue] = useState("");
+  const [comentario, setComentario] = useState("");
   // useState
   const product = useRef([]);
   // mode Color
@@ -43,7 +45,7 @@ const rate = () => {
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
-    setValue(inputValue);
+    setComentario(inputValue);
   };
 
   const handleRating = (rate) => {
@@ -75,11 +77,17 @@ const rate = () => {
     "#f1d045",
     "#f1d045",
   ];
+
+  const { uid, displayName, photoURL } = activeSelect;
   // reseña
   product.current = Object.values(router.query).map((item) => ({
+    uid,
     id: item,
     rat: ratingValue,
-    com: value,
+    com: comentario,
+    nam: displayName,
+    pho: photoURL,
+    cre: Date.now(),
   }));
   // add review
   const handleSubmit = (e) => {
@@ -124,7 +132,7 @@ const rate = () => {
                 Puedes dejar un comentario
               </Heading>
               <Textarea
-                value={value}
+                value={comentario}
                 onChange={handleInputChange}
                 placeholder="Escribe tu comentario"
                 size="sm"
