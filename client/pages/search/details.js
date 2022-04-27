@@ -27,6 +27,7 @@ import {
   Heading,
   HStack,
   Input,
+  Progress,
   Stack,
   Tab,
   TabList,
@@ -48,6 +49,7 @@ import Layout from "../../components/layout/layout";
 import { activeProductCart } from "../../actions/product";
 
 import { db } from "../../firebase/config";
+
 import Calculate from "../../helpers/Calculate";
 
 const Details = ({ data }) => {
@@ -64,7 +66,7 @@ const Details = ({ data }) => {
   // activeSelectQ
   const activeSelectQ = router.query;
   // useRef
-  const lis = useRef({ rat: 0, rev: [] });
+  const lis = useRef({ rat: 0 });
   // values
   const { id, na, pr, im, ds, ct, cn, es, dt } = activeSelectQ;
   // list Category
@@ -98,15 +100,14 @@ const Details = ({ data }) => {
     reviewCount: 34,
     rating: 4,
   };
+
   lis.current.rat = data.map((item) => ({
     rat: item.rat,
     nam: item.rat.toString(),
   }));
-  lis.current.rev = data.length;
-  // Calculate
-  const { listRat } = Calculate(lis.current.rat);
 
-  console.log(listRat);
+  // Calculate
+  const { listRat, listRang, listRang2 } = Calculate(lis.current.rat);
 
   const handleRating = () => {
     // dispatch(checkoutadd());
@@ -138,18 +139,18 @@ const Details = ({ data }) => {
 
           <VStack p={5} spacing={4}>
             <Heading>{na}</Heading>
-            <Box w={"full"} display="flex" mt={2} alignItems="center">
-              <Box>
+            <HStack w={full}>
+              <Text color="gray.600" fontSize={"xl"} fontWeight={"bold"}>
+                {isNaN(listRang) ? "( 0 )" : listRang}
+              </Text>{" "}
+              <Box p={0.5}>
                 <Rating
                   size={25}
-                  ratingValue={lis.current.rat ? lis.current.rat : 0}
+                  ratingValue={isNaN(listRang) ? 0 : listRang2}
                   readonly={true}
                 />
               </Box>
-              <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                {lis.current.rev ? lis.current.rev : 0} reviews
-              </Box>
-            </Box>
+            </HStack>
             <Box w={full}>
               <Badge colorScheme="green">En stock ({cn})</Badge>
             </Box>
@@ -185,11 +186,12 @@ const Details = ({ data }) => {
             </HStack>
           </VStack>
         </Stack>
+
         <HStack>
           <Tabs w={"full"}>
             <TabList>
               <Tab>Detalles</Tab>
-              <Tab>({lis.current.rev ? lis.current.rev : 0}) reviews</Tab>
+              <Tab>({data.length ? data.length : 0}) reviews</Tab>
             </TabList>
 
             <TabPanels>
@@ -197,74 +199,121 @@ const Details = ({ data }) => {
                 <Text>{dt}</Text>
               </TabPanel>
               <TabPanel>
-                {data.map((item) => (
+                {listRat.length > 0 ? (
                   <>
-                    <Stack
-                      key={item.id}
-                      flexDirection={content6}
-                      spacing={0}
-                      p={5}
-                    >
-                      <VStack mx={4} h={"full"}>
-                        {!item.pho ? (
-                          <Avatar size="md" name={item.nam} />
-                        ) : (
-                          <AspectRatio
-                            ratio={16 / 9}
-                            w={50}
-                            h={50}
-                            position={"relative"}
-                          >
-                            <Image
-                              src={item.pho}
-                              alt="Perfil"
-                              layout="fill"
-                              objectFit="contain"
-                            />
-                          </AspectRatio>
-                        )}
-                      </VStack>
-                      <VStack mx={4} w={"full"}>
-                        <HStack w={"full"} justifyContent={"space-between"}>
-                          <Heading size={"md"}>{item.nam}</Heading>
-                          {item.uid === activeSelect?.uid ? (
-                            <Tooltip
-                              hasArrow
-                              label="Editar Reseñas"
-                              bg="brand.700"
-                              color={"Background.900"}
-                            >
-                              <Button
-                                variant={"secondary"}
-                                onClick={handleRating}
-                              >
-                                <DragHandleIcon />
-                              </Button>
-                            </Tooltip>
-                          ) : (
-                            ""
-                          )}
-                        </HStack>
-
-                        <HStack w={"full"}>
-                          <Box>
-                            <Rating
-                              size={25}
-                              ratingValue={item.rat}
-                              readonly={true}
-                            />
-                          </Box>
-                          <Box as="span" color="gray.600" fontSize="sm">
-                            hace{" "}
-                            {formatDistanceToNow(item.cre, { locale: localEs })}
-                          </Box>
-                        </HStack>
-                        <Text w={"full"}>{item.com}</Text>
-                      </VStack>
+                    <Stack w={"full"} mb={10} border={bordes}>
+                      <HStack p={5} w={full}>
+                        <Box p={5} textAlign={"center"}>
+                          <Heading>{listRang}</Heading>
+                          <Text>Valoración total</Text>
+                        </Box>
+                        <Stack w={full}>
+                          {listRat.map((item, key) => (
+                            <HStack p={0.5} key={key}>
+                              <Box p={0.5}>
+                                <Heading w={6} size={"sm"}>
+                                  {item.nam}
+                                </Heading>
+                              </Box>
+                              <Progress
+                                w={full}
+                                colorScheme="yellow"
+                                size="sm"
+                                value={item.rat}
+                              />
+                              <Box p={0.5}>{item.per}</Box>
+                              <Rating
+                                size={25}
+                                ratingValue={item.est ? item.est : 0}
+                                readonly={true}
+                              />
+                              <Box p={0.5}>
+                                <Heading size={"xs"}>{item.rat}%</Heading>
+                              </Box>
+                            </HStack>
+                          ))}
+                        </Stack>
+                      </HStack>
                     </Stack>
-                    <Divider w={"full"} mt={5} borderBottom={bordes} />
+                    <Box>
+                      {data.map((item) => (
+                        <>
+                          <Stack
+                            key={item.nam}
+                            flexDirection={content6}
+                            spacing={0}
+                            p={5}
+                          >
+                            <VStack mx={4} h={"full"}>
+                              {!item.pho ? (
+                                <Avatar size="md" name={item.nam} />
+                              ) : (
+                                <AspectRatio
+                                  ratio={16 / 9}
+                                  w={50}
+                                  h={50}
+                                  position={"relative"}
+                                >
+                                  <Image
+                                    src={item.pho}
+                                    alt="Perfil"
+                                    layout="fill"
+                                    objectFit="contain"
+                                  />
+                                </AspectRatio>
+                              )}
+                            </VStack>
+                            <VStack mx={4} w={"full"}>
+                              <HStack
+                                w={"full"}
+                                justifyContent={"space-between"}
+                              >
+                                <Heading size={"md"}>{item.nam}</Heading>
+                                {item.uid === activeSelect?.uid ? (
+                                  <Tooltip
+                                    hasArrow
+                                    label="Editar Reseñas"
+                                    bg="brand.700"
+                                    color={"Background.900"}
+                                  >
+                                    <Button
+                                      variant={"secondary"}
+                                      onClick={handleRating}
+                                    >
+                                      <DragHandleIcon />
+                                    </Button>
+                                  </Tooltip>
+                                ) : (
+                                  ""
+                                )}
+                              </HStack>
+
+                              <HStack w={"full"}>
+                                <Box>
+                                  <Rating
+                                    size={25}
+                                    ratingValue={item.rat}
+                                    readonly={true}
+                                  />
+                                </Box>
+                                <Box as="span" color="gray.600" fontSize="sm">
+                                  hace{" "}
+                                  {formatDistanceToNow(item.cre, {
+                                    locale: localEs,
+                                  })}
+                                </Box>
+                              </HStack>
+                              <Text w={"full"}>{item.com}</Text>
+                            </VStack>
+                          </Stack>
+                          <Divider w={"full"} mt={5} borderBottom={bordes} />
+                        </>
+                      ))}
+                    </Box>
                   </>
-                ))}
+                ) : (
+                  <Text>No hay reviews</Text>
+                )}
               </TabPanel>
             </TabPanels>
           </Tabs>
