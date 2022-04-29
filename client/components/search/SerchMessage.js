@@ -43,13 +43,22 @@ const SerchMessage = (item) => {
     router.push({
       pathname: "/search/checkout/rate",
       query: {
-        id,
-        rat: 60,
-        com: "hola",
+        id: router.query.id,
+        na: router.query.na,
+        pr: router.query.pr,
+        im: router.query.im,
+        ds: router.query.ds,
+        ct: router.query.ct,
+        cn: router.query.cn,
+        es: router.query.es,
+        dt: router.query.dt,
+        ratA: router.query.rat,
+        rat: item.rat,
+        com: item.com,
+        idm: item.id,
       },
     });
   };
-
 
   return (
     <>
@@ -59,7 +68,12 @@ const SerchMessage = (item) => {
             <Avatar size="md" name={item.nam} />
           ) : (
             <AspectRatio ratio={16 / 9} w={50} h={50} position={"relative"}>
-              <Image src={item.pho} alt="Perfil" layout="fill" objectFit="contain" />
+              <Image
+                src={item.pho}
+                alt="Perfil"
+                layout="fill"
+                objectFit="contain"
+              />
             </AspectRatio>
           )}
         </VStack>

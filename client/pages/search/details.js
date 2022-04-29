@@ -30,6 +30,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
+import Calculate from "../../helpers/Calculate";
 import Breakpoints from "../../helpers/Breakpoints";
 import { CartIcon } from "../../helpers/IconNew";
 import Toast from "../../helpers/Toast";
@@ -40,7 +41,6 @@ import { activeProductCart } from "../../actions/product";
 
 import { db } from "../../firebase/config";
 
-import Calculate from "../../helpers/Calculate";
 import SerchRat from "../../components/search/SerchRat";
 import SerchMessage from "../../components/search/SerchMessage";
 
@@ -53,10 +53,8 @@ const Details = ({ data }) => {
   const { list } = useSelector(({ category }) => category);
   // Breakpoints
   const { content5, full, bordes } = Breakpoints();
-  // activeSelectQ
-  const activeSelectQ = router.query;
   // values
-  const { id, na, pr, im, ds, ct, cn, es, dt } = activeSelectQ;
+  const { id, na, pr, im, ds, ct, cn, es, dt } = router.query;
   // list Category
   const listCt = list.filter((item) => item.id === ct);
   // Incremen and Decrement

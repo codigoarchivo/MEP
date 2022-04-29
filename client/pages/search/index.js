@@ -67,6 +67,7 @@ import {
 import Toast from "../../helpers/Toast";
 
 import Breakpoints from "../../helpers/Breakpoints";
+
 import NavLink from "../../helpers/Navlink";
 
 const serchList = ({ data }) => {
@@ -90,6 +91,11 @@ const serchList = ({ data }) => {
   const max = useRef(0);
   // useRef
   const min = useRef(0);
+
+  useEffect(() => {
+    dispatch(serchProductList(data));
+    dispatch(listDataProduct(data));
+  }, [dispatch]);
 
   max.current = data.reduce(
     (n, m) => Math.max(n, Number(m.pr)),
@@ -395,7 +401,7 @@ const serchList = ({ data }) => {
 
 export async function getStaticProps() {
   try {
-    const q = query(collection(db, "serchs"), orderBy("na", "asc"));
+    const q = query(collection(db, "serchs"), limit(25), orderBy("na", "asc"));
 
     const el = await getDocs(q);
 

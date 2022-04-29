@@ -23,9 +23,9 @@ import ModeColor from "../../../helpers/ModeColor";
 
 import Breakpoints from "../../../helpers/Breakpoints";
 
-import { checkoutadd } from "../../../actions/checkout";
+import { checkoutAddEdit } from "../../../actions/checkout";
 
-import { editProduct } from "../../../actions/product";
+import { valueInProduct } from "../../../actions/checkout";
 
 const rate = () => {
   // selector
@@ -35,9 +35,12 @@ const rate = () => {
   // useRouter
   const router = useRouter();
   // useState
-  const [ratingValue, setRatingValue] = useState(0);
+  const [ratingValue, setRatingValue] = useState(
+    typeof router.query.rat === "string" ? router.query.rat : 0
+  );
   // useState
-  const [comentario, setComentario] = useState("");
+
+  const [comentario, setComentario] = useState(router.query.com || "");
   // mode Color
   const { bg, brand } = ModeColor();
   // Breakpoints
@@ -79,11 +82,11 @@ const rate = () => {
   ];
 
   const { uid, displayName, photoURL } = activeSelect;
-
   // reseña
   const message = {
+    id: router.query.idm !== undefined ? router.query.idm : "",
     uid,
-    id: router.query.id,
+    idC: router.query.id,
     li: router.query.li,
     rat: ratingValue,
     com: comentario,
@@ -104,14 +107,28 @@ const rate = () => {
     es: router.query.es,
     id: router.query.id,
   };
+
+  const arry = Object.assign([], router.query.ratA);
+
+  arry.forEach(function (item) {
+    switch (item) {
+      case item.toString() === "90":
+        arry.splice(item, 1);
+        break;
+    }
+  });
+  // item.length
+  console.log(arry);
+  console.log(ratingValue);
+
   // add review
   const handleSubmit = (e) => {
     e.preventDefault();
     // add review
-    dispatch(checkoutadd(message));
+    dispatch(checkoutAddEdit(message));
     // Edit product
     dispatch(
-      editProduct({
+      valueInProduct({
         ...product,
         rat: [...router.query.rat, ratingValue.toString()],
       })

@@ -51,7 +51,7 @@ const Calculate = (data) => {
       }
     });
   });
-
+  // obtener el ranking de los productos de la lista de productos
   listRang = (listRang / listRat.length).toFixed(1);
 
   let listRang2 = 0;

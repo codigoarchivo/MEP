@@ -15,24 +15,34 @@ const listcheckout = (data) => ({
   payload: data,
 });
 
-export const checkoutadd = (data) => {
+export const checkoutAddEdit = (data) => {
   return async (dispatch) => {
     try {
-      if (data) {
-        await setDoc(doc(collection(db, "serchs", data.id, "messages")), {
-          uid: data.uid,
-          com: data.com,
-          nam: data.nam,
-          pho: data.pho,
-          cre: data.cre,
-          rat: data.rat,
-        });
+      const dataList = {
+        uid: data.uid,
+        com: data.com,
+        nam: data.nam,
+        pho: data.pho,
+        cre: data.cre,
+        rat: data.rat,
+      };
 
-        if (Number(data.li) === 1) {
-          await dispatch(closeRevert());
-        } else {
-          await dispatch(deletecheckout(data.id));
-        }
+      if (data.id === "") {
+        await setDoc(
+          doc(collection(db, "serchs", data.idC, "messages")),
+          dataList
+        );
+      } else {
+        await setDoc(
+          doc(collection(db, "serchs", data.idC, "messages", data.id)),
+          dataList
+        );
+      }
+
+      if (Number(data.li) === 1) {
+        await dispatch(closeRevert());
+      } else {
+        await dispatch(deletecheckout({ id: data.idC }));
       }
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
@@ -46,6 +56,23 @@ export const closeRevert = () => ({
 const deletecheckout = (id) => ({
   type: types.checkoutDelete,
   payload: id,
+});
+
+// editProduct message
+export const valueInProduct = (data) => {
+  return async (dispatch) => {
+    try {
+      await setDoc(doc(db, "serchs", data.id), data);
+      await dispatch(productEdit(data));
+    } catch (error) {
+      Toast("Al parecer hay un error", "error", 5000);
+    }
+  };
+};
+
+const productEdit = (data) => ({
+  type: types.productEdit,
+  payload: data,
 });
 
 const addcheckout = (data) => ({
