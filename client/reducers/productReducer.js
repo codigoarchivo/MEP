@@ -70,6 +70,13 @@ export const productReducer = (state = initialStates, action) => {
           (e) => e.id !== action.payload
         ),
       };
+    case types.checkoutDelete:
+      return {
+        ...state,
+        activeSelectCheck: state.activeSelectCheck.filter(
+          (e) => e.id !== action.payload
+        ),
+      };
     case types.productDeleteSave:
       return {
         ...state,

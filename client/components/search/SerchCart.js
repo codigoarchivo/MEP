@@ -36,6 +36,7 @@ import {
 import SerchCartSave from "./SerchCartSave";
 
 import Breakpoints from "../../helpers/Breakpoints";
+
 import Toast from "../../helpers/Toast";
 
 const SerchCart = () => {
@@ -83,6 +84,12 @@ const SerchCart = () => {
             cn: item.cn,
             pr: item.pr,
             na: item.na,
+            ds: item.ds,
+            im: item.im,
+            ct: item.ct,
+            es: item.es,
+            dt: item.dt,
+            rat: item.rat,
           })
         );
         Swal.fire("Procesado!", "Si, Gracias por su Compra.", "success");

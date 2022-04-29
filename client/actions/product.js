@@ -47,7 +47,7 @@ const productAdd = (data) => ({
 export const editProduct = (data) => {
   return async (dispatch) => {
     try {
-      await setDoc(doc(db, "serchs", data?.id), data);
+      await setDoc(doc(db, "serchs", data.id), data);
       dispatch(productEdit(data));
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);

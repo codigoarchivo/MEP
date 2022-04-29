@@ -19,20 +19,21 @@ import {
   Flex,
   Badge,
   WrapItem,
+  HStack,
+  Text,
 } from "@chakra-ui/react";
 
 import { StarIcon } from "@chakra-ui/icons";
 
-import {
-  cartSaveLatest,
-  saveProductCart,
-} from "../../actions/product";
+import { cartSaveLatest, saveProductCart } from "../../actions/product";
 
 import { LoveIcon } from "../../helpers/IconNew";
 import Toast from "../../helpers/Toast";
 import Breakpoints from "../../helpers/Breakpoints";
+import Calculate from "../../helpers/Calculate";
+import { Rating } from "react-simple-star-rating";
 
-const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
+const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat }) => {
   // useRef
   const match = useRef();
   // useRef
@@ -60,11 +61,12 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
     cn,
     es,
     dt,
+    rat: rat?.length > 0 ? rat : [0],
   };
+
   // ref
   match.current = activeCartSelect.map((item) => item.id).includes(id);
   matchValid.current = saveCartSelect.map((item) => item.id).includes(id);
-
   // select
   const handleSelect = () => {
     // activeCartSelect
@@ -78,14 +80,14 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
         pathname: "/search/cart",
         query: { pid: id },
       });
-    } else {
-      router.push({
-        pathname: "/search/details",
-        query: { pid: "d", ...data },
-      });
-
-      handleSaveLatest();
     }
+    // dispatch
+    router.push({
+      pathname: "/search/details",
+      query: { pid: "d", ...data },
+    });
+
+    handleSaveLatest();
   };
 
   // Latest
@@ -96,7 +98,6 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
       })
     );
   };
-
   // save
   const handleSave = () => {
     // activeCartSelect
@@ -110,7 +111,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
         matchValid.current ? "error" : "success",
         5000
       );
-      dispatch(saveProductCart({ id, na, cn, pr, im }));
+      dispatch(saveProductCart({ ...data }));
     }
   };
 
@@ -118,6 +119,13 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
     reviewCount: 34,
     rating: 4,
   };
+
+  const lisRat = data.rat.map((item) => ({
+    rat: Number(item),
+    nam: item.toString(),
+  }));
+  // Calculate product price
+  const { listRang, listRang2 } = Calculate(lisRat);
 
   return (
     <>
@@ -170,17 +178,18 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
               <Badge colorScheme="green">Producto</Badge>
             </Flex>
             <Box px={3} w={"full"} display="flex" mt={2} alignItems="center">
-              {Array(5)
-                .fill("")
-                .map((_, i) => (
-                  <StarIcon
-                    key={i}
-                    color={i < property.rating ? "brand.800" : "gray.300"}
+              <HStack w={"full"}>
+                <Box p={0.5}>
+                  <Rating
+                    size={25}
+                    ratingValue={isNaN(listRang) ? 0 : listRang2}
+                    readonly={true}
                   />
-                ))}
-              <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                {property.reviewCount} reviews
-              </Box>
+                </Box>
+                <Text color="gray.600" fontSize={"xl"} fontWeight={"bold"}>
+                  {isNaN(listRang) ? "( 0 )" : listRang}
+                </Text>{" "}
+              </HStack>
             </Box>
             <Stat width={"full"} px={3} pb={3}>
               <StatLabel>{na}</StatLabel>

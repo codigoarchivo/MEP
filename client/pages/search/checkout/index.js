@@ -55,13 +55,12 @@ const checkout = () => {
     (total, item) => (total += Number(item.cn) * Number(item.pr)),
     0
   );
-
   const handleRevert = () => {
     router.push("/");
     dispatch(closeRevert());
   };
   // product
-  activeSelectCheck.map((item) => product.current.push(item.id));
+  // activeSelectCheck.map((item) => product.current.push(item.id));
 
   return !activeSelectCheck.length > 0 ? (
     <></>
@@ -202,15 +201,32 @@ const checkout = () => {
                 <Heading size={"md"}>Total a Transferir:</Heading>
                 <Text size={"md"}>{resumen.current}$</Text>
               </HStack>
-              <NavLink
-                name={"Calificar"}
-                href={{
-                  pathname: "/search/checkout/rate",
-                  query: product.current,
-                }}
-                variant={"primary"}
-                w={full}
-              />
+              {activeSelectCheck.map((item, key) => (
+                <NavLink
+                  leftIcon={<CartList w={5} h={5} />}
+                  key={item.id}
+                  name={`${key ? (key += 1) : (key = 1)} Calificar`}
+                  href={{
+                    pathname: "/search/checkout/rate",
+                    query: {
+                      id: item.id,
+                      na: item.na,
+                      pr: item.pr,
+                      im: item.im,
+                      cn: item.cn,
+                      ct: item.ct,
+                      ds: item.ds,
+                      dt: item.dt,
+                      es: item.es,
+                      rat: item.rat,
+                      li: activeSelectCheck.length,
+                    },
+                  }}
+                  variant={"primary"}
+                  w={full}
+                />
+              ))}
+
               <Text>
                 Si sientes que as cometido una equivocación puede revertir
                 haciendo{" "}

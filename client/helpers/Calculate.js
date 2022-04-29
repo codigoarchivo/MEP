@@ -1,7 +1,7 @@
 const Calculate = (data) => {
   let listRat = [];
   // sumar y acumular los valores de los ratings de los productos de la lista de productos
-  data.forEach(function (a) {
+  data?.forEach(function (a) {
     if (!this[a.nam]) {
       this[a.nam] = {
         nam: a.nam,

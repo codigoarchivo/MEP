@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 
 import { useRouter } from "next/router";
 
@@ -25,6 +25,8 @@ import Breakpoints from "../../../helpers/Breakpoints";
 
 import { checkoutadd } from "../../../actions/checkout";
 
+import { editProduct } from "../../../actions/product";
+
 const rate = () => {
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
@@ -36,8 +38,6 @@ const rate = () => {
   const [ratingValue, setRatingValue] = useState(0);
   // useState
   const [comentario, setComentario] = useState("");
-  // useState
-  const product = useRef([]);
   // mode Color
   const { bg, brand } = ModeColor();
   // Breakpoints
@@ -79,21 +79,49 @@ const rate = () => {
   ];
 
   const { uid, displayName, photoURL } = activeSelect;
+
   // reseña
-  product.current = Object.values(router.query).map((item) => ({
+  const message = {
     uid,
-    id: item,
+    id: router.query.id,
+    li: router.query.li,
     rat: ratingValue,
     com: comentario,
     nam: displayName,
     pho: photoURL,
     cre: Date.now(),
-  }));
+  };
+
+  // agregar reseña
+  const product = {
+    na: router.query.na,
+    pr: router.query.pr,
+    ds: router.query.ds,
+    ct: router.query.ct,
+    cn: router.query.cn,
+    dt: router.query.dt,
+    im: router.query.im,
+    es: router.query.es,
+    id: router.query.id,
+  };
   // add review
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(checkoutadd(product.current));
-    router.push("/search");
+    // add review
+    dispatch(checkoutadd(message));
+    // Edit product
+    dispatch(
+      editProduct({
+        ...product,
+        rat: [...router.query.rat, ratingValue.toString()],
+      })
+    );
+    // redirect
+    if (router.query.li === "1") {
+      router.push("/search");
+    } else {
+      router.push("/search/checkout");
+    }
   };
 
   return (
