@@ -55,6 +55,7 @@ const checkout = () => {
     (total, item) => (total += Number(item.cn) * Number(item.pr)),
     0
   );
+
   const handleRevert = () => {
     router.push("/");
     dispatch(closeRevert());
@@ -226,7 +227,7 @@ const checkout = () => {
                   w={full}
                 />
               ))}
-
+    
               <Text>
                 Si sientes que as cometido una equivocación puede revertir
                 haciendo{" "}

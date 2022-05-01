@@ -22,6 +22,7 @@ import Layout from "../../../components/layout/layout";
 import ModeColor from "../../../helpers/ModeColor";
 
 import Breakpoints from "../../../helpers/Breakpoints";
+import Calculate from "../../../helpers/Calculate";
 
 import { checkoutAddEdit } from "../../../actions/checkout";
 
@@ -35,6 +36,7 @@ const rate = () => {
   // useRouter
   const router = useRouter();
   // useState
+
   const [ratingValue, setRatingValue] = useState(
     typeof router.query.rat === "string" ? router.query.rat : 0
   );
@@ -82,7 +84,8 @@ const rate = () => {
   ];
 
   const { uid, displayName, photoURL } = activeSelect;
-  // reseña
+
+  // reseña de usuario
   const message = {
     id: router.query.idm !== undefined ? router.query.idm : "",
     uid,
@@ -108,20 +111,21 @@ const rate = () => {
     id: router.query.id,
   };
 
-  const arry = Object.assign([], router.query.ratA);
+  // query ref el nombre propiedad x se muestra una vez (String) pero a ver mas de la misma x propiedad (Array)
+  const init = router.query.rat !== undefined ? router.query.rat : [];
 
-  arry.forEach(function (item) {
-    switch (item) {
-      case item.toString() === "90":
-        arry.splice(item, 1);
-        break;
-    }
-  });
-  // item.length
-  console.log(arry);
-  console.log(ratingValue);
+  // une el array de reseñas con el nuevo
+  const inc = [...init, ratingValue];
 
-  // add review
+  // crea una referencia de lista de rat
+  const lisRat = inc.map((item) => ({
+    rat: Number(item),
+    nam: item,
+  }));
+
+  // Calculate product price
+  const { result } = Calculate(lisRat);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // add review
@@ -130,7 +134,7 @@ const rate = () => {
     dispatch(
       valueInProduct({
         ...product,
-        rat: [...router.query.rat, ratingValue.toString()],
+        rat: result,
       })
     );
     // redirect

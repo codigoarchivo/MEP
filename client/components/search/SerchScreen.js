@@ -30,7 +30,6 @@ import { cartSaveLatest, saveProductCart } from "../../actions/product";
 import { LoveIcon } from "../../helpers/IconNew";
 import Toast from "../../helpers/Toast";
 import Breakpoints from "../../helpers/Breakpoints";
-import Calculate from "../../helpers/Calculate";
 import { Rating } from "react-simple-star-rating";
 
 const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat }) => {
@@ -44,6 +43,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat }) => {
   const { activeCartSelect, saveCartSelect } = useSelector(
     ({ product }) => product
   );
+  console.log(rat);
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -51,6 +51,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat }) => {
   // disclosure
   const { isOpen, onToggle } = useDisclosure();
 
+console.log(rat);
   const data = {
     id,
     na,
@@ -61,7 +62,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat }) => {
     cn,
     es,
     dt,
-    rat: rat?.length > 0 ? rat : [0],
+    // rat,
   };
 
   // ref
@@ -84,7 +85,10 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat }) => {
     // dispatch
     router.push({
       pathname: "/search/details",
-      query: { pid: "d", ...data },
+      query: {
+        pid: "d",
+        ...data,
+      },
     });
 
     handleSaveLatest();
@@ -114,18 +118,6 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat }) => {
       dispatch(saveProductCart({ ...data }));
     }
   };
-
-  const property = {
-    reviewCount: 34,
-    rating: 4,
-  };
-
-  const lisRat = data.rat.map((item) => ({
-    rat: Number(item),
-    nam: item.toString(),
-  }));
-  // Calculate product price
-  const { listRang, listRang2 } = Calculate(lisRat);
 
   return (
     <>
@@ -182,12 +174,12 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat }) => {
                 <Box p={0.5}>
                   <Rating
                     size={25}
-                    ratingValue={isNaN(listRang) ? 0 : listRang2}
+                    ratingValue={rat !== undefined ? rat.est : 0}
                     readonly={true}
                   />
                 </Box>
                 <Text color="gray.600" fontSize={"xl"} fontWeight={"bold"}>
-                  {isNaN(listRang) ? "( 0 )" : listRang}
+                  {rat !== undefined ? rat.nam : "0.0"}
                 </Text>{" "}
               </HStack>
             </Box>

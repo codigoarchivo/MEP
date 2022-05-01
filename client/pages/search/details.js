@@ -54,7 +54,7 @@ const Details = ({ data }) => {
   // Breakpoints
   const { content5, full, bordes } = Breakpoints();
   // values
-  const { id, na, pr, im, ds, ct, cn, es, dt } = router.query;
+  const { id, na, pr, im, ds, ct, cn, es, dt, rat } = router.query;
   // list Category
   const listCt = list.filter((item) => item.id === ct);
   // Incremen and Decrement
@@ -76,26 +76,38 @@ const Details = ({ data }) => {
   const input = getInputProps({ isReadOnly: true });
 
   // query ref el nombre propiedad x se muestra una vez (String) pero a ver mas de la misma x propiedad (Array)
-  const rat =
-    typeof router.query.rat === "string"
-      ? new Array(router.query.rat)
-      : router.query.rat;
-  // crea una referencia de lista de rat
-  const lisRat = rat.map((item) => ({
-    rat: Number(item),
-    nam: item,
-  }));
+  // const rat =
+  //   typeof router.query.rat === "string"
+  //     ? new Array(router.query.rat)
+  //     : router.query.rat;
+  // // crea una referencia de lista de rat
+  // const lisRat = rat.map((item) => ({
+  //   rat: Number(item),
+  //   nam: item,
+  // }));
+  //  crea una referencia de lista de comentarios
 
+  console.log(rat);
   // select product in cart
   const handleSelect = () => {
     const cn = Number(input.value);
-    dispatch(activeProductCart({ id, na, pr, im, ds, ct, cn, es, dt, rat }));
+    dispatch(
+      activeProductCart({
+        id,
+        na,
+        pr,
+        im,
+        ds,
+        ct,
+        cn,
+        es,
+        dt,
+        rat,
+      })
+    );
 
     router.push("/search/cart");
   };
-
-  // Calculate product price
-  const { listRat, listRang, listRang2 } = Calculate(lisRat);
 
   return (
     <Layout>
@@ -118,12 +130,12 @@ const Details = ({ data }) => {
             <Heading>{na}</Heading>
             <HStack w={full}>
               <Text color="gray.600" fontSize={"xl"} fontWeight={"bold"}>
-                {isNaN(listRang) ? "( 0 )" : listRang}
+                {/* {isNaN(listRang) ? "( 0 )" : listRang} */}
               </Text>{" "}
               <Box p={0.5}>
                 <Rating
                   size={25}
-                  ratingValue={isNaN(listRang) ? 0 : listRang2}
+                  // ratingValue={isNaN(listRang) ? 0 : listRang2}
                   readonly={true}
                 />
               </Box>
@@ -180,14 +192,14 @@ const Details = ({ data }) => {
                   <Stack w={"full"} mb={10} border={bordes}>
                     <HStack p={5} w={full}>
                       <Box p={5} textAlign={"center"}>
-                        <Heading>{listRang}</Heading>
+                        {/* <Heading>{listRang}</Heading> */}
                         <Text>Valoración total</Text>
                       </Box>
                       <Stack w={full}>
                         {/* SerchRat */}
-                        {listRat.map((item) => (
-                          <SerchRat key={item.est} {...item} />
-                        ))}
+                        {/* {listRat.map((item, key) => (
+                          <SerchRat key={key} {...item} />
+                        ))} */}
                       </Stack>
                     </HStack>
                   </Stack>

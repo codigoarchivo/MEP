@@ -1,6 +1,6 @@
 const Calculate = (data) => {
-  let listRat = [];
   // sumar y acumular los valores de los ratings de los productos de la lista de productos
+  let listRat = [];
   data?.forEach(function (a) {
     if (!this[a.nam]) {
       this[a.nam] = {
@@ -31,6 +31,7 @@ const Calculate = (data) => {
   while (a.length < 10) {
     a.push({ dt: (t -= 10), do: (p -= 0.5) });
   }
+
   // calculo ranking de los productos de la lista de productos
   let b = [];
   let i = 102;
@@ -51,21 +52,27 @@ const Calculate = (data) => {
       }
     });
   });
+
   // obtener el ranking de los productos de la lista de productos
   listRang = (listRang / listRat.length).toFixed(1);
 
-  let listRang2 = 0;
   // obtener el ranking de los productos de la lista de productos
+  let listRang2 = 0;
   b.forEach(function (a) {
     if (Number(listRang) === Number(a.ran)) {
       listRang2 = a.ini;
     }
   });
 
+  const result = {
+    est: listRang2,
+    nam: listRang,
+    per: listRat[0].per,
+    rat: listRat[0].rat,
+  };
+
   return {
-    listRat,
-    listRang,
-    listRang2,
+    result,
   };
 };
 

@@ -66,7 +66,7 @@ const SerchCart = () => {
     activeCartSelect.map((item) => (inc.current -= Number(item.pr)));
     Toast("Eliminado con exito", "error", 5000);
   };
-
+  // save cart
   const handleCheckout = () => {
     Swal.fire({
       title: "Estas seguro?",
