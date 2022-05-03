@@ -1,4 +1,4 @@
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc, updateDoc } from "firebase/firestore";
 
 import { db } from "../firebase/config";
 import Toast from "../helpers/Toast";
@@ -10,14 +10,16 @@ export const checkoutList = (data) => {
     dispatch(listcheckout(data));
   };
 };
+
 const listcheckout = (data) => ({
   type: types.checkoutList,
   payload: data,
 });
 
-export const checkoutAddEdit = (data) => {
+export const checkoutAdd = (data) => {
   return async (dispatch) => {
     try {
+
       const dataList = {
         uid: data.uid,
         com: data.com,
@@ -27,17 +29,10 @@ export const checkoutAddEdit = (data) => {
         rat: data.rat,
       };
 
-      if (data.word === "Edit") {
-        await setDoc(
-          doc(collection(db, "serchs", data.idC, "messages", data.id)),
-          dataList
-        );
-      } else {
-        await setDoc(
-          doc(collection(db, "serchs", data.idC, "messages")),
-          dataList
-        );
-      }
+      await setDoc(
+        doc(collection(db, "serchs", data.idC, "messages")),
+        dataList
+      );
 
       if (data.li === "1") {
         await dispatch(closeRevert());
@@ -49,6 +44,7 @@ export const checkoutAddEdit = (data) => {
     }
   };
 };
+
 export const closeRevert = () => ({
   type: types.productRevert,
 });
@@ -58,11 +54,33 @@ const deletecheckout = (id) => ({
   payload: id,
 });
 
+// checkoutEdit comentario
+export const checkoutEdit = (data) => {
+  return async () => {
+    try {
+      const dataList = {
+        com: data.com,
+        cre: data.cre,
+        rat: data.rat,
+      };
+
+      await updateDoc(
+        doc(db, "serchs", data.idC, "messages", data.id),
+        dataList
+      );
+    } catch (error) {
+      console.log(error);
+      Toast("Al parecer hay un error", "error", 5000);
+    }
+  };
+};
+
+
 // editProduct message
 export const valueInProduct = (data) => {
   return async (dispatch) => {
     try {
-      await setDoc(doc(db, "serchs", data.id), data);
+      await updateDoc(doc(db, "serchs", data.id), data);
       await dispatch(productEdit(data));
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
@@ -72,10 +90,5 @@ export const valueInProduct = (data) => {
 
 const productEdit = (data) => ({
   type: types.productEdit,
-  payload: data,
-});
-
-const addcheckout = (data) => ({
-  type: types.checkoutAdd,
   payload: data,
 });

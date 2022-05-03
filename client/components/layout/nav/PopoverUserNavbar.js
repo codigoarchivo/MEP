@@ -1,8 +1,18 @@
 import React from "react";
 
-import { Divider, List, ListItem, Select } from "@chakra-ui/react";
+import { Box, Divider, List, ListItem, Select } from "@chakra-ui/react";
 
 import { useSelector } from "react-redux";
+import {
+  About,
+  Category,
+  Global,
+  Home,
+  Logout,
+  Perfil,
+  Product,
+  ShopAll,
+} from "../../../helpers/IconNew";
 
 const PopoverUserNavbar = ({
   HStack,
@@ -19,25 +29,45 @@ const PopoverUserNavbar = ({
   return (
     <>
       <List spacing={3} py={5}>
+        <ListItem>
+          <NavLink
+            leftIcon={<Home />}
+            fontWeight={"normal"}
+            variant={"secondary"}
+            href={"/"}
+            name={"Home"}
+          />
+        </ListItem>
+        <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
+        <ListItem>
+          <NavLink
+            leftIcon={<About />}
+            fontWeight={"normal"}
+            variant={"secondary"}
+            href={"/about"}
+            name={"About"}
+          />
+        </ListItem>
+        <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
         {activeSelect?.rol === "owner" && (
           <>
             <ListItem>
               <NavLink
-                href={"/category"}
+                leftIcon={<Category />}
                 fontWeight={"normal"}
-                size={"sm"}
                 variant={"secondary"}
-                name={"Category"}
+                href={"/category"}
+                name={"category"}
               />
             </ListItem>
             <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
             <ListItem>
               <NavLink
-                href={"/product"}
+                leftIcon={<Product />}
                 fontWeight={"normal"}
-                size={"sm"}
                 variant={"secondary"}
-                name={"Product"}
+                href={"/product"}
+                name={"product"}
               />
             </ListItem>
             <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
@@ -45,35 +75,47 @@ const PopoverUserNavbar = ({
         )}
         <ListItem>
           <NavLink
+            leftIcon={<ShopAll />}
+            fontWeight={"normal"}
+            variant={"secondary"}
+            href={"/search"}
+            name={"Shop All"}
+          />
+        </ListItem>
+        <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
+        <ListItem>
+          <NavLink
+            leftIcon={<Perfil />}
             href={"/user"}
             fontWeight={"normal"}
-            size={"sm"}
             variant={"secondary"}
             name={"Editar Perfil"}
           />
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
-
-        <ListItem>
-          <HStack spacing={3} w={"full"}>
-            <Heading size="sm" fontWeight={"normal"} px={3}>
-              Idioma
-            </Heading>{" "}
-            <Select placeholder="English" size="sm" w={porcent2}>
-              <option value="option1">Español</option>
-            </Select>
-          </HStack>
-        </ListItem>
         <ListItem>
           <Button
             variant={"secondary"}
             fontWeight={"normal"}
-            px={3}
-            size="sm"
+            leftIcon={<Logout />}
             onClick={handleLogout}
           >
             Logout
           </Button>
+        </ListItem>
+        <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
+        <ListItem>
+          <HStack w={"full"} alignItems={"stretch"}>
+            <Box w={6} h={6} as={Global} />
+
+            <Heading textTransform={"uppercase"} size="sm">
+              Idioma
+            </Heading>
+
+            <Select placeholder="English" size="sx" fontSize={"sm"}>
+              <option value="option1">Español</option>
+            </Select>
+          </HStack>
         </ListItem>
       </List>
     </>

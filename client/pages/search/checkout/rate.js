@@ -24,7 +24,7 @@ import ModeColor from "../../../helpers/ModeColor";
 import Breakpoints from "../../../helpers/Breakpoints";
 import Calculate from "../../../helpers/Calculate";
 
-import { checkoutAddEdit } from "../../../actions/checkout";
+import { checkoutAdd, checkoutEdit } from "../../../actions/checkout";
 
 import { valueInProduct } from "../../../actions/checkout";
 
@@ -105,34 +105,8 @@ const rate = () => {
     "#f1d045",
   ];
 
+  // usuario del store
   const { uid, displayName, photoURL } = activeSelect;
-
-  // reseña de usuario
-  const message = {
-    id: router.query.idm !== undefined && router.query.idm,
-    word: router.query.word,
-    uid,
-    idC: router.query.id,
-    li: router.query.li,
-    rat: ratingValue,
-    com: comentario,
-    nam: displayName,
-    pho: photoURL,
-    cre: Date.now(),
-  };
-console.log(message);
-  // agregar reseña
-  const product = {
-    na: router.query.na,
-    pr: router.query.pr,
-    ds: router.query.ds,
-    ct: router.query.ct,
-    cn: router.query.cn,
-    dt: router.query.dt,
-    im: router.query.im,
-    es: router.query.es,
-    id: router.query.id,
-  };
 
   // crea una referencia de lista de rat
   const lisRat = carga.map((item) => ({
@@ -143,29 +117,51 @@ console.log(message);
   // Calculate product price
   const { listRang, listRang2 } = Calculate(lisRat);
 
-  // resultado de la suma de los rangos
-  const result = {
-    est: listRang2,
-    nam: listRang,
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    // add review
-    dispatch(checkoutAddEdit(message));
-    // Edit product
-    dispatch(
-      valueInProduct({
-        ...product,
-        rat: result,
-      })
-    );
-    // redirect
-    if (router.query.li === "1") {
+    if (router.query.word === "Edit") {
+      // edit review
+      dispatch(
+        checkoutEdit({
+          id: router.query.idm,
+          idC: router.query.id,
+          rat: ratingValue,
+          com: comentario,
+          cre: Date.now(),
+        })
+      );
       router.push("/search");
     } else {
-      router.push("/search/checkout");
+      // add review
+      dispatch(
+        checkoutAdd({
+          uid,
+          id: router.query.idm,
+          idC: router.query.id,
+          cre: Date.now(),
+          pho: photoURL,
+          nam: displayName,
+          rat: ratingValue,
+          com: comentario,
+          li: router.query.li,
+        })
+      );
+
+      if (router.query.li === "1") {
+        router.push("/search");
+      } else {
+        router.push("/search/checkout");
+      }
     }
+    dispatch(
+      valueInProduct({
+        id: router.query.id,
+        rat: {
+          est: listRang2,
+          nam: listRang,
+        },
+      })
+    );
   };
 
   return (

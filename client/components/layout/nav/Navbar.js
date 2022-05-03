@@ -42,14 +42,14 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import {
-  HamburgerIcon,
-  MoonIcon,
-  SearchIcon,
-  SunIcon,
-} from "@chakra-ui/icons";
+import { HamburgerIcon, MoonIcon, SearchIcon, SunIcon } from "@chakra-ui/icons";
 
-import { CartIcon, OrdenpagoIcon } from "../../../helpers/IconNew";
+import {
+  CartIcon,
+  CategoryAll,
+  LoveIcon,
+  OrdenpagoIcon,
+} from "../../../helpers/IconNew";
 import ModeColor from "../../../helpers/ModeColor";
 import Breakpoints from "../../../helpers/Breakpoints";
 import NavLink from "../../../helpers/Navlink";
@@ -79,7 +79,7 @@ const Navbar = () => {
   // selector
   const { list } = useSelector(({ category }) => category);
   // selector
-  const { activeCartSelect, activeSelectCheck } = useSelector(
+  const { activeCartSelect, activeSelectCheck, saveCartSelect } = useSelector(
     ({ product }) => product
   );
 
@@ -189,7 +189,15 @@ const Navbar = () => {
                 </Box>
                 <Box as={"div"} display={displayOff2}>
                   <Menu>
-                    <MenuButton>Categoria</MenuButton>
+                    <MenuButton
+                      fontSize={["sm"]}
+                      leftIcon={<CategoryAll />}
+                      variant={"primary"}
+                      as={Button}
+                      textTransform={"uppercase"}
+                    >
+                      Categorias
+                    </MenuButton>
                     <Portal>
                       <MenuList
                         display={displayOff2}
@@ -370,12 +378,29 @@ const Navbar = () => {
                 )}
 
                 {isloggedIn ? (
-                  <NavLink
-                    size="md"
-                    variant={"primary"}
-                    href={"/"}
-                    name={"Para algo"}
-                  />
+                  <Box position={"relative"}>
+                    <NavLink
+                      px={0}
+                      variant={"secondary"}
+                      href={"/search/cart"}
+                      name={<LoveIcon boxSize={points11} />}
+                    />
+                    <Flex
+                      cursor={"pointer"}
+                      right={0}
+                      top={0}
+                      border={bordes}
+                      alignItems={"center"}
+                      justifyContent="center"
+                      backgroundColor={"brand.800"}
+                      borderRadius={"full"}
+                      position={"absolute"}
+                      w={5}
+                      h={5}
+                    >
+                      {!saveCartSelect[0] ? 0 : saveCartSelect.length}
+                    </Flex>
+                  </Box>
                 ) : (
                   <NavLink
                     size="md"

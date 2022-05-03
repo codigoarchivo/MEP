@@ -34,8 +34,6 @@ import NavLink from "../../../helpers/Navlink";
 const checkout = () => {
   // dispatch
   const router = useRouter();
-  // dispatch
-  const product = useRef([]);
   // useDispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -209,14 +207,6 @@ const checkout = () => {
                     pathname: "/search/checkout/rate",
                     query: {
                       id: item.id,
-                      na: item.na,
-                      pr: item.pr,
-                      im: item.im,
-                      cn: item.cn,
-                      ct: item.ct,
-                      ds: item.ds,
-                      dt: item.dt,
-                      es: item.es,
                       rat: item.rat,
                       li: activeSelectCheck.length,
                     },
