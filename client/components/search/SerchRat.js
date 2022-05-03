@@ -1,5 +1,7 @@
 import React from "react";
+
 import { Box, Heading, HStack, Progress } from "@chakra-ui/react";
+
 import { Rating } from "react-simple-star-rating";
 
 const SerchRat = (item) => {

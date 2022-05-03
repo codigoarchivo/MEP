@@ -60,9 +60,7 @@ const checkout = () => {
     router.push("/");
     dispatch(closeRevert());
   };
-  // product
-  // activeSelectCheck.map((item) => product.current.push(item.id));
-
+ 
   return !activeSelectCheck.length > 0 ? (
     <></>
   ) : (

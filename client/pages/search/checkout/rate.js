@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 
@@ -36,13 +36,12 @@ const rate = () => {
   // useRouter
   const router = useRouter();
   // useState
-
-  const [ratingValue, setRatingValue] = useState(
-    typeof router.query.rat === "string" ? router.query.rat : 0
-  );
+  const [ratingValue, setRatingValue] = useState(0);
   // useState
+  const [comentario, setComentario] = useState("");
+  // useState
+  const [carga, setCarga] = useState([]);
 
-  const [comentario, setComentario] = useState(router.query.com || "");
   // mode Color
   const { bg, brand } = ModeColor();
   // Breakpoints
@@ -56,6 +55,29 @@ const rate = () => {
   const handleRating = (rate) => {
     setRatingValue(Number(rate));
   };
+
+  useEffect(() => {
+    if (router.query.word === "Edit") {
+      setRatingValue(router.query.ratD);
+      setComentario(router.query.com);
+    } else {
+      setRatingValue(0);
+      setComentario("");
+    }
+  }, [setRatingValue, setComentario, router.query]);
+
+  useEffect(() => {
+    const saveRat =
+      typeof router.query.rat === "string"
+        ? [router.query.rat]
+        : router.query.rat;
+
+    if (saveRat !== undefined) {
+      setCarga([...saveRat, ratingValue]);
+    } else {
+      setCarga([ratingValue]);
+    }
+  }, [setCarga, router.query, ratingValue]);
 
   const tooltipArray = [
     "Terrible",
@@ -87,7 +109,8 @@ const rate = () => {
 
   // reseña de usuario
   const message = {
-    id: router.query.idm !== undefined ? router.query.idm : "",
+    id: router.query.idm !== undefined && router.query.idm,
+    word: router.query.word,
     uid,
     idC: router.query.id,
     li: router.query.li,
@@ -97,7 +120,7 @@ const rate = () => {
     pho: photoURL,
     cre: Date.now(),
   };
-
+console.log(message);
   // agregar reseña
   const product = {
     na: router.query.na,
@@ -111,20 +134,20 @@ const rate = () => {
     id: router.query.id,
   };
 
-  // query ref el nombre propiedad x se muestra una vez (String) pero a ver mas de la misma x propiedad (Array)
-  const init = router.query.rat !== undefined ? router.query.rat : [];
-
-  // une el array de reseñas con el nuevo
-  const inc = [...init, ratingValue];
-
   // crea una referencia de lista de rat
-  const lisRat = inc.map((item) => ({
+  const lisRat = carga.map((item) => ({
     rat: Number(item),
-    nam: item,
+    nam: item.toString(),
   }));
 
   // Calculate product price
-  const { result } = Calculate(lisRat);
+  const { listRang, listRang2 } = Calculate(lisRat);
+
+  // resultado de la suma de los rangos
+  const result = {
+    est: listRang2,
+    nam: listRang,
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();

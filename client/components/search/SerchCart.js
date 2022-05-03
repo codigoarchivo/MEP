@@ -48,8 +48,6 @@ const SerchCart = () => {
   const dispatch = useDispatch();
   // useRef
   const inc = useRef(0);
-  // useRef
-  const resumen = useRef([]);
   // selector
   const { activeCartSelect, saveCartSelect } = useSelector(
     ({ product }) => product
@@ -78,22 +76,20 @@ const SerchCart = () => {
       confirmButtonText: "Aceptar!",
     }).then((result) => {
       if (result.isConfirmed) {
-        activeCartSelect.map((item) =>
-          resumen.current.push({
-            id: item.id,
-            cn: item.cn,
-            pr: item.pr,
-            na: item.na,
-            ds: item.ds,
-            im: item.im,
-            ct: item.ct,
-            es: item.es,
-            dt: item.dt,
-            rat: item.rat,
-          })
-        );
+        const data = activeCartSelect.map((item) => ({
+          id: item.id,
+          cn: item.cn,
+          pr: item.pr,
+          na: item.na,
+          ds: item.ds,
+          im: item.im,
+          ct: item.ct,
+          es: item.es,
+          dt: item.dt,
+          rat: item.rat,
+        }));
         Swal.fire("Procesado!", "Si, Gracias por su Compra.", "success");
-        dispatch(activeProduct(resumen.current));
+        dispatch(activeProduct(data));
         router.push("/search/checkout");
         dispatch(closeActive());
       }

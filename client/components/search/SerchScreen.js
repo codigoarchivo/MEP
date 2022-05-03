@@ -43,7 +43,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat }) => {
   const { activeCartSelect, saveCartSelect } = useSelector(
     ({ product }) => product
   );
-  console.log(rat);
+
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -51,7 +51,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat }) => {
   // disclosure
   const { isOpen, onToggle } = useDisclosure();
 
-console.log(rat);
+  // data product
   const data = {
     id,
     na,
@@ -62,7 +62,8 @@ console.log(rat);
     cn,
     es,
     dt,
-    // rat,
+    est: rat?.est,
+    nam: rat?.nam,
   };
 
   // ref

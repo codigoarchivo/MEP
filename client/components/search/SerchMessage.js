@@ -37,9 +37,9 @@ const SerchMessage = (item) => {
   const { content6, bordes } = Breakpoints();
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
-
+  // traer match sin id de manera que se pueda hacer calculo correcto
   const handleRating = () => {
-    // dispatch(checkoutadd());
+    const dataSin = item.match.map((i) => i).filter((i) => i.id !== item.id);
     router.push({
       pathname: "/search/checkout/rate",
       query: {
@@ -52,10 +52,12 @@ const SerchMessage = (item) => {
         cn: router.query.cn,
         es: router.query.es,
         dt: router.query.dt,
-        ratA: router.query.rat,
-        rat: item.rat,
+        word: "Edit",
         com: item.com,
         idm: item.id,
+        ratD: item.rat,
+        li: dataSin.length > 0 ? dataSin.length : "1",
+        rat: dataSin.map((item) => item.rat),
       },
     });
   };

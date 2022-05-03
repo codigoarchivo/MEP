@@ -64,15 +64,11 @@ const Calculate = (data) => {
     }
   });
 
-  const result = {
-    est: listRang2,
-    nam: listRang,
-    per: listRat[0].per,
-    rat: listRat[0].rat,
-  };
 
   return {
-    result,
+    listRat,
+    listRang,
+    listRang2,
   };
 };
 

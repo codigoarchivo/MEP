@@ -27,22 +27,22 @@ export const checkoutAddEdit = (data) => {
         rat: data.rat,
       };
 
-      if (data.id === "") {
-        await setDoc(
-          doc(collection(db, "serchs", data.idC, "messages")),
-          dataList
-        );
-      } else {
+      if (data.word === "Edit") {
         await setDoc(
           doc(collection(db, "serchs", data.idC, "messages", data.id)),
           dataList
         );
+      } else {
+        await setDoc(
+          doc(collection(db, "serchs", data.idC, "messages")),
+          dataList
+        );
       }
 
-      if (Number(data.li) === 1) {
+      if (data.li === "1") {
         await dispatch(closeRevert());
       } else {
-        await dispatch(deletecheckout({ id: data.idC }));
+        await dispatch(deletecheckout(data.idC));
       }
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
