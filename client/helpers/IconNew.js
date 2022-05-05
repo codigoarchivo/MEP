@@ -29,7 +29,6 @@ export const LoveIcon = createIcon({
     </svg>
   ),
 });
-
 export const CartIcon = createIcon({
   displayName: "cartIcon",
   viewBox: "0 0 512.000000 512.000000",
@@ -158,7 +157,6 @@ export const OrdenpagoIcon = createIcon({
     </svg>
   ),
 });
-
 export const CartList = createIcon({
   displayName: "CartList",
   viewBox: "0 0 50.000000 50.000000",
@@ -327,7 +325,6 @@ export const GoogleIcon = createIcon({
     </svg>
   ),
 });
-
 export const Home = createIcon({
   displayName: "Home",
   viewBox: "0 0 24 24",
@@ -343,8 +340,8 @@ export const Home = createIcon({
     </svg>
   ),
 });
-export const About = createIcon({
-  displayName: "About",
+export const AboutIcon = createIcon({
+  displayName: "AboutIcon",
   viewBox: "0 0 24 24",
 
   path: (
@@ -355,6 +352,29 @@ export const About = createIcon({
       height="24px"
     >
       <path d="M 12 0 C 5.925781 0 1 4.476563 1 10 C 1 15.523438 5.925781 20 12 20 L 12 24 C 12 24 23 18.640625 23 10 C 23 4.476563 18.074219 0 12 0 Z M 13.222656 15.125 L 10.777344 15.125 L 10.777344 8.160156 L 13.222656 8.160156 Z M 12.003906 6.199219 C 10.679688 6.199219 10.671875 5.222656 10.671875 4.996094 C 10.671875 4.765625 10.671875 3.800781 12.003906 3.800781 C 13.339844 3.800781 13.335938 4.765625 13.335938 4.996094 C 13.335938 5.222656 13.328125 6.199219 12.003906 6.199219 Z" />
+    </svg>
+  ),
+});
+export const VentaIcon = createIcon({
+  displayName: "VentaIcon",
+  viewBox: "0 0 24 24",
+
+  path: (
+    <svg xmlns="http://www.w3.org/2000/svg" id="body_1" width="24" height="24">
+      <g transform="matrix(0.375 0 0 0.375 0 0)">
+        <g transform="matrix(0.1 0 -0 -0.1 0 64)">
+          <path
+            d="M286 581C 261 555 255 553 222 561C 202 566 182 570 179 570C 176 570 168 552 161 530C 151 496 144 489 110 479C 71 467 70 466 76 431C 80 411 84 393 87 391C 89 388 76 371 58 353L58 353L26 320L58 287C 76 269 89 252 87 249C 84 247 80 229 76 209C 70 174 71 173 110 161C 144 151 151 144 161 110C 173 71 174 70 209 76C 229 80 247 84 249 87C 252 89 269 76 287 58L287 58L320 26L353 58C 371 76 388 89 391 87C 393 84 411 80 431 76C 466 70 467 71 479 110C 489 144 496 151 530 161C 569 173 570 174 564 209C 560 229 556 247 553 249C 551 252 564 269 582 287L582 287L614 320L582 353C 564 371 551 388 553 391C 556 393 560 411 564 431C 570 466 569 467 530 479C 496 489 489 496 479 530C 472 552 464 570 461 570C 458 570 438 566 418 561C 385 553 379 555 354 581C 339 597 323 610 320 610C 317 610 301 597 286 581zM220 366C 220 357 213 354 200 357C 172 364 175 350 208 324C 230 305 233 298 224 283C 212 264 159 257 161 275C 162 281 167 284 172 282C 178 280 190 282 198 285C 210 289 206 297 179 319C 150 344 147 350 159 364C 176 384 220 385 220 366zM312 323C 329 263 328 248 308 268C 292 284 263 283 257 268C 255 261 249 258 245 262C 238 268 255 349 267 373C 279 394 297 374 312 323zM360 330C 360 283 362 280 385 280C 399 280 410 276 410 270C 410 265 394 260 375 260L375 260L340 260L340 320C 340 353 344 380 350 380C 356 380 360 358 360 330zM485 370C 489 364 480 360 466 360C 450 360 440 354 440 345C 440 337 447 330 455 330C 463 330 470 326 470 320C 470 315 463 310 455 310C 447 310 440 303 440 295C 440 286 450 280 466 280C 480 280 489 276 485 270C 482 265 466 260 449 260C 420 260 420 260 420 320C 420 380 420 380 449 380C 466 380 482 376 485 370z"
+            stroke="none"
+            fill="currentColor"
+          />
+          <path
+            d="M275 327C 271 317 270 306 274 303C 284 293 292 307 287 327C 283 344 283 344 275 327z"
+            stroke="none"
+            fill="currentColor"
+          />
+        </g>
+      </g>
     </svg>
   ),
 });
@@ -386,7 +406,6 @@ export const Product = createIcon({
     </svg>
   ),
 });
-
 export const Category = createIcon({
   displayName: "Category",
   viewBox: "0 0 24 24",
@@ -421,7 +440,6 @@ export const Category = createIcon({
     </svg>
   ),
 });
-
 export const ShopAll = createIcon({
   displayName: "ShopAll",
   viewBox: "0 0 24 24",
@@ -445,7 +463,6 @@ export const ShopAll = createIcon({
     </svg>
   ),
 });
-
 export const CategoryAll = createIcon({
   displayName: "CategoryAll",
   viewBox: "0 0 24 24",
@@ -549,7 +566,6 @@ export const CategoryAll = createIcon({
     </svg>
   ),
 });
-
 export const Perfil = createIcon({
   displayName: "Perfil",
   viewBox: "0 0 24 24",
@@ -631,7 +647,6 @@ export const Global = createIcon({
     </svg>
   ),
 });
-
 export const Logout = createIcon({
   displayName: "Logout",
   viewBox: "0 0 24 24",

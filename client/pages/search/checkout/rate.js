@@ -28,7 +28,7 @@ import { checkoutAdd, checkoutEdit } from "../../../actions/checkout";
 
 import { valueInProduct } from "../../../actions/checkout";
 
-const rate = () => {
+const Rate = () => {
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
   // dispatch
@@ -219,4 +219,4 @@ const rate = () => {
   );
 };
 
-export default rate;
+export default Rate;

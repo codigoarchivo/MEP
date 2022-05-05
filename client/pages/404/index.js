@@ -2,9 +2,9 @@ import React from "react";
 
 import { Container, Flex } from "@chakra-ui/react";
 
-import { PageNotFound } from "../components/err/PageNotFound";
+import { PageNotFound } from "../../components/err/PageNotFound";
 
-import Breakpoints from "../helpers/Breakpoints";
+import Breakpoints from "../../helpers/Breakpoints";
 
 const Custom404 = () => {
   // Breakpoints

@@ -8,7 +8,7 @@ import CreateUser from "../../components/log/CreateUser";
 
 import useAuth from "../../hooks/useAuth";
 
-const create = () => {
+const Create = () => {
   // useAuth
   const { isloggedIn } = useAuth();
   // router
@@ -27,4 +27,4 @@ const create = () => {
   );
 };
 
-export default create;
+export default Create;

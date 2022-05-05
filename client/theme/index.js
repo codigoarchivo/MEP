@@ -7,6 +7,8 @@ import {
 
 import { mode } from "@chakra-ui/theme-tools";
 
+import { StepsStyleConfig } from "chakra-ui-steps";
+
 const stylesFonts = {
   fonts: {
     heading: `Montserrat ${base.fonts?.heading}`,
@@ -21,7 +23,7 @@ const colors = {
     200: "#8AC",
     300: "#112",
     400: "#676",
-    500: "#fff",
+    500: "#ffd60a",
     600: "#E9E9E9",
     700: "#ffd60a",
     800: "#ffc301",
@@ -98,7 +100,7 @@ const globalStyles = {
   styles: {
     global: {
       html: {},
-      svg: { display: "inline"},
+      svg: { display: "inline" },
       body: {},
       ".css-1xjer9p": {
         justifyContent: "center",
@@ -115,12 +117,37 @@ const globalStyles = {
   },
 };
 
+const brandRing = {
+  borderRadius: "none",
+  _focus: {
+    ring: 2,
+    ringColor: "brand.500",
+  },
+};
+
+const CustomSteps = {
+  ...StepsStyleConfig,
+  baseStyle: (props) => {
+    return {
+      ...StepsStyleConfig.baseStyle(props),
+      icon: {
+        ...StepsStyleConfig.baseStyle(props).icon,
+        // your custom styles here
+        strokeWidth: "1px",
+        color: mode("brand.800", "brand.600")(props),
+        backgroundColor: mode("brand.900", "brand.800")(props),
+      },
+    };
+  },
+};
+
 export const theme = extendTheme(
   {
     ...globalStyles,
     ...stylesFonts,
     colors,
     components: {
+      Steps: CustomSteps,
       Button: {
         ...buttonStyles,
       },
@@ -136,11 +163,21 @@ export const theme = extendTheme(
       Select: {
         ...inputStyles,
       },
+      Checkbox: {
+        baseStyle: {
+          control: {
+            ...brandRing,
+          },
+        },
+      },
     },
   },
   withDefaultVariant({
     variant: "filled",
     components: ["Input", "NumberInput", "PinInput", "Select", "Textarea"],
   }),
-  withDefaultColorScheme({ colorScheme: "brand" })
+  withDefaultColorScheme({
+    colorScheme: "brand",
+    components: ["Checkbox"],
+  })
 );

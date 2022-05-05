@@ -4,7 +4,7 @@ import { Box, Divider, List, ListItem, Select } from "@chakra-ui/react";
 
 import { useSelector } from "react-redux";
 import {
-  About,
+  AboutIcon,
   Category,
   Global,
   Home,
@@ -12,6 +12,7 @@ import {
   Perfil,
   Product,
   ShopAll,
+  VentaIcon,
 } from "../../../helpers/IconNew";
 
 const PopoverUserNavbar = ({
@@ -41,11 +42,21 @@ const PopoverUserNavbar = ({
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
         <ListItem>
           <NavLink
-            leftIcon={<About />}
+            leftIcon={<AboutIcon />}
             fontWeight={"normal"}
             variant={"secondary"}
             href={"/about"}
             name={"About"}
+          />
+        </ListItem>
+        <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
+        <ListItem>
+          <NavLink
+            leftIcon={<VentaIcon />}
+            fontWeight={"normal"}
+            variant={"secondary"}
+            href={"/sell"}
+            name={"Quieres vender"}
           />
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />

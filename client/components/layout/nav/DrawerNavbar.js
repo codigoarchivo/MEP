@@ -27,7 +27,6 @@ import NavLink from "../../../helpers/Navlink";
 import { useDispatch, useSelector } from "react-redux";
 import { serchProductList } from "../../../actions/product";
 import {
-  About,
   Category,
   Home,
   Product,
@@ -36,6 +35,8 @@ import {
   Perfil,
   Global,
   Logout,
+  AboutIcon,
+  VentaIcon,
 } from "../../../helpers/IconNew";
 
 export const DrawerNavbar = ({
@@ -138,11 +139,20 @@ export const DrawerNavbar = ({
                     </chakra.li>
                     <chakra.li mx={"3"}>
                       <NavLink
-                        leftIcon={<About />}
+                        leftIcon={<AboutIcon />}
                         fontWeight={"normal"}
                         variant={"secondary"}
                         href={"/about"}
                         name={"About"}
+                      />
+                    </chakra.li>
+                    <chakra.li mx={"3"}>
+                      <NavLink
+                        leftIcon={<VentaIcon />}
+                        fontWeight={"normal"}
+                        variant={"secondary"}
+                        href={"/sell"}
+                        name={"Quieres vender"}
                       />
                     </chakra.li>
                     {activeSelect?.rol === "owner" && (
