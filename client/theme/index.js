@@ -127,6 +127,7 @@ const brandRing = {
 
 const CustomSteps = {
   ...StepsStyleConfig,
+  borderColor: "brand.500",
   baseStyle: (props) => {
     return {
       ...StepsStyleConfig.baseStyle(props),
@@ -134,8 +135,6 @@ const CustomSteps = {
         ...StepsStyleConfig.baseStyle(props).icon,
         // your custom styles here
         strokeWidth: "1px",
-        color: mode("brand.800", "brand.600")(props),
-        backgroundColor: mode("brand.900", "brand.800")(props),
       },
     };
   },
@@ -174,7 +173,7 @@ export const theme = extendTheme(
   },
   withDefaultVariant({
     variant: "filled",
-    components: ["Input", "NumberInput", "PinInput", "Select", "Textarea"],
+    components: ["Input", "NumberInput", "PinInput", "Select", "Textarea", "Checkbox"],
   }),
   withDefaultColorScheme({
     colorScheme: "brand",

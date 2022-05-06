@@ -106,6 +106,7 @@ const Breakpoints = () => {
     porcent3,
     porcent4,
     content5,
+    content6,
     center,
     full,
     bordes,

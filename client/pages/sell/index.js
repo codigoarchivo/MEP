@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import { useSelector } from "react-redux";
 
 import Layout from "../../components/layout/Layout";
 
@@ -16,10 +18,18 @@ import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { stepsData } from "../../helpers/StepsContent";
 
 const Sell = () => {
-
+  // selector
+  const { activeSelect } = useSelector(({ auth }) => auth);
+  // useSteps
   const { nextStep, prevStep, reset, activeStep } = useSteps({
     initialStep: 0,
   });
+  const [activo, setActivo] = useState(false);
+
+  useEffect(() => {
+    const { uid, email, rol } = activeSelect;
+    setActivo(uid && email && rol ? false : true);
+  }, [setActivo]);
 
   return (
     <Layout>
@@ -34,10 +44,10 @@ const Sell = () => {
             Pasos para poder vender en nuestro sitio
           </Heading>
           <Flex flexDir="column" width="100%">
-            <Steps activeStep={activeStep}>
+            <Steps activeStep={activeStep} colorScheme={"brand"}>
               {stepsData.map(({ label, icon, contenido }) => (
                 <Step label={label} key={label} icon={icon}>
-                  <List spacing={3} w={"full"}>
+                  <List spacing={3} w={"full"} my={10}>
                     {contenido}
                   </List>
                 </Step>
@@ -63,7 +73,7 @@ const Sell = () => {
                 >
                   Prev
                 </Button>
-                <Button size="sm" onClick={nextStep}>
+                <Button size="sm" onClick={nextStep} isDisabled={activo}>
                   {activeStep === stepsData.length - 1 ? "Finish" : "Next"}
                 </Button>
               </Flex>

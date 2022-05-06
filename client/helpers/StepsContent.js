@@ -1,30 +1,117 @@
 import React from "react";
 
+import Image from "next/image";
+
 import { CheckCircleIcon } from "@chakra-ui/icons";
 
-import { Button, Checkbox, ListIcon, ListItem, Stack } from "@chakra-ui/react";
+import {
+  AspectRatio,
+  Button,
+  Checkbox,
+  Heading,
+  ListIcon,
+  ListItem,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 
 import { Perfil } from "./IconNew";
+
+import Breakpoints from "./Breakpoints";
+
+// Breakpoints
+const { bordes, content5 } = Breakpoints();
 
 export const stepsData = [
   {
     label: "Login",
     icon: Perfil,
     contenido: (
-      <ListItem w={"full"} py={20}>
-        <ListIcon as={CheckCircleIcon} color="brand.700" />
-        Tiene que estar registrado en nuestro sitio web
-      </ListItem>
+      <>
+        <ListItem w={"full"} pt={20}>
+          <ListIcon as={CheckCircleIcon} color="brand.700" />
+          Tiene que estar registrado en nuestro sitio web
+        </ListItem>
+        <ListItem w={"full"}>
+          <ListIcon as={CheckCircleIcon} color="brand.700" />
+          Si tienes una cuenta en nuestro sitio web puedes{" "}
+          <Button variant={"primary"} size={"xs"}>
+            ingresar
+          </Button>
+        </ListItem>
+        <ListItem w={"full"}>
+          <ListIcon as={CheckCircleIcon} color="brand.700" />
+          Si no tienes una cuenta puedes{" "}
+          <Button variant={"primary"} size={"xs"}>
+            crear una cuenta
+          </Button>
+        </ListItem>
+        <ListItem w={"full"} pb={20}>
+          <ListIcon as={CheckCircleIcon} color="brand.700" />
+          Si no cumples con los requisitos no podras pasar a la siguiente etapa
+        </ListItem>
+      </>
     ),
   },
   {
-    label: "Verification",
+    label: "Tipo de publicación",
     icon: Perfil,
     contenido: (
-      <ListItem w={"full"} py={20}>
-        <ListIcon as={CheckCircleIcon} color="brand.700" />
-        Comunicarte con nosotros para que te asignemos un boton
-      </ListItem>
+      <Stack flexDirection={content5} spacing={0}>
+        <VStack
+          border={bordes}
+          w={"full"}
+          p={5}
+          mx={5}
+          textAlign={"center"}
+          cursor={"pointer"}
+          transition={"all 0.3s ease-in-out"}
+          _hover={{ backgroundColor: "#d0d0d0" }}
+        >
+          <AspectRatio w="100px" position={"relative"}>
+            <Image
+              src={"/img/productos.png"}
+              alt="Picture of the author"
+              layout="fill"
+              objectFit="contain"
+              objectPosition="center"
+            />
+          </AspectRatio>
+          <Heading size={"sm"} textTransform={"uppercase"}>
+            Crea un producto
+          </Heading>
+          <Text>
+            Crea una sola publicación para vender uno o más productos.
+          </Text>
+        </VStack>
+        <VStack
+          border={bordes}
+          w={"full"}
+          p={5}
+          mx={5}
+          textAlign={"center"}
+          cursor={"pointer"}
+          transition={"all 0.3s ease-in-out"}
+          _hover={{ backgroundColor: "#d0d0d0" }}
+        >
+          <AspectRatio w="100px" position={"relative"}>
+            <Image
+              src={"/img/servicios.png"}
+              alt="Picture of the author"
+              layout="fill"
+              objectFit="contain"
+              objectPosition="center"
+            />
+          </AspectRatio>
+          <Heading size={"sm"} textTransform={"uppercase"}>
+            Crea un servicio
+          </Heading>
+          <Text>
+            Crea una sola publicación para vender uno o más servicios.
+          </Text>
+        </VStack>
+      </Stack>
     ),
   },
   {
@@ -38,7 +125,7 @@ export const stepsData = [
     ),
   },
   {
-    label: "Pay",
+    label: "list",
     icon: Perfil,
     contenido: (
       <ListItem w={"full"} py={20}>
