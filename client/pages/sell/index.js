@@ -15,7 +15,7 @@ import {
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 
-import { stepsData } from "../../helpers/StepsContent";
+import { StepsContent } from "../../helpers/StepsContent";
 
 const Sell = () => {
   // selector
@@ -24,12 +24,25 @@ const Sell = () => {
   const { nextStep, prevStep, reset, activeStep } = useSteps({
     initialStep: 0,
   });
+  // StepsContent
+  const { stepsData } = StepsContent();
+
   const [activo, setActivo] = useState(false);
+
+  const [activoP, setActivoP] = useState(false);
 
   useEffect(() => {
     const { uid, email, rol } = activeSelect;
     setActivo(uid && email && rol ? false : true);
   }, [setActivo]);
+
+  useEffect(() => {
+    stepsData.map((step, i) => {
+      if (i === 1) {
+        setActivoP(step.flag1.e1 || step.flag2.e2 ? true : false);
+      }
+    });
+  }, [setActivoP, stepsData]);
 
   return (
     <Layout>
@@ -45,7 +58,7 @@ const Sell = () => {
           </Heading>
           <Flex flexDir="column" width="100%">
             <Steps activeStep={activeStep} colorScheme={"brand"}>
-              {stepsData.map(({ label, icon, contenido }) => (
+              {stepsData.map(({ label, icon, contenido }, i) => (
                 <Step label={label} key={label} icon={icon}>
                   <List spacing={3} w={"full"} my={10}>
                     {contenido}
@@ -65,15 +78,20 @@ const Sell = () => {
             ) : (
               <Flex width="100%" justify="flex-end">
                 <Button
-                  isDisabled={activeStep === 0}
-                  mr={4}
-                  onClick={prevStep}
                   size="sm"
-                  variant="ghost"
+                  mr={4}
+                  variant="secondary"
+                  onClick={prevStep}
+                  isDisabled={activeStep === 0}
                 >
                   Prev
                 </Button>
-                <Button size="sm" onClick={nextStep} isDisabled={activo}>
+                <Button
+                  size="sm"
+                  variant={"primary"}
+                  onClick={nextStep}
+                  isDisabled={activo}
+                >
                   {activeStep === stepsData.length - 1 ? "Finish" : "Next"}
                 </Button>
               </Flex>
