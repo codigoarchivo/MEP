@@ -46,7 +46,7 @@ const PopoverUserNavbar = ({
             leftIcon={<AboutIcon />}
             fontWeight={"normal"}
             variant={"secondary"}
-            href={"/about"}
+            href={"/search/concerning"}
             name={"About"}
           />
         </ListItem>

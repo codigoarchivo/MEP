@@ -1,8 +1,10 @@
 import React from 'react'
 
+import Layout from '../../components/layout/layout'
+
 const agreement = () => {
   return (
-    <div>agreement</div>
+    <Layout>agreement</Layout>
   )
 }
 

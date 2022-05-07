@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
 
-import Layout from "../../components/layout/Layout";
+import Layout from "../../components/layout/layout";
 
 import {
   Button,
@@ -20,7 +20,7 @@ import { Step, Steps, useSteps } from "chakra-ui-steps";
 
 import StepsContent from "../../components/user/StepsContent";
 
-const Sell = () => {
+const Selling = () => {
   // router
   const router = useRouter();
   // selector
@@ -145,4 +145,4 @@ const Sell = () => {
   );
 };
 
-export default Sell;
+export default Selling;

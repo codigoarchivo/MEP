@@ -1,16 +1,18 @@
 import React from "react";
-import { Container, Heading } from "@chakra-ui/react";
+
 import Layout from "../../components/layout/Layout";
 
+import { Container, Heading } from "@chakra-ui/react";
 
-const About = () => {
+
+const Concerning = () => {
   return (
     <Layout>
       <Container maxW={"container.xs"}>
-          <Heading>About</Heading>
+          <Heading>Concerning</Heading>
       </Container>
     </Layout>
   );
 };
 
-export default About;
+export default Concerning;
