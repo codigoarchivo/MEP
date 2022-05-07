@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import { useSelector } from "react-redux";
 
+import { useRouter } from "next/router";
+
 import Layout from "../../components/layout/Layout";
 
 import {
@@ -9,15 +11,18 @@ import {
   Container,
   Flex,
   Heading,
+  HStack,
   List,
   VStack,
 } from "@chakra-ui/react";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 
-import { StepsContent } from "../../helpers/StepsContent";
+import StepsContent from "../../components/user/StepsContent";
 
 const Sell = () => {
+  // router
+  const router = useRouter();
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
   // useSteps
@@ -29,7 +34,9 @@ const Sell = () => {
 
   const [activo, setActivo] = useState(false);
 
-  const [activoP, setActivoP] = useState(false);
+  const [select, setSelect] = useState(false);
+
+  const [form, setForm] = useState(false);
 
   useEffect(() => {
     const { uid, email, rol } = activeSelect;
@@ -37,12 +44,25 @@ const Sell = () => {
   }, [setActivo]);
 
   useEffect(() => {
-    stepsData.map((step, i) => {
-      if (i === 1) {
-        setActivoP(step.flag1.e1 || step.flag2.e2 ? true : false);
+    stepsData.map(({ flag1, flag2, items }, i) => {
+      if (i === 0 && activeStep === 0) {
+        setActivo(items);
+      } else if (i === 1 && activeStep === 1) {
+        setSelect(flag1 || flag2 ? false : true);
+      } else if (i === 2 && activeStep === 2) {
+        const { create } = router.query;
+        setForm(create ? false : true);
       }
     });
-  }, [setActivoP, stepsData]);
+  }, [setSelect, stepsData]);
+
+  const handleReset = () => {
+    reset();
+    router.push("/user/selling");
+  };
+  const handleList = () => {
+    router.push("/user/list");
+  };
 
   return (
     <Layout>
@@ -58,22 +78,44 @@ const Sell = () => {
           </Heading>
           <Flex flexDir="column" width="100%">
             <Steps activeStep={activeStep} colorScheme={"brand"}>
-              {stepsData.map(({ label, icon, contenido }, i) => (
+              {stepsData.map(({ label, icon, content }, i) => (
                 <Step label={label} key={label} icon={icon}>
                   <List spacing={3} w={"full"} my={10}>
-                    {contenido}
+                    {content}
                   </List>
                 </Step>
               ))}
             </Steps>
             {activeStep === stepsData.length ? (
-              <Flex px={4} py={4} width="100%" flexDirection="column">
+              <Flex
+                px={4}
+                py={4}
+                alignItems={"center"}
+                justifyContent={"center"}
+                width="100%"
+                flexDirection="column"
+              >
                 <Heading fontSize="xl" textAlign="center">
-                  Woohoo! All steps completed!
+                  Congratulations! All steps completed!
                 </Heading>
-                <Button mx="auto" mt={6} size="sm" onClick={reset}>
-                  Reset
-                </Button>
+                <HStack spacing={5} py={5}>
+                  <Button
+                    w={"full"}
+                    variant={"primary"}
+                    size="sm"
+                    onClick={handleReset}
+                  >
+                    Crear un producto
+                  </Button>
+                  <Button
+                    w={"full"}
+                    variant={"primary"}
+                    size="sm"
+                    onClick={handleList}
+                  >
+                    Ver productos
+                  </Button>
+                </HStack>
               </Flex>
             ) : (
               <Flex width="100%" justify="flex-end">
@@ -90,7 +132,7 @@ const Sell = () => {
                   size="sm"
                   variant={"primary"}
                   onClick={nextStep}
-                  isDisabled={activo}
+                  isDisabled={activo || select || form}
                 >
                   {activeStep === stepsData.length - 1 ? "Finish" : "Next"}
                 </Button>

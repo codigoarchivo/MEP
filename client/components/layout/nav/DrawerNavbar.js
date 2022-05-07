@@ -151,7 +151,7 @@ export const DrawerNavbar = ({
                         leftIcon={<VentaIcon />}
                         fontWeight={"normal"}
                         variant={"secondary"}
-                        href={"/sell"}
+                        href={"/user/selling"}
                         name={"Quieres vender"}
                       />
                     </chakra.li>

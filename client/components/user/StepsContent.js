@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Image from "next/image";
 
@@ -17,22 +17,37 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import { Eligir, Perfil } from "./IconNew";
+import { CreateProduct, Eligir, Perfil } from "../../helpers/IconNew";
 
-import Breakpoints from "./Breakpoints";
+import Breakpoints from "../../helpers/Breakpoints";
+
+import UserData from "./UserData";
+
+import { useRouter } from "next/router";
 
 // Breakpoints
 const { bordes, content5 } = Breakpoints();
 
-export function StepsContent() {
+export default function StepsContent() {
+  // router
+  const router = useRouter();
+  // useBoolean
   const [flag1, setFlag1] = useBoolean();
+  // useBoolean
   const [flag2, setFlag2] = useBoolean();
+  // useState
+  const [items, setItems] = useState(true);
+
+  const handleAgreement = () => {
+    router.push("/user/agreement");
+  };
 
   const stepsData = [
     {
+      items,
       label: "Login",
       icon: Perfil,
-      contenido: (
+      content: (
         <>
           <ListItem w={"full"} pt={20}>
             <ListIcon as={CheckCircleIcon} color="brand.700" />
@@ -52,6 +67,24 @@ export function StepsContent() {
               crear una cuenta
             </Button>
           </ListItem>
+          <ListItem w={"full"}>
+            <Stack spacing={[1, 5]} direction={["column", "row"]}>
+              <Checkbox
+                fontWeight={"bold"}
+                colorScheme={"brand"}
+                onChange={() => setItems(!items)}
+              >
+                Aceptas todos los acuerdos de venta{" "}
+                <Button
+                  variant={"secondary"}
+                  textTransform={"uppercase"}
+                  onClick={handleAgreement}
+                >
+                  Saber mas
+                </Button>
+              </Checkbox>
+            </Stack>
+          </ListItem>
           <ListItem w={"full"} pb={20}>
             <ListIcon as={CheckCircleIcon} color="brand.700" />
             Si no cumples con los requisitos no podras pasar a la siguiente
@@ -61,17 +94,11 @@ export function StepsContent() {
       ),
     },
     {
-      flag1: {
-        e1: flag1,
-        word: flag1.toString() === "true" ? "Producto" : null,
-      },
-      flag2: {
-        e2: flag2,
-        word: flag2.toString() === "true" ? "Servicio" : null,
-      },
-      label: "Tipo de publicación",
+      flag1,
+      flag2,
+      label: "Tipo",
       icon: Eligir,
-      contenido: (
+      content: (
         <Stack flexDirection={content5} spacing={0}>
           <VStack
             border={bordes}
@@ -133,34 +160,19 @@ export function StepsContent() {
       ),
     },
     {
-      label: "Pay",
-      icon: Perfil,
-      contenido: (
-        <ListItem w={"full"} py={20}>
-          <ListIcon as={CheckCircleIcon} color="brand.700" />
-          Puedes vender tu producto o servicio
-        </ListItem>
-      ),
-    },
-    {
-      label: "list",
-      icon: Perfil,
-      contenido: (
-        <ListItem w={"full"} py={20}>
-          <Stack spacing={[1, 5]} direction={["column", "row"]}>
-            <Checkbox
-              fontWeight={"bold"}
-              defaultChecked
-              colorScheme={"brand"}
-              value="naruto"
-            >
-              Aceptas todos los acuerdos de venta{" "}
-              <Button variant={"secondary"} textTransform={"uppercase"}>
-                Saber mas
-              </Button>
-            </Checkbox>
-          </Stack>
-        </ListItem>
+      label: "Create",
+      icon: CreateProduct,
+      content: (
+        <UserData
+          word={{
+            b: "Add",
+            d: `Create a new ${
+              flag1.toString() === "true" ? "Producto" : "Servicio"
+            }`,
+            w1: (flag1.toString() === "true" && "Producto") || "",
+            w2: (flag2.toString() === "true" && "Servicio") || "",
+          }}
+        />
       ),
     },
   ];

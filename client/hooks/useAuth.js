@@ -19,14 +19,13 @@ const useAuth = () => {
       if (user) {
         setIsloggedIn(true);
         const dA = process.env.NEXT_PUBLIC_ROL_A;
-
         dispatch(
           login(
             user.uid,
             user.displayName,
             user.photoURL,
             user.email,
-            user.uid === dA.toString() ? "owner" : "user",
+            user.uid === dA.toString() ? "owner" : "user"
           )
         );
       } else {

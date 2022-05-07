@@ -3,6 +3,7 @@ import React from "react";
 import { Box, Divider, List, ListItem, Select } from "@chakra-ui/react";
 
 import { useSelector } from "react-redux";
+
 import {
   AboutIcon,
   Category,
@@ -55,7 +56,7 @@ const PopoverUserNavbar = ({
             leftIcon={<VentaIcon />}
             fontWeight={"normal"}
             variant={"secondary"}
-            href={"/sell"}
+            href={"/user/selling"}
             name={"Quieres vender"}
           />
         </ListItem>

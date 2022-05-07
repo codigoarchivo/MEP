@@ -19,6 +19,7 @@ const Validator = (values) => {
   const mDescripcion = values?.ds === "";
   const mCantidad = Number(values?.cn) === 0;
   const mCategory = values?.ct === "";
+  const mTipos = values?.ti === "";
 
   const nameE = nameV && "Nombre is required.";
 
@@ -82,6 +83,7 @@ const Validator = (values) => {
     mDescripcion ||
     mCantidad ||
     mCategory ||
+    mTipos ||
     mImageCero
   ) {
     ErrorRetur = true;
@@ -119,6 +121,7 @@ const Validator = (values) => {
     mDescripcion,
     mCantidad,
     mCategory,
+    mTipos,
     ErrorRetur,
     ErrorRetur2,
     ErrorLorR,
