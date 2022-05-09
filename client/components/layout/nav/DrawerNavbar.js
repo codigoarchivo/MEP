@@ -37,6 +37,7 @@ import {
   Logout,
   AboutIcon,
   VentaIcon,
+  VentasClient,
 } from "../../../helpers/IconNew";
 
 export const DrawerNavbar = ({
@@ -153,6 +154,15 @@ export const DrawerNavbar = ({
                         variant={"secondary"}
                         href={"/user/selling"}
                         name={"Quieres vender"}
+                      />
+                    </chakra.li>
+                    <chakra.li mx={"3"}>
+                      <NavLink
+                        leftIcon={<VentasClient />}
+                        fontWeight={"normal"}
+                        variant={"secondary"}
+                        href={"/user/list"}
+                        name={"Mis ventas"}
                       />
                     </chakra.li>
                     {activeSelect?.rol === "owner" && (

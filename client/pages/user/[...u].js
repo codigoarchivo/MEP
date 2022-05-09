@@ -4,6 +4,8 @@ export const getStaticPaths = () => {
       { params: { u: ["you"] } },
       { params: { u: ["selling"] } },
       { params: { u: ["agreement"] } },
+      { params: { u: ["list"] } },
+      { params: { u: ["ajustar"] } },
     ],
     fallback: false,
   };

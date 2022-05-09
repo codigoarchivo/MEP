@@ -2,12 +2,14 @@ import React from "react";
 
 import { useRouter } from "next/router";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { CloseButton, Heading, HStack, VStack } from "@chakra-ui/react";
 
 import Breakpoints from "../../helpers/Breakpoints";
+
 import Toast from "../../helpers/Toast";
+
 import Validator from "../../helpers/Validator";
 
 import useForm from "../../hooks/useForm";
@@ -16,7 +18,7 @@ import UserForm from "./UserForm";
 
 import UserFormWord from "./UserFormWord";
 
-import { addProduct, deleteProduct, editProduct } from "../../actions/product";
+import { addUser, deleteUser, editUser } from "../../actions/user";
 
 const initialStates = {
   na: "",
@@ -29,15 +31,18 @@ const initialStates = {
   ti: "",
 };
 
-const UserData = ({ word }) => {
+const UserData = (activeSelect) => {
   // router
   const router = useRouter();
   // dispatch
   const dispatch = useDispatch();
+  // selector
+  const {
+    activeSelect: { uid },
+  } = useSelector(({ auth }) => auth);
   // Breakpoints
   const { points1, repeat1, points3, bordes } = Breakpoints();
 
-  const activeSelect = { pid: word.b, ti: word.w1 ? word.w1 : word.w2 };
   // useForm
   const {
     reset,
@@ -53,7 +58,7 @@ const UserData = ({ word }) => {
   // validar
   const { fiel, estado, ErrorRetur, ErrorRetur2 } = Validator(values);
   // values
-  const { na, pr, ds, ct, cn, dt, im, es, id, ti, pid } = values;
+  const { na, pr, ds, ct, cn, dt, im, id, ti, pid, d } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,25 +69,35 @@ const UserData = ({ word }) => {
     if (ErrorRetur) {
       return Toast(fiel, "error", 5000);
     } else {
-      // pid === "Add" &&
-      //   dispatch(addProduct({ na, pr, ds, ct, cn, dt, im, ti, es: true }));
-      // pid === "Edit" &&
-      //   dispatch(editProduct({ na, pr, ds, ct, cn, dt, im, ti, es, id }));
-      // pid === "Delete" && dispatch(deleteProduct(id));
-    }
+      if (pid === "Add") {
+        dispatch(addUser({ na, pr, ds, ct, cn, dt, im, ti, uid }));
+        active();
+      }
 
-    onClose();
+      if (pid === "Edit") {
+        dispatch(editUser({ na, pr, ds, ct, cn, dt, im, ti, uid, id }));
+        onClose();
+      }
+
+      if (pid === "Delete") {
+        dispatch(deleteUser(id));
+        onClose();
+      }
+    }
   };
-  // cerrar
-  const onClose = () => {
+
+  const active = () => {
     router.push({
-      pathname: "/user/sell",
+      pathname: "/user/selling",
       query: { create: true },
     });
-    Toast(word.d, "success", 5000);
-    reset();
+    Toast(d, "success", 5000);
   };
 
+  // cerrar
+  const onClose = () => {
+    router.push("/user/list");
+  };
 
   return (
     <>
@@ -90,7 +105,7 @@ const UserData = ({ word }) => {
         <HStack w={"full"}>
           <CloseButton size="md" onClick={onClose} />
           <Heading as="h1" size={"md"} textTransform={"uppercase"}>
-            {pid}
+            {pid ? pid : "Confirmado"}
           </Heading>
         </HStack>
         {pid === "Details" || pid === "Delete" ? (
@@ -104,6 +119,7 @@ const UserData = ({ word }) => {
         ) : (
           <UserForm
             pid={pid}
+            ti={ti}
             na={na}
             pr={pr}
             ds={ds}

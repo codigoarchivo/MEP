@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
 
+import { Rating } from "react-simple-star-rating";
+
 import Image from "next/image";
 
 import {
@@ -23,16 +25,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import { StarIcon } from "@chakra-ui/icons";
-
 import { cartSaveLatest, saveProductCart } from "../../actions/product";
 
 import { LoveIcon } from "../../helpers/IconNew";
 import Toast from "../../helpers/Toast";
 import Breakpoints from "../../helpers/Breakpoints";
-import { Rating } from "react-simple-star-rating";
 
-const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat }) => {
+const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat, ti }) => {
   // useRef
   const match = useRef();
   // useRef
@@ -62,6 +61,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat }) => {
     cn,
     es,
     dt,
+    ti,
     est: rat?.est,
     nam: rat?.nam,
   };
@@ -168,7 +168,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat }) => {
             )}
 
             <Flex align="baseline" pt={3} w={"full"} px={3}>
-              <Badge colorScheme="green">Producto</Badge>
+              <Badge colorScheme="green">{ti}</Badge>
             </Flex>
             <Box px={3} w={"full"} display="flex" mt={2} alignItems="center">
               <HStack w={"full"}>

@@ -25,6 +25,7 @@ import ModeColor from "../../helpers/ModeColor";
 
 const UserForm = ({
   pid,
+  ti,
   na,
   pr,
   ds,
@@ -48,6 +49,8 @@ const UserForm = ({
   const file = useRef();
   // selector
   const { list } = useSelector(({ category }) => category);
+
+  const listTipo = ["Producto", "Servicio"];
 
   return (
     <>
@@ -157,6 +160,25 @@ const UserForm = ({
             </Select>
           </GridItem>
 
+          {pid !== "Add" && (
+            <GridItem colSpan={points1}>
+              <FormLabel htmlFor="ti">Tipo</FormLabel>
+              <Select
+                name="ti"
+                variant="filled"
+                placeholder="Options"
+                value={ti}
+                onChange={handleInputChange}
+              >
+                {listTipo.map((ti) => (
+                  <option key={ti} value={ti}>
+                    {ti}
+                  </option>
+                ))}
+              </Select>
+            </GridItem>
+          )}
+
           <GridItem colSpan={2}>
             <FormLabel htmlFor="dt">Detalles</FormLabel>
             <Textarea
@@ -174,8 +196,13 @@ const UserForm = ({
 
           <GridItem colSpan={2}>
             <HStack w={"full"} justifyContent="flex-end" spacing={10}>
-              <Button variant={"primary"} type="submit" ml={3}>
-                {pid}
+              <Button
+                variant={"primary"}
+                type="submit"
+                disabled={pid ? false : true}
+                ml={3}
+              >
+                {pid ? pid : "Confirmado"}
               </Button>
             </HStack>
           </GridItem>

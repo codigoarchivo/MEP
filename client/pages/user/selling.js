@@ -26,7 +26,7 @@ const Selling = () => {
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
   // useSteps
-  const { nextStep, prevStep, reset, activeStep } = useSteps({
+  const { nextStep, reset, activeStep } = useSteps({
     initialStep: 0,
   });
   // StepsContent
@@ -59,6 +59,14 @@ const Selling = () => {
   const handleReset = () => {
     reset();
     router.push("/user/selling");
+    stepsData.map(
+      ({ setItems, setFlag1, setFlag2 }) => (
+        setItems(true), setFlag1.off(false), setFlag2.off(false)
+      )
+    );
+    setActivo(false);
+    setSelect(false);
+    setForm(false);
   };
   const handleList = () => {
     router.push("/user/list");
@@ -123,11 +131,12 @@ const Selling = () => {
                   size="sm"
                   mr={4}
                   variant="secondary"
-                  onClick={prevStep}
+                  onClick={handleReset}
                   isDisabled={activeStep === 0}
                 >
-                  Prev
+                  Reiniciar
                 </Button>
+
                 <Button
                   size="sm"
                   variant={"primary"}

@@ -9,6 +9,7 @@ import {
   Button,
   Checkbox,
   Heading,
+  HStack,
   ListIcon,
   ListItem,
   Stack,
@@ -17,16 +18,23 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import { CreateProduct, Eligir, Perfil } from "../../helpers/IconNew";
+import { useSelector } from "react-redux";
+
+import { useRouter } from "next/router";
+
+import {
+  CreateProduct,
+  Eligir,
+  ListEspera,
+  Perfil,
+} from "../../helpers/IconNew";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
 import UserData from "./UserData";
 
-import { useRouter } from "next/router";
-
 // Breakpoints
-const { bordes, content5 } = Breakpoints();
+const { bordes, content5, full } = Breakpoints();
 
 export default function StepsContent() {
   // router
@@ -42,37 +50,50 @@ export default function StepsContent() {
     router.push("/user/agreement");
   };
 
+  const w1 = (flag1.toString() === "true" && "Producto") || "";
+  const w2 = (flag2.toString() === "true" && "Servicio") || "";
+  const w = w1 ? w1 : w2;
+
+  const data = {
+    pid: "Add",
+    d: `Create a new ${w}`,
+    ti: w,
+  };
+
   const stepsData = [
     {
+      setFlag1,
+      setFlag2,
+      setItems,
       items,
       label: "Login",
       icon: Perfil,
       content: (
         <>
-          <ListItem w={"full"} pt={20}>
+          <ListItem w={full} pt={20}>
             <ListIcon as={CheckCircleIcon} color="brand.700" />
             Tiene que estar registrado en nuestro sitio web
           </ListItem>
-          <ListItem w={"full"}>
+          <ListItem w={full}>
             <ListIcon as={CheckCircleIcon} color="brand.700" />
             Si tienes una cuenta en nuestro sitio web puedes{" "}
             <Button variant={"primary"} size={"xs"}>
               ingresar
             </Button>
           </ListItem>
-          <ListItem w={"full"}>
+          <ListItem w={full}>
             <ListIcon as={CheckCircleIcon} color="brand.700" />
             Si no tienes una cuenta puedes{" "}
             <Button variant={"primary"} size={"xs"}>
               crear una cuenta
             </Button>
           </ListItem>
-          <ListItem w={"full"}>
+          <ListItem w={full}>
             <Stack spacing={[1, 5]} direction={["column", "row"]}>
               <Checkbox
                 fontWeight={"bold"}
                 colorScheme={"brand"}
-                onChange={() => setItems(!items)}
+                onChange={() => setItems(false)}
               >
                 Aceptas todos los acuerdos de venta{" "}
                 <Button
@@ -85,7 +106,7 @@ export default function StepsContent() {
               </Checkbox>
             </Stack>
           </ListItem>
-          <ListItem w={"full"} pb={20}>
+          <ListItem w={full} pb={20}>
             <ListIcon as={CheckCircleIcon} color="brand.700" />
             Si no cumples con los requisitos no podras pasar a la siguiente
             etapa
@@ -94,6 +115,9 @@ export default function StepsContent() {
       ),
     },
     {
+      setFlag1,
+      setFlag2,
+      setItems,
       flag1,
       flag2,
       label: "Tipo",
@@ -102,7 +126,7 @@ export default function StepsContent() {
         <Stack flexDirection={content5} spacing={0}>
           <VStack
             border={bordes}
-            w={"full"}
+            w={full}
             p={5}
             mx={5}
             textAlign={"center"}
@@ -130,7 +154,7 @@ export default function StepsContent() {
           </VStack>
           <VStack
             border={bordes}
-            w={"full"}
+            w={full}
             p={5}
             mx={5}
             textAlign={"center"}
@@ -160,19 +184,35 @@ export default function StepsContent() {
       ),
     },
     {
+      setFlag1,
+      setFlag2,
+      setItems,
       label: "Create",
       icon: CreateProduct,
+      content: <UserData {...data} />,
+    },
+    {
+      setFlag1,
+      setFlag2,
+      setItems,
+      label: "Información",
+      icon: ListEspera,
       content: (
-        <UserData
-          word={{
-            b: "Add",
-            d: `Create a new ${
-              flag1.toString() === "true" ? "Producto" : "Servicio"
-            }`,
-            w1: (flag1.toString() === "true" && "Producto") || "",
-            w2: (flag2.toString() === "true" && "Servicio") || "",
-          }}
-        />
+        <Stack w={full} spacing={5}>
+          <Heading size={"sm"}>Por favor guarda toda esta información </Heading>
+          <HStack>
+            <Heading size={"sm"}>Nombre:</Heading>
+            <Text>Edgar Marcano</Text>
+          </HStack>
+          <HStack>
+            <Heading size={"sm"}>Correo:</Heading>
+            <Text>ehms1975@gmail.com</Text>
+          </HStack>
+          <HStack w={full}>
+            <Heading size={"sm"}>Telefono:</Heading>
+            <Text>+1 973 510 8452</Text>
+          </HStack>
+        </Stack>
       ),
     },
   ];

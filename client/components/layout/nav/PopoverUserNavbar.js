@@ -14,6 +14,7 @@ import {
   Product,
   ShopAll,
   VentaIcon,
+  VentasClient,
 } from "../../../helpers/IconNew";
 
 const PopoverUserNavbar = ({
@@ -58,6 +59,16 @@ const PopoverUserNavbar = ({
             variant={"secondary"}
             href={"/user/selling"}
             name={"Quieres vender"}
+          />
+        </ListItem>
+        <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
+        <ListItem>
+          <NavLink
+            leftIcon={<VentasClient />}
+            fontWeight={"normal"}
+            variant={"secondary"}
+            href={"/user/list"}
+            name={"Mis ventas"}
           />
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
