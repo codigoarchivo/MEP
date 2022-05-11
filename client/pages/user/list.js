@@ -59,7 +59,7 @@ import { listDataUser } from "../../actions/user";
 
 import Toast from "../../helpers/Toast";
 
-const List = ({ data }) => {
+const list = ({ data }) => {
   // router
   const router = useRouter();
   // breakpoints
@@ -283,4 +283,4 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default List;
+export default list;

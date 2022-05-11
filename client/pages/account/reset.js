@@ -4,7 +4,7 @@ import { Container, Flex } from "@chakra-ui/react";
 
 import ResetPassword from "../../components/log/ResetPassword";
 
-const Reset = () => {
+const reset = () => {
   return (
     <>
       <Container maxW={"container.sm"}>
@@ -16,4 +16,4 @@ const Reset = () => {
   );
 };
 
-export default Reset;
+export default reset;

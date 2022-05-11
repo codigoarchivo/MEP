@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useDispatch } from "react-redux";
 
@@ -8,7 +8,7 @@ import { auth } from "../firebase/config";
 
 import { login } from "../actions/auth";
 
-const useAuth = () => {
+const AuthChange = () => {
   // dispatch
   const dispatch = useDispatch();
   // checking
@@ -16,10 +16,9 @@ const useAuth = () => {
   // isloggedIn
   const [isloggedIn, setIsloggedIn] = useState(false);
 
-  useEffect(() => {
+  useMemo(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setIsloggedIn(true);
         const dA = process.env.NEXT_PUBLIC_ROL_A;
         dispatch(
           login(
@@ -28,25 +27,18 @@ const useAuth = () => {
             user.photoURL,
             user.email,
             user.uid === dA.toString() ? "owner" : "user",
-            checking,
-            isloggedIn
           )
         );
+
+        setIsloggedIn(true);
       } else {
         setIsloggedIn(false);
       }
       setChecking(false);
     });
-    return () => {
-      setChecking(true);
-      setIsloggedIn(false);
-    };
   }, [dispatch, setIsloggedIn, setChecking]);
 
-  return {
-    checking,
-    isloggedIn,
-  };
+  return null;
 };
 
-export default useAuth;
+export default AuthChange;

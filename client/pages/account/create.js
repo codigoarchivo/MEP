@@ -8,7 +8,7 @@ import CreateUser from "../../components/log/CreateUser";
 
 import { useSelector } from "react-redux";
 
-const Create = () => {
+const create = () => {
   // selector
   const {
     activeSelect: { isloggedIn },
@@ -29,4 +29,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default create;

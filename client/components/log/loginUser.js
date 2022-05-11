@@ -46,7 +46,7 @@ const LoginUser = ({ handleReview }) => {
   // vista de la contraseña
   const { show, handleClick } = useFormShow();
   // guardar states
-  const [values, handleInputChange] = useForm(initialStates);
+  const { values, handleInputChange } = useForm(initialStates);
   // validar
   const { emailE, passwordL, field, fiel, ErrorRorL } = Validator(values);
   // mode Color

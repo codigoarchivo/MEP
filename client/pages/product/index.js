@@ -56,7 +56,7 @@ import {
   useModality3,
 } from "../../hooks/useModality";
 
-const ProductList = ({ data, dataC }) => {
+const product = ({ data, dataC }) => {
   // router
   const router = useRouter();
   // breakpoints
@@ -285,4 +285,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default ProductList;
+export default product;

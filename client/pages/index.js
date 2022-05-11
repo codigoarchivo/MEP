@@ -16,14 +16,14 @@ import { listDataCategory } from "../actions/category";
 
 import Toast from "../helpers/Toast";
 
-const HomeL = ({ data, dataC }) => {
+const HomeL = ({ product, category }) => {
   // dispatch
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(serchProductList(data));
-    dispatch(listDataProduct(data));
-    dispatch(listDataCategory(dataC));
+    dispatch(serchProductList(product));
+    dispatch(listDataProduct(product));
+    dispatch(listDataCategory(category));
   }, [dispatch]);
 
   return (
@@ -45,20 +45,20 @@ export async function getStaticProps() {
     const elC = await getDocs(qC);
     const el = await getDocs(q);
 
-    const data = el.docs.map((doc) => ({
+    const product = el.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
 
-    const dataC = elC.docs.map((doc) => ({
+    const category = elC.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
 
     return {
       props: {
-        data,
-        dataC,
+        product,
+        category,
       },
     };
   } catch (error) {

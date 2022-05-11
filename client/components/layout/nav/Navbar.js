@@ -66,6 +66,7 @@ import NavbarCart from "./NavbarCart";
 import { logout } from "../../../actions/auth";
 
 import useFormChange from "../../../hooks/useFormChange";
+
 import Toast from "../../../helpers/Toast";
 
 const Navbar = () => {
@@ -75,6 +76,7 @@ const Navbar = () => {
   const router = useRouter();
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
+  const a = activeSelect;
   // selector
   const { list } = useSelector(({ category }) => category);
   // selector
@@ -305,7 +307,7 @@ const Navbar = () => {
             </GridItem>
             <GridItem as={"li"} colSpan={5} display={displayOff2}>
               <Flex mx={4} justifyContent="space-around" alignItems={"center"}>
-                {activeSelect?.isloggedIn ? (
+                {a?.email && a?.rol && a?.displayName ? (
                   <>
                     {!activeSelectCheck.length > 0 ? (
                       <Box
@@ -374,7 +376,7 @@ const Navbar = () => {
                   />
                 )}
 
-                {activeSelect?.isloggedIn ? (
+                {a?.email && a?.rol && a?.displayName ? (
                   <Box position={"relative"}>
                     <NavLink
                       px={0}
@@ -409,11 +411,8 @@ const Navbar = () => {
 
                 <Popover isLazy>
                   <PopoverTrigger>
-                    {!activeSelect?.photoURL ? (
-                      <Avatar
-                        cursor={"pointer"}
-                        name={activeSelect?.displayName}
-                      />
+                    {!a?.photoURL ? (
+                      <Avatar cursor={"pointer"} name={a?.displayName} />
                     ) : (
                       <AspectRatio
                         ratio={16 / 9}
@@ -423,7 +422,7 @@ const Navbar = () => {
                         cursor={"pointer"}
                       >
                         <Image
-                          src={activeSelect?.photoURL}
+                          src={a?.photoURL}
                           alt="Perfil"
                           layout="fill"
                           objectFit="contain"
@@ -434,9 +433,7 @@ const Navbar = () => {
                   <PopoverContent>
                     <PopoverHeader fontWeight="semibold" borderBottomWidth={0}>
                       <HStack spacing={6}>
-                        <Heading size={"md"}>
-                          {activeSelect?.displayName}
-                        </Heading>
+                        <Heading size={"md"}>{a?.displayName}</Heading>
                         <Button
                           onClick={toggleColorMode}
                           size="xs"
@@ -450,7 +447,7 @@ const Navbar = () => {
                           )}
                         </Button>
                       </HStack>
-                      <Text fontSize="sm">{activeSelect?.email}</Text>
+                      <Text fontSize="sm">{a?.email}</Text>
                     </PopoverHeader>
                     <PopoverArrow />
                     <PopoverCloseButton />
@@ -480,15 +477,7 @@ const Navbar = () => {
       </Container>
 
       {/* BreadcrumbNavbar */}
-      <BreadcrumbNavbar
-        activeSelect={activeSelect}
-        Heading={Heading}
-        HStack={HStack}
-        Grid={Grid}
-        GridItem={GridItem}
-        NavLink={NavLink}
-        Box={Box}
-      />
+      <BreadcrumbNavbar NavLink={NavLink} Box={Box} />
     </>
   );
 };

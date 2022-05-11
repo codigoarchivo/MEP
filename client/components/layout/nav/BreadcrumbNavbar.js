@@ -10,9 +10,12 @@ import Breakpoints from "../../../helpers/Breakpoints";
 
 import { serchProductList } from "../../../actions/product";
 
-export const BreadcrumbNavbar = ({ NavLink, Box, activeSelect }) => {
+export const BreadcrumbNavbar = ({ NavLink, Box }) => {
   // selector
   const { list } = useSelector(({ product }) => product);
+  // selector
+  const { activeSelect } = useSelector(({ auth }) => auth);
+  const a = activeSelect;
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -49,7 +52,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box, activeSelect }) => {
               name={"About"}
             />
           </chakra.li>
-          {activeSelect?.rol === "owner" && (
+          {a?.rol === "owner" && (
             <chakra.li mx={"3"}>
               <NavLink
                 fontWeight={"normal"}
@@ -59,7 +62,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box, activeSelect }) => {
               />
             </chakra.li>
           )}
-          {activeSelect?.rol === "owner" && (
+          {a?.rol === "owner" && (
             <chakra.li mx={"3"}>
               <NavLink
                 fontWeight={"normal"}

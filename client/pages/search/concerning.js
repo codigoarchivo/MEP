@@ -5,14 +5,14 @@ import Layout from "../../components/layout/Layout";
 import { Container, Heading } from "@chakra-ui/react";
 
 
-const Concerning = () => {
+const concerning = () => {
   return (
     <Layout>
       <Container maxW={"container.xs"}>
-          <Heading>Concerning</Heading>
+          <Heading>concerning</Heading>
       </Container>
     </Layout>
   );
 };
 
-export default Concerning;
+export default concerning;

@@ -36,23 +36,19 @@ const initialStates = {
   displayName: "",
 };
 
-const User = () => {
+const user = () => {
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
+  const a = activeSelect;
   // dispatch
   const dispatch = useDispatch();
   // mode Color
-  const { bg, bg2 } = ModeColor();
+  const { bg } = ModeColor();
   // Breakpoints
   const { content5, points24, porcent3, porcent4, bordes } = Breakpoints();
   // file
   const file = useRef();
-  // useForm
-
-  const el = activeSelect;
-  // values
-  el?.photoURL === null ? (el?.photoURL = "") : el?.photoURL;
-  el?.displayName === null ? (el?.displayName = "") : el?.displayName;
+  
 
   const [
     values,
@@ -61,6 +57,7 @@ const User = () => {
     handleInputChange,
     handleInputChange2,
   ] = useFormUser(initialStates, activeSelect);
+  
   // agrega imagen
   values.photoURL = urlImage ? urlImage : values.photoURL;
   // values
@@ -68,107 +65,98 @@ const User = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(changeNameImgTel(uid, photoURL, displayName, el.email, el.rol));
+    dispatch(changeNameImgTel(uid, photoURL, displayName, a?.email, a?.rol));
     Toast("Datos actualizados", "success", 5000);
   };
 
   return (
     <Layout>
-      {activeSelect?.isloggedIn === true && activeSelect?.rol === "owner" ? (
-        <Container maxW={"container.lg"} mt={10}>
-          <VStack>
-            <Heading size={"lg"} textAlign="center">
-              Perfil público
-            </Heading>
-            <Heading size={"sm"} fontWeight={"normal"}>
-              Información Basica
-            </Heading>
-          </VStack>
-          <Stack
-            flexDirection={content5}
-            justifyContent={"space-around"}
-            p={points24}
-            alignItems={"center"}
-          >
-            <VStack spacing={12} h={"full"} p={5} mx={5} w={porcent4}>
-              <Box border={bordes} p={5} rounded={5}>
-                {!photoURL ? (
-                  <Avatar size="2xl" name={displayName} />
-                ) : (
-                  <AspectRatio
-                    ratio={16 / 9}
-                    w={70}
-                    h={70}
-                    position={"relative"}
-                  >
-                    <Image
-                      src={photoURL}
-                      alt="Perfil"
-                      layout="fill"
-                      objectFit="contain"
-                    />
-                  </AspectRatio>
-                )}
-              </Box>
-              <VStack>
-                <Heading size={"md"}>Perfil Usuario</Heading>
-                <Heading size={"sm"} fontWeight={"normal"}>
-                  {displayName}
-                </Heading>
-              </VStack>
-            </VStack>
-            <chakra.form
-              w={porcent3}
-              p={5}
-              mx={5}
-              border={bordes}
-              onSubmit={handleSubmit}
-            >
-              <VStack spacing={10}>
-                <Heading size={"xs"} w={"full"} fontWeight={"normal"}>
-                  Información Basica
-                </Heading>
-                <InputGroup>
-                  <Button
-                    w={"full"}
-                    rightIcon={<DownloadIcon w={6} h={6} />}
-                    variant={"outline"}
-                    textTransform={"uppercase"}
-                    onClick={() => file.current.click()}
-                    size="md"
-                    fontWeight={"normal"}
-                    _hover={{ border: bg }}
-                    p={1}
-                  >
-                    Foto de Perfil : {progress}%
-                  </Button>
-                  <chakra.input
-                    onChange={handleInputChange2}
-                    name="photoURL"
-                    type={"file"}
-                    ref={file}
-                    display="none"
+      <Container maxW={"container.lg"} mt={10}>
+        <VStack>
+          <Heading size={"lg"} textAlign="center">
+            Perfil público
+          </Heading>
+          <Heading size={"sm"} fontWeight={"normal"}>
+            Información Basica
+          </Heading>
+        </VStack>
+        <Stack
+          flexDirection={content5}
+          justifyContent={"space-around"}
+          p={points24}
+          alignItems={"center"}
+        >
+          <VStack spacing={12} h={"full"} p={5} mx={5} w={porcent4}>
+            <Box border={bordes} p={5} rounded={5}>
+              {!photoURL ? (
+                <Avatar size="2xl" name={displayName} />
+              ) : (
+                <AspectRatio ratio={16 / 9} w={70} h={70} position={"relative"}>
+                  <Image
+                    src={photoURL}
+                    alt="Perfil"
+                    layout="fill"
+                    objectFit="contain"
                   />
-                </InputGroup>
-
-                <Input
-                  onChange={handleInputChange}
-                  value={displayName}
-                  name={"displayName"}
-                  placeholder="Escribe tu nombre"
-                />
-                <Button variant={"primary"} type="submit" ml={3}>
-                  Guardar
+                </AspectRatio>
+              )}
+            </Box>
+            <VStack>
+              <Heading size={"md"}>Perfil Usuario</Heading>
+              <Heading size={"sm"} fontWeight={"normal"}>
+                {displayName}
+              </Heading>
+            </VStack>
+          </VStack>
+          <chakra.form
+            w={porcent3}
+            p={5}
+            mx={5}
+            border={bordes}
+            onSubmit={handleSubmit}
+          >
+            <VStack spacing={10}>
+              <Heading size={"xs"} w={"full"} fontWeight={"normal"}>
+                Información Basica
+              </Heading>
+              <InputGroup>
+                <Button
+                  w={"full"}
+                  rightIcon={<DownloadIcon w={6} h={6} />}
+                  variant={"outline"}
+                  textTransform={"uppercase"}
+                  onClick={() => file.current.click()}
+                  size="md"
+                  fontWeight={"normal"}
+                  _hover={{ border: bg }}
+                  p={1}
+                >
+                  Foto de Perfil : {progress}%
                 </Button>
-              </VStack>
-            </chakra.form>
-          </Stack>
-        </Container>
-      ) : (
-        ""
-      )}
+                <chakra.input
+                  onChange={handleInputChange2}
+                  name="photoURL"
+                  type={"file"}
+                  ref={file}
+                  display="none"
+                />
+              </InputGroup>
+
+              <Input
+                onChange={handleInputChange}
+                value={displayName}
+                name={"displayName"}
+                placeholder="Escribe tu nombre"
+              />
+              <Button variant={"primary"} type="submit" ml={3}>
+                Guardar
+              </Button>
+            </VStack>
+          </chakra.form>
+        </Stack>
+      </Container>
     </Layout>
   );
 };
 
-export default User;
+export default user;

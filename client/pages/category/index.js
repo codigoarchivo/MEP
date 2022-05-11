@@ -56,7 +56,7 @@ import {
 
 import { listDataProduct } from "../../actions/product";
 
-const CategoryList = ({ data, dataC }) => {
+const category = ({ data, dataC }) => {
   // router
   const router = useRouter();
   // breakpoints
@@ -287,4 +287,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default CategoryList;
+export default category;

@@ -70,7 +70,7 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import NavLink from "../../helpers/Navlink";
 
-const serchList = ({ data }) => {
+const search = ({ productos }) => {
   // Breakpoints
   const { bordes } = Breakpoints();
   // dispatch
@@ -78,7 +78,8 @@ const serchList = ({ data }) => {
   // dispatch
   const router = useRouter();
   // selector
-  const { listSerch } = useSelector(({ product }) => product);
+  const product = useSelector(({ product }) => product);
+  const { listSerch } = product;
   // selector
   const { list } = useSelector(({ category }) => category);
   // modality
@@ -93,15 +94,15 @@ const serchList = ({ data }) => {
   const min = useRef(0);
 
   useEffect(() => {
-    dispatch(serchProductList(data));
-    dispatch(listDataProduct(data));
+    dispatch(serchProductList(productos));
+    dispatch(listDataProduct(productos));
   }, [dispatch]);
 
-  max.current = data.reduce(
+  max.current = product.list?.reduce(
     (n, m) => Math.max(n, Number(m.pr)),
     -Number.POSITIVE_INFINITY
   );
-  min.current = data.reduce(
+  min.current = product.list?.reduce(
     (n, m) => Math.min(n, Number(m.pr)),
     Number.POSITIVE_INFINITY
   );
@@ -114,14 +115,14 @@ const serchList = ({ data }) => {
     const q = router.query.q?.toLowerCase();
     const r = router.query.r;
 
-    const filtro = data
-      .filter((item) => {
+    const filtro = product.list
+      ?.filter((item) => {
         return c ? item.ct.includes(c) : item.na.toLowerCase().includes(q);
       })
       .slice(0, 25);
 
-    const filtroR = data
-      .filter((item) => {
+    const filtroR = product.list
+      ?.filter((item) => {
         return item.pr >= listPrice[0] && item.pr <= listPrice[1];
       })
       .slice(0, 25);
@@ -402,17 +403,17 @@ const serchList = ({ data }) => {
 export async function getStaticProps() {
   try {
     const q = query(collection(db, "serchs"), limit(25), orderBy("na", "asc"));
-
+    
     const el = await getDocs(q);
 
-    const data = el.docs.map((doc) => ({
+    const productos = el.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
 
     return {
       props: {
-        data,
+        productos,
       },
     };
   } catch (error) {
@@ -420,4 +421,4 @@ export async function getStaticProps() {
   }
 }
 
-export default serchList;
+export default search;

@@ -8,7 +8,7 @@ import Layout from "../../components/layout/layout";
 
 import UserData from "../../components/user/UserData";
 
-const Ajustar = () => {
+const ajustar = () => {
   // router
   const router = useRouter();
   const data = router.query;
@@ -22,4 +22,4 @@ const Ajustar = () => {
   );
 };
 
-export default Ajustar;
+export default ajustar;

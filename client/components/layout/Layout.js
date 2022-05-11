@@ -11,6 +11,8 @@ import { chakra } from "@chakra-ui/react";
 import Navbar from "./nav/Navbar";
 import Footer from "./foo/Footer";
 
+import AuthChange from "../../helpers/AuthChange";
+
 const Layout = ({ children }) => {
   return (
     <>
@@ -24,12 +26,13 @@ const Layout = ({ children }) => {
         />
       </Head>
       <Provider store={store}>
+        <AuthChange />
         <chakra.header>
           <Navbar />
         </chakra.header>
 
         <chakra.main>{children}</chakra.main>
-        
+
         <chakra.footer w={"full"}>
           <Footer />
         </chakra.footer>
