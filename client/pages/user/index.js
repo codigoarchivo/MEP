@@ -26,8 +26,6 @@ import Toast from "../../helpers/Toast";
 
 import Layout from "../../components/layout/layout";
 
-import useAuth from "../../hooks/useAuth";
-
 import useFormUser from "../../hooks/useFormUser";
 
 import { changeNameImgTel } from "../../actions/auth";
@@ -41,8 +39,6 @@ const initialStates = {
 const User = () => {
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
-  // useAuth
-  const { isloggedIn } = useAuth();
   // dispatch
   const dispatch = useDispatch();
   // mode Color
@@ -78,7 +74,7 @@ const User = () => {
 
   return (
     <Layout>
-      {isloggedIn === true && activeSelect?.rol === "owner" ? (
+      {activeSelect?.isloggedIn === true && activeSelect?.rol === "owner" ? (
         <Container maxW={"container.lg"} mt={10}>
           <VStack>
             <Heading size={"lg"} textAlign="center">

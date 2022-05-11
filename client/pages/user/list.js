@@ -45,13 +45,9 @@ import Layout from "../../components/layout/layout";
 
 import { db } from "../../firebase/config";
 
-import { activeProduct, listDataProduct } from "../../actions/product";
-
-import { listDataCategory } from "../../actions/category";
+import { listDataProduct } from "../../actions/product";
 
 import Breakpoints from "../../helpers/Breakpoints";
-
-import useAuth from "../../hooks/useAuth";
 
 import {
   useModality,
@@ -72,7 +68,7 @@ const List = ({ data }) => {
   const { list } = useSelector(({ user }) => user);
   // selector
   const {
-    activeSelect: { rol, uid },
+    activeSelect: { rol, uid, isloggedIn },
   } = useSelector(({ auth }) => auth);
   // modality
   const { modality, setModality } = useModality(true);
@@ -82,11 +78,8 @@ const List = ({ data }) => {
   const { modality3, setModality3 } = useModality3(true);
   // dispatch
   const dispatch = useDispatch();
-  // useAuth
-  //TODO revisa para que sirve y si se puede ahorrar datos
-  const { isloggedIn } = useAuth();
 
-  if (rol === "" && !isloggedIn && uid === "" ) {
+  if (rol === "" && !isloggedIn && uid === "") {
     router.push("/");
   }
 

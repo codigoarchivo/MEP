@@ -50,8 +50,6 @@ import { listDataCategory } from "../../actions/category";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import useAuth from "../../hooks/useAuth";
-
 import {
   useModality,
   useModality2,
@@ -75,8 +73,6 @@ const ProductList = ({ data, dataC }) => {
   const { modality3, setModality3 } = useModality3(true);
   // dispatch
   const dispatch = useDispatch();
-  // useAuth
-  const { isloggedIn } = useAuth();
 
   if (activeSelect?.rol === "user") {
     router.push("/");
@@ -172,7 +168,7 @@ const ProductList = ({ data, dataC }) => {
 
   return (
     <Layout>
-      {isloggedIn === true && activeSelect?.rol === "owner" ? (
+      {activeSelect?.isloggedIn === true && activeSelect?.rol === "owner" ? (
         <Container maxW={"container.lg"} my={10}>
           <Box p={5}>
             {!list[0] && (

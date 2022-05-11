@@ -48,13 +48,12 @@ import { db } from "../../firebase/config";
 
 import { activeCategory, listDataCategory } from "../../actions/category";
 
-import useAuth from "../../hooks/useAuth";
-
 import {
   useModality,
   useModality2,
   useModality3,
 } from "../../hooks/useModality";
+
 import { listDataProduct } from "../../actions/product";
 
 const CategoryList = ({ data, dataC }) => {
@@ -72,8 +71,6 @@ const CategoryList = ({ data, dataC }) => {
   const { modality2, setModality2 } = useModality2();
   // modality
   const { modality3, setModality3 } = useModality3(true);
-  // useAuth
-  const { isloggedIn } = useAuth();
   // dispatch
   const dispatch = useDispatch();
 
@@ -176,7 +173,7 @@ const CategoryList = ({ data, dataC }) => {
 
   return (
     <Layout>
-      {isloggedIn === true && activeSelect?.rol === "owner" ? (
+      {activeSelect?.isloggedIn === true && activeSelect?.rol === "owner" ? (
         <Container maxW={"container.sm"} my={10}>
           <Box p={5}>
             {!list[0] && (

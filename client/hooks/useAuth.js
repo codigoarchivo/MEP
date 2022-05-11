@@ -11,11 +11,13 @@ import { login } from "../actions/auth";
 const useAuth = () => {
   // dispatch
   const dispatch = useDispatch();
+  // checking
   const [checking, setChecking] = useState(true);
+  // isloggedIn
   const [isloggedIn, setIsloggedIn] = useState(false);
 
   useEffect(() => {
-    onAuthStateChanged(auth, async (user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsloggedIn(true);
         const dA = process.env.NEXT_PUBLIC_ROL_A;
@@ -25,7 +27,9 @@ const useAuth = () => {
             user.displayName,
             user.photoURL,
             user.email,
-            user.uid === dA.toString() ? "owner" : "user"
+            user.uid === dA.toString() ? "owner" : "user",
+            checking,
+            isloggedIn
           )
         );
       } else {
@@ -35,6 +39,7 @@ const useAuth = () => {
     });
     return () => {
       setChecking(true);
+      setIsloggedIn(false);
     };
   }, [dispatch, setIsloggedIn, setChecking]);
 

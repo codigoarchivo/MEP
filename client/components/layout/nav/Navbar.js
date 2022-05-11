@@ -60,7 +60,6 @@ import { BreadcrumbNavbar } from "./BreadcrumbNavbar";
 import PopoverUserNavbar from "./PopoverUserNavbar";
 
 import { useModality } from "../../../hooks/useModality";
-import useAuth from "../../../hooks/useAuth";
 
 import NavbarCart from "./NavbarCart";
 
@@ -89,8 +88,6 @@ const Navbar = () => {
   const { toggleColorMode, colorMode } = useColorMode();
   // drawer
   const { isOpen, onClose, onOpen } = useDisclosure();
-  // useAuth
-  const { isloggedIn } = useAuth();
   // mode Color
   const { bg2 } = ModeColor();
   // Breakpoints
@@ -308,7 +305,7 @@ const Navbar = () => {
             </GridItem>
             <GridItem as={"li"} colSpan={5} display={displayOff2}>
               <Flex mx={4} justifyContent="space-around" alignItems={"center"}>
-                {isloggedIn ? (
+                {activeSelect?.isloggedIn ? (
                   <>
                     {!activeSelectCheck.length > 0 ? (
                       <Box
@@ -377,7 +374,7 @@ const Navbar = () => {
                   />
                 )}
 
-                {isloggedIn ? (
+                {activeSelect?.isloggedIn ? (
                   <Box position={"relative"}>
                     <NavLink
                       px={0}

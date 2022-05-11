@@ -18,7 +18,15 @@ import { doc, setDoc } from "firebase/firestore";
 
 import Toast from "../helpers/Toast";
 
-export const login = (uid, displayName, photoURL, email, rol) => ({
+export const login = (
+  uid,
+  displayName,
+  photoURL,
+  email,
+  rol,
+  checking,
+  isloggedIn
+) => ({
   type: types.login,
   payload: {
     uid,
@@ -26,6 +34,8 @@ export const login = (uid, displayName, photoURL, email, rol) => ({
     photoURL,
     email,
     rol,
+    checking,
+    isloggedIn,
   },
 });
 

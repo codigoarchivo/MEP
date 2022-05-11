@@ -6,11 +6,13 @@ import { Container, Flex } from "@chakra-ui/react";
 
 import CreateUser from "../../components/log/CreateUser";
 
-import useAuth from "../../hooks/useAuth";
+import { useSelector } from "react-redux";
 
 const Create = () => {
-  // useAuth
-  const { isloggedIn } = useAuth();
+  // selector
+  const {
+    activeSelect: { isloggedIn },
+  } = useSelector(({ auth }) => auth);
   // router
   const router = useRouter();
 
