@@ -12,6 +12,7 @@ import {
   onSnapshot,
   limitToLast,
   getDocs,
+  where,
 } from "firebase/firestore";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -402,8 +403,12 @@ const search = ({ productos }) => {
 
 export async function getStaticProps() {
   try {
-    const q = query(collection(db, "serchs"), limit(25), orderBy("na", "asc"));
-    
+    const q = query(
+      collection(db, "serchs"),
+      limit(25),
+      orderBy("na", "asc"),
+    );
+
     const el = await getDocs(q);
 
     const productos = el.docs.map((doc) => ({

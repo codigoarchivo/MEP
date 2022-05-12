@@ -18,8 +18,6 @@ import {
   Tr,
 } from "@chakra-ui/react";
 
-import Breakpoints from "../../helpers/Breakpoints";
-
 import {
   CheckCircleIcon,
   DeleteIcon,
@@ -38,8 +36,6 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
   const dispatch = useDispatch();
   // router
   const router = useRouter();
-  // breakpoints
-  const { displayOff3, points18 } = Breakpoints();
 
   const data = {
     id,
@@ -59,24 +55,24 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
   // edit
   const handleEdit = () => {
     router.push({
-      pathname: "/product/[pid]",
-      query: { pid: "Edit", ...data },
+      pathname: "/product/[product]",
+      query: { product: "edit", ...data },
     });
   };
 
   // delete
   const handleDelete = () => {
     router.push({
-      pathname: "/product/[pid]",
-      query: { pid: "Delete", id },
+      pathname: "/product/[product]",
+      query: { product: "delete", id },
     });
   };
 
   // detalles
   const handleDetails = () => {
     router.push({
-      pathname: "/product/[pid]",
-      query: { pid: "Details", dt },
+      pathname: "/product/[product]",
+      query: { product: "details", dt },
     });
   };
 

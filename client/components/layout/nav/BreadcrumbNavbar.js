@@ -57,7 +57,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
               <NavLink
                 fontWeight={"normal"}
                 variant={"secondary"}
-                href={"/product"}
+                href={"/product/list"}
                 name={"product"}
               />
             </chakra.li>

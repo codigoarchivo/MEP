@@ -51,7 +51,7 @@ const ProductData = () => {
   // validar
   const { fiel, estado, ErrorRetur, ErrorRetur2 } = Validator(values);
   // values
-  const { na, pr, ds, ct, cn, dt, im, es, id, pid } = values;
+  const { na, pr, ds, ct, cn, dt, im, es, id, product } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -62,18 +62,18 @@ const ProductData = () => {
     if (ErrorRetur) {
       return Toast(fiel, "error", 5000);
     } else {
-      pid === "Add" &&
+      product === "Add" &&
         dispatch(addProduct({ na, pr, ds, ct, cn, dt, im, es: true }));
-      pid === "Edit" &&
+      product === "Edit" &&
         dispatch(editProduct({ na, pr, ds, ct, cn, dt, im, es, id }));
-      pid === "Delete" && dispatch(deleteProduct(id));
+      product === "Delete" && dispatch(deleteProduct(id));
     }
 
     onClose();
   };
   // cerrar
   const onClose = () => {
-    router.push("/product");
+    router.push("/product/list");
   };
 
   return (
@@ -82,20 +82,20 @@ const ProductData = () => {
         <HStack w={"full"}>
           <CloseButton size="md" onClick={onClose} />
           <Heading as="h1" size={"md"} textTransform={"uppercase"}>
-            {pid}
+            {product}
           </Heading>
         </HStack>
-        {pid === "Details" || pid === "Delete" ? (
+        {product === "details" || product === "delete" ? (
           <ProductFormWord
             handleSubmit={handleSubmit}
             HStack={HStack}
             dt={dt}
-            pid={pid}
+            product={product}
             onClose={onClose}
           />
         ) : (
           <ProductForm
-            pid={pid}
+            product={product}
             na={na}
             pr={pr}
             ds={ds}

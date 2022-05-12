@@ -1,4 +1,11 @@
-import { addDoc, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 import { db } from "../firebase/config";
 
@@ -79,7 +86,7 @@ const productDelete = (id) => ({
 export const productActiveOrInactive = (data) => {
   return async (dispatch) => {
     try {
-      await setDoc(doc(db, "serchs", data?.id), data);
+      await updateDoc(doc(db, "serchs", data.id), { es: data.es });
       dispatch(activeOrInactiveProduct(data));
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);

@@ -89,7 +89,7 @@ const PopoverUserNavbar = ({
                 leftIcon={<Product />}
                 fontWeight={"normal"}
                 variant={"secondary"}
-                href={"/product"}
+                href={"/product/list"}
                 name={"product"}
               />
             </ListItem>

@@ -24,7 +24,7 @@ import {
 import ModeColor from "../../helpers/ModeColor";
 
 const ProductForm = ({
-  pid,
+  product,
   na,
   pr,
   ds,
@@ -178,7 +178,7 @@ const ProductForm = ({
                 Close
               </Button>
               <Button variant={"primary"} type="submit" ml={3}>
-                {pid}
+                {product}
               </Button>
             </HStack>
           </GridItem>

@@ -55,8 +55,9 @@ import {
   useModality2,
   useModality3,
 } from "../../hooks/useModality";
+import Toast from "../../helpers/Toast";
 
-const product = ({ data, dataC }) => {
+const List = ({ data, dataC }) => {
   // router
   const router = useRouter();
   // breakpoints
@@ -65,6 +66,7 @@ const product = ({ data, dataC }) => {
   const { list } = useSelector(({ product }) => product);
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
+  const a = activeSelect;
   // modality
   const { modality, setModality } = useModality(true);
   // modality
@@ -74,7 +76,7 @@ const product = ({ data, dataC }) => {
   // dispatch
   const dispatch = useDispatch();
 
-  if (activeSelect?.rol === "user") {
+  if (a?.rol === "user") {
     router.push("/");
   }
 
@@ -86,8 +88,8 @@ const product = ({ data, dataC }) => {
   // add
   const handleAdd = () => {
     router.push({
-      pathname: "/product/[pid]",
-      query: { pid: "Add" },
+      pathname: "/product/[product]",
+      query: { product: "add" },
     });
   };
 
@@ -168,7 +170,7 @@ const product = ({ data, dataC }) => {
 
   return (
     <Layout>
-      {activeSelect?.isloggedIn === true && activeSelect?.rol === "owner" ? (
+      {a?.rol === "owner" ? (
         <Container maxW={"container.lg"} my={10}>
           <Box p={5}>
             {!list[0] && (
@@ -285,4 +287,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default product;
+export default List;
