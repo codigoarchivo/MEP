@@ -16,7 +16,9 @@ import { types } from "../type";
 export const listDataProduct = (data) => {
   return async (dispatch) => {
     try {
-      await dispatch(productDataList(data));
+      if (data) {
+        await dispatch(productDataList(data));
+      }
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }
@@ -187,6 +189,33 @@ export const listProductSerchClose = () => ({
   type: types.emptySerch,
 });
 
+export const saveSale = (data) => {
+  return (dispatch) => {
+    try {
+      data.map(async (d) => {
+        if (d.sale?.id === d.product?.uid) {
+          await addDoc(collection(db, "users", d.sale?.id, "sales"), {
+            sale: d.sale,
+            buy: d.buy,
+            process: d.process,
+            product: d.product,
+          });
+        }
+
+        await addDoc(collection(db, "users", d.uidC, "buys"), {
+          sale: d.sale,
+          buy: d.buy,
+          process: d.process,
+          product: d.product,
+        });
+      });
+
+      dispatch(activeProduct(data));
+    } catch (error) {
+      Toast("Al parecer hay un error", "error", 5000);
+    }
+  };
+};
 export const activeProduct = (data) => ({
   type: types.productActive,
   payload: data,

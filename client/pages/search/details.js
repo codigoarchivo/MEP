@@ -54,7 +54,7 @@ const details = ({ data }) => {
   // Breakpoints
   const { content5, full, bordes } = Breakpoints();
   // values
-  const { id, na, pr, im, ds, ct, cn, es, dt } = router.query;
+  const { id, na, pr, im, ds, ct, cn, es, dt, uid } = router.query;
 
   // list Category
   const listCt = list.filter((item) => item.id === ct);
@@ -102,6 +102,7 @@ const details = ({ data }) => {
         cn,
         es,
         dt,
+        uid,
         rat: data.map((item) => item.rat.toString()),
       })
     );

@@ -77,10 +77,6 @@ export default function StepsContent() {
         <>
           <ListItem w={full} pt={10} pb={5}>
             <ListIcon as={CheckCircleIcon} color="brand.700" />
-            Tiene que estar registrado en nuestro sitio web
-          </ListItem>
-          <ListItem w={full} pb={5}>
-            <ListIcon as={CheckCircleIcon} color="brand.700" />
             Si tienes una cuenta en nuestro sitio web puedes{" "}
             <Button variant={"primary"} size={"xs"}>
               ingresar
@@ -207,7 +203,7 @@ export default function StepsContent() {
       icon: ListEspera,
       content: (
         <Stack w={full} spacing={5}>
-          <Heading size={"sm"}>Por favor guarda toda esta información </Heading>
+          <Heading size={"sm"}>Por favor guarda toda esta información para informar cualquier duda</Heading>
           <HStack>
             <Heading size={"sm"}>Nombre:</Heading>
             <Text>Edgar Marcano</Text>

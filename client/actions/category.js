@@ -15,7 +15,9 @@ import { types } from "../type";
 export const listDataCategory = (data) => {
   return async (dispatch) => {
     try {
-      dispatch(categoryDataList(data));
+      if (data) {
+       await dispatch(categoryDataList(data));
+      }
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }

@@ -46,11 +46,11 @@ const checkout = () => {
   const resumen = useRef(0);
 
   cat.current = activeSelectCheck.reduce(
-    (total, item) => total + Number(item.cn),
+    (total, item) => total + Number(item.product.cn),
     0
   );
   resumen.current = activeSelectCheck.reduce(
-    (total, item) => (total += Number(item.cn) * Number(item.pr)),
+    (total, item) => (total += Number(item.product.cn) * Number(item.product.pr)),
     0
   );
 
@@ -177,7 +177,7 @@ const checkout = () => {
                 </Heading>
                 {activeSelectCheck.map((item, key) => (
                   <HStack
-                    key={item.id}
+                    key={key}
                     w={full}
                     justifyContent={"space-between"}
                   >
@@ -185,7 +185,7 @@ const checkout = () => {
                       <Box as={CartList} w={5} h={5} />{" "}
                       {key ? (key += 1) : (key = 1)}:
                     </Heading>
-                    <Text size={"sm"}>{item.na}</Text>
+                    <Text size={"sm"}>{item.product.na}</Text>
                   </HStack>
                 ))}
                 <HStack w={full} justifyContent={"space-between"}>
@@ -201,13 +201,13 @@ const checkout = () => {
               {activeSelectCheck.map((item, key) => (
                 <NavLink
                   leftIcon={<CartList w={5} h={5} />}
-                  key={item.id}
+                  key={key}
                   name={`${key ? (key += 1) : (key = 1)} Calificar`}
                   href={{
                     pathname: "/search/checkout/rate",
                     query: {
-                      id: item.id,
-                      rat: item.rat,
+                      id: item.product.id,
+                      rat: item.product.rat,
                       li: activeSelectCheck.length,
                     },
                   }}

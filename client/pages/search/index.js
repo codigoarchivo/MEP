@@ -80,6 +80,7 @@ const search = ({ productos }) => {
   const router = useRouter();
   // selector
   const product = useSelector(({ product }) => product);
+  // selector
   const { listSerch } = product;
   // selector
   const { list } = useSelector(({ category }) => category);
@@ -118,7 +119,7 @@ const search = ({ productos }) => {
 
     const filtro = product.list
       ?.filter((item) => {
-        return c ? item.ct.includes(c) : item.na.toLowerCase().includes(q);
+        return c ? item.ct.includes(c) : item.na?.toLowerCase().includes(q);
       })
       .slice(0, 25);
 
@@ -400,30 +401,5 @@ const search = ({ productos }) => {
     </>
   );
 };
-
-export async function getStaticProps() {
-  try {
-    const q = query(
-      collection(db, "serchs"),
-      limit(25),
-      orderBy("na", "asc"),
-    );
-
-    const el = await getDocs(q);
-
-    const productos = el.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    return {
-      props: {
-        productos,
-      },
-    };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-  }
-}
 
 export default search;

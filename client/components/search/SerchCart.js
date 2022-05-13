@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useRouter } from "next/router";
 
@@ -14,6 +14,7 @@ import {
   AspectRatio,
   Button,
   Heading,
+  HStack,
   Stack,
   Table,
   TableCaption,
@@ -28,9 +29,9 @@ import {
 } from "@chakra-ui/react";
 
 import {
-  activeProduct,
   closeActive,
   deleteProductCart,
+  saveSale,
 } from "../../actions/product";
 
 import SerchCartSave from "./SerchCartSave";
@@ -38,6 +39,7 @@ import SerchCartSave from "./SerchCartSave";
 import Breakpoints from "../../helpers/Breakpoints";
 
 import Toast from "../../helpers/Toast";
+import UserOne from "../../helpers/UserOne";
 
 const SerchCart = () => {
   // dispatch
@@ -48,6 +50,9 @@ const SerchCart = () => {
   const dispatch = useDispatch();
   // useRef
   const inc = useRef(0);
+  // selector
+  const { activeSelect } = useSelector(({ auth }) => auth);
+  const a = activeSelect;
   // selector
   const { activeCartSelect, saveCartSelect } = useSelector(
     ({ product }) => product
@@ -64,6 +69,50 @@ const SerchCart = () => {
     activeCartSelect.map((item) => (inc.current -= Number(item.pr)));
     Toast("Eliminado con exito", "error", 5000);
   };
+  // si la lista esta llena sera false podra comprar
+  const [listUser, setListUser] = useState(true);
+  // proceso de compra
+  const [proceso, setProceso] = useState([]);
+
+  useEffect(async () => {
+    // comprador
+
+    const { dataUser } = await UserOne(a?.uid.toString());
+    const datU = dataUser;
+    if (
+      datU?.na === undefined ||
+      datU?.te === undefined ||
+      datU?.co === undefined ||
+      datU?.dt === undefined
+    ) {
+      setListUser(true);
+    } else {
+      setListUser(false);
+
+      activeCartSelect.map(async (item) => {
+        const { dataUser } = await UserOne(item?.uid.toString());
+        const datV = dataUser;
+        if (dataUser !== undefined) {
+          setProceso((proceso) => [
+            ...proceso,
+            {
+              // uid del comprador
+              uidC: a?.uid.toString(),
+              // informacion del vendedor
+              sale: datV,
+              // informacion del comprador
+              buy: datU,
+              // proceso
+              process: true,
+              // informacion del producto
+              product: item,
+            },
+          ]);
+        }
+      });
+    }
+  }, []);
+  console.log(proceso);
   // save cart
   const handleCheckout = () => {
     Swal.fire({
@@ -76,26 +125,20 @@ const SerchCart = () => {
       confirmButtonText: "Aceptar!",
     }).then((result) => {
       if (result.isConfirmed) {
-        const data = activeCartSelect.map((item) => ({
-          id: item.id,
-          cn: item.cn,
-          pr: item.pr,
-          na: item.na,
-          ds: item.ds,
-          im: item.im,
-          ct: item.ct,
-          es: item.es,
-          dt: item.dt,
-          rat: item.rat,
-        }));
         Swal.fire("Procesado!", "Si, Gracias por su Compra.", "success");
-        dispatch(activeProduct(data));
+        dispatch(saveSale(proceso));
         router.push("/search/checkout");
         dispatch(closeActive());
       }
     });
   };
 
+  const handleInfo = () => {
+    router.push({
+      pathname: "/search/info/[info]",
+      query: { info: a?.uid },
+    });
+  };
   return (
     <>
       <Stack flexDirection={"row"} w={full}>
@@ -143,13 +186,30 @@ const SerchCart = () => {
         </TableContainer>
         <VStack py={20} px={1} spacing={0} w={"25%"} style={{ marginTop: 0 }}>
           <Stack w={full} p={3} spacing={5} border={bordes}>
-            <Heading w={full} size={"md"}>
-              Total:
-            </Heading>
+            <HStack w={full}>
+              <Heading w={full} size={"md"}>
+                Total:
+              </Heading>
+              <Button
+                w={full}
+                variant={"primary"}
+                size={"xs"}
+                onClick={handleInfo}
+              >
+                {"{Datos}"}
+              </Button>
+            </HStack>
+
             <Heading w={full}>{inc.current}$</Heading>
 
-            <Button variant={"primary"} w={full} onClick={handleCheckout}>
-              Pagar
+            <Button
+              variant={"primary"}
+              w={full}
+              onClick={handleCheckout}
+              disabled={listUser}
+              size={listUser ? "xs" : "md"}
+            >
+              {listUser ? "Agregar {Datos} adicional" : "Pagar"}
             </Button>
             <Text>
               Si quiere seguir comprando puede hacer{" "}

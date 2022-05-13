@@ -31,7 +31,7 @@ import { LoveIcon } from "../../helpers/IconNew";
 import Toast from "../../helpers/Toast";
 import Breakpoints from "../../helpers/Breakpoints";
 
-const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat, ti }) => {
+const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat, ti, uid }) => {
   // useRef
   const match = useRef();
   // useRef
@@ -62,6 +62,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat, ti }) => {
     es,
     dt,
     ti,
+    uid,
     est: rat?.est,
     nam: rat?.nam,
   };

@@ -63,6 +63,9 @@ export async function getStaticProps() {
     };
   } catch (error) {
     Toast("Al parecer hay un error", "error", 5000);
+    return {
+      props: {},
+    };
   }
 }
 

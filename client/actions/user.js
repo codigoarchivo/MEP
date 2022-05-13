@@ -80,7 +80,13 @@ const userDelete = (id) => ({
 
 export const userAdicional = (data) => {
   return async (dispatch) => {
-    const vendedor = { na: data.na, te: data.te, co: data.co, dt: data.dt };
+    const vendedor = {
+      na: data.na,
+      te: data.te,
+      co: data.co,
+      dt: data.dt,
+      rol: data.rol,
+    };
     try {
       await setDoc(doc(db, "users", data.id), vendedor);
       dispatch(userAdicionalData(data));

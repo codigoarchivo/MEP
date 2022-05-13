@@ -123,6 +123,10 @@ const brandRing = {
     ring: 2,
     ringColor: "brand.500",
   },
+  _hover: {
+    backgroundColor: "brand.600",
+    color: "brand.900",
+  }
 };
 
 const CustomSteps = {
@@ -173,7 +177,14 @@ export const theme = extendTheme(
   },
   withDefaultVariant({
     variant: "filled",
-    components: ["Input", "NumberInput", "PinInput", "Select", "Textarea", "Checkbox"],
+    components: [
+      "Input",
+      "NumberInput",
+      "PinInput",
+      "Select",
+      "Textarea",
+      "Checkbox",
+    ],
   }),
   withDefaultColorScheme({
     colorScheme: "brand",

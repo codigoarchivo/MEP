@@ -60,7 +60,7 @@ const informacion = ({ data }) => {
 
     if (na === "" || te === "" || co === "" || dt === "") {
       return Toast(
-        "Si vas a vender tiene llenar todos los campos",
+        "Si vas a comprar tiene llenar todos los campos",
         "error",
         5000
       );
@@ -72,7 +72,7 @@ const informacion = ({ data }) => {
 
   // cerrar
   const onClose = () => {
-    router.push("/user/selling");
+    router.push("/search/cart");
   };
   return (
     <Layout>
@@ -90,7 +90,7 @@ const informacion = ({ data }) => {
             textTransform={"uppercase"}
             fontWeight={"normal"}
           >
-            informacion Personal para el cliente
+            informacion Personal para el vendedor
           </Heading>
           <chakra.form onSubmit={handleSubmit} w={"full"} p={3}>
             <Grid
@@ -131,7 +131,7 @@ const informacion = ({ data }) => {
                   onChange={handleInputChange}
                   value={te}
                   type={"tel"}
-                  placeholder="Nombre"
+                  placeholder="numero de telefono (+569) 99999999"
                 />
               </GridItem>
 

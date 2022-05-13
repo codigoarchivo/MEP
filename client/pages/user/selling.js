@@ -19,6 +19,7 @@ import {
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 
 import StepsContent from "../../components/user/StepsContent";
+
 import UserOne from "../../helpers/UserOne";
 
 const Selling = () => {
@@ -40,7 +41,7 @@ const Selling = () => {
 
   const [form, setForm] = useState(false);
 
-  const [listUser, setListUser] = useState(false);
+  const [listUser, setListUser] = useState(true);
 
   useEffect(() => {
     const { uid, email, rol } = activeSelect;
@@ -157,7 +158,7 @@ const Selling = () => {
                   mr={4}
                   variant="secondary"
                   onClick={handleReset}
-                  isDisabled={activeStep === 0}
+                  isDisabled={activeStep === 0 || activeStep === 3}
                 >
                   Reiniciar
                 </Button>
