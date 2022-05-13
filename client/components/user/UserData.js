@@ -96,7 +96,10 @@ const UserData = (activeSelect) => {
 
   // cerrar
   const onClose = () => {
-    router.push("/user/list");
+    router.push({
+      pathname: "/user/[list]",
+      query: { list: uid },
+    });
   };
 
   return (

@@ -71,7 +71,8 @@ export const startRegisterWithNameEmailPassword = (email, password, name) => {
           dispatch(login(user.uid, user.displayName));
           // rol
           setDoc(doc(db, "users", user.uid.toString()), {
-            uid: user.uid,
+            co: user.email,
+            na: user.displayName,
             rol: "user",
           });
           // end

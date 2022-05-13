@@ -77,3 +77,19 @@ const userDelete = (id) => ({
   type: types.userDelete,
   payload: id,
 });
+
+export const userAdicional = (data) => {
+  return async (dispatch) => {
+    const vendedor = { na: data.na, te: data.te, co: data.co, dt: data.dt };
+    try {
+      await setDoc(doc(db, "users", data.id), vendedor);
+      dispatch(userAdicionalData(data));
+    } catch (error) {
+      Toast("Al parecer hay un error", "error", 5000);
+    }
+  };
+};
+export const userAdicionalData = (data) => ({
+  type: types.userActive,
+  payload: data,
+});

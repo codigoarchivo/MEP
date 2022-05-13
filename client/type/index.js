@@ -49,4 +49,5 @@ export const types = {
   userAdd: "[USER] Add",
   userEdit: "[USER] Edit",
   userDelete: "[USER] Delete",
+  userActive: "[USER] Active",
 };

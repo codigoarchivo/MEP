@@ -68,7 +68,7 @@ const list = ({ data }) => {
   const { list } = useSelector(({ user }) => user);
   // selector
   const {
-    activeSelect: { rol, uid, isloggedIn },
+    activeSelect: { rol, uid },
   } = useSelector(({ auth }) => auth);
   // modality
   const { modality, setModality } = useModality(true);
@@ -79,16 +79,9 @@ const list = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
 
-  if (rol === "" && !isloggedIn && uid === "") {
+  if (rol === "" && uid === "") {
     router.push("/");
   }
-
-  useEffect(() => {
-    router.push({
-      pathname: "/user/list",
-      query: { uid },
-    });
-  }, []);
 
   useEffect(() => {
     dispatch(listDataUser(data));
@@ -176,7 +169,7 @@ const list = ({ data }) => {
 
   return (
     <Layout>
-      {isloggedIn === true && rol === "owner" ? (
+      {rol === "owner" ? (
         <Container maxW={"container.lg"} my={10}>
           <Box p={5}>
             {!list[0] && (

@@ -19,12 +19,14 @@ import {
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 
 import StepsContent from "../../components/user/StepsContent";
+import UserOne from "../../helpers/UserOne";
 
 const Selling = () => {
   // router
   const router = useRouter();
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
+  const a = activeSelect;
   // useSteps
   const { nextStep, reset, activeStep } = useSteps({
     initialStep: 0,
@@ -37,6 +39,8 @@ const Selling = () => {
   const [select, setSelect] = useState(false);
 
   const [form, setForm] = useState(false);
+
+  const [listUser, setListUser] = useState(false);
 
   useEffect(() => {
     const { uid, email, rol } = activeSelect;
@@ -68,9 +72,30 @@ const Selling = () => {
     setSelect(false);
     setForm(false);
   };
+
   const handleList = () => {
-    router.push("/user/list");
+    router.push({
+      pathname: "/user/[list]",
+      query: { list: a?.uid },
+    });
   };
+
+  useEffect(async () => {
+    if (a?.uid) {
+      const { dataUser } = await UserOne(a?.uid.toString());
+
+      if (
+        dataUser?.na === undefined ||
+        dataUser?.te === undefined ||
+        dataUser?.co === undefined ||
+        dataUser?.dt === undefined
+      ) {
+        setListUser(true);
+      } else {
+        setListUser(false);
+      }
+    }
+  }, []);
 
   return (
     <Layout>
@@ -141,7 +166,7 @@ const Selling = () => {
                   size="sm"
                   variant={"primary"}
                   onClick={nextStep}
-                  isDisabled={activo || select || form}
+                  isDisabled={listUser || activo || select || form}
                 >
                   {activeStep === stepsData.length - 1 ? "Finish" : "Next"}
                 </Button>

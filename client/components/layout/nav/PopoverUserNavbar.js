@@ -22,7 +22,6 @@ const PopoverUserNavbar = ({
   Heading,
   NavLink,
   bg2,
-  porcent2,
   Button,
   handleLogout,
 }) => {
@@ -67,7 +66,10 @@ const PopoverUserNavbar = ({
             leftIcon={<VentasClient />}
             fontWeight={"normal"}
             variant={"secondary"}
-            href={"/user/list"}
+            href={{
+              pathname: "/user/[list]",
+              query: { list: activeSelect?.uid },
+            }}
             name={"Mis ventas"}
           />
         </ListItem>

@@ -39,6 +39,8 @@ const { bordes, content5, full } = Breakpoints();
 export default function StepsContent() {
   // router
   const router = useRouter();
+  // selector
+  const { activeSelect } = useSelector(({ auth }) => auth);
   // useBoolean
   const [flag1, setFlag1] = useBoolean();
   // useBoolean
@@ -46,8 +48,11 @@ export default function StepsContent() {
   // useState
   const [items, setItems] = useState(true);
 
-  const handleAgreement = () => {
-    router.push("/user/agreement");
+  const handleInfo = () => {
+    router.push({
+      pathname: "/user/info/[info]",
+      query: { info: activeSelect?.uid },
+    });
   };
 
   const w1 = (flag1.toString() === "true" && "Producto") || "";
@@ -70,25 +75,32 @@ export default function StepsContent() {
       icon: Perfil,
       content: (
         <>
-          <ListItem w={full} pt={20}>
+          <ListItem w={full} pt={10} pb={5}>
             <ListIcon as={CheckCircleIcon} color="brand.700" />
             Tiene que estar registrado en nuestro sitio web
           </ListItem>
-          <ListItem w={full}>
+          <ListItem w={full} pb={5}>
             <ListIcon as={CheckCircleIcon} color="brand.700" />
             Si tienes una cuenta en nuestro sitio web puedes{" "}
             <Button variant={"primary"} size={"xs"}>
               ingresar
             </Button>
           </ListItem>
-          <ListItem w={full}>
+          <ListItem w={full} pb={5}>
             <ListIcon as={CheckCircleIcon} color="brand.700" />
             Si no tienes una cuenta puedes{" "}
             <Button variant={"primary"} size={"xs"}>
               crear una cuenta
             </Button>
           </ListItem>
-          <ListItem w={full}>
+          <ListItem w={full} pb={5}>
+            <ListIcon as={CheckCircleIcon} color="brand.700" />
+            Agrega la información para que tu cliente{" "}
+            <Button variant={"primary"} size={"xs"} onClick={handleInfo}>
+              La pueda ver
+            </Button>
+          </ListItem>
+          <ListItem w={full} pb={5}>
             <Stack spacing={[1, 5]} direction={["column", "row"]}>
               <Checkbox
                 fontWeight={"bold"}
@@ -96,17 +108,13 @@ export default function StepsContent() {
                 onChange={() => setItems(false)}
               >
                 Aceptas todos los acuerdos de venta{" "}
-                <Button
-                  variant={"secondary"}
-                  textTransform={"uppercase"}
-                  onClick={handleAgreement}
-                >
+                <Button variant={"secondary"} textTransform={"uppercase"}>
                   Saber mas
                 </Button>
               </Checkbox>
             </Stack>
           </ListItem>
-          <ListItem w={full} pb={20}>
+          <ListItem w={full} pb={10}>
             <ListIcon as={CheckCircleIcon} color="brand.700" />
             Si no cumples con los requisitos no podras pasar a la siguiente
             etapa
