@@ -40,7 +40,7 @@ export async function getStaticProps() {
       limit(25),
       orderBy("na", "asc")
     );
-    const q = query(collection(db, "serchs"), limit(25), orderBy("na", "asc"));
+    const q = query(collection(db, "serchs"), limit(1), orderBy("na", "desc"));
 
     const elC = await getDocs(qC);
     const el = await getDocs(q);
