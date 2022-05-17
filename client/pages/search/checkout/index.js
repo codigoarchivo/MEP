@@ -17,6 +17,7 @@ import {
   TagLabel,
   TagRightIcon,
   Text,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 
@@ -40,11 +41,15 @@ import { activeProduct, closeRevert } from "../../../actions/product";
 
 import UserTwo from "../../../helpers/UserTwo";
 
+import CheckModal from "./checkModal";
+
 const checkout = () => {
   // dispatch
   const router = useRouter();
   // useDispatch
   const dispatch = useDispatch();
+  // useDisclosure
+  const { isOpen, onOpen, onClose } = useDisclosure();
   // Breakpoints
   const { bordes, full, content5 } = Breakpoints();
   // selector
@@ -53,19 +58,33 @@ const checkout = () => {
   // useSelector
   const { activeSelectCheck } = useSelector(({ product }) => product);
   // useRef
+  const initialRef = useRef();
+  // useRef
   const cat = useRef(0);
   // useRef
   const resumen = useRef(0);
+  // useRef
+  const comision = useRef(0);
 
-  cat.current = activeSelectCheck.reduce(
-    (total, item) => total + Number(item.product.cn),
-    0
-  );
-  resumen.current = activeSelectCheck.reduce(
-    (total, item) =>
-      (total += Number(item.product.cn) * Number(item.product.pr)),
-    0
-  );
+  // cat.current = activeSelectCheck.reduce(
+  //   (total, item) => total + Number(item.product.cn),
+  //   0
+  // );
+
+  // resumen.current = activeSelectCheck.reduce(
+  //   (total, item) =>
+  //     (total += Number(item.product.cn) * Number(item.product.pr)),
+  //   0
+  // );
+
+  // useEffect(() => {
+  //   //   // cantidad de productos
+  //     cat.current += Number(cn);
+  //     // total de productos a comprar
+  //     resumen.current = Number(cn) * Number(pr);
+  //   //   // comision 20% al comprador
+  //   comision.current = Number(cn) * Number(pr) * 0.2;
+  // }, []);
 
   const handleRevert = () => {
     router.push("/");
@@ -73,9 +92,11 @@ const checkout = () => {
   };
 
   useEffect(async () => {
-    const { dataUser } = await UserTwo(a?.uid);
-    if (dataUser) {
-      dispatch(activeProduct(dataUser));
+    if (a.length > 0) {
+      const { dataUser } = await UserTwo(a?.uid);
+      if (dataUser) {
+        dispatch(activeProduct(dataUser));
+      }
     }
   }, []);
 
@@ -89,6 +110,7 @@ const checkout = () => {
       },
     });
   };
+
   return !activeSelectCheck.length > 0 ? (
     <></>
   ) : (
@@ -165,7 +187,7 @@ const checkout = () => {
 
               <Box w={full} mx={2}>
                 <VStack p={3} spacing={5} border={bordes}>
-                  <VStack w={full} border={bordes} p={2}>
+                  <VStack w={full} border={bordes} p={3}>
                     <Heading
                       w={full}
                       size={"lg"}
@@ -183,18 +205,22 @@ const checkout = () => {
                         p={2}
                       >
                         <HStack spacing={"5"}>
-                          <Button
+                          <CheckModal
                             backgroundColor={"grey.100"}
                             leftIcon={<CartList h={5} w={5} />}
                             variant={"primary"}
                             size={"xs"}
                             border={bordes}
                             w={"min-content"}
-                            onClick={handleSelect}
                             disabled={item.process ? true : false}
-                          >
-                            resumen
-                          </Button>
+                            isOpen={isOpen}
+                            onOpen={onOpen}
+                            onClose={onClose}
+                            initialRef={initialRef}
+                            nameButton={"resumen"}
+                            item={item}
+                            bordes={bordes}
+                          />
                           <Button
                             backgroundColor={"grey.100"}
                             variant={"primary"}
@@ -205,6 +231,20 @@ const checkout = () => {
                             disabled={item.process ? false : true}
                           >
                             Calificar
+                          </Button>
+                          <Button
+                            backgroundColor={"grey.100"}
+                            variant={"primary"}
+                            size={"xs"}
+                            border={bordes}
+                            w={"min-content"}
+                            disabled={item.process ? true : false}
+                          >
+                            Envie a la tienda $
+                            {Number(item.product.cn) * Number(item.product.pr) +
+                              Number(item.product.cn) *
+                                Number(item.product.pr) *
+                                0.2}
                           </Button>
                         </HStack>
                         <HStack spacing={"5"}>
@@ -224,17 +264,7 @@ const checkout = () => {
                         </HStack>
                       </HStack>
                     ))}
-                    <HStack w={full} justifyContent={"space-between"}>
-                      <Heading size={"sm"}>Cantidad Total:</Heading>
-                      <Text size={"sm"}>{cat.current}</Text>
-                    </HStack>
                   </VStack>
-
-                  <HStack justifyContent={"space-between"}>
-                    <Heading size={"md"}>Total a Transferir:</Heading>
-                    <Text size={"md"}>{resumen.current}$</Text>
-                  </HStack>
-
                   <Text>
                     Si sientes que as cometido una equivocación puede revertir
                     haciendo{" "}
@@ -245,6 +275,14 @@ const checkout = () => {
                     >
                       clik aqui
                     </Button>{" "}
+                    <Box mt={5}>
+                      <Heading size={"sm"}>Nota:</Heading>{" "}
+                      <Text>
+                        La información se encuentra en el <b>botton resumen</b>{" "}
+                        solo asi, podras notificar del pago tanto al vendedor
+                        como a la tienda.
+                      </Text>
+                    </Box>
                   </Text>
                 </VStack>
               </Box>

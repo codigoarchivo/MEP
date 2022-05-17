@@ -106,6 +106,8 @@ const SerchCart = () => {
               process: true,
               // informacion del producto
               product: item,
+              // fecha de la compra
+              cre: Date.now(),
             },
           ]);
         }

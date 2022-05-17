@@ -86,10 +86,10 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat, ti, uid }) => {
     }
     // dispatch
     router.push({
-      pathname: "/search/details",
+      pathname: "/search/[details]",
       query: {
+        details: id,
         pid: "d",
-        ...data,
       },
     });
 

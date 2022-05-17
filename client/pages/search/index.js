@@ -96,8 +96,10 @@ const search = ({ productos }) => {
   const min = useRef(0);
 
   useEffect(() => {
-    dispatch(serchProductList(productos));
-    dispatch(listDataProduct(productos));
+    if (productos) {
+      dispatch(serchProductList(productos));
+      dispatch(listDataProduct(productos));
+    }
   }, [dispatch]);
 
   max.current = product.list?.reduce(

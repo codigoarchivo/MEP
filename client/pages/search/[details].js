@@ -2,7 +2,7 @@ import React from "react";
 
 import { useRouter } from "next/router";
 
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
 
 import { Rating } from "react-simple-star-rating";
 
@@ -44,7 +44,7 @@ import { db } from "../../firebase/config";
 import SerchRat from "../../components/search/SerchRat";
 import SerchMessage from "../../components/search/SerchMessage";
 
-const details = ({ data }) => {
+const details = ({ message, product }) => {
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -54,8 +54,8 @@ const details = ({ data }) => {
   // Breakpoints
   const { content5, full, bordes } = Breakpoints();
   // values
-  const { id, na, pr, im, ds, ct, cn, es, dt, uid } = router.query;
-
+  const { id, na, pr, im, ds, ct, cn, es, dt, uid, ti } = product;
+  console.log(product);
   // list Category
   const listCt = list.filter((item) => item.id === ct);
   // Incremen and Decrement
@@ -76,8 +76,8 @@ const details = ({ data }) => {
   // input
   const input = getInputProps({ isReadOnly: true });
 
-  // data obtiene rating individuales crear un array con todos los rating
-  const match = data.map((item) => ({ rat: item.rat, id: item.id }));
+  // message obtiene rating individuales crear un array con todos los rating
+  const match = message.map((item) => ({ rat: item.rat, id: item.id }));
 
   // crea una referencia de lista de rat
   const lisDat = match.map((item) => ({
@@ -103,7 +103,8 @@ const details = ({ data }) => {
         es,
         dt,
         uid,
-        rat: data.map((item) => item.rat.toString()),
+        ti,
+        rat: message.map((item) => item.rat.toString()),
       })
     );
 
@@ -181,7 +182,7 @@ const details = ({ data }) => {
           <Tabs w={"full"}>
             <TabList>
               <Tab>Detalles</Tab>
-              <Tab>({data.length ? data.length : 0}) reviews</Tab>
+              <Tab>({message.length ? message.length : 0}) reviews</Tab>
             </TabList>
 
             <TabPanels>
@@ -206,7 +207,7 @@ const details = ({ data }) => {
                   </Stack>
                   <Box>
                     {/* SerchMessage */}
-                    {data.map((item) => (
+                    {message.map((item) => (
                       <SerchMessage key={item.id} {...item} match={match} />
                     ))}
                   </Box>
@@ -222,20 +223,32 @@ const details = ({ data }) => {
 
 export async function getServerSideProps(context) {
   try {
-    const id = context.query.id.toString();
+    // message
+    const id = context.query.details.toString();
 
     const q = query(collection(db, "serchs", id, "messages"));
 
     const el = await getDocs(q);
 
-    const data = el.docs.map((doc) => ({
+    const message = el.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
 
-    return { props: { data } };
+     //  product
+     const docRef = doc(db, "serchs", id);
+
+     const docSnap = await getDoc(docRef);
+ 
+     const product = {
+       id: docSnap.id,
+       ...docSnap.data(),
+     };
+
+    return { props: { message, product } };
   } catch (error) {
     Toast("Al parecer hay un error", "error", 5000);
+    return { props: { message: [], product: {} } };
   }
 }
 

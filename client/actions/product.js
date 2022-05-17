@@ -218,7 +218,7 @@ export const saveSale = (data) => {
 };
 export const activeProduct = (data) => ({
   type: types.productActive,
-  payload: data,
+  payload: data.length > 0 ? data : [],
 });
 
 export const deleteProductCart = (id) => ({
