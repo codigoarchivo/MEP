@@ -8,7 +8,7 @@ const UserTwo = async (id) => {
   try {
     const docRef = collection(db, "users", id, "buys");
 
-    const q = query(docRef, where("paid", "==", true));
+    const q = query(docRef);
 
     const el = await getDocs(q);
 

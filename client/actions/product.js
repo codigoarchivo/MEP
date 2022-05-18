@@ -199,6 +199,7 @@ export const saveSale = (data) => {
             buy: d.buy,
             process: d.process,
             product: d.product,
+            lim: d.lim,
           });
         }
 
@@ -207,6 +208,7 @@ export const saveSale = (data) => {
           buy: d.buy,
           process: d.process,
           product: d.product,
+          lim: d.lim,
         });
       });
 

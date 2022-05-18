@@ -50,11 +50,12 @@ const informacion = ({ data }) => {
   const { repeat1, points3, bordes } = Breakpoints();
   // mode Color
   const { bg, brand } = ModeColor();
+
   // useForm
   const { values, handleInputChange } = useFormChange(initialStates, data);
   // values
   const { na, te, co, dt, id, rol } = values;
-
+  // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -169,12 +170,13 @@ const informacion = ({ data }) => {
 };
 
 export async function getServerSideProps(context) {
-  const { info } = await context.query;
   try {
+    const { info } = context.query;
+
     const docRef = doc(db, "users", info.toString());
 
     const docSnap = await getDoc(docRef);
-
+  
     const data = {
       id: docSnap.id,
       ...docSnap.data(),

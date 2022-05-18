@@ -42,6 +42,8 @@ import { activeProduct, closeRevert } from "../../../actions/product";
 import UserTwo from "../../../helpers/UserTwo";
 
 import CheckModal from "./checkModal";
+import { formatDuration, intervalToDuration } from "date-fns";
+import ContadorRegresivo from "../../../helpers/ContadorRegresivo";
 
 const checkout = () => {
   // dispatch
@@ -59,32 +61,6 @@ const checkout = () => {
   const { activeSelectCheck } = useSelector(({ product }) => product);
   // useRef
   const initialRef = useRef();
-  // useRef
-  const cat = useRef(0);
-  // useRef
-  const resumen = useRef(0);
-  // useRef
-  const comision = useRef(0);
-
-  // cat.current = activeSelectCheck.reduce(
-  //   (total, item) => total + Number(item.product.cn),
-  //   0
-  // );
-
-  // resumen.current = activeSelectCheck.reduce(
-  //   (total, item) =>
-  //     (total += Number(item.product.cn) * Number(item.product.pr)),
-  //   0
-  // );
-
-  // useEffect(() => {
-  //   //   // cantidad de productos
-  //     cat.current += Number(cn);
-  //     // total de productos a comprar
-  //     resumen.current = Number(cn) * Number(pr);
-  //   //   // comision 20% al comprador
-  //   comision.current = Number(cn) * Number(pr) * 0.2;
-  // }, []);
 
   const handleRevert = () => {
     router.push("/");
@@ -92,13 +68,13 @@ const checkout = () => {
   };
 
   useEffect(async () => {
-    if (a.length > 0) {
+    if (a) {
       const { dataUser } = await UserTwo(a?.uid);
       if (dataUser) {
         dispatch(activeProduct(dataUser));
       }
     }
-  }, []);
+  }, [a, dispatch]);
 
   const handleSelect = () => {
     router.push({
@@ -115,7 +91,12 @@ const checkout = () => {
     <></>
   ) : (
     <Layout>
-      <Container maxW={"container.lg"}>
+      <Box>
+        {activeSelectCheck[0].lim && (
+          <ContadorRegresivo lim={activeSelectCheck[0].lim} />
+        )}
+      </Box>
+      <Container maxW={"container.xl"}>
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>
             <Heading w={full} as="h2" size="lg" fontWeight="semibold">
@@ -190,11 +171,20 @@ const checkout = () => {
                   <VStack w={full} border={bordes} p={3}>
                     <Heading
                       w={full}
-                      size={"lg"}
+                      size={"sm"}
                       fontWeight={"normal"}
                       textTransform={"uppercase"}
+                      px={2}
                     >
-                      Resumen
+                      <Text as={"span"} fontWeight={"black"} fontSize={"small"}>
+                        Te quedan:
+                      </Text>{" "}
+                      <Text
+                        as={"span"}
+                        id="resLimit"
+                        fontWeight={"black"}
+                        fontSize={"small"}
+                      ></Text>
                     </Heading>
                     {activeSelectCheck.map((item, key) => (
                       <HStack
@@ -248,7 +238,6 @@ const checkout = () => {
                           </Button>
                         </HStack>
                         <HStack spacing={"5"}>
-                          <Text>te quedan:2dias</Text>
                           <Tag
                             size={"md"}
                             variant="outline"
@@ -265,9 +254,11 @@ const checkout = () => {
                       </HStack>
                     ))}
                   </VStack>
-                  <Text>
-                    Si sientes que as cometido una equivocación puede revertir
-                    haciendo{" "}
+                  <Box>
+                    <Text>
+                      Si sientes que as cometido una equivocación puede revertir
+                      haciendo{" "}
+                    </Text>
                     <Button
                       onClick={handleRevert}
                       textTransform={"uppercase"}
@@ -283,7 +274,7 @@ const checkout = () => {
                         como a la tienda.
                       </Text>
                     </Box>
-                  </Text>
+                  </Box>
                 </VStack>
               </Box>
             </Stack>

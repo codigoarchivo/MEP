@@ -41,6 +41,10 @@ import Breakpoints from "../../helpers/Breakpoints";
 import Toast from "../../helpers/Toast";
 import UserOne from "../../helpers/UserOne";
 
+import { addDays } from "date-fns";
+
+import localEs from "date-fns/locale/es";
+
 const SerchCart = () => {
   // dispatch
   const router = useRouter();
@@ -103,11 +107,11 @@ const SerchCart = () => {
               // informacion del comprador
               buy: datU,
               // proceso
-              process: true,
+              process: false,
               // informacion del producto
               product: item,
-              // fecha de la compra
-              cre: Date.now(),
+              // fecha limite de la compra
+              lim: addDays(Date.now(), 7),
             },
           ]);
         }
@@ -127,9 +131,13 @@ const SerchCart = () => {
       confirmButtonText: "Aceptar!",
     }).then((result) => {
       if (result.isConfirmed) {
+        // success
         Swal.fire("Procesado!", "Si, Gracias por su Compra.", "success");
+        // save cart
         dispatch(saveSale(proceso));
+        // ir checkout
         router.push("/search/checkout");
+        // limpiar carrito
         dispatch(closeActive());
       }
     });
