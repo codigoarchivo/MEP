@@ -1,16 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
-import {
-  formatDuration,
-  getUnixTime,
-  intervalToDuration,
-} from "date-fns";
+import { formatDuration, getUnixTime, intervalToDuration } from "date-fns";
 
 const ContadorRegresivo = ({ lim }) => {
-  const data = useRef(null);
-  //  donde guarde el tiempo
-  data.current = document.getElementById("resLimit");
-
   useEffect(() => {
     // cree el intervalo
     const interval = setInterval(() => {
@@ -34,7 +26,7 @@ const ContadorRegresivo = ({ lim }) => {
       //  Tiempo Agotado
       if (getUnixTime(new Date()) >= value) {
         // muestro el mensaje
-        data.current.innerHTML = "Tiempo agotado";
+        document.getElementById("resLimit").innerHTML = "Tiempo agotado";
         // Limpiar
         clearInterval(interval);
         return;
@@ -52,7 +44,7 @@ const ContadorRegresivo = ({ lim }) => {
       });
 
       // muestra el tiempo
-      data.current.innerHTML = del;
+      document.getElementById("resLimit").innerHTML = del;
     }, 1000);
     // limpiar el intervalo
     return () => {

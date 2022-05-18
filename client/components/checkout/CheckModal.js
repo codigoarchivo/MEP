@@ -18,7 +18,7 @@ import {
 
 // import { addDays, formatDistance, getUnixTime, subDays } from "date-fns";
 
-const checkModal = ({
+const CheckModal = ({
   isOpen,
   onOpen,
   onClose,
@@ -31,8 +31,10 @@ const checkModal = ({
   w,
   disabled,
   nameButton,
-  item,
   bordes,
+  product,
+  buy,
+  sale,
 }) => {
   // useRef
   const cat = useRef(0);
@@ -48,11 +50,11 @@ const checkModal = ({
   //   });
   //   console.log(e);
   // buy
-  const { na: naC } = item.buy;
+  const { na: naC } = buy;
   // sale
-  const { na: naV, te, co, dt, id } = item.sale;
+  const { na: naV, te, co, dt, id } = sale;
   // product
-  const { cn, pr, uid, id: idP, na: naP } = item.product;
+  const { cn, pr, uid, id: idP, na: naP } = product;
 
   useEffect(() => {
     // cantidad de productos
@@ -138,12 +140,27 @@ const checkModal = ({
           </ModalBody>
 
           <ModalFooter>
-            <Button variant={"primary"} mr={3}>
-              Page ${resumen.current} al vendedor
-            </Button>
-            <Button variant={"primary"}>
-              Page ${comision.current} a la tienda
-            </Button>
+            <HStack w={"full"} spacing={10} alignItems={"flex-start"}>
+              <VStack>
+                <Heading w={"full"} size={"sm"}>
+                  Pago Individual
+                </Heading>
+                <Button size={"sm"} w={"full"} variant={"primary"}>
+                  Page ${resumen.current} al vendedor
+                </Button>
+                <Button size={"sm"} w={"full"} variant={"primary"}>
+                  Page ${comision.current} a la tienda
+                </Button>
+              </VStack>
+              <VStack>
+                <Heading w={"full"} size={"sm"}>
+                  Pago Unico
+                </Heading>
+                <Button size={"sm"} w={"full"} variant={"primary"}>
+                  Page ${resumen.current + comision.current} a la tienda
+                </Button>
+              </VStack>
+            </HStack>
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -151,4 +168,4 @@ const checkModal = ({
   );
 };
 
-export default checkModal;
+export default CheckModal;

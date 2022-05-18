@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 
 import { useRouter } from "next/router";
 
@@ -13,11 +13,7 @@ import {
   ListIcon,
   ListItem,
   Stack,
-  Tag,
-  TagLabel,
-  TagRightIcon,
   Text,
-  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 
@@ -27,31 +23,23 @@ import Layout from "../../../components/layout/layout";
 
 import Breakpoints from "../../../helpers/Breakpoints";
 
-import {
-  CheckCircleIcon,
-  CheckIcon,
-  ExternalLinkIcon,
-  LockIcon,
-  UnlockIcon,
-} from "@chakra-ui/icons";
+import { CheckCircleIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 
-import { CartList, WhatsAppIcon } from "../../../helpers/IconNew";
+import { WhatsAppIcon } from "../../../helpers/IconNew";
 
 import { activeProduct, closeRevert } from "../../../actions/product";
 
 import UserTwo from "../../../helpers/UserTwo";
 
-import CheckModal from "./checkModal";
-import { formatDuration, intervalToDuration } from "date-fns";
 import ContadorRegresivo from "../../../helpers/ContadorRegresivo";
+
+import CheckoutScreen from "../../../components/checkout/CheckoutScreen";
 
 const checkout = () => {
   // dispatch
   const router = useRouter();
   // useDispatch
   const dispatch = useDispatch();
-  // useDisclosure
-  const { isOpen, onOpen, onClose } = useDisclosure();
   // Breakpoints
   const { bordes, full, content5 } = Breakpoints();
   // selector
@@ -59,8 +47,6 @@ const checkout = () => {
   const a = activeSelect;
   // useSelector
   const { activeSelectCheck } = useSelector(({ product }) => product);
-  // useRef
-  const initialRef = useRef();
 
   const handleRevert = () => {
     router.push("/");
@@ -75,17 +61,6 @@ const checkout = () => {
       }
     }
   }, [a, dispatch]);
-
-  const handleSelect = () => {
-    router.push({
-      pathname: "/search/checkout/rate",
-      query: {
-        id: item.product.id,
-        rat: item.product.rat,
-        li: activeSelectCheck.length,
-      },
-    });
-  };
 
   return !activeSelectCheck.length > 0 ? (
     <></>
@@ -187,71 +162,7 @@ const checkout = () => {
                       ></Text>
                     </Heading>
                     {activeSelectCheck.map((item, key) => (
-                      <HStack
-                        key={key}
-                        w={full}
-                        justifyContent={"space-between"}
-                        borderBottom={bordes}
-                        p={2}
-                      >
-                        <HStack spacing={"5"}>
-                          <CheckModal
-                            backgroundColor={"grey.100"}
-                            leftIcon={<CartList h={5} w={5} />}
-                            variant={"primary"}
-                            size={"xs"}
-                            border={bordes}
-                            w={"min-content"}
-                            disabled={item.process ? true : false}
-                            isOpen={isOpen}
-                            onOpen={onOpen}
-                            onClose={onClose}
-                            initialRef={initialRef}
-                            nameButton={"resumen"}
-                            item={item}
-                            bordes={bordes}
-                          />
-                          <Button
-                            backgroundColor={"grey.100"}
-                            variant={"primary"}
-                            size={"xs"}
-                            border={bordes}
-                            w={"min-content"}
-                            onClick={handleSelect}
-                            disabled={item.process ? false : true}
-                          >
-                            Calificar
-                          </Button>
-                          <Button
-                            backgroundColor={"grey.100"}
-                            variant={"primary"}
-                            size={"xs"}
-                            border={bordes}
-                            w={"min-content"}
-                            disabled={item.process ? true : false}
-                          >
-                            Envie a la tienda $
-                            {Number(item.product.cn) * Number(item.product.pr) +
-                              Number(item.product.cn) *
-                                Number(item.product.pr) *
-                                0.2}
-                          </Button>
-                        </HStack>
-                        <HStack spacing={"5"}>
-                          <Tag
-                            size={"md"}
-                            variant="outline"
-                            colorScheme={item.process ? "green" : "blue"}
-                          >
-                            <TagLabel>
-                              {item.process ? "Pagado" : "Proceso"}
-                            </TagLabel>
-                            <TagRightIcon
-                              as={item.process ? UnlockIcon : LockIcon}
-                            />
-                          </Tag>
-                        </HStack>
-                      </HStack>
+                      <CheckoutScreen key={key} {...item} />
                     ))}
                   </VStack>
                   <Box>
