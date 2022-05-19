@@ -6,6 +6,8 @@ const useFormChange = (initialStates = {}, data) => {
   useEffect(() => {
     if (data) {
       setValues({ ...values, ...data });
+    } else {
+      setValues({ ...values });
     }
   }, [setValues]);
 
