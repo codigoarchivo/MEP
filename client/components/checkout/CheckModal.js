@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react";
 
+import Image from "next/image";
+
 import {
   CheckCircleIcon,
   DownloadIcon,
@@ -33,7 +35,11 @@ import {
   GridItem,
   Grid,
   InputGroup,
+  AspectRatio,
+  Flex,
 } from "@chakra-ui/react";
+
+import { addDays } from "date-fns";
 
 import { useRouter } from "next/router";
 
@@ -47,9 +53,10 @@ import ModeColor from "../../helpers/ModeColor";
 
 import useFormEasy from "../../hooks/useFormEasy";
 
+import { validSales, validShop } from "../../actions/checkout";
+
 const initialStates = {
   nap: "",
-  rec: "",
   imp: "",
   fer: "",
   cor: "",
@@ -71,8 +78,15 @@ const CheckModal = ({
   disabled,
   nameButton,
   bordes,
+  // id del sales product
+  idSale,
+  // id del buy product
+  idBuy,
+  // product
   product,
+  // buy
   buy,
+  // sale
   sale,
 }) => {
   // useRef
@@ -93,11 +107,11 @@ const CheckModal = ({
   const { bg, brand } = ModeColor();
 
   // buy
-  const { na: naC } = buy;
+  const { na: naC, id: uidBuy } = buy;
   // sale
-  const { na: naV, te, co, dt, id } = sale;
+  const { na: naV, te, co, dt } = sale;
   // product
-  const { cn, pr, uid, id: idP, na: naP } = product;
+  const { cn, pr, uid: uidSale, na: naP } = product;
 
   useEffect(() => {
     // cantidad de productos
@@ -121,9 +135,7 @@ const CheckModal = ({
   // agrega imagen
   values.imp = urlImage ? urlImage : values.imp;
   // values
-  const { nap, rec, imp, fer, cor, tip, inf } = values;
-
-  console.log(values);
+  const { nap, imp, fer, cor, tip, inf, condicion = "1" } = values;
 
   // handleSubmit
   const handleSubmit = (e) => {
@@ -131,7 +143,6 @@ const CheckModal = ({
 
     if (
       nap === "" ||
-      rec === "" ||
       imp === "" ||
       fer === "" ||
       cor === "" ||
@@ -145,8 +156,56 @@ const CheckModal = ({
       );
     }
 
-    // dispatch(userAdicional({ na, te, co, dt, id, rol }));
+    const shop = {
+      nap,
+      imp,
+      fer,
+      cor,
+      tip,
+      inf,
+      // uid del comprador
+      uidBuy,
+      // uid del vendedor
+      uidSale,
+      // id del sales product
+      idSale,
+      // id del producto a comprar
+      idBuy,
+    };
+
+    const info = {
+      nap,
+      imp,
+      fer,
+      cor,
+      tip,
+      inf,
+      // uid del comprador
+      uidBuy,
+      // uid del vendedor
+      uidSale,
+      // id del sales product
+      idSale,
+      // id del producto a comprar
+      idBuy,
+      // id del producto a comprar
+      lim: addDays(Date.now(), 2),
+    };
+
+    switch (condicion) {
+      case "1":
+        dispatch(validShop(shop));
+        break;
+      case "2":
+        dispatch(validShop(shop));
+        break;
+      case "3":
+        dispatch(validSales(info));
+        break;
+    }
+
     onClose();
+    reset();
   };
 
   return (
@@ -171,7 +230,9 @@ const CheckModal = ({
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Comprador: {naC}</ModalHeader>
+          <ModalHeader textTransform={"uppercase"}>
+            Comprador: {naC}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <Stack
@@ -180,56 +241,84 @@ const CheckModal = ({
               w={full}
               justifyContent={"space-around"}
             >
-              <Stack spacing={0} w={"40%"} mr={5}>
-                <VStack
-                  alignContent={"center"}
-                  h={"full"}
+              <VStack
+                mr={5}
+                w={full}
+                alignContent={"center"}
+                h={"full"}
+                spacing={0}
+              >
+                <chakra.form
+                  onSubmit={handleSubmit}
+                  w={full}
+                  p={3}
                   border={bordes}
-                  spacing={0}
                 >
-                  <Heading
-                    pt={5}
-                    size={"xs"}
-                    textTransform={"uppercase"}
-                    fontWeight={"normal"}
+                  <Grid
+                    templateColumns={repeat1}
+                    alignItems={"center"}
+                    columnGap={points3}
                   >
-                    informacion pago para el vendedor
-                  </Heading>
-                  <chakra.form onSubmit={handleSubmit} w={"full"} p={3}>
-                    <Grid
-                      templateColumns={repeat1}
-                      alignItems={"center"}
-                      columnGap={points3}
-                    >
-                      <GridItem colSpan={2}>
-                        <FormLabel htmlFor="nap">Nombre Realizo pago</FormLabel>
-                        <Input
-                          name="nap"
-                          id="nap"
-                          onChange={handleInputChange}
-                          value={nap}
-                          type={"text"}
-                          placeholder="Nombre"
-                        />
-                      </GridItem>
+                    <GridItem mb={3} colSpan={2}>
+                      <Heading
+                        border={bordes}
+                        p={2}
+                        size={"xs"}
+                        textTransform={"uppercase"}
+                        fontWeight={"normal"}
+                        mb={5}
+                      >
+                        informacion pago para el vendedor o tienda
+                      </Heading>
+                    </GridItem>
+                    <GridItem mb={3} colSpan={2}>
+                      <FormLabel htmlFor="nap" textTransform={"uppercase"}>
+                        Nombre realizo pago
+                      </FormLabel>
+                      <Input
+                        name="nap"
+                        id="nap"
+                        onChange={handleInputChange}
+                        value={nap}
+                        type={"text"}
+                        placeholder="Nombre"
+                      />
+                    </GridItem>
 
-                      <GridItem colSpan={2}>
-                        <FormLabel htmlFor="cor">Correo</FormLabel>
-                        <Input
-                          name="cor"
-                          id="cor"
-                          onChange={handleInputChange}
-                          value={cor}
-                          type={"text"}
-                          placeholder="Correo"
-                        />
-                      </GridItem>
+                    <GridItem mb={3} colSpan={2}>
+                      <FormLabel htmlFor="cor" textTransform={"uppercase"}>
+                        Correo
+                      </FormLabel>
+                      <Input
+                        name="cor"
+                        id="cor"
+                        onChange={handleInputChange}
+                        value={cor}
+                        type={"text"}
+                        placeholder="Correo"
+                      />
+                    </GridItem>
+                    <GridItem mb={3} colSpan={2}>
+                      <FormLabel htmlFor="fer" textTransform={"uppercase"}>
+                        Fecha de pago
+                      </FormLabel>
+                      <Input
+                        name="fer"
+                        id="fer"
+                        onChange={handleInputChange}
+                        value={fer}
+                        type={"date"}
+                      />
+                    </GridItem>
 
-                      <GridItem colSpan={2}>
-                        <FormLabel htmlFor="imp">Imagen</FormLabel>
+                    <GridItem mb={3} colSpan={2}>
+                      <FormLabel htmlFor="imp" textTransform={"uppercase"}>
+                        Imagen del recibo
+                      </FormLabel>
+                      <HStack>
                         <InputGroup>
                           <Button
-                            w={"full"}
+                            w={"80%"}
                             rightIcon={<DownloadIcon w={6} h={6} />}
                             variant={"outline"}
                             textTransform={"uppercase"}
@@ -249,84 +338,106 @@ const CheckModal = ({
                             display="none"
                           />
                         </InputGroup>
-                      </GridItem>
-                      <GridItem colSpan={2}>
-                        <FormLabel htmlFor="tip">Tipo pago</FormLabel>
-                        <RadioGroup
-                          name="tip"
-                          id="tip"
-                          onChange={handleInputChange3}
-                          value={tip}
-                          defaultValue={`Pago $${
-                            comision.current + resumen.current
-                          } en la
-                                Tienda`.toString()}
+                        <Flex w={"20%"} justifyContent={"center"}>
+                          {imp && (
+                            <AspectRatio
+                              border={bordes}
+                              ratio={1}
+                              w={59}
+                              h={59}
+                              position={"relative"}
+                            >
+                              <Image
+                                src={imp}
+                                alt="Recibo pago"
+                                layout="fill"
+                                objectFit="contain"
+                              />
+                            </AspectRatio>
+                          )}
+                        </Flex>
+                      </HStack>
+                    </GridItem>
+                    <GridItem mb={3} colSpan={2}>
+                      <FormLabel htmlFor="tip" textTransform={"uppercase"}>
+                        Tipo pago
+                      </FormLabel>
+                      <RadioGroup
+                        name="tip"
+                        id="tip"
+                        onChange={handleInputChange3}
+                        value={tip}
+                      >
+                        <Stack
+                          spacing={3}
+                          direction="column"
+                          border={bordes}
+                          p={2}
                         >
-                          <Stack spacing={5} direction="column">
-                            <Radio
-                              colorScheme="brand"
-                              value={`Pago $${
-                                comision.current + resumen.current
-                              } en la Tienda`.toString()}
-                            >
-                              Pago ${comision.current + resumen.current} en la
-                              Tienda
-                            </Radio>
-                            <Radio
-                              colorScheme="brand"
-                              value={`Comisión $${comision.current.toString()} en la tienda`}
-                            >
-                              Comisión ${comision.current} en la tienda
-                            </Radio>
-                            <Radio
-                              colorScheme="brand"
-                              value={`Pago al vendedor $${resumen.current.toString()}`}
-                            >
-                              Pago al vendedor ${resumen.current}
-                            </Radio>
-                          </Stack>
-                        </RadioGroup>
-                      </GridItem>
+                          <Radio
+                            name="tienda"
+                            colorScheme="brand"
+                            value={`1 Pago $${
+                              comision.current + resumen.current
+                            } en la Tienda`.toString()}
+                          >
+                            Pago ${comision.current + resumen.current} en la
+                            Tienda
+                          </Radio>
+                          <Radio
+                            name="comision"
+                            colorScheme="brand"
+                            value={`2 Comisión $${comision.current.toString()} en la tienda`}
+                          >
+                            Comisión ${comision.current} en la tienda
+                          </Radio>
+                          <Radio
+                            name="vendedor"
+                            colorScheme="brand"
+                            value={`3 Pago al vendedor $${resumen.current.toString()}`}
+                          >
+                            Pago al vendedor ${resumen.current}
+                          </Radio>
+                        </Stack>
+                      </RadioGroup>
+                    </GridItem>
 
-                      <GridItem colSpan={2}>
-                        <FormLabel htmlFor="inf">
-                          Informacion Adicional
-                        </FormLabel>
-                        <Textarea
-                          bg={bg}
-                          _focus={brand}
-                          variant="filled"
-                          name="inf"
-                          id="inf"
-                          value={inf}
-                          onChange={handleInputChange}
-                          placeholder="Informacion Adicional"
-                          size="xs"
-                        />
-                      </GridItem>
+                    <GridItem mb={5} colSpan={2}>
+                      <FormLabel htmlFor="inf" textTransform={"uppercase"}>
+                        Informacion Adicional
+                      </FormLabel>
+                      <Textarea
+                        bg={bg}
+                        _focus={brand}
+                        variant="filled"
+                        name="inf"
+                        id="inf"
+                        value={inf}
+                        onChange={handleInputChange}
+                        placeholder="Informacion Adicional"
+                        size="xs"
+                      />
+                    </GridItem>
 
-                      <GridItem colSpan={2}>
-                        <HStack
-                          w={"full"}
-                          justifyContent="flex-end"
-                          spacing={10}
-                        >
-                          <Button variant={"secondary"} onClick={onClose}>
-                            Close
-                          </Button>
-                          <Button variant={"primary"} type="submit" ml={3}>
-                            Guardar
-                          </Button>
-                        </HStack>
-                      </GridItem>
-                    </Grid>
-                  </chakra.form>
-                </VStack>
+                    <GridItem mb={3} colSpan={2}>
+                      <HStack w={"full"} justifyContent="flex-end" spacing={10}>
+                        <Button variant={"secondary"} onClick={onClose}>
+                          Close
+                        </Button>
+                        <Button variant={"primary"} type="submit" ml={3}>
+                          Envio del recibo
+                        </Button>
+                      </HStack>
+                    </GridItem>
+                  </Grid>
+                </chakra.form>
+              </VStack>
 
-                <Box>
-                  <Heading size={"sm"} border={bordes} p={2}>
-                    Información de Pago
-                  </Heading>
+              <VStack w={full} spacing={0}>
+                <Heading w={full} mb={5} size={"sm"} border={bordes} p={2}>
+                  Información de Pago
+                </Heading>
+                <Stack w={full} mt={5} spacing={2} border={bordes} p={5}>
                   <HStack
                     justifyContent={"space-between"}
                     borderBottom={bordes}
@@ -366,34 +477,42 @@ const CheckModal = ({
                     <Text fontWeight={"black"}>Total: </Text>
                     <Text>${comision.current + resumen.current}</Text>
                   </HStack>
-                </Box>
-              </Stack>
-              <Stack
-                justifyContent={"space-around"}
-                flexDirection={content5}
-                w={"60%"}
-                spacing={0}
-              >
-                <Stack spacing={3} mr={0}>
-                  <Heading size={"sm"} border={bordes} p={2}>
+                </Stack>
+
+                <Stack w={full} spacing={3}>
+                  <Heading mt={5} size={"sm"} border={bordes} p={2}>
                     Información de la tienda
                   </Heading>
-                  <HStack w={full}>
+                  <HStack w={full} justifyContent={"space-between"}>
                     <Heading size={"sm"}>Telefono:</Heading>
-                    <Text>+1 973 510 8452</Text>
+                    <Text>
+                      +1 973 510 8452{" "}
+                      <Link
+                        href="https://wa.me/19735108452?text=Hola%20Edgar%20Marcano%20voy%20a%20"
+                        isExternal
+                      >
+                        Ir a<WhatsAppIcon mx="2px" />
+                      </Link>
+                    </Text>
                   </HStack>
-                  <Stack w={full} spacing={5}>
+                  <Stack w={full} spacing={2} border={bordes} p={5}>
                     <List spacing={3}>
                       <ListItem>
                         <ListIcon as={CheckCircleIcon} color="brand.700" />
                         Transferencia por Zelle
                       </ListItem>
                     </List>
-                    <HStack>
+                    <HStack
+                      justifyContent={"space-between"}
+                      borderBottom={bordes}
+                    >
                       <Heading size={"sm"}>Nombre:</Heading>
                       <Text>Edgar Marcano</Text>
                     </HStack>
-                    <HStack>
+                    <HStack
+                      justifyContent={"space-between"}
+                      borderBottom={bordes}
+                    >
                       <Heading size={"sm"}>Correo:</Heading>
                       <Text>ehms1975@gmail.com</Text>
                     </HStack>
@@ -403,7 +522,10 @@ const CheckModal = ({
                         Desde la aplicación móvil
                       </ListItem>
                     </List>
-                    <HStack>
+                    <HStack
+                      justifyContent={"space-between"}
+                      borderBottom={bordes}
+                    >
                       <Heading size={"sm"}>Información:</Heading>
                       <Link
                         href="https://www.bankofamerica.com/online-banking/mobile-and-online-banking-features/money-transfer/es/#:~:text=Seleccione%20Transferir%20%7C%20Enviar%20y%20despu%C3%A9s,transferencia%20y%20luego%20toque%20Continuar."
@@ -412,49 +534,55 @@ const CheckModal = ({
                         Ir a<ExternalLinkIcon mx="2px" />
                       </Link>
                     </HStack>
-                    <HStack>
+                    <HStack
+                      justifyContent={"space-between"}
+                      borderBottom={bordes}
+                    >
                       <Heading size={"sm"}>Nombre:</Heading>
                       <Text>Edgar Marcano</Text>
                     </HStack>
-                    <HStack>
+                    <HStack
+                      justifyContent={"space-between"}
+                      borderBottom={bordes}
+                    >
                       <Heading size={"sm"}>N° Cuenta:</Heading>
                       <Text>381053465609</Text>
                     </HStack>
                   </Stack>
-                  <HStack w={full}>
-                    <Heading size={"sm"}>WhatsApp:</Heading>
-                    <Link
-                      href="https://wa.me/19735108452?text=Hola%20Edgar%20Marcano%20voy%20a%20"
-                      isExternal
-                    >
-                      Ir a<WhatsAppIcon mx="2px" />
-                    </Link>
-                  </HStack>
                 </Stack>
-                <Stack spacing={3} mb={2}>
-                  <Heading size={"sm"} border={bordes} p={2}>
+                <Stack w={full} spacing={3} mb={2}>
+                  <Heading mt={5} size={"sm"} border={bordes} p={2}>
                     Información del vendedor
                   </Heading>
-                  <HStack justifyContent={"space-between"}>
-                    <Text fontWeight={"black"}>Nombre: </Text>
-                    <Text>{naV}</Text>
-                  </HStack>
                   <HStack justifyContent={"space-between"}>
                     <Text fontWeight={"black"}>Telefono: </Text>
                     <Text>{te}</Text>
                   </HStack>
-                  <HStack justifyContent={"space-between"}>
-                    <Text fontWeight={"black"}>Correo: </Text>
-                    <Text>{co}</Text>
-                  </HStack>
-                  <VStack>
-                    <Text w={full} fontWeight={"black"}>
-                      Información Adicional:{" "}
-                    </Text>
-                    <Text w={full}>{dt}</Text>
-                  </VStack>
+                  <Stack w={full} spacing={2} border={bordes} p={5}>
+                    <HStack
+                      justifyContent={"space-between"}
+                      borderBottom={bordes}
+                    >
+                      <Text fontWeight={"black"}>Nombre: </Text>
+                      <Text>{naV}</Text>
+                    </HStack>
+
+                    <HStack
+                      justifyContent={"space-between"}
+                      borderBottom={bordes}
+                    >
+                      <Text fontWeight={"black"}>Correo: </Text>
+                      <Text>{co}</Text>
+                    </HStack>
+                    <VStack>
+                      <Text w={full} fontWeight={"black"}>
+                        Información Adicional:{" "}
+                      </Text>
+                      <Text w={full}>{dt}</Text>
+                    </VStack>
+                  </Stack>
                 </Stack>
-              </Stack>
+              </VStack>
             </Stack>
           </ModalBody>
         </ModalContent>

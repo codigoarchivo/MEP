@@ -34,7 +34,7 @@ const useFormEasy = (initialStates = {}) => {
   };
 
   const handleInputChange3 = (data) => {
-    setValues({ ...values, tip: data });
+    setValues({ ...values, tip: data, condicion: data.slice(0, 1) });
   };
 
   return {

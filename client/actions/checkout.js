@@ -1,9 +1,11 @@
-import { collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 
 import { db } from "../firebase/config";
 import Toast from "../helpers/Toast";
 
 import { types } from "../type";
+
+const dA = process.env.NEXT_PUBLIC_ROL_A;
 
 export const checkoutList = (data) => {
   return async (dispatch) => {
@@ -19,7 +21,6 @@ const listcheckout = (data) => ({
 export const checkoutAdd = (data) => {
   return async (dispatch) => {
     try {
-
       const dataList = {
         uid: data.uid,
         com: data.com,
@@ -75,7 +76,6 @@ export const checkoutEdit = (data) => {
   };
 };
 
-
 // editProduct message
 export const valueInProduct = (data) => {
   return async (dispatch) => {
@@ -92,3 +92,29 @@ const productEdit = (data) => ({
   type: types.productEdit,
   payload: data,
 });
+
+export const validShop = (data) => {
+  return async () => {
+    try {
+      // principal
+      await addDoc(collection(db, "users", dA, "orders"), data);
+    } catch (error) {
+      Toast("Al parecer hay un error", "error", 5000);
+    }
+  };
+};
+
+export const validSales = (info) => {
+  return async () => {
+    try {
+      // principal
+      await addDoc(collection(db, "users", dA, "orders"), info);
+      // sales
+      await updateDoc(doc(db, "users", info.uidSale, "sales", info.idSale), {
+        info,
+      });
+    } catch (error) {
+      Toast("Al parecer hay un error", "error", 5000);
+    }
+  };
+};

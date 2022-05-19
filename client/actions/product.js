@@ -190,26 +190,34 @@ export const listProductSerchClose = () => ({
 });
 
 export const saveSale = (data) => {
+  let idS = "";
   return (dispatch) => {
     try {
       data.map(async (d) => {
         if (d.sale?.id === d.product?.uid) {
-          await addDoc(collection(db, "users", d.sale?.id, "sales"), {
+          const { id } = await addDoc(
+            collection(db, "users", d.sale?.id, "sales"),
+            {
+              sale: d.sale,
+              buy: d.buy,
+              process: d.process,
+              product: d.product,
+              lim: d.lim,
+            }
+          );
+          // id del vendedor
+          idS = id;
+        }
+        if (idS) {
+          await addDoc(collection(db, "users", d.uidC, "buys"), {
             sale: d.sale,
             buy: d.buy,
             process: d.process,
             product: d.product,
             lim: d.lim,
+            idSale: idS,
           });
         }
-
-        await addDoc(collection(db, "users", d.uidC, "buys"), {
-          sale: d.sale,
-          buy: d.buy,
-          process: d.process,
-          product: d.product,
-          lim: d.lim,
-        });
       });
 
       dispatch(activeProduct(data));

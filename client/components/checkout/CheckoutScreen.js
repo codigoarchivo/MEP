@@ -17,7 +17,7 @@ import { CartList } from "../../helpers/IconNew";
 
 import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
 
-const CheckoutScreen = ({ product, process, buy, sale }) => {
+const CheckoutScreen = ({ product, process, buy, sale, id: idBuy, idSale }) => {
   // useRef
   const initialRef = useRef();
   // useDisclosure
@@ -60,8 +60,15 @@ const CheckoutScreen = ({ product, process, buy, sale }) => {
             Number(product.cn) * Number(product.pr) * 0.2
           }`}
           bordes={bordes}
+          // id del sales product
+          idSale={idSale}
+          // id del buy product
+          idBuy={idBuy}
+          // product
           product={product}
+          // buy
           buy={buy}
+          // sale
           sale={sale}
         />
         <Button

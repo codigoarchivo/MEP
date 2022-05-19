@@ -111,7 +111,7 @@ const SerchCart = () => {
               // informacion del producto
               product: item,
               // fecha limite de la compra
-              lim: addDays(Date.now(), 7),
+              lim: addDays(Date.now(), 3),
             },
           ]);
         }
