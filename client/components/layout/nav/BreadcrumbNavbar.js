@@ -64,7 +64,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
                   <MenuItem>
                     <NavLink
                       href={`/history/buy/[buy]`}
-                      as={`/history/buy/${a.uid}`}
+                      as={`/history/buy/${a?.uid}`}
                       name={"Historia de compra"}
                       variant={"secondary"}
                       fontWeight={"normal"}
@@ -73,7 +73,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
                   <MenuItem>
                     <NavLink
                       href={`/history/sale/[sale]`}
-                      as={`/history/sale/${a.uid}`}
+                      as={`/history/sale/${a?.uid}`}
                       name={"Historia de venta"}
                       variant={"secondary"}
                       fontWeight={"normal"}

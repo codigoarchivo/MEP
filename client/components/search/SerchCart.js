@@ -55,15 +55,17 @@ const SerchCart = () => {
   // useRef
   const inc = useRef(0);
   // selector
-  const { activeSelect } = useSelector(({ auth }) => auth);
-  const a = activeSelect;
+  const { activeSelect: a } = useSelector(({ auth }) => auth);
   // selector
   const { activeCartSelect, saveCartSelect } = useSelector(
     ({ product }) => product
   );
   // incrementa y encapsula información para evitar que se actualice
   inc.current = activeCartSelect.reduce(
-    (total, item) => (total += Number(item.cn) * Number(item.pr)),
+    (total, item) =>
+      (total +=
+        Number(item.cn) * Number(item.pr) +
+        Number(item.cn) * Number(item.pr) * 0.2),
     0
   );
   // delete cart
@@ -79,10 +81,9 @@ const SerchCart = () => {
   const [proceso, setProceso] = useState([]);
 
   useEffect(async () => {
-    const { dataUser } = await UserOne(a?.uid.toString());
     // informacion del comprador para la compra
+    const { dataUser: datC } = await UserOne(a?.uid.toString());
     // id es el uid del comprador
-    const datC = dataUser;
     if (
       datC?.na === undefined ||
       datC?.te === undefined ||
@@ -94,12 +95,22 @@ const SerchCart = () => {
       setListUser(false);
 
       activeCartSelect.map(async (item) => {
+        const product = {
+          cn: item.cn,
+          na: item.na,
+          uid: item.uid,
+          pr: Number(item.pr),
+          to: item.cn * Number(item.pr),
+          // porcentaje de ganancia 5%
+          in: item.cn * Number(item.pr) * 0.05,
+        };
+        console.log(product);
         // cuando vendedor crea producto o servicio, guarda su uid  para saber a quien le pertenece
         // se identifica la informacion colleción users y nos trae los datos del vendedor
-        const { dataUser } = await UserOne(item?.uid.toString());
+        const { dataUser: datV } = await UserOne(item?.uid.toString());
         // el id es el  mismo uid que esta producto cuando se creo y que le pertenece al vendedor
-        const datV = dataUser;
-        if (dataUser !== undefined) {
+        // se crea una nueva informacion para la compra
+        if (datV !== undefined) {
           setProceso((proceso) => [
             ...proceso,
             {
@@ -112,7 +123,7 @@ const SerchCart = () => {
               // proceso de compra se hizo con exito pasa a true
               process: false,
               // informacion del producto
-              product: item,
+              product,
               // fecha limite de la compra
               lim: addDays(Date.now(), 3),
             },

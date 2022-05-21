@@ -9,7 +9,6 @@ import {
 } from "@chakra-ui/icons";
 
 import {
-  Box,
   Button,
   Heading,
   HStack,
@@ -23,8 +22,6 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  Radio,
-  RadioGroup,
   Stack,
   Text,
   VStack,
@@ -53,7 +50,7 @@ import ModeColor from "../../helpers/ModeColor";
 
 import useFormEasy from "../../hooks/useFormEasy";
 
-import { validSales, validShop } from "../../actions/checkout";
+import { validShop } from "../../actions/checkout";
 
 import Toast from "../../helpers/Toast";
 
@@ -85,19 +82,9 @@ const CheckModal = ({
   idThree,
   // product
   product,
-  // buy
-  buy,
-  // sale
-  sale,
 }) => {
   // selector
   const { activeSelect: a } = useSelector(({ auth }) => auth);
-  // useRef
-  const cat = useRef(0);
-  // useRef
-  const resumen = useRef(0);
-  // useRef
-  const comision = useRef(0);
   // file
   const file = useRef();
   // router
@@ -109,21 +96,8 @@ const CheckModal = ({
   // mode Color
   const { bg, brand } = ModeColor();
 
-  // buy
-  const { na: naC } = buy;
-  // sale
-  const { na: naV, te, co, dt } = sale;
   // product
-  const { cn, pr, uid: uidSale, na: naP } = product;
-
-  useEffect(() => {
-    // cantidad de productos
-    cat.current += Number(cn);
-    // total de productos a comprar
-    resumen.current = Number(cn) * Number(pr);
-    // comision 20% al comprador
-    comision.current = resumen.current * 0.2;
-  }, []);
+  const { cn, pr, uid: uidSale, na: naP, to } = product;
 
   // useForm
   const {
@@ -133,12 +107,11 @@ const CheckModal = ({
     reset,
     handleInputChange,
     handleInputChange2,
-    handleInputChange3,
   } = useFormEasy(initialStates);
   // agrega imagen
   values.imp = urlImage ? urlImage : values.imp;
   // values
-  const { nap, imp, fer, cor, tip, inf, ref, condicion = "1" } = values;
+  const { nap, imp, fer, cor, inf, ref } = values;
 
   // handleSubmit
   const handleSubmit = (e) => {
@@ -150,8 +123,7 @@ const CheckModal = ({
       fer === "" ||
       cor === "" ||
       inf === "" ||
-      ref === "" ||
-      tip === ""
+      ref === ""
     ) {
       return Toast("Todos los campos son obligatorios", "error", 5000);
     }
@@ -161,7 +133,6 @@ const CheckModal = ({
       imp,
       fer,
       cor,
-      tip,
       inf,
       ref,
       // uid del comprador que se encuentra logeado
@@ -170,37 +141,11 @@ const CheckModal = ({
       uidSale,
       // idThree es id del la compra del producto
       idThree,
-    };
 
-    const info = {
-      nap,
-      imp,
-      fer,
-      cor,
-      tip,
-      inf,
-      ref,
-      // uid del comprador que se encuentra logeado
-      uidBuy: a?.uid.toString(),
-      // uid del vendedor que esta guardado producto
-      uidSale,
-      // idThree es id del la compra del producto
-      idThree,
-      // limite de tiempo para pagar a la tienda 
       lim: addDays(Date.now(), 2),
     };
 
-    switch (condicion) {
-      case "1":
-        dispatch(validShop(shop));
-        break;
-      case "2":
-        dispatch(validShop(shop));
-        break;
-      case "3":
-        dispatch(validSales(info));
-        break;
-    }
+    dispatch(validShop(shop));
 
     onClose();
     reset();
@@ -229,7 +174,7 @@ const CheckModal = ({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textTransform={"uppercase"}>
-            Comprador: {naC}
+            Comprador: {a?.displayName}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
@@ -266,7 +211,7 @@ const CheckModal = ({
                         fontWeight={"normal"}
                         mb={5}
                       >
-                        informacion pago para el vendedor o tienda
+                        informacion pago para la tienda
                       </Heading>
                     </GridItem>
                     <GridItem mb={3} colSpan={2}>
@@ -368,50 +313,6 @@ const CheckModal = ({
                         </Flex>
                       </HStack>
                     </GridItem>
-                    <GridItem mb={3} colSpan={2}>
-                      <FormLabel htmlFor="tip" textTransform={"uppercase"}>
-                        Tipo pago
-                      </FormLabel>
-                      <RadioGroup
-                        name="tip"
-                        id="tip"
-                        onChange={handleInputChange3}
-                        value={tip}
-                      >
-                        <Stack
-                          spacing={3}
-                          direction="column"
-                          border={bordes}
-                          p={2}
-                        >
-                          <Radio
-                            name="tienda"
-                            colorScheme="brand"
-                            value={`1 Pago $${
-                              comision.current + resumen.current
-                            } en la Tienda`.toString()}
-                          >
-                            Pago ${comision.current + resumen.current} en la
-                            Tienda
-                          </Radio>
-                          <Radio
-                            name="comision"
-                            colorScheme="brand"
-                            value={`2 Comisión $${comision.current.toString()} en la tienda`}
-                          >
-                            Comisión ${comision.current} en la tienda
-                          </Radio>
-                          <Radio
-                            name="vendedor"
-                            colorScheme="brand"
-                            value={`3 Pago al vendedor $${resumen.current.toString()}`}
-                          >
-                            Pago al vendedor ${resumen.current}
-                          </Radio>
-                        </Stack>
-                      </RadioGroup>
-                    </GridItem>
-
                     <GridItem mb={5} colSpan={2}>
                       <FormLabel htmlFor="inf" textTransform={"uppercase"}>
                         Informacion Adicional
@@ -467,25 +368,14 @@ const CheckModal = ({
                     borderBottom={bordes}
                   >
                     <Text fontWeight={"black"}>Cantidad: </Text>
-                    <Text>{cat.current}</Text>
+                    <Text>{cn}</Text>
                   </HStack>
                   <HStack
                     justifyContent={"space-between"}
                     borderBottom={bordes}
                   >
-                    <Text fontWeight={"black"}>comision 20%: </Text>
-                    <Text>${comision.current}</Text>
-                  </HStack>
-                  <HStack
-                    justifyContent={"space-between"}
-                    borderBottom={bordes}
-                  >
-                    <Text fontWeight={"black"}>Solo pagar vendedor: </Text>
-                    <Text>${resumen.current}</Text>
-                  </HStack>
-                  <HStack justifyContent={"space-between"}>
-                    <Text fontWeight={"black"}>Total: </Text>
-                    <Text>${comision.current + resumen.current}</Text>
+                    <Text fontWeight={"black"}>Pagar a la tienda: </Text>
+                    <Text>${to}</Text>
                   </HStack>
                 </Stack>
 
@@ -558,38 +448,6 @@ const CheckModal = ({
                       <Heading size={"sm"}>N° Cuenta:</Heading>
                       <Text>381053465609</Text>
                     </HStack>
-                  </Stack>
-                </Stack>
-                <Stack w={full} spacing={3} mb={2}>
-                  <Heading mt={5} size={"sm"} border={bordes} p={2}>
-                    Información del vendedor
-                  </Heading>
-                  <HStack justifyContent={"space-between"}>
-                    <Text fontWeight={"black"}>Telefono: </Text>
-                    <Text>{te}</Text>
-                  </HStack>
-                  <Stack w={full} spacing={2} border={bordes} p={5}>
-                    <HStack
-                      justifyContent={"space-between"}
-                      borderBottom={bordes}
-                    >
-                      <Text fontWeight={"black"}>Nombre: </Text>
-                      <Text>{naV}</Text>
-                    </HStack>
-
-                    <HStack
-                      justifyContent={"space-between"}
-                      borderBottom={bordes}
-                    >
-                      <Text fontWeight={"black"}>Correo: </Text>
-                      <Text>{co}</Text>
-                    </HStack>
-                    <VStack>
-                      <Text w={full} fontWeight={"black"}>
-                        Información Adicional:{" "}
-                      </Text>
-                      <Text w={full}>{dt}</Text>
-                    </VStack>
                   </Stack>
                 </Stack>
               </VStack>

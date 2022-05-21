@@ -9,19 +9,27 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
+import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
+
 import Breakpoints from "../../helpers/Breakpoints";
 
 import CheckModal from "./CheckModal";
 
 import { CartList } from "../../helpers/IconNew";
 
-import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
+import CheckModalSale from "./CheckModalSale";
 
-const CheckoutScreen = ({ product, process, buy, sale, id: idThree }) => {
+const CheckoutScreen = ({ product, process, sale, id: idThree }) => {
   // useRef
   const initialRef = useRef();
   // useDisclosure
   const { isOpen, onOpen, onClose } = useDisclosure();
+  // useDisclosure
+  const {
+    isOpen: isOpen1,
+    onOpen: onOpen1,
+    onClose: onClose1,
+  } = useDisclosure();
   // Breakpoints
   const { bordes, full } = Breakpoints();
 
@@ -64,8 +72,6 @@ const CheckoutScreen = ({ product, process, buy, sale, id: idThree }) => {
           idThree={idThree}
           // toda la informacion del producto, que se guardo en el uid del comprador
           product={product}
-          // toda la informacion del comprador, que se guardo para que se refleje en el checkout
-          buy={buy}
           // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
           sale={sale}
         />
@@ -80,6 +86,26 @@ const CheckoutScreen = ({ product, process, buy, sale, id: idThree }) => {
         >
           Calificar
         </Button>
+        <CheckModalSale
+          backgroundColor={"grey.100"}
+          variant={"primary"}
+          size={"xs"}
+          border={bordes}
+          w={"min-content"}
+          disabled={process ? false : true}
+          isOpen={isOpen1}
+          onOpen={onOpen1}
+          onClose={onClose1}
+          initialRef={initialRef}
+          nameButton={"Datos del vendedor"}
+          bordes={bordes}
+          // idThree es id del la compra del producto
+          idThree={idThree}
+          // toda la informacion del producto, que se guardo en el uid del comprador
+          product={product}
+          // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
+          sale={sale}
+        />
       </HStack>
       <HStack spacing={"5"}>
         <Tag

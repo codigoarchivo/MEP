@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 
 import {
-  Button,
   HStack,
   Tag,
   TagLabel,
@@ -25,16 +24,6 @@ const SaleScreen = ({ product, process, buy, sale, id: idThree, info }) => {
   // Breakpoints
   const { bordes, full } = Breakpoints();
 
-  const handleSelect = () => {
-    router.push({
-      pathname: "/search/checkout/rate",
-      query: {
-        id: item.product.id,
-        rat: item.product.rat,
-        li: activeSelectCheck.length,
-      },
-    });
-  };
   return (
     <HStack
       w={full}
@@ -50,15 +39,12 @@ const SaleScreen = ({ product, process, buy, sale, id: idThree, info }) => {
           size={"xs"}
           border={bordes}
           w={"min-content"}
-          disabled={process ? true : false}
+          disabled={info ? false : true}
           isOpen={isOpen}
           onOpen={onOpen}
           onClose={onClose}
           initialRef={initialRef}
-          nameButton={`resumen $${
-            Number(product.cn) * Number(product.pr) +
-            Number(product.cn) * Number(product.pr) * 0.2
-          }`}
+          nameButton={`resumen $${product.to}`}
           bordes={bordes}
           // idThree es id del la compra del producto
           idThree={idThree}
@@ -68,6 +54,7 @@ const SaleScreen = ({ product, process, buy, sale, id: idThree, info }) => {
           buy={buy}
           // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
           sale={sale}
+          // información del pago del producto
           info={info}
         />
       </HStack>

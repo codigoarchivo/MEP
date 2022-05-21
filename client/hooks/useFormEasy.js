@@ -33,10 +33,6 @@ const useFormEasy = (initialStates = {}) => {
     }
   };
 
-  const handleInputChange3 = (data) => {
-    setValues({ ...values, tip: data, condicion: data.slice(0, 1) });
-  };
-
   return {
     values,
     urlImage,
@@ -44,7 +40,6 @@ const useFormEasy = (initialStates = {}) => {
     reset,
     handleInputChange,
     handleInputChange2,
-    handleInputChange3,
   };
 };
 

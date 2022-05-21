@@ -196,35 +196,38 @@ export const saveSale = (data) => {
     try {
       data.map(async (d) => {
         const { id } = await addDoc(collection(db, "users", d.buy.id, "buys"), {
-          sale: d.sale,
-          buy: d.buy,
+          lim: d.lim,
           process: d.process,
           product: d.product,
-          lim: d.lim,
           close: d.close,
         });
 
         if (id) {
-          // compara id que es uid vendedor con uid donde esta publicado el producto para saber si ese producto fue vendido por el mismo usuario
-          if (d.sale.id === d.product.uid) {
-            await setDoc(doc(db, "users", d.sale.id, "sales", id), {
+          if (dA === d.sale.id) {
+            await setDoc(doc(db, "users", dA, "sales", id), {
               sale: d.sale,
+              lim: d.lim,
               buy: d.buy,
               process: d.process,
               product: d.product,
+              close: d.close,
+            });
+          } else {
+            await setDoc(doc(db, "users", dA, "sales", id), {
+              sale: d.sale,
               lim: d.lim,
+              buy: d.buy,
+              process: d.process,
+              product: d.product,
+              close: d.close,
+            });
+            await setDoc(doc(db, "users", d.sale.id, "sales", id), {
+              lim: d.lim,
+              process: d.process,
+              product: d.product,
               close: d.close,
             });
           }
-
-          await setDoc(doc(db, "users", dA, "orders", id), {
-            sale: d.sale,
-            buy: d.buy,
-            process: d.process,
-            product: d.product,
-            lim: d.lim,
-            close: d.close,
-          });
         }
       });
 

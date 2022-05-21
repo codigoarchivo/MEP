@@ -97,22 +97,7 @@ export const validShop = (info) => {
   return async () => {
     try {
       // principal
-      await updateDoc(doc(db, "users", dA, "orders", info.idThree), { info });
-    } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
-    }
-  };
-};
-
-export const validSales = (info) => {
-  return async () => {
-    try {
-      // principal
-      await updateDoc(doc(db, "users", dA, "orders", info.idThree), { info });
-      // sales
-      await updateDoc(doc(db, "users", info.uidSale, "sales", info.idThree), {
-        info,
-      });
+      await updateDoc(doc(db, "users", dA, "sales", info.idThree), { info });
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }
@@ -122,11 +107,13 @@ export const validSales = (info) => {
 export const validPago = (info) => {
   return async () => {
     try {
-      // principal
-      await updateDoc(doc(db, "users", dA, "orders", info.idThree), { info });
       // sales
-      await updateDoc(doc(db, "users", info.uidSale, "sales", info.idThree), {
-        info,
+      await updateDoc(doc(db, "users", info.uid, "sales", info.idThree), {
+        process: info.process,
+      });
+      // buy
+      await updateDoc(doc(db, "users", info.id, "buys", info.idThree), {
+        process: info.process,
       });
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);

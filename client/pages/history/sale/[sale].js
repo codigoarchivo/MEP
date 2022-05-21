@@ -80,7 +80,7 @@ const Sale = ({ dataUser }) => {
 export async function getServerSideProps(context) {
   const { sale } = await context.query;
   try {
-    const { dataUser } = await UserTwo(sale.toString(), "orders");
+    const { dataUser } = await UserTwo(sale.toString(), "sales");
     return {
       props: {
         dataUser,

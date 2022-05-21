@@ -25,7 +25,7 @@ const cart = () => {
       </Container>
     ) : (
       <Layout>
-        <Container maxW="container.lg">
+        <Container maxW="container.xl">
           <VStack width={"full"}>
             <SerchCart />
           </VStack>

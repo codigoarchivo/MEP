@@ -309,7 +309,7 @@ const Navbar = () => {
               <Flex mx={4} justifyContent="space-around" alignItems={"center"}>
                 {a?.email && a?.rol && a?.displayName ? (
                   <>
-                    {!activeSelectCheck.length > 0 ? (
+                    {activeSelectCheck.length > 0 ? (
                       <Box
                         position={"relative"}
                         onClick={() =>

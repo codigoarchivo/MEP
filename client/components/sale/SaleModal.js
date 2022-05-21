@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 
 import Image from "next/image";
 
@@ -16,13 +16,13 @@ import {
   Stack,
   Text,
   VStack,
+  chakra,
 } from "@chakra-ui/react";
-
-import { useRouter } from "next/router";
 
 import { useDispatch, useSelector } from "react-redux";
 
 import Breakpoints from "../../helpers/Breakpoints";
+
 import { validPago } from "../../actions/checkout";
 
 const SaleModal = ({
@@ -53,24 +53,31 @@ const SaleModal = ({
   // selector
   const { activeSelect: a } = useSelector(({ auth }) => auth);
 
-  // router
-  const router = useRouter();
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
   const { content5, full } = Breakpoints();
 
   // buy
-  const { na: naC } = buy;
+  const { id, na: naC, co: coC, te: teC, dt: dtC } = buy;
+
+  const { in: incre, to, uid } = product;
+
+  const { na, co, te, dt } = sale;
 
   // handleLiberate
   const handleLiberate = (e) => {
     e.preventDefault();
     const data = {
+      // proceso de pago
+      process: true,
+      // uid del vendendor
+      uid,
+      // id del la venta - compra
       idThree,
-      
-      
-    }
+      // uid del comprador
+      id,
+    };
     dispatch(validPago(data));
     onClose();
   };
@@ -90,7 +97,7 @@ const SaleModal = ({
         {nameButton}
       </Button>
       <Modal
-        size={"lg"}
+        size={"6xl"}
         initialFocusRef={initialRef}
         isOpen={isOpen}
         onClose={onClose}
@@ -98,7 +105,7 @@ const SaleModal = ({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textTransform={"uppercase"}>
-            Comprador: {naC}
+            Encargado: {a?.displayName}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
@@ -108,7 +115,7 @@ const SaleModal = ({
               w={full}
               justifyContent={"space-around"}
             >
-              <VStack w={full} spacing={0}>
+              <VStack w={full} spacing={0} mr={5}>
                 <Heading w={full} mb={5} size={"sm"} border={bordes} p={2}>
                   Información de la transferencia
                 </Heading>
@@ -163,23 +170,120 @@ const SaleModal = ({
                     justifyContent={"space-between"}
                     borderBottom={bordes}
                   >
-                    <Text fontWeight={"black"}>Tipo Pago: </Text>
-                    <Text>{info?.tip.slice(1, 50)}</Text>
+                    <Text fontWeight={"black"}>Total reflejado: </Text>
+                    <Text>${to}</Text>
                   </HStack>
-                  <HStack justifyContent={"space-between"}>
+                  <HStack
+                    justifyContent={"space-between"}
+                    borderBottom={bordes}
+                  >
+                    <Text fontWeight={"black"}>Comision: </Text>
+                    <Text>${incre}</Text>
+                  </HStack>
+                  <HStack
+                    justifyContent={"space-between"}
+                    borderBottom={bordes}
+                  >
+                    <Text fontWeight={"black"}>Pago al vendedor: </Text>
+                    <Text>${to - incre}</Text>
+                  </HStack>
+
+                  <HStack
+                    justifyContent={"space-between"}
+                    borderBottom={bordes}
+                  >
                     <Text fontWeight={"black"}>Información adicional: </Text>
                     <Text>{info?.inf}</Text>
                   </HStack>
-                  <HStack w={"full"} justifyContent="flex-end" spacing={10}>
-                    <Button variant={"secondary"} onClick={onClose}>
-                      Close
-                    </Button>
-                    <Button onClick={handleLiberate} variant={"primary"} type="submit" ml={3}>
-                      Liberar Proceso
-                    </Button>
-                  </HStack>
+                  <chakra.form onSubmit={handleLiberate}>
+                    <HStack
+                      mt={10}
+                      w={"full"}
+                      justifyContent="flex-end"
+                      spacing={10}
+                    >
+                      <Button variant={"secondary"} onClick={onClose}>
+                        Close
+                      </Button>
+                      <Button variant={"primary"} type="submit" ml={3}>
+                        Liberar Proceso
+                      </Button>
+                    </HStack>
+                  </chakra.form>
                 </Stack>
               </VStack>
+              <Stack w={full}>
+                <VStack w={full} spacing={0}>
+                  <Heading w={full} mb={5} size={"sm"} border={bordes} p={2}>
+                    Información del pago para Vendedor
+                  </Heading>
+                  <Stack w={full} mt={5} spacing={5} border={bordes} p={5}>
+                    <HStack
+                      justifyContent={"space-between"}
+                      borderBottom={bordes}
+                    >
+                      <Text fontWeight={"black"}>Pagar a: </Text>
+                      <Text>{na}</Text>
+                    </HStack>
+                    <HStack
+                      justifyContent={"space-between"}
+                      borderBottom={bordes}
+                    >
+                      <Text fontWeight={"black"}>Telefono: </Text>
+                      <Text>{te}</Text>
+                    </HStack>
+                    <HStack
+                      justifyContent={"space-between"}
+                      borderBottom={bordes}
+                    >
+                      <Text fontWeight={"black"}>Correo: </Text>
+                      <Text>{co}</Text>
+                    </HStack>
+                    <HStack
+                      justifyContent={"space-between"}
+                      borderBottom={bordes}
+                    >
+                      <Text fontWeight={"black"}>Información adicional: </Text>
+                      <Text>{dt}</Text>
+                    </HStack>
+                  </Stack>
+                </VStack>
+                <VStack w={full} spacing={0}>
+                  <Heading w={full} my={5} size={"sm"} border={bordes} p={2}>
+                    Información del cliente
+                  </Heading>
+                  <Stack w={full} mt={5} spacing={5} border={bordes} p={5}>
+                    <HStack
+                      justifyContent={"space-between"}
+                      borderBottom={bordes}
+                    >
+                      <Text fontWeight={"black"}>Nombre: </Text>
+                      <Text>{naC}</Text>
+                    </HStack>
+                    <HStack
+                      justifyContent={"space-between"}
+                      borderBottom={bordes}
+                    >
+                      <Text fontWeight={"black"}>Telefono: </Text>
+                      <Text>{teC}</Text>
+                    </HStack>
+                    <HStack
+                      justifyContent={"space-between"}
+                      borderBottom={bordes}
+                    >
+                      <Text fontWeight={"black"}>Correo: </Text>
+                      <Text>{coC}</Text>
+                    </HStack>
+                    <HStack
+                      justifyContent={"space-between"}
+                      borderBottom={bordes}
+                    >
+                      <Text fontWeight={"black"}>Información adicional: </Text>
+                      <Text>{dtC}</Text>
+                    </HStack>
+                  </Stack>
+                </VStack>
+              </Stack>
             </Stack>
           </ModalBody>
         </ModalContent>
