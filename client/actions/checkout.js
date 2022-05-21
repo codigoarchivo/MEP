@@ -93,11 +93,11 @@ const productEdit = (data) => ({
   payload: data,
 });
 
-export const validShop = (data) => {
+export const validShop = (info) => {
   return async () => {
     try {
       // principal
-      await addDoc(collection(db, "users", dA, "orders"), data);
+      await updateDoc(doc(db, "users", dA, "orders", info.idThree), { info });
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }
@@ -108,9 +108,24 @@ export const validSales = (info) => {
   return async () => {
     try {
       // principal
-      await addDoc(collection(db, "users", dA, "orders"), info);
+      await updateDoc(doc(db, "users", dA, "orders", info.idThree), { info });
       // sales
-      await updateDoc(doc(db, "users", info.uidSale, "sales", info.idSale), {
+      await updateDoc(doc(db, "users", info.uidSale, "sales", info.idThree), {
+        info,
+      });
+    } catch (error) {
+      Toast("Al parecer hay un error", "error", 5000);
+    }
+  };
+};
+
+export const validPago = (info) => {
+  return async () => {
+    try {
+      // principal
+      await updateDoc(doc(db, "users", dA, "orders", info.idThree), { info });
+      // sales
+      await updateDoc(doc(db, "users", info.uidSale, "sales", info.idThree), {
         info,
       });
     } catch (error) {

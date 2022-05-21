@@ -4,11 +4,11 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 
 import { db } from "../firebase/config";
 
-const UserTwo = async (id) => {
+const UserTwo = async (id, coleccion) => {
   try {
-    const docRef = collection(db, "users", id, "buys");
+    const docRef = collection(db, "users", id, coleccion);
 
-    const q = query(docRef);
+    const q = query(docRef, where("close", "==", false));
 
     const el = await getDocs(q);
 
@@ -18,7 +18,7 @@ const UserTwo = async (id) => {
     }));
 
     return {
-      dataUser,
+      dataUser: JSON.parse(JSON.stringify(dataUser)),
     };
   } catch (error) {
     Toast("Al parecer hay un error", "error", 5000);

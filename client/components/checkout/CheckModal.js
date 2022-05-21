@@ -43,7 +43,7 @@ import { addDays } from "date-fns";
 
 import { useRouter } from "next/router";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
@@ -55,6 +55,8 @@ import useFormEasy from "../../hooks/useFormEasy";
 
 import { validSales, validShop } from "../../actions/checkout";
 
+import Toast from "../../helpers/Toast";
+
 const initialStates = {
   nap: "",
   imp: "",
@@ -62,6 +64,7 @@ const initialStates = {
   cor: "",
   inf: "",
   tip: "",
+  ref: "",
 };
 
 const CheckModal = ({
@@ -78,10 +81,8 @@ const CheckModal = ({
   disabled,
   nameButton,
   bordes,
-  // id del sales product
-  idSale,
   // id del buy product
-  idBuy,
+  idThree,
   // product
   product,
   // buy
@@ -89,6 +90,8 @@ const CheckModal = ({
   // sale
   sale,
 }) => {
+  // selector
+  const { activeSelect: a } = useSelector(({ auth }) => auth);
   // useRef
   const cat = useRef(0);
   // useRef
@@ -107,7 +110,7 @@ const CheckModal = ({
   const { bg, brand } = ModeColor();
 
   // buy
-  const { na: naC, id: uidBuy } = buy;
+  const { na: naC } = buy;
   // sale
   const { na: naV, te, co, dt } = sale;
   // product
@@ -135,7 +138,7 @@ const CheckModal = ({
   // agrega imagen
   values.imp = urlImage ? urlImage : values.imp;
   // values
-  const { nap, imp, fer, cor, tip, inf, condicion = "1" } = values;
+  const { nap, imp, fer, cor, tip, inf, ref, condicion = "1" } = values;
 
   // handleSubmit
   const handleSubmit = (e) => {
@@ -147,13 +150,10 @@ const CheckModal = ({
       fer === "" ||
       cor === "" ||
       inf === "" ||
+      ref === "" ||
       tip === ""
     ) {
-      return Toast(
-        "Si vas a comprar tiene llenar todos los campos",
-        "error",
-        5000
-      );
+      return Toast("Todos los campos son obligatorios", "error", 5000);
     }
 
     const shop = {
@@ -163,14 +163,13 @@ const CheckModal = ({
       cor,
       tip,
       inf,
-      // uid del comprador
-      uidBuy,
-      // uid del vendedor
+      ref,
+      // uid del comprador que se encuentra logeado
+      uidBuy: a.uid.toString(),
+      // uid del vendedor que esta guardado producto
       uidSale,
-      // id del sales product
-      idSale,
-      // id del producto a comprar
-      idBuy,
+      // idThree es id del la compra del producto
+      idThree,
     };
 
     const info = {
@@ -180,15 +179,14 @@ const CheckModal = ({
       cor,
       tip,
       inf,
-      // uid del comprador
-      uidBuy,
-      // uid del vendedor
+      ref,
+      // uid del comprador que se encuentra logeado
+      uidBuy: a?.uid.toString(),
+      // uid del vendedor que esta guardado producto
       uidSale,
-      // id del sales product
-      idSale,
-      // id del producto a comprar
-      idBuy,
-      // id del producto a comprar
+      // idThree es id del la compra del producto
+      idThree,
+      // limite de tiempo para pagar a la tienda 
       lim: addDays(Date.now(), 2),
     };
 
@@ -284,7 +282,19 @@ const CheckModal = ({
                         placeholder="Nombre"
                       />
                     </GridItem>
-
+                    <GridItem mb={3} colSpan={2}>
+                      <FormLabel htmlFor="ref" textTransform={"uppercase"}>
+                        Referencia
+                      </FormLabel>
+                      <Input
+                        name="ref"
+                        id="ref"
+                        onChange={handleInputChange}
+                        value={ref}
+                        type={"text"}
+                        placeholder="N° Referencia"
+                      />
+                    </GridItem>
                     <GridItem mb={3} colSpan={2}>
                       <FormLabel htmlFor="cor" textTransform={"uppercase"}>
                         Correo

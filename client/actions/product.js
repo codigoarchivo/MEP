@@ -13,6 +13,8 @@ import Toast from "../helpers/Toast";
 
 import { types } from "../type";
 
+const dA = process.env.NEXT_PUBLIC_ROL_A;
+
 export const listDataProduct = (data) => {
   return async (dispatch) => {
     try {
@@ -190,32 +192,38 @@ export const listProductSerchClose = () => ({
 });
 
 export const saveSale = (data) => {
-  let idS = "";
   return (dispatch) => {
     try {
       data.map(async (d) => {
-        if (d.sale?.id === d.product?.uid) {
-          const { id } = await addDoc(
-            collection(db, "users", d.sale?.id, "sales"),
-            {
+        const { id } = await addDoc(collection(db, "users", d.buy.id, "buys"), {
+          sale: d.sale,
+          buy: d.buy,
+          process: d.process,
+          product: d.product,
+          lim: d.lim,
+          close: d.close,
+        });
+
+        if (id) {
+          // compara id que es uid vendedor con uid donde esta publicado el producto para saber si ese producto fue vendido por el mismo usuario
+          if (d.sale.id === d.product.uid) {
+            await setDoc(doc(db, "users", d.sale.id, "sales", id), {
               sale: d.sale,
               buy: d.buy,
               process: d.process,
               product: d.product,
               lim: d.lim,
-            }
-          );
-          // id del vendedor
-          idS = id;
-        }
-        if (idS) {
-          await addDoc(collection(db, "users", d.uidC, "buys"), {
+              close: d.close,
+            });
+          }
+
+          await setDoc(doc(db, "users", dA, "orders", id), {
             sale: d.sale,
             buy: d.buy,
             process: d.process,
             product: d.product,
             lim: d.lim,
-            idSale: idS,
+            close: d.close,
           });
         }
       });
@@ -226,6 +234,7 @@ export const saveSale = (data) => {
     }
   };
 };
+
 export const activeProduct = (data) => ({
   type: types.productActive,
   payload: data.length > 0 ? data : [],

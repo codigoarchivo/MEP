@@ -15,18 +15,13 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import Layout from "../../../components/layout/layout";
-
 import Breakpoints from "../../../helpers/Breakpoints";
-
-import { activeProduct, closeRevert } from "../../../actions/product";
-
+import { activeProduct } from "../../../actions/product";
 import UserTwo from "../../../helpers/UserTwo";
-
-import ContadorRegresivo from "../../../helpers/ContadorRegresivo";
-
 import CheckoutScreen from "../../../components/checkout/CheckoutScreen";
+import Toast from "../../../helpers/Toast";
 
-const checkout = () => {
+const Buy = ({ dataUser }) => {
   // dispatch
   const router = useRouter();
   // useDispatch
@@ -43,29 +38,19 @@ const checkout = () => {
     dispatch(closeRevert());
   };
 
-  useEffect(async () => {
-    if (a) {
-      const { dataUser } = await UserTwo(a.uid, "buys");
-      if (dataUser) {
-        dispatch(activeProduct(dataUser));
-      }
-    }
-  }, [a, dispatch]);
+  // useEffect(async () => {
+  //   if (dataUser) {
+  //     dispatch(activeProduct(dataUser));
+  //   }
+  // }, [dispatch]);
 
-  return !activeSelectCheck.length > 0 ? (
-    <></>
-  ) : (
+  return (
     <Layout>
-      <Box>
-        {activeSelectCheck[0].lim && (
-          <ContadorRegresivo lim={activeSelectCheck[0].lim} />
-        )}
-      </Box>
       <Container maxW={"container.xl"}>
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>
             <Heading w={full} as="h2" size="lg" fontWeight="semibold">
-              Envia el dinero a la cuenta de la tienda
+              Historial de ventas
             </Heading>
             <Stack w={full} flexDirection={content5} spacing={0}>
               <Box w={full} mx={2}>
@@ -78,19 +63,11 @@ const checkout = () => {
                       textTransform={"uppercase"}
                       px={2}
                     >
-                      <Text as={"span"} fontWeight={"black"} fontSize={"small"}>
-                        Te quedan:
-                      </Text>{" "}
-                      <Text
-                        as={"span"}
-                        id="resLimit"
-                        fontWeight={"black"}
-                        fontSize={"small"}
-                      ></Text>
+                      Historial de ventas
                     </Heading>
-                    {activeSelectCheck.map((item, key) => (
+                    {/* {activeSelectCheck.map((item, key) => (
                       <CheckoutScreen key={key} {...item} />
-                    ))}
+                    ))} */}
                   </VStack>
                   <Box>
                     <Text>
@@ -123,4 +100,21 @@ const checkout = () => {
   );
 };
 
-export default checkout;
+export async function getServerSideProps(context) {
+  const { buy } = await context.query;
+  try {
+    const { dataUser } = await UserTwo(buy, "buy");
+    console.log(dataUser);
+    return {
+      props: {
+        dataUser : null,
+      },
+    };
+  } catch (error) {
+    Toast("Al parecer hay un error", "error", 5000);
+    return {
+      props: {},
+    };
+  }
+}
+export default Buy;

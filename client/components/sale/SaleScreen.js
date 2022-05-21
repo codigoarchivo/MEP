@@ -9,15 +9,15 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
 
-import CheckModal from "./CheckModal";
+import Breakpoints from "../../helpers/Breakpoints";
 
 import { CartList } from "../../helpers/IconNew";
 
-import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
+import SaleModal from "./SaleModal";
 
-const CheckoutScreen = ({ product, process, buy, sale, id: idThree }) => {
+const SaleScreen = ({ product, process, buy, sale, id: idThree, info }) => {
   // useRef
   const initialRef = useRef();
   // useDisclosure
@@ -43,7 +43,7 @@ const CheckoutScreen = ({ product, process, buy, sale, id: idThree }) => {
       p={2}
     >
       <HStack spacing={"5"}>
-        <CheckModal
+        <SaleModal
           backgroundColor={"grey.100"}
           leftIcon={<CartList h={5} w={5} />}
           variant={"primary"}
@@ -68,18 +68,8 @@ const CheckoutScreen = ({ product, process, buy, sale, id: idThree }) => {
           buy={buy}
           // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
           sale={sale}
+          info={info}
         />
-        <Button
-          backgroundColor={"grey.100"}
-          variant={"primary"}
-          size={"xs"}
-          border={bordes}
-          w={"min-content"}
-          onClick={handleSelect}
-          disabled={process ? false : true}
-        >
-          Calificar
-        </Button>
       </HStack>
       <HStack spacing={"5"}>
         <Tag
@@ -95,4 +85,4 @@ const CheckoutScreen = ({ product, process, buy, sale, id: idThree }) => {
   );
 };
 
-export default CheckoutScreen;
+export default SaleScreen;

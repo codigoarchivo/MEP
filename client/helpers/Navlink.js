@@ -16,9 +16,10 @@ const NavLink = ({
   px,
   fontWeight,
   click,
+  as,
 }) => {
   return (
-    <Link href={href} passHref>
+    <Link href={href} as={as} passHref>
       <Button
         rightIcon={rightIcon}
         leftIcon={leftIcon}

@@ -79,34 +79,37 @@ const SerchCart = () => {
   const [proceso, setProceso] = useState([]);
 
   useEffect(async () => {
-    // comprador
-
     const { dataUser } = await UserOne(a?.uid.toString());
-    const datU = dataUser;
+    // informacion del comprador para la compra
+    // id es el uid del comprador
+    const datC = dataUser;
     if (
-      datU?.na === undefined ||
-      datU?.te === undefined ||
-      datU?.co === undefined ||
-      datU?.dt === undefined
+      datC?.na === undefined ||
+      datC?.te === undefined ||
+      datC?.co === undefined ||
+      datC?.dt === undefined
     ) {
       setListUser(true);
     } else {
       setListUser(false);
 
       activeCartSelect.map(async (item) => {
+        // cuando vendedor crea producto o servicio, guarda su uid  para saber a quien le pertenece
+        // se identifica la informacion colleción users y nos trae los datos del vendedor
         const { dataUser } = await UserOne(item?.uid.toString());
+        // el id es el  mismo uid que esta producto cuando se creo y que le pertenece al vendedor
         const datV = dataUser;
         if (dataUser !== undefined) {
           setProceso((proceso) => [
             ...proceso,
             {
-              // uid del comprador
-              uidC: a?.uid.toString(),
               // informacion del vendedor
               sale: datV,
               // informacion del comprador
-              buy: datU,
-              // proceso
+              buy: datC,
+              // cuando la persona culmino la compra y califico el vendedor pasa a true
+              close: false,
+              // proceso de compra se hizo con exito pasa a true
               process: false,
               // informacion del producto
               product: item,
@@ -118,7 +121,7 @@ const SerchCart = () => {
       });
     }
   }, []);
-  console.log(proceso);
+
   // save cart
   const handleCheckout = () => {
     Swal.fire({
