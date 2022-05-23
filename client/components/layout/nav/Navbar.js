@@ -75,14 +75,15 @@ const Navbar = () => {
   // dispatch
   const router = useRouter();
   // selector
-  const { activeSelect } = useSelector(({ auth }) => auth);
-  const a = activeSelect;
+  const { activeSelect: a } = useSelector(({ auth }) => auth);
   // selector
   const { list } = useSelector(({ category }) => category);
   // selector
-  const { activeCartSelect, activeSelectCheck, saveCartSelect } = useSelector(
-    ({ product }) => product
-  );
+  const {
+    activeCartSelect,
+    activeSelectCheck: check,
+    saveCartSelect,
+  } = useSelector(({ product }) => product);
 
   // Modality
   const { modality, setModality } = useModality();
@@ -252,7 +253,7 @@ const Navbar = () => {
               <Popover isLazy>
                 <PopoverTrigger>
                   <Box position={"relative"}>
-                    {activeSelectCheck.length > 0 ? (
+                    {check.length > 0 ? (
                       <Button
                         size="xs"
                         px={0}
@@ -288,7 +289,7 @@ const Navbar = () => {
                     </Flex>
                   </Box>
                 </PopoverTrigger>
-                {activeSelectCheck.length > 0 ? (
+                {check.length > 0 ? (
                   ""
                 ) : (
                   <PopoverContent>
@@ -309,7 +310,31 @@ const Navbar = () => {
               <Flex mx={4} justifyContent="space-around" alignItems={"center"}>
                 {a?.email && a?.rol && a?.displayName ? (
                   <>
-                    {activeSelectCheck.length > 0 ? (
+                    {check.length > 0 ? (
+                      <Box position={"relative"}>
+                        <NavLink
+                          px={0}
+                          variant={"secondary"}
+                          href={"/search/checkout"}
+                          name={<OrdenpagoIcon boxSize={points11} />}
+                        />
+                        <Flex
+                          cursor={"pointer"}
+                          right={0}
+                          top={0}
+                          border={bordes}
+                          alignItems={"center"}
+                          justifyContent="center"
+                          backgroundColor={"brand.800"}
+                          borderRadius={"full"}
+                          position={"absolute"}
+                          w={5}
+                          h={5}
+                        >
+                          {!check[0] ? 0 : check.length}
+                        </Flex>
+                      </Box>
+                    ) : (
                       <Box
                         position={"relative"}
                         onClick={() =>
@@ -337,31 +362,7 @@ const Navbar = () => {
                           w={5}
                           h={5}
                         >
-                          {!activeSelectCheck[0] ? 0 : activeSelectCheck.length}
-                        </Flex>
-                      </Box>
-                    ) : (
-                      <Box position={"relative"}>
-                        <NavLink
-                          px={0}
-                          variant={"secondary"}
-                          href={"/search/checkout"}
-                          name={<OrdenpagoIcon boxSize={points11} />}
-                        />
-                        <Flex
-                          cursor={"pointer"}
-                          right={0}
-                          top={0}
-                          border={bordes}
-                          alignItems={"center"}
-                          justifyContent="center"
-                          backgroundColor={"brand.800"}
-                          borderRadius={"full"}
-                          position={"absolute"}
-                          w={5}
-                          h={5}
-                        >
-                          {!activeSelectCheck[0] ? 0 : activeSelectCheck.length}
+                          {!check[0] ? 0 : check.length}
                         </Flex>
                       </Box>
                     )}

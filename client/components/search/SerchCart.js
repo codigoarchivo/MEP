@@ -62,10 +62,7 @@ const SerchCart = () => {
   );
   // incrementa y encapsula información para evitar que se actualice
   inc.current = activeCartSelect.reduce(
-    (total, item) =>
-      (total +=
-        Number(item.cn) * Number(item.pr) +
-        Number(item.cn) * Number(item.pr) * 0.2),
+    (total, item) => (total += Number(item.cn) * Number(item.pr)),
     0
   );
   // delete cart
@@ -96,15 +93,23 @@ const SerchCart = () => {
 
       activeCartSelect.map(async (item) => {
         const product = {
+          // raiting del producto
+          rat: item.rat,
+          // id del producto
+          id: item.id,
+          // catidad del producto
           cn: item.cn,
+          // nombre del producto
           na: item.na,
+          // uid del  vendedor
           uid: item.uid,
+          // precio del producto
           pr: Number(item.pr),
+          //  total del producto a comprar
           to: item.cn * Number(item.pr),
           // porcentaje de ganancia 5%
           in: item.cn * Number(item.pr) * 0.05,
         };
-        console.log(product);
         // cuando vendedor crea producto o servicio, guarda su uid  para saber a quien le pertenece
         // se identifica la informacion colleción users y nos trae los datos del vendedor
         const { dataUser: datV } = await UserOne(item?.uid.toString());

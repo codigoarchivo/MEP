@@ -1,26 +1,14 @@
-import React, { useRef } from "react";
+import React from "react";
 
-import {
-  HStack,
-  Tag,
-  TagLabel,
-  TagRightIcon,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { HStack, Tag, TagLabel, TagRightIcon } from "@chakra-ui/react";
 
 import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import { CartList } from "../../helpers/IconNew";
+import NavLink from "../../helpers/Navlink";
 
-import SaleModal from "./SaleModal";
-
-const SaleScreen = ({ product, process, buy, sale, id: idThree, info }) => {
-  // useRef
-  const initialRef = useRef();
-  // useDisclosure
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const SaleScreen = ({ id: idThree, process, product, info }) => {
   // Breakpoints
   const { bordes, full } = Breakpoints();
 
@@ -32,30 +20,14 @@ const SaleScreen = ({ product, process, buy, sale, id: idThree, info }) => {
       p={2}
     >
       <HStack spacing={"5"}>
-        <SaleModal
-          backgroundColor={"grey.100"}
-          leftIcon={<CartList h={5} w={5} />}
+        <NavLink
+          href={`/history/verify/[verify]`}
+          as={`/history/verify/${idThree}`}
+          name={`Verificar $${product.to}`}
           variant={"primary"}
           size={"xs"}
-          border={bordes}
-          w={"min-content"}
-          disabled={info ? false : true}
-          isOpen={isOpen}
-          onOpen={onOpen}
-          onClose={onClose}
-          initialRef={initialRef}
-          nameButton={`resumen $${product.to}`}
-          bordes={bordes}
-          // idThree es id del la compra del producto
-          idThree={idThree}
-          // toda la informacion del producto, que se guardo en el uid del comprador
-          product={product}
-          // toda la informacion del comprador, que se guardo para que se refleje en el checkout
-          buy={buy}
-          // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
-          sale={sale}
-          // información del pago del producto
-          info={info}
+          textTransform={"uppercase"}
+          disabled={info !== undefined ? false : true}
         />
       </HStack>
       <HStack spacing={"5"}>

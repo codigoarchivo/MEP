@@ -16,7 +16,7 @@ const UserOne = async (id) => {
     };
 
     return {
-      dataUser,
+      dataUser: JSON.parse(JSON.stringify(dataUser)),
     };
   } catch (error) {
     Toast("Al parecer hay un error", "error", 5000);

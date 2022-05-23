@@ -55,7 +55,6 @@ const details = ({ message, product }) => {
   const { content5, full, bordes } = Breakpoints();
   // values
   const { id, na, pr, im, ds, ct, cn, es, dt, uid, ti } = product;
-  console.log(product);
   // list Category
   const listCt = list.filter((item) => item.id === ct);
   // Incremen and Decrement

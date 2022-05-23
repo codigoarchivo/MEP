@@ -104,7 +104,6 @@ export async function getServerSideProps(context) {
   const { buy } = await context.query;
   try {
     const { dataUser } = await UserTwo(buy, "buy");
-    console.log(dataUser);
     return {
       props: {
         dataUser : null,

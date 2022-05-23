@@ -36,7 +36,7 @@ const checkout = () => {
   // selector
   const { activeSelect: a } = useSelector(({ auth }) => auth);
   // useSelector
-  const { activeSelectCheck } = useSelector(({ product }) => product);
+  const { activeSelectCheck: check } = useSelector(({ product }) => product);
 
   const handleRevert = () => {
     router.push("/");
@@ -44,23 +44,17 @@ const checkout = () => {
   };
 
   useEffect(async () => {
-    if (a) {
-      const { dataUser } = await UserTwo(a.uid, "buys");
-      if (dataUser) {
-        dispatch(activeProduct(dataUser));
-      }
+    const { dataUser } = await UserTwo(a?.uid, "buys");
+    if (dataUser) {
+      dispatch(activeProduct(dataUser));
     }
-  }, [a, dispatch]);
+  }, [dispatch, activeProduct]);
 
-  return !activeSelectCheck.length > 0 ? (
+  return !check.length > 0 ? (
     <></>
   ) : (
     <Layout>
-      <Box>
-        {activeSelectCheck[0].lim && (
-          <ContadorRegresivo lim={activeSelectCheck[0].lim} />
-        )}
-      </Box>
+      <Box>{check[0].lim && <ContadorRegresivo lim={check[0].lim} />}</Box>
       <Container maxW={"container.xl"}>
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>
@@ -88,7 +82,7 @@ const checkout = () => {
                         fontSize={"small"}
                       ></Text>
                     </Heading>
-                    {activeSelectCheck.map((item, key) => (
+                    {check.map((item, key) => (
                       <CheckoutScreen key={key} {...item} />
                     ))}
                   </VStack>

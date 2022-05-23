@@ -17,6 +17,9 @@ import {
 import { doc, setDoc } from "firebase/firestore";
 
 import Toast from "../helpers/Toast";
+import { closeRevert } from "./checkout";
+import UserTwo from "../helpers/UserTwo";
+import { activeProduct } from "./product";
 
 export const login = (
   uid = null,
@@ -42,9 +45,16 @@ export const startLoginEmailPassword = (email, password) => {
       dispatch(startLoading());
       // login
       await signInWithEmailAndPassword(auth, email, password)
-        .then(({ user }) => {
-          dispatch(login(user.uid, user.displayName));
-          dispatch(finishLoading());
+        .then(async ({ user }) => {
+          await dispatch(login(user.uid, user.displayName));
+          await dispatch(finishLoading());
+
+          if (user.uid) {
+            const { dataUser } = await UserTwo(user.uid, "buys");
+            if (dataUser.length > 0) {
+              await dispatch(activeProduct(dataUser));
+            }
+          }
         })
         .catch(({ message }) => {
           // end
@@ -68,15 +78,22 @@ export const startRegisterWithNameEmailPassword = (email, password, name) => {
       createUserWithEmailAndPassword(auth, email, password)
         .then(async ({ user }) => {
           await updateProfile(auth.currentUser, { displayName: name });
-          dispatch(login(user.uid, user.displayName));
+          await dispatch(login(user.uid, user.displayName));
           // rol
-          setDoc(doc(db, "users", user.uid.toString()), {
+          await setDoc(doc(db, "users", user.uid.toString()), {
             co: user.email,
             na: user.displayName,
             rol: "user",
           });
           // end
-          dispatch(finishLoading());
+          await dispatch(finishLoading());
+
+          if (user.uid) {
+            const { dataUser } = await UserTwo(user.uid, "buys");
+            if (dataUser.length > 0) {
+              await dispatch(activeProduct(dataUser));
+            }
+          }
         })
         .catch(({ message }) => {
           // end
@@ -96,8 +113,15 @@ export const startGoogleLogin = () => {
   return async (dispatch) => {
     try {
       await signInWithPopup(auth, provider)
-        .then(({ user }) => {
-          dispatch(login(user.uid, user.displayName));
+        .then(async ({ user }) => {
+          await dispatch(login(user.uid, user.displayName));
+
+          if (user.uid) {
+            const { dataUser } = await UserTwo(user.uid, "buys");
+            if (dataUser.length > 0) {
+              await dispatch(activeProduct(dataUser));
+            }
+          }
         })
         .catch(({ message }) => {
           // error
@@ -169,6 +193,8 @@ export const logout = () => {
           // error
           Toast(message, "error", 5000);
         });
+
+      await dispatch(closeRevert());
     } catch (error) {
       // error
       Toast("Al parecer hay un error", "error", 5000);

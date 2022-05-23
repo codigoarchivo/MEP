@@ -35,6 +35,15 @@ export const checkoutAdd = (data) => {
         dataList
       );
 
+      // sales
+      await updateDoc(doc(db, "users", data.uidV, "sales", data.idGlobal), {
+        close: data.close,
+      });
+      // buy
+      await updateDoc(doc(db, "users", data.uid, "buys", data.idGlobal), {
+        close: data.close,
+      });
+
       if (data.li === "1") {
         await dispatch(closeRevert());
       } else {
@@ -70,7 +79,6 @@ export const checkoutEdit = (data) => {
         dataList
       );
     } catch (error) {
-      console.log(error);
       Toast("Al parecer hay un error", "error", 5000);
     }
   };
@@ -110,10 +118,12 @@ export const validPago = (info) => {
       // sales
       await updateDoc(doc(db, "users", info.uid, "sales", info.idThree), {
         process: info.process,
+        buy: info.buy,
       });
       // buy
       await updateDoc(doc(db, "users", info.id, "buys", info.idThree), {
         process: info.process,
+        sale: info.sale,
       });
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);

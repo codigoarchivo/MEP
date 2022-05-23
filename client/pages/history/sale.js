@@ -1,45 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-import { useRouter } from "next/router";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
-import {
-  Box,
-  Button,
-  Container,
-  Heading,
-  Stack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Container, Heading, Stack, Text, VStack } from "@chakra-ui/react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { db } from "../../firebase/config";
 
-import Layout from "../../../components/layout/layout";
-import Breakpoints from "../../../helpers/Breakpoints";
-import { activeProduct } from "../../../actions/product";
-import UserTwo from "../../../helpers/UserTwo";
-import CheckoutScreen from "../../../components/checkout/CheckoutScreen";
-import Toast from "../../../helpers/Toast";
-import SaleScreen from "../../../components/sale/SaleScreen";
+import SaleScreen from "../../components/sale/SaleScreen";
+
+import Layout from "../../components/layout/layout";
+
+import Breakpoints from "../../helpers/Breakpoints";
+
+import Toast from "../../helpers/Toast";
 
 const Sale = ({ dataUser }) => {
-  // dispatch
-  const router = useRouter();
-  // useDispatch
-  const dispatch = useDispatch();
+  const [dataList, setDataList] = useState([]);
   // Breakpoints
   const { bordes, full, content5 } = Breakpoints();
 
-  const handleRevert = () => {
-    router.push("/");
-    dispatch(closeRevert());
-  };
+  useEffect(() => {
+    if (dataUser) {
+      setDataList(dataUser);
+    } else {
+      setDataList([]);
+    }
+  }, [dataUser]);
 
-  // useEffect(async () => {
-  //   if (dataUser) {
-  //     dispatch(activeProduct(dataUser));
-  //   }
-  // }, [dispatch]);
   return (
     <Layout>
       <Container maxW={"container.lg"}>
@@ -52,7 +39,7 @@ const Sale = ({ dataUser }) => {
               <Box w={full} mx={2}>
                 <VStack p={3} spacing={5} border={bordes}>
                   <VStack w={full} border={bordes} p={3}>
-                    {dataUser.map((item, key) => (
+                    {dataList.map((item, key) => (
                       <SaleScreen key={key} {...item} />
                     ))}
                   </VStack>
@@ -77,13 +64,23 @@ const Sale = ({ dataUser }) => {
   );
 };
 
-export async function getServerSideProps(context) {
-  const { sale } = await context.query;
+export async function getStaticProps() {
+  const dA = process.env.NEXT_PUBLIC_ROL_A;
   try {
-    const { dataUser } = await UserTwo(sale.toString(), "sales");
+    const docRef = collection(db, "users", dA, "sales");
+
+    const q = query(docRef, where("close", "==", false));
+
+    const el = await getDocs(q);
+
+    const dataUser = el.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
     return {
       props: {
-        dataUser,
+        dataUser: JSON.parse(JSON.stringify(dataUser)),
       },
     };
   } catch (error) {

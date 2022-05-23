@@ -135,15 +135,28 @@ const Rate = () => {
       // add review
       dispatch(
         checkoutAdd({
+          // uid Comprador
           uid,
-          id: router.query.idm,
-          idC: router.query.id,
+          // id del producto en venta
+          idC: router.query.rate,
+          // cuando fue creado
           cre: Date.now(),
+          // photo
           pho: photoURL,
+          // nombre del usuario
           nam: displayName,
+          // nombre usuario
           rat: ratingValue,
+          // comentario
           com: comentario,
+          // los que quedan en el proceso
           li: router.query.li,
+          // cierre de proceso
+          close: router.query.close,
+          // uid vendedor
+          uidV: router.query.ve,
+          // id global
+          idGlobal: router.query.glo,
         })
       );
 
@@ -155,7 +168,7 @@ const Rate = () => {
     }
     dispatch(
       valueInProduct({
-        id: router.query.id,
+        id: router.query.rate,
         rat: {
           est: listRang2,
           nam: listRang,

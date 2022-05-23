@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
 
+import { useSelector } from "react-redux";
+
 import {
-  Button,
   HStack,
   Tag,
   TagLabel,
@@ -13,17 +14,21 @@ import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import CheckModal from "./CheckModal";
+import CheckModal from "./CheckVerify";
 
 import { CartList } from "../../helpers/IconNew";
 
 import CheckModalSale from "./CheckModalSale";
 
+import NavLink from "../../helpers/Navlink";
+
 const CheckoutScreen = ({ product, process, sale, id: idThree }) => {
+  // selector
+  const { activeSelect: a } = useSelector(({ auth }) => auth);
+  // useSelector
+  const { activeSelectCheck: check } = useSelector(({ product }) => product);
   // useRef
   const initialRef = useRef();
-  // useDisclosure
-  const { isOpen, onOpen, onClose } = useDisclosure();
   // useDisclosure
   const {
     isOpen: isOpen1,
@@ -33,16 +38,9 @@ const CheckoutScreen = ({ product, process, sale, id: idThree }) => {
   // Breakpoints
   const { bordes, full } = Breakpoints();
 
-  const handleSelect = () => {
-    router.push({
-      pathname: "/search/checkout/rate",
-      query: {
-        id: item.product.id,
-        rat: item.product.rat,
-        li: activeSelectCheck.length,
-      },
-    });
-  };
+  // id del producto y el rat que esta acumulado
+  const { rat, id, uid } = product;
+
   return (
     <HStack
       w={full}
@@ -50,43 +48,22 @@ const CheckoutScreen = ({ product, process, sale, id: idThree }) => {
       borderBottom={bordes}
       p={2}
     >
-      <HStack spacing={"5"}>
-        <CheckModal
-          backgroundColor={"grey.100"}
-          leftIcon={<CartList h={5} w={5} />}
+      <HStack spacing={"3"}>
+        <NavLink
+          href={`/search/checkout/verify/[verify]?n=${a?.uid}`}
+          as={`/search/checkout/verify/${idThree}?n=${a?.uid}`}
+          name={`Resumén $${product.to}`}
           variant={"primary"}
           size={"xs"}
-          border={bordes}
-          w={"min-content"}
+          textTransform={"uppercase"}
           disabled={process ? true : false}
-          isOpen={isOpen}
-          onOpen={onOpen}
-          onClose={onClose}
-          initialRef={initialRef}
-          nameButton={`resumen $${
-            Number(product.cn) * Number(product.pr) +
-            Number(product.cn) * Number(product.pr) * 0.2
-          }`}
-          bordes={bordes}
-          // idThree es id del la compra del producto
-          idThree={idThree}
-          // toda la informacion del producto, que se guardo en el uid del comprador
-          product={product}
-          // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
-          sale={sale}
-        />
-        <Button
           backgroundColor={"grey.100"}
-          variant={"primary"}
-          size={"xs"}
           border={bordes}
-          w={"min-content"}
-          onClick={handleSelect}
-          disabled={process ? false : true}
-        >
-          Calificar
-        </Button>
+          leftIcon={<CartList h={5} w={5} />}
+        />
+
         <CheckModalSale
+          textTransform={"uppercase"}
           backgroundColor={"grey.100"}
           variant={"primary"}
           size={"xs"}
@@ -105,6 +82,17 @@ const CheckoutScreen = ({ product, process, sale, id: idThree }) => {
           product={product}
           // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
           sale={sale}
+        />
+        <NavLink
+          href={`/search/checkout/[rate]?co=${a?.uid}&glo=${idThree}&rat=${rat}&li=${check.length}&close=true`}
+          as={`/search/checkout/${id}?co=${a?.uid}&glo=${idThree}&rat=${rat}&li=${check.length}&close=true`}
+          name={"Calificar"}
+          variant={"primary"}
+          fontWeight={"normal"}
+          w={"min-content"}
+          disabled={process ? false : true}
+          size={"xs"}
+          border={bordes}
         />
       </HStack>
       <HStack spacing={"5"}>

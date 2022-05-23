@@ -26,6 +26,7 @@ const CheckModalSale = ({
   size,
   border,
   w,
+  textTransform,
   disabled,
   nameButton,
   bordes,
@@ -34,12 +35,11 @@ const CheckModalSale = ({
 }) => {
   // Breakpoints
   const { full } = Breakpoints();
-  // sale
-  const { na, co, te, dt } = sale;
 
   return (
     <>
       <Button
+        textTransform={textTransform}
         onClick={onOpen}
         backgroundColor={backgroundColor}
         leftIcon={leftIcon}
@@ -63,24 +63,24 @@ const CheckModalSale = ({
           <ModalBody pb={6} mt={10}>
             <Stack w={full} spacing={0}>
               <Heading w={full} mb={5} size={"sm"} border={bordes} p={2}>
-                Información del pago para Vendedor
+                Información del Vendedor
               </Heading>
               <Stack w={full} mt={5} spacing={5} border={bordes} p={5}>
                 <HStack justifyContent={"space-between"} borderBottom={bordes}>
                   <Text fontWeight={"black"}>Nombre: </Text>
-                  <Text>{na}</Text>
+                  <Text>{sale?.na}</Text>
                 </HStack>
                 <HStack justifyContent={"space-between"} borderBottom={bordes}>
                   <Text fontWeight={"black"}>Telefono: </Text>
-                  <Text>{te}</Text>
+                  <Text>{sale?.te}</Text>
                 </HStack>
                 <HStack justifyContent={"space-between"} borderBottom={bordes}>
                   <Text fontWeight={"black"}>Correo: </Text>
-                  <Text>{co}</Text>
+                  <Text>{sale?.co}</Text>
                 </HStack>
                 <HStack justifyContent={"space-between"} borderBottom={bordes}>
                   <Text fontWeight={"black"}>Información adicional: </Text>
-                  <Text>{dt}</Text>
+                  <Text>{sale?.dt}</Text>
                 </HStack>
               </Stack>
             </Stack>

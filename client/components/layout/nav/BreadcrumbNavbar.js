@@ -72,8 +72,8 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
                   </MenuItem>
                   <MenuItem>
                     <NavLink
-                      href={`/history/sale/[sale]`}
-                      as={`/history/sale/${a?.uid}`}
+                      href={`/history/sale`}
+                      as={`/history/sale`}
                       name={"Historia de venta"}
                       variant={"secondary"}
                       fontWeight={"normal"}
