@@ -4,7 +4,7 @@ import { Container } from "@chakra-ui/react";
 
 import { useRouter } from "next/router";
 
-import Layout from "../../components/layout/layout";
+import ShopLayout from "../../components/layout/ShopLayout";
 
 import UserData from "../../components/user/UserData";
 
@@ -14,11 +14,11 @@ const ajustar = () => {
   const data = router.query;
 
   return (
-    <Layout>
+    <ShopLayout>
       <Container maxWidth={"container.sm"}>
         <UserData {...data} />
       </Container>
-    </Layout>
+    </ShopLayout>
   );
 };
 

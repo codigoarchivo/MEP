@@ -1,17 +1,17 @@
 import React from "react";
 
-import Layout from "../../components/layout/Layout";
+import ShopLayout from "../../components/layout/ShopLayout";
 
 import { Container, Heading } from "@chakra-ui/react";
 
 
 const concerning = () => {
   return (
-    <Layout>
+    <ShopLayout>
       <Container maxW={"container.xs"}>
           <Heading>concerning</Heading>
       </Container>
-    </Layout>
+    </ShopLayout>
   );
 };
 

@@ -35,7 +35,7 @@ import Breakpoints from "../../helpers/Breakpoints";
 import { CartIcon } from "../../helpers/IconNew";
 import Toast from "../../helpers/Toast";
 
-import Layout from "../../components/layout/layout";
+import ShopLayout from "../../components/layout/ShopLayout";
 
 import { activeProductCart } from "../../actions/product";
 
@@ -111,7 +111,7 @@ const details = ({ message, product }) => {
   };
 
   return (
-    <Layout>
+    <ShopLayout>
       <Container maxW="container.lg">
         <Stack flexDirection={content5}>
           <VStack>
@@ -216,7 +216,7 @@ const details = ({ message, product }) => {
           </Tabs>
         </HStack>
       </Container>
-    </Layout>
+    </ShopLayout>
   );
 };
 

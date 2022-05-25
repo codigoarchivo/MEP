@@ -77,10 +77,7 @@ const CheckVerify = ({
   const { repeat1, points3, full } = Breakpoints();
   // mode Color
   const { bg, brand } = ModeColor();
-
-  // product
-  const { cn, pr, uid: uidSale, na: naP, to } = product;
-
+console.log(product);
   // useForm
   const {
     values,
@@ -120,7 +117,7 @@ const CheckVerify = ({
       // uid del comprador que se encuentra logeado
       uidBuy: a.uid.toString(),
       // uid del vendedor que esta guardado producto
-      uidSale,
+      uidSale: product.uidSale,
       // idThree es id del la compra del producto
       idThree,
 
@@ -294,19 +291,19 @@ const CheckVerify = ({
         <Stack w={full} mt={5} spacing={2} border={bordes} p={5}>
           <HStack justifyContent={"space-between"} borderBottom={bordes}>
             <Text fontWeight={"black"}>Nombre: </Text>
-            <Text>{naP}</Text>
+            <Text>{product?.na}</Text>
           </HStack>
           <HStack justifyContent={"space-between"} borderBottom={bordes}>
             <Text fontWeight={"black"}>Precio: </Text>
-            <Text>${pr}</Text>
+            <Text>${product?.pr}</Text>
           </HStack>
           <HStack justifyContent={"space-between"} borderBottom={bordes}>
             <Text fontWeight={"black"}>Cantidad: </Text>
-            <Text>{cn}</Text>
+            <Text>{product?.cn}</Text>
           </HStack>
           <HStack justifyContent={"space-between"} borderBottom={bordes}>
             <Text fontWeight={"black"}>Pagar a la tienda: </Text>
-            <Text>${to}</Text>
+            <Text>${product?.to}</Text>
           </HStack>
         </Stack>
 

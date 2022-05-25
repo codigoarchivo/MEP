@@ -12,7 +12,6 @@ import {
   onSnapshot,
   limitToLast,
   getDocs,
-  where,
 } from "firebase/firestore";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -42,7 +41,7 @@ import {
 
 import SerchScreen from "../../components/search/SerchScreen";
 
-import Layout from "../../components/layout/layout";
+import ShopLayout from "../../components/layout/ShopLayout";
 
 import { db } from "../../firebase/config";
 
@@ -245,7 +244,7 @@ const search = ({ productos }) => {
 
   return (
     <>
-      <Layout>
+      <ShopLayout>
         <Container maxW="container.xs">
           <Stack flexDirection={"row"}>
             <VStack
@@ -399,9 +398,32 @@ const search = ({ productos }) => {
             </Button>
           </HStack>
         </Container>
-      </Layout>
+      </ShopLayout>
     </>
   );
 };
 
+export async function getStaticProps() {
+  try {
+    const q = query(collection(db, "serchs"), limit(25), orderBy("na", "desc"));
+
+    const el = await getDocs(q);
+
+    const product = el.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return {
+      props: {
+        product,
+      },
+    };
+  } catch (error) {
+    Toast("Al parecer hay un error", "error", 5000);
+    return {
+      props: {},
+    };
+  }
+}
 export default search;

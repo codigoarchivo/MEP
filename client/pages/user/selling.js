@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
 
-import Layout from "../../components/layout/layout";
+import ShopLayout from "../../components/layout/ShopLayout";
 
 import {
   Button,
@@ -99,7 +99,7 @@ const Selling = () => {
   }, []);
 
   return (
-    <Layout>
+    <ShopLayout>
       <Container maxW={"container.sm"} py={20}>
         <VStack w={"full"} spacing={10}>
           <Heading
@@ -176,7 +176,7 @@ const Selling = () => {
           </Flex>
         </VStack>
       </Container>
-    </Layout>
+    </ShopLayout>
   );
 };
 

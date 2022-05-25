@@ -41,7 +41,7 @@ import {
 
 import UserScreen from "../../components/user/UserScreen";
 
-import Layout from "../../components/layout/layout";
+import ShopLayout from "../../components/layout/ShopLayout";
 
 import { db } from "../../firebase/config";
 
@@ -168,7 +168,7 @@ const list = ({ data }) => {
   };
 
   return (
-    <Layout>
+    <ShopLayout>
       {rol === "owner" ? (
         <Container maxW={"container.lg"} my={10}>
           <Box p={5}>
@@ -249,7 +249,7 @@ const list = ({ data }) => {
       ) : (
         ""
       )}
-    </Layout>
+    </ShopLayout>
   );
 };
 

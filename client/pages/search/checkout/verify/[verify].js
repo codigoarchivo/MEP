@@ -10,12 +10,12 @@ import { db } from "../../../../firebase/config";
 
 import CheckVerify from "../../../../components/checkout/CheckVerify";
 
-import Layout from "../../../../components/layout/layout";
+import ShopLayout from "../../../../components/layout/ShopLayout";
 
 const Verify = ({ dataUser }) => {
   const { content5, bordes, full } = Breakpoints();
   return (
-    <Layout>
+    <ShopLayout>
       <Container maxW={"container.lg"}>
         <Stack
           flexDirection={content5}
@@ -39,7 +39,7 @@ const Verify = ({ dataUser }) => {
           />
         </Stack>
       </Container>
-    </Layout>
+    </ShopLayout>
   );
 };
 

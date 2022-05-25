@@ -13,7 +13,7 @@ import Footer from "./foo/Footer";
 
 import AuthChange from "../../helpers/AuthChange";
 
-const Layout = ({ children }) => {
+const ShopLayout = ({ children }) => {
   return (
     <>
       <Head>
@@ -41,4 +41,4 @@ const Layout = ({ children }) => {
   );
 };
 
-export default Layout;
+export default ShopLayout;

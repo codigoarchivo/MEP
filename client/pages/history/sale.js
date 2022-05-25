@@ -8,7 +8,7 @@ import { db } from "../../firebase/config";
 
 import SaleScreen from "../../components/sale/SaleScreen";
 
-import Layout from "../../components/layout/layout";
+import ShopLayout from "../../components/layout/ShopLayout";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
@@ -28,7 +28,7 @@ const Sale = ({ dataUser }) => {
   }, [dataUser]);
 
   return (
-    <Layout>
+    <ShopLayout>
       <Container maxW={"container.lg"}>
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>
@@ -60,7 +60,7 @@ const Sale = ({ dataUser }) => {
           </VStack>
         </Stack>
       </Container>
-    </Layout>
+    </ShopLayout>
   );
 };
 

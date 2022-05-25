@@ -17,7 +17,7 @@ import {
 
 import { Rating } from "react-simple-star-rating";
 
-import Layout from "../../../components/layout/layout";
+import ShopLayout from "../../../components/layout/ShopLayout";
 
 import ModeColor from "../../../helpers/ModeColor";
 
@@ -136,9 +136,9 @@ const Rate = () => {
       dispatch(
         checkoutAdd({
           // uid Comprador
-          uid,
+          uidC: uid,
           // id del producto en venta
-          idC: router.query.rate,
+          idPV: router.query.rate,
           // cuando fue creado
           cre: Date.now(),
           // photo
@@ -178,7 +178,7 @@ const Rate = () => {
   };
 
   return (
-    <Layout>
+    <ShopLayout>
       <Container maxW={"container.sm"}>
         <HStack my={20}>
           <chakra.form onSubmit={handleSubmit} w={full} border={bordes} p={5}>
@@ -228,7 +228,7 @@ const Rate = () => {
           </chakra.form>
         </HStack>
       </Container>
-    </Layout>
+    </ShopLayout>
   );
 };
 

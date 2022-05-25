@@ -24,7 +24,7 @@ import ModeColor from "../../helpers/ModeColor";
 import Breakpoints from "../../helpers/Breakpoints";
 import Toast from "../../helpers/Toast";
 
-import Layout from "../../components/layout/layout";
+import ShopLayout from "../../components/layout/ShopLayout";
 
 import useFormUser from "../../hooks/useFormUser";
 
@@ -70,7 +70,7 @@ const user = () => {
   };
 
   return (
-    <Layout>
+    <ShopLayout>
       <Container maxW={"container.lg"} mt={10}>
         <VStack>
           <Heading size={"lg"} textAlign="center">
@@ -155,7 +155,7 @@ const user = () => {
           </chakra.form>
         </Stack>
       </Container>
-    </Layout>
+    </ShopLayout>
   );
 };
 

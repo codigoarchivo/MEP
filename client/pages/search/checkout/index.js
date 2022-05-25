@@ -14,11 +14,11 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Layout from "../../../components/layout/layout";
+import ShopLayout from "../../../components/layout/ShopLayout";
 
 import Breakpoints from "../../../helpers/Breakpoints";
 
-import { activeProduct, closeRevert } from "../../../actions/product";
+import { activeProduct, saveSaleRevert } from "../../../actions/product";
 
 import UserTwo from "../../../helpers/UserTwo";
 
@@ -39,13 +39,23 @@ const checkout = () => {
   const { activeSelectCheck: check } = useSelector(({ product }) => product);
 
   const handleRevert = () => {
+    // revertir
+    const data = check.map(({ product, id, process: pr }) => {
+      return {
+        uidV: product.uid,
+        idP: id,
+        uidC: a?.uid,
+        uidP: process.env.NEXT_PUBLIC_ROL_A,
+        process: pr,
+      };
+    });
     router.push("/");
-    dispatch(closeRevert());
+    dispatch(saveSaleRevert(data));
   };
 
   useEffect(async () => {
-    const { dataUser } = await UserTwo(a?.uid, "buys");
-    if (dataUser) {
+    if (check.length === 0) {
+      const { dataUser } = await UserTwo(a?.uid, "buys");
       dispatch(activeProduct(dataUser));
     }
   }, [dispatch, activeProduct]);
@@ -53,8 +63,7 @@ const checkout = () => {
   return !check.length > 0 ? (
     <></>
   ) : (
-    <Layout>
-      <Box>{check[0].lim && <ContadorRegresivo lim={check[0].lim} />}</Box>
+    <ShopLayout>
       <Container maxW={"container.xl"}>
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>
@@ -73,17 +82,11 @@ const checkout = () => {
                       px={2}
                     >
                       <Text as={"span"} fontWeight={"black"} fontSize={"small"}>
-                        Te quedan:
+                        Lista de compras
                       </Text>{" "}
-                      <Text
-                        as={"span"}
-                        id="resLimit"
-                        fontWeight={"black"}
-                        fontSize={"small"}
-                      ></Text>
                     </Heading>
                     {check.map((item, key) => (
-                      <CheckoutScreen key={key} {...item} />
+                      <CheckoutScreen key={key} {...item} count={(key += 1)} />
                     ))}
                   </VStack>
                   <Box>
@@ -113,7 +116,7 @@ const checkout = () => {
           </VStack>
         </Stack>
       </Container>
-    </Layout>
+    </ShopLayout>
   );
 };
 

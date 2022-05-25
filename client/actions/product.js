@@ -229,9 +229,33 @@ export const saveSale = (data) => {
             });
           }
         }
+        // TODO:hacer que el id funcione y se guarde en la base de datos
+        return { ...data, id };
       });
 
       dispatch(activeProduct(data));
+    } catch (error) {
+      Toast("Al parecer hay un error", "error", 5000);
+    }
+  };
+};
+export const saveSaleRevert = (data) => {
+  return (dispatch) => {
+    try {
+      data.map(async (d) => {
+        if (d.process === false) {
+          await deleteDoc(doc(db, "users", d.uidC, "buys", d.idP));
+
+          if (d.uidP === d.uidV) {
+            await deleteDoc(doc(db, "users", d.uidP, "sales", d.idP));
+          } else {
+            await deleteDoc(doc(db, "users", d.uidP, "sales", d.idP));
+            await deleteDoc(doc(db, "users", d.uidV, "sales", d.idP));
+          }
+        }
+      });
+
+      dispatch(closeRevert());
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }

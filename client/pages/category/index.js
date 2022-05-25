@@ -42,7 +42,7 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import CategoryScrenn from "../../components/category/CategoryScreen";
 
-import Layout from "../../components/layout/layout";
+import ShopLayout from "../../components/layout/ShopLayout";
 
 import { db } from "../../firebase/config";
 
@@ -172,7 +172,7 @@ const category = ({ data, dataC }) => {
   };
 
   return (
-    <Layout>
+    <ShopLayout>
       {activeSelect?.isloggedIn === true && activeSelect?.rol === "owner" ? (
         <Container maxW={"container.sm"} my={10}>
           <Box p={5}>
@@ -250,7 +250,7 @@ const category = ({ data, dataC }) => {
       ) : (
         ""
       )}
-    </Layout>
+    </ShopLayout>
   );
 };
 

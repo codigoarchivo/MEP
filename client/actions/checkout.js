@@ -1,6 +1,7 @@
 import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 
 import { db } from "../firebase/config";
+
 import Toast from "../helpers/Toast";
 
 import { types } from "../type";
@@ -19,10 +20,11 @@ const listcheckout = (data) => ({
 });
 
 export const checkoutAdd = (data) => {
+  console.log(data);
   return async (dispatch) => {
     try {
       const dataList = {
-        uid: data.uid,
+        uid: data.uidC,
         com: data.com,
         nam: data.nam,
         pho: data.pho,
@@ -31,7 +33,7 @@ export const checkoutAdd = (data) => {
       };
 
       await setDoc(
-        doc(collection(db, "serchs", data.idC, "messages")),
+        doc(collection(db, "serchs", data.idPV, "messages")),
         dataList
       );
 
@@ -39,8 +41,9 @@ export const checkoutAdd = (data) => {
       await updateDoc(doc(db, "users", data.uidV, "sales", data.idGlobal), {
         close: data.close,
       });
+
       // buy
-      await updateDoc(doc(db, "users", data.uid, "buys", data.idGlobal), {
+      await updateDoc(doc(db, "users", data.uidC, "buys", data.idGlobal), {
         close: data.close,
       });
 

@@ -20,7 +20,7 @@ import { db } from "../../../firebase/config";
 
 import Toast from "../../../helpers/Toast";
 
-import Layout from "../../../components/layout/layout";
+import ShopLayout from "../../../components/layout/ShopLayout";
 
 import useFormChange from "../../../hooks/useFormChange";
 
@@ -76,7 +76,7 @@ const informacion = ({ data }) => {
     router.push("/search/cart");
   };
   return (
-    <Layout>
+    <ShopLayout>
       <Container maxW="sm">
         <VStack
           alignContent={"center"}
@@ -165,7 +165,7 @@ const informacion = ({ data }) => {
           </chakra.form>
         </VStack>
       </Container>
-    </Layout>
+    </ShopLayout>
   );
 };
 

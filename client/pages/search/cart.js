@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 import SerchCart from "../../components/search/SerchCart";
 
-import Layout from "../../components/layout/layout";
+import ShopLayout from "../../components/layout/ShopLayout";
 
 import { PageNotFound } from "../../components/err/PageNotFound";
 
@@ -24,13 +24,13 @@ const cart = () => {
         </Flex>
       </Container>
     ) : (
-      <Layout>
+      <ShopLayout>
         <Container maxW="container.xl">
           <VStack width={"full"}>
             <SerchCart />
           </VStack>
         </Container>
-      </Layout>
+      </ShopLayout>
     );
   }
 };

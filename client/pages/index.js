@@ -4,7 +4,7 @@ import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 
 import { useDispatch } from "react-redux";
 
-import Layout from "../components/layout/layout";
+import ShopLayout from "../components/layout/ShopLayout";
 
 import { listDataProduct, serchProductList } from "../actions/product";
 
@@ -27,9 +27,9 @@ const HomeL = ({ product, category }) => {
   }, [dispatch]);
 
   return (
-    <Layout>
+    <ShopLayout>
       <Home />
-    </Layout>
+    </ShopLayout>
   );
 };
 

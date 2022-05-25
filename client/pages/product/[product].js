@@ -4,15 +4,15 @@ import {  Container} from "@chakra-ui/react";
 
 import ProductData from "../../components/product/ProductData";
 
-import Layout from "../../components/layout/layout";
+import ShopLayout from "../../components/layout/ShopLayout";
 
 const configDashboard = () => {
   return (
-    <Layout>
+    <ShopLayout>
       <Container maxW={"container.sm"}>
         <ProductData />
       </Container>
-    </Layout>
+    </ShopLayout>
   );
 };
 export default configDashboard;

@@ -14,7 +14,7 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Layout from "../../../components/layout/layout";
+import ShopLayout from "../../../components/layout/ShopLayout";
 import Breakpoints from "../../../helpers/Breakpoints";
 import { activeProduct } from "../../../actions/product";
 import UserTwo from "../../../helpers/UserTwo";
@@ -45,7 +45,7 @@ const Buy = ({ dataUser }) => {
   // }, [dispatch]);
 
   return (
-    <Layout>
+    <ShopLayout>
       <Container maxW={"container.xl"}>
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>
@@ -96,7 +96,7 @@ const Buy = ({ dataUser }) => {
           </VStack>
         </Stack>
       </Container>
-    </Layout>
+    </ShopLayout>
   );
 };
 

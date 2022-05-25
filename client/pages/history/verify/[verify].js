@@ -4,7 +4,7 @@ import { Container, Stack } from "@chakra-ui/react";
 
 import { doc, getDoc } from "firebase/firestore";
 
-import Layout from "../../../components/layout/layout";
+import ShopLayout from "../../../components/layout/ShopLayout";
 
 import { db } from "../../../firebase/config";
 
@@ -16,7 +16,7 @@ const Verify = ({ dataUser }) => {
   // Breakpoints
   const { content5, bordes } = Breakpoints();
   return (
-    <Layout>
+    <ShopLayout>
       <Container maxW={"container.xl"}>
         <Stack flexDirection={content5} spacing={0}>
           <SaleVerify
@@ -34,7 +34,7 @@ const Verify = ({ dataUser }) => {
           />
         </Stack>
       </Container>
-    </Layout>
+    </ShopLayout>
   );
 };
 
