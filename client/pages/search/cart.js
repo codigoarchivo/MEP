@@ -11,9 +11,11 @@ import ShopLayout from "../../components/layout/ShopLayout";
 import { PageNotFound } from "../../components/err/PageNotFound";
 
 const cart = () => {
-  const { activeSelectCheck } = useSelector(({ product }) => product);
+  const { activeSelectCheck: check = [] } = useSelector(
+    ({ product }) => product
+  );
   {
-    return activeSelectCheck.length > 0 ? (
+    return check.length > 0 ? (
       <Container maxW="container.xl" p={0}>
         <Flex
           h={"100vh"}

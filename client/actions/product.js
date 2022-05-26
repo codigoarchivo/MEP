@@ -191,11 +191,11 @@ export const listProductSerchClose = () => ({
   type: types.emptySerch,
 });
 
-export const saveSale = (data) => {
+export const saveSale = (data = []) => {
   return (dispatch) => {
     try {
       data.map(async (d) => {
-        const { id } = await addDoc(collection(db, "users", d.buy.id, "buys"), {
+        const { id } = await addDoc(collection(db, "users", d.uidCom, "buys"), {
           lim: d.lim,
           process: d.process,
           product: d.product,
@@ -203,37 +203,12 @@ export const saveSale = (data) => {
         });
 
         if (id) {
-          if (dA === d.sale.id) {
-            await setDoc(doc(db, "users", dA, "sales", id), {
-              sale: d.sale,
-              lim: d.lim,
-              buy: d.buy,
-              process: d.process,
-              product: d.product,
-              close: d.close,
-            });
-          } else {
-            await setDoc(doc(db, "users", dA, "sales", id), {
-              sale: d.sale,
-              lim: d.lim,
-              buy: d.buy,
-              process: d.process,
-              product: d.product,
-              close: d.close,
-            });
-            await setDoc(doc(db, "users", d.sale.id, "sales", id), {
-              lim: d.lim,
-              process: d.process,
-              product: d.product,
-              close: d.close,
-            });
+          for (let i = 0; i < data.length; i++) {
+            data[i].id = id;
           }
+          await dispatch(activeProduct(data));
         }
-        // TODO:hacer que el id funcione y se guarde en la base de datos
-        return { ...data, id };
       });
-
-      dispatch(activeProduct(data));
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }
@@ -245,26 +220,19 @@ export const saveSaleRevert = (data) => {
       data.map(async (d) => {
         if (d.process === false) {
           await deleteDoc(doc(db, "users", d.uidC, "buys", d.idP));
-
-          if (d.uidP === d.uidV) {
-            await deleteDoc(doc(db, "users", d.uidP, "sales", d.idP));
-          } else {
-            await deleteDoc(doc(db, "users", d.uidP, "sales", d.idP));
-            await deleteDoc(doc(db, "users", d.uidV, "sales", d.idP));
-          }
         }
       });
 
       dispatch(closeRevert());
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast("Al parecer hay un errorasasasasa", "error", 5000);
     }
   };
 };
 
 export const activeProduct = (data) => ({
   type: types.productActive,
-  payload: data.length > 0 ? data : [],
+  payload: data,
 });
 
 export const deleteProductCart = (id) => ({

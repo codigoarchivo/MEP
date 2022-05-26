@@ -104,11 +104,11 @@ const productEdit = (data) => ({
   payload: data,
 });
 
-export const validShop = (info) => {
+export const validShop = (sale) => {
   return async () => {
     try {
       // principal
-      await updateDoc(doc(db, "users", dA, "sales", info.idThree), { info });
+      await setDoc(doc(db, "users", dA, "sales", sale.idThree), { sale });
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }

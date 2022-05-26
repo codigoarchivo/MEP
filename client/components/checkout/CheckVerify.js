@@ -61,12 +61,12 @@ const initialStates = {
 const CheckVerify = ({
   bordes,
   // id del buy product
-  idThree,
+  idThree = "",
   // product
-  product,
+  product = {},
 }) => {
   // selector
-  const { activeSelect: a } = useSelector(({ auth }) => auth);
+  const { activeSelect: a = "" } = useSelector(({ auth }) => auth);
   // file
   const file = useRef();
   // router
@@ -77,7 +77,7 @@ const CheckVerify = ({
   const { repeat1, points3, full } = Breakpoints();
   // mode Color
   const { bg, brand } = ModeColor();
-console.log(product);
+
   // useForm
   const {
     values,
@@ -93,6 +93,7 @@ console.log(product);
   const { nap, imp, fer, cor, inf, ref } = values;
 
   // handleSubmit
+  product.rat = [];
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -114,14 +115,14 @@ console.log(product);
       cor,
       inf,
       ref,
+      // información del producto
+      product,
       // uid del comprador que se encuentra logeado
       uidBuy: a.uid.toString(),
       // uid del vendedor que esta guardado producto
-      uidSale: product.uidSale,
+      uidSale: product.uid,
       // idThree es id del la compra del producto
       idThree,
-
-      lim: addDays(Date.now(), 2),
     };
 
     dispatch(validShop(shop));

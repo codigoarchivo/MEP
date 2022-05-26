@@ -39,11 +39,8 @@ import SerchCartSave from "./SerchCartSave";
 import Breakpoints from "../../helpers/Breakpoints";
 
 import Toast from "../../helpers/Toast";
-import UserOne from "../../helpers/UserOne";
 
 import { addDays } from "date-fns";
-
-import localEs from "date-fns/locale/es";
 
 const SerchCart = () => {
   // dispatch
@@ -55,7 +52,7 @@ const SerchCart = () => {
   // useRef
   const inc = useRef(0);
   // selector
-  const { activeSelect: a } = useSelector(({ auth }) => auth);
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector
   const { activeCartSelect, saveCartSelect } = useSelector(
     ({ product }) => product
@@ -78,64 +75,46 @@ const SerchCart = () => {
   const [proceso, setProceso] = useState([]);
 
   useEffect(async () => {
-    // informacion del comprador para la compra
-    const { dataUser: datC } = await UserOne(a?.uid.toString());
-    // id es el uid del comprador
-    if (
-      datC?.na === undefined ||
-      datC?.te === undefined ||
-      datC?.co === undefined ||
-      datC?.dt === undefined
-    ) {
-      setListUser(true);
-    } else {
-      setListUser(false);
+    setListUser(false);
 
-      activeCartSelect.map(async (item) => {
-        const product = {
-          // raiting del producto
-          rat: item.rat,
+    activeCartSelect.map(async (item) => {
+      const product = {
+        // raiting del producto
+        rat: item.rat,
+        // id del producto
+        id: item.id,
+        // catidad del producto
+        cn: item.cn,
+        // nombre del producto
+        na: item.na,
+        // uid del  vendedor
+        uid: item.uid,
+        // precio del producto
+        pr: Number(item.pr),
+        //  total del producto a comprar
+        to: item.cn * Number(item.pr),
+        // porcentaje de ganancia 5%
+        in: item.cn * Number(item.pr) * 0.05,
+      };
+
+      setProceso((proceso) => [
+        ...proceso,
+        {
           // id del producto
-          id: item.id,
-          // catidad del producto
-          cn: item.cn,
-          // nombre del producto
-          na: item.na,
-          // uid del  vendedor
-          uid: item.uid,
-          // precio del producto
-          pr: Number(item.pr),
-          //  total del producto a comprar
-          to: item.cn * Number(item.pr),
-          // porcentaje de ganancia 5%
-          in: item.cn * Number(item.pr) * 0.05,
-        };
-        // cuando vendedor crea producto o servicio, guarda su uid  para saber a quien le pertenece
-        // se identifica la informacion colleción users y nos trae los datos del vendedor
-        const { dataUser: datV } = await UserOne(item?.uid.toString());
-        // el id es el  mismo uid que esta producto cuando se creo y que le pertenece al vendedor
-        // se crea una nueva informacion para la compra
-        if (datV !== undefined) {
-          setProceso((proceso) => [
-            ...proceso,
-            {
-              // informacion del vendedor
-              sale: datV,
-              // informacion del comprador
-              buy: datC,
-              // cuando la persona culmino la compra y califico el vendedor pasa a true
-              close: false,
-              // proceso de compra se hizo con exito pasa a true
-              process: false,
-              // informacion del producto
-              product,
-              // fecha limite de la compra
-              lim: addDays(Date.now(), 3),
-            },
-          ]);
-        }
-      });
-    }
+          id: "",
+          // uid de usuario que compro
+          uidCom: a.uid,
+          // cuando la persona culmino la compra y califico el vendedor pasa a true
+          close: false,
+          // proceso de compra se hizo con exito pasa a true
+          process: false,
+          // informacion del producto
+          product,
+          // fecha limite de la compra
+          lim: addDays(Date.now(), 3),
+        },
+      ]);
+    });
   }, []);
 
   // save cart

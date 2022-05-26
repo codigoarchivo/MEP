@@ -39,9 +39,11 @@ const CheckoutScreen = ({
   // count,
 }) => {
   // selector
-  const { activeSelect: a } = useSelector(({ auth }) => auth);
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useSelector
-  const { activeSelectCheck: check } = useSelector(({ product }) => product);
+  const { activeSelectCheck: check = [] } = useSelector(
+    ({ product }) => product
+  );
   // useRef
   const initialRef = useRef();
   // useRef
@@ -56,8 +58,8 @@ const CheckoutScreen = ({
   const { bordes, full } = Breakpoints();
 
   // id del producto y el rat que esta acumulado
-  const { rat, id, uid } = product;
-console.log(idThree);
+  const { rat, id, uid, to, na, cn, pr, in: ind } = product;
+
   return (
     <>
       {/* <ContadorRegresivo lim={lim} count={count} /> */}
@@ -69,8 +71,8 @@ console.log(idThree);
       >
         <HStack spacing={"3"}>
           <NavLink
-            href={`/search/checkout/verify/[verify]?n=${a?.uid}`}
-            as={`/search/checkout/verify/${idThree}?n=${a?.uid}`}
+            href={`/search/checkout/verify/[verify]?id=${id}&rat=${rat}&uid=${uid}&to=${to}&na=${na}&cn=${cn}&pr=${pr}&in=${ind}`}
+            as={`/search/checkout/verify/${idThree}?id=${id}&rat=${rat}&uid=${uid}&to=${to}&na=${na}&cn=${cn}&pr=${pr}&in=${ind}`}
             name={`Resumén $${product.to}`}
             variant={"primary"}
             size={"xs"}

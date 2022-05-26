@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useRouter } from "next/router";
+
 import { Container, Stack } from "@chakra-ui/react";
 
 import { doc, getDoc } from "firebase/firestore";
@@ -12,8 +14,23 @@ import CheckVerify from "../../../../components/checkout/CheckVerify";
 
 import ShopLayout from "../../../../components/layout/ShopLayout";
 
-const Verify = ({ dataUser }) => {
+const Verify = () => {
   const { content5, bordes, full } = Breakpoints();
+  // dispatch
+  const router = useRouter();
+
+  const { rat, id, uid, to, na, cn, pr, in: ind, verify } = router.query;
+
+  const product = {
+    rat,
+    id,
+    uid,
+    to,
+    na,
+    cn,
+    pr,
+    in: ind,
+  };
   return (
     <ShopLayout>
       <Container maxW={"container.lg"}>
@@ -27,15 +44,9 @@ const Verify = ({ dataUser }) => {
           <CheckVerify
             bordes={bordes}
             // idThree es id del la compra del producto
-            idThree={dataUser.id}
+            idThree={verify}
             // toda la informacion del producto, que se guardo en el uid del comprador
-            product={dataUser.product}
-            // toda la informacion del comprador, que se guardo para que se refleje en el checkout
-            buy={dataUser.buy}
-            // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
-            sale={dataUser.sale}
-            // información del pago del producto
-            info={dataUser.info}
+            product={product}
           />
         </Stack>
       </Container>
@@ -43,28 +54,4 @@ const Verify = ({ dataUser }) => {
   );
 };
 
-export async function getServerSideProps(context) {
-  const { verify = "", n = "" } = await context.query;
-  try {
-    const docRef = doc(db, "users", n, "buys", verify);
-
-    const docSnap = await getDoc(docRef);
-
-    const dataUser = {
-      id: docSnap.id,
-      ...docSnap.data(),
-    };
-
-    return {
-      props: {
-        dataUser: JSON.parse(JSON.stringify(dataUser)),
-      },
-    };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return {
-      props: {},
-    };
-  }
-}
 export default Verify;

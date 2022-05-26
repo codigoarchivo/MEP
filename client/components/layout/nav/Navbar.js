@@ -81,7 +81,7 @@ const Navbar = () => {
   // selector
   const {
     activeCartSelect,
-    activeSelectCheck: check,
+    activeSelectCheck: check = [],
     saveCartSelect,
   } = useSelector(({ product }) => product);
 

@@ -36,17 +36,16 @@ const checkout = () => {
   // selector
   const { activeSelect: a } = useSelector(({ auth }) => auth);
   // useSelector
-  const { activeSelectCheck: check } = useSelector(({ product }) => product);
+  const { activeSelectCheck: check = [] } = useSelector(
+    ({ product }) => product
+  );
 
   const handleRevert = () => {
     // revertir
-    const data = check.map(({ product, id, process: pr }) => {
+    const data = check.map(({ id }) => {
       return {
-        uidV: product.uid,
         idP: id,
         uidC: a?.uid,
-        uidP: process.env.NEXT_PUBLIC_ROL_A,
-        process: pr,
       };
     });
     router.push("/");
@@ -54,13 +53,15 @@ const checkout = () => {
   };
 
   useEffect(async () => {
-    if (check.length === 0) {
+    if (check.length === 0 && a?.uid) {
       const { dataUser } = await UserTwo(a?.uid, "buys");
       dispatch(activeProduct(dataUser));
+    } else {
+      dispatch(activeProduct(check));
     }
   }, [dispatch, activeProduct]);
 
-  return !check.length > 0 ? (
+  return check.length === 0 ? (
     <></>
   ) : (
     <ShopLayout>

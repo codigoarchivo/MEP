@@ -1,5 +1,3 @@
-import Toast from "./Toast";
-
 import { collection, getDocs, query, where } from "firebase/firestore";
 
 import { db } from "../firebase/config";
@@ -21,7 +19,6 @@ const UserTwo = async (id, coleccion) => {
       dataUser: JSON.parse(JSON.stringify(dataUser)),
     };
   } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
     return { props: {} };
   }
 };
