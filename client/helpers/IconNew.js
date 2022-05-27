@@ -763,12 +763,7 @@ export const VentasClient = createIcon({
   displayName: "VentasClient",
   viewBox: "0 0 24 24",
   path: (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      id="body_1"
-      width="24"
-      height="24"
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" id="body_1" width="24" height="24">
       <g transform="matrix(0.3 0 0 0.3 0 0)">
         <g transform="matrix(0.1 0 -0 -0.1 0 80)">
           <path
@@ -863,6 +858,21 @@ export const VentasClient = createIcon({
           />
         </g>
       </g>
+    </svg>
+  ),
+});
+export const BsPerson = createIcon({
+  displayName: "BsPerson",
+  viewBox: "0 0 16 16",
+  path: (
+    <svg
+      stroke="currentColor"
+      fill="currentColor"
+      height="3em"
+      width="3em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"></path>
     </svg>
   ),
 });
