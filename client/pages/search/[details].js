@@ -81,7 +81,7 @@ const details = ({ message, product }) => {
   // crea una referencia de lista de rat
   const lisDat = match.map((item) => ({
     rat: Number(item.rat),
-    nam: item.rat.toString(),
+    nam: String(item.rat),
   }));
 
   // Calculate product price

@@ -8,10 +8,13 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import NavLink from "../../helpers/Navlink";
 
-const SaleScreen = ({ id: idThree, process, product, info }) => {
+const SaleScreen = ({ sale = {}, process }) => {
   // Breakpoints
   const { bordes, full } = Breakpoints();
 
+  const { uidBuy, idThree } = sale;
+
+  const { uid, to } = sale.product;
   return (
     <HStack
       w={full}
@@ -21,13 +24,12 @@ const SaleScreen = ({ id: idThree, process, product, info }) => {
     >
       <HStack spacing={"5"}>
         <NavLink
-          href={`/history/verify/[verify]`}
-          as={`/history/verify/${idThree}`}
-          name={`Verificar $${product.to}`}
+          href={`/history/verify/[verify]?uidBuy=${uidBuy}&uid=${uid}`}
+          as={`/history/verify/${idThree}?uidBuy=${uidBuy}&uid=${uid}`}
+          name={`Verificar $${to}`}
           variant={"primary"}
           size={"xs"}
           textTransform={"uppercase"}
-          disabled={info !== undefined ? false : true}
         />
       </HStack>
       <HStack spacing={"5"}>

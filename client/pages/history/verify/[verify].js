@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useRouter } from "next/router";
+
 import { Container, Stack } from "@chakra-ui/react";
 
 import { doc, getDoc } from "firebase/firestore";
@@ -12,25 +14,28 @@ import Breakpoints from "../../../helpers/Breakpoints";
 
 import SaleVerify from "../../../components/sale/SaleVerify";
 
-const Verify = ({ dataUser }) => {
+const Verify = ({ dataUser = {}, dataUser2 = {}, dataUser3 = {} }) => {
   // Breakpoints
   const { content5, bordes } = Breakpoints();
+  // dispatch
+  const router = useRouter();
+
   return (
     <ShopLayout>
-      <Container maxW={"container.xl"}>
+      <Container maxW={"container.lg"} py={10}>
         <Stack flexDirection={content5} spacing={0}>
           <SaleVerify
             bordes={bordes}
             // idThree es id del la compra del producto
-            idThree={dataUser.id}
+            idThree={router.query.verify}
             // toda la informacion del producto, que se guardo en el uid del comprador
-            product={dataUser.product}
+            product={dataUser3.sale.product}
+            // la referenciadel pago
+            referencia={dataUser3.sale}
             // toda la informacion del comprador, que se guardo para que se refleje en el checkout
-            buy={dataUser.buy}
+            buy={dataUser}
             // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
-            sale={dataUser.sale}
-            // información del pago del producto
-            info={dataUser.info}
+            sale={dataUser2}
           />
         </Stack>
       </Container>
@@ -40,9 +45,9 @@ const Verify = ({ dataUser }) => {
 
 export async function getServerSideProps(context) {
   const dA = process.env.NEXT_PUBLIC_ROL_A;
-  const { verify = "" } = await context.query;
+  const { uidBuy = "", uid = "", verify = "" } = await context.query;
   try {
-    const docRef = doc(db, "users", dA, "sales", verify);
+    const docRef = doc(db, "users", uidBuy.toString());
 
     const docSnap = await getDoc(docRef);
 
@@ -51,9 +56,32 @@ export async function getServerSideProps(context) {
       ...docSnap.data(),
     };
 
+    let dataUser2 = {};
+    if (dA !== uid) {
+      const docRef2 = doc(db, "users", uid.toString());
+
+      const docSnap2 = await getDoc(docRef2);
+
+      dataUser2 = {
+        id: docSnap.id,
+        ...docSnap2.data(),
+      };
+    }
+
+    const docRef3 = doc(db, "users", uid.toString(), "sales", verify);
+
+    const docSnap3 = await getDoc(docRef3);
+
+    const dataUser3 = {
+      id: docSnap.id,
+      ...docSnap3.data(),
+    };
+
     return {
       props: {
         dataUser: JSON.parse(JSON.stringify(dataUser)),
+        dataUser2: JSON.parse(JSON.stringify(dataUser2)),
+        dataUser3: JSON.parse(JSON.stringify(dataUser3)),
       },
     };
   } catch (error) {
@@ -63,4 +91,5 @@ export async function getServerSideProps(context) {
     };
   }
 }
+
 export default Verify;

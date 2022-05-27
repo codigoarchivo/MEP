@@ -1,18 +1,18 @@
 import React from "react";
 
-import ShopLayout from "../../components/layout/ShopLayout";
+import ShopLayout from "../components/layout/ShopLayout";
 
 import { Container, Heading } from "@chakra-ui/react";
 
 
-const concerning = () => {
+const Blog = () => {
   return (
     <ShopLayout>
       <Container maxW={"container.xs"}>
-          <Heading>concerning</Heading>
+          <Heading>Blog</Heading>
       </Container>
     </ShopLayout>
   );
 };
 
-export default concerning;
+export default Blog;

@@ -19,10 +19,9 @@ const Verify = () => {
   // dispatch
   const router = useRouter();
 
-  const { rat, id, uid, to, na, cn, pr, in: ind, verify } = router.query;
+  const { id, uid, to, na, cn, pr, in: ind, verify } = router.query;
 
   const product = {
-    rat,
     id,
     uid,
     to,

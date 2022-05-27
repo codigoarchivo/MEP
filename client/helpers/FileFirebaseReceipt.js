@@ -5,10 +5,10 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 
-export const FileFirebaseReceipt = (file, setUrlImage, setProgress) => {
+export const FileFirebaseReceipt = (file = null, setUrlImage, setProgress) => {
   const storage = getStorage();
 
-  const storageRef = ref(storage, `fotosRecibo/${file?.name}`);
+  const storageRef = ref(storage, `fotosRecibo/${file.name}`);
 
   const uploadTask = uploadBytesResumable(storageRef, file);
 

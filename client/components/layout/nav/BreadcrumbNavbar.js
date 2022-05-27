@@ -26,9 +26,9 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
   // dispatch
   const router = useRouter();
   // selector
-  const { list } = useSelector(({ product }) => product);
+  const { list = [] } = useSelector(({ product }) => product);
   // selector
-  const { activeSelect: a } = useSelector(({ auth }) => auth);
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -49,6 +49,14 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
           alignItems={"center"}
           py={2}
         >
+          <chakra.li mx={"3"}>
+            <NavLink
+              fontWeight={"normal"}
+              variant={"secondary"}
+              href={"/"}
+              name={"Home"}
+            />
+          </chakra.li>
           <chakra.li mx={"3"}>
             <Menu>
               <MenuButton
@@ -83,20 +91,37 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
               </Portal>
             </Menu>
           </chakra.li>
-          <chakra.li mx={"3"}>
+          <chakra.li mx={"3"} onClick={handleObservator}>
             <NavLink
+              href={"/user"}
               fontWeight={"normal"}
               variant={"secondary"}
-              href={"/"}
-              name={"Home"}
+              name={"Editar Perfil"}
+            />
+          </chakra.li>
+          <chakra.li mx={"3"} onClick={handleObservator}>
+            <NavLink
+              href={"/blog"}
+              fontWeight={"normal"}
+              variant={"secondary"}
+              name={"Blog"}
             />
           </chakra.li>
           <chakra.li mx={"3"}>
             <NavLink
               fontWeight={"normal"}
               variant={"secondary"}
-              href={"/search/concerning"}
-              name={"About"}
+              href={"/user/selling"}
+              name={"Quieres vender"}
+            />
+          </chakra.li>
+
+          <chakra.li mx={"3"}>
+            <NavLink
+              fontWeight={"normal"}
+              variant={"secondary"}
+              href={"/user/list"}
+              name={"Mis ventas"}
             />
           </chakra.li>
           {a?.rol === "owner" && (

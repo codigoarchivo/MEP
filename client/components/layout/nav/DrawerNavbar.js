@@ -140,15 +140,6 @@ export const DrawerNavbar = ({
                     </chakra.li>
                     <chakra.li mx={"3"}>
                       <NavLink
-                        leftIcon={<AboutIcon />}
-                        fontWeight={"normal"}
-                        variant={"secondary"}
-                        href={"/search/concerning"}
-                        name={"About"}
-                      />
-                    </chakra.li>
-                    <chakra.li mx={"3"}>
-                      <NavLink
                         leftIcon={<VentaIcon />}
                         fontWeight={"normal"}
                         variant={"secondary"}
@@ -194,6 +185,15 @@ export const DrawerNavbar = ({
                         variant={"secondary"}
                         href={"/search"}
                         name={"Shop All"}
+                      />
+                    </chakra.li>
+                    <chakra.li mx={"3"} onClick={handleObservator}>
+                      <NavLink
+                        leftIcon={<ShopAll />}
+                        fontWeight={"normal"}
+                        variant={"secondary"}
+                        href={"/blog"}
+                        name={"Blog"}
                       />
                     </chakra.li>
                     <chakra.li mx={"3"} onClick={handleObservator}>

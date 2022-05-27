@@ -26,7 +26,7 @@ const PopoverUserNavbar = ({
   handleLogout,
 }) => {
   // selector
-  const { activeSelect } = useSelector(({ auth }) => auth);
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
 
   return (
     <>
@@ -43,16 +43,6 @@ const PopoverUserNavbar = ({
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
         <ListItem>
           <NavLink
-            leftIcon={<AboutIcon />}
-            fontWeight={"normal"}
-            variant={"secondary"}
-            href={"/search/concerning"}
-            name={"About"}
-          />
-        </ListItem>
-        <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
-        <ListItem>
-          <NavLink
             leftIcon={<VentaIcon />}
             fontWeight={"normal"}
             variant={"secondary"}
@@ -63,18 +53,28 @@ const PopoverUserNavbar = ({
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
         <ListItem>
           <NavLink
+            leftIcon={<ShopAll />}
+            fontWeight={"normal"}
+            variant={"secondary"}
+            href={"/blog"}
+            name={"Blog"}
+          />
+        </ListItem>
+        <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
+        <ListItem>
+          <NavLink
             leftIcon={<VentasClient />}
             fontWeight={"normal"}
             variant={"secondary"}
             href={{
               pathname: "/user/[list]",
-              query: { list: activeSelect?.uid },
+              query: { list: a?.uid },
             }}
             name={"Mis ventas"}
           />
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
-        {activeSelect?.rol === "owner" && (
+        {a?.rol === "owner" && (
           <>
             <ListItem>
               <NavLink

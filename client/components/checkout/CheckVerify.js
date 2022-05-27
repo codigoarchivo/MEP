@@ -93,7 +93,6 @@ const CheckVerify = ({
   const { nap, imp, fer, cor, inf, ref } = values;
 
   // handleSubmit
-  product.rat = [];
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -119,8 +118,6 @@ const CheckVerify = ({
       product,
       // uid del comprador que se encuentra logeado
       uidBuy: a.uid.toString(),
-      // uid del vendedor que esta guardado producto
-      uidSale: product.uid,
       // idThree es id del la compra del producto
       idThree,
     };

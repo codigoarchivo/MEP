@@ -19,6 +19,8 @@ const Sale = ({ dataUser }) => {
   // Breakpoints
   const { bordes, full, content5 } = Breakpoints();
 
+  console.log(dataUser);
+
   useEffect(() => {
     if (dataUser) {
       setDataList(dataUser);
@@ -29,7 +31,7 @@ const Sale = ({ dataUser }) => {
 
   return (
     <ShopLayout>
-      <Container maxW={"container.lg"}>
+      <Container maxW={"container.md"}>
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>
             <Heading w={full} as="h2" size="lg" fontWeight="semibold">
@@ -67,8 +69,8 @@ const Sale = ({ dataUser }) => {
 export async function getStaticProps() {
   const dA = process.env.NEXT_PUBLIC_ROL_A;
   try {
-    const docRef = collection(db, "users", dA, "sales");
-
+    const docRef = collection(db, "users", dA.toString(), "sales");
+    
     const q = query(docRef, where("close", "==", false));
 
     const el = await getDocs(q);

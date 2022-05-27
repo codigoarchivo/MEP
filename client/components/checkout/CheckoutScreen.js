@@ -38,8 +38,6 @@ const CheckoutScreen = ({
   // lim,
   // count,
 }) => {
-  // selector
-  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useSelector
   const { activeSelectCheck: check = [] } = useSelector(
     ({ product }) => product
@@ -71,8 +69,8 @@ const CheckoutScreen = ({
       >
         <HStack spacing={"3"}>
           <NavLink
-            href={`/search/checkout/verify/[verify]?id=${id}&rat=${rat}&uid=${uid}&to=${to}&na=${na}&cn=${cn}&pr=${pr}&in=${ind}`}
-            as={`/search/checkout/verify/${idThree}?id=${id}&rat=${rat}&uid=${uid}&to=${to}&na=${na}&cn=${cn}&pr=${pr}&in=${ind}`}
+            href={`/search/checkout/verify/[verify]?id=${id}&uid=${uid}&to=${to}&na=${na}&cn=${cn}&pr=${pr}&in=${ind}`}
+            as={`/search/checkout/verify/${idThree}?id=${id}&uid=${uid}&to=${to}&na=${na}&cn=${cn}&pr=${pr}&in=${ind}`}
             name={`Resumén $${product.to}`}
             variant={"primary"}
             size={"xs"}

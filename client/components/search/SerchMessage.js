@@ -44,11 +44,17 @@ const SerchMessage = (item) => {
     router.push({
       pathname: "/search/checkout/rate",
       query: {
+        // id del producto
+        m: router.query.details,
+        // bandera
         word: "Edit",
-        id: router.query.id,
+        // id del mensaje
         idm: item.id,
+        // raiting
         ratD: item.rat,
+        // comentario
         com: item.com,
+        // match raiting
         rat: match.map((item) => item.rat),
       },
     });

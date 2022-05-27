@@ -22,12 +22,12 @@ const useFormEasy = (initialStates = {}) => {
   };
 
   const handleInputChange2 = ({ target }) => {
-    const { mImage, esImg } = Validator({ imgsize: target.files[0]?.size });
+    const { mImage, esImg } = Validator({ imgsize: target.files[0].size });
 
     if (mImage) return Toast(esImg, "error", 5000);
 
     const file = target.files[0];
-
+    
     if (file) {
       FileFirebaseReceipt(file, setUrlImage, setProgress);
     }

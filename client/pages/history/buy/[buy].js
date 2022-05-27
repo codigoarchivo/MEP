@@ -7,6 +7,7 @@ import {
   Button,
   Container,
   Heading,
+  HStack,
   Stack,
   Text,
   VStack,
@@ -28,29 +29,19 @@ const Buy = ({ dataUser }) => {
   const dispatch = useDispatch();
   // Breakpoints
   const { bordes, full, content5 } = Breakpoints();
-  // selector
-  const { activeSelect: a } = useSelector(({ auth }) => auth);
-  // useSelector
-  const { activeSelectCheck } = useSelector(({ product }) => product);
 
   const handleRevert = () => {
     router.push("/");
     dispatch(closeRevert());
   };
-
-  // useEffect(async () => {
-  //   if (dataUser) {
-  //     dispatch(activeProduct(dataUser));
-  //   }
-  // }, [dispatch]);
-
+  console.log(dataUser);
   return (
     <ShopLayout>
       <Container maxW={"container.xl"}>
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>
             <Heading w={full} as="h2" size="lg" fontWeight="semibold">
-              Historial de ventas
+              Historial de Compras
             </Heading>
             <Stack w={full} flexDirection={content5} spacing={0}>
               <Box w={full} mx={2}>
@@ -65,22 +56,25 @@ const Buy = ({ dataUser }) => {
                     >
                       Historial de ventas
                     </Heading>
-                    {/* {activeSelectCheck.map((item, key) => (
+                    {dataUser.map((item, key) => (
                       <CheckoutScreen key={key} {...item} />
-                    ))} */}
+                    ))}
                   </VStack>
-                  <Box>
-                    <Text>
-                      Si sientes que as cometido una equivocación puede revertir
-                      haciendo{" "}
-                    </Text>
-                    <Button
-                      onClick={handleRevert}
-                      textTransform={"uppercase"}
-                      variant={"secondary"}
-                    >
-                      clik aqui
-                    </Button>{" "}
+                  <Box w={"full"}>
+                    <HStack>
+                      <Text>
+                        Si sientes que as cometido una equivocación puede
+                        revertir haciendo{" "}
+                      </Text>
+                      <Button
+                        onClick={handleRevert}
+                        textTransform={"uppercase"}
+                        variant={"secondary"}
+                      >
+                        clik aqui
+                      </Button>{" "}
+                    </HStack>
+
                     <Box mt={5}>
                       <Heading size={"sm"}>Nota:</Heading>{" "}
                       <Text>
@@ -103,10 +97,10 @@ const Buy = ({ dataUser }) => {
 export async function getServerSideProps(context) {
   const { buy } = await context.query;
   try {
-    const { dataUser } = await UserTwo(buy, "buy");
+    const { dataUser } = await UserTwo(buy, "buys");
     return {
       props: {
-        dataUser : null,
+        dataUser: JSON.parse(JSON.stringify(dataUser)),
       },
     };
   } catch (error) {

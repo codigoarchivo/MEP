@@ -66,16 +66,14 @@ const Rate = () => {
     }
   }, [setRatingValue, setComentario, router.query]);
 
-  useEffect(() => {
-    const saveRat =
-      typeof router.query.rat === "string"
-        ? [router.query.rat]
-        : router.query.rat;
+  const saveRat =
+    typeof router.query.rat === "string"
+      ? [router.query.rat]
+      : router.query.rat;
 
+  useEffect(() => {
     if (saveRat !== undefined) {
       setCarga([...saveRat, ratingValue]);
-    } else {
-      setCarga([ratingValue]);
     }
   }, [setCarga, router.query, ratingValue]);
 
@@ -110,12 +108,18 @@ const Rate = () => {
 
   // crea una referencia de lista de rat
   const lisRat = carga.map((item) => ({
-    rat: Number(item),
-    nam: item.toString(),
+    rat: Number(item) || 0,
+    nam: String(item) || "0",
   }));
 
+  const list =
+    lisRat[0]?.rat === 0 && lisRat[0]?.nam === "0"
+      ? [{ rat: lisRat[1].rat || 0, nam: lisRat[1].nam || "0" }]
+      : lisRat;
+
   // Calculate product price
-  const { listRang, listRang2 } = Calculate(lisRat);
+  const { listRang, listRang2 } = Calculate(list);
+  console.log(router.query.rate);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -123,14 +127,28 @@ const Rate = () => {
       // edit review
       dispatch(
         checkoutEdit({
+          // id del mensaje
           id: router.query.idm,
-          idC: router.query.id,
+          // id del producto
+          idC: router.query.m,
+          // raiting
           rat: ratingValue,
+          // comentario nuevo
           com: comentario,
+          // creado
           cre: Date.now(),
         })
       );
-      router.push("/search");
+      dispatch(
+        valueInProduct({
+          id: router.query.m,
+          rat: {
+            est: listRang2,
+            nam: listRang,
+          },
+        })
+      );
+      router.push("/");
     } else {
       // add review
       dispatch(
@@ -160,21 +178,22 @@ const Rate = () => {
         })
       );
 
+      dispatch(
+        valueInProduct({
+          id: router.query.rate,
+          rat: {
+            est: listRang2,
+            nam: listRang,
+          },
+        })
+      );
+
       if (router.query.li === "1") {
-        router.push("/search");
+        router.push("/");
       } else {
         router.push("/search/checkout");
       }
     }
-    dispatch(
-      valueInProduct({
-        id: router.query.rate,
-        rat: {
-          est: listRang2,
-          nam: listRang,
-        },
-      })
-    );
   };
 
   return (

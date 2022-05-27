@@ -108,26 +108,51 @@ export const validShop = (sale) => {
   return async () => {
     try {
       // principal
-      await setDoc(doc(db, "users", dA, "sales", sale.idThree), { sale });
+      await setDoc(doc(db, "users", dA, "sales", sale.idThree), {
+        sale,
+        close: false,
+        process: false,
+      });
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
 
-export const validPago = (info) => {
+export const validPago = (info = {}) => {
   return async () => {
     try {
-      // sales
-      await updateDoc(doc(db, "users", info.uid, "sales", info.idThree), {
-        process: info.process,
-        buy: info.buy,
-      });
-      // buy
-      await updateDoc(doc(db, "users", info.id, "buys", info.idThree), {
-        process: info.process,
-        sale: info.sale,
-      });
+      if (dA === info.product.uid) {
+        // principal
+        await updateDoc(doc(db, "users", dA, "sales", info.idThree), {
+          process: true,
+        });
+        // buy
+        await updateDoc(doc(db, "users", info.buy.id, "buys", info.idThree), {
+          process: true,
+          sale: info.sale,
+        });
+      } else {
+        // principal
+        await updateDoc(doc(db, "users", dA, "sales", info.idThree), {
+          process: true,
+        });
+        // sales
+        await setDoc(
+          doc(db, "users", info.product.uid, "sales", info.idThree),
+          {
+            process: true,
+            buy: info.buy,
+            product: info.product,
+            close: false,
+          }
+        );
+        // buy
+        await updateDoc(doc(db, "users", info.buy.id, "buys", info.idThree), {
+          process: true,
+          sale: info.sale,
+        });
+      }
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }

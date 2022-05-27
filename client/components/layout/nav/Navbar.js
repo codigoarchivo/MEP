@@ -75,9 +75,9 @@ const Navbar = () => {
   // dispatch
   const router = useRouter();
   // selector
-  const { activeSelect: a } = useSelector(({ auth }) => auth);
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector
-  const { list } = useSelector(({ category }) => category);
+  const { list = [] } = useSelector(({ category }) => category);
   // selector
   const {
     activeCartSelect,

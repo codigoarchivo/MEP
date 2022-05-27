@@ -7,6 +7,7 @@ import {
   Button,
   Container,
   Heading,
+  HStack,
   Stack,
   Text,
   VStack,
@@ -34,7 +35,7 @@ const checkout = () => {
   // Breakpoints
   const { bordes, full, content5 } = Breakpoints();
   // selector
-  const { activeSelect: a } = useSelector(({ auth }) => auth);
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useSelector
   const { activeSelectCheck: check = [] } = useSelector(
     ({ product }) => product
@@ -45,7 +46,7 @@ const checkout = () => {
     const data = check.map(({ id }) => {
       return {
         idP: id,
-        uidC: a?.uid,
+        uidC: a.uid,
       };
     });
     router.push("/");
@@ -90,18 +91,21 @@ const checkout = () => {
                       <CheckoutScreen key={key} {...item} count={(key += 1)} />
                     ))}
                   </VStack>
-                  <Box>
-                    <Text>
-                      Si sientes que as cometido una equivocación puede revertir
-                      haciendo{" "}
-                    </Text>
-                    <Button
-                      onClick={handleRevert}
-                      textTransform={"uppercase"}
-                      variant={"secondary"}
-                    >
-                      clik aqui
-                    </Button>{" "}
+                  <Box w={"full"}>
+                    <HStack>
+                      <Text>
+                        Si sientes que as cometido una equivocación puede
+                        revertir haciendo{" "}
+                      </Text>
+                      <Button
+                        onClick={handleRevert}
+                        textTransform={"uppercase"}
+                        variant={"secondary"}
+                      >
+                        clik aqui
+                      </Button>{" "}
+                    </HStack>
+
                     <Box mt={5}>
                       <Heading size={"sm"}>Nota:</Heading>{" "}
                       <Text>
