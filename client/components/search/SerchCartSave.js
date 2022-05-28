@@ -5,9 +5,8 @@ import Image from "next/image";
 import { useDispatch } from "react-redux";
 
 import {
-  AspectRatio,
-  Box,
   Button,
+  Heading,
   HStack,
   Input,
   Menu,
@@ -18,11 +17,13 @@ import {
   Text,
   Tr,
   useNumberInput,
+  VStack,
 } from "@chakra-ui/react";
 
 import { DeleteIcon, PlusSquareIcon, SmallAddIcon } from "@chakra-ui/icons";
 
 import Breakpoints from "../../helpers/Breakpoints";
+
 import Toast from "../../helpers/Toast";
 
 import { activeProductCart, deleteProductSave } from "../../actions/product";
@@ -56,9 +57,8 @@ const SerchCartSave = ({ id, na, pr, cn, im }) => {
   const input = getInputProps({ isReadOnly: true });
 
   const handleSelect = () => {
-    const total = pr * input.value;
-    const cantidad = input.value;
-    dispatch(activeProductCart({ id, na, pr, im, cantidad, total }));
+    const cn = input.value;
+    dispatch(activeProductCart({ id, na, pr, im, cn }));
     dispatch(deleteProductSave(id));
   };
 
@@ -66,30 +66,33 @@ const SerchCartSave = ({ id, na, pr, cn, im }) => {
     <>
       <Tr>
         <Td>
-          <AspectRatio ratio={1} w={59} h={59} position={"relative"}>
+          <HStack position={"relative"}>
             <Image
               src={im}
               alt="Picture of the author"
-              layout="fill"
-              objectFit="contain"
+              width={100}
+              height={100}
             />
-          </AspectRatio>
+            <VStack>
+              <Heading w={full} size={"sm"}>
+                {na}
+              </Heading>
+
+              <Text w={full}>Precio: ${pr}</Text>
+              <Text w={full}>Disponible: {cn}</Text>
+            </VStack>
+          </HStack>
         </Td>
-        <Td>{na}</Td>
-        <Td>${pr}</Td>
-        <Td>{cn}</Td>
-        <Td>
-          <Box w={full}>
-            <HStack maxW="160px">
-              <Button fontSize={20} variant={"primary"} {...dec}>
-                -
-              </Button>
-              <Input {...input} />
-              <Button fontSize={20} variant={"primary"} {...inc}>
-                +
-              </Button>
-            </HStack>
-          </Box>
+        <Td display={"flex"} justifyContent={"center"} alignItems={"center"} h={"130px"}>
+          <HStack maxW="160px"  >
+            <Button fontSize={20} variant={"primary"} {...dec}>
+              -
+            </Button>
+            <Input {...input} />
+            <Button fontSize={20} variant={"primary"} {...inc}>
+              +
+            </Button>
+          </HStack>
         </Td>
         <Td>${pr * input.value}</Td>
         <Td>

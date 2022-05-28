@@ -5,13 +5,7 @@ export const LoveIcon = createIcon({
   viewBox: "0 0 512.000000 512.000000",
 
   path: (
-    <svg
-      version="1.0"
-      xmlns="http://www.w3.org/2000/svg"
-      width="512.000000pt"
-      height="512.000000pt"
-      preserveAspectRatio="xMidYMid meet"
-    >
+    <>
       <g
         transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
         fill="currentColor"
@@ -26,7 +20,7 @@ export const LoveIcon = createIcon({
    -281 292 -477 389 -210 104 -392 146 -630 144 -71 -1 -164 -7 -205 -14z"
         />
       </g>
-    </svg>
+    </>
   ),
 });
 export const CartIcon = createIcon({
@@ -34,13 +28,7 @@ export const CartIcon = createIcon({
   viewBox: "0 0 512.000000 512.000000",
 
   path: (
-    <svg
-      version="1.0"
-      xmlns="http://www.w3.org/2000/svg"
-      width="512.000000pt"
-      height="512.000000pt"
-      preserveAspectRatio="xMidYMid meet"
-    >
+    <>
       <g
         transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
         fill="currentColor"
@@ -61,7 +49,7 @@ export const CartIcon = createIcon({
         -145 340 -38 22 -46 22 -442 22 -382 -1 -406 -2 -441 -21z"
         />
       </g>
-    </svg>
+    </>
   ),
 });
 export const FacebookIcon = createIcon({
@@ -69,13 +57,7 @@ export const FacebookIcon = createIcon({
   viewBox: "0 0 144.000000 144.000000",
 
   path: (
-    <svg
-      version="1.0"
-      xmlns="http://www.w3.org/2000/svg"
-      width="144.000000pt"
-      height="144.000000pt"
-      preserveAspectRatio="xMidYMid meet"
-    >
+    <>
       <metadata>
         Created by potrace 1.16, written by Peter Selinger 2001-2019
       </metadata>
@@ -94,7 +76,7 @@ export const FacebookIcon = createIcon({
    60 0 60 45 0 45 0 0 68 c0 128 48 172 187 172 l83 0 0 -60z"
         />
       </g>
-    </svg>
+    </>
   ),
 });
 export const WhatsAppIcon = createIcon({
@@ -102,16 +84,7 @@ export const WhatsAppIcon = createIcon({
   viewBox: "0 0 24 24",
 
   path: (
-    <svg
-      fill="currentColor"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      width="24px"
-      height="24px"
-    >
-      {" "}
-      <path d="M19.077,4.928c-2.082-2.083-4.922-3.134-7.904-2.894C7.164,2.356,3.65,5.144,2.474,8.99 c-0.84,2.748-0.487,5.617,0.881,7.987L2.059,21.28c-0.124,0.413,0.253,0.802,0.67,0.691l4.504-1.207 c1.459,0.796,3.101,1.215,4.773,1.216h0.004c4.195,0,8.071-2.566,9.412-6.541C22.728,11.563,21.762,7.616,19.077,4.928z M16.898,15.554c-0.208,0.583-1.227,1.145-1.685,1.186c-0.458,0.042-0.887,0.207-2.995-0.624c-2.537-1-4.139-3.601-4.263-3.767 c-0.125-0.167-1.019-1.353-1.019-2.581S7.581,7.936,7.81,7.687c0.229-0.25,0.499-0.312,0.666-0.312c0.166,0,0.333,0,0.478,0.006 c0.178,0.007,0.375,0.016,0.562,0.431c0.222,0.494,0.707,1.728,0.769,1.853s0.104,0.271,0.021,0.437s-0.125,0.27-0.249,0.416 c-0.125,0.146-0.262,0.325-0.374,0.437c-0.125,0.124-0.255,0.26-0.11,0.509c0.146,0.25,0.646,1.067,1.388,1.728 c0.954,0.85,1.757,1.113,2.007,1.239c0.25,0.125,0.395,0.104,0.541-0.063c0.146-0.166,0.624-0.728,0.79-0.978 s0.333-0.208,0.562-0.125s1.456,0.687,1.705,0.812c0.25,0.125,0.416,0.187,0.478,0.291 C17.106,14.471,17.106,14.971,16.898,15.554z" />
-    </svg>
+    <path d="M19.077,4.928c-2.082-2.083-4.922-3.134-7.904-2.894C7.164,2.356,3.65,5.144,2.474,8.99 c-0.84,2.748-0.487,5.617,0.881,7.987L2.059,21.28c-0.124,0.413,0.253,0.802,0.67,0.691l4.504-1.207 c1.459,0.796,3.101,1.215,4.773,1.216h0.004c4.195,0,8.071-2.566,9.412-6.541C22.728,11.563,21.762,7.616,19.077,4.928z M16.898,15.554c-0.208,0.583-1.227,1.145-1.685,1.186c-0.458,0.042-0.887,0.207-2.995-0.624c-2.537-1-4.139-3.601-4.263-3.767 c-0.125-0.167-1.019-1.353-1.019-2.581S7.581,7.936,7.81,7.687c0.229-0.25,0.499-0.312,0.666-0.312c0.166,0,0.333,0,0.478,0.006 c0.178,0.007,0.375,0.016,0.562,0.431c0.222,0.494,0.707,1.728,0.769,1.853s0.104,0.271,0.021,0.437s-0.125,0.27-0.249,0.416 c-0.125,0.146-0.262,0.325-0.374,0.437c-0.125,0.124-0.255,0.26-0.11,0.509c0.146,0.25,0.646,1.067,1.388,1.728 c0.954,0.85,1.757,1.113,2.007,1.239c0.25,0.125,0.395,0.104,0.541-0.063c0.146-0.166,0.624-0.728,0.79-0.978 s0.333-0.208,0.562-0.125s1.456,0.687,1.705,0.812c0.25,0.125,0.416,0.187,0.478,0.291 C17.106,14.471,17.106,14.971,16.898,15.554z" />
   ),
 });
 export const OrdenpagoIcon = createIcon({
@@ -119,13 +92,7 @@ export const OrdenpagoIcon = createIcon({
   viewBox: "0 0 64.000000 64.000000",
 
   path: (
-    <svg
-      version="1.0"
-      xmlns="http://www.w3.org/2000/svg"
-      width="64.000000pt"
-      height="64.000000pt"
-      preserveAspectRatio="xMidYMid meet"
-    >
+    <>
       <g
         transform="translate(0.000000,64.000000) scale(0.100000,-0.100000)"
         fill="currentColor"
@@ -154,7 +121,7 @@ export const OrdenpagoIcon = createIcon({
    -15 -4 -15 -10z"
         />
       </g>
-    </svg>
+    </>
   ),
 });
 export const CartList = createIcon({
@@ -162,13 +129,8 @@ export const CartList = createIcon({
   viewBox: "0 0 50.000000 50.000000",
 
   path: (
-    <svg
-      version="1.0"
-      xmlns="http://www.w3.org/2000/svg"
-      width="50.000000pt"
-      height="50.000000pt"
-      preserveAspectRatio="xMidYMid meet"
-    >
+    <>
+      {" "}
       <g
         transform="translate(0.000000,50.000000) scale(0.100000,-0.100000)"
         fill="currentColor"
@@ -176,28 +138,28 @@ export const CartList = createIcon({
       >
         <path
           d="M4 469 c-11 -18 13 -34 30 -20 8 7 30 11 48 9 l33 -3 46 -181 c25
-   -100 50 -188 55 -195 4 -7 8 -24 8 -38 2 -51 67 -53 74 -2 l4 22 23 -25 c72
-   -77 196 -12 171 89 -7 27 -35 60 -57 67 -10 3 -6 21 14 77 15 40 27 74 27 77
-   0 2 -72 4 -159 4 l-159 0 -12 50 c-7 28 -19 57 -27 65 -17 18 -108 20 -119 4z
-   m451 -314 c50 -49 15 -135 -55 -135 -41 0 -80 39 -80 80 0 70 86 105 135 55z
-   m-153 -45 c-4 -25 -9 -30 -31 -30 -31 0 -51 16 -51 42 0 15 8 18 43 18 43 0
-   43 -1 39 -30z m-26 -61 c10 -17 -13 -36 -27 -22 -12 12 -4 33 11 33 5 0 12 -5
-   16 -11z"
+-100 50 -188 55 -195 4 -7 8 -24 8 -38 2 -51 67 -53 74 -2 l4 22 23 -25 c72
+-77 196 -12 171 89 -7 27 -35 60 -57 67 -10 3 -6 21 14 77 15 40 27 74 27 77
+0 2 -72 4 -159 4 l-159 0 -12 50 c-7 28 -19 57 -27 65 -17 18 -108 20 -119 4z
+m451 -314 c50 -49 15 -135 -55 -135 -41 0 -80 39 -80 80 0 70 86 105 135 55z
+m-153 -45 c-4 -25 -9 -30 -31 -30 -31 0 -51 16 -51 42 0 15 8 18 43 18 43 0
+43 -1 39 -30z m-26 -61 c10 -17 -13 -36 -27 -22 -12 12 -4 33 11 33 5 0 12 -5
+16 -11z"
         />
         <path
           d="M390 130 c0 -18 -6 -33 -15 -36 -8 -4 -15 -13 -15 -20 0 -12 4 -12
-   25 2 19 12 25 25 25 50 0 19 -4 34 -10 34 -5 0 -10 -14 -10 -30z"
+25 2 19 12 25 25 25 50 0 19 -4 34 -10 34 -5 0 -10 -14 -10 -30z"
         />
         <path
           d="M240 405 l-34 -35 69 0 69 0 -34 35 c-19 19 -34 35 -35 35 -1 0 -16
-   -16 -35 -35z"
+-16 -35 -35z"
         />
         <path
           d="M342 427 c-16 -19 27 -60 58 -55 20 3 19 5 -13 36 -28 27 -36 30 -45
-   19z"
+19z"
         />
       </g>
-    </svg>
+    </>
   ),
 });
 export const TelegramIcon = createIcon({
@@ -205,13 +167,7 @@ export const TelegramIcon = createIcon({
   viewBox: "0 0 150.000000 150.000000",
 
   path: (
-    <svg
-      version="1.0"
-      xmlns="http://www.w3.org/2000/svg"
-      width="150.000000pt"
-      height="150.000000pt"
-      preserveAspectRatio="xMidYMid meet"
-    >
+    <>
       <g
         transform="translate(0.000000,150.000000) scale(0.100000,-0.100000)"
         fill="currentColor"
@@ -227,7 +183,7 @@ c-20 -21 -131 -145 -247 -275 l-212 -237 -44 -118 c-26 -69 -47 -112 -50 -103
 -17 -30 -37z"
         />
       </g>
-    </svg>
+    </>
   ),
 });
 export const InstagramIcon = createIcon({
@@ -235,13 +191,8 @@ export const InstagramIcon = createIcon({
   viewBox: "0 0 150.000000 150.000000",
 
   path: (
-    <svg
-      version="1.0"
-      xmlns="http://www.w3.org/2000/svg"
-      width="150.000000pt"
-      height="150.000000pt"
-      preserveAspectRatio="xMidYMid meet"
-    >
+    <>
+      {" "}
       <g
         transform="translate(0.000000,150.000000) scale(0.100000,-0.100000)"
         fill="currentColor"
@@ -249,21 +200,21 @@ export const InstagramIcon = createIcon({
       >
         <path
           d="M387 1399 c-108 -26 -211 -112 -261 -219 l-31 -65 0 -365 0 -365 31
-   -65 c39 -83 111 -155 194 -194 l65 -31 365 0 365 0 67 33 c85 42 148 105 190
-   190 l33 67 0 365 0 365 -31 65 c-39 83 -111 155 -194 194 l-65 31 -345 2
-   c-190 1 -362 -3 -383 -8z m763 -249 c11 -11 20 -29 20 -40 0 -11 -9 -29 -20
-   -40 -11 -11 -29 -20 -40 -20 -11 0 -29 9 -40 20 -11 11 -20 29 -20 40 0 11 9
-   29 20 40 11 11 29 20 40 20 11 0 29 -9 40 -20z m-268 -97 c65 -30 133 -95 165
-   -162 24 -48 28 -68 28 -141 -1 -65 -6 -96 -22 -132 -30 -66 -96 -133 -162
-   -165 -48 -24 -68 -28 -141 -28 -74 0 -92 4 -143 29 -68 35 -130 98 -160 164
-   -30 66 -31 198 -1 263 40 85 119 156 209 186 56 18 169 11 227 -14z"
+-65 c39 -83 111 -155 194 -194 l65 -31 365 0 365 0 67 33 c85 42 148 105 190
+190 l33 67 0 365 0 365 -31 65 c-39 83 -111 155 -194 194 l-65 31 -345 2
+c-190 1 -362 -3 -383 -8z m763 -249 c11 -11 20 -29 20 -40 0 -11 -9 -29 -20
+-40 -11 -11 -29 -20 -40 -20 -11 0 -29 9 -40 20 -11 11 -20 29 -20 40 0 11 9
+29 20 40 11 11 29 20 40 20 11 0 29 -9 40 -20z m-268 -97 c65 -30 133 -95 165
+-162 24 -48 28 -68 28 -141 -1 -65 -6 -96 -22 -132 -30 -66 -96 -133 -162
+-165 -48 -24 -68 -28 -141 -28 -74 0 -92 4 -143 29 -68 35 -130 98 -160 164
+-30 66 -31 198 -1 263 40 85 119 156 209 186 56 18 169 11 227 -14z"
         />
         <path
           d="M674 1010 c-99 -31 -180 -130 -191 -232 -15 -146 94 -280 239 -295
-   146 -15 280 94 295 239 15 152 -98 285 -250 294 -34 2 -76 -1 -93 -6z"
+146 -15 280 94 295 239 15 152 -98 285 -250 294 -34 2 -76 -1 -93 -6z"
         />
       </g>
-    </svg>
+    </>
   ),
 });
 export const TwitterIcon = createIcon({
@@ -271,13 +222,8 @@ export const TwitterIcon = createIcon({
   viewBox: "0 0 150.000000 150.000000",
 
   path: (
-    <svg
-      version="1.0"
-      xmlns="http://www.w3.org/2000/svg"
-      width="150.000000pt"
-      height="150.000000pt"
-      preserveAspectRatio="xMidYMid meet"
-    >
+    <>
+      {" "}
       <g
         transform="translate(0.000000,150.000000) scale(0.100000,-0.100000)"
         fill="currentColor"
@@ -295,7 +241,7 @@ export const TwitterIcon = createIcon({
 -15 -14 -123 -51 -148 -51 -13 0 -29 7 -37 16 -49 59 -205 90 -300 59z"
         />
       </g>
-    </svg>
+    </>
   ),
 });
 export const GoogleIcon = createIcon({
@@ -303,7 +249,8 @@ export const GoogleIcon = createIcon({
   viewBox: "0 0 24 24",
 
   path: (
-    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+    <>
+      {" "}
       <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">
         <path
           fill="#4285F4"
@@ -322,7 +269,7 @@ export const GoogleIcon = createIcon({
           d="M -14.754 43.989 C -12.984 43.989 -11.404 44.599 -10.154 45.789 L -6.734 42.369 C -8.804 40.429 -11.514 39.239 -14.754 39.239 C -19.444 39.239 -23.494 41.939 -25.464 45.859 L -21.484 48.949 C -20.534 46.099 -17.884 43.989 -14.754 43.989 Z"
         />
       </g>
-    </svg>
+    </>
   ),
 });
 export const Home = createIcon({
@@ -330,14 +277,9 @@ export const Home = createIcon({
   viewBox: "0 0 24 24",
 
   path: (
-    <svg
-      fill="currentColor"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24px"
-      height="24px"
-    >
+    <>
       <path d="M 12 2 A 1 1 0 0 0 11.289062 2.296875 L 1.203125 11.097656 A 0.5 0.5 0 0 0 1 11.5 A 0.5 0.5 0 0 0 1.5 12 L 4 12 L 4 20 C 4 20.552 4.448 21 5 21 L 9 21 C 9.552 21 10 20.552 10 20 L 10 14 L 14 14 L 14 20 C 14 20.552 14.448 21 15 21 L 19 21 C 19.552 21 20 20.552 20 20 L 20 12 L 22.5 12 A 0.5 0.5 0 0 0 23 11.5 A 0.5 0.5 0 0 0 22.796875 11.097656 L 12.716797 2.3027344 A 1 1 0 0 0 12.710938 2.296875 A 1 1 0 0 0 12 2 z" />
-    </svg>
+    </>
   ),
 });
 export const AboutIcon = createIcon({
@@ -345,14 +287,7 @@ export const AboutIcon = createIcon({
   viewBox: "0 0 24 24",
 
   path: (
-    <svg
-      fill="currentColor"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24px"
-      height="24px"
-    >
-      <path d="M 12 0 C 5.925781 0 1 4.476563 1 10 C 1 15.523438 5.925781 20 12 20 L 12 24 C 12 24 23 18.640625 23 10 C 23 4.476563 18.074219 0 12 0 Z M 13.222656 15.125 L 10.777344 15.125 L 10.777344 8.160156 L 13.222656 8.160156 Z M 12.003906 6.199219 C 10.679688 6.199219 10.671875 5.222656 10.671875 4.996094 C 10.671875 4.765625 10.671875 3.800781 12.003906 3.800781 C 13.339844 3.800781 13.335938 4.765625 13.335938 4.996094 C 13.335938 5.222656 13.328125 6.199219 12.003906 6.199219 Z" />
-    </svg>
+    <path d="M 12 0 C 5.925781 0 1 4.476563 1 10 C 1 15.523438 5.925781 20 12 20 L 12 24 C 12 24 23 18.640625 23 10 C 23 4.476563 18.074219 0 12 0 Z M 13.222656 15.125 L 10.777344 15.125 L 10.777344 8.160156 L 13.222656 8.160156 Z M 12.003906 6.199219 C 10.679688 6.199219 10.671875 5.222656 10.671875 4.996094 C 10.671875 4.765625 10.671875 3.800781 12.003906 3.800781 C 13.339844 3.800781 13.335938 4.765625 13.335938 4.996094 C 13.335938 5.222656 13.328125 6.199219 12.003906 6.199219 Z" />
   ),
 });
 export const VentaIcon = createIcon({
@@ -360,7 +295,7 @@ export const VentaIcon = createIcon({
   viewBox: "0 0 24 24",
 
   path: (
-    <svg xmlns="http://www.w3.org/2000/svg" id="body_1" width="24" height="24">
+    <>
       <g transform="matrix(0.375 0 0 0.375 0 0)">
         <g transform="matrix(0.1 0 -0 -0.1 0 64)">
           <path
@@ -375,7 +310,7 @@ export const VentaIcon = createIcon({
           />
         </g>
       </g>
-    </svg>
+    </>
   ),
 });
 export const Product = createIcon({
@@ -383,7 +318,8 @@ export const Product = createIcon({
   viewBox: "0 0 24 24",
 
   path: (
-    <svg xmlns="http://www.w3.org/2000/svg" id="body_1" width="24" height="24">
+    <>
+      {" "}
       <g transform="matrix(0.48 0 0 0.48 0 0)">
         <g transform="matrix(0.1 0 -0 -0.1 0 50)">
           <path
@@ -403,7 +339,7 @@ export const Product = createIcon({
           />
         </g>
       </g>
-    </svg>
+    </>
   ),
 });
 export const Category = createIcon({
@@ -411,13 +347,8 @@ export const Category = createIcon({
   viewBox: "0 0 24 24",
 
   path: (
-    <svg
-      version="1.0"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24.000000pt"
-      height="24.000000pt"
-      preserveAspectRatio="xMidYMid meet"
-    >
+    <>
+      {" "}
       <g
         transform="translate(0.000000,24.000000) scale(0.100000,-0.100000)"
         fill="currentColor"
@@ -437,7 +368,7 @@ export const Category = createIcon({
 25 0 18 5 25 20 25 15 0 20 -7 20 -25z"
         />
       </g>
-    </svg>
+    </>
   ),
 });
 export const ShopAll = createIcon({
@@ -445,7 +376,8 @@ export const ShopAll = createIcon({
   viewBox: "0 0 24 24",
 
   path: (
-    <svg xmlns="http://www.w3.org/2000/svg" id="body_1" width="24" height="24">
+    <>
+      {" "}
       <g transform="matrix(0.75 0 0 0.75 0 0)">
         <g transform="matrix(0.1 0 -0 -0.1 0 32)">
           <path
@@ -460,7 +392,7 @@ export const ShopAll = createIcon({
           />
         </g>
       </g>
-    </svg>
+    </>
   ),
 });
 export const CategoryAll = createIcon({
@@ -468,7 +400,7 @@ export const CategoryAll = createIcon({
   viewBox: "0 0 24 24",
 
   path: (
-    <svg xmlns="http://www.w3.org/2000/svg" id="body_1" width="24" height="24">
+    <>
       <g transform="matrix(0.375 0 0 0.375 0 0)">
         <g transform="matrix(0.1 0 -0 -0.1 0 64)">
           <path
@@ -563,7 +495,7 @@ export const CategoryAll = createIcon({
           />
         </g>
       </g>
-    </svg>
+    </>
   ),
 });
 export const Perfil = createIcon({
@@ -571,7 +503,7 @@ export const Perfil = createIcon({
   viewBox: "0 0 24 24",
 
   path: (
-    <svg xmlns="http://www.w3.org/2000/svg" id="body_1" width="24" height="24">
+    <>
       <g transform="matrix(0.1263158 0 0 0.1263158 0.5052632 -0)">
         <g transform="matrix(0.1 0 -0 -0.1 0 190)">
           <path
@@ -586,7 +518,7 @@ export const Perfil = createIcon({
           />
         </g>
       </g>
-    </svg>
+    </>
   ),
 });
 export const Global = createIcon({
@@ -594,7 +526,8 @@ export const Global = createIcon({
   viewBox: "0 0 24 24",
 
   path: (
-    <svg xmlns="http://www.w3.org/2000/svg" id="body_1" width="24" height="24">
+    <>
+      {" "}
       <g transform="matrix(0.75 0 0 0.75 0 0)">
         <g transform="matrix(0.1 0 -0 -0.1 0 24)">
           <path
@@ -644,7 +577,7 @@ export const Global = createIcon({
           />
         </g>
       </g>
-    </svg>
+    </>
   ),
 });
 export const Logout = createIcon({
@@ -652,7 +585,7 @@ export const Logout = createIcon({
   viewBox: "0 0 24 24",
 
   path: (
-    <svg xmlns="http://www.w3.org/2000/svg" id="body_1" width="24" height="24">
+    <>
       <g transform="matrix(0.48 0 0 0.48 0 0)">
         <g transform="matrix(0.1 0 -0 -0.1 0 50)">
           <path
@@ -667,7 +600,7 @@ export const Logout = createIcon({
           />
         </g>
       </g>
-    </svg>
+    </>
   ),
 });
 export const Eligir = createIcon({
@@ -675,7 +608,7 @@ export const Eligir = createIcon({
   viewBox: "0 0 24 24",
 
   path: (
-    <svg xmlns="http://www.w3.org/2000/svg" id="body_1" width="24" height="24">
+    <>
       <g transform="matrix(0.48 0 0 0.48 0 0)">
         <g transform="matrix(0.1 0 -0 -0.1 0 50)">
           <path
@@ -690,7 +623,7 @@ export const Eligir = createIcon({
           />
         </g>
       </g>
-    </svg>
+    </>
   ),
 });
 export const CreateProduct = createIcon({
@@ -698,7 +631,8 @@ export const CreateProduct = createIcon({
   viewBox: "0 0 24 24",
 
   path: (
-    <svg xmlns="http://www.w3.org/2000/svg" id="body_1" width="24" height="24">
+    <>
+      {" "}
       <g transform="matrix(0.48 0 0 0.48 0 0)">
         <g transform="matrix(0.1 0 -0 -0.1 0 50)">
           <path
@@ -713,7 +647,7 @@ export const CreateProduct = createIcon({
           />
         </g>
       </g>
-    </svg>
+    </>
   ),
 });
 export const ListEspera = createIcon({
@@ -721,7 +655,8 @@ export const ListEspera = createIcon({
   viewBox: "0 0 24 24",
 
   path: (
-    <svg xmlns="http://www.w3.org/2000/svg" id="body_1" width="24" height="24">
+    <>
+      {" "}
       <g transform="matrix(0.48 0 0 0.48 0 0)">
         <g transform="matrix(0.1 0 -0 -0.1 0 50)">
           <path
@@ -756,14 +691,14 @@ export const ListEspera = createIcon({
           />
         </g>
       </g>
-    </svg>
+    </>
   ),
 });
 export const VentasClient = createIcon({
   displayName: "VentasClient",
   viewBox: "0 0 24 24",
   path: (
-    <svg xmlns="http://www.w3.org/2000/svg" id="body_1" width="24" height="24">
+    <>
       <g transform="matrix(0.3 0 0 0.3 0 0)">
         <g transform="matrix(0.1 0 -0 -0.1 0 80)">
           <path
@@ -858,21 +793,13 @@ export const VentasClient = createIcon({
           />
         </g>
       </g>
-    </svg>
+    </>
   ),
 });
 export const BsPerson = createIcon({
   displayName: "BsPerson",
   viewBox: "0 0 16 16",
   path: (
-    <svg
-      stroke="currentColor"
-      fill="currentColor"
-      height="3em"
-      width="3em"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"></path>
-    </svg>
+    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"></path>
   ),
 });

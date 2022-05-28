@@ -21,6 +21,7 @@ import Breakpoints from "../../../helpers/Breakpoints";
 
 import { serchProductList } from "../../../actions/product";
 import { CategoryAll } from "../../../helpers/IconNew";
+import MenuHistory from "../../../helpers/MenuHistory";
 
 export const BreadcrumbNavbar = ({ NavLink, Box }) => {
   // dispatch
@@ -54,46 +55,17 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
               fontWeight={"normal"}
               variant={"secondary"}
               href={"/"}
+              as={"/"}
               name={"Home"}
             />
           </chakra.li>
           <chakra.li mx={"3"}>
-            <Menu>
-              <MenuButton
-                fontSize={["sm"]}
-                variant={"secondary"}
-                as={Button}
-                fontWeight={"normal"}
-              >
-                Historial
-              </MenuButton>
-              <Portal>
-                <MenuList display={displayOff2} minWidth={0} border={bordes}>
-                  <MenuItem>
-                    <NavLink
-                      href={`/history/buy/[buy]`}
-                      as={`/history/buy/${a?.uid}`}
-                      name={"Historia de compra"}
-                      variant={"secondary"}
-                      fontWeight={"normal"}
-                    />
-                  </MenuItem>
-                  <MenuItem>
-                    <NavLink
-                      href={`/history/sale`}
-                      as={`/history/sale`}
-                      name={"Historia de venta"}
-                      variant={"secondary"}
-                      fontWeight={"normal"}
-                    />
-                  </MenuItem>
-                </MenuList>
-              </Portal>
-            </Menu>
+            <MenuHistory />
           </chakra.li>
           <chakra.li mx={"3"} onClick={handleObservator}>
             <NavLink
               href={"/user"}
+              as={"/user"}
               fontWeight={"normal"}
               variant={"secondary"}
               name={"Editar Perfil"}
@@ -102,9 +74,10 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
           <chakra.li mx={"3"} onClick={handleObservator}>
             <NavLink
               href={"/blog"}
+              as={"/blog"}
+              name={"Blog"}
               fontWeight={"normal"}
               variant={"secondary"}
-              name={"Blog"}
             />
           </chakra.li>
           <chakra.li mx={"3"}>
@@ -112,6 +85,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
               fontWeight={"normal"}
               variant={"secondary"}
               href={"/user/selling"}
+              as={"/user/selling"}
               name={"Quieres vender"}
             />
           </chakra.li>
@@ -121,6 +95,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
               fontWeight={"normal"}
               variant={"secondary"}
               href={"/user/list"}
+              as={"/user/list"}
               name={"Mis ventas"}
             />
           </chakra.li>
@@ -130,6 +105,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
                 fontWeight={"normal"}
                 variant={"secondary"}
                 href={"/product/list"}
+                as={"/product/list"}
                 name={"product"}
               />
             </chakra.li>
@@ -140,6 +116,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
                 fontWeight={"normal"}
                 variant={"secondary"}
                 href={"/category"}
+                as={"/category"}
                 name={"category"}
               />
             </chakra.li>
@@ -149,6 +126,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
               fontWeight={"normal"}
               variant={"secondary"}
               href={"/search"}
+              as={"/search"}
               name={"Shop All"}
             />
           </chakra.li>

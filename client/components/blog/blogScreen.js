@@ -419,14 +419,18 @@ const BlogScreen = () => {
                 zIndex="2"
                 marginLeft={{ base: "0", sm: "5%" }}
                 marginTop="5%"
+                textAlign="center"
               >
-                <Link textDecoration="none" _hover={{ textDecoration: "none" }}>
+                <Link
+                  textDecoration="none"
+                  _hover={{ textDecoration: "none" }}
+                >
                   <Image
                     loader={myLoader}
                     src={"Fenergia.jpg"}
                     alt="energia"
-                    layout="fill"
-                    objectFit="contain"
+                    width={"200px"}
+                    height={"300px"}
                   />
                 </Link>
               </Box>
@@ -483,8 +487,8 @@ const BlogScreen = () => {
         p={5}
         position={"relative"}
       >
-        {seAside.map((item) => (
-          <VStack key={item} w={"full"} p={1} display={"inline-block"}>
+        {seAside.map((item, key) => (
+          <VStack key={key} w={"full"} p={1} display={"inline-block"}>
             <Heading size={"md"}>{item.title}</Heading>
             <Text>{item.text}</Text>
           </VStack>

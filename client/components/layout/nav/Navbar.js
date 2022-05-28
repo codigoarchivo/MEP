@@ -9,7 +9,6 @@ import Image from "next/image";
 import {
   AspectRatio,
   Avatar,
-  Badge,
   Box,
   Button,
   chakra,
@@ -36,7 +35,6 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
-  Portal,
   Text,
   useColorMode,
   useDisclosure,
@@ -46,7 +44,6 @@ import { HamburgerIcon, MoonIcon, SearchIcon, SunIcon } from "@chakra-ui/icons";
 
 import {
   CartIcon,
-  CategoryAll,
   LoveIcon,
   OrdenpagoIcon,
 } from "../../../helpers/IconNew";
@@ -68,6 +65,7 @@ import { logout } from "../../../actions/auth";
 import useFormChange from "../../../hooks/useFormChange";
 
 import Toast from "../../../helpers/Toast";
+import MenuCategoria from "../../../helpers/MenuCategoria";
 
 const Navbar = () => {
   // dispatch
@@ -76,8 +74,6 @@ const Navbar = () => {
   const router = useRouter();
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
-  // selector
-  const { list = [] } = useSelector(({ category }) => category);
   // selector
   const {
     activeCartSelect,
@@ -188,38 +184,7 @@ const Navbar = () => {
                   />
                 </Box>
                 <Box as={"div"} display={displayOff2}>
-                  <Menu>
-                    <MenuButton
-                      fontSize={["sm"]}
-                      leftIcon={<CategoryAll />}
-                      variant={"primary"}
-                      as={Button}
-                      textTransform={"uppercase"}
-                    >
-                      Categorias
-                    </MenuButton>
-                    <Portal>
-                      <MenuList
-                        display={displayOff2}
-                        minWidth={0}
-                        border={bordes}
-                      >
-                        {list.map(({ na, id }) => (
-                          <MenuItem key={id}>
-                            <NavLink
-                              href={{
-                                pathname: "/search",
-                                query: { c: id, n: na },
-                              }}
-                              name={na}
-                              variant={"secondary"}
-                              fontWeight={"normal"}
-                            />
-                          </MenuItem>
-                        ))}
-                      </MenuList>
-                    </Portal>
-                  </Menu>
+                  <MenuCategoria />
                 </Box>
               </HStack>
             </GridItem>

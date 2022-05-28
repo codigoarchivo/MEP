@@ -20,6 +20,8 @@ const NavLink = ({
   disabled,
   textTransform,
   backgroundColor,
+  color,
+  display,
 }) => {
   return (
     <Link href={href} as={as} passHref>
@@ -38,6 +40,8 @@ const NavLink = ({
         disabled={disabled}
         textTransform={textTransform}
         backgroundColor={backgroundColor}
+        color={color}
+        display={display}
       >
         {name}
       </Button>

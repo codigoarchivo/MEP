@@ -54,11 +54,12 @@ const SerchCart = () => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector
-  const { activeCartSelect, saveCartSelect } = useSelector(
-    ({ product }) => product
-  );
+  const {
+    activeCartSelect: active = [],
+    saveCartSelect: save = [],
+  } = useSelector(({ product }) => product);
   // incrementa y encapsula información para evitar que se actualice
-  inc.current = activeCartSelect.reduce(
+  inc.current = active.reduce(
     (total, item) => (total += Number(item.cn) * Number(item.pr)),
     0
   );
@@ -66,7 +67,7 @@ const SerchCart = () => {
   const handleDeleteCart = (id) => {
     dispatch(deleteProductCart(id));
     // dcr
-    activeCartSelect.map((item) => (inc.current -= Number(item.pr)));
+    active.map((item) => (inc.current -= Number(item.pr)));
     Toast("Eliminado con exito", "error", 5000);
   };
   // si la lista esta llena sera false podra comprar
@@ -77,7 +78,7 @@ const SerchCart = () => {
   useEffect(async () => {
     setListUser(false);
 
-    activeCartSelect.map(async (item) => {
+    active.map(async (item) => {
       const product = {
         // raiting del producto
         rat: item.rat,
@@ -150,110 +151,127 @@ const SerchCart = () => {
   return (
     <>
       <Stack flexDirection={"row"} w={full}>
-        <TableContainer w={"75%"} my={20} border={bordes}>
+        {!active[0] ? (
+          <Heading my={20} w={full} textAlign={"center"}>
+            Carrito esta Vacio
+          </Heading>
+        ) : (
+          <>
+            <TableContainer w={"75%"} my={20} border={bordes}>
+              <Table variant="simple">
+                <TableCaption>Carrito de Compras</TableCaption>
+                <Thead>
+                  <Tr>
+                    <Th></Th>
+                    <Th textAlign={"center"}>Sub Total</Th>
+                    <Th isNumeric>Action</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {active.map((item) => (
+                    <Tr key={item.id}>
+                      <Td>
+                        <HStack position={"relative"}>
+                          <Image
+                            src={item.im}
+                            alt="Picture of the author"
+                            width={100}
+                            height={100}
+                          />
+                          <VStack>
+                            <Heading w={full} size={"sm"}>
+                              {item.na}
+                            </Heading>
+
+                            <Text w={full}>Precio: ${item.pr}</Text>
+                            <Text w={full}>Cantidad: {item.cn}</Text>
+                          </VStack>
+                        </HStack>
+                      </Td>
+
+                      <Td textAlign={"center"}>${item.cn * item.pr}</Td>
+                      <Td isNumeric>
+                        <DeleteIcon
+                          onClick={() => handleDeleteCart(item.id)}
+                          mx={5}
+                          cursor={"pointer"}
+                        />
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </TableContainer>
+            <VStack
+              py={20}
+              px={1}
+              spacing={0}
+              w={"25%"}
+              style={{ marginTop: 0 }}
+            >
+              <Stack w={full} p={3} spacing={5} border={bordes}>
+                <HStack w={full}>
+                  <Heading w={full} size={"md"}>
+                    Total:
+                  </Heading>
+                  <Button
+                    w={full}
+                    variant={"primary"}
+                    size={"xs"}
+                    onClick={handleInfo}
+                  >
+                    {"{Datos}"}
+                  </Button>
+                </HStack>
+
+                <Heading w={full}>{inc.current}$</Heading>
+
+                <Button
+                  variant={"primary"}
+                  w={full}
+                  onClick={handleCheckout}
+                  disabled={listUser}
+                  size={listUser ? "xs" : "md"}
+                >
+                  {listUser ? "Agregar {Datos} adicional" : "Pagar"}
+                </Button>
+                <Text>
+                  Si quiere seguir comprando puede hacer{" "}
+                  <Button
+                    onClick={() => router.push("/search")}
+                    textTransform={"uppercase"}
+                    variant={"secondary"}
+                  >
+                    clik aqui
+                  </Button>{" "}
+                </Text>
+              </Stack>
+            </VStack>
+          </>
+        )}
+      </Stack>
+      {!save[0] ? (
+        <></>
+      ) : (
+        <TableContainer variant="striped" w={full} my={10} border={bordes}>
           <Table variant="simple">
-            <TableCaption>Carrito de Compras</TableCaption>
+            <TableCaption>Lista de deseos</TableCaption>
             <Thead>
               <Tr>
                 <Th></Th>
-                <Th>Producto</Th>
-                <Th>Precio</Th>
-                <Th>Cantidad</Th>
-                <Th>Sub Total</Th>
-                <Th isNumeric>Action</Th>
+                <Th textAlign={"center"}>Cantidad</Th>
+                <Th>Total</Th>
+                <Th></Th>
               </Tr>
             </Thead>
             <Tbody>
-              {activeCartSelect.map((item) => (
-                <Tr key={item.id}>
-                  <Td>
-                    <AspectRatio ratio={1} w={59} h={59} position={"relative"}>
-                      <Image
-                        src={item.im}
-                        alt="Picture of the author"
-                        layout="fill"
-                        objectFit="contain"
-                      />
-                    </AspectRatio>
-                  </Td>
-                  <Td>{item.na}</Td>
-                  <Td>${item.pr}</Td>
-                  <Td>{item.cn}</Td>
-                  <Td>${item.cn * item.pr}</Td>
-                  <Td isNumeric>
-                    <DeleteIcon
-                      onClick={() => handleDeleteCart(item.id)}
-                      mx={5}
-                      cursor={"pointer"}
-                    />
-                  </Td>
-                </Tr>
+              {save.map((item) => (
+                <SerchCartSave key={item.id} {...item} />
               ))}
             </Tbody>
           </Table>
         </TableContainer>
-        <VStack py={20} px={1} spacing={0} w={"25%"} style={{ marginTop: 0 }}>
-          <Stack w={full} p={3} spacing={5} border={bordes}>
-            <HStack w={full}>
-              <Heading w={full} size={"md"}>
-                Total:
-              </Heading>
-              <Button
-                w={full}
-                variant={"primary"}
-                size={"xs"}
-                onClick={handleInfo}
-              >
-                {"{Datos}"}
-              </Button>
-            </HStack>
-
-            <Heading w={full}>{inc.current}$</Heading>
-
-            <Button
-              variant={"primary"}
-              w={full}
-              onClick={handleCheckout}
-              disabled={listUser}
-              size={listUser ? "xs" : "md"}
-            >
-              {listUser ? "Agregar {Datos} adicional" : "Pagar"}
-            </Button>
-            <Text>
-              Si quiere seguir comprando puede hacer{" "}
-              <Button
-                onClick={() => router.push("/search")}
-                textTransform={"uppercase"}
-                variant={"secondary"}
-              >
-                clik aqui
-              </Button>{" "}
-            </Text>
-          </Stack>
-        </VStack>
-      </Stack>
-
-      <TableContainer variant="striped" w={full} my={10} border={bordes}>
-        <Table variant="simple">
-          <TableCaption>Lista de deseos</TableCaption>
-          <Thead>
-            <Tr>
-              <Th></Th>
-              <Th>Producto</Th>
-              <Th>Precio</Th>
-              <Th>Disponible</Th>
-              <Th>Cantidad</Th>
-              <Th>Total</Th>
-              <Th></Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {saveCartSelect.map((item) => (
-              <SerchCartSave key={item.id} {...item} />
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
+      )}
     </>
   );
 };
