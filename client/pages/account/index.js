@@ -8,7 +8,7 @@ import LoginUser from "../../components/log/loginUser";
 
 import { useSelector } from "react-redux";
 
-const account = () => {
+const Account = () => {
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
   // router
@@ -35,4 +35,4 @@ const account = () => {
   );
 };
 
-export default account;
+export default Account;

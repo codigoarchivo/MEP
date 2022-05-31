@@ -23,6 +23,7 @@ import {
   WrapItem,
   HStack,
   Text,
+  Icon,
 } from "@chakra-ui/react";
 
 import { cartSaveLatest, saveProductCart } from "../../actions/product";
@@ -30,6 +31,8 @@ import { cartSaveLatest, saveProductCart } from "../../actions/product";
 import { LoveIcon } from "../../helpers/IconNew";
 import Toast from "../../helpers/Toast";
 import Breakpoints from "../../helpers/Breakpoints";
+
+import { ShopAll } from "../../helpers/IconNew";
 
 const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat, ti, uid }) => {
   // useRef
@@ -143,6 +146,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat, ti, uid }) => {
           onClick={handleSelect}
         >
           <VStack
+            spacing={1}
             onMouseEnter={() => onToggle()}
             onMouseLeave={() => onToggle()}
             cursor={"pointer"}
@@ -157,41 +161,50 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat, ti, uid }) => {
             }}
           >
             {im && (
-              <AspectRatio w="248px" h={200} position={"relative"}>
+              <Box position={"relative"}>
                 <Image
                   src={im}
                   alt="Picture of the author"
-                  layout="fill"
-                  objectFit="contain"
                   objectPosition="center"
+                  width={"248px"}
+                  height={"248px"}
                 />
-              </AspectRatio>
+              </Box>
             )}
+            <Box p={3} w={"full"}>
+              <Flex align="baseline" w={"full"}>
+                <Badge colorScheme="green">{ti}</Badge>
+              </Flex>
 
-            <Flex align="baseline" pt={3} w={"full"} px={3}>
-              <Badge colorScheme="green">{ti}</Badge>
-            </Flex>
-            <Box px={3} w={"full"} display="flex" mt={2} alignItems="center">
-              <HStack w={"full"}>
-                <Box p={0.5}>
-                  <Rating
-                    size={25}
-                    ratingValue={rat !== undefined ? rat.est : 0}
-                    readonly={true}
-                  />
-                </Box>
-                <Text color="gray.600" fontSize={"xl"} fontWeight={"bold"}>
+              <HStack w={"full"} spacing={0}>
+                <Rating
+                  size={17}
+                  ratingValue={rat !== undefined ? rat.est : 0}
+                  readonly={true}
+                />
+                <Text
+                  h={"full"}
+                  color="gray.600"
+                  fontSize={"lg"}
+                  fontWeight={"bold"}
+                >
                   {rat !== undefined ? rat.nam : "0.0"}
                 </Text>{" "}
               </HStack>
+
+              <Stat size={"sm"} width={"full"}>
+                <StatLabel>{na}</StatLabel>
+                <StatNumber>
+                  <HStack w={"full"} justifyContent={"space-between"}>
+                    <Text>${pr}</Text>
+                    <Icon as={ShopAll} w={6} h={6} />
+                  </HStack>
+                </StatNumber>
+                <Collapse in={isOpen} animateOpacity>
+                  <StatHelpText mt={2}>{ds}</StatHelpText>
+                </Collapse>
+              </Stat>
             </Box>
-            <Stat width={"full"} px={3} pb={3}>
-              <StatLabel>{na}</StatLabel>
-              <StatNumber>${pr}</StatNumber>
-              <Collapse in={isOpen} animateOpacity>
-                <StatHelpText mt={2}>{ds}</StatHelpText>
-              </Collapse>
-            </Stat>
           </VStack>
         </Box>
       </WrapItem>

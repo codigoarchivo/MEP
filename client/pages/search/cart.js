@@ -10,7 +10,7 @@ import ShopLayout from "../../components/layout/ShopLayout";
 
 import { PageNotFound } from "../../components/err/PageNotFound";
 
-const cart = () => {
+const Cart = () => {
   const { activeSelectCheck: check = [] } = useSelector(
     ({ product }) => product
   );
@@ -37,4 +37,4 @@ const cart = () => {
   }
 };
 
-export default cart;
+export default Cart;

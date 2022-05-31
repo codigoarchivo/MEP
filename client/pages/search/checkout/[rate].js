@@ -66,12 +66,12 @@ const Rate = () => {
     }
   }, [setRatingValue, setComentario, router.query]);
 
-  const saveRat =
-    typeof router.query.rat === "string"
-      ? [router.query.rat]
-      : router.query.rat;
-
   useEffect(() => {
+    const saveRat =
+      typeof router.query.rat === "string"
+        ? [router.query.rat]
+        : router.query.rat;
+
     if (saveRat !== undefined) {
       setCarga([...saveRat, ratingValue]);
     }

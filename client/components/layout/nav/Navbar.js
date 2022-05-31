@@ -42,11 +42,7 @@ import {
 
 import { HamburgerIcon, MoonIcon, SearchIcon, SunIcon } from "@chakra-ui/icons";
 
-import {
-  CartIcon,
-  LoveIcon,
-  OrdenpagoIcon,
-} from "../../../helpers/IconNew";
+import { CartIcon, LoveIcon, OrdenpagoIcon } from "../../../helpers/IconNew";
 import ModeColor from "../../../helpers/ModeColor";
 import Breakpoints from "../../../helpers/Breakpoints";
 import NavLink from "../../../helpers/Navlink";
@@ -200,10 +196,10 @@ const Navbar = () => {
               </Icon>
               <chakra.form onSubmit={handleSerchProduct}>
                 <InputGroup display={displayOff2}>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<SearchIcon color="gray.300" />}
-                  />
+                  <InputLeftElement pointerEvents="none">
+                    <SearchIcon color="gray.300" />
+                  </InputLeftElement>
+
                   <Input
                     type={"search"}
                     placeholder="Buscar"

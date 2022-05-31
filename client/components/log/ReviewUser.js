@@ -68,7 +68,7 @@ const ReviewUser = () => {
           <FormControl isInvalid>
             {!emailE && (
               <FormHelperText>
-                Enter the email you'd like to receive the newsletter on.
+                {"Enter the email you'd like to receive the newsletter on."}
               </FormHelperText>
             )}
             <FormLabel htmlFor="email">

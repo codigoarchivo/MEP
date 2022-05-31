@@ -6,7 +6,7 @@ import CategoryData from "../../components/category/CategoryData";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-const configCategory = () => {
+const ConfigCategory = () => {
   return (
     <ShopLayout>
       <Container maxW={"container.sm"}>
@@ -16,4 +16,4 @@ const configCategory = () => {
   );
 };
 
-export default configCategory;
+export default ConfigCategory;

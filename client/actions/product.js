@@ -216,10 +216,11 @@ export const saveSale = (data = []) => {
 };
 export const saveSaleRevert = (data) => {
   return (dispatch) => {
+    console.log(data);
     try {
       data.map(async (d) => {
         if (d.process === false) {
-          await deleteDoc(doc(db, "users", d.uidC, "buys", d.idP));
+          await deleteDoc(doc(db, "users", d.uidC.toString(), "buys", d.idP.toString()));
         }
       });
 

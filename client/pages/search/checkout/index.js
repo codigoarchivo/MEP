@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 
 import { useRouter } from "next/router";
 
@@ -27,7 +27,7 @@ import ContadorRegresivo from "../../../helpers/ContadorRegresivo";
 
 import CheckoutScreen from "../../../components/checkout/CheckoutScreen";
 
-const checkout = () => {
+const Checkout = () => {
   // dispatch
   const router = useRouter();
   // useDispatch
@@ -40,27 +40,31 @@ const checkout = () => {
   const { activeSelectCheck: check = [] } = useSelector(
     ({ product }) => product
   );
-
   const handleRevert = () => {
     // revertir
-    const data = check.map(({ id }) => {
+    const data = check.map((d) => {
       return {
-        idP: id,
+        idP: d.id,
         uidC: a.uid,
+        process: d.process,
       };
     });
-    router.push("/");
     dispatch(saveSaleRevert(data));
+    router.push("/");
   };
 
-  useEffect(async () => {
+  const fetchMyAPI = useCallback(async () => {
     if (check.length === 0 && a?.uid) {
       const { dataUser } = await UserTwo(a?.uid, "buys");
       dispatch(activeProduct(dataUser));
     } else {
       dispatch(activeProduct(check));
     }
-  }, [dispatch, activeProduct]);
+  }, [a, check, dispatch]);
+
+  useEffect(() => {
+    fetchMyAPI();
+  }, [fetchMyAPI]);
 
   return check.length === 0 ? (
     <></>
@@ -125,4 +129,4 @@ const checkout = () => {
   );
 };
 
-export default checkout;
+export default Checkout;

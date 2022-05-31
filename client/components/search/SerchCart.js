@@ -71,52 +71,47 @@ const SerchCart = () => {
     Toast("Eliminado con exito", "error", 5000);
   };
   // si la lista esta llena sera false podra comprar
-  const [listUser, setListUser] = useState(true);
+  const [listUser, setListUser] = useState(false);
   // proceso de compra
-  const [proceso, setProceso] = useState([]);
+  // const [proceso, setProceso] = useState([]);
 
-  useEffect(async () => {
-    setListUser(false);
+  // setListUser(false);
+  let proceso = [];
+  active.map((item) => {
+    const product = {
+      // raiting del producto
+      rat: item.rat,
+      // id del producto
+      id: item.id,
+      // catidad del producto
+      cn: item.cn,
+      // nombre del producto
+      na: item.na,
+      // uid del  vendedor
+      uid: item.uid,
+      // precio del producto
+      pr: Number(item.pr),
+      //  total del producto a comprar
+      to: item.cn * Number(item.pr),
+      // porcentaje de ganancia 5%
+      in: item.cn * Number(item.pr) * 0.05,
+    };
 
-    active.map(async (item) => {
-      const product = {
-        // raiting del producto
-        rat: item.rat,
-        // id del producto
-        id: item.id,
-        // catidad del producto
-        cn: item.cn,
-        // nombre del producto
-        na: item.na,
-        // uid del  vendedor
-        uid: item.uid,
-        // precio del producto
-        pr: Number(item.pr),
-        //  total del producto a comprar
-        to: item.cn * Number(item.pr),
-        // porcentaje de ganancia 5%
-        in: item.cn * Number(item.pr) * 0.05,
-      };
-
-      setProceso((proceso) => [
-        ...proceso,
-        {
-          // id del producto
-          id: "",
-          // uid de usuario que compro
-          uidCom: a.uid,
-          // cuando la persona culmino la compra y califico el vendedor pasa a true
-          close: false,
-          // proceso de compra se hizo con exito pasa a true
-          process: false,
-          // informacion del producto
-          product,
-          // fecha limite de la compra
-          lim: addDays(Date.now(), 3),
-        },
-      ]);
+    proceso.push({
+      // id del producto
+      id: "",
+      // uid de usuario que compro
+      uidCom: a.uid,
+      // cuando la persona culmino la compra y califico el vendedor pasa a true
+      close: false,
+      // proceso de compra se hizo con exito pasa a true
+      process: false,
+      // informacion del producto
+      product,
+      // fecha limite de la compra
+      lim: addDays(Date.now(), 3),
     });
-  }, []);
+  });
 
   // save cart
   const handleCheckout = () => {

@@ -60,10 +60,9 @@ export const DialogSerchNavbar = ({
             <AlertDialogBody>
               <chakra.form onSubmit={handleSerchProduct}>
                 <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<SearchIcon color="gray.300" />}
-                  />
+                  <InputLeftElement pointerEvents="none">
+                    <SearchIcon color="gray.300" />
+                  </InputLeftElement>
                   <Input
                     type={"search"}
                     placeholder="Buscar"

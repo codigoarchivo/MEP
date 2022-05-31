@@ -56,7 +56,9 @@ import {
 
 import { listDataProduct } from "../../actions/product";
 
-const category = ({ data, dataC }) => {
+const Category = ({ data, dataC }) => {
+  // dispatch
+  const dispatch = useDispatch();
   // router
   const router = useRouter();
   // breakpoints
@@ -71,8 +73,6 @@ const category = ({ data, dataC }) => {
   const { modality2, setModality2 } = useModality2();
   // modality
   const { modality3, setModality3 } = useModality3(true);
-  // dispatch
-  const dispatch = useDispatch();
 
   if (activeSelect?.rol === "user") {
     router.push("/");
@@ -80,7 +80,7 @@ const category = ({ data, dataC }) => {
   useEffect(() => {
     dispatch(listDataProduct(data));
     dispatch(listDataCategory(dataC));
-  }, [dispatch, data]);
+  }, [dispatch, data, dataC]);
 
   // add
   const handleAdd = () => {
@@ -287,4 +287,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default category;
+export default Category;

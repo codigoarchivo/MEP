@@ -42,7 +42,7 @@ const Home = () => {
             </Heading>
             <Text>
               Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's .
+              industry. Lorem Ipsum has been the industry.
             </Text>
           </VStack>
           <Box w={"lg"} h={500} position={"relative"}>

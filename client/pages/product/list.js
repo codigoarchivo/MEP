@@ -55,6 +55,7 @@ import {
   useModality2,
   useModality3,
 } from "../../hooks/useModality";
+
 import Toast from "../../helpers/Toast";
 
 const List = ({ data, dataC }) => {
@@ -83,7 +84,7 @@ const List = ({ data, dataC }) => {
   useEffect(() => {
     dispatch(listDataProduct(data));
     dispatch(listDataCategory(dataC));
-  }, [dispatch, data]);
+  }, [dispatch, data, dataC]);
 
   // add
   const handleAdd = () => {

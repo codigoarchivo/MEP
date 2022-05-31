@@ -30,7 +30,7 @@ import Breakpoints from "../../../helpers/Breakpoints";
 
 import { useRouter } from "next/router";
 
-import { userAdicional } from "../../../actions/user";
+import { DataUserAdicional } from "../../../actions/user";
 
 import { useDispatch } from "react-redux";
 
@@ -41,11 +41,11 @@ const initialStates = {
   dt: "",
 };
 
-const informacion = ({ data }) => {
-  // router
-  const router = useRouter();
+const Informacion = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
+  // router
+  const router = useRouter();
   // Breakpoints
   const { repeat1, points3, bordes } = Breakpoints();
   // mode Color
@@ -67,12 +67,12 @@ const informacion = ({ data }) => {
       );
     }
 
-    dispatch(userAdicional({ na, te, co, dt, id, rol }));
-    onClose();
+    dispatch(DataUserAdicional({ na, te, co, dt, id, rol }));
+    OnClose();
   };
 
   // cerrar
-  const onClose = () => {
+  const OnClose = () => {
     router.push("/search/cart");
   };
   return (
@@ -153,7 +153,7 @@ const informacion = ({ data }) => {
 
               <GridItem colSpan={2}>
                 <HStack w={"full"} justifyContent="flex-end" spacing={10}>
-                  <Button variant={"secondary"} onClick={onClose}>
+                  <Button variant={"secondary"} onClick={OnClose}>
                     Close
                   </Button>
                   <Button variant={"primary"} type="submit" ml={3}>
@@ -176,7 +176,7 @@ export async function getServerSideProps(context) {
     const docRef = doc(db, "users", info.toString());
 
     const docSnap = await getDoc(docRef);
-  
+
     const data = {
       id: docSnap.id,
       ...docSnap.data(),
@@ -193,4 +193,4 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default informacion;
+export default Informacion;

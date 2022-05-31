@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { useSelector } from "react-redux";
 
@@ -22,12 +22,13 @@ import StepsContent from "../../components/user/StepsContent";
 
 import UserOne from "../../helpers/UserOne";
 
+import Breakpoints from "../../helpers/Breakpoints";
+
 const Selling = () => {
   // router
   const router = useRouter();
   // selector
-  const { activeSelect } = useSelector(({ auth }) => auth);
-  const a = activeSelect;
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useSteps
   const { nextStep, reset, activeStep } = useSteps({
     initialStep: 0,
@@ -43,10 +44,12 @@ const Selling = () => {
 
   const [listUser, setListUser] = useState(true);
 
+  const { bordes } = Breakpoints();
+
   useEffect(() => {
-    const { uid, email, rol } = activeSelect;
+    const { uid, email, rol } = a;
     setActivo(uid && email && rol ? false : true);
-  }, [setActivo]);
+  }, [a]);
 
   useEffect(() => {
     stepsData.map(({ flag1, flag2, items }, i) => {
@@ -59,7 +62,7 @@ const Selling = () => {
         setForm(create ? false : true);
       }
     });
-  }, [setSelect, stepsData]);
+  }, [setSelect, stepsData, activeStep, router.query]);
 
   const handleReset = () => {
     reset();
@@ -81,7 +84,7 @@ const Selling = () => {
     });
   };
 
-  useEffect(async () => {
+  const fetchMyAPI = useCallback(async () => {
     if (a?.uid) {
       const { dataUser } = await UserOne(a?.uid.toString());
 
@@ -96,12 +99,16 @@ const Selling = () => {
         setListUser(false);
       }
     }
-  }, []);
+  }, [a]);
+
+  useEffect(() => {
+    fetchMyAPI();
+  }, [fetchMyAPI]);
 
   return (
     <ShopLayout>
-      <Container maxW={"container.sm"} py={20}>
-        <VStack w={"full"} spacing={10}>
+      <Container maxW={"container.xl"} py={20}>
+        <VStack w={"full"} spacing={10} border={bordes} p={10}>
           <Heading
             w={"full"}
             size={"md"}

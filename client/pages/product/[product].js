@@ -6,7 +6,7 @@ import ProductData from "../../components/product/ProductData";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-const configDashboard = () => {
+const ConfigDashboard = () => {
   return (
     <ShopLayout>
       <Container maxW={"container.sm"}>
@@ -15,4 +15,4 @@ const configDashboard = () => {
     </ShopLayout>
   );
 };
-export default configDashboard;
+export default ConfigDashboard;

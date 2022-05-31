@@ -24,7 +24,7 @@ const HomeL = ({ product, category }) => {
     dispatch(serchProductList(product));
     dispatch(listDataProduct(product));
     dispatch(listDataCategory(category));
-  }, [dispatch]);
+  }, [dispatch, product, category]);
 
   return (
     <ShopLayout>

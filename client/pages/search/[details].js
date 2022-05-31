@@ -44,7 +44,7 @@ import { db } from "../../firebase/config";
 import SerchRat from "../../components/search/SerchRat";
 import SerchMessage from "../../components/search/SerchMessage";
 
-const details = ({ message, product }) => {
+const Details = ({ message, product }) => {
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -251,4 +251,4 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default details;
+export default Details;

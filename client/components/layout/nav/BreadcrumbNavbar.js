@@ -4,28 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
 
-import { useRouter } from "next/router";
-
-import {
-  Button,
-  chakra,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Portal,
-  Stack,
-} from "@chakra-ui/react";
+import { chakra, Stack } from "@chakra-ui/react";
 
 import Breakpoints from "../../../helpers/Breakpoints";
 
 import { serchProductList } from "../../../actions/product";
-import { CategoryAll } from "../../../helpers/IconNew";
 import MenuHistory from "../../../helpers/MenuHistory";
 
 export const BreadcrumbNavbar = ({ NavLink, Box }) => {
-  // dispatch
-  const router = useRouter();
   // selector
   const { list = [] } = useSelector(({ product }) => product);
   // selector

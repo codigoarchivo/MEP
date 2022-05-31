@@ -70,7 +70,7 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import NavLink from "../../helpers/Navlink";
 
-const search = ({ productos }) => {
+const Search = ({ productos }) => {
   // Breakpoints
   const { bordes } = Breakpoints();
   // dispatch
@@ -99,7 +99,7 @@ const search = ({ productos }) => {
       dispatch(serchProductList(productos));
       dispatch(listDataProduct(productos));
     }
-  }, [dispatch]);
+  }, [dispatch, productos]);
 
   max.current = product.list?.reduce(
     (n, m) => Math.max(n, Number(m.pr)),
@@ -157,7 +157,7 @@ const search = ({ productos }) => {
     }
 
     dispatch(serchProductList(r ? filtroR : filtro));
-  }, [router.query, listPrice]);
+  }, [router.query, listPrice, dispatch, product.list]);
 
   const home = () => {
     const firstVisible = listSerch[0].na;
@@ -277,7 +277,6 @@ const search = ({ productos }) => {
                   min={min.current}
                   max={max.current}
                   step={5}
-                  aria-label={["min", "max"]}
                   onChangeEnd={(val) => handleChangeEnd(val)}
                 >
                   <RangeSliderTrack bg="brand.800">
@@ -426,4 +425,4 @@ export async function getStaticProps() {
     };
   }
 }
-export default search;
+export default Search;

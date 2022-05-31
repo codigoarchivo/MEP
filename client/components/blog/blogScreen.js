@@ -34,9 +34,12 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import { seAside, seOutstanding, seWork } from "../../data/SeStatic";
 import { BsPerson, CategoryAll, ShopAll } from "../../helpers/IconNew";
+import ModeColor from "../../helpers/ModeColor";
 
 const BlogScreen = () => {
   const { content5, bordes } = Breakpoints();
+
+  const { bg3, bgText, bg4, bg5 } = ModeColor();
 
   const Arrow = createIcon({
     displayName: "Arrow",
@@ -287,7 +290,7 @@ const BlogScreen = () => {
                 key={index}
                 maxW={"330px"}
                 w={"full"}
-                bg={useColorModeValue("white", "gray.800")}
+                bg={bg3}
                 boxShadow={"2xl"}
                 rounded={"md"}
                 overflow={"hidden"}
@@ -295,13 +298,13 @@ const BlogScreen = () => {
                 <Stack
                   textAlign={"center"}
                   p={6}
-                  color={useColorModeValue("gray.800", "white")}
+                  color={bgText}
                   align={"center"}
                 >
                   <Text
                     fontSize={"sm"}
                     fontWeight={500}
-                    bg={useColorModeValue("yellow.100", "brand.600")}
+                    bg={bg4}
                     p={2}
                     px={3}
                     color={"brand.900"}
@@ -317,11 +320,7 @@ const BlogScreen = () => {
                   </Stack>
                 </Stack>
 
-                <Box
-                  bg={useColorModeValue("gray.50", "gray.900")}
-                  px={6}
-                  py={10}
-                >
+                <Box bg={bg5} px={6} py={10}>
                   <List spacing={3}>
                     <ListItem>
                       <ListIcon as={CheckIcon} color="brand.500" />
@@ -421,10 +420,7 @@ const BlogScreen = () => {
                 marginTop="5%"
                 textAlign="center"
               >
-                <Link
-                  textDecoration="none"
-                  _hover={{ textDecoration: "none" }}
-                >
+                <Link textDecoration="none" _hover={{ textDecoration: "none" }}>
                   <Image
                     loader={myLoader}
                     src={"Fenergia.jpg"}

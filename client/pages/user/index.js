@@ -36,7 +36,7 @@ const initialStates = {
   displayName: "",
 };
 
-const user = () => {
+const User = () => {
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
   const a = activeSelect;
@@ -159,4 +159,4 @@ const user = () => {
   );
 };
 
-export default user;
+export default User;
