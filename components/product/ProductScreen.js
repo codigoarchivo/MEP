@@ -55,24 +55,24 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
   // edit
   const handleEdit = () => {
     router.push({
-      pathname: "/product/[product]",
-      query: { product: "edit", ...data },
+      pathname: "/set/[set]",
+      query: { set: "edit", ...data },
     });
   };
 
   // delete
   const handleDelete = () => {
     router.push({
-      pathname: "/product/[product]",
-      query: { product: "delete", id },
+      pathname: "/set/[set]",
+      query: { set: "delete", id },
     });
   };
 
   // detalles
   const handleDetails = () => {
     router.push({
-      pathname: "/product/[product]",
-      query: { product: "details", dt },
+      pathname: "/set/[set]",
+      query: { set: "details", dt },
     });
   };
 

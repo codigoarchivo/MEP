@@ -1,16 +1,16 @@
 import {
   getDownloadURL,
   getStorage,
-  ref,
+  ref as storageRef,
   uploadBytesResumable,
 } from "firebase/storage";
 
 export const FileFirebaseReceipt = (file = null, setUrlImage, setProgress) => {
   const storage = getStorage();
 
-  const storageRef = ref(storage, `fotosRecibo/${file.name}`);
+  const storageData = storageRef(storage, `fotosRecibo/${file.name}`);
 
-  const uploadTask = uploadBytesResumable(storageRef, file);
+  const uploadTask = uploadBytesResumable(storageData, file);
 
   // Listen for state changes, errors, and completion of the upload.
   uploadTask.on(

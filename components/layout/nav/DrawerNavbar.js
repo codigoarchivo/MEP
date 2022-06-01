@@ -55,9 +55,9 @@ export const DrawerNavbar = ({
   handleLogout,
 }) => {
   // selector
-  const { activeSelect } = useSelector(({ auth }) => auth);
+  const { activeSelect: a } = useSelector(({ auth }) => auth);
   // Breakpoints
-  const { displayOn2, bordes, content5 } = Breakpoints();
+  const { displayOn2, bordes } = Breakpoints();
   // dispatch
   const dispatch = useDispatch();
   // selector
@@ -147,27 +147,19 @@ export const DrawerNavbar = ({
                         name={"Quieres vender"}
                       />
                     </chakra.li>
-                    <chakra.li mx={"3"}>
-                      <NavLink
-                        leftIcon={<VentasClient />}
-                        fontWeight={"normal"}
-                        variant={"secondary"}
-                        href={"/user/list"}
-                        name={"Mis ventas"}
-                      />
-                    </chakra.li>
-                    {activeSelect?.rol === "owner" && (
+                    {a?.rol === "owner" && (
                       <chakra.li mx={"3"}>
                         <NavLink
                           leftIcon={<Product />}
                           fontWeight={"normal"}
                           variant={"secondary"}
-                          href={"/product"}
+                          href={"/product/[product]"}
+                          as={`/product/${a?.uid}`}
                           name={"product"}
                         />
                       </chakra.li>
                     )}
-                    {activeSelect?.rol === "owner" && (
+                    {a?.rol === "owner" && (
                       <chakra.li mx={"3"}>
                         <NavLink
                           leftIcon={<Category />}

@@ -128,12 +128,11 @@ export const validPago = (info = {}) => {
           process: true,
         });
         // buy
-        await updateDoc(doc(db, "users", info.buy.id, "buys", info.idThree), {
+        await updateDoc(doc(db, "users", info.buy, "buys", info.idThree), {
           process: true,
           sale: info.sale,
         });
       } else {
-        // principal
         await updateDoc(doc(db, "users", dA, "sales", info.idThree), {
           process: true,
         });

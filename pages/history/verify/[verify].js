@@ -14,7 +14,7 @@ import Breakpoints from "../../../helpers/Breakpoints";
 
 import SaleVerify from "../../../components/sale/SaleVerify";
 
-const Verify = ({ dataUser = {}, dataUser2 = {}, dataUser3 = {} }) => {
+const Verify = ({ dataUser = {}, dataUser2 = {} }) => {
   // Breakpoints
   const { content5, bordes } = Breakpoints();
   // dispatch
@@ -29,13 +29,11 @@ const Verify = ({ dataUser = {}, dataUser2 = {}, dataUser3 = {} }) => {
             // idThree es id del la compra del producto
             idThree={router.query.verify}
             // toda la informacion del producto, que se guardo en el uid del comprador
-            product={dataUser3.sale.product}
+            product={dataUser2.sale.product}
             // la referenciadel pago
-            referencia={dataUser3.sale}
-            // toda la informacion del comprador, que se guardo para que se refleje en el checkout
-            buy={dataUser}
+            referencia={dataUser2.sale}
             // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
-            sale={dataUser2}
+            sale={dataUser}
           />
         </Stack>
       </Container>
@@ -45,43 +43,33 @@ const Verify = ({ dataUser = {}, dataUser2 = {}, dataUser3 = {} }) => {
 
 export async function getServerSideProps(context) {
   const dA = process.env.NEXT_PUBLIC_ROL_A;
-  const { uidBuy = "", uid = "", verify = "" } = await context.query;
+  const { uid = "", verify = "" } = await context.query;
   try {
-    const docRef = doc(db, "users", uidBuy.toString());
-
-    const docSnap = await getDoc(docRef);
-
-    const dataUser = {
-      id: docSnap.id,
-      ...docSnap.data(),
-    };
-
-    let dataUser2 = {};
+    let dataUser = {};
     if (dA !== uid) {
-      const docRef2 = doc(db, "users", uid.toString());
+      const docRef = doc(db, "users", uid.toString());
 
-      const docSnap2 = await getDoc(docRef2);
+      const docSnap = await getDoc(docRef);
 
-      dataUser2 = {
+      dataUser = {
         id: docSnap.id,
-        ...docSnap2.data(),
+        ...docSnap.data(),
       };
     }
 
-    const docRef3 = doc(db, "users", uid.toString(), "sales", verify);
+    const docRef2 = doc(db, "users", uid.toString(), "sales", verify);
 
-    const docSnap3 = await getDoc(docRef3);
+    const docSnap2 = await getDoc(docRef2);
 
-    const dataUser3 = {
-      id: docSnap.id,
-      ...docSnap3.data(),
+    const dataUser2 = {
+      id: docSnap2.id,
+      ...docSnap2.data(),
     };
 
     return {
       props: {
         dataUser: JSON.parse(JSON.stringify(dataUser)),
         dataUser2: JSON.parse(JSON.stringify(dataUser2)),
-        dataUser3: JSON.parse(JSON.stringify(dataUser3)),
       },
     };
   } catch (error) {

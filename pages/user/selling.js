@@ -79,8 +79,8 @@ const Selling = () => {
 
   const handleList = () => {
     router.push({
-      pathname: "/user/[list]",
-      query: { list: a?.uid },
+      pathname: "/product/[product]",
+      query: { product: a?.uid },
     });
   };
 
@@ -107,7 +107,7 @@ const Selling = () => {
 
   return (
     <ShopLayout>
-      <Container maxW={"container.xl"} py={20}>
+      <Container maxW={"container.lg"} py={20}>
         <VStack w={"full"} spacing={10} border={bordes} p={10}>
           <Heading
             w={"full"}

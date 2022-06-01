@@ -50,6 +50,9 @@ import Toast from "../../helpers/Toast";
 
 const initialStates = {
   nap: "",
+  na: "",
+  co: "",
+  te: "",
   imp: "",
   fer: "",
   cor: "",
@@ -90,7 +93,7 @@ const CheckVerify = ({
   // agrega imagen
   values.imp = urlImage ? urlImage : values.imp;
   // values
-  const { nap, imp, fer, cor, inf, ref } = values;
+  const { nap, imp, fer, cor, inf, ref, na, co, te } = values;
 
   // handleSubmit
   const handleSubmit = (e) => {
@@ -101,7 +104,9 @@ const CheckVerify = ({
       imp === "" ||
       fer === "" ||
       cor === "" ||
-      inf === "" ||
+      na === "" ||
+      co === "" ||
+      te === "" ||
       ref === ""
     ) {
       return Toast("Todos los campos son obligatorios", "error", 5000);
@@ -114,6 +119,9 @@ const CheckVerify = ({
       cor,
       inf,
       ref,
+      na,
+      co,
+      te,
       // información del producto
       product,
       // uid del comprador que se encuentra logeado
@@ -124,7 +132,11 @@ const CheckVerify = ({
 
     dispatch(validShop(shop));
 
+    Toast("Enviada Verificación", "success", 5000);
+
     reset();
+
+    router.push("/search/checkout");
   };
 
   const closeVerify = () => {
@@ -151,6 +163,54 @@ const CheckVerify = ({
               >
                 informacion pago para la tienda
               </Heading>
+            </GridItem>
+
+            <GridItem mb={3} colSpan={2}>
+              <FormLabel htmlFor="imp" textTransform={"uppercase"}>
+                Imagen del recibo
+              </FormLabel>
+              <HStack>
+                <InputGroup>
+                  <Button
+                    w={"80%"}
+                    rightIcon={<DownloadIcon w={6} h={6} />}
+                    variant={"outline"}
+                    textTransform={"uppercase"}
+                    onClick={() => file.current.click()}
+                    size="md"
+                    fontWeight={"normal"}
+                    _hover={{ border: bg }}
+                    p={1}
+                  >
+                    Subir: {progress}%
+                  </Button>
+                  <chakra.input
+                    onChange={handleInputChange2}
+                    name="imp"
+                    type={"file"}
+                    ref={file}
+                    display="none"
+                  />
+                </InputGroup>
+                <Flex w={"20%"} justifyContent={"center"}>
+                  {imp && (
+                    <AspectRatio
+                      border={bordes}
+                      ratio={1}
+                      w={59}
+                      h={59}
+                      position={"relative"}
+                    >
+                      <Image
+                        src={imp}
+                        alt="Recibo pago"
+                        layout="fill"
+                        objectFit="contain"
+                      />
+                    </AspectRatio>
+                  )}
+                </Flex>
+              </HStack>
             </GridItem>
             <GridItem mb={3} colSpan={2}>
               <FormLabel htmlFor="nap" textTransform={"uppercase"}>
@@ -204,52 +264,54 @@ const CheckVerify = ({
               />
             </GridItem>
 
-            <GridItem mb={3} colSpan={2}>
-              <FormLabel htmlFor="imp" textTransform={"uppercase"}>
-                Imagen del recibo
-              </FormLabel>
-              <HStack>
-                <InputGroup>
-                  <Button
-                    w={"80%"}
-                    rightIcon={<DownloadIcon w={6} h={6} />}
-                    variant={"outline"}
-                    textTransform={"uppercase"}
-                    onClick={() => file.current.click()}
-                    size="md"
-                    fontWeight={"normal"}
-                    _hover={{ border: bg }}
-                    p={1}
-                  >
-                    Subir: {progress}%
-                  </Button>
-                  <chakra.input
-                    onChange={handleInputChange2}
-                    name="imp"
-                    type={"file"}
-                    ref={file}
-                    display="none"
-                  />
-                </InputGroup>
-                <Flex w={"20%"} justifyContent={"center"}>
-                  {imp && (
-                    <AspectRatio
-                      border={bordes}
-                      ratio={1}
-                      w={59}
-                      h={59}
-                      position={"relative"}
-                    >
-                      <Image
-                        src={imp}
-                        alt="Recibo pago"
-                        layout="fill"
-                        objectFit="contain"
-                      />
-                    </AspectRatio>
-                  )}
-                </Flex>
-              </HStack>
+            <GridItem colSpan={2}>
+              <Heading
+                p={2}
+                my={5}
+                size={"xs"}
+                textTransform={"uppercase"}
+                fontWeight={"normal"}
+                border={bordes}
+                w={"full"}
+              >
+                informacion Personal para el vendedor
+              </Heading>
+            </GridItem>
+
+            <GridItem colSpan={2}>
+              <FormLabel htmlFor="na">Nombre </FormLabel>
+              <Input
+                name="na"
+                id="na"
+                onChange={handleInputChange}
+                value={na}
+                type={"text"}
+                placeholder="Nombre"
+              />
+            </GridItem>
+
+            <GridItem colSpan={2}>
+              <FormLabel htmlFor="co">Correo</FormLabel>
+              <Input
+                name="co"
+                id="co"
+                onChange={handleInputChange}
+                value={co}
+                type={"text"}
+                placeholder="Nombre"
+              />
+            </GridItem>
+
+            <GridItem colSpan={2}>
+              <FormLabel htmlFor="te">Telefono</FormLabel>
+              <Input
+                name="te"
+                id="te"
+                onChange={handleInputChange}
+                value={te}
+                type={"tel"}
+                placeholder="numero de telefono (+569) 99999999"
+              />
             </GridItem>
             <GridItem mb={5} colSpan={2}>
               <FormLabel htmlFor="inf" textTransform={"uppercase"}>

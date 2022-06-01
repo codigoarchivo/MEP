@@ -25,12 +25,10 @@ import Toast from "../../helpers/Toast";
 
 const SaleModal = ({
   bordes,
-  // id del buy product
+  // id del referencia product
   idThree,
   // product
   product,
-  // buy
-  buy = {},
   // sale
   sale = {},
   // información del pago del producto
@@ -52,13 +50,13 @@ const SaleModal = ({
       na: "puede ser un nombre",
       te: "puede ser un telefono",
     };
-    // Todo agregar los datos en duro
+    // Todo agregar los datos en duro y agregar los datos del vendedor
     const sales = sale ? dataL : sale;
     const data = {
       // id del la venta - compra
       idThree,
       // información para el vendedor
-      buy,
+      buy: referencia.uidBuy,
       // información para el comprador
       sale: sales,
       // información del pago del producto
@@ -67,6 +65,8 @@ const SaleModal = ({
     dispatch(validPago(data));
     // pago verificado
     Toast("Pago ha sido verificado", "success", 5000);
+
+    router.push("/history/sale");
   };
 
   const closeVerify = () => {
@@ -145,19 +145,19 @@ const SaleModal = ({
           <Stack w={full} mt={5} spacing={5} border={bordes} p={5}>
             <HStack justifyContent={"space-between"} borderBottom={bordes}>
               <Text fontWeight={"black"}>Nombre: </Text>
-              <Text>{buy.na}</Text>
+              <Text>{referencia.na}</Text>
             </HStack>
             <HStack justifyContent={"space-between"} borderBottom={bordes}>
               <Text fontWeight={"black"}>Telefono: </Text>
-              <Text>{buy.te}</Text>
+              <Text>{referencia.te}</Text>
             </HStack>
             <HStack justifyContent={"space-between"} borderBottom={bordes}>
               <Text fontWeight={"black"}>Correo: </Text>
-              <Text>{buy.co}</Text>
+              <Text>{referencia.co}</Text>
             </HStack>
             <HStack justifyContent={"space-between"} borderBottom={bordes}>
               <Text fontWeight={"black"}>Información adicional: </Text>
-              <Text>{buy.dt}</Text>
+              <Text>{referencia.inf}</Text>
             </HStack>
           </Stack>
         </VStack>

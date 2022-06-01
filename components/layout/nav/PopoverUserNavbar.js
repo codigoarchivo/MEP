@@ -61,19 +61,6 @@ const PopoverUserNavbar = ({
           />
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
-        <ListItem>
-          <NavLink
-            leftIcon={<VentasClient />}
-            fontWeight={"normal"}
-            variant={"secondary"}
-            href={{
-              pathname: "/user/[list]",
-              query: { list: a?.uid },
-            }}
-            name={"Mis ventas"}
-          />
-        </ListItem>
-        <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
         {a?.rol === "owner" && (
           <>
             <ListItem>
@@ -86,18 +73,19 @@ const PopoverUserNavbar = ({
               />
             </ListItem>
             <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
-            <ListItem>
-              <NavLink
-                leftIcon={<Product />}
-                fontWeight={"normal"}
-                variant={"secondary"}
-                href={"/product/list"}
-                name={"product"}
-              />
-            </ListItem>
-            <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
           </>
         )}
+        <ListItem>
+          <NavLink
+            leftIcon={<Product />}
+            fontWeight={"normal"}
+            variant={"secondary"}
+            href={"/product/[product]"}
+            as={`/product/${a?.uid}`}
+            name={"product"}
+          />
+        </ListItem>
+        <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
         <ListItem>
           <NavLink
             leftIcon={<ShopAll />}

@@ -12,7 +12,7 @@ const SaleScreen = ({ sale = {}, process }) => {
   // Breakpoints
   const { bordes, full } = Breakpoints();
 
-  const { uidBuy, idThree } = sale;
+  const { idThree } = sale;
 
   const { uid, to } = sale.product;
   return (
@@ -24,8 +24,8 @@ const SaleScreen = ({ sale = {}, process }) => {
     >
       <HStack spacing={"5"}>
         <NavLink
-          href={`/history/verify/[verify]?uidBuy=${uidBuy}&uid=${uid}`}
-          as={`/history/verify/${idThree}?uidBuy=${uidBuy}&uid=${uid}`}
+          href={`/history/verify/[verify]?uid=${uid}`}
+          as={`/history/verify/${idThree}?uid=${uid}`}
           name={`Verificar $${to}`}
           variant={"primary"}
           size={"xs"}

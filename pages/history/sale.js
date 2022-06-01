@@ -79,7 +79,7 @@ export async function getStaticProps() {
       id: doc.id,
       ...doc.data(),
     }));
-
+console.log(dataUser);
     return {
       props: {
         dataUser: JSON.parse(JSON.stringify(dataUser)),

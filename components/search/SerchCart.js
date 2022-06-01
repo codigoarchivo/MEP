@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 
 import { useRouter } from "next/router";
 
@@ -11,7 +11,6 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  AspectRatio,
   Button,
   Heading,
   HStack,
@@ -70,10 +69,6 @@ const SerchCart = () => {
     active.map((item) => (inc.current -= Number(item.pr)));
     Toast("Eliminado con exito", "error", 5000);
   };
-  // si la lista esta llena sera false podra comprar
-  const [listUser, setListUser] = useState(false);
-  // proceso de compra
-  // const [proceso, setProceso] = useState([]);
 
   // setListUser(false);
   let proceso = [];
@@ -137,12 +132,6 @@ const SerchCart = () => {
     });
   };
 
-  const handleInfo = () => {
-    router.push({
-      pathname: "/search/info/[info]",
-      query: { info: a?.uid },
-    });
-  };
   return (
     <>
       <Stack flexDirection={"row"} w={full}>
@@ -209,26 +198,16 @@ const SerchCart = () => {
                   <Heading w={full} size={"md"}>
                     Total:
                   </Heading>
-                  <Button
-                    w={full}
-                    variant={"primary"}
-                    size={"xs"}
-                    onClick={handleInfo}
-                  >
-                    {"{Datos}"}
-                  </Button>
+                  <Heading w={full}>{inc.current}$</Heading>
                 </HStack>
-
-                <Heading w={full}>{inc.current}$</Heading>
 
                 <Button
                   variant={"primary"}
                   w={full}
                   onClick={handleCheckout}
-                  disabled={listUser}
-                  size={listUser ? "xs" : "md"}
+                  size={"md"}
                 >
-                  {listUser ? "Agregar {Datos} adicional" : "Pagar"}
+                  {"Pagar"}
                 </Button>
                 <Text>
                   Si quiere seguir comprando puede hacer{" "}

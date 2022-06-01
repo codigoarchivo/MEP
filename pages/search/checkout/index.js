@@ -6,8 +6,10 @@ import {
   Box,
   Button,
   Container,
+  Flex,
   Heading,
   HStack,
+  Spinner,
   Stack,
   Text,
   VStack,
@@ -22,8 +24,6 @@ import Breakpoints from "../../../helpers/Breakpoints";
 import { activeProduct, saveSaleRevert } from "../../../actions/product";
 
 import UserTwo from "../../../helpers/UserTwo";
-
-import ContadorRegresivo from "../../../helpers/ContadorRegresivo";
 
 import CheckoutScreen from "../../../components/checkout/CheckoutScreen";
 
@@ -67,7 +67,15 @@ const Checkout = () => {
   }, [fetchMyAPI]);
 
   return check.length === 0 ? (
-    <></>
+    <Flex h={"full"} w={"full"} alignContent={"center"} alignItems={"center"}>
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="brand.500"
+        size="xl"
+      />
+    </Flex>
   ) : (
     <ShopLayout>
       <Container maxW={"container.xl"}>

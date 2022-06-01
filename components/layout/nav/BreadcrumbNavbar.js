@@ -66,7 +66,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
               variant={"secondary"}
             />
           </chakra.li>
-          <chakra.li mx={"3"}>
+          {/* <chakra.li mx={"3"}>
             <NavLink
               fontWeight={"normal"}
               variant={"secondary"}
@@ -74,28 +74,17 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
               as={"/user/selling"}
               name={"Quieres vender"}
             />
-          </chakra.li>
-
+          </chakra.li> */}
           <chakra.li mx={"3"}>
             <NavLink
               fontWeight={"normal"}
               variant={"secondary"}
-              href={"/user/list"}
-              as={"/user/list"}
-              name={"Mis ventas"}
+              href={"/product/[product]"}
+              as={`/product/${a?.uid}`}
+              name={"product"}
             />
           </chakra.li>
-          {a?.rol === "owner" && (
-            <chakra.li mx={"3"}>
-              <NavLink
-                fontWeight={"normal"}
-                variant={"secondary"}
-                href={"/product/list"}
-                as={"/product/list"}
-                name={"product"}
-              />
-            </chakra.li>
-          )}
+
           {a?.rol === "owner" && (
             <chakra.li mx={"3"}>
               <NavLink
