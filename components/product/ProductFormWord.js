@@ -2,15 +2,15 @@ import React from "react";
 
 import { Button, Heading, Text, chakra } from "@chakra-ui/react";
 
-const ProductFormWord = ({ HStack, dt, product, onClose, handleSubmit }) => {
+const ProductFormWord = ({ HStack, dt, set, onClose, handleSubmit }) => {
   return (
     <>
-      {product === "details" && (
+      {set === "details" && (
         <Text lineHeight={2} p={5}>
           {dt}
         </Text>
       )}
-      {product === "delete" && (
+      {set === "delete" && (
         <chakra.form onSubmit={handleSubmit} w={"full"} p={3}>
           <Heading mb={6} size={"lg"}>
             Esta seguro que desea eliminar
@@ -20,7 +20,7 @@ const ProductFormWord = ({ HStack, dt, product, onClose, handleSubmit }) => {
               Close
             </Button>
             <Button variant={"primary"} type="submit" ml={3}>
-              {product}
+              {set}
             </Button>
           </HStack>
         </chakra.form>

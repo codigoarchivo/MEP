@@ -45,7 +45,7 @@ import { HamburgerIcon, MoonIcon, SearchIcon, SunIcon } from "@chakra-ui/icons";
 import { CartIcon, LoveIcon, OrdenpagoIcon } from "../../../helpers/IconNew";
 import ModeColor from "../../../helpers/ModeColor";
 import Breakpoints from "../../../helpers/Breakpoints";
-import NavLink from "../../../helpers/Navlink";
+import NavLink from "../../../utils/Navlink";
 
 import { DrawerNavbar } from "./DrawerNavbar";
 import { DialogSerchNavbar } from "./DialogSerchNavbar";
@@ -58,11 +58,14 @@ import NavbarCart from "./NavbarCart";
 
 import { logout } from "../../../actions/auth";
 
-import useFormChange from "../../../hooks/useFormChange";
+import useFormAll from "../../../hooks/useFormAll";
 
 import Toast from "../../../helpers/Toast";
-import MenuCategoria from "../../../helpers/MenuCategoria";
+import MenuCategoria from "../../../utils/MenuCategoria";
 
+const initialStates = {
+  q: "",
+};
 const Navbar = () => {
   // dispatch
   const dispatch = useDispatch();
@@ -105,7 +108,7 @@ const Navbar = () => {
     }
   };
 
-  const { values, reset, handleInputChange } = useFormChange({ q: "" });
+  const { values, reset, handleInputChange } = useFormAll(initialStates);
 
   const handleSerchProduct = (e) => {
     e.preventDefault();

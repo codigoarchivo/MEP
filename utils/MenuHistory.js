@@ -13,7 +13,7 @@ import {
 
 import NavLink from "./Navlink";
 
-import Breakpoints from "./Breakpoints";
+import Breakpoints from "../helpers/Breakpoints";
 
 const MenuHistory = ({ color }) => {
   // selector

@@ -14,7 +14,11 @@ import {
 
 import { useRouter } from "next/router";
 
-import useFormChange from "../../../hooks/useFormChange";
+import useFormAll from "../../../hooks/useFormAll";
+
+const initialStates = {
+  q: "",
+};
 
 export const DialogSerchNavbar = ({
   isSerch,
@@ -31,7 +35,7 @@ export const DialogSerchNavbar = ({
   // dispatch
   const router = useRouter();
 
-  const { values, reset, handleInputChange } = useFormChange({ q: "" });
+  const { values, reset, handleInputChange } = useFormAll(initialStates);
 
   const handleSerchProduct = (e) => {
     e.preventDefault();

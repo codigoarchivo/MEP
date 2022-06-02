@@ -1,8 +1,6 @@
-import React, { useRef } from "react";
+import React from "react";
 
 import { useSelector } from "react-redux";
-
-import { DownloadIcon } from "@chakra-ui/icons";
 
 import {
   Button,
@@ -10,7 +8,6 @@ import {
   Grid,
   GridItem,
   Input,
-  InputGroup,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
@@ -22,30 +19,28 @@ import {
 } from "@chakra-ui/react";
 
 import ModeColor from "../../helpers/ModeColor";
+import FileAll from "../../utils/FileAll";
 
 const ProductForm = ({
-  product,
+  set,
   na,
   pr,
   ds,
   ct,
   cn,
   dt,
-  progress,
   HStack,
   points3,
   repeat1,
   points1,
   onClose,
+  setUrlImage,
   handleSubmit,
   handleInputChange,
-  handleInputChange2,
-  handleInputChange3,
+  handleNumberInput,
 }) => {
   // mode Color
   const { bg, brand } = ModeColor();
-  // file
-  const file = useRef();
   // selector
   const { list } = useSelector(({ category }) => category);
 
@@ -61,28 +56,7 @@ const ProductForm = ({
         >
           <GridItem colSpan={points1}>
             <FormLabel htmlFor="im">Image</FormLabel>
-            <InputGroup>
-              <Button
-                w={"full"}
-                rightIcon={<DownloadIcon w={6} h={6} />}
-                variant={"outline"}
-                textTransform={"uppercase"}
-                onClick={() => file.current.click()}
-                size="md"
-                fontWeight={"normal"}
-                _hover={{ border: bg }}
-                p={1}
-              >
-                Subir: {progress}%
-              </Button>
-              <chakra.input
-                onChange={handleInputChange3}
-                name="im"
-                type={"file"}
-                ref={file}
-                display="none"
-              />
-            </InputGroup>
+            <FileAll setUrlImage={setUrlImage} fileName={"fotosTienda"} />
           </GridItem>
 
           <GridItem colSpan={points1}>
@@ -126,11 +100,12 @@ const ProductForm = ({
             <NumberInput
               name="cn"
               id="cn"
-              onChange={handleInputChange2}
+              onChange={handleNumberInput}
               variant={"filled"}
               value={cn}
               min={1}
               max={20}
+              defaultValue={1}
             >
               <NumberInputField />
               <NumberInputStepper>
@@ -178,7 +153,7 @@ const ProductForm = ({
                 Close
               </Button>
               <Button variant={"primary"} type="submit" ml={3}>
-                {product}
+                {set}
               </Button>
             </HStack>
           </GridItem>

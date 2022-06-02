@@ -12,20 +12,22 @@ import { Button, InputGroup, Input } from "@chakra-ui/react";
 
 import { DownloadIcon } from "@chakra-ui/icons";
 
-import Validator from "./Validator";
+import Validator from "../helpers/Validator";
 
-import Toast from "./Toast";
+import Toast from "../helpers/Toast";
 
-import ModeColor from "./ModeColor";
+import ModeColor from "../helpers/ModeColor";
 
-const FileAll = ({ setUrlImage, carpeta }) => {
+const FileAll = ({ setUrlImage, fileName }) => {
   const [progress, setProgress] = useState(0);
   // mode Color
   const { bg } = ModeColor();
   // file
   const file = useRef();
 
-  function handleInputChange({ target }) {
+  const imp = document.getElementById("imp");
+
+  function handleUpload({ target }) {
     const file = target.files[0];
 
     const { mImage, esImg } = Validator({ imgsize: file.size });
@@ -34,7 +36,7 @@ const FileAll = ({ setUrlImage, carpeta }) => {
 
     try {
       const uploadTask = uploadBytesResumable(
-        storageRef(storage, `${carpeta}/${file.name}`),
+        storageRef(storage, `${fileName}/${file.name}`),
         file
       );
 
@@ -55,15 +57,16 @@ const FileAll = ({ setUrlImage, carpeta }) => {
           });
         }
       );
-      document.getElementById("imp").value = "";
+      imp.value = "";
     } catch (error) {
+      imp.value = "";
       console.log(error);
     }
   }
   return (
     <InputGroup>
       <Input
-        onChange={handleInputChange}
+        onChange={handleUpload}
         name="imp"
         type={"file"}
         id="imp"
@@ -71,7 +74,7 @@ const FileAll = ({ setUrlImage, carpeta }) => {
         display="none"
       />
       <Button
-        w={"80%"}
+        w={"full"}
         rightIcon={<DownloadIcon w={6} h={6} />}
         variant={"outline"}
         textTransform={"uppercase"}

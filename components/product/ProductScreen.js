@@ -108,7 +108,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
           <Text>{pr}$</Text>
         </Td>
         <Td>
-          <Text>{listCt[0].na}</Text>
+          <Text>{listCt[0]?.na}</Text>
         </Td>
         <Td isNumeric>
           <Menu>

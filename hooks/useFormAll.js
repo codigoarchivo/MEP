@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useFormChange = (initialStates = {}, data) => {
+const useFormAll = (initialStates = {}, data = {}) => {
   const [values, setValues] = useState(initialStates);
 
   useEffect(() => {
@@ -11,19 +11,31 @@ const useFormChange = (initialStates = {}, data) => {
     }
   }, [setValues]);
 
+  // reset
   const reset = (newFormState = initialStates) => {
     setValues(newFormState);
   };
-
+  // handleInputChange
   const handleInputChange = ({ target }) => {
     setValues({ ...values, [target.name]: target.value });
+  };
+  // handlePassword
+  const handlePassword = () => setValues({ ...values, pass: !values.pass });
+  // handleRePassword
+  const handleRePassword = () => setValues({ ...values, rPass: !values.rPass });
+  // handleNumberInput
+  const handleNumberInput = (e) => {
+    setValues({ ...values, cn: e });
   };
 
   return {
     values,
-    reset,
     handleInputChange,
+    handlePassword,
+    handleRePassword,
+    handleNumberInput,
+    reset,
   };
 };
 
-export default useFormChange;
+export default useFormAll;

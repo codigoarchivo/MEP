@@ -20,10 +20,9 @@ import {
   editCategory,
 } from "../../actions/category";
 
-import useFormChange from "../../hooks/useFormChange";
+import useFormAll from "../../hooks/useFormAll";
 
 const initialStates = {
-  id: "",
   na: "",
   pid: "",
 };
@@ -38,12 +37,9 @@ const CategoryData = () => {
   // Breakpoints
   const { bordes } = Breakpoints();
 
-  const activeSelect = router.query;
+  const data = router.query;
   // useForm
-  const { values, handleInputChange } = useFormChange(
-    initialStates,
-    activeSelect
-  );
+  const { values, handleInputChange } = useFormAll(initialStates, data);
   // validar
   const { fiel, ErrorCatData } = Validator(values);
   // values

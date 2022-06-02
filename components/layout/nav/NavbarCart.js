@@ -29,7 +29,7 @@ import { deleteProductCart } from "../../../actions/product";
 
 import Breakpoints from "../../../helpers/Breakpoints";
 import { CartIcon } from "../../../helpers/IconNew";
-import NavLink from "../../../helpers/Navlink";
+import NavLink from "../../../utils/Navlink";
 
 const NavbarCart = () => {
   // router

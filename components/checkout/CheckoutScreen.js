@@ -26,7 +26,7 @@ import { CartList } from "../../helpers/IconNew";
 
 import CheckModalSale from "./CheckModalSale";
 
-import NavLink from "../../helpers/Navlink";
+import NavLink from "../../utils/Navlink";
 
 import ContadorRegresivo from "../../helpers/ContadorRegresivo";
 

@@ -22,7 +22,7 @@ import {
 
 import Breakpoints from "../../../helpers/Breakpoints";
 
-import NavLink from "../../../helpers/Navlink";
+import NavLink from "../../../utils/Navlink";
 
 import { useDispatch, useSelector } from "react-redux";
 import { serchProductList } from "../../../actions/product";

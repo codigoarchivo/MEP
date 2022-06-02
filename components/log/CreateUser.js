@@ -19,17 +19,15 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import useFormShow from "../../hooks/useFormShow";
-import useForm from "../../hooks/useForm";
-
 import Validator from "../../helpers/Validator";
 import ModeColor from "../../helpers/ModeColor";
-import NavLink from "../../helpers/Navlink";
+import NavLink from "../../utils/Navlink";
 import Toast from "../../helpers/Toast";
 
 import { startRegisterWithNameEmailPassword } from "../../actions/auth";
 
-import DividerWithText from "../utils/DividerWithText";
+import DividerWithText from "../../utils/DividerWithText";
+import useFormAll from "../../hooks/useFormAll";
 
 const initialStates = {
   name: "jackson Quintero",
@@ -37,16 +35,22 @@ const initialStates = {
   password: "123456",
   rePassword: "123456",
 };
-
+const data = {
+  pass: false,
+  rPass: false,
+};
 const CreateUser = () => {
   // selector
   const { loading } = useSelector(({ ui }) => ui);
   // dispatch
   const dispatch = useDispatch();
-  // vista de la contraseña
-  const { show, handleClick, handleClick2 } = useFormShow();
-  // guardar states
-  const [values, handleInputChange] = useForm(initialStates);
+  // useFormAll
+  const {
+    values,
+    handleInputChange,
+    handlePassword,
+    handleRePassword,
+  } = useFormAll(initialStates, data);
   // validar
   const {
     nameE,
@@ -60,7 +64,7 @@ const CreateUser = () => {
   // mode Color
   const { textError, bgTextError } = ModeColor();
   // valores
-  const { name, email, password, rePassword } = values;
+  const { name, email, password, rePassword, pass, rPass } = values;
 
   // handleSubmit
   const handleSubmit = (e) => {
@@ -148,13 +152,17 @@ const CreateUser = () => {
                 onChange={handleInputChange}
                 value={password}
                 pr="4.5rem"
-                type={show.password ? "text" : "password"}
+                type={pass ? "text" : "password"}
                 placeholder="Agregar password"
                 autoComplete="new-password"
               />
               <InputRightElement width="4.5rem">
-                <Button variant={"secondary"} h="1.75rem" onClick={handleClick}>
-                  {show.password ? <ViewIcon /> : <ViewOffIcon />}
+                <Button
+                  variant={"secondary"}
+                  h="1.75rem"
+                  onClick={handlePassword}
+                >
+                  {pass ? <ViewIcon /> : <ViewOffIcon />}
                 </Button>
               </InputRightElement>
             </InputGroup>
@@ -178,7 +186,7 @@ const CreateUser = () => {
                 onChange={handleInputChange}
                 value={rePassword}
                 pr="4.5rem"
-                type={show.rePassword ? "text" : "password"}
+                type={rPass ? "text" : "password"}
                 placeholder="Repetir password"
                 autoComplete="new-rePassword"
               />
@@ -186,9 +194,9 @@ const CreateUser = () => {
                 <Button
                   variant={"secondary"}
                   h="1.75rem"
-                  onClick={handleClick2}
+                  onClick={handleRePassword}
                 >
-                  {show.rePassword ? <ViewIcon /> : <ViewOffIcon />}
+                  {rPass ? <ViewIcon /> : <ViewOffIcon />}
                 </Button>
               </InputRightElement>
             </InputGroup>

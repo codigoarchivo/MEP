@@ -20,39 +20,41 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import useFormShow from "../../hooks/useFormShow";
-import useForm from "../../hooks/useForm";
+import useFormAll from "../../hooks/useFormAll";
 
 import Validator from "../../helpers/Validator";
 import ModeColor from "../../helpers/ModeColor";
 import { GoogleIcon } from "../../helpers/IconNew";
 import Toast from "../../helpers/Toast";
-import NavLink from "../../helpers/Navlink";
+import NavLink from "../../utils/Navlink";
 
 import { startGoogleLogin, startLoginEmailPassword } from "../../actions/auth";
 
-import DividerWithText from "../utils/DividerWithText";
+import DividerWithText from "../../utils/DividerWithText";
 
 const initialStates = {
   email: "jackson@gmail.com",
   password: "123456",
 };
-
+const data = {
+  pass: false,
+};
 const LoginUser = ({ handleReview }) => {
   // selector
   const { loading } = useSelector(({ ui }) => ui);
   // dispatch
   const dispatch = useDispatch();
-  // vista de la contraseña
-  const { show, handleClick } = useFormShow();
-  // guardar states
-  const { values, handleInputChange } = useForm(initialStates);
+  // useFormAll
+  const { values, handleInputChange, handlePassword } = useFormAll(
+    initialStates,
+    data
+  );
   // validar
   const { emailE, passwordL, field, fiel, ErrorRorL } = Validator(values);
   // mode Color
   const { textError, bgTextError } = ModeColor();
   // valores
-  const { email, password } = values;
+  const { email, password, pass } = values;
 
   // handleSubmit
   const handleSubmit = (e) => {
@@ -121,13 +123,17 @@ const LoginUser = ({ handleReview }) => {
                 onChange={handleInputChange}
                 value={password}
                 pr="4.5rem"
-                type={show.password ? "text" : "password"}
+                type={pass ? "text" : "password"}
                 placeholder="Agregar password"
                 autoComplete="new-password"
               />
               <InputRightElement width="4.5rem">
-                <Button variant={"secondary"} h="1.75rem" onClick={handleClick}>
-                  {show.password ? <ViewIcon /> : <ViewOffIcon />}
+                <Button
+                  variant={"secondary"}
+                  h="1.75rem"
+                  onClick={handlePassword}
+                >
+                  {pass ? <ViewIcon /> : <ViewOffIcon />}
                 </Button>
               </InputRightElement>
             </InputGroup>

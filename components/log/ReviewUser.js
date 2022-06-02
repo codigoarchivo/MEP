@@ -17,14 +17,14 @@ import {
   Center,
 } from "@chakra-ui/react";
 
-import useForm from "../../hooks/useForm";
+import useFormAll from "../../hooks/useFormAll";
 
 import Validator from "../../helpers/Validator";
 import ModeColor from "../../helpers/ModeColor";
 
 import { sendEmail } from "../../actions/auth";
-import DividerWithText from "../utils/DividerWithText";
-import NavLink from "../../helpers/Navlink";
+import DividerWithText from "../../utils/DividerWithText";
+import NavLink from "../../utils/Navlink";
 import Toast from "../../helpers/Toast";
 
 const initialStates = {
@@ -35,7 +35,7 @@ const ReviewUser = () => {
   // dispatch
   const dispatch = useDispatch();
   // guardar states
-  const { values, handleInputChange } = useForm(initialStates);
+  const { values, handleInputChange } = useFormAll(initialStates);
   // validar
   const { emailE, field, ErrorLorR, fiel } = Validator(values);
   // mode Color

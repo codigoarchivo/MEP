@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
 
@@ -15,22 +15,15 @@ import {
   Tr,
 } from "@chakra-ui/react";
 
-import Breakpoints from "../../helpers/Breakpoints";
 import Toast from "../../helpers/Toast";
 
 import { DeleteIcon, EditIcon, PlusSquareIcon } from "@chakra-ui/icons";
 
-import { activeCategory } from "../../actions/category";
-
 const CategoryScrenn = ({ id, na }) => {
   // selector
   const { list } = useSelector(({ product }) => product);
-  // dispatch
-  const dispatch = useDispatch();
   // router
   const router = useRouter();
-  // breakpoints
-  const { center, points18 } = Breakpoints();
 
   // edit
   const handleEdit = async () => {

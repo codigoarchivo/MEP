@@ -17,8 +17,7 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 
-import useForm from "../../hooks/useForm";
-import useFormShow from "../../hooks/useFormShow";
+import useFormAll from "../../hooks/useFormAll";
 
 import Validator from "../../helpers/Validator";
 import ModeColor from "../../helpers/ModeColor";
@@ -29,19 +28,24 @@ const initialStates = {
   password: "",
 };
 
+const data = {
+  pass: false,
+};
+
 const ResetPassword = () => {
   // dispatch
   const dispatch = useDispatch();
-  // vista de la contraseña
-  const { show, handleClick } = useFormShow();
   // guardar states
-  const { values, handleInputChange } = useForm(initialStates);
+  const { values, handlePassword, handleInputChange, reset } = useFormAll(
+    initialStates,
+    data
+  );
   // validar
   const { field, passwordV, fiel } = Validator(values);
   // mode Color
   const { textError, bgTextError } = ModeColor();
   // valores
-  const { password } = values;
+  const { password, pass } = values;
 
   // handleSubmit
   const handleSubmit = (e) => {
@@ -51,6 +55,7 @@ const ResetPassword = () => {
     } else {
       dispatch(resetPassword(password, getParameterByName("oobCode")));
       Toast("Password has been changed, you can login now.", "success", 5000);
+      reset();
     }
   };
 
@@ -80,13 +85,17 @@ const ResetPassword = () => {
                 onChange={handleInputChange}
                 value={password}
                 pr="4.5rem"
-                type={show.password ? "text" : "password"}
+                type={pass ? "text" : "password"}
                 placeholder="new password"
                 autoComplete="new-password"
               />
               <InputRightElement width="4.5rem">
-                <Button variant={"secondary"} h="1.75rem" onClick={handleClick}>
-                  {show.password ? <ViewIcon /> : <ViewOffIcon />}
+                <Button
+                  variant={"secondary"}
+                  h="1.75rem"
+                  onClick={handlePassword}
+                >
+                  {pass ? <ViewIcon /> : <ViewOffIcon />}
                 </Button>
               </InputRightElement>
             </InputGroup>

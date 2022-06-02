@@ -2,17 +2,7 @@ import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  collection,
-  endBefore,
-  getDocs,
-  limit,
-  limitToLast,
-  onSnapshot,
-  orderBy,
-  query,
-  startAfter,
-} from "firebase/firestore";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 
 import { useRouter } from "next/router";
 
@@ -22,7 +12,6 @@ import {
   Center,
   Container,
   Heading,
-  HStack,
   Table,
   TableCaption,
   TableContainer,
@@ -31,12 +20,6 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  RepeatIcon,
-} from "@chakra-ui/icons";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
@@ -48,15 +31,9 @@ import { db } from "../../firebase/config";
 
 import { activeCategory, listDataCategory } from "../../actions/category";
 
-import {
-  useModality,
-  useModality2,
-  useModality3,
-} from "../../hooks/useModality";
+import Paginator from "../../utils/Paginator";
 
-import { listDataProduct } from "../../actions/product";
-
-const Category = ({ data, dataC }) => {
+const Category = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -66,21 +43,14 @@ const Category = ({ data, dataC }) => {
   // selector
   const { list } = useSelector(({ category }) => category);
   // selector
-  const { activeSelect } = useSelector(({ auth }) => auth);
-  // modality
-  const { modality, setModality } = useModality(true);
-  // modality
-  const { modality2, setModality2 } = useModality2();
-  // modality
-  const { modality3, setModality3 } = useModality3(true);
+  const { activeSelect: a } = useSelector(({ auth }) => auth);
 
-  if (activeSelect?.rol === "user") {
+  if (a?.rol === "user") {
     router.push("/");
   }
   useEffect(() => {
-    dispatch(listDataProduct(data));
-    dispatch(listDataCategory(dataC));
-  }, [dispatch, data, dataC]);
+    dispatch(listDataCategory(data));
+  }, [dispatch, data]);
 
   // add
   const handleAdd = () => {
@@ -96,84 +66,9 @@ const Category = ({ data, dataC }) => {
     });
   };
 
-  const home = () => {
-    const firstVisible = list[0].na;
-
-    const q = query(
-      collection(db, "categories"),
-      orderBy("na", "asc"),
-      endBefore(firstVisible),
-      limit(10)
-    );
-
-    onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs
-        .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .slice(0, 10);
-
-      if (data.length === 0) {
-        return setModality(true);
-      } else {
-        handleModality();
-        dispatch(listDataCategory(data));
-      }
-    });
-  };
-
-  const previous = () => {
-    const firstVisible = list[0].na;
-
-    const q = query(
-      collection(db, "categories"),
-      orderBy("na", "asc"),
-      endBefore(firstVisible),
-      limitToLast(10)
-    );
-
-    onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs
-        .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .slice(0, 10);
-
-      if (data.length !== 0) {
-        setModality3(true);
-        dispatch(listDataCategory(data));
-      }
-    });
-  };
-
-  const next = () => {
-    const lastVisible = list[list.length - 1].na;
-
-    const q = query(
-      collection(db, "categories"),
-      orderBy("na", "asc"),
-      startAfter(lastVisible),
-      limit(10)
-    );
-
-    onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs
-        .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .slice(0, 10);
-      if (data.length === 0) {
-        return setModality2(true);
-      } else {
-        handleModality();
-        dispatch(listDataCategory(data));
-      }
-    });
-  };
-
-  const handleModality = () => {
-    setModality(false);
-    setModality2(false);
-    setModality3(false);
-  };
-
   return (
     <ShopLayout>
-      {activeSelect?.isloggedIn === true && activeSelect?.rol === "owner" ? (
+      {a?.rol === "owner" ? (
         <Container maxW={"container.sm"} my={10}>
           <Box p={5}>
             {!list[0] && (
@@ -211,41 +106,17 @@ const Category = ({ data, dataC }) => {
               </Table>
             </TableContainer>
           </Box>
-          <HStack spacing={10} justifyContent={"center"} mt={10}>
-            <Button
-              onClick={home}
-              disabled={modality}
-              variant={"primary"}
-              cursor="pointer"
-              rounded="3xl"
-              background={"transparent"}
-              p={1}
-            >
-              <RepeatIcon />
-            </Button>
-            <Button
-              onClick={previous}
-              disabled={modality3}
-              variant={"primary"}
-              cursor="pointer"
-              rounded="3xl"
-              background={"transparent"}
-              p={1}
-            >
-              <ChevronLeftIcon w={6} h={6} />
-            </Button>
-            <Button
-              onClick={next}
-              disabled={modality2}
-              variant={"primary"}
-              cursor="pointer"
-              rounded="3xl"
-              background={"transparent"}
-              p={1}
-            >
-              <ChevronRightIcon w={6} h={6} />
-            </Button>
-          </HStack>
+          <Box>
+            {list.length > 0 && (
+              <Paginator
+                window={"categories"}
+                word={"na"}
+                list={list}
+                firstVisible={list[0]?.na}
+                lastVisible={list[list.length - 1]?.na}
+              />
+            )}
+          </Box>
         </Container>
       ) : (
         ""
@@ -256,14 +127,12 @@ const Category = ({ data, dataC }) => {
 
 export async function getServerSideProps() {
   try {
-    const qC = query(
+    const q = query(
       collection(db, "categories"),
-      limit(25),
+      limit(2),
       orderBy("na", "asc")
     );
-    const q = query(collection(db, "serchs"), limit(25), orderBy("na", "asc"));
 
-    const elC = await getDocs(qC);
     const el = await getDocs(q);
 
     const data = el.docs.map((doc) => ({
@@ -271,15 +140,9 @@ export async function getServerSideProps() {
       ...doc.data(),
     }));
 
-    const dataC = elC.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
     return {
       props: {
         data,
-        dataC,
       },
     };
   } catch (error) {

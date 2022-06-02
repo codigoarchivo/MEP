@@ -22,7 +22,7 @@ import Toast from "../../../helpers/Toast";
 
 import ShopLayout from "../../../components/layout/ShopLayout";
 
-import useFormChange from "../../../hooks/useFormChange";
+import useFormAll from "../../../hooks/useFormAll";
 
 import ModeColor from "../../../helpers/ModeColor";
 
@@ -51,7 +51,7 @@ const Informacion = ({ data }) => {
   // mode Color
   const { bg, brand } = ModeColor();
   // useForm
-  const { values, handleInputChange } = useFormChange(initialStates, data);
+  const { values, handleInputChange } = useFormAll(initialStates, data);
   // values
   const { na, te, co, dt, id, rol } = values;
 

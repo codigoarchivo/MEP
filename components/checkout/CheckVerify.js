@@ -35,12 +35,12 @@ import { WhatsAppIcon } from "../../helpers/IconNew";
 
 import ModeColor from "../../helpers/ModeColor";
 
-import useFormEasy from "../../hooks/useFormEasy";
+import useFormAll from "../../hooks/useFormAll";
 
 import { validShop } from "../../actions/checkout";
 
 import Toast from "../../helpers/Toast";
-import FileAll from "../../helpers/FileAll";
+import FileAll from "../../utils/FileAll";
 
 const initialStates = {
   nap: "",
@@ -76,7 +76,7 @@ const CheckVerify = ({
   const { bg, brand } = ModeColor();
 
   // useForm
-  const { values, reset, handleInputChange } = useFormEasy(initialStates);
+  const { values, reset, handleInputChange } = useFormAll(initialStates);
   // agrega imagen
   values.imp = urlImage ? urlImage : values.imp;
   // values
@@ -158,7 +158,7 @@ const CheckVerify = ({
               </FormLabel>
               <HStack>
                 {/* save file */}
-                <FileAll setUrlImage={setUrlImage} carpeta={"fotosRecibo"} />
+                <FileAll setUrlImage={setUrlImage} fileName={"fotosRecibo"} />
                 <Flex w={"20%"} justifyContent={"center"}>
                   {imp && (
                     <AspectRatio

@@ -22,7 +22,7 @@ import {
 
 import ModeColor from "../../../helpers/ModeColor";
 import Breakpoints from "../../../helpers/Breakpoints";
-import NavLink from "../../../helpers/Navlink";
+import NavLink from "../../../utils/Navlink";
 
 import {
   FacebookIcon,
@@ -30,9 +30,9 @@ import {
   TwitterIcon,
 } from "../../../helpers/IconNew";
 
-import MenuHistory from "../../../helpers/MenuHistory";
+import MenuHistory from "../../../utils/MenuHistory";
 
-import MenuCategoria from "../../../helpers/MenuCategoria";
+import MenuCategoria from "../../../utils/MenuCategoria";
 
 const Footer = () => {
   // Breakpoints

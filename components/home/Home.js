@@ -23,7 +23,7 @@ import SerchScreen from "../search/SerchScreen";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import NavLink from "../../helpers/Navlink";
+import NavLink from "../../utils/Navlink";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 

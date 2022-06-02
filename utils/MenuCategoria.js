@@ -9,13 +9,13 @@ import {
   Portal,
 } from "@chakra-ui/react";
 
-import NavLink from "./Navlink";
+import NavLink from "../utils/Navlink";
 
 import { useSelector } from "react-redux";
 
-import Breakpoints from "./Breakpoints";
+import Breakpoints from "../helpers/Breakpoints";
 
-import { CategoryAll } from "./IconNew";
+import { CategoryAll } from "../helpers/IconNew";
 
 const MenuCategoria = () => {
   // Breakpoints

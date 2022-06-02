@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useRouter } from "next/router";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { CloseButton, Heading, HStack, VStack } from "@chakra-ui/react";
 
@@ -10,13 +10,12 @@ import Breakpoints from "../../helpers/Breakpoints";
 import Toast from "../../helpers/Toast";
 import Validator from "../../helpers/Validator";
 
-import useForm from "../../hooks/useForm";
-
 import ProductForm from "./ProductForm";
 
 import ProductFormWord from "./ProductFormWord";
 
 import { addProduct, deleteProduct, editProduct } from "../../actions/product";
+import useFormAll from "../../hooks/useFormAll";
 
 const initialStates = {
   na: "",
@@ -29,6 +28,8 @@ const initialStates = {
 };
 
 const ProductData = () => {
+  // selector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -36,22 +37,20 @@ const ProductData = () => {
   // Breakpoints
   const { points1, repeat1, points3, bordes } = Breakpoints();
 
-  const activeSelect = router.query;
+  const [urlImage, setUrlImage] = useState("");
+
+  const data = router.query;
   // useForm
-  const {
-    values,
-    urlImage,
-    progress,
-    handleInputChange,
-    handleInputChange2,
-    handleInputChange3,
-  } = useForm(initialStates, activeSelect);
+  const { values, handleInputChange, handleNumberInput } = useFormAll(
+    initialStates,
+    data
+  );
   // agrega imagen
   values.im = urlImage ? urlImage : values.im;
   // validar
   const { fiel, estado, ErrorRetur, ErrorRetur2 } = Validator(values);
   // values
-  const { na, pr, ds, ct, cn, dt, im, es, id, product } = values;
+  const { na, pr, ds, ct, cn, dt, im, es, id, set } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -62,18 +61,28 @@ const ProductData = () => {
     if (ErrorRetur) {
       return Toast(fiel, "error", 5000);
     } else {
-      product === "Add" &&
+      set === "Add" &&
         dispatch(addProduct({ na, pr, ds, ct, cn, dt, im, es: true }));
-      product === "Edit" &&
+      set === "Edit" &&
         dispatch(editProduct({ na, pr, ds, ct, cn, dt, im, es, id }));
-      product === "Delete" && dispatch(deleteProduct(id));
+      set === "Delete" && dispatch(deleteProduct(id));
     }
 
-    onClose();
+    router.push({
+      pathname: `/product/[product]`,
+      query: {
+        product: a?.uid,
+      },
+    });
   };
   // cerrar
   const onClose = () => {
-    router.push("/product/list");
+    router.push({
+      pathname: `/product/[product]`,
+      query: {
+        product: a?.uid,
+      },
+    });
   };
 
   return (
@@ -82,36 +91,35 @@ const ProductData = () => {
         <HStack w={"full"}>
           <CloseButton size="md" onClick={onClose} />
           <Heading as="h1" size={"md"} textTransform={"uppercase"}>
-            {product}
+            {set}
           </Heading>
         </HStack>
-        {product === "details" || product === "delete" ? (
+        {set === "details" || set === "delete" ? (
           <ProductFormWord
             handleSubmit={handleSubmit}
             HStack={HStack}
             dt={dt}
-            product={product}
+            set={set}
             onClose={onClose}
           />
         ) : (
           <ProductForm
-            product={product}
+            set={set}
             na={na}
             pr={pr}
             ds={ds}
             ct={ct}
             cn={cn}
             dt={dt}
-            progress={progress}
             HStack={HStack}
             repeat1={repeat1}
             points1={points1}
             points3={points3}
             onClose={onClose}
             handleInputChange={handleInputChange}
-            handleInputChange2={handleInputChange2}
-            handleInputChange3={handleInputChange3}
+            handleNumberInput={handleNumberInput}
             handleSubmit={handleSubmit}
+            setUrlImage={setUrlImage}
           />
         )}
       </VStack>

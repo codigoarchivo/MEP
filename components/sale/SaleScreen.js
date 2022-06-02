@@ -6,7 +6,7 @@ import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import NavLink from "../../helpers/Navlink";
+import NavLink from "../../utils/Navlink";
 
 const SaleScreen = ({ sale = {}, process }) => {
   // Breakpoints

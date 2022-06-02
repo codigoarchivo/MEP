@@ -9,7 +9,7 @@ import { chakra, Stack } from "@chakra-ui/react";
 import Breakpoints from "../../../helpers/Breakpoints";
 
 import { serchProductList } from "../../../actions/product";
-import MenuHistory from "../../../helpers/MenuHistory";
+import MenuHistory from "../../../utils/MenuHistory";
 
 export const BreadcrumbNavbar = ({ NavLink, Box }) => {
   // selector

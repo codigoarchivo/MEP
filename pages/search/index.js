@@ -68,7 +68,7 @@ import Toast from "../../helpers/Toast";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import NavLink from "../../helpers/Navlink";
+import NavLink from "../../utils/Navlink";
 
 const Search = ({ productos }) => {
   // Breakpoints

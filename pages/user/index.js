@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 
 import Image from "next/image";
 
@@ -13,22 +13,19 @@ import {
   Container,
   Heading,
   Input,
-  InputGroup,
   Stack,
   VStack,
 } from "@chakra-ui/react";
 
-import { DownloadIcon } from "@chakra-ui/icons";
-
-import ModeColor from "../../helpers/ModeColor";
 import Breakpoints from "../../helpers/Breakpoints";
 import Toast from "../../helpers/Toast";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import useFormUser from "../../hooks/useFormUser";
+import useFormAll from "../../hooks/useFormAll";
 
 import { changeNameImgTel } from "../../actions/auth";
+import FileAll from "../../utils/FileAll";
 
 const initialStates = {
   uid: "",
@@ -38,26 +35,16 @@ const initialStates = {
 
 const User = () => {
   // selector
-  const { activeSelect } = useSelector(({ auth }) => auth);
-  const a = activeSelect;
+  const { activeSelect: data } = useSelector(({ auth }) => auth);
   // dispatch
   const dispatch = useDispatch();
-  // mode Color
-  const { bg } = ModeColor();
   // Breakpoints
   const { content5, points24, porcent3, porcent4, bordes } = Breakpoints();
-  // file
-  const file = useRef();
-  
 
-  const [
-    values,
-    urlImage,
-    progress,
-    handleInputChange,
-    handleInputChange2,
-  ] = useFormUser(initialStates, activeSelect);
-  
+  const [urlImage, setUrlImage] = useState("");
+
+  const { values, handleInputChange } = useFormAll(initialStates, data);
+
   // agrega imagen
   values.photoURL = urlImage ? urlImage : values.photoURL;
   // values
@@ -119,28 +106,7 @@ const User = () => {
               <Heading size={"xs"} w={"full"} fontWeight={"normal"}>
                 Información Basica
               </Heading>
-              <InputGroup>
-                <Button
-                  w={"full"}
-                  rightIcon={<DownloadIcon w={6} h={6} />}
-                  variant={"outline"}
-                  textTransform={"uppercase"}
-                  onClick={() => file.current.click()}
-                  size="md"
-                  fontWeight={"normal"}
-                  _hover={{ border: bg }}
-                  p={1}
-                >
-                  Foto de Perfil : {progress}%
-                </Button>
-                <chakra.input
-                  onChange={handleInputChange2}
-                  name="photoURL"
-                  type={"file"}
-                  ref={file}
-                  display="none"
-                />
-              </InputGroup>
+              <FileAll setUrlImage={setUrlImage} fileName={"fotosPerfil"} />
 
               <Input
                 onChange={handleInputChange}
