@@ -1,12 +1,8 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 
 import Image from "next/image";
 
-import {
-  CheckCircleIcon,
-  DownloadIcon,
-  ExternalLinkIcon,
-} from "@chakra-ui/icons";
+import { CheckCircleIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 
 import {
   Button,
@@ -25,12 +21,9 @@ import {
   Textarea,
   GridItem,
   Grid,
-  InputGroup,
   AspectRatio,
   Flex,
 } from "@chakra-ui/react";
-
-import { addDays } from "date-fns";
 
 import { useRouter } from "next/router";
 
@@ -47,6 +40,7 @@ import useFormEasy from "../../hooks/useFormEasy";
 import { validShop } from "../../actions/checkout";
 
 import Toast from "../../helpers/Toast";
+import FileAll from "../../helpers/FileAll";
 
 const initialStates = {
   nap: "",
@@ -70,8 +64,8 @@ const CheckVerify = ({
 }) => {
   // selector
   const { activeSelect: a = "" } = useSelector(({ auth }) => auth);
-  // file
-  const file = useRef();
+
+  const [urlImage, setUrlImage] = useState("");
   // router
   const router = useRouter();
   // dispatch
@@ -82,14 +76,7 @@ const CheckVerify = ({
   const { bg, brand } = ModeColor();
 
   // useForm
-  const {
-    values,
-    urlImage,
-    progress,
-    reset,
-    handleInputChange,
-    handleInputChange2,
-  } = useFormEasy(initialStates);
+  const { values, reset, handleInputChange } = useFormEasy(initialStates);
   // agrega imagen
   values.imp = urlImage ? urlImage : values.imp;
   // values
@@ -170,28 +157,8 @@ const CheckVerify = ({
                 Imagen del recibo
               </FormLabel>
               <HStack>
-                <InputGroup>
-                  <Button
-                    w={"80%"}
-                    rightIcon={<DownloadIcon w={6} h={6} />}
-                    variant={"outline"}
-                    textTransform={"uppercase"}
-                    onClick={() => file.current.click()}
-                    size="md"
-                    fontWeight={"normal"}
-                    _hover={{ border: bg }}
-                    p={1}
-                  >
-                    Subir: {progress}%
-                  </Button>
-                  <chakra.input
-                    onChange={handleInputChange2}
-                    name="imp"
-                    type={"file"}
-                    ref={file}
-                    display="none"
-                  />
-                </InputGroup>
+                {/* save file */}
+                <FileAll setUrlImage={setUrlImage} carpeta={"fotosRecibo"} />
                 <Flex w={"20%"} justifyContent={"center"}>
                   {imp && (
                     <AspectRatio

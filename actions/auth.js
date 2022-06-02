@@ -17,8 +17,11 @@ import {
 import { doc, setDoc } from "firebase/firestore";
 
 import Toast from "../helpers/Toast";
+
 import { closeRevert } from "./checkout";
+
 import UserTwo from "../helpers/UserTwo";
+
 import { activeProduct } from "./product";
 
 export const login = (

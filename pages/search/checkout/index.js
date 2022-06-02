@@ -40,9 +40,9 @@ const Checkout = () => {
   const { activeSelectCheck: check = [] } = useSelector(
     ({ product }) => product
   );
-  const handleRevert = () => {
+  const handleRevert = async () => {
     // revertir
-    const data = check.map((d) => {
+    const data = await check.map((d) => {
       return {
         idP: d.id,
         uidC: a.uid,
@@ -67,15 +67,17 @@ const Checkout = () => {
   }, [fetchMyAPI]);
 
   return check.length === 0 ? (
-    <Flex h={"full"} w={"full"} alignContent={"center"} alignItems={"center"}>
-      <Spinner
-        thickness="4px"
-        speed="0.65s"
-        emptyColor="gray.200"
-        color="brand.500"
-        size="xl"
-      />
-    </Flex>
+    <ShopLayout>
+      <Flex h={"full"} w={"full"} alignContent={"center"} alignItems={"center"}>
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="brand.500"
+          size="xl"
+        />
+      </Flex>
+    </ShopLayout>
   ) : (
     <ShopLayout>
       <Container maxW={"container.xl"}>

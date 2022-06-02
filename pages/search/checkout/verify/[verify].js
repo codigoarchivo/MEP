@@ -8,8 +8,6 @@ import { doc, getDoc } from "firebase/firestore";
 
 import Breakpoints from "../../../../helpers/Breakpoints";
 
-import { db } from "../../../../firebase/config";
-
 import CheckVerify from "../../../../components/checkout/CheckVerify";
 
 import ShopLayout from "../../../../components/layout/ShopLayout";
