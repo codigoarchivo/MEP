@@ -2,6 +2,7 @@ import { types } from "../type";
 
 const initialStates = {
   list: [],
+  listData: [],
   activeSelect: null,
 };
 export const categoryReducer = (state = initialStates, action) => {
@@ -10,6 +11,11 @@ export const categoryReducer = (state = initialStates, action) => {
       return {
         ...state,
         list: [...action.payload],
+      };
+    case types.categoryList:
+      return {
+        ...state,
+        listData: [...action.payload],
       };
     case types.categoryAdd:
       return {

@@ -16,7 +16,7 @@ export const listDataCategory = (data) => {
   return async (dispatch) => {
     try {
       if (data) {
-       await dispatch(categoryDataList(data));
+        await dispatch(categoryDataList(data));
       }
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
@@ -26,6 +26,11 @@ export const listDataCategory = (data) => {
 
 const categoryDataList = (data) => ({
   type: types.category,
+  payload: data,
+});
+
+export const categoryListConfig = (data) => ({
+  type: types.categoryList,
   payload: data,
 });
 

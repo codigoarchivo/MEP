@@ -1,9 +1,14 @@
 import { types } from "../type";
 
 const initialStates = {
+  // list genereal
   list: [],
+  // busqueda por el porcentaje /search
   listSerch: [],
+  // lista de productos /product/[product]
+  listData: [],
   saveCartSelect: [],
+  // lista de los ultimos productos agregados 
   latestCartSelect: [],
   activeCartSelect: [],
   activeSelectCheck: [],
@@ -11,6 +16,11 @@ const initialStates = {
 };
 export const productReducer = (state = initialStates, action) => {
   switch (action.type) {
+    case types.productList:
+      return {
+        ...state,
+        listData: [...action.payload],
+      };
     case types.product:
       return {
         ...state,

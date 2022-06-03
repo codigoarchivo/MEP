@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useRef } from "react";
 
 import Image from "next/image";
 
@@ -36,6 +36,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
   const dispatch = useDispatch();
   // router
   const router = useRouter();
+  const listCt = useRef([]);
 
   const data = {
     id,
@@ -49,8 +50,9 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
     dt,
   };
 
-  // list Category
-  const listCt = list.filter((item) => item.id === ct);
+  useMemo(() => {
+    listCt.current = list.filter((item) => item.id === ct);
+  }, [list, ct]);
 
   // edit
   const handleEdit = () => {
@@ -108,7 +110,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
           <Text>{pr}$</Text>
         </Td>
         <Td>
-          <Text>{listCt[0]?.na}</Text>
+          <Text>{listCt.current[0]?.na}</Text>
         </Td>
         <Td isNumeric>
           <Menu>

@@ -29,7 +29,7 @@ import ShopLayout from "../../components/layout/ShopLayout";
 
 import { db } from "../../firebase/config";
 
-import { activeCategory, listDataCategory } from "../../actions/category";
+import { activeCategory, categoryListConfig } from "../../actions/category";
 
 import Paginator from "../../utils/Paginator";
 
@@ -41,7 +41,7 @@ const Category = ({ data }) => {
   // breakpoints
   const { center, bordes } = Breakpoints();
   // selector
-  const { list } = useSelector(({ category }) => category);
+  const { listData } = useSelector(({ category }) => category);
   // selector
   const { activeSelect: a } = useSelector(({ auth }) => auth);
 
@@ -49,7 +49,7 @@ const Category = ({ data }) => {
     router.push("/");
   }
   useEffect(() => {
-    dispatch(listDataCategory(data));
+    dispatch(categoryListConfig(data));
   }, [dispatch, data]);
 
   // add
@@ -71,7 +71,7 @@ const Category = ({ data }) => {
       {a?.rol === "owner" ? (
         <Container maxW={"container.sm"} my={10}>
           <Box p={5}>
-            {!list[0] && (
+            {!listData[0] && (
               <Center border={bordes} py={30}>
                 <Heading size={"sm"} textTransform={"uppercase"}>
                   Agrega una categoria
@@ -99,7 +99,7 @@ const Category = ({ data }) => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {list.map((data) => (
+                  {listData.map((data) => (
                     <CategoryScrenn key={data.id} {...data} />
                   ))}
                 </Tbody>
@@ -107,13 +107,18 @@ const Category = ({ data }) => {
             </TableContainer>
           </Box>
           <Box>
-            {list.length > 0 && (
+            {listData.length > 0 && (
               <Paginator
                 window={"categories"}
                 word={"na"}
-                list={list}
-                firstVisible={list[0]?.na}
-                lastVisible={list[list.length - 1]?.na}
+                list={listData}
+                firstVisible={listData[0].na}
+                lastVisible={listData[listData.length - 1].na}
+                newList={categoryListConfig}
+                nLimit={2}
+                orHome={"asc"}
+                orPrevious={"asc"}
+                orNext={"asc"}
               />
             )}
           </Box>

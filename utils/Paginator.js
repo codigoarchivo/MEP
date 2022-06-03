@@ -25,9 +25,19 @@ import {
 
 import { useModality } from "../hooks/useModality";
 
-import { listDataCategory } from "../actions/category";
-
-const Paginator = ({ list, firstVisible, lastVisible, window, word }) => {
+const Paginator = ({
+  list,
+  firstVisible,
+  lastVisible,
+  window,
+  word,
+  newList,
+  nLimit,
+  // ordenar
+  orHome,
+  orPrevious,
+  orNext,
+}) => {
   // dispatch
   const dispatch = useDispatch();
   // modality
@@ -48,21 +58,21 @@ const Paginator = ({ list, firstVisible, lastVisible, window, word }) => {
   const home = useCallback(() => {
     const q = query(
       collection(db, window),
-      orderBy(word, "asc"),
+      orderBy(word, orHome),
       endBefore(firstVisible),
-      limit(2)
+      limit(nLimit)
     );
 
     onSnapshot(q, (snapshot) => {
       const data = snapshot.docs
         .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .slice(0, 2);
+        .slice(0, nLimit);
 
       if (data.length === 0) {
         return setModality(true);
       } else {
         handleModality();
-        dispatch(listDataCategory(data));
+        dispatch(newList(data));
       }
     });
   }, [dispatch, firstVisible, lastVisible, window, word]);
@@ -70,18 +80,18 @@ const Paginator = ({ list, firstVisible, lastVisible, window, word }) => {
   const previous = useCallback(() => {
     const q = query(
       collection(db, window),
-      orderBy(word, "asc"),
+      orderBy(word, orPrevious),
       endBefore(firstVisible),
-      limitToLast(2)
+      limitToLast(nLimit)
     );
 
     onSnapshot(q, (snapshot) => {
       const data = snapshot.docs
         .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .slice(0, 2);
+        .slice(0, nLimit);
 
       if (data.length !== 0) {
-        dispatch(listDataCategory(data));
+        dispatch(newList(data));
       }
     });
   }, [dispatch, firstVisible, lastVisible, window, word]);
@@ -89,19 +99,19 @@ const Paginator = ({ list, firstVisible, lastVisible, window, word }) => {
   const next = useCallback(() => {
     const q = query(
       collection(db, window),
-      orderBy(word, "asc"),
+      orderBy(word, orNext),
       startAfter(lastVisible),
-      limit(2)
+      limit(nLimit)
     );
 
     onSnapshot(q, (snapshot) => {
       const data = snapshot.docs
         .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .slice(0, 2);
+        .slice(0, nLimit);
 
       if (data.length !== 0) {
         handleModality();
-        dispatch(listDataCategory(data));
+        dispatch(newList(data));
       }
     });
   }, [dispatch, firstVisible, lastVisible, window, word]);

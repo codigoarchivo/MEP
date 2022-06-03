@@ -32,6 +32,32 @@ const productDataList = (data) => ({
   payload: data,
 });
 
+export const serchProductList = (filtro) => {
+  return async (dispatch) => {
+    try {
+      if (filtro.length > 0) {
+        dispatch(listProductSerch(filtro));
+      }
+    } catch (error) {
+      Toast("Al parecer hay un error", "error", 5000);
+    }
+  };
+};
+
+export const listProductSerch = (data) => ({
+  type: types.serchList,
+  payload: data,
+});
+
+export const listProductSerchClose = () => ({
+  type: types.emptySerch,
+});
+// Product config
+export const productListConfig = (data) => ({
+  type: types.productList,
+  payload: data,
+});
+
 export const addProduct = (resData) => {
   return async (dispatch) => {
     try {
@@ -168,27 +194,6 @@ export const cartSaveLatest = (data) => {
 const LatestSaveCart = (data) => ({
   type: types.productSaveLatest,
   payload: data,
-});
-
-export const serchProductList = (filtro) => {
-  return async (dispatch) => {
-    try {
-      if (filtro.length > 0) {
-        dispatch(listProductSerch(filtro));
-      }
-    } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
-    }
-  };
-};
-
-export const listProductSerch = (data) => ({
-  type: types.serchList,
-  payload: data,
-});
-
-export const listProductSerchClose = () => ({
-  type: types.emptySerch,
 });
 
 export const saveSale = (data = []) => {

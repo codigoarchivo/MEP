@@ -2,27 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { useRouter } from "next/router";
 
-import {
-  collection,
-  query,
-  orderBy,
-  limit,
-  endBefore,
-  startAfter,
-  onSnapshot,
-  limitToLast,
-  getDocs,
-} from "firebase/firestore";
-
 import { useDispatch, useSelector } from "react-redux";
 
 import {
   Box,
-  Button,
   Center,
   Container,
   Heading,
-  HStack,
   List,
   ListIcon,
   ListItem,
@@ -43,34 +29,24 @@ import SerchScreen from "../../components/search/SerchScreen";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import { db } from "../../firebase/config";
-
-import {
-  listDataProduct,
-  listProductSerchClose,
-  serchProductList,
-} from "../../actions/product";
+import { listProductSerchClose, serchProductList } from "../../actions/product";
 
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
-  RepeatIcon,
   CheckCircleIcon,
 } from "@chakra-ui/icons";
-
-import {
-  useModality,
-  useModality2,
-  useModality3,
-} from "../../hooks/useModality";
 
 import Toast from "../../helpers/Toast";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
 import NavLink from "../../utils/Navlink";
+import Paginator from "../../utils/Paginator";
 
-const Search = ({ productos }) => {
+import { dbProducts } from "../../data/dbProducts";
+
+const Search = ({ product }) => {
   // Breakpoints
   const { bordes } = Breakpoints();
   // dispatch
@@ -78,37 +54,30 @@ const Search = ({ productos }) => {
   // dispatch
   const router = useRouter();
   // selector
-  const product = useSelector(({ product }) => product);
-  // selector
-  const { listSerch } = product;
+  const { listSerch, list: listP } = useSelector(({ product }) => product);
   // selector
   const { list } = useSelector(({ category }) => category);
-  // modality
-  const { modality, setModality } = useModality(true);
-  // modality
-  const { modality2, setModality2 } = useModality2();
-  // modality
-  const { modality3, setModality3 } = useModality3(true);
   // useRef
   const max = useRef(0);
   // useRef
   const min = useRef(0);
 
   useEffect(() => {
-    if (productos) {
-      dispatch(serchProductList(productos));
-      dispatch(listDataProduct(productos));
+    if (product) {
+      dispatch(serchProductList(product));
     }
-  }, [dispatch, productos]);
+  }, [dispatch, product]);
 
-  max.current = product.list?.reduce(
-    (n, m) => Math.max(n, Number(m.pr)),
-    -Number.POSITIVE_INFINITY
-  );
-  min.current = product.list?.reduce(
-    (n, m) => Math.min(n, Number(m.pr)),
-    Number.POSITIVE_INFINITY
-  );
+  if (listP.length > 0) {
+    max.current = listP.reduce(
+      (n, m) => Math.max(n, Number(m.pr)),
+      -Number.POSITIVE_INFINITY
+    );
+    min.current = listP.reduce(
+      (n, m) => Math.min(n, Number(m.pr)),
+      Number.POSITIVE_INFINITY
+    );
+  }
 
   // useState
   const [listPrice, setListPrice] = useState([min.current, max.current]);
@@ -118,13 +87,13 @@ const Search = ({ productos }) => {
     const q = router.query.q?.toLowerCase();
     const r = router.query.r;
 
-    const filtro = product.list
+    const filtro = listP
       ?.filter((item) => {
         return c ? item.ct.includes(c) : item.na?.toLowerCase().includes(q);
       })
       .slice(0, 25);
 
-    const filtroR = product.list
+    const filtroR = listP
       ?.filter((item) => {
         return item.pr >= listPrice[0] && item.pr <= listPrice[1];
       })
@@ -157,82 +126,7 @@ const Search = ({ productos }) => {
     }
 
     dispatch(serchProductList(r ? filtroR : filtro));
-  }, [router.query, listPrice, dispatch, product.list]);
-
-  const home = () => {
-    const firstVisible = listSerch[0].na;
-
-    const q = query(
-      collection(db, "serchs"),
-      orderBy("na", "asc"),
-      endBefore(firstVisible),
-      limit(2)
-    );
-
-    onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs
-        .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .slice(0, 2);
-
-      if (data.length === 0) {
-        return setModality(true);
-      } else {
-        handleModality();
-        dispatch(listDataProduct(data));
-      }
-    });
-  };
-
-  const previous = () => {
-    const firstVisible = listSerch[0].na;
-
-    const q = query(
-      collection(db, "serchs"),
-      orderBy("na", "asc"),
-      endBefore(firstVisible),
-      limitToLast(2)
-    );
-
-    onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs
-        .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .slice(0, 2);
-
-      if (data.length !== 0) {
-        setModality3(true);
-        dispatch(listDataProduct(data));
-      }
-    });
-  };
-
-  const next = () => {
-    const lastVisible = listSerch[listSerch.length - 1].na;
-
-    const q = query(
-      collection(db, "serchs"),
-      orderBy("na", "asc"),
-      startAfter(lastVisible),
-      limit(2)
-    );
-
-    onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs
-        .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .slice(0, 2);
-      if (data.length === 0) {
-        return setModality2(true);
-      } else {
-        handleModality();
-        dispatch(listDataProduct(data));
-      }
-    });
-  };
-
-  const handleModality = () => {
-    setModality(false);
-    setModality2(false);
-    setModality3(false);
-  };
+  }, [router.query, listPrice, dispatch, listP]);
 
   const handleChangeEnd = (r) => {
     router.push({
@@ -360,42 +254,22 @@ const Search = ({ productos }) => {
               </Wrap>
             )}
           </Stack>
-
-          <HStack spacing={10} justifyContent={"center"}>
-            <Button
-              onClick={home}
-              disabled={modality}
-              variant={"primary"}
-              cursor="pointer"
-              rounded="3xl"
-              background={"transparent"}
-              p={1}
-            >
-              <RepeatIcon />
-            </Button>
-            <Button
-              onClick={previous}
-              disabled={modality3}
-              variant={"primary"}
-              cursor="pointer"
-              rounded="3xl"
-              background={"transparent"}
-              p={1}
-            >
-              <ChevronLeftIcon w={6} h={6} />
-            </Button>
-            <Button
-              onClick={next}
-              disabled={modality2}
-              variant={"primary"}
-              cursor="pointer"
-              rounded="3xl"
-              background={"transparent"}
-              p={1}
-            >
-              <ChevronRightIcon w={6} h={6} />
-            </Button>
-          </HStack>
+          <Box>
+            {listP.length > 0 && (
+              <Paginator
+                window={"serchs"}
+                word={"na"}
+                list={listSerch}
+                firstVisible={listSerch[0].na}
+                lastVisible={listSerch[listSerch.length - 1].na}
+                newList={serchProductList}
+                nLimit={2}
+                orHome={"asc"}
+                orPrevious={"asc"}
+                orNext={"asc"}
+              />
+            )}
+          </Box>
         </Container>
       </ShopLayout>
     </>
@@ -404,14 +278,16 @@ const Search = ({ productos }) => {
 
 export async function getStaticProps() {
   try {
-    const q = query(collection(db, "serchs"), limit(25), orderBy("na", "desc"));
+    const product = await dbProducts();
 
-    const el = await getDocs(q);
-
-    const product = el.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    if (!product) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
 
     return {
       props: {
@@ -425,4 +301,5 @@ export async function getStaticProps() {
     };
   }
 }
+
 export default Search;

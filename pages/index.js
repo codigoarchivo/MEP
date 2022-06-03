@@ -1,14 +1,10 @@
 import React, { useEffect } from "react";
 
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
-
 import { useDispatch } from "react-redux";
 
 import ShopLayout from "../components/layout/ShopLayout";
 
-import { listDataProduct, serchProductList } from "../actions/product";
-
-import { db } from "../firebase/config";
+import { listDataProduct } from "../actions/product";
 
 import Home from "../components/home/Home";
 
@@ -16,12 +12,15 @@ import { listDataCategory } from "../actions/category";
 
 import Toast from "../helpers/Toast";
 
+import { dbProducts } from "../data/dbProducts";
+
+import { dbCategory } from "../data/dbCategory";
+
 const HomeL = ({ product, category }) => {
   // dispatch
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(serchProductList(product));
     dispatch(listDataProduct(product));
     dispatch(listDataCategory(category));
   }, [dispatch, product, category]);
@@ -35,25 +34,17 @@ const HomeL = ({ product, category }) => {
 
 export async function getStaticProps() {
   try {
-    const qC = query(
-      collection(db, "categories"),
-      limit(25),
-      orderBy("na", "asc")
-    );
-    const q = query(collection(db, "serchs"), limit(25), orderBy("na", "desc"));
+    const product = await dbProducts();
+    const category = await dbCategory();
 
-    const elC = await getDocs(qC);
-    const el = await getDocs(q);
-
-    const product = el.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    const category = elC.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    if (!product || !category) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
 
     return {
       props: {
