@@ -20,10 +20,6 @@ import Toast from "../helpers/Toast";
 
 import { closeRevert } from "./checkout";
 
-import UserTwo from "../helpers/UserTwo";
-
-import { activeProduct } from "./product";
-
 export const login = (
   uid = null,
   displayName = null,
@@ -51,13 +47,6 @@ export const startLoginEmailPassword = (email, password) => {
         .then(async ({ user }) => {
           await dispatch(login(user.uid, user.displayName));
           await dispatch(finishLoading());
-
-          if (user.uid) {
-            const { dataUser } = await UserTwo(user.uid, "buys");
-            if (dataUser.length > 0) {
-              await dispatch(activeProduct(dataUser));
-            }
-          }
         })
         .catch(({ message }) => {
           // end
@@ -90,13 +79,6 @@ export const startRegisterWithNameEmailPassword = (email, password, name) => {
           });
           // end
           await dispatch(finishLoading());
-
-          if (user.uid) {
-            const { dataUser } = await UserTwo(user.uid, "buys");
-            if (dataUser.length > 0) {
-              await dispatch(activeProduct(dataUser));
-            }
-          }
         })
         .catch(({ message }) => {
           // end
@@ -118,13 +100,6 @@ export const startGoogleLogin = () => {
       await signInWithPopup(auth, provider)
         .then(async ({ user }) => {
           await dispatch(login(user.uid, user.displayName));
-
-          if (user.uid) {
-            const { dataUser } = await UserTwo(user.uid, "buys");
-            if (dataUser.length > 0) {
-              await dispatch(activeProduct(dataUser));
-            }
-          }
         })
         .catch(({ message }) => {
           // error

@@ -20,13 +20,14 @@ import { Rating } from "react-simple-star-rating";
 import ShopLayout from "../../../components/layout/ShopLayout";
 
 import ModeColor from "../../../helpers/ModeColor";
-
 import Breakpoints from "../../../helpers/Breakpoints";
 import Calculate from "../../../helpers/Calculate";
 
-import { checkoutAdd, checkoutEdit } from "../../../actions/checkout";
-
-import { valueInProduct } from "../../../actions/checkout";
+import {
+  checkoutAdd,
+  checkoutEdit,
+  valueInProduct,
+} from "../../../actions/checkout";
 
 const Rate = () => {
   // selector
@@ -191,7 +192,12 @@ const Rate = () => {
       if (router.query.li === "1") {
         router.push("/");
       } else {
-        router.push("/search/checkout");
+        router.push({
+          pathname: "/checkout/[checkout]",
+          query: {
+            checkout: uid,
+          },
+        });
       }
     }
   };

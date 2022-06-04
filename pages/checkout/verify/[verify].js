@@ -4,13 +4,11 @@ import { useRouter } from "next/router";
 
 import { Container, Stack } from "@chakra-ui/react";
 
-import { doc, getDoc } from "firebase/firestore";
+import Breakpoints from "../../../helpers/Breakpoints";
 
-import Breakpoints from "../../../../helpers/Breakpoints";
+import CheckVerify from "../../../components/checkout/CheckVerify";
 
-import CheckVerify from "../../../../components/checkout/CheckVerify";
-
-import ShopLayout from "../../../../components/layout/ShopLayout";
+import ShopLayout from "../../../components/layout/ShopLayout";
 
 const Verify = () => {
   const { content5, bordes, full } = Breakpoints();

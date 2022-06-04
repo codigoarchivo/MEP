@@ -2,15 +2,6 @@ import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  collection,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
-
 import { useRouter } from "next/router";
 
 import {
@@ -32,8 +23,6 @@ import ProductScrenn from "../../components/product/ProductScreen";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import { db } from "../../firebase/config";
-
 import { productListConfig } from "../../actions/product";
 
 import Breakpoints from "../../helpers/Breakpoints";
@@ -41,9 +30,12 @@ import Breakpoints from "../../helpers/Breakpoints";
 import Toast from "../../helpers/Toast";
 
 import Paginator from "../../utils/Paginator";
+
 import { dbProducts } from "../../data/dbProducts";
 
 const List = ({ product }) => {
+  // selector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // router
   const router = useRouter();
   // breakpoints
@@ -120,6 +112,7 @@ const List = ({ product }) => {
               orHome={"desc"}
               orPrevious={"desc"}
               orNext={"desc"}
+              uid={a?.uid}
             />
           )}
         </Box>
@@ -130,7 +123,7 @@ const List = ({ product }) => {
 export async function getServerSideProps(context) {
   const { product: id } = await context.query;
   try {
-    const product = await dbProducts(id);
+    const product = await dbProducts(id, "dbProTwo");
 
     if (!product) {
       return {

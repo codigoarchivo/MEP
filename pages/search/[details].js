@@ -43,6 +43,7 @@ import { db } from "../../firebase/config";
 
 import SerchRat from "../../components/search/SerchRat";
 import SerchMessage from "../../components/search/SerchMessage";
+import { dbMessage, dbProducts, dbProductsById } from "../../data/dbProducts";
 
 const Details = ({ message, product }) => {
   // dispatch
@@ -223,26 +224,11 @@ const Details = ({ message, product }) => {
 export async function getServerSideProps(context) {
   try {
     // message
-    const id = context.query.details.toString();
+    const id = context.query.details;
+    // product
+    const product = await dbProductsById(id);
 
-    const q = query(collection(db, "serchs", id, "messages"));
-
-    const el = await getDocs(q);
-
-    const message = el.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-     //  product
-     const docRef = doc(db, "serchs", id);
-
-     const docSnap = await getDoc(docRef);
- 
-     const product = {
-       id: docSnap.id,
-       ...docSnap.data(),
-     };
+    const message = await dbProducts(id, "dbProThree");
 
     return { props: { message, product } };
   } catch (error) {

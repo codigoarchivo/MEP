@@ -13,6 +13,7 @@ import {
   orderBy,
   query,
   startAfter,
+  where,
 } from "firebase/firestore";
 
 import { Button, HStack } from "@chakra-ui/react";
@@ -37,6 +38,7 @@ const Paginator = ({
   orHome,
   orPrevious,
   orNext,
+  uid,
 }) => {
   // dispatch
   const dispatch = useDispatch();
@@ -56,12 +58,24 @@ const Paginator = ({
   }, [list, setModality, setModality2, setModality3]);
 
   const home = useCallback(() => {
-    const q = query(
-      collection(db, window),
-      orderBy(word, orHome),
-      endBefore(firstVisible),
-      limit(nLimit)
-    );
+    let q = "";
+    if (uid !== undefined) {
+      q = query(
+        collection(db, window),
+        where("uid", "==", uid),
+        where(word, "!=", "0"),
+        orderBy(word, "desc"),
+        endBefore(firstVisible),
+        limit(nLimit)
+      );
+    } else {
+      q = query(
+        collection(db, window),
+        orderBy(word, orHome),
+        endBefore(firstVisible),
+        limit(nLimit)
+      );
+    }
 
     onSnapshot(q, (snapshot) => {
       const data = snapshot.docs
@@ -78,12 +92,24 @@ const Paginator = ({
   }, [dispatch, firstVisible, lastVisible, window, word]);
 
   const previous = useCallback(() => {
-    const q = query(
-      collection(db, window),
-      orderBy(word, orPrevious),
-      endBefore(firstVisible),
-      limitToLast(nLimit)
-    );
+    let q = "";
+    if (uid !== undefined) {
+      q = query(
+        collection(db, window),
+        where("uid", "==", uid),
+        where(word, "!=", "0"),
+        orderBy(word, "desc"),
+        endBefore(firstVisible),
+        limitToLast(nLimit)
+      );
+    } else {
+      q = query(
+        collection(db, window),
+        orderBy(word, orPrevious),
+        endBefore(firstVisible),
+        limitToLast(nLimit)
+      );
+    }
 
     onSnapshot(q, (snapshot) => {
       const data = snapshot.docs
@@ -97,12 +123,24 @@ const Paginator = ({
   }, [dispatch, firstVisible, lastVisible, window, word]);
 
   const next = useCallback(() => {
-    const q = query(
-      collection(db, window),
-      orderBy(word, orNext),
-      startAfter(lastVisible),
-      limit(nLimit)
-    );
+    let q = "";
+    if (uid !== undefined) {
+      q = query(
+        collection(db, window),
+        where("uid", "==", uid),
+        where(word, "!=", "0"),
+        orderBy(word, "desc"),
+        startAfter(lastVisible),
+        limit(nLimit)
+      );
+    } else {
+      q = query(
+        collection(db, window),
+        orderBy(word, orNext),
+        startAfter(lastVisible),
+        limit(nLimit)
+      );
+    }
 
     onSnapshot(q, (snapshot) => {
       const data = snapshot.docs

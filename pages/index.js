@@ -31,13 +31,19 @@ const HomeL = ({ product, category }) => {
     </ShopLayout>
   );
 };
-
+// if (uid) {
+//   console.log(uid);
+//   const product = await dbUser(uid, "dbUserOne");
+//   if (product.length > 0) {
+//     await dispatch(activeProduct(product));
+//   }
+// }
 export async function getStaticProps() {
   try {
-    const product = await dbProducts();
+    const product = await dbProducts("", "dbProOne");
     const category = await dbCategory();
 
-    if (!product || !category) {
+    if (!product) {
       return {
         redirect: {
           destination: "/",
@@ -45,7 +51,7 @@ export async function getStaticProps() {
         },
       };
     }
-
+    
     return {
       props: {
         product,

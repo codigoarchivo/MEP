@@ -69,8 +69,8 @@ const CheckoutScreen = ({
       >
         <HStack spacing={"3"}>
           <NavLink
-            href={`/search/checkout/verify/[verify]?id=${id}&uid=${uid}&to=${to}&na=${na}&cn=${cn}&pr=${pr}&in=${ind}`}
-            as={`/search/checkout/verify/${idThree}?id=${id}&uid=${uid}&to=${to}&na=${na}&cn=${cn}&pr=${pr}&in=${ind}`}
+            href={`/checkout/verify/[verify]?id=${id}&uid=${uid}&to=${to}&na=${na}&cn=${cn}&pr=${pr}&in=${ind}`}
+            as={`/checkout/verify/${idThree}?id=${id}&uid=${uid}&to=${to}&na=${na}&cn=${cn}&pr=${pr}&in=${ind}`}
             name={`Resumén $${product.to}`}
             variant={"primary"}
             size={"xs"}
@@ -103,8 +103,8 @@ const CheckoutScreen = ({
             sale={sale}
           />
           <NavLink
-            href={`/search/checkout/[rate]?ve=${uid}&glo=${idThree}&rat=${rat}&li=${check.length}&close=true`}
-            as={`/search/checkout/${id}?ve=${uid}&glo=${idThree}&rat=${rat}&li=${check.length}&close=true`}
+            href={`/checkout/[rate]?ve=${uid}&glo=${idThree}&rat=${rat}&li=${check.length}&close=true`}
+            as={`/checkout/${id}?ve=${uid}&glo=${idThree}&rat=${rat}&li=${check.length}&close=true`}
             name={"Calificar"}
             variant={"primary"}
             fontWeight={"normal"}

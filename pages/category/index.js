@@ -32,6 +32,7 @@ import { db } from "../../firebase/config";
 import { activeCategory, categoryListConfig } from "../../actions/category";
 
 import Paginator from "../../utils/Paginator";
+import { dbCategory } from "../../data/dbCategory";
 
 const Category = ({ data }) => {
   // dispatch
@@ -132,19 +133,7 @@ const Category = ({ data }) => {
 
 export async function getServerSideProps() {
   try {
-    const q = query(
-      collection(db, "categories"),
-      limit(2),
-      orderBy("na", "asc")
-    );
-
-    const el = await getDocs(q);
-
-    const data = el.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
+    const data = await dbCategory();
     return {
       props: {
         data,

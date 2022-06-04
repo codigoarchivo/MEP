@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { useRouter } from "next/router";
 
@@ -17,17 +17,17 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import ShopLayout from "../../../components/layout/ShopLayout";
+import ShopLayout from "../../components/layout/ShopLayout";
 
-import Breakpoints from "../../../helpers/Breakpoints";
+import Breakpoints from "../../helpers/Breakpoints";
 
-import { activeProduct, saveSaleRevert } from "../../../actions/product";
+import { activeProduct, saveSaleRevert } from "../../actions/product";
 
-import UserTwo from "../../../helpers/UserTwo";
+import CheckoutScreen from "../../components/checkout/CheckoutScreen";
 
-import CheckoutScreen from "../../../components/checkout/CheckoutScreen";
+import { dbUser } from "../../data/dbUser";
 
-const Checkout = () => {
+const Checkout = ({ product }) => {
   // dispatch
   const router = useRouter();
   // useDispatch
@@ -53,18 +53,11 @@ const Checkout = () => {
     router.push("/");
   };
 
-  const fetchMyAPI = useCallback(async () => {
-    if (check.length === 0 && a?.uid) {
-      const { dataUser } = await UserTwo(a?.uid, "buys");
-      dispatch(activeProduct(dataUser));
-    } else {
-      dispatch(activeProduct(check));
-    }
-  }, [a, check, dispatch]);
-
   useEffect(() => {
-    fetchMyAPI();
-  }, [fetchMyAPI]);
+    if (product) {
+      dispatch(activeProduct(product));
+    }
+  }, [dispatch, product]);
 
   return check.length === 0 ? (
     <ShopLayout>
@@ -138,5 +131,32 @@ const Checkout = () => {
     </ShopLayout>
   );
 };
+
+export async function getserversideprops(context) {
+  const { checkout: id } = await context.query;
+  try {
+    const product = await dbUser(id, "dbUserOne");
+
+    if (!product) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+
+    return {
+      props: {
+        product,
+      },
+    };
+  } catch (error) {
+    Toast("Al parecer hay un error", "error", 5000);
+    return {
+      props: {},
+    };
+  }
+}
 
 export default Checkout;

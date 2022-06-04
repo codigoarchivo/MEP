@@ -43,7 +43,6 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import NavLink from "../../utils/Navlink";
 import Paginator from "../../utils/Paginator";
-
 import { dbProducts } from "../../data/dbProducts";
 
 const Search = ({ product }) => {
@@ -83,13 +82,13 @@ const Search = ({ product }) => {
   const [listPrice, setListPrice] = useState([min.current, max.current]);
 
   useEffect(() => {
-    const c = router.query.c;
-    const q = router.query.q?.toLowerCase();
-    const r = router.query.r;
+    const { c, q, r } = router.query;
 
     const filtro = listP
       ?.filter((item) => {
-        return c ? item.ct.includes(c) : item.na?.toLowerCase().includes(q);
+        return c
+          ? item.ct.includes(c)
+          : item.na?.toLowerCase().includes(q?.toLowerCase());
       })
       .slice(0, 25);
 
@@ -255,7 +254,7 @@ const Search = ({ product }) => {
             )}
           </Stack>
           <Box>
-            {listP.length > 0 && (
+            {listSerch.length > 0 && (
               <Paginator
                 window={"serchs"}
                 word={"na"}
@@ -278,7 +277,7 @@ const Search = ({ product }) => {
 
 export async function getStaticProps() {
   try {
-    const product = await dbProducts();
+    const product = await dbProducts("", "dbProOne");
 
     if (!product) {
       return {

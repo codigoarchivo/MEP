@@ -120,14 +120,19 @@ const SerchCart = () => {
       confirmButtonText: "Aceptar!",
     }).then((result) => {
       if (result.isConfirmed) {
-        // success
-        Swal.fire("Procesado!", "Si, Gracias por su Compra.", "success");
         // save cart
         dispatch(saveSale(proceso));
-        // ir checkout
-        router.push("/search/checkout");
         // limpiar carrito
         dispatch(closeActive());
+        // success
+        Swal.fire("Procesado!", "Si, Gracias por su Compra.", "success");
+        // ir checkout
+        router.push({
+          pathname: "/checkout/[checkout]",
+          query: {
+            checkout: a.uid,
+          },
+        });
       }
     });
   };

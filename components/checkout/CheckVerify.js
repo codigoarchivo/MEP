@@ -123,11 +123,21 @@ const CheckVerify = ({
 
     reset();
 
-    router.push("/search/checkout");
+    router.push({
+      pathname: "/checkout/[checkout]",
+      query: {
+        checkout: a?.uid,
+      },
+    });
   };
 
   const closeVerify = () => {
-    router.push("/search/checkout");
+    router.push({
+      pathname: "/checkout/[checkout]",
+      query: {
+        checkout: a?.uid,
+      },
+    });
   };
 
   return (
