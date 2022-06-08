@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { useRouter } from "next/router";
 
@@ -14,22 +14,27 @@ import ProductForm from "./ProductForm";
 
 import ProductFormWord from "./ProductFormWord";
 
-import { addProduct, deleteProduct, editProduct } from "../../actions/product";
+import { deleteProduct, editProduct } from "../../actions/product";
+
 import useFormAll from "../../hooks/useFormAll";
 
 const initialStates = {
+  pr: 0,
+  cn: 1,
+  pj: 0,
+  ps: "",
   na: "",
-  pr: "",
   ds: "",
   ct: "",
-  cn: "",
   dt: "",
   im: "",
 };
 
-const ProductData = () => {
+const ProductData = ({ product = {} }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+
+  const [word, setWord] = useState("");
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -40,17 +45,28 @@ const ProductData = () => {
   const [urlImage, setUrlImage] = useState("");
 
   const data = router.query;
+
+  useMemo(() => {
+    setWord(data.set);
+  }, [setWord, data.set]);
+
   // useForm
   const { values, handleInputChange, handleNumberInput } = useFormAll(
     initialStates,
-    data
+    product
   );
+
   // agrega imagen
   values.im = urlImage ? urlImage : values.im;
   // validar
   const { fiel, estado, ErrorRetur, ErrorRetur2 } = Validator(values);
+
   // values
-  const { na, pr, ds, ct, cn, dt, im, es, id, set } = values;
+  const { na, ds, ct, dt, im, id, ps } = values;
+
+  const pj = Number(values.pj);
+  const cn = Number(values.cn);
+  const pr = Number(values.pr);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,12 +76,26 @@ const ProductData = () => {
 
     if (ErrorRetur) {
       return Toast(fiel, "error", 5000);
+    }
+
+    if (word === "edit") {
+      dispatch(
+        editProduct({
+          na,
+          pr,
+          ds,
+          ct,
+          cn,
+          dt,
+          im,
+          id,
+          ps,
+          pj,
+          uid: a?.uid,
+        })
+      );
     } else {
-      set === "Add" &&
-        dispatch(addProduct({ na, pr, ds, ct, cn, dt, im, es: true }));
-      set === "Edit" &&
-        dispatch(editProduct({ na, pr, ds, ct, cn, dt, im, es, id }));
-      set === "Delete" && dispatch(deleteProduct(id));
+      dispatch(deleteProduct(id));
     }
 
     router.push({
@@ -75,6 +105,7 @@ const ProductData = () => {
       },
     });
   };
+
   // cerrar
   const onClose = () => {
     router.push({
@@ -91,26 +122,20 @@ const ProductData = () => {
         <HStack w={"full"}>
           <CloseButton size="md" onClick={onClose} />
           <Heading as="h1" size={"md"} textTransform={"uppercase"}>
-            {set}
+            {word}
           </Heading>
         </HStack>
-        {set === "details" || set === "delete" ? (
-          <ProductFormWord
-            handleSubmit={handleSubmit}
-            HStack={HStack}
-            dt={dt}
-            set={set}
-            onClose={onClose}
-          />
-        ) : (
+        {word === "edit" ? (
           <ProductForm
-            set={set}
-            na={na}
+            pj={pj}
+            cn={cn}
             pr={pr}
+            ps={ps}
+            na={na}
             ds={ds}
             ct={ct}
-            cn={cn}
             dt={dt}
+            word={word}
             HStack={HStack}
             repeat1={repeat1}
             points1={points1}
@@ -120,6 +145,13 @@ const ProductData = () => {
             handleNumberInput={handleNumberInput}
             handleSubmit={handleSubmit}
             setUrlImage={setUrlImage}
+          />
+        ) : (
+          <ProductFormWord
+            handleSubmit={handleSubmit}
+            HStack={HStack}
+            word={word}
+            onClose={onClose}
           />
         )}
       </VStack>

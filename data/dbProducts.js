@@ -11,10 +11,9 @@ import {
 
 import { db } from "../firebase/config";
 
-export const dbProducts = async (id, dbP) => {
+export const dbProducts = async (id = "", dbP = "") => {
   let q = "";
   let ref = collection(db, "serchs");
-console.log(id, dbP);
   switch (dbP) {
     case "dbProOne":
       q = query(ref, limit(2), orderBy("na", "asc"));
@@ -24,6 +23,9 @@ console.log(id, dbP);
       break;
     case "dbProThree":
       q = collection(db, "serchs", id.toString(), "messages");
+      break;
+    case "dbProFour":
+      q = ref;
       break;
   }
 

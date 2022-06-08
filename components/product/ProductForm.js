@@ -2,34 +2,37 @@ import React from "react";
 
 import { useSelector } from "react-redux";
 
+import PropTypes from "prop-types";
+
 import {
-  Button,
   FormLabel,
   Grid,
   GridItem,
-  Input,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
   Select,
-  Textarea,
   chakra,
 } from "@chakra-ui/react";
 
 import ModeColor from "../../helpers/ModeColor";
 import FileAll from "../../utils/FileAll";
+import GridItemForm from "../../utils/GridItemForm";
+import GridItemFormTextarea from "../../utils/GridItemFormTextarea";
+import GridValueClose from "../../utils/GridValueClose";
 
 const ProductForm = ({
-  set,
+  pj,
+  word,
   na,
   pr,
   ds,
   ct,
   cn,
   dt,
-  HStack,
+  ps,
   points3,
   repeat1,
   points1,
@@ -43,6 +46,8 @@ const ProductForm = ({
   const { bg, brand } = ModeColor();
   // selector
   const { list } = useSelector(({ category }) => category);
+
+  const productOrServices = ["Product", "Services"];
 
   return (
     <>
@@ -58,42 +63,36 @@ const ProductForm = ({
             <FormLabel htmlFor="im">Image</FormLabel>
             <FileAll setUrlImage={setUrlImage} fileName={"fotosTienda"} />
           </GridItem>
-
-          <GridItem colSpan={points1}>
-            <FormLabel htmlFor="na">Nombre</FormLabel>
-            <Input
-              name="na"
-              id="na"
-              onChange={handleInputChange}
-              value={na}
-              type={"text"}
-              placeholder="Nombre"
-            />
-          </GridItem>
-
-          <GridItem colSpan={points1}>
-            <FormLabel htmlFor="pr">Precio</FormLabel>
-            <Input
-              name="pr"
-              id="pr"
-              onChange={handleInputChange}
-              value={pr}
-              type={"text"}
-              placeholder="Precio"
-            />
-          </GridItem>
-
-          <GridItem colSpan={points1}>
-            <FormLabel htmlFor="ds">Descripcion</FormLabel>
-            <Input
-              name="ds"
-              id="ds"
-              onChange={handleInputChange}
-              value={ds}
-              type={"text"}
-              placeholder="Descripcion"
-            />
-          </GridItem>
+          {/* nombre del producto */}
+          <GridItemForm
+            points={points1}
+            name={"Nombre"}
+            na={"na"}
+            val={na}
+            type={"text"}
+            place={"Coloca el nombre del producto"}
+            handle={handleInputChange}
+          />
+          {/* precio del producto */}
+          <GridItemForm
+            points={points1}
+            name={"Precio $"}
+            na={"pr"}
+            val={pr}
+            type={"number"}
+            place={"Coloca el Precio del producto"}
+            handle={handleInputChange}
+          />
+          {/* Porcentaje del producto */}
+          <GridItemForm
+            points={points1}
+            name={"Porcentaje %"}
+            na={"pj"}
+            val={pj}
+            type={"number"}
+            place={"Coloca el Porcentaje"}
+            handle={handleInputChange}
+          />
 
           <GridItem colSpan={points1}>
             <FormLabel htmlFor="cn">Cantidad</FormLabel>
@@ -116,11 +115,27 @@ const ProductForm = ({
           </GridItem>
 
           <GridItem colSpan={points1}>
+            <FormLabel htmlFor="ps">Producto o Services</FormLabel>
+            <Select
+              name="ps"
+              variant="filled"
+              value={ps}
+              onChange={handleInputChange}
+            >
+              {productOrServices.map((ps, key) => (
+                <option key={key} value={ps}>
+                  {ps}
+                </option>
+              ))}
+            </Select>
+          </GridItem>
+
+          <GridItem colSpan={points1}>
             <FormLabel htmlFor="ct">Categoria</FormLabel>
             <Select
               name="ct"
               variant="filled"
-              placeholder="Options"
+              placeholder="Categoria"
               value={ct}
               onChange={handleInputChange}
             >
@@ -132,35 +147,51 @@ const ProductForm = ({
             </Select>
           </GridItem>
 
-          <GridItem colSpan={2}>
-            <FormLabel htmlFor="dt">Detalles</FormLabel>
-            <Textarea
-              bg={bg}
-              _focus={brand}
-              variant="filled"
-              name="dt"
-              id="dt"
-              value={dt}
-              onChange={handleInputChange}
-              placeholder="Detalles"
-              size="xs"
-            />
-          </GridItem>
-
-          <GridItem colSpan={2}>
-            <HStack w={"full"} justifyContent="flex-end" spacing={10}>
-              <Button variant={"secondary"} onClick={onClose}>
-                Close
-              </Button>
-              <Button variant={"primary"} type="submit" ml={3}>
-                {set}
-              </Button>
-            </HStack>
-          </GridItem>
+          {/* descripcion del producto */}
+          <GridItemForm
+            points={points1}
+            name={"Descripción"}
+            na={"ds"}
+            val={ds}
+            type={"text"}
+            place={"Coloca una Descripción del producto"}
+            handle={handleInputChange}
+          />
+          <GridItemFormTextarea
+            points={2}
+            name={"Detalles"}
+            na={"dt"}
+            val={dt}
+            place={"Detalles"}
+            handle={handleInputChange}
+            bg={bg}
+            brand={brand}
+          />
+          <GridValueClose onClose={onClose} set={word} />
         </Grid>
       </chakra.form>
     </>
   );
+};
+
+ProductForm.propTypes = {
+  pj: PropTypes.number.isRequired,
+  na: PropTypes.string.isRequired,
+  pr: PropTypes.number.isRequired,
+  ds: PropTypes.string.isRequired,
+  ct: PropTypes.string.isRequired,
+  cn: PropTypes.number.isRequired,
+  dt: PropTypes.string.isRequired,
+  ps: PropTypes.string.isRequired,
+  points3: PropTypes.object.isRequired,
+  repeat1: PropTypes.object.isRequired,
+  points1: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
+  setUrlImage: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  handleNumberInput: PropTypes.func.isRequired,
+  word: PropTypes.string.isRequired,
 };
 
 export default ProductForm;

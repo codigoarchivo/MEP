@@ -26,6 +26,7 @@ import NavLink from "../../../utils/Navlink";
 
 import { useDispatch, useSelector } from "react-redux";
 import { serchProductList } from "../../../actions/product";
+
 import {
   Category,
   Home,
@@ -35,9 +36,7 @@ import {
   Perfil,
   Global,
   Logout,
-  AboutIcon,
   VentaIcon,
-  VentasClient,
 } from "../../../helpers/IconNew";
 
 export const DrawerNavbar = ({

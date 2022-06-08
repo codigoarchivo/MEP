@@ -13,8 +13,6 @@ import Toast from "../helpers/Toast";
 
 import { types } from "../type";
 
-const dA = process.env.NEXT_PUBLIC_ROL_A;
-
 export const listDataProduct = (data) => {
   return async (dispatch) => {
     try {
@@ -29,7 +27,7 @@ export const listDataProduct = (data) => {
 
 const productDataList = (data) => ({
   type: types.product,
-  payload: data,
+  payload: data || [],
 });
 
 export const serchProductList = (filtro) => {
@@ -58,7 +56,7 @@ export const productListConfig = (data) => ({
   payload: data,
 });
 
-export const addProduct = (resData) => {
+export const addProduct = (resData = {}) => {
   return async (dispatch) => {
     try {
       const { id } = await addDoc(collection(db, "serchs"), {

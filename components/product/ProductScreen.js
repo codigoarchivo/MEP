@@ -36,6 +36,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
   const dispatch = useDispatch();
   // router
   const router = useRouter();
+  // useRef
   const listCt = useRef([]);
 
   const data = {
@@ -57,24 +58,24 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
   // edit
   const handleEdit = () => {
     router.push({
-      pathname: "/set/[set]",
-      query: { set: "edit", ...data },
+      pathname: "/set/[id]",
+      query: { id, set: "edit" },
     });
   };
 
   // delete
   const handleDelete = () => {
     router.push({
-      pathname: "/set/[set]",
-      query: { set: "delete", id },
+      pathname: "/set/[id]",
+      query: { id, set: "delete" },
     });
   };
 
   // detalles
   const handleDetails = () => {
     router.push({
-      pathname: "/set/[set]",
-      query: { set: "details", dt },
+      pathname: "/set/plus/[plus]",
+      query: { plus: "details", dt },
     });
   };
 

@@ -31,13 +31,7 @@ const HomeL = ({ product, category }) => {
     </ShopLayout>
   );
 };
-// if (uid) {
-//   console.log(uid);
-//   const product = await dbUser(uid, "dbUserOne");
-//   if (product.length > 0) {
-//     await dispatch(activeProduct(product));
-//   }
-// }
+
 export async function getStaticProps() {
   try {
     const product = await dbProducts("", "dbProOne");

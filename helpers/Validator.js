@@ -12,7 +12,8 @@ const Validator = (values) => {
   const minRePasswordV = values?.rePassword?.length < 6;
   const samePasswordV = values?.password !== values?.rePassword;
   const mNombre = values?.na === "";
-  const mPrecio = values?.pr === "";
+  const mPrecio = values?.pr === 0;
+  const mPorcentaje = values?.pj === 0;
   const mDetalles = values?.dt === "";
   const mImage = Number(values?.imgsize) > 50000;
   const mImageCero = values?.im === "";
@@ -84,7 +85,8 @@ const Validator = (values) => {
     mCantidad ||
     mCategory ||
     mTipos ||
-    mImageCero
+    mImageCero ||
+    mPorcentaje
   ) {
     ErrorRetur = true;
   }

@@ -14,6 +14,7 @@ import {
   TableCaption,
   TableContainer,
   Tbody,
+  Text,
   Th,
   Thead,
   Tr,
@@ -52,8 +53,15 @@ const List = ({ product }) => {
   // add
   const handleAdd = () => {
     router.push({
-      pathname: "/set/[set]",
-      query: { set: "add" },
+      pathname: "/set/plus/[plus]",
+      query: { plus: "add" },
+    });
+  };
+
+  const handleClient = () => {
+    router.push({
+      pathname: "/info/[info]",
+      query: { info: a?.uid.toString() },
     });
   };
 
@@ -68,6 +76,14 @@ const List = ({ product }) => {
               </Heading>
             </Center>
           )}
+          <Text py={5}>
+            !importante Información para que el cliente -{" "}
+            <Button onClick={handleClient} variant={"primary"}>
+              ir
+            </Button>{" "}
+            - Datos quedara guardado en la base de datos y se utilizara para
+            futuras ventas.
+          </Text>
           <TableContainer w={"full"} border={bordes}>
             <Table>
               <TableCaption>Tus publicaciones en nuestro sitio</TableCaption>
@@ -120,6 +136,7 @@ const List = ({ product }) => {
     </ShopLayout>
   );
 };
+
 export async function getServerSideProps(context) {
   const { product: id } = await context.query;
   try {
@@ -146,4 +163,5 @@ export async function getServerSideProps(context) {
     };
   }
 }
+
 export default List;
