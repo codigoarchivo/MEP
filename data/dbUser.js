@@ -1,4 +1,13 @@
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+} from "firebase/firestore";
+
 import { db } from "../firebase/config";
 
 export const dbUser = async (id, dbU) => {
@@ -11,6 +20,9 @@ export const dbUser = async (id, dbU) => {
         orderBy("na", "asc")
       );
       break;
+    case "dbUserTwo":
+      q = collection(db, "users");
+      break;
   }
 
   const { docs } = await getDocs(q);
@@ -19,6 +31,19 @@ export const dbUser = async (id, dbU) => {
     id: doc.id,
     ...doc.data(),
   }));
+
+  return JSON.parse(JSON.stringify(data));
+};
+
+export const dbUserByUID = async (uid) => {
+  const q = doc(db, "users", uid);
+
+  const docSnap = await getDoc(q);
+
+  const data = {
+    id: docSnap.id,
+    ...docSnap.data(),
+  };
 
   return JSON.parse(JSON.stringify(data));
 };

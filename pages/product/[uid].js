@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import PropTypes from "prop-types";
+
 import { useRouter } from "next/router";
 
 import {
@@ -34,7 +36,7 @@ import Paginator from "../../utils/Paginator";
 
 import { dbProducts } from "../../data/dbProducts";
 
-const List = ({ product }) => {
+const List = ({ product = [] }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // router
@@ -53,20 +55,20 @@ const List = ({ product }) => {
   // add
   const handleAdd = () => {
     router.push({
-      pathname: "/set/plus/[plus]",
-      query: { plus: "add" },
+      pathname: "/set/[id]",
+      query: { id: "1", set: "add" },
     });
   };
 
   const handleClient = () => {
     router.push({
-      pathname: "/info/[info]",
-      query: { info: a?.uid.toString() },
+      pathname: "/info/[uid]",
+      query: { uid: a?.uid.toString() },
     });
   };
 
   return (
-    <ShopLayout>
+    <ShopLayout title={"All Products"}>
       <Container maxW={"container.lg"} my={10}>
         <Box p={5}>
           {!listData[0] && (
@@ -137,19 +139,26 @@ const List = ({ product }) => {
   );
 };
 
-export async function getServerSideProps(context) {
-  const { product: id } = await context.query;
-  try {
-    const product = await dbProducts(id, "dbProTwo");
+List.propTypes = {
+  product: PropTypes.array,
+};
 
-    if (!product) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
+export async function getStaticPaths() {
+  const producto = await dbProducts("", "dbProFour");
+  return {
+    paths: producto.map(({ uid }) => ({
+      params: {
+        uid: uid.toString(),
+      },
+    })),
+    fallback: "blocking",
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const uid = await params.uid.toString();
+  try {
+    const product = await dbProducts(uid, "dbProTwo");
 
     return {
       props: {

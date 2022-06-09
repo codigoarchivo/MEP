@@ -111,22 +111,6 @@ const productDelete = (id) => ({
   payload: id,
 });
 
-export const productActiveOrInactive = (data) => {
-  return async (dispatch) => {
-    try {
-      await updateDoc(doc(db, "serchs", data.id), { es: data.es });
-      dispatch(activeOrInactiveProduct(data));
-    } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
-    }
-  };
-};
-
-const activeOrInactiveProduct = (data) => ({
-  type: types.productEdit,
-  payload: data,
-});
-
 export const activeProductCart = (data) => {
   return async (dispatch, getState) => {
     const { activeCartSelect } = await getState().product;

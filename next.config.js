@@ -9,6 +9,8 @@ module.exports = {
       "lh5.googleusercontent.com",
       "lh6.googleusercontent.com",
       "firebasestorage.googleapis.com",
+      "via.placeholder.com",
+      "image/webp",
     ],
   },
 };

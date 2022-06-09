@@ -24,8 +24,14 @@ const useFormAll = (initialStates = {}, data = {}) => {
   // handleRePassword
   const handleRePassword = () => setValues({ ...values, rPass: !values.rPass });
   // handleNumberInput
-  const handleNumberInput = (e) => {
+  const handleNumberInputCn = (e) => {
     setValues({ ...values, cn: e });
+  };
+  const handleNumberInputPj = (e) => {
+    setValues({ ...values, pj: e });
+  };
+  const handleNumberInputPr = (e) => {
+    setValues({ ...values, pr: e });
   };
 
   return {
@@ -33,7 +39,9 @@ const useFormAll = (initialStates = {}, data = {}) => {
     handleInputChange,
     handlePassword,
     handleRePassword,
-    handleNumberInput,
+    handleNumberInputCn,
+    handleNumberInputPj,
+    handleNumberInputPr,
     reset,
   };
 };

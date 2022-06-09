@@ -35,7 +35,7 @@ const HomeL = ({ product, category }) => {
 export async function getStaticProps() {
   try {
     const product = await dbProducts("", "dbProOne");
-    const category = await dbCategory();
+    const category = await dbCategory("", "dbCatTwo");
 
     if (!product) {
       return {
@@ -45,7 +45,7 @@ export async function getStaticProps() {
         },
       };
     }
-    
+
     return {
       props: {
         product,

@@ -1,5 +1,7 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import {
   Button,
   chakra,
@@ -21,7 +23,7 @@ const CategoryForm = ({
     <>
       <chakra.form onSubmit={handleSubmit} w="full" p={3}>
         <VStack spacing={7}>
-          <FormControl >
+          <FormControl>
             <FormLabel htmlFor="na">Nombre</FormLabel>
             <Input
               name="na"
@@ -44,6 +46,16 @@ const CategoryForm = ({
       </chakra.form>
     </>
   );
+};
+
+CategoryForm.propTypes = {
+  na: PropTypes.string.isRequired,
+  pid: PropTypes.string.isRequired,
+  HStack: PropTypes.object.isRequired,
+  VStack: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
 };
 
 export default CategoryForm;

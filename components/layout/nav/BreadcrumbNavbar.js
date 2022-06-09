@@ -79,7 +79,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
             <NavLink
               fontWeight={"normal"}
               variant={"secondary"}
-              href={"/product/[product]"}
+              href={"/product/[uid]"}
               as={`/product/${a?.uid}`}
               name={"product"}
             />

@@ -1,16 +1,8 @@
 import React from "react";
 
-import {
-  Grid,
-  chakra,
-  Heading,
-  Container,
-  VStack,
-} from "@chakra-ui/react";
+import { Grid, chakra, Heading, Container, VStack } from "@chakra-ui/react";
 
-import { doc, getDoc } from "firebase/firestore";
-
-import { db } from "../../firebase/config";
+import PropTypes from "prop-types";
 
 import Toast from "../../helpers/Toast";
 
@@ -32,6 +24,8 @@ import GridItemForm from "../../utils/GridItemForm";
 import GridItemFormTextarea from "../../utils/GridItemFormTextarea";
 import GridValueClose from "../../utils/GridValueClose";
 
+import { dbUser, dbUserByUID } from "../../data/dbUser";
+
 const initialStates = {
   na: "",
   te: "",
@@ -39,7 +33,7 @@ const initialStates = {
   dt: "",
 };
 
-const Informacion = ({ data }) => {
+const Informacion = ({ user = {} }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // dispatch
@@ -51,7 +45,7 @@ const Informacion = ({ data }) => {
   // mode Color
   const { bg, brand } = ModeColor();
   // useForm
-  const { values, handleInputChange } = useFormAll(initialStates, data);
+  const { values, handleInputChange } = useFormAll(initialStates, user);
   // values
   const { na, te, co, dt, id, rol } = values;
 
@@ -69,20 +63,20 @@ const Informacion = ({ data }) => {
     dispatch(DataUserAdicional({ na, te, co, dt, id, rol }));
 
     router.push({
-      pathname: "/product/[product]",
-      query: { product: a?.uid.toString() },
+      pathname: "/product/[uid]",
+      query: { uid: a?.uid.toString() },
     });
   };
 
   // cerrar
   const onCloseSelling = () => {
     router.push({
-      pathname: "/product/[product]",
-      query: { product: a?.uid.toString() },
+      pathname: "/product/[uid]",
+      query: { uid: a?.uid.toString() },
     });
   };
   return (
-    <ShopLayout>
+    <ShopLayout title={"Información | Usuario"}>
       <Container maxW="sm">
         <VStack
           alignContent={"center"}
@@ -153,21 +147,29 @@ const Informacion = ({ data }) => {
   );
 };
 
-export async function getServerSideProps(context) {
-  const { info } = await context.query;
+Informacion.propTypes = {
+  user: PropTypes.object,
+};
+
+export async function getStaticPaths() {
+  const user = await dbUser("", "dbUserTwo");
+  return {
+    paths: user.map(({ id }) => ({
+      params: {
+        uid: id.toString(),
+      },
+    })),
+    fallback: "blocking",
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const uid = await params.uid.toString();
   try {
-    const docRef = doc(db, "users", info.toString());
-
-    const docSnap = await getDoc(docRef);
-
-    const data = {
-      id: docSnap.id,
-      ...docSnap.data(),
-    };
-
+    const user = await dbUserByUID(uid);
     return {
       props: {
-        data,
+        user,
       },
     };
   } catch (error) {

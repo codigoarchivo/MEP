@@ -11,7 +11,7 @@ import {
 
 import { db } from "../firebase/config";
 
-export const dbProducts = async (id = "", dbP = "") => {
+export const dbProducts = async (uid = "", dbP = "") => {
   let q = "";
   let ref = collection(db, "serchs");
   switch (dbP) {
@@ -19,7 +19,7 @@ export const dbProducts = async (id = "", dbP = "") => {
       q = query(ref, limit(2), orderBy("na", "asc"));
       break;
     case "dbProTwo":
-      q = query(ref, where("uid", "==", id.toString()), limit(2));
+      q = query(ref, where("uid", "==", uid), limit(2));
       break;
     case "dbProThree":
       q = collection(db, "serchs", id.toString(), "messages");
@@ -41,7 +41,7 @@ export const dbProducts = async (id = "", dbP = "") => {
 
 export const dbProductsById = async (id) => {
   //  product
-  const docRef = doc(db, "serchs", id.toString());
+  const docRef = doc(db, "serchs", id);
 
   const docSnap = await getDoc(docRef);
 

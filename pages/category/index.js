@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
-
 import { useRouter } from "next/router";
 
 import {
@@ -27,14 +25,13 @@ import CategoryScrenn from "../../components/category/CategoryScreen";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import { db } from "../../firebase/config";
-
 import { activeCategory, categoryListConfig } from "../../actions/category";
 
 import Paginator from "../../utils/Paginator";
 import { dbCategory } from "../../data/dbCategory";
+import Toast from "../../helpers/Toast";
 
-const Category = ({ data }) => {
+const Category = ({ data = [] }) => {
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -62,8 +59,8 @@ const Category = ({ data }) => {
     );
 
     router.push({
-      pathname: "/category/[pid]",
-      query: { pid: "new", word: "Add" },
+      pathname: "/category/[id]",
+      query: { id: "new", pid: "Add" },
     });
   };
 
@@ -133,7 +130,7 @@ const Category = ({ data }) => {
 
 export async function getServerSideProps() {
   try {
-    const data = await dbCategory();
+    const data = await dbCategory("", "dbCatTwo");
     return {
       props: {
         data,

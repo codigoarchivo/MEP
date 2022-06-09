@@ -9,11 +9,10 @@ import { uiReducer } from "./uiReducer";
 import { checkoutReducer } from "./checkoutReducer";
 import { userReducer } from "./userReducer";
 
-
 const persistConfig = {
   key: "root",
   storage: storage,
-  blacklist: ["ui"],
+  blacklist: ["ui", "product"],
 };
 
 const rootReducer = combineReducers({

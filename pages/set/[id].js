@@ -1,19 +1,31 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import { Container } from "@chakra-ui/react";
 
 import ProductData from "../../components/product/ProductData";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
+import { useRouter } from "next/router";
+
 import { dbProducts, dbProductsById } from "../../data/dbProducts";
+
 import Toast from "../../helpers/Toast";
 
-const ConfigDashboard = ({ product }) => {
+const ConfigDashboard = ({ product = {} }) => {
+  // router
+  const router = useRouter();
   return (
-    <ShopLayout>
-      <Container maxW={"container.sm"}>
-        <ProductData product={product} />
+    <ShopLayout title={router.query.set}>
+      <Container maxW={"container.sm"} py={10}>
+        <ProductData
+          product={product}
+          set={router.query.set}
+          router={router}
+          details={router.query.dt}
+        />
       </Container>
     </ShopLayout>
   );
@@ -34,7 +46,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const id = await params.id.toString();
   try {
-    const product = id !== "1" ? await dbProductsById(id) : {};
+    const product = await dbProductsById(id);
 
     return {
       props: {
@@ -48,5 +60,9 @@ export async function getStaticProps({ params }) {
     };
   }
 }
+
+ConfigDashboard.propTypes = {
+  product: PropTypes.object,
+};
 
 export default ConfigDashboard;

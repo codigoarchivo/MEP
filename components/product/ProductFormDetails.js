@@ -1,5 +1,7 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import { Text } from "@chakra-ui/react";
 
 const ProductFormDetails = ({ dt }) => {
@@ -10,6 +12,10 @@ const ProductFormDetails = ({ dt }) => {
       </Text>
     </>
   );
+};
+
+ProductFormDetails.propTypes = {
+  dt: PropTypes.string.isRequired,
 };
 
 export default ProductFormDetails;

@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from "react";
 
-import { useRouter } from "next/router";
-
 import { useDispatch, useSelector } from "react-redux";
+
+import PropTypes from "prop-types";
 
 import { CloseButton, Heading, HStack, VStack } from "@chakra-ui/react";
 
@@ -14,13 +14,14 @@ import ProductForm from "./ProductForm";
 
 import ProductFormWord from "./ProductFormWord";
 
-import { deleteProduct, editProduct } from "../../actions/product";
+import { addProduct, deleteProduct, editProduct } from "../../actions/product";
 
 import useFormAll from "../../hooks/useFormAll";
+import ProductFormDetails from "./ProductFormDetails";
 
 const initialStates = {
   pr: 0,
-  cn: 1,
+  cn: 0,
   pj: 0,
   ps: "",
   na: "",
@@ -30,43 +31,43 @@ const initialStates = {
   im: "",
 };
 
-const ProductData = ({ product = {} }) => {
+const ProductData = ({ product = {}, set = "", router = {}, details = "" }) => {
+  // useState
+  const [word, setWord] = useState("");
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
-
-  const [word, setWord] = useState("");
   // dispatch
   const dispatch = useDispatch();
-  // router
-  const router = useRouter();
   // Breakpoints
   const { points1, repeat1, points3, bordes } = Breakpoints();
 
   const [urlImage, setUrlImage] = useState("");
 
-  const data = router.query;
-
   useMemo(() => {
-    setWord(data.set);
-  }, [setWord, data.set]);
+    setWord(set);
+  }, [setWord, set]);
 
   // useForm
-  const { values, handleInputChange, handleNumberInput } = useFormAll(
-    initialStates,
-    product
-  );
+  const {
+    values,
+    handleInputChange,
+    handleNumberInputCn,
+    handleNumberInputPj,
+    handleNumberInputPr,
+  } = useFormAll(initialStates, word !== "add" ? product : {});
 
   // agrega imagen
+
   values.im = urlImage ? urlImage : values.im;
+
+  values.pj = Number(values.pj);
+  values.cn = Number(values.cn);
+  values.pr = Number(values.pr);
   // validar
   const { fiel, estado, ErrorRetur, ErrorRetur2 } = Validator(values);
 
   // values
-  const { na, ds, ct, dt, im, id, ps } = values;
-
-  const pj = Number(values.pj);
-  const cn = Number(values.cn);
-  const pr = Number(values.pr);
+  const { na, ds, ct, dt, im, id, ps, pj, cn, pr } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -76,6 +77,27 @@ const ProductData = ({ product = {} }) => {
 
     if (ErrorRetur) {
       return Toast(fiel, "error", 5000);
+    }
+
+    if (word === "delete") {
+      dispatch(deleteProduct(id));
+    }
+
+    if (word === "add") {
+      dispatch(
+        addProduct({
+          na,
+          pr,
+          ds,
+          ct,
+          cn,
+          dt,
+          im,
+          ps,
+          pj,
+          uid: a?.uid,
+        })
+      );
     }
 
     if (word === "edit") {
@@ -94,14 +116,11 @@ const ProductData = ({ product = {} }) => {
           uid: a?.uid,
         })
       );
-    } else {
-      dispatch(deleteProduct(id));
     }
-
     router.push({
-      pathname: `/product/[product]`,
+      pathname: `/product/[uid]`,
       query: {
-        product: a?.uid,
+        uid: a?.uid,
       },
     });
   };
@@ -109,24 +128,26 @@ const ProductData = ({ product = {} }) => {
   // cerrar
   const onClose = () => {
     router.push({
-      pathname: `/product/[product]`,
+      pathname: `/product/[uid]`,
       query: {
-        product: a?.uid,
+        uid: a?.uid,
       },
     });
   };
 
   return (
     <>
-      <VStack spacing={5} w={"full"} border={bordes} p={3}>
+      <VStack spacing={5} w={"full"} border={bordes} p={6} boxShadow={"xl"}>
         <HStack w={"full"}>
           <CloseButton size="md" onClick={onClose} />
           <Heading as="h1" size={"md"} textTransform={"uppercase"}>
             {word}
           </Heading>
         </HStack>
-        {word === "edit" ? (
+
+        {(word === "add" || word === "edit") && (
           <ProductForm
+            im={im}
             pj={pj}
             cn={cn}
             pr={pr}
@@ -142,11 +163,15 @@ const ProductData = ({ product = {} }) => {
             points3={points3}
             onClose={onClose}
             handleInputChange={handleInputChange}
-            handleNumberInput={handleNumberInput}
+            handleNumberInputCn={handleNumberInputCn}
+            handleNumberInputPj={handleNumberInputPj}
+            handleNumberInputPr={handleNumberInputPr}
             handleSubmit={handleSubmit}
             setUrlImage={setUrlImage}
           />
-        ) : (
+        )}
+
+        {word === "delete" && (
           <ProductFormWord
             handleSubmit={handleSubmit}
             HStack={HStack}
@@ -154,9 +179,18 @@ const ProductData = ({ product = {} }) => {
             onClose={onClose}
           />
         )}
+
+        {word === "details" && <ProductFormDetails dt={details} />}
       </VStack>
     </>
   );
+};
+
+ProductData.propTypes = {
+  product: PropTypes.object,
+  set: PropTypes.string,
+  router: PropTypes.object,
+  details: PropTypes.string,
 };
 
 export default ProductData;

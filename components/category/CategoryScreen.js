@@ -1,5 +1,7 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import { useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
@@ -32,8 +34,8 @@ const CategoryScrenn = ({ id, na }) => {
       return Toast("Category tiene un producto asociado", "error", 5000);
     } else {
       router.push({
-        pathname: "/category/[pid]",
-        query: { pid: "Edit", na, id },
+        pathname: "/category/[id]",
+        query: { id, na, pid: "Edit" },
       });
     }
   };
@@ -45,8 +47,8 @@ const CategoryScrenn = ({ id, na }) => {
       return Toast("Category tiene un producto asociado", "error", 5000);
     } else {
       router.push({
-        pathname: "/category/[pid]",
-        query: { pid: "Delete", id },
+        pathname: "/category/[id]",
+        query: { id, na, pid: "Delete" },
       });
     }
   };
@@ -94,6 +96,11 @@ const CategoryScrenn = ({ id, na }) => {
       </Tr>
     </>
   );
+};
+
+CategoryScrenn.propTypes = {
+  id: PropTypes.string.isRequired,
+  na: PropTypes.string.isRequired,
 };
 
 export default CategoryScrenn;

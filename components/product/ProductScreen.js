@@ -2,7 +2,7 @@ import React, { useMemo, useRef } from "react";
 
 import Image from "next/image";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
 
@@ -19,37 +19,19 @@ import {
 } from "@chakra-ui/react";
 
 import {
-  CheckCircleIcon,
   DeleteIcon,
   EditIcon,
   ExternalLinkIcon,
-  NotAllowedIcon,
   PlusSquareIcon,
 } from "@chakra-ui/icons";
 
-import { productActiveOrInactive } from "../../actions/product";
-
-const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
+const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr }) => {
   // selector
   const { list } = useSelector(({ category }) => category);
-  // dispatch
-  const dispatch = useDispatch();
   // router
   const router = useRouter();
   // useRef
   const listCt = useRef([]);
-
-  const data = {
-    id,
-    na,
-    pr,
-    im,
-    ds,
-    ct,
-    cn,
-    es,
-    dt,
-  };
 
   useMemo(() => {
     listCt.current = list.filter((item) => item.id === ct);
@@ -74,19 +56,9 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
   // detalles
   const handleDetails = () => {
     router.push({
-      pathname: "/set/plus/[plus]",
-      query: { plus: "details", dt },
+      pathname: "/set/[id]",
+      query: { id: "1", set: "details", dt },
     });
-  };
-
-  // ActiveOrInactive
-  const handleActiveOrInactive = (bol) => {
-    dispatch(
-      productActiveOrInactive({
-        ...data,
-        es: bol,
-      })
-    );
   };
 
   return (
@@ -119,32 +91,6 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, es, im, pr }) => {
               <PlusSquareIcon w={6} h={6} />
             </MenuButton>
             <MenuList minWidth={0}>
-              <MenuItem>
-                {es ? (
-                  <HStack
-                    spacing={3}
-                    cursor={"pointer"}
-                    fontWeight={"normal"}
-                    width="full"
-                    onClick={() => handleActiveOrInactive(false)}
-                  >
-                    <CheckCircleIcon w={3} h={3} />
-                    <Text>Activo</Text>
-                  </HStack>
-                ) : (
-                  <HStack
-                    spacing={3}
-                    cursor={"pointer"}
-                    fontWeight={"normal"}
-                    width="full"
-                    onClick={() => handleActiveOrInactive(true)}
-                  >
-                    <NotAllowedIcon w={3} h={3} />
-                    <Text>Pause</Text>
-                  </HStack>
-                )}
-              </MenuItem>
-
               <MenuItem>
                 <HStack
                   spacing={3}

@@ -5,7 +5,7 @@ const initialStates = {
   list: [],
   // busqueda por el porcentaje /search
   listSerch: [],
-  // lista de productos /product/[product]
+  // lista de productos /product/[uid]
   listData: [],
   saveCartSelect: [],
   // lista de los ultimos productos agregados 

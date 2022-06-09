@@ -1,5 +1,7 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import { Button, Heading, chakra } from "@chakra-ui/react";
 
 const ProductFormWord = ({ HStack, word, onClose, handleSubmit }) => {
@@ -20,6 +22,13 @@ const ProductFormWord = ({ HStack, word, onClose, handleSubmit }) => {
       </chakra.form>
     </>
   );
+};
+
+ProductFormWord.propTypes = {
+  HStack: PropTypes.object.isRequired,
+  word: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 export default ProductFormWord;

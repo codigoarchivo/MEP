@@ -13,11 +13,11 @@ import Footer from "./foo/Footer";
 
 import AuthChange from "../../helpers/AuthChange";
 
-const ShopLayout = ({ children }) => {
+const ShopLayout = ({ children, title }) => {
   return (
     <>
       <Head>
-        <title>Market | Edgars Pendulum</title>
+        <title>{title || "Market | Edgars Pendulum"}</title>
       </Head>
       <Provider store={store}>
         <AuthChange />
