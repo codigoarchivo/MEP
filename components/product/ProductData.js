@@ -17,6 +17,7 @@ import ProductFormWord from "./ProductFormWord";
 import { addProduct, deleteProduct, editProduct } from "../../actions/product";
 
 import useFormAll from "../../hooks/useFormAll";
+
 import ProductFormDetails from "./ProductFormDetails";
 
 const initialStates = {
@@ -57,24 +58,19 @@ const ProductData = ({ product = {}, set = "", router = {}, details = "" }) => {
   } = useFormAll(initialStates, word !== "add" ? product : {});
 
   // agrega imagen
-
   values.im = urlImage ? urlImage : values.im;
 
   values.pj = Number(values.pj);
   values.cn = Number(values.cn);
   values.pr = Number(values.pr);
   // validar
-  const { fiel, estado, ErrorRetur, ErrorRetur2 } = Validator(values);
+  const { fiel, ErrorRetur } = Validator(values);
 
   // values
   const { na, ds, ct, dt, im, id, ps, pj, cn, pr } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (ErrorRetur2) {
-      return Toast(estado, "error", 5000);
-    }
-
     if (ErrorRetur) {
       return Toast(fiel, "error", 5000);
     }
@@ -117,8 +113,9 @@ const ProductData = ({ product = {}, set = "", router = {}, details = "" }) => {
         })
       );
     }
+
     router.push({
-      pathname: `/product/[uid]`,
+      pathname: `/product`,
       query: {
         uid: a?.uid,
       },
@@ -128,7 +125,7 @@ const ProductData = ({ product = {}, set = "", router = {}, details = "" }) => {
   // cerrar
   const onClose = () => {
     router.push({
-      pathname: `/product/[uid]`,
+      pathname: `/product`,
       query: {
         uid: a?.uid,
       },

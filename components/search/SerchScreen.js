@@ -1,5 +1,7 @@
 import React, { useRef } from "react";
 
+import PropTypes from "prop-types";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
@@ -9,7 +11,6 @@ import { Rating } from "react-simple-star-rating";
 import Image from "next/image";
 
 import {
-  AspectRatio,
   Box,
   Stat,
   StatHelpText,
@@ -34,7 +35,7 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import { ShopAll } from "../../helpers/IconNew";
 
-const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat, ti, uid }) => {
+const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
   // useRef
   const match = useRef();
   // useRef
@@ -62,12 +63,12 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat, ti, uid }) => {
     ds,
     ct,
     cn,
-    es,
     dt,
-    ti,
+    ps,
     uid,
     est: rat?.est,
     nam: rat?.nam,
+    pj,
   };
 
   // ref
@@ -146,7 +147,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat, ti, uid }) => {
           onClick={handleSelect}
         >
           <VStack
-            spacing={1}
+            spacing={0}
             onMouseEnter={() => onToggle()}
             onMouseLeave={() => onToggle()}
             cursor={"pointer"}
@@ -160,20 +161,24 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat, ti, uid }) => {
               boxShadow: "lg",
             }}
           >
-            {im && (
-              <Box position={"relative"}>
-                <Image
-                  src={im}
-                  alt="Picture of the author"
-                  objectPosition="center"
-                  width={"248px"}
-                  height={"248px"}
-                />
-              </Box>
-            )}
+            <Box position={"relative"}>
+              <Image
+                src={im || "https://via.placeholder.com/248.png?text=Imagen"}
+                alt={na}
+                width={248}
+                height={248}
+                objectFit="cover"
+                objectPosition="center"
+                style={{
+                  borderTopLeftRadius: "5px",
+                  borderTopRightRadius: "5px",
+                }}
+              />
+            </Box>
+
             <Box p={3} w={"full"}>
               <Flex align="baseline" w={"full"}>
-                <Badge colorScheme="green">{ti}</Badge>
+                <Badge colorScheme="green">{ps}</Badge>
               </Flex>
 
               <HStack w={"full"} spacing={0}>
@@ -193,7 +198,9 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat, ti, uid }) => {
               </HStack>
 
               <Stat size={"sm"} width={"full"}>
-                <StatLabel>{na}</StatLabel>
+                <StatLabel>
+                  {na.charAt(0).toUpperCase() + na.slice(1)}
+                </StatLabel>
                 <StatNumber>
                   <HStack w={"full"} justifyContent={"space-between"}>
                     <Text>${pr}</Text>
@@ -210,6 +217,21 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, es, im, pr, rat, ti, uid }) => {
       </WrapItem>
     </>
   );
+};
+
+SerchScreen.propTypes = {
+  rat: PropTypes.array,
+  id: PropTypes.string.isRequired,
+  na: PropTypes.string.isRequired,
+  cn: PropTypes.number.isRequired,
+  ct: PropTypes.string.isRequired,
+  ds: PropTypes.string.isRequired,
+  dt: PropTypes.string.isRequired,
+  im: PropTypes.string.isRequired,
+  pr: PropTypes.number.isRequired,
+  ps: PropTypes.string.isRequired,
+  uid: PropTypes.string.isRequired,
+  pj: PropTypes.number.isRequired,
 };
 
 export default SerchScreen;

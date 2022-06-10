@@ -1,8 +1,8 @@
 import React from "react";
 
-import { useRouter } from "next/router";
+import PropTypes from "prop-types";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { CloseButton, Heading, HStack, VStack } from "@chakra-ui/react";
 
@@ -11,7 +11,6 @@ import Toast from "../../helpers/Toast";
 import Validator from "../../helpers/Validator";
 
 import CategoryForm from "./CategoryForm";
-
 import CategoryFormWord from "./CategoryFormWord";
 
 import {
@@ -22,28 +21,25 @@ import {
 
 import useFormAll from "../../hooks/useFormAll";
 
+import { dbCategory } from "../../data/dbCategory";
+
 const initialStates = {
   na: "",
   pid: "",
 };
 
-const CategoryData = () => {
-  // selector
-  const { list } = useSelector(({ category }) => category);
+const CategoryData = ({ router, category, pid }) => {
   // dispatch
   const dispatch = useDispatch();
-  // router
-  const router = useRouter();
   // Breakpoints
   const { bordes } = Breakpoints();
 
-  const data = router.query;
   // useForm
-  const { values, handleInputChange } = useFormAll(initialStates, data);
+  const { values, handleInputChange } = useFormAll(initialStates, category);
   // validar
   const { fiel, ErrorCatData } = Validator(values);
   // values
-  const { na, id, pid } = values;
+  const { na, id } = values;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,25 +49,25 @@ const CategoryData = () => {
     }
 
     if (pid === "Add") {
-      const match = list
-        .map((item) => item.na.toLowerCase())
-        .includes(na.toLowerCase());
+      const match = await dbCategory(na, "dbCatThree");
 
-      if (match) {
+      if (match.length > 0) {
         return Toast(
           "Hay una categoria asociada al nombre quiere agregar",
           "error",
           5000
         );
-      } else {
-        dispatch(addCategory(na));
       }
+
+      dispatch(addCategory(na));
     }
 
     pid === "Edit" && dispatch(editCategory(na, id));
     pid === "Delete" && dispatch(deleteCategory(id));
-    onClose();
+
+    await router.push("/category");
   };
+
   // cerrar
   const onClose = () => {
     router.push("/category");
@@ -109,6 +105,12 @@ const CategoryData = () => {
       </VStack>
     </>
   );
+};
+
+CategoryData.propTypes = {
+  router: PropTypes.object.isRequired,
+  category: PropTypes.object.isRequired,
+  pid: PropTypes.string.isRequired,
 };
 
 export default CategoryData;

@@ -51,7 +51,6 @@ const ProductForm = ({
   // selector
   const { list } = useSelector(({ category }) => category);
 
-  const productOrServices = ["Product", "Services"];
   return (
     <>
       <chakra.form onSubmit={handleSubmit} w={"full"}>
@@ -73,6 +72,8 @@ const ProductForm = ({
                   alt="Imagen"
                   width={100}
                   height={100}
+                  objectFit="cover"
+                  objectPosition="center"
                 />
               </Box>
             </HStack>
@@ -81,6 +82,7 @@ const ProductForm = ({
           <GridItemForm
             points={points1}
             name={"Nombre"}
+            maxlength="50"
             na={"na"}
             val={na}
             type={"text"}
@@ -123,10 +125,11 @@ const ProductForm = ({
             <Select
               name="ps"
               variant="filled"
+              placeholder="Agrega un producto o servicio"
               value={ps}
               onChange={handleInputChange}
             >
-              {productOrServices.map((ps, key) => (
+              {["Product", "Services"].map((ps, key) => (
                 <option key={key} value={ps}>
                   {ps}
                 </option>
@@ -139,7 +142,7 @@ const ProductForm = ({
             <Select
               name="ct"
               variant="filled"
-              placeholder="Categoria"
+              placeholder="Agrega una categoria"
               value={ct}
               onChange={handleInputChange}
             >
@@ -153,6 +156,7 @@ const ProductForm = ({
 
           {/* descripcion del producto */}
           <GridItemForm
+            maxlength="20"
             points={points1}
             name={"Descripción"}
             na={"ds"}

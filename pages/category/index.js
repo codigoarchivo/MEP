@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 
+import PropTypes from "prop-types";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
@@ -65,7 +67,7 @@ const Category = ({ data = [] }) => {
   };
 
   return (
-    <ShopLayout>
+    <ShopLayout title={"All Category"}>
       {a?.rol === "owner" ? (
         <Container maxW={"container.sm"} my={10}>
           <Box p={5}>
@@ -77,7 +79,7 @@ const Category = ({ data = [] }) => {
               </Center>
             )}
             <TableContainer w={"full"} border={bordes}>
-              <Table variant="simple">
+              <Table variant="striped" colorScheme="brand">
                 <TableCaption>Lista de Categorias</TableCaption>
                 <Thead>
                   <Tr>
@@ -126,6 +128,10 @@ const Category = ({ data = [] }) => {
       )}
     </ShopLayout>
   );
+};
+
+Category.propTypes = {
+  data: PropTypes.array,
 };
 
 export async function getServerSideProps() {

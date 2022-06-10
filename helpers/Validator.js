@@ -11,7 +11,9 @@ const Validator = (values) => {
   const minPasswordV = values?.password?.length < 6;
   const minRePasswordV = values?.rePassword?.length < 6;
   const samePasswordV = values?.password !== values?.rePassword;
+
   const mNombre = values?.na === "";
+  const mTipo = values?.ps === "";
   const mPrecio = values?.pr === 0;
   const mPorcentaje = values?.pj === 0;
   const mDetalles = values?.dt === "";
@@ -86,14 +88,10 @@ const Validator = (values) => {
     mCategory ||
     mTipos ||
     mImageCero ||
+    mTipo ||
     mPorcentaje
   ) {
     ErrorRetur = true;
-  }
-
-  let ErrorRetur2;
-  if (values.word !== "Add" && values.es === false) {
-    ErrorRetur2 = true;
   }
   // CategoryData
 
@@ -125,7 +123,6 @@ const Validator = (values) => {
     mCategory,
     mTipos,
     ErrorRetur,
-    ErrorRetur2,
     ErrorLorR,
     ErrorRorL,
     passwordV,

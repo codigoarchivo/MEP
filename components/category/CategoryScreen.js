@@ -2,8 +2,6 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
-import { useSelector } from "react-redux";
-
 import { useRouter } from "next/router";
 
 import {
@@ -21,36 +19,40 @@ import Toast from "../../helpers/Toast";
 
 import { DeleteIcon, EditIcon, PlusSquareIcon } from "@chakra-ui/icons";
 
+import { dbProducts } from "../../data/dbProducts";
+
 const CategoryScrenn = ({ id, na }) => {
-  // selector
-  const { list } = useSelector(({ product }) => product);
   // router
   const router = useRouter();
 
   // edit
   const handleEdit = async () => {
-    const match = list.map((item) => item.ct).includes(id);
-    if (match) {
+    // evita que se pueda editar  un producto que posee una categoria
+    const match = await dbProducts(id, "dbProFive");
+
+    if (match.length > 0) {
       return Toast("Category tiene un producto asociado", "error", 5000);
-    } else {
-      router.push({
-        pathname: "/category/[id]",
-        query: { id, na, pid: "Edit" },
-      });
     }
+
+    router.push({
+      pathname: "/category/[id]",
+      query: { id, na, pid: "Edit" },
+    });
   };
 
   // delete
   const handleDelete = async () => {
-    const match = list.map((item) => item.ct).includes(id);
-    if (match) {
+    // evita que se pueda eliminar  un producto que posee una categoria
+    const match = await dbProducts(id, "dbProFive");
+
+    if (match.length > 0) {
       return Toast("Category tiene un producto asociado", "error", 5000);
-    } else {
-      router.push({
-        pathname: "/category/[id]",
-        query: { id, na, pid: "Delete" },
-      });
     }
+
+    router.push({
+      pathname: "/category/[id]",
+      query: { id, na, pid: "Delete" },
+    });
   };
 
   return (

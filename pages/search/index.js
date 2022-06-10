@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+
+import PropTypes from "prop-types";
 
 import { useRouter } from "next/router";
 
@@ -46,98 +48,89 @@ import Paginator from "../../utils/Paginator";
 import { dbProducts } from "../../data/dbProducts";
 
 const Search = ({ product }) => {
+  // selector
+  const { listSerch } = useSelector(({ product }) => product);
+  // selector
+  const { list } = useSelector(({ category }) => category);
+  // selector
+  const [listP, setListP] = useState([]);
   // Breakpoints
   const { bordes } = Breakpoints();
   // dispatch
   const dispatch = useDispatch();
   // dispatch
   const router = useRouter();
-  // selector
-  const { listSerch, list: listP } = useSelector(({ product }) => product);
-  // selector
-  const { list } = useSelector(({ category }) => category);
   // useRef
   const max = useRef(0);
   // useRef
   const min = useRef(0);
 
+  // useState
   useEffect(() => {
     if (product) {
       dispatch(serchProductList(product));
     }
   }, [dispatch, product]);
 
-  if (listP.length > 0) {
-    max.current = listP.reduce(
-      (n, m) => Math.max(n, Number(m.pr)),
-      -Number.POSITIVE_INFINITY
-    );
-    min.current = listP.reduce(
-      (n, m) => Math.min(n, Number(m.pr)),
-      Number.POSITIVE_INFINITY
-    );
-  }
+  useEffect(() => {
+    if (product) {
+      setListP(product);
+    }
+  }, [setListP, product]);
+
+  max.current = listP.reduce(
+    (n, m) => Math.max(Number(n), m.pr),
+    -Number.POSITIVE_INFINITY
+  );
+
+  min.current = listP.reduce(
+    (n, m) => Math.min(Number(n), m.pr),
+    Number.POSITIVE_INFINITY
+  );
 
   // useState
-  const [listPrice, setListPrice] = useState([min.current, max.current]);
+  const [listPrice, setListPrice] = useState([0, 0]);
 
-  useEffect(() => {
-    const { c, q, r } = router.query;
+  useEffect(() => setListPrice([min.current, max.current]), [min, max]);
 
-    const filtro = listP
-      ?.filter((item) => {
-        return c
-          ? item.ct.includes(c)
-          : item.na?.toLowerCase().includes(q?.toLowerCase());
-      })
-      .slice(0, 25);
-
-    const filtroR = listP
-      ?.filter((item) => {
-        return item.pr >= listPrice[0] && item.pr <= listPrice[1];
-      })
-      .slice(0, 25);
-
-    if (c || q) {
-      if (filtro.length === 0) {
-        return (
-          Toast(
-            `${filtro.length} resultado, reinicia con boton Shop All`,
-            "info",
-            5000
-          ),
-          dispatch(listProductSerchClose(filtro))
-        );
-      }
-    }
-
-    if (r) {
-      if (filtroR.length === 0) {
-        return (
-          Toast(
-            `${filtroR.length} resultado, reinicia con boton Shop All`,
-            "info",
-            5000
-          ),
-          dispatch(listProductSerchClose(filtroR))
-        );
-      }
-    }
-
-    dispatch(serchProductList(r ? filtroR : filtro));
-  }, [router.query, listPrice, dispatch, listP]);
-
-  const handleChangeEnd = (r) => {
+  const handleChangeEnd = async (r) => {
     router.push({
       pathname: "/search",
       query: { r },
     });
+
     setListPrice(r);
+
+    const newData = await dbProducts(r, "dbProSix");
+
+    if (newData.length === 0) {
+      return Toast(
+        "No hay resultados, reinicia con boton Shop All",
+        "info",
+        5000
+      );
+    }
+
+    dispatch(serchProductList(newData));
+  };
+
+  const handleOnclick = async (id) => {
+    const newData = await dbProducts(id, "dbProSeven");
+
+    if (newData.length === 0) {
+      return Toast(
+        "No hay resultados, reinicia con boton Shop All",
+        "info",
+        5000
+      );
+    }
+
+    dispatch(serchProductList(newData));
   };
 
   return (
     <>
-      <ShopLayout>
+      <ShopLayout title={"Shop All"}>
         <Container maxW="container.xs">
           <Stack flexDirection={"row"}>
             <VStack
@@ -217,12 +210,15 @@ const Search = ({ product }) => {
                 </Box>
                 <List spacing={3}>
                   {list.map((item) => (
-                    <ListItem key={item.id}>
+                    <ListItem
+                      key={item.id}
+                      onClick={() => handleOnclick(item.id)}
+                    >
                       <ListIcon as={CheckCircleIcon} color="brand.700" />
                       <NavLink
                         href={{
                           pathname: "/search",
-                          query: { c: item.id, n: item.na },
+                          query: { n: item.id, c: item.na },
                         }}
                         name={item.na}
                         variant={"secondary"}
@@ -275,18 +271,16 @@ const Search = ({ product }) => {
   );
 };
 
+Search.propTypes = {
+  list: PropTypes.array,
+  listSerch: PropTypes.array,
+  serchProductList: PropTypes.func,
+  listProductSerchClose: PropTypes.func,
+};
+
 export async function getStaticProps() {
   try {
     const product = await dbProducts("", "dbProOne");
-
-    if (!product) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
 
     return {
       props: {

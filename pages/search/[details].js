@@ -1,8 +1,8 @@
 import React from "react";
 
-import { useRouter } from "next/router";
+import PropTypes from "prop-types";
 
-import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
+import { useRouter } from "next/router";
 
 import { Rating } from "react-simple-star-rating";
 
@@ -11,7 +11,6 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  AspectRatio,
   Badge,
   Box,
   Button,
@@ -39,13 +38,12 @@ import ShopLayout from "../../components/layout/ShopLayout";
 
 import { activeProductCart } from "../../actions/product";
 
-import { db } from "../../firebase/config";
-
 import SerchRat from "../../components/search/SerchRat";
 import SerchMessage from "../../components/search/SerchMessage";
-import { dbMessage, dbProducts, dbProductsById } from "../../data/dbProducts";
 
-const Details = ({ message, product }) => {
+import { dbProducts, dbProductsById } from "../../data/dbProducts";
+
+const Details = ({ message = [], product = {} }) => {
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -55,7 +53,7 @@ const Details = ({ message, product }) => {
   // Breakpoints
   const { content5, full, bordes } = Breakpoints();
   // values
-  const { id, na, pr, im, ds, ct, cn, es, dt, uid, ti } = product;
+  const { id, na, pr, im, ds, ct, cn, es, dt, uid, ps, pj } = product;
   // list Category
   const listCt = list.filter((item) => item.id === ct);
   // Incremen and Decrement
@@ -103,7 +101,8 @@ const Details = ({ message, product }) => {
         es,
         dt,
         uid,
-        ti,
+        ps,
+        pj,
         rat: message.map((item) => item.rat.toString()),
       })
     );
@@ -112,24 +111,31 @@ const Details = ({ message, product }) => {
   };
 
   return (
-    <ShopLayout>
-      <Container maxW="container.lg">
-        <Stack flexDirection={content5}>
-          <VStack>
-            {im && (
-              <AspectRatio w="500px" h={"auto"} position={"relative"}>
-                <Image
-                  src={im}
-                  alt="Picture of the author"
-                  layout="fill"
-                  objectFit="contain"
-                />
-              </AspectRatio>
-            )}
-          </VStack>
+    <ShopLayout title={"Details"}>
+      <Container maxW="container.lg" py={10}>
+        <Stack flexDirection={content5} spacing={0}>
+          <Box position={"relative"} w={full}>
+            <Image
+              src={im || "https://via.placeholder.com/450.png?text=Imagen"}
+              alt={na}
+              width={450}
+              height={450}
+              objectFit="cover"
+              objectPosition="center"
+              style={{
+                borderTopLeftRadius: "5px",
+                borderTopRightRadius: "5px",
+                borderBottomLeftRadius: "5px",
+                borderBottomRightRadius: "5px",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+              }}
+            />
+          </Box>
 
-          <VStack p={5} spacing={4}>
-            <Heading>{na}</Heading>
+          <VStack px={10} spacing={6} w={full}>
+            <Heading w={full}>
+              {na.charAt(0).toUpperCase() + na.slice(1)}
+            </Heading>
             <HStack w={full}>
               <Text color="gray.600" fontSize={"xl"} fontWeight={"bold"}>
                 {isNaN(listRang) ? "0.0" : listRang}
@@ -160,6 +166,12 @@ const Details = ({ message, product }) => {
                 </Button>
               </HStack>
             </Box>
+            <HStack w={full}>
+              <Heading textTransform={"uppercase"} as="h3" size="sm">
+                Categoria:
+              </Heading>
+              <Text>{listCt[0]?.na}</Text>
+            </HStack>
             <Box w={full}>
               <Button
                 rightIcon={<CartIcon />}
@@ -169,16 +181,10 @@ const Details = ({ message, product }) => {
                 Añadir
               </Button>
             </Box>
-            <HStack w={full}>
-              <Heading textTransform={"uppercase"} as="h3" size="sm">
-                Categoria:
-              </Heading>
-              <Text>{listCt[0]?.na}</Text>
-            </HStack>
           </VStack>
         </Stack>
 
-        <HStack>
+        <HStack mt={10} border={bordes} p={5}>
           <Tabs w={"full"}>
             <TabList>
               <Tab>Detalles</Tab>
@@ -221,10 +227,27 @@ const Details = ({ message, product }) => {
   );
 };
 
-export async function getServerSideProps(context) {
+Details.propType = {
+  message: PropTypes.array.isRequired,
+  product: PropTypes.object.isRequired,
+};
+
+export async function getStaticPaths() {
+  const producto = await dbProducts("", "dbProFour");
+  return {
+    paths: producto.map(({ id }) => ({
+      params: {
+        details: id.toString(),
+      },
+    })),
+    fallback: "blocking",
+  };
+}
+
+export async function getStaticProps({ params }) {
   try {
     // message
-    const id = context.query.details;
+    const id = params.details;
     // product
     const product = await dbProductsById(id);
 

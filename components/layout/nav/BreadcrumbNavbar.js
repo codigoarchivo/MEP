@@ -9,11 +9,12 @@ import { chakra, Stack } from "@chakra-ui/react";
 import Breakpoints from "../../../helpers/Breakpoints";
 
 import { serchProductList } from "../../../actions/product";
+
 import MenuHistory from "../../../utils/MenuHistory";
 
+import { dbProducts } from "../../../data/dbProducts";
+
 export const BreadcrumbNavbar = ({ NavLink, Box }) => {
-  // selector
-  const { list = [] } = useSelector(({ product }) => product);
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // dispatch
@@ -22,8 +23,11 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
   const { displayOff2, bordes, content5 } = Breakpoints();
 
   // handleObservator
-  const handleObservator = () => {
-    dispatch(serchProductList(list));
+  const handleObservator = async () => {
+    const allData = await dbProducts("", "dbProOne");
+    if (allData.length > 0) {
+      dispatch(serchProductList(allData));
+    }
   };
   return (
     <Box display={displayOff2} mb={5} borderTop={bordes}>
@@ -66,21 +70,11 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
               variant={"secondary"}
             />
           </chakra.li>
-          {/* <chakra.li mx={"3"}>
-            <NavLink
-              fontWeight={"normal"}
-              variant={"secondary"}
-              href={"/user/selling"}
-              as={"/user/selling"}
-              name={"Quieres vender"}
-            />
-          </chakra.li> */}
           <chakra.li mx={"3"}>
             <NavLink
               fontWeight={"normal"}
               variant={"secondary"}
-              href={"/product/[uid]"}
-              as={`/product/${a?.uid}`}
+              href={`/product?uid=${a?.uid}`}
               name={"product"}
             />
           </chakra.li>

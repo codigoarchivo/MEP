@@ -6,11 +6,12 @@ import {
   limit,
   orderBy,
   query,
+  where,
 } from "firebase/firestore";
 
 import { db } from "../firebase/config";
 
-export const dbCategory = async (id = "", dbC = "") => {
+export const dbCategory = async (na = "", dbC = "") => {
   let q = "";
   switch (dbC) {
     case "dbCatOne":
@@ -18,6 +19,10 @@ export const dbCategory = async (id = "", dbC = "") => {
       break;
     case "dbCatTwo":
       q = query(collection(db, "categories"), limit(25), orderBy("na", "asc"));
+      break;
+    case "dbCatThree":
+      q = query(collection(db, "categories"), where("na", "==", na), limit(1));
+      break;
   }
 
   const { docs } = await getDocs(q);

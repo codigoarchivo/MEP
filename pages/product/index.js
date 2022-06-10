@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -48,7 +48,7 @@ const List = ({ product = [] }) => {
   // dispatch
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useMemo(() => {
     dispatch(productListConfig(product));
   }, [dispatch, product]);
 
@@ -87,14 +87,11 @@ const List = ({ product = [] }) => {
             futuras ventas.
           </Text>
           <TableContainer w={"full"} border={bordes}>
-            <Table>
+            <Table  variant='striped' colorScheme='brand'>
               <TableCaption>Tus publicaciones en nuestro sitio</TableCaption>
               <Thead>
                 <Tr>
                   <Th></Th>
-                  <Th>Nombre</Th>
-                  <Th>Precio</Th>
-                  <Th>Categoria</Th>
                   <Th isNumeric>
                     <Button
                       onClick={handleAdd}
@@ -143,23 +140,11 @@ List.propTypes = {
   product: PropTypes.array,
 };
 
-export async function getStaticPaths() {
-  const producto = await dbProducts("", "dbProFour");
-  return {
-    paths: producto.map(({ uid }) => ({
-      params: {
-        uid: uid.toString(),
-      },
-    })),
-    fallback: "blocking",
-  };
-}
-
-export async function getStaticProps({ params }) {
-  const uid = await params.uid.toString();
+export async function getServerSideProps({ query }) {
+  const uid = await query.uid.toString();
   try {
     const product = await dbProducts(uid, "dbProTwo");
-
+    
     return {
       props: {
         product,
