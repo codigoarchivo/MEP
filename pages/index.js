@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 
+import PropTypes from "prop-types";
+
 import { useDispatch } from "react-redux";
 
 import ShopLayout from "../components/layout/ShopLayout";
@@ -16,7 +18,7 @@ import { dbProducts } from "../data/dbProducts";
 
 import { dbCategory } from "../data/dbCategory";
 
-const HomeL = ({ product, category }) => {
+const HomeL = ({ product = [], category = [] }) => {
   // dispatch
   const dispatch = useDispatch();
 
@@ -26,10 +28,15 @@ const HomeL = ({ product, category }) => {
   }, [dispatch, product, category]);
 
   return (
-    <ShopLayout>
+    <ShopLayout title={"Home"}>
       <Home />
     </ShopLayout>
   );
+};
+
+HomeL.propTypes = {
+  product: PropTypes.array.isRequired,
+  category: PropTypes.array.isRequired,
 };
 
 export async function getStaticProps() {
@@ -37,20 +44,12 @@ export async function getStaticProps() {
     const product = await dbProducts("", "dbProOne");
     const category = await dbCategory("", "dbCatTwo");
 
-    if (!product) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
     return {
       props: {
         product,
         category,
       },
+      revalidate: 86400, // 60 * 60 * 24 revalidate every 24 hours
     };
   } catch (error) {
     Toast("Al parecer hay un error", "error", 5000);

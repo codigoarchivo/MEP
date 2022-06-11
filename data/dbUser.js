@@ -3,9 +3,8 @@ import {
   doc,
   getDoc,
   getDocs,
-  limit,
-  orderBy,
   query,
+  where,
 } from "firebase/firestore";
 
 import { db } from "../firebase/config";
@@ -16,8 +15,7 @@ export const dbUser = async (id, dbU) => {
     case "dbUserOne":
       q = query(
         collection(db, "users", id, "buys"),
-        limit(2),
-        orderBy("na", "asc")
+        where("close", "==", false)
       );
       break;
     case "dbUserTwo":

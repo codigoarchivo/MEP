@@ -1,9 +1,5 @@
 import React from "react";
 
-import { Provider } from "react-redux";
-
-import { store } from "../../store";
-
 import Head from "next/head";
 
 import { chakra } from "@chakra-ui/react";
@@ -19,18 +15,17 @@ const ShopLayout = ({ children, title }) => {
       <Head>
         <title>{title || "Market | Edgars Pendulum"}</title>
       </Head>
-      <Provider store={store}>
-        <AuthChange />
-        <chakra.header>
-          <Navbar />
-        </chakra.header>
 
-        <chakra.main>{children}</chakra.main>
+      <AuthChange />
+      <chakra.header>
+        <Navbar />
+      </chakra.header>
 
-        <chakra.footer w={"full"}>
-          <Footer />
-        </chakra.footer>
-      </Provider>
+      <chakra.main>{children}</chakra.main>
+
+      <chakra.footer w={"full"}>
+        <Footer />
+      </chakra.footer>
     </>
   );
 };

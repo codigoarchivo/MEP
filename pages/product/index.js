@@ -91,7 +91,7 @@ const List = ({ product = [] }) => {
               <TableCaption>Tus publicaciones en nuestro sitio</TableCaption>
               <Thead>
                 <Tr>
-                  <Th></Th>
+                  <Th isNumeric ></Th>
                   <Th isNumeric>
                     <Button
                       onClick={handleAdd}

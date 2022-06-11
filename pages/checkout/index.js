@@ -40,13 +40,15 @@ const Checkout = ({ product }) => {
   const { activeSelectCheck: check = [] } = useSelector(
     ({ product }) => product
   );
-  const handleRevert = async () => {
+  const handleRevert = () => {
     // revertir
-    const data = await check.map((d) => {
+    const data = check.map(async (item) => {
+      // resta cantidad de productos
+      await dbProducts(item.id, "dbProEight", item.cn + 1);
       return {
-        idP: d.id,
-        uidC: a.uid,
-        process: d.process,
+        idP: item.id,
+        uidC: item.uid,
+        process: item.process,
       };
     });
     dispatch(saveSaleRevert(data));
@@ -132,10 +134,10 @@ const Checkout = ({ product }) => {
   );
 };
 
-export async function getserversideprops(context) {
-  const { checkout: id } = await context.query;
+export async function getserversideprops({ query }) {
+  const { checkout } = await query.toString();
   try {
-    const product = await dbUser(id, "dbUserOne");
+    const product = await dbUser(checkout, "dbUserOne");
 
     if (!product) {
       return {

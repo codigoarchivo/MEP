@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React from "react";
 
 import PropTypes from "prop-types";
 
@@ -35,15 +35,9 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
   // Breakpoints
   const { full, bordes } = Breakpoints();
   // selector
-  const { list } = useSelector(({ category }) => category);
+  const { list = [] } = useSelector(({ category }) => category);
   // router
   const router = useRouter();
-  // useRef
-  const listCt = useRef([]);
-
-  useMemo(() => {
-    listCt.current = list.filter((item) => item.id === ct);
-  }, [list, ct]);
 
   // edit
   const handleEdit = () => {
@@ -77,7 +71,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
             <Flex position={"relative"}>
               <Image
                 src={im || "https://via.placeholder.com/155.png?text=Imagen"}
-                alt="Picture of the author"
+                alt={na}
                 width={155}
                 height={155}
                 objectFit="cover"
@@ -120,7 +114,9 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
                 <Heading as="h3" size="sm">
                   Categoria:
                 </Heading>
-                <Text size={"sm"}>{listCt.current[0]?.na}</Text>
+                <Text size={"sm"}>
+                  {list.map((item) => item.id === ct && item.na)}
+                </Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">

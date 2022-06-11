@@ -167,6 +167,16 @@ export async function getStaticProps({ params }) {
   const uid = await params.uid.toString();
   try {
     const user = await dbUserByUID(uid);
+
+    if (!user) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+    
     return {
       props: {
         user,

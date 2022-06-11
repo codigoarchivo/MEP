@@ -12,7 +12,7 @@ import { userReducer } from "./userReducer";
 const persistConfig = {
   key: "root",
   storage: storage,
-  blacklist: ["ui", "product"],
+  blacklist: ["ui"],
 };
 
 const rootReducer = combineReducers({

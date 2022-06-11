@@ -6,12 +6,13 @@ import {
   limit,
   orderBy,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 
 import { db } from "../firebase/config";
 
-export const dbProducts = async (id = "", dbP = "") => {
+export const dbProducts = async (id = "", dbP = "", val = "") => {
   let q = "";
   let ref = collection(db, "serchs");
 
@@ -41,6 +42,9 @@ export const dbProducts = async (id = "", dbP = "") => {
       break;
     case "dbProSeven":
       q = query(ref, where("ct", "==", id), limit(25));
+      break;
+    case "dbProEight":
+      q = await updateDoc(doc(db, "serchs", id), { cn: val });
       break;
   }
 
