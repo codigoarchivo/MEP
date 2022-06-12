@@ -279,13 +279,14 @@ const Navbar = () => {
                         <NavLink
                           px={0}
                           variant={"secondary"}
-                          href={"/checkout/[checkout]"}
+                          href={"/checkout/[uid]"}
                           as={`/checkout/${a?.uid}`}
                           name={<OrdenpagoIcon boxSize={points11} />}
                         />
                         <Flex
+                          right={-2}
+                          zIndex={-10}
                           cursor={"pointer"}
-                          right={0}
                           top={0}
                           border={bordes}
                           alignItems={"center"}

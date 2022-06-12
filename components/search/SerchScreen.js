@@ -93,7 +93,6 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
       pathname: "/search/[details]",
       query: {
         details: id,
-        pid: "d",
       },
     });
 

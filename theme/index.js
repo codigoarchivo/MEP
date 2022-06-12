@@ -7,8 +7,6 @@ import {
 
 import { mode } from "@chakra-ui/theme-tools";
 
-import { StepsStyleConfig } from "chakra-ui-steps";
-
 const stylesFonts = {
   fonts: {
     heading: `Montserrat ${base.fonts?.heading}`,
@@ -129,28 +127,12 @@ const brandRing = {
   }
 };
 
-const CustomSteps = {
-  ...StepsStyleConfig,
-  borderColor: "brand.500",
-  baseStyle: (props) => {
-    return {
-      ...StepsStyleConfig.baseStyle(props),
-      icon: {
-        ...StepsStyleConfig.baseStyle(props).icon,
-        // your custom styles here
-        strokeWidth: "1px",
-      },
-    };
-  },
-};
-
 export const theme = extendTheme(
   {
     ...globalStyles,
     ...stylesFonts,
     colors,
     components: {
-      Steps: CustomSteps,
       Button: {
         ...buttonStyles,
       },

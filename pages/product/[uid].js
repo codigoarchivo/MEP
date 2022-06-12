@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -48,7 +48,7 @@ const List = ({ product = [] }) => {
   // dispatch
   const dispatch = useDispatch();
 
-  useMemo(() => {
+  useEffect(() => {
     dispatch(productListConfig(product));
   }, [dispatch, product]);
 
@@ -87,11 +87,11 @@ const List = ({ product = [] }) => {
             futuras ventas.
           </Text>
           <TableContainer w={"full"} border={bordes}>
-            <Table  variant='striped' colorScheme='brand'>
+            <Table variant="striped" colorScheme="brand">
               <TableCaption>Tus publicaciones en nuestro sitio</TableCaption>
               <Thead>
                 <Tr>
-                  <Th isNumeric ></Th>
+                  <Th isNumeric></Th>
                   <Th isNumeric>
                     <Button
                       onClick={handleAdd}
@@ -140,11 +140,20 @@ List.propTypes = {
   product: PropTypes.array,
 };
 
-export async function getServerSideProps({ query }) {
-  const uid = await query.uid.toString();
+export async function getServerSideProps({ params }) {
+  const uid = await params.uid.toString();
   try {
     const product = await dbProducts(uid, "dbProTwo");
-    
+
+    if (!product) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+
     return {
       props: {
         product,

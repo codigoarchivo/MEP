@@ -35,8 +35,8 @@ const CheckoutScreen = ({
   process,
   sale,
   id: idThree,
-  // lim,
-  // count,
+  lim,
+  count,
 }) => {
   // useSelector
   const { activeSelectCheck: check = [] } = useSelector(
@@ -60,7 +60,7 @@ const CheckoutScreen = ({
 
   return (
     <>
-      {/* <ContadorRegresivo lim={lim} count={count} /> */}
+      <ContadorRegresivo lim={lim} count={count} />
       <HStack
         w={full}
         justifyContent={"space-between"}
@@ -141,12 +141,12 @@ const CheckoutScreen = ({
                     <PopoverHeader>Tiempo para realizar pago</PopoverHeader>
                     <PopoverCloseButton />
                     <PopoverBody>
-                      {/* <Text
+                      <Text
                         as={"span"}
                         id={`resLimit_${count}`}
                         fontWeight={"black"}
                         fontSize={"small"}
-                      ></Text> */}
+                      ></Text>
                     </PopoverBody>
                   </PopoverContent>
                 </Portal>

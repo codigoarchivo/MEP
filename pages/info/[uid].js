@@ -63,7 +63,7 @@ const Informacion = ({ user = {} }) => {
     dispatch(DataUserAdicional({ na, te, co, dt, id, rol }));
 
     router.push({
-      pathname: "/product",
+      pathname: "/product/[uid]",
       query: { uid: a?.uid.toString() },
     });
   };
@@ -71,7 +71,7 @@ const Informacion = ({ user = {} }) => {
   // cerrar
   const onCloseSelling = () => {
     router.push({
-      pathname: "/product",
+      pathname: "/product/[uid]",
       query: { uid: a?.uid.toString() },
     });
   };

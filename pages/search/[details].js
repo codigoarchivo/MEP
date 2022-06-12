@@ -88,7 +88,6 @@ const Details = ({ message = [], product = {} }) => {
 
   // select product in cart
   const handleSelect = () => {
-    const cn = Number(input.value);
     dispatch(
       activeProductCart({
         id,
@@ -97,12 +96,12 @@ const Details = ({ message = [], product = {} }) => {
         im,
         ds,
         ct,
-        cn,
-        es,
         dt,
-        uid,
         ps,
         pj,
+        uid,
+        cnr: cn,
+        cn: Number(input.value),
         rat: message.map((item) => item.rat.toString()),
       })
     );

@@ -6,6 +6,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { dbProductEdit } from "../data/dbProducts";
 
 import { db } from "../firebase/config";
 
@@ -178,9 +179,18 @@ const LatestSaveCart = (data) => ({
   payload: data,
 });
 
-export const saveSale = (data = []) => {
+export const saveSale = (data = [], uid) => {
   return async (dispatch) => {
     try {
+      const { id } = await addDoc(collection(db, "users", uid, "buys"), {
+        ...data,
+      });
+
+      data.forEach((item) => ({
+        ...item,
+        id: (item["id"] = id),
+      }));
+
       await dispatch(activeProduct(data));
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
@@ -191,11 +201,11 @@ export const saveSale = (data = []) => {
 export const saveSaleRevert = (data) => {
   return (dispatch) => {
     try {
-      data.map(async (d) => {
-        if (d.process === false) {
-          await deleteDoc(
-            doc(db, "users", d.uidC.toString(), "buys", d.idP.toString())
-          );
+      data.map(async (item) => {
+        if (item.process === false) {
+          const cnr = item.cnr + item.cn;
+          await dbProductEdit(item.id, "dbProEditOne", cnr);
+          await deleteDoc(doc(db, "users", item.uid, "buys", item.idP));
         }
       });
 

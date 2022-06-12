@@ -12,7 +12,7 @@ import {
 
 import { db } from "../firebase/config";
 
-export const dbProducts = async (id = "", dbP = "", val = "") => {
+export const dbProducts = async (id = "", dbP = "") => {
   let q = "";
   let ref = collection(db, "serchs");
 
@@ -43,9 +43,6 @@ export const dbProducts = async (id = "", dbP = "", val = "") => {
     case "dbProSeven":
       q = query(ref, where("ct", "==", id), limit(25));
       break;
-    case "dbProEight":
-      q = await updateDoc(doc(db, "serchs", id), { cn: val });
-      break;
   }
 
   const { docs } = await getDocs(q);
@@ -70,4 +67,12 @@ export const dbProductsById = async (id) => {
   };
 
   return JSON.parse(JSON.stringify(data));
+};
+
+export const dbProductEdit = async (id, dbE, val) => {
+  switch (dbE) {
+    case "dbProEditOne":
+      await updateDoc(doc(db, "serchs", id), { cn: val });
+      break;
+  }
 };

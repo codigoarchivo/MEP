@@ -6,10 +6,8 @@ import {
   Box,
   Button,
   Container,
-  Flex,
   Heading,
   HStack,
-  Spinner,
   Stack,
   Text,
   VStack,
@@ -27,6 +25,10 @@ import CheckoutScreen from "../../components/checkout/CheckoutScreen";
 
 import { dbUser } from "../../data/dbUser";
 
+import Spiner from "../../utils/Spiner";
+
+import Toast from "../../helpers/Toast";
+
 const Checkout = ({ product }) => {
   // dispatch
   const router = useRouter();
@@ -40,20 +42,6 @@ const Checkout = ({ product }) => {
   const { activeSelectCheck: check = [] } = useSelector(
     ({ product }) => product
   );
-  const handleRevert = () => {
-    // revertir
-    const data = check.map(async (item) => {
-      // resta cantidad de productos
-      await dbProducts(item.id, "dbProEight", item.cn + 1);
-      return {
-        idP: item.id,
-        uidC: item.uid,
-        process: item.process,
-      };
-    });
-    dispatch(saveSaleRevert(data));
-    router.push("/");
-  };
 
   useEffect(() => {
     if (product) {
@@ -61,21 +49,33 @@ const Checkout = ({ product }) => {
     }
   }, [dispatch, product]);
 
+  const handleRevert = async () => {
+    if (a === undefined) {
+      router.push("/login");
+    }
+
+    // revertir
+    const data = await check.map((item) => {
+      return {
+        uid: a.uid,
+        idP: item.id,
+        process: item.process,
+        cnr: item.product.cnr,
+        cn: item.product.cn,
+        id: item.product.id,
+      };
+    });
+
+    dispatch(saveSaleRevert(data));
+
+    router.push("/");
+  };
+
   return check.length === 0 ? (
-    <ShopLayout>
-      <Flex h={"full"} w={"full"} alignContent={"center"} alignItems={"center"}>
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="brand.500"
-          size="xl"
-        />
-      </Flex>
-    </ShopLayout>
+    <Spiner title={"SIN INFORMCACiÖN"} />
   ) : (
-    <ShopLayout>
-      <Container maxW={"container.xl"}>
+    <ShopLayout title={"Tus Compras"}>
+      <Container maxW={"container.lg"}>
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>
             <Heading w={full} as="h2" size="lg" fontWeight="semibold">
@@ -134,10 +134,10 @@ const Checkout = ({ product }) => {
   );
 };
 
-export async function getserversideprops({ query }) {
-  const { checkout } = await query.toString();
+export async function getServerSideProps({ params }) {
+  const uid = await params.uid.toString();
   try {
-    const product = await dbUser(checkout, "dbUserOne");
+    const product = await dbUser(uid, "dbUserOne");
 
     if (!product) {
       return {

@@ -115,7 +115,7 @@ const ProductData = ({ product = {}, set = "", router = {}, details = "" }) => {
     }
 
     router.push({
-      pathname: `/product`,
+      pathname: `/product/[uid]`,
       query: {
         uid: a?.uid,
       },
@@ -125,7 +125,7 @@ const ProductData = ({ product = {}, set = "", router = {}, details = "" }) => {
   // cerrar
   const onClose = () => {
     router.push({
-      pathname: `/product`,
+      pathname: `/product/[uid]`,
       query: {
         uid: a?.uid,
       },

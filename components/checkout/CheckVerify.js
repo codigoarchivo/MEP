@@ -124,18 +124,18 @@ const CheckVerify = ({
     reset();
 
     router.push({
-      pathname: "/checkout/[checkout]",
+      pathname: "/checkout/[uid]",
       query: {
-        checkout: a?.uid,
+        uid: a?.uid,
       },
     });
   };
 
   const closeVerify = () => {
     router.push({
-      pathname: "/checkout/[checkout]",
+      pathname: "/checkout/[uid]",
       query: {
-        checkout: a?.uid,
+        uid: a?.uid,
       },
     });
   };
