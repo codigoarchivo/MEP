@@ -1,10 +1,16 @@
 import React from "react";
 
+import { db } from "../../firebase/config";
+
+import { addDoc, collection } from "firebase/firestore";
+
 import { useRouter } from "next/router";
 
 import { useDispatch, useSelector } from "react-redux";
 
 import { addDays } from "date-fns";
+
+import { dbProductEdit } from "../../data/dbProducts";
 
 import {
   Button,
@@ -17,12 +23,9 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 
-import { closeActive, saveSale } from "../../actions/product";
-import { dbProductEdit } from "../../data/dbProducts";
-import { db } from "../../firebase/config";
-import { addDoc, collection } from "firebase/firestore";
+import { activeProduct, closeActive } from "../../actions/product";
 
-const SerchCartModal = ({ isOpen, onOpen, onClose }) => {
+const SerchCartModal = ({ isOpen, onClose }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector
@@ -36,9 +39,9 @@ const SerchCartModal = ({ isOpen, onOpen, onClose }) => {
 
   const data = active.map((item) => {
     return {
-      lim: addDays(Date.now(), 3),
       process: false,
       close: false,
+      lim: addDays(Date.now(), 3),
       product: {
         // raiting del producto
         rat: item.rat,
@@ -64,26 +67,33 @@ const SerchCartModal = ({ isOpen, onOpen, onClose }) => {
     };
   });
 
-  const confirmSale = (e) => {
+  const confirmSale = async (e) => {
     e.preventDefault();
 
-    data.forEach(
-      async ({ product }) =>
-        await dbProductEdit(product.id, "dbProEditOne", product.cnr)
-    );
+    const newData = await data.map(async (item) => {
+      await dbProductEdit(item.product.id, "dbProEditOne", item.product.cnr);
 
-    dispatch(saveSale(data, a.uid));
+      const { id } = await addDoc(collection(db, "users", a.uid, "buys"), {
+        ...item,
+      });
+
+      return {
+        ...item,
+        id: (item["id"] = id),
+      };
+    });
+
+    dispatch(activeProduct(newData));
+
+    dispatch(closeActive());
 
     // save cart
-    setTimeout(() => {
-      router.push({
-        pathname: "/checkout/[uid]",
-        query: {
-          uid: a.uid,
-        },
-      });
-      dispatch(closeActive());
-    }, 1000);
+    await router.push({
+      pathname: "/checkout/[uid]",
+      query: {
+        uid: a.uid,
+      },
+    });
   };
 
   return (

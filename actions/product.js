@@ -182,16 +182,12 @@ const LatestSaveCart = (data) => ({
 export const saveSale = (data = [], uid) => {
   return async (dispatch) => {
     try {
-      const { id } = await addDoc(collection(db, "users", uid, "buys"), {
-        ...data,
-      });
+      // data.forEach((item) => ({
+      //   ...item,
+      //   id: (item["id"] = id),
+      // }));
 
-      data.forEach((item) => ({
-        ...item,
-        id: (item["id"] = id),
-      }));
-
-      await dispatch(activeProduct(data));
+      
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }

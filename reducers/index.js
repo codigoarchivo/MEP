@@ -1,7 +1,7 @@
+import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
-import { combineReducers } from "redux";
 import { categoryReducer } from "./categoryReducer";
 import { productReducer } from "./productReducer";
 import { authReducer } from "./authReducer";

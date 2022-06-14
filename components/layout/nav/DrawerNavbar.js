@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import PropTypes from "prop-types";
 
@@ -39,6 +39,8 @@ import {
   VentaIcon,
 } from "../../../helpers/IconNew";
 
+import { UIContext } from "../../../context/UIContext";
+
 export const DrawerNavbar = ({
   onClose,
   isOpen,
@@ -53,8 +55,8 @@ export const DrawerNavbar = ({
   MoonIcon,
   handleLogout,
 }) => {
-  // selector
-  const { activeSelect: a } = useSelector(({ auth }) => auth);
+  // useContext
+  const a = useContext(UIContext);
   // Breakpoints
   const { displayOn2, bordes } = Breakpoints();
   // dispatch

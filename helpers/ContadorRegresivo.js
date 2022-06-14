@@ -34,7 +34,7 @@ const ContadorRegresivo = ({ lim, count }) => {
     return () => {
       clearInterval(interval);
     };
-  }, [lim.seconds, count]);
+  }, [lim, count]);
 
   return null;
 };

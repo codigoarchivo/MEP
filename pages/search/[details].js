@@ -53,7 +53,7 @@ const Details = ({ message = [], product = {} }) => {
   // Breakpoints
   const { content5, full, bordes } = Breakpoints();
   // values
-  const { id, na, pr, im, ds, ct, cn, es, dt, uid, ps, pj } = product;
+  const { id, na, pr, im, ds, ct, cn, dt, uid, ps, pj } = product;
   // list Category
   const listCt = list.filter((item) => item.id === ct);
   // Incremen and Decrement

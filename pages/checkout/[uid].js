@@ -25,8 +25,6 @@ import CheckoutScreen from "../../components/checkout/CheckoutScreen";
 
 import { dbUser } from "../../data/dbUser";
 
-import Spiner from "../../utils/Spiner";
-
 import Toast from "../../helpers/Toast";
 
 const Checkout = ({ product }) => {
@@ -49,6 +47,8 @@ const Checkout = ({ product }) => {
     }
   }, [dispatch, product]);
 
+
+  console.log(check);
   const handleRevert = async () => {
     if (a === undefined) {
       router.push("/login");
@@ -68,12 +68,10 @@ const Checkout = ({ product }) => {
 
     dispatch(saveSaleRevert(data));
 
-    router.push("/");
+    // router.push("/");
   };
 
-  return check.length === 0 ? (
-    <Spiner title={"SIN INFORMCACiÖN"} />
-  ) : (
+  return (
     <ShopLayout title={"Tus Compras"}>
       <Container maxW={"container.lg"}>
         <Stack flexDirection={"row"} my={20} w={full}>

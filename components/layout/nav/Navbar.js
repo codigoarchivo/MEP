@@ -1,10 +1,10 @@
-import React from "react";
-
-import { useDispatch, useSelector } from "react-redux";
+import React, { useContext } from "react";
 
 import { useRouter } from "next/router";
 
 import Image from "next/image";
+
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   AspectRatio,
@@ -42,6 +42,8 @@ import {
 
 import { HamburgerIcon, MoonIcon, SearchIcon, SunIcon } from "@chakra-ui/icons";
 
+import { UIContext } from "../../../context/UIContext";
+
 import { CartIcon, LoveIcon, OrdenpagoIcon } from "../../../helpers/IconNew";
 import ModeColor from "../../../helpers/ModeColor";
 import Breakpoints from "../../../helpers/Breakpoints";
@@ -71,8 +73,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
   // dispatch
   const router = useRouter();
-  // selector
-  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+  // useContext
+  const a = useContext(UIContext);
   // selector
   const {
     activeCartSelect,
@@ -121,7 +123,7 @@ const Navbar = () => {
   };
 
   const handleSerchProductCart = (data) => {
-    Toast(data, "info", 5000);
+    return Toast(data, "info", 5000);
   };
   return (
     <>
@@ -274,64 +276,32 @@ const Navbar = () => {
               <Flex mx={4} justifyContent="space-around" alignItems={"center"}>
                 {a?.email && a?.rol && a?.displayName ? (
                   <>
-                    {check.length > 0 ? (
-                      <Box position={"relative"}>
-                        <NavLink
-                          px={0}
-                          variant={"secondary"}
-                          href={"/checkout/[uid]"}
-                          as={`/checkout/${a?.uid}`}
-                          name={<OrdenpagoIcon boxSize={points11} />}
-                        />
-                        <Flex
-                          right={-2}
-                          zIndex={-10}
-                          cursor={"pointer"}
-                          top={0}
-                          border={bordes}
-                          alignItems={"center"}
-                          justifyContent="center"
-                          backgroundColor={"brand.800"}
-                          borderRadius={"full"}
-                          position={"absolute"}
-                          w={5}
-                          h={5}
-                        >
-                          {!check[0] ? 0 : check.length}
-                        </Flex>
-                      </Box>
-                    ) : (
-                      <Box
-                        position={"relative"}
-                        onClick={() =>
-                          handleSerchProductCart(
-                            "Direjete a la lista de compras"
-                          )
-                        }
+                    <Box position={"relative"}>
+                      <NavLink
+                        px={0}
+                        variant={"secondary"}
+                        href={"/checkout/[uid]"}
+                        as={`/checkout/${a?.uid}`}
+                        name={<OrdenpagoIcon boxSize={points11} />}
+                      />
+
+                      <Flex
+                        right={-2}
+                        zIndex={-10}
+                        cursor={"pointer"}
+                        top={0}
+                        border={bordes}
+                        alignItems={"center"}
+                        justifyContent="center"
+                        backgroundColor={"brand.800"}
+                        borderRadius={"full"}
+                        position={"absolute"}
+                        w={5}
+                        h={5}
                       >
-                        <NavLink
-                          px={0}
-                          variant={"secondary"}
-                          href={`${router.pathname}`}
-                          name={<OrdenpagoIcon boxSize={points11} />}
-                        />
-                        <Flex
-                          cursor={"pointer"}
-                          right={0}
-                          top={0}
-                          border={bordes}
-                          alignItems={"center"}
-                          justifyContent="center"
-                          backgroundColor={"brand.800"}
-                          borderRadius={"full"}
-                          position={"absolute"}
-                          w={5}
-                          h={5}
-                        >
-                          {!check[0] ? 0 : check.length}
-                        </Flex>
-                      </Box>
-                    )}
+                        {check.length > 0 ? check.length : 0}
+                      </Flex>
+                    </Box>
                   </>
                 ) : (
                   <NavLink

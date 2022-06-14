@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 
-import { useDispatch } from "react-redux";
-
 import { onAuthStateChanged } from "firebase/auth";
 
 import { auth } from "../firebase/config";
 
 import { login } from "../actions/auth";
+
+import { useDispatch } from "react-redux";
 
 const AuthChange = () => {
   // dispatch
@@ -27,7 +27,7 @@ const AuthChange = () => {
         );
       }
     });
-  }, [dispatch]);
+  }, [ dispatch ]);
 
   return null;
 };

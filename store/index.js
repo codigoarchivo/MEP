@@ -1,6 +1,9 @@
+import { applyMiddleware, compose, legacy_createStore as createStore } from "redux";
+
 import thunk from "redux-thunk";
-import { applyMiddleware, compose, createStore } from "redux";
+
 import { persistStore } from "redux-persist";
+
 import { persistingReducer } from "../reducers";
 
 const composeEnhancers =

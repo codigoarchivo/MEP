@@ -2,13 +2,13 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
+import { useRouter } from "next/router";
+
 import { Container } from "@chakra-ui/react";
 
 import ProductData from "../../components/product/ProductData";
 
 import ShopLayout from "../../components/layout/ShopLayout";
-
-import { useRouter } from "next/router";
 
 import { dbProducts, dbProductsById } from "../../data/dbProducts";
 

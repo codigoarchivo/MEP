@@ -49,7 +49,9 @@ const SerchCart = () => {
 
   return (
     <>
+      {/* modal compra */}
       <SerchCartModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+      {/* carrito */}
       <Stack flexDirection={"row"} w={full} spacing={0}>
         {!active[0] ? (
           <Heading my={20} w={full} textAlign={"center"}>

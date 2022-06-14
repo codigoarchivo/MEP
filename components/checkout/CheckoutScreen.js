@@ -31,9 +31,8 @@ import NavLink from "../../utils/Navlink";
 import ContadorRegresivo from "../../helpers/ContadorRegresivo";
 
 const CheckoutScreen = ({
-  product,
+  product = {},
   process,
-  sale,
   id: idThree,
   lim,
   count,
@@ -54,6 +53,8 @@ const CheckoutScreen = ({
   } = useDisclosure();
   // Breakpoints
   const { bordes, full } = Breakpoints();
+
+  // console.log(product);
 
   // id del producto y el rat que esta acumulado
   const { rat, id, uid, to, na, cn, pr, in: ind } = product;
@@ -100,7 +101,7 @@ const CheckoutScreen = ({
             // toda la informacion del producto, que se guardo en el uid del comprador
             product={product}
             // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
-            sale={sale}
+            // sale={sale}
           />
           <NavLink
             href={`/checkout/[rate]?ve=${uid}&glo=${idThree}&rat=${rat}&li=${check.length}&close=true`}
