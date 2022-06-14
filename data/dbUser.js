@@ -9,7 +9,7 @@ import {
 
 import { db } from "../firebase/config";
 
-export const dbUser = async (id, dbU) => {
+export const dbUser = async (id, dbU, val) => {
   let q = "";
   switch (dbU) {
     case "dbUserOne":
@@ -20,6 +20,12 @@ export const dbUser = async (id, dbU) => {
       break;
     case "dbUserTwo":
       q = collection(db, "users");
+      break;
+    case "dbUserThree":
+      q = query(
+        collection(db, "users", id, "buys", val),
+        where("close", "==", false)
+      );
       break;
   }
 

@@ -19,7 +19,11 @@ import ShopLayout from "../../components/layout/ShopLayout";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import { activeProduct, saveSaleRevert } from "../../actions/product";
+import {
+  activeProduct,
+  closeActive,
+  saveSaleRevert,
+} from "../../actions/product";
 
 import CheckoutScreen from "../../components/checkout/CheckoutScreen";
 
@@ -44,11 +48,10 @@ const Checkout = ({ product }) => {
   useEffect(() => {
     if (product) {
       dispatch(activeProduct(product));
+      dispatch(closeActive());
     }
   }, [dispatch, product]);
 
-
-  console.log(check);
   const handleRevert = async () => {
     if (a === undefined) {
       router.push("/login");
@@ -68,7 +71,7 @@ const Checkout = ({ product }) => {
 
     dispatch(saveSaleRevert(data));
 
-    // router.push("/");
+    router.push("/");
   };
 
   return (
@@ -81,7 +84,7 @@ const Checkout = ({ product }) => {
             </Heading>
             <Stack w={full} flexDirection={content5} spacing={0}>
               <Box w={full} mx={2}>
-                <VStack p={3} spacing={5} border={bordes}>
+                <VStack spacing={5} border={bordes} p={10} boxShadow={"lg"}>
                   <VStack w={full} border={bordes} p={3}>
                     <Heading
                       w={full}

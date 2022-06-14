@@ -182,12 +182,20 @@ const LatestSaveCart = (data) => ({
 export const saveSale = (data = [], uid) => {
   return async (dispatch) => {
     try {
-      // data.forEach((item) => ({
-      //   ...item,
-      //   id: (item["id"] = id),
-      // }));
+      const newData = data.map(async (item) => {
+        await dbProductEdit(item.product.id, "dbProEditOne", item.product.cnr);
 
-      
+        const { id } = await addDoc(collection(db, "users", uid, "buys"), {
+          ...item,
+        });
+
+        return {
+          ...item,
+          id: (item["id"] = id),
+        };
+      });
+
+      dispatch(activeProduct(newData));
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }
@@ -207,7 +215,7 @@ export const saveSaleRevert = (data) => {
 
       dispatch(closeRevert());
     } catch (error) {
-      Toast("Al parecer hay un errorasasasasa", "error", 5000);
+      Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };

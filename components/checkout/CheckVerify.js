@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 
 import Image from "next/image";
 
@@ -28,8 +28,6 @@ import {
 import { useRouter } from "next/router";
 
 import { useDispatch, useSelector } from "react-redux";
-
-import { UIContext } from "../../context/UIContext";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
@@ -64,8 +62,7 @@ const CheckVerify = ({
   // product
   product = {},
 }) => {
-  // useContext
-  const a = useContext(UIContext);
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
 
   const [urlImage, setUrlImage] = useState("");
   // router

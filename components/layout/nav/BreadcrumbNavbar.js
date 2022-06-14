@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,11 +14,8 @@ import MenuHistory from "../../../utils/MenuHistory";
 
 import { dbProducts } from "../../../data/dbProducts";
 
-import { UIContext } from "../../../context/UIContext";
-
 export const BreadcrumbNavbar = ({ NavLink, Box }) => {
-  // useContext
-  const a = useContext(UIContext);
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints

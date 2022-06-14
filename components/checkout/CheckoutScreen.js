@@ -30,13 +30,8 @@ import NavLink from "../../utils/Navlink";
 
 import ContadorRegresivo from "../../helpers/ContadorRegresivo";
 
-const CheckoutScreen = ({
-  product = {},
-  process,
-  id: idThree,
-  lim,
-  count,
-}) => {
+const CheckoutScreen = ({ product = {}, process, id: idThree, lim, count }) => {
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useSelector
   const { activeSelectCheck: check = [] } = useSelector(
     ({ product }) => product
@@ -46,15 +41,9 @@ const CheckoutScreen = ({
   // useRef
   const initRef = useRef();
   // useDisclosure
-  const {
-    isOpen: isOpen1,
-    onOpen: onOpen1,
-    onClose: onClose1,
-  } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   // Breakpoints
   const { bordes, full } = Breakpoints();
-
-  // console.log(product);
 
   // id del producto y el rat que esta acumulado
   const { rat, id, uid, to, na, cn, pr, in: ind } = product;
@@ -70,8 +59,8 @@ const CheckoutScreen = ({
       >
         <HStack spacing={"3"}>
           <NavLink
-            href={`/checkout/verify/[verify]?id=${id}&uid=${uid}&to=${to}&na=${na}&cn=${cn}&pr=${pr}&in=${ind}`}
-            as={`/checkout/verify/${idThree}?id=${id}&uid=${uid}&to=${to}&na=${na}&cn=${cn}&pr=${pr}&in=${ind}`}
+            href={`/checkout/verify/[verify]?uid=${a.uid}`}
+            as={`/checkout/verify/${idThree}?uid=${a.uid}`}
             name={`Resumén $${product.to}`}
             variant={"primary"}
             size={"xs"}
@@ -90,9 +79,9 @@ const CheckoutScreen = ({
             border={bordes}
             w={"min-content"}
             disabled={process ? false : true}
-            isOpen={isOpen1}
-            onOpen={onOpen1}
-            onClose={onClose1}
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onClose={onClose}
             initialRef={initialRef}
             nameButton={"Datos del vendedor"}
             bordes={bordes}

@@ -61,6 +61,34 @@ export const startLoginEmailPassword = (email, password) => {
   };
 };
 
+export const listDataUserUID = () => {
+  return async (dispatch) => {
+    try {
+      onAuthStateChanged(auth, (user) => {
+        // dispatch
+        const dA = process.env.NEXT_PUBLIC_ROL_A;
+
+        if (user) {
+          dispatch(
+            login(
+              user.uid,
+              user.displayName,
+              user.photoURL,
+              user.email,
+              user.uid === dA.toString() ? "owner" : "user"
+            )
+          );
+        } else {
+          dispatch(logoutClose());
+        }
+      });
+    } catch (error) {
+      // error
+      Toast("Al parecer hay un error", "error", 5000);
+    }
+  };
+};
+
 export const startRegisterWithNameEmailPassword = (email, password, name) => {
   return (dispatch) => {
     try {
@@ -180,7 +208,7 @@ export const logout = () => {
   };
 };
 
-const logoutClose = () => ({
+export const logoutClose = () => ({
   type: types.logout,
 });
 

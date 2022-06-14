@@ -15,7 +15,7 @@ import {
   chakra,
 } from "@chakra-ui/react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import Breakpoints from "../../helpers/Breakpoints";
 

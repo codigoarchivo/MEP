@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import { useRouter } from "next/router";
 
@@ -42,8 +42,6 @@ import {
 
 import { HamburgerIcon, MoonIcon, SearchIcon, SunIcon } from "@chakra-ui/icons";
 
-import { UIContext } from "../../../context/UIContext";
-
 import { CartIcon, LoveIcon, OrdenpagoIcon } from "../../../helpers/IconNew";
 import ModeColor from "../../../helpers/ModeColor";
 import Breakpoints from "../../../helpers/Breakpoints";
@@ -73,8 +71,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
   // dispatch
   const router = useRouter();
-  // useContext
-  const a = useContext(UIContext);
+
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector
   const {
     activeCartSelect,

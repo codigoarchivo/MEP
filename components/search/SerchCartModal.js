@@ -1,19 +1,17 @@
-import React from "react";
-
-import { db } from "../../firebase/config";
-
-import { addDoc, collection } from "firebase/firestore";
+import React, { useState } from "react";
 
 import { useRouter } from "next/router";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import { QuestionOutlineIcon } from "@chakra-ui/icons";
+
 import { addDays } from "date-fns";
 
-import { dbProductEdit } from "../../data/dbProducts";
-
 import {
+  Box,
   Button,
+  Heading,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -21,9 +19,11 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Text,
 } from "@chakra-ui/react";
 
-import { activeProduct, closeActive } from "../../actions/product";
+import { saveSale } from "../../actions/product";
+import Toast from "../../helpers/Toast";
 
 const SerchCartModal = ({ isOpen, onClose }) => {
   // selector
@@ -36,6 +36,15 @@ const SerchCartModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   // useRouter
   const router = useRouter();
+
+  const OverlayOne = () => (
+    <ModalOverlay
+      bg="blackAlpha.300"
+      backdropFilter="blur(10px) hue-rotate(90deg)"
+    />
+  );
+
+  const [overlay, setOverlay] = useState(<OverlayOne />);
 
   const data = active.map((item) => {
     return {
@@ -67,53 +76,53 @@ const SerchCartModal = ({ isOpen, onClose }) => {
     };
   });
 
-  const confirmSale = async (e) => {
-    e.preventDefault();
-
-    const newData = await data.map(async (item) => {
-      await dbProductEdit(item.product.id, "dbProEditOne", item.product.cnr);
-
-      const { id } = await addDoc(collection(db, "users", a.uid, "buys"), {
-        ...item,
-      });
-
-      return {
-        ...item,
-        id: (item["id"] = id),
-      };
-    });
-
-    dispatch(activeProduct(newData));
-
-    dispatch(closeActive());
+  const confirmSale = () => {
+    dispatch(saveSale(data, a.uid));
 
     // save cart
-    await router.push({
+    router.push({
       pathname: "/checkout/[uid]",
       query: {
         uid: a.uid,
       },
     });
+
+    Toast("Gracias por su compra", "success", 5000);
   };
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        isCentered
+        motionPreset="slideInBottom"
+      >
+        {overlay}
         <ModalOverlay />
-        <ModalContent as={"form"} onSubmit={confirmSale}>
-          <ModalHeader>Modal Title</ModalHeader>
+        <ModalContent>
+          <ModalHeader>{a.displayName}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <h1>No podrás revertir esto!,</h1>
-            <p>¿Estas seguro de que quieres realizar la compra?</p>
-          </ModalBody>
+            <Box textAlign={"center"} mb={10} w={"full"}>
+              <QuestionOutlineIcon w={20} h={20} color="red.500" />
+            </Box>
 
+            <Heading size={"lg"}>No podrás revertir esto!,</Heading>
+            <Text>¿Estas seguro de que quieres realizar la compra?</Text>
+          </ModalBody>
           <ModalFooter>
-            <Button variant="primary" type="submit" onClick={onClose}>
-              Comprar
-            </Button>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
+            <Button variant={"secondary"} mr={3} onClick={onClose}>
               Close
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => {
+                confirmSale(), setOverlay(<OverlayOne />);
+              }}
+              mr={3}
+            >
+              Comprar
             </Button>
           </ModalFooter>
         </ModalContent>

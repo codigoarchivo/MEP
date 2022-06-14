@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React  from "react";
 
 import PropTypes from "prop-types";
 
@@ -25,6 +25,7 @@ import Breakpoints from "../../../helpers/Breakpoints";
 import NavLink from "../../../utils/Navlink";
 
 import { useDispatch, useSelector } from "react-redux";
+
 import { serchProductList } from "../../../actions/product";
 
 import {
@@ -38,8 +39,6 @@ import {
   Logout,
   VentaIcon,
 } from "../../../helpers/IconNew";
-
-import { UIContext } from "../../../context/UIContext";
 
 export const DrawerNavbar = ({
   onClose,
@@ -55,8 +54,7 @@ export const DrawerNavbar = ({
   MoonIcon,
   handleLogout,
 }) => {
-  // useContext
-  const a = useContext(UIContext);
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // Breakpoints
   const { displayOn2, bordes } = Breakpoints();
   // dispatch
