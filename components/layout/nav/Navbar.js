@@ -75,9 +75,9 @@ const Navbar = () => {
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector
   const {
-    activeCartSelect,
+    activeCartSelect = [],
     activeSelectCheck: check = [],
-    saveCartSelect,
+    saveCartSelect = [],
   } = useSelector(({ product }) => product);
 
   // Modality

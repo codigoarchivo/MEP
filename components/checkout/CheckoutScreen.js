@@ -30,8 +30,14 @@ import NavLink from "../../utils/Navlink";
 
 import ContadorRegresivo from "../../helpers/ContadorRegresivo";
 
-const CheckoutScreen = ({ product = {}, process, id: idThree, lim, count }) => {
-  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+const CheckoutScreen = ({
+  product = {},
+  process,
+  id: idThree,
+  lim,
+  count,
+  uid,
+}) => {
   // useSelector
   const { activeSelectCheck: check = [] } = useSelector(
     ({ product }) => product
@@ -46,7 +52,7 @@ const CheckoutScreen = ({ product = {}, process, id: idThree, lim, count }) => {
   const { bordes, full } = Breakpoints();
 
   // id del producto y el rat que esta acumulado
-  const { rat, id, uid, to, na, cn, pr, in: ind } = product;
+  const { rat, id } = product;
 
   return (
     <>
@@ -59,8 +65,8 @@ const CheckoutScreen = ({ product = {}, process, id: idThree, lim, count }) => {
       >
         <HStack spacing={"3"}>
           <NavLink
-            href={`/checkout/verify/[verify]?uid=${a.uid}`}
-            as={`/checkout/verify/${idThree}?uid=${a.uid}`}
+            href={`/verify/[uid]?v=${idThree}`}
+            as={`/verify/${[uid]}?v=${idThree}`}
             name={`Resumén $${product.to}`}
             variant={"primary"}
             size={"xs"}

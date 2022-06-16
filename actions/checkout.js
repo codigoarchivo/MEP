@@ -104,14 +104,20 @@ const productEdit = (data) => ({
   payload: data,
 });
 
+
+export const cheListAll = (data) => ({
+  type: types.cheListAllHistory,
+  payload: data,
+});
+
+
+
 export const validShop = (sale) => {
   return async () => {
     try {
       // principal
       await setDoc(doc(db, "users", dA, "sales", sale.idThree), {
-        sale,
-        close: false,
-        process: false,
+        ...sale,
       });
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);

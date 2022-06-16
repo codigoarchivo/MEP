@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 
 import PropTypes from "prop-types";
 
@@ -60,7 +60,7 @@ export const DrawerNavbar = ({
   // dispatch
   const dispatch = useDispatch();
   // selector
-  const { list } = useSelector(({ category }) => category);
+  const { list = [] } = useSelector(({ category }) => category);
   // handleObservator
   const handleObservator = () => {
     dispatch(serchProductList(list));

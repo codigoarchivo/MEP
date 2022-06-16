@@ -27,6 +27,9 @@ export const dbUser = async (id, dbU, val) => {
         where("close", "==", false)
       );
       break;
+    case "dbUserFour":
+      q = collection(db, "users", id, "sales");
+      break;
   }
 
   const { docs } = await getDocs(q);
@@ -39,8 +42,16 @@ export const dbUser = async (id, dbU, val) => {
   return JSON.parse(JSON.stringify(data));
 };
 
-export const dbUserByUID = async (uid) => {
-  const q = doc(db, "users", uid);
+export const dbUserByUID = async (uid, dbU, val) => {
+  let q = {};
+  switch (dbU) {
+    case "dbUserOneID":
+      q = doc(db, "users", uid);
+      break;
+    case "dbuserTwoID":
+      q = doc(db, "users", uid, "buys", val);
+      break;
+  }
 
   const docSnap = await getDoc(q);
 

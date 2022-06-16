@@ -46,6 +46,7 @@ export const types = {
   checkoutAdd: "[CHECKOUT] Add",
   checkoutList: "[CHECKOUT] List",
   checkoutDelete: "[CHECKOUT] Delete",
+  cheListAllHistory: "[CHECKOUT] History",
 
   user: "[USER] List",
   userAdd: "[USER] Add",

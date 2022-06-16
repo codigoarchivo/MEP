@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 
 import { useRouter } from "next/router";
 
+import PropTypes from "prop-types";
+
 import {
   Box,
   Button,
@@ -31,15 +33,13 @@ import { dbUser } from "../../data/dbUser";
 
 import Toast from "../../helpers/Toast";
 
-const Checkout = ({ product }) => {
+const Checkout = ({ product, uid }) => {
   // dispatch
   const router = useRouter();
   // useDispatch
   const dispatch = useDispatch();
   // Breakpoints
   const { bordes, full, content5 } = Breakpoints();
-  // selector
-  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useSelector
   const { activeSelectCheck: check = [] } = useSelector(
     ({ product }) => product
@@ -53,10 +53,6 @@ const Checkout = ({ product }) => {
   }, [dispatch, product]);
 
   const handleRevert = async () => {
-    if (a === undefined) {
-      router.push("/login");
-    }
-
     // revertir
     const data = await check.map((item) => {
       return {
@@ -85,20 +81,24 @@ const Checkout = ({ product }) => {
             <Stack w={full} flexDirection={content5} spacing={0}>
               <Box w={full} mx={2}>
                 <VStack spacing={5} border={bordes} p={10} boxShadow={"lg"}>
-                  <VStack w={full} border={bordes} p={3}>
+                  <VStack w={full} py={5}>
                     <Heading
                       w={full}
-                      size={"sm"}
-                      fontWeight={"normal"}
+                      size={"md"}
                       textTransform={"uppercase"}
                       px={2}
+                      fontWeight={"black"}
+                      mb={10}
                     >
-                      <Text as={"span"} fontWeight={"black"} fontSize={"small"}>
-                        Lista de compras
-                      </Text>{" "}
+                      Lista de compras
                     </Heading>
                     {check.map((item, key) => (
-                      <CheckoutScreen key={key} {...item} count={(key += 1)} />
+                      <CheckoutScreen
+                        key={key}
+                        {...item}
+                        count={(key += 1)}
+                        uid={uid}
+                      />
                     ))}
                   </VStack>
                   <Box w={"full"}>
@@ -135,6 +135,11 @@ const Checkout = ({ product }) => {
   );
 };
 
+Checkout.propTypes = {
+  product: PropTypes.array,
+  uid: PropTypes.string,
+};
+
 export async function getServerSideProps({ params }) {
   const uid = await params.uid.toString();
   try {
@@ -152,6 +157,7 @@ export async function getServerSideProps({ params }) {
     return {
       props: {
         product,
+        uid,
       },
     };
   } catch (error) {

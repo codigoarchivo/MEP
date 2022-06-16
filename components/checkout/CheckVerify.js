@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 
+import { useRouter } from "next/router";
+
+import PropTypes from "prop-types";
+
+import { useDispatch } from "react-redux";
+
 import Image from "next/image";
 
 import { CheckCircleIcon, ExternalLinkIcon } from "@chakra-ui/icons";
@@ -17,21 +23,14 @@ import {
   VStack,
   chakra,
   FormLabel,
-  Input,
-  Textarea,
   GridItem,
   Grid,
-  AspectRatio,
-  Flex,
+  Box,
+  CloseButton,
+  Divider,
 } from "@chakra-ui/react";
 
-import { useRouter } from "next/router";
-
-import { useDispatch, useSelector } from "react-redux";
-
 import Breakpoints from "../../helpers/Breakpoints";
-
-import { WhatsAppIcon } from "../../helpers/IconNew";
 
 import ModeColor from "../../helpers/ModeColor";
 
@@ -40,30 +39,31 @@ import useFormAll from "../../hooks/useFormAll";
 import { validShop } from "../../actions/checkout";
 
 import Toast from "../../helpers/Toast";
+
 import FileAll from "../../utils/FileAll";
+import GridItemForm from "../../utils/GridItemForm";
+import GridItemFormTextarea from "../../utils/GridItemFormTextarea";
+import GridValueClose from "../../utils/GridValueClose";
 
 const initialStates = {
   nap: "",
-  na: "",
   co: "",
-  te: "",
   imp: "",
   fer: "",
-  cor: "",
-  inf: "",
-  tip: "",
+  dt: "",
   ref: "",
 };
 
 const CheckVerify = ({
-  bordes,
-  // id del buy product
+  // uid del comprador que se encuentra logeado
+  uid = "",
+  // BORDES
+  bordes = "",
+  // id del buy del la compra del producto
   idThree = "",
   // product
   product = {},
 }) => {
-  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
-
   const [urlImage, setUrlImage] = useState("");
   // router
   const router = useRouter();
@@ -76,56 +76,45 @@ const CheckVerify = ({
 
   // useForm
   const { values, reset, handleInputChange } = useFormAll(initialStates);
+
   // agrega imagen
   values.imp = urlImage ? urlImage : values.imp;
   // values
-  const { nap, imp, fer, cor, inf, ref, na, co, te } = values;
+  const { nap, co, imp, fer, dt, ref } = values;
 
   // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (
-      nap === "" ||
-      imp === "" ||
-      fer === "" ||
-      cor === "" ||
-      na === "" ||
-      co === "" ||
-      te === "" ||
-      ref === ""
-    ) {
+    if ([nap, co, imp, fer, dt, ref].includes("") || !urlImage) {
       return Toast("Todos los campos son obligatorios", "error", 5000);
     }
 
     const shop = {
       nap,
+      co,
       imp,
       fer,
-      cor,
-      inf,
+      dt,
       ref,
-      na,
-      co,
-      te,
       // información del producto
       product,
       // uid del comprador que se encuentra logeado
-      uidBuy: a.uid.toString(),
+      uidBuy: uid,
       // idThree es id del la compra del producto
       idThree,
     };
 
     dispatch(validShop(shop));
 
-    Toast("Enviada Verificación", "success", 5000);
+    Toast("Enviada Verificación espere a que recibe", "success", 5000);
 
     reset();
 
     router.push({
       pathname: "/checkout/[uid]",
       query: {
-        uid: a?.uid,
+        uid,
       },
     });
   };
@@ -134,250 +123,96 @@ const CheckVerify = ({
     router.push({
       pathname: "/checkout/[uid]",
       query: {
-        uid: a?.uid,
+        uid,
       },
+    });
+  };
+
+  const handleClient = () => {
+    router.push({
+      pathname: "/info/[uid]",
+      query: { uid },
     });
   };
 
   return (
     <>
-      <VStack mr={5} w={full} alignContent={"center"} h={"full"} spacing={0}>
-        <chakra.form onSubmit={handleSubmit} w={full} p={3} border={bordes}>
-          <Grid
-            templateColumns={repeat1}
-            alignItems={"center"}
-            columnGap={points3}
+      <Text py={5}>
+        !importante Información para que el vendedor -{" "}
+        <Button onClick={handleClient} variant={"primary"}>
+          ir
+        </Button>{" "}
+        - Datos quedara guardado en la base de datos y se utilizara para futuras
+        compras.
+      </Text>
+      <Stack flexDirection={"row"} w={full} spacing={0}>
+        <VStack shadow={"lg"} w={full} mr={5} spacing={2} border={bordes} p={5}>
+          <Heading
+            textTransform={"uppercase"}
+            w={full}
+            mb={5}
+            size={"sm"}
+            border={bordes}
+            p={2}
           >
-            <GridItem mb={3} colSpan={2}>
-              <Heading
-                border={bordes}
-                p={2}
-                size={"xs"}
-                textTransform={"uppercase"}
-                fontWeight={"normal"}
-                mb={5}
+            Información de Pago
+          </Heading>
+          <Stack w={full} spacing={3} border={bordes} p={5}>
+            {[
+              {
+                nombre: "Nombre",
+                Valor: product?.na,
+              },
+              {
+                nombre: "Cantidad",
+                Valor: "N°" + product?.cn,
+              },
+              {
+                nombre: "Impuesto",
+                Valor: "$" + product?.in,
+              },
+              {
+                nombre: "Precio",
+                Valor: "$" + product?.pj,
+              },
+              {
+                nombre: "Precio Unitario",
+                Valor: "$" + product?.pr,
+              },
+              {
+                nombre: "Total",
+                Valor: "$" + product?.to,
+              },
+            ].map(({ nombre, Valor }, key) => (
+              <HStack
+                w={full}
+                key={key}
+                justifyContent={"space-between"}
+                borderBottom={bordes}
               >
-                informacion pago para la tienda
-              </Heading>
-            </GridItem>
-
-            <GridItem mb={3} colSpan={2}>
-              <FormLabel htmlFor="imp" textTransform={"uppercase"}>
-                Imagen del recibo
-              </FormLabel>
-              <HStack>
-                {/* save file */}
-                <FileAll setUrlImage={setUrlImage} fileName={"fotosRecibo"} />
-                <Flex w={"20%"} justifyContent={"center"}>
-                  {imp && (
-                    <AspectRatio
-                      border={bordes}
-                      ratio={1}
-                      w={59}
-                      h={59}
-                      position={"relative"}
-                    >
-                      <Image
-                        src={imp}
-                        alt="Recibo pago"
-                        layout="fill"
-                        objectFit="contain"
-                      />
-                    </AspectRatio>
-                  )}
-                </Flex>
+                <Text fontWeight={"black"}>{nombre}: </Text>
+                <Text>{Valor}</Text>
               </HStack>
-            </GridItem>
-            <GridItem mb={3} colSpan={2}>
-              <FormLabel htmlFor="nap" textTransform={"uppercase"}>
-                Nombre realizo pago
-              </FormLabel>
-              <Input
-                name="nap"
-                id="nap"
-                onChange={handleInputChange}
-                value={nap}
-                type={"text"}
-                placeholder="Nombre"
-              />
-            </GridItem>
-            <GridItem mb={3} colSpan={2}>
-              <FormLabel htmlFor="ref" textTransform={"uppercase"}>
-                Referencia
-              </FormLabel>
-              <Input
-                name="ref"
-                id="ref"
-                onChange={handleInputChange}
-                value={ref}
-                type={"text"}
-                placeholder="N° Referencia"
-              />
-            </GridItem>
-            <GridItem mb={3} colSpan={2}>
-              <FormLabel htmlFor="cor" textTransform={"uppercase"}>
-                Correo
-              </FormLabel>
-              <Input
-                name="cor"
-                id="cor"
-                onChange={handleInputChange}
-                value={cor}
-                type={"text"}
-                placeholder="Correo"
-              />
-            </GridItem>
-            <GridItem mb={3} colSpan={2}>
-              <FormLabel htmlFor="fer" textTransform={"uppercase"}>
-                Fecha de pago
-              </FormLabel>
-              <Input
-                name="fer"
-                id="fer"
-                onChange={handleInputChange}
-                value={fer}
-                type={"date"}
-              />
-            </GridItem>
+            ))}
+          </Stack>
+        </VStack>
 
-            <GridItem colSpan={2}>
-              <Heading
-                p={2}
-                my={5}
-                size={"xs"}
-                textTransform={"uppercase"}
-                fontWeight={"normal"}
-                border={bordes}
-                w={"full"}
-              >
-                informacion Personal para el vendedor
-              </Heading>
-            </GridItem>
-
-            <GridItem colSpan={2}>
-              <FormLabel htmlFor="na">Nombre </FormLabel>
-              <Input
-                name="na"
-                id="na"
-                onChange={handleInputChange}
-                value={na}
-                type={"text"}
-                placeholder="Nombre"
-              />
-            </GridItem>
-
-            <GridItem colSpan={2}>
-              <FormLabel htmlFor="co">Correo</FormLabel>
-              <Input
-                name="co"
-                id="co"
-                onChange={handleInputChange}
-                value={co}
-                type={"text"}
-                placeholder="Nombre"
-              />
-            </GridItem>
-
-            <GridItem colSpan={2}>
-              <FormLabel htmlFor="te">Telefono</FormLabel>
-              <Input
-                name="te"
-                id="te"
-                onChange={handleInputChange}
-                value={te}
-                type={"tel"}
-                placeholder="numero de telefono (+569) 99999999"
-              />
-            </GridItem>
-            <GridItem mb={5} colSpan={2}>
-              <FormLabel htmlFor="inf" textTransform={"uppercase"}>
-                Informacion Adicional
-              </FormLabel>
-              <Textarea
-                bg={bg}
-                _focus={brand}
-                variant="filled"
-                name="inf"
-                id="inf"
-                value={inf}
-                onChange={handleInputChange}
-                placeholder="Informacion Adicional"
-                size="xs"
-              />
-            </GridItem>
-
-            <GridItem mb={3} colSpan={2}>
-              <HStack w={"full"} justifyContent="flex-end" spacing={10}>
-                <Button variant={"secondary"} onClick={closeVerify}>
-                  Close
-                </Button>
-                <Button variant={"primary"} type="submit" ml={3}>
-                  Envio del recibo
-                </Button>
-              </HStack>
-            </GridItem>
-          </Grid>
-        </chakra.form>
-      </VStack>
-
-      <VStack w={full} spacing={0}>
-        <Heading w={full} mb={5} size={"sm"} border={bordes} p={2}>
-          Información de Pago
-        </Heading>
-        <Stack w={full} mt={5} spacing={2} border={bordes} p={5}>
-          <HStack justifyContent={"space-between"} borderBottom={bordes}>
-            <Text fontWeight={"black"}>Nombre: </Text>
-            <Text>{product?.na}</Text>
-          </HStack>
-          <HStack justifyContent={"space-between"} borderBottom={bordes}>
-            <Text fontWeight={"black"}>Precio: </Text>
-            <Text>${product?.pr}</Text>
-          </HStack>
-          <HStack justifyContent={"space-between"} borderBottom={bordes}>
-            <Text fontWeight={"black"}>Cantidad: </Text>
-            <Text>{product?.cn}</Text>
-          </HStack>
-          <HStack justifyContent={"space-between"} borderBottom={bordes}>
-            <Text fontWeight={"black"}>Pagar a la tienda: </Text>
-            <Text>${product?.to}</Text>
-          </HStack>
-        </Stack>
-
-        <Stack w={full} spacing={3}>
-          <Heading mt={5} size={"sm"} border={bordes} p={2}>
+        <VStack shadow={"lg"} w={full} spacing={2} border={bordes} p={5}>
+          <Heading
+            textTransform={"uppercase"}
+            w={full}
+            mb={5}
+            size={"sm"}
+            border={bordes}
+            p={2}
+          >
             Información de la tienda
           </Heading>
-          <HStack w={full} justifyContent={"space-between"}>
-            <Heading size={"sm"}>Telefono:</Heading>
-            <Text>
-              +1 973 510 8452{" "}
-              <Link
-                href="https://wa.me/19735108452?text=Hola%20Edgar%20Marcano%20voy%20a%20"
-                isExternal
-              >
-                Ir a<WhatsAppIcon mx="2px" />
-              </Link>
-            </Text>
-          </HStack>
           <Stack w={full} spacing={2} border={bordes} p={5}>
             <List spacing={3}>
               <ListItem>
                 <ListIcon as={CheckCircleIcon} color="brand.700" />
                 Transferencia por Zelle
-              </ListItem>
-            </List>
-            <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Heading size={"sm"}>Nombre:</Heading>
-              <Text>Edgar Marcano</Text>
-            </HStack>
-            <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Heading size={"sm"}>Correo:</Heading>
-              <Text>ehms1975@gmail.com</Text>
-            </HStack>
-            <List spacing={3}>
-              <ListItem>
-                <ListIcon as={CheckCircleIcon} color="brand.700" />
-                Desde la aplicación móvil
               </ListItem>
             </List>
             <HStack justifyContent={"space-between"} borderBottom={bordes}>
@@ -389,19 +224,151 @@ const CheckVerify = ({
                 Ir a<ExternalLinkIcon mx="2px" />
               </Link>
             </HStack>
-            <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Heading size={"sm"}>Nombre:</Heading>
-              <Text>Edgar Marcano</Text>
-            </HStack>
-            <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Heading size={"sm"}>N° Cuenta:</Heading>
-              <Text>381053465609</Text>
-            </HStack>
+            {[
+              { nombre: "Nombre", Valor: "Edgar Marcano" },
+              { nombre: "Correo", Valor: "ehms1975@gmail.com" },
+              { nombre: "Telefono", Valor: "+1 973 510 8452" },
+              { nombre: "N° Cuenta", Valor: "381053465609" },
+            ].map(({ nombre, Valor }, key) => (
+              <HStack
+                py={1}
+                key={key}
+                justifyContent={"space-between"}
+                borderBottom={bordes}
+              >
+                <Heading size={"sm"}>{nombre}:</Heading>
+                <Text>{Valor}</Text>
+              </HStack>
+            ))}
           </Stack>
-        </Stack>
-      </VStack>
+        </VStack>
+      </Stack>
+
+      <Divider py={5} />
+
+      <chakra.form
+        onSubmit={handleSubmit}
+        w={full}
+        p={10}
+        border={bordes}
+        shadow={"lg"}
+      >
+        <Grid
+          templateColumns={repeat1}
+          alignItems={"center"}
+          columnGap={points3}
+          w={full}
+        >
+          <GridItem mb={3} colSpan={2}>
+            <Heading
+              textTransform={"uppercase"}
+              w={full}
+              mb={5}
+              size={"sm"}
+              border={bordes}
+              p={2}
+            >
+              <HStack w={full} justifyContent={"space-between"}>
+                <Text>informacion pago para la tienda</Text>
+                <CloseButton onClick={closeVerify} />
+              </HStack>
+            </Heading>
+          </GridItem>
+
+          {[
+            {
+              nombre: "Nombre realizo pago",
+              Valor: nap,
+              na: "nap",
+              place: "Nombre",
+              type: "text",
+            },
+            {
+              nombre: "Referencia",
+              Valor: ref,
+              na: "ref",
+              place: "N° Referencia",
+              type: "text",
+            },
+            {
+              nombre: "Correo",
+              Valor: co,
+              na: "co",
+              place: "Correo",
+              type: "email",
+            },
+            {
+              nombre: "Fecha de pago",
+              Valor: fer,
+              na: "fer",
+              type: "date",
+            },
+          ].map(({ nombre, Valor, na, place, type }, key) => (
+            <GridItemForm
+              key={key}
+              mb={3}
+              points={1}
+              na={na}
+              name={nombre}
+              val={Valor}
+              handle={handleInputChange}
+              type={type}
+              place={place}
+            />
+          ))}
+          <GridItemFormTextarea
+            points={2}
+            name={"Informacion Adicional"}
+            na={"dt"}
+            val={dt}
+            place={"Informacion Adicional"}
+            handle={handleInputChange}
+            bg={bg}
+            brand={brand}
+            mb={10}
+          />
+          <GridItem mb={3} colSpan={1} p={5}>
+            <FormLabel
+              htmlFor="imp"
+              fontWeight={"bold"}
+              textTransform={"uppercase"}
+            >
+              Imagen del recibo
+            </FormLabel>
+            <HStack justifyContent={"space-between"} w={"full"} spacing={20}>
+              {/* save file */}
+              <Box w={"full"}>
+                <FileAll setUrlImage={setUrlImage} fileName={"fotosRecibo"} />
+              </Box>
+
+              <Box w="full" h={"full"} position={"relative"}>
+                <Image
+                  src={
+                    urlImage ||
+                    "https://via.placeholder.com/100.png?text=Imagen"
+                  }
+                  alt="Recibo pago"
+                  width={100}
+                  height={100}
+                  objectFit="cover"
+                  objectPosition="center"
+                />
+              </Box>
+            </HStack>
+          </GridItem>
+
+          <GridValueClose onClose={closeVerify} set={"Envio del recibo"} />
+        </Grid>
+      </chakra.form>
     </>
   );
+};
+
+CheckVerify.propTypes = {
+  uid: PropTypes.string.isRequired,
+  product: PropTypes.object.isRequired,
+  idThree: PropTypes.string.isRequired,
+  bordes: PropTypes.string.isRequired,
 };
 
 export default CheckVerify;

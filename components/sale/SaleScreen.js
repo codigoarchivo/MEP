@@ -8,13 +8,13 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import NavLink from "../../utils/Navlink";
 
-const SaleScreen = ({ sale = {}, process }) => {
+const SaleScreen = ({ item = {} }) => {
   // Breakpoints
   const { bordes, full } = Breakpoints();
 
-  const { idThree } = sale;
+  const { idThree } = item;
 
-  const { uid, to } = sale.product;
+  const { uid, to } = item.product;
   return (
     <HStack
       w={full}

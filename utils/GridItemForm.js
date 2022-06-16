@@ -1,6 +1,7 @@
 import { FormLabel, GridItem, Input } from "@chakra-ui/react";
 
 const GridItemForm = ({
+  mb,
   points,
   name,
   na,
@@ -12,8 +13,14 @@ const GridItemForm = ({
 }) => {
   return (
     <>
-      <GridItem colSpan={points}>
-        <FormLabel htmlFor={na}>{name}</FormLabel>
+      <GridItem mb={mb} colSpan={points}>
+        <FormLabel
+          fontWeight={"bold"}
+          textTransform={"capitalize"}
+          htmlFor={na}
+        >
+          {name}
+        </FormLabel>
         <Input
           maxLength={maxlength}
           name={na}

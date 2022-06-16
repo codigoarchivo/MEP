@@ -2,8 +2,6 @@ import { applyMiddleware, compose, legacy_createStore as createStore } from "red
 
 import thunk from "redux-thunk";
 
-import { persistStore } from "redux-persist";
-
 import { persistingReducer } from "../reducers";
 
 const composeEnhancers =
@@ -18,5 +16,3 @@ export const store = createStore(
 
   composeEnhancers(applyMiddleware(thunk))
 );
-
-export const persistor = persistStore(store);

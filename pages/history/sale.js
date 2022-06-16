@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { useDispatch, useSelector } from "react-redux";
+
+import { collection, getDocs } from "firebase/firestore";
 
 import { Box, Container, Heading, Stack, Text, VStack } from "@chakra-ui/react";
 
@@ -14,20 +16,26 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import Toast from "../../helpers/Toast";
 
+import { cheListAll } from "../../actions/checkout";
+import { dbUser } from "../../data/dbUser";
+
 const Sale = ({ dataUser }) => {
-  const [dataList, setDataList] = useState([]);
+  // dispatch
+  const dispatch = useDispatch();
+  // useSelector
+  const { history = [] } = useSelector(({ checkout }) => checkout);
   // Breakpoints
   const { bordes, full, content5 } = Breakpoints();
 
-  console.log(dataUser);
+  console.log(history);
 
   useEffect(() => {
     if (dataUser) {
-      setDataList(dataUser);
+      dispatch(cheListAll(dataUser));
     } else {
-      setDataList([]);
+      dispatch(cheListAll([]));
     }
-  }, [dataUser]);
+  }, [dispatch, dataUser]);
 
   return (
     <ShopLayout>
@@ -40,9 +48,20 @@ const Sale = ({ dataUser }) => {
             <Stack w={full} flexDirection={content5} spacing={0}>
               <Box w={full} mx={2}>
                 <VStack p={3} spacing={5} border={bordes}>
-                  <VStack w={full} border={bordes} p={3}>
-                    {dataList.map((item, key) => (
-                      <SaleScreen key={key} {...item} />
+                  <VStack w={full} py={5}>
+                    <Heading
+                      w={full}
+                      size={"md"}
+                      textTransform={"uppercase"}
+                      px={2}
+                      fontWeight={"black"}
+                      mb={10}
+                    >
+                      Lista de compras
+                    </Heading>
+
+                    {history.map((item) => (
+                      <SaleScreen item={item} key={item} />
                     ))}
                   </VStack>
 
@@ -67,22 +86,22 @@ const Sale = ({ dataUser }) => {
 };
 
 export async function getStaticProps() {
-  const dA = process.env.NEXT_PUBLIC_ROL_A;
+  const dA = process.env.NEXT_PUBLIC_ROL_A.toString();
   try {
-    const docRef = collection(db, "users", dA.toString(), "sales");
-    
-    const q = query(docRef, where("close", "==", false));
+    const dataUser = await dbUser(dA, "dbUserFour");
 
-    const el = await getDocs(q);
+    if (!dataUser) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
 
-    const dataUser = el.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-console.log(dataUser);
     return {
       props: {
-        dataUser: JSON.parse(JSON.stringify(dataUser)),
+        dataUser,
       },
     };
   } catch (error) {

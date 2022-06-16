@@ -62,18 +62,12 @@ const Informacion = ({ user = {} }) => {
 
     dispatch(DataUserAdicional({ na, te, co, dt, id, rol }));
 
-    router.push({
-      pathname: "/product/[uid]",
-      query: { uid: a?.uid.toString() },
-    });
+    router.back()
   };
 
   // cerrar
   const onCloseSelling = () => {
-    router.push({
-      pathname: "/product/[uid]",
-      query: { uid: a?.uid.toString() },
-    });
+    router.back()
   };
   return (
     <ShopLayout title={"Información | Usuario"}>
@@ -91,7 +85,7 @@ const Informacion = ({ user = {} }) => {
             textTransform={"uppercase"}
             fontWeight={"normal"}
           >
-            informacion Personal para el cliente
+            informacion Personal
           </Heading>
           <chakra.form onSubmit={handleSubmit} w={"full"} p={3}>
             <Grid
@@ -166,7 +160,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const uid = await params.uid.toString();
   try {
-    const user = await dbUserByUID(uid);
+    const user = await dbUserByUID(uid, "dbUserOneID");
 
     if (!user) {
       return {
@@ -176,7 +170,7 @@ export async function getStaticProps({ params }) {
         },
       };
     }
-    
+
     return {
       props: {
         user,

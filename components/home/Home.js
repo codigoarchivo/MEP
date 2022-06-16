@@ -29,7 +29,9 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 const Home = () => {
   // selector
-  const { list, latestCartSelect } = useSelector(({ product }) => product);
+  const { list = [], latestCartSelect = [] } = useSelector(
+    ({ product }) => product
+  );
   // Breakpoints
   const { content5, bordes } = Breakpoints();
   return (

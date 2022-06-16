@@ -41,7 +41,7 @@ const NavbarCart = () => {
   // useRef
   const inc = useRef(0);
   // selector
-  const { activeCartSelect } = useSelector(({ product }) => product);
+  const { activeCartSelect = [] } = useSelector(({ product }) => product);
   // incrementa y encapsula información para evitar que se actualice
   inc.current = activeCartSelect.reduce(
     (total, item) => (total += Number(item.cn) * Number(item.pr)),
@@ -122,7 +122,7 @@ const NavbarCart = () => {
                   </HStack>
                   <HStack w={full}>
                     <Heading textTransform={"uppercase"} fontSize={"small"}>
-                    Sub Total:{" "}
+                      Sub Total:{" "}
                     </Heading>
                     <Text>${item.pr * item.cn}</Text>
                   </HStack>

@@ -44,7 +44,7 @@ const List = ({ product = [] }) => {
   // breakpoints
   const { bordes } = Breakpoints();
   // selector
-  const { listData } = useSelector(({ product }) => product);
+  const { listData = [] } = useSelector(({ product }) => product);
   // dispatch
   const dispatch = useDispatch();
 

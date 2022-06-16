@@ -3,6 +3,7 @@ import { types } from "../type";
 const initialStates = {
   list: [],
   activeSelect: null,
+  history: [],
 };
 
 export const checkoutReducer = (state = initialStates, action) => {
@@ -11,6 +12,11 @@ export const checkoutReducer = (state = initialStates, action) => {
       return {
         ...state,
         list: [...action.payload],
+      };
+    case types.cheListAllHistory:
+      return {
+        ...state,
+        history: [...action.payload],
       };
     case types.checkoutAdd:
       return {

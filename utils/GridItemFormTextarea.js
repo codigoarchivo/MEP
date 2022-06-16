@@ -9,11 +9,18 @@ const GridItemFormTextarea = ({
   handle,
   bg,
   brand,
+  mb,
 }) => {
   return (
     <>
-      <GridItem colSpan={points}>
-        <FormLabel htmlFor={na}>{name}</FormLabel>
+      <GridItem colSpan={points} mb={mb}>
+        <FormLabel
+          fontWeight={"bold"}
+          textTransform={"capitalize"}
+          htmlFor={na}
+        >
+          {name}
+        </FormLabel>
         <Textarea
           bg={bg}
           _focus={brand}

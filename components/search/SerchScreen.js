@@ -43,7 +43,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
   // Breakpoints
   const { bordes } = Breakpoints();
   // selector
-  const { activeCartSelect, saveCartSelect } = useSelector(
+  const { activeCartSelect = [], saveCartSelect = [] } = useSelector(
     ({ product }) => product
   );
 
