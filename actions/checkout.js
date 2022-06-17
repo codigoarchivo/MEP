@@ -62,6 +62,10 @@ export const closeRevert = () => ({
   type: types.productRevert,
 });
 
+export const checkRevert = () => ({
+  type: types.cheClear,
+});
+
 const deletecheckout = (id) => ({
   type: types.checkoutDelete,
   payload: id,
@@ -104,19 +108,21 @@ const productEdit = (data) => ({
   payload: data,
 });
 
-
 export const cheListAll = (data) => ({
   type: types.cheListAllHistory,
   payload: data,
 });
 
+export const cheListAllActive = (data) => ({
+  type: types.cheListAllActive,
+  payload: data,
+});
 
-
-export const validShop = (sale) => {
+export const validShop = (sale, idThree) => {
   return async () => {
     try {
       // principal
-      await setDoc(doc(db, "users", dA, "sales", sale.idThree), {
+      await setDoc(doc(db, "users", dA, "sales", idThree), {
         ...sale,
       });
     } catch (error) {
@@ -125,41 +131,40 @@ export const validShop = (sale) => {
   };
 };
 
-// export const validPago = (info = {}) => {
-//   return async () => {
-//     try {
-//       if (dA === info.product.uid) {
-//         // principal
-//         await updateDoc(doc(db, "users", dA, "sales", info.idThree), {
-//           process: true,
-//         });
-//         // buy
-//         await updateDoc(doc(db, "users", info.buy, "buys", info.idThree), {
-//           process: true,
-//           sale: info.sale,
-//         });
-//       } else {
-//         await updateDoc(doc(db, "users", dA, "sales", info.idThree), {
-//           process: true,
-//         });
-//         // sales
-//         await setDoc(
-//           doc(db, "users", info.product.uid, "sales", info.idThree),
-//           {
-//             process: true,
-//             buy: info.buy,
-//             product: info.product,
-//             close: false,
-//           }
-//         );
-//         // buy
-//         await updateDoc(doc(db, "users", info.buy.id, "buys", info.idThree), {
-//           process: true,
-//           sale: info.sale,
-//         });
-//       }
-//     } catch (error) {
-//       Toast("Al parecer hay un error", "error", 5000);
-//     }
-//   };
-// };
+export const validPago = (
+  info = {},
+  idThree = "",
+  idProduct = "",
+  uidBuy = ""
+) => {
+  return async (dispatch) => {
+    try {
+      if (dA.toString() === idProduct.toString()) {
+        // buy
+        await updateDoc(doc(db, "users", uidBuy, "buys", idThree), {
+          sale: info.sale,
+          process: true,
+        });
+        dispatch(checkRevert());
+      }
+
+      if (dA.toString() !== idProduct.toString()) {
+        // sales
+        await setDoc(doc(db, "users", idProduct, "sales", idThree), {
+          buy: info.buy,
+          product: info.product,
+        });
+        // buy
+        await updateDoc(doc(db, "users", uidBuy, "buys", idThree), {
+          sale: info.sale,
+          process: true,
+        });
+        dispatch(checkRevert());
+      }
+
+    
+    } catch (error) {
+      Toast("Al parecer hay un errorqsqsq", "error", 5000);
+    }
+  };
+};

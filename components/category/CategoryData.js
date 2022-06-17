@@ -65,12 +65,12 @@ const CategoryData = ({ router, category, pid }) => {
     pid === "Edit" && dispatch(editCategory(na, id));
     pid === "Delete" && dispatch(deleteCategory(id));
 
-    await router.push("/category");
+    await router.push("/admin/category");
   };
 
   // cerrar
   const onClose = () => {
-    router.push("/category");
+    router.push("/admin/category");
   };
 
   return (

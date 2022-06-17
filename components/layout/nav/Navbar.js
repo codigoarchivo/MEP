@@ -306,7 +306,7 @@ const Navbar = () => {
                     px={0}
                     size="md"
                     variant={"secondary"}
-                    href={"/account"}
+                    href={"/auth"}
                     name={"Inicia Sesión"}
                   />
                 )}
@@ -316,7 +316,7 @@ const Navbar = () => {
                     <NavLink
                       px={0}
                       variant={"secondary"}
-                      href={"/search/cart"}
+                      href={"/cart"}
                       name={<LoveIcon boxSize={points11} />}
                     />
                     <Flex
@@ -339,7 +339,7 @@ const Navbar = () => {
                   <NavLink
                     size="md"
                     variant={"primary"}
-                    href={"/account/create"}
+                    href={"/auth/create"}
                     name={"Regístrate"}
                   />
                 )}

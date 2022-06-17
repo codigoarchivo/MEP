@@ -84,7 +84,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
     if (matchValid.current) {
       Toast("Producto ya esta en la lista deseo", "info", 5000);
       router.push({
-        pathname: "/search/cart",
+        pathname: "/cart",
         query: { pid: id },
       });
     }

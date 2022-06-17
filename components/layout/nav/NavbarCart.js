@@ -65,13 +65,13 @@ const NavbarCart = () => {
                 size={"sm"}
                 variant={"primary"}
                 href={
-                  router.pathname !== "/search/cart"
-                    ? "/search/cart"
+                  router.pathname !== "/cart"
+                    ? "/cart"
                     : "/search"
                 }
                 name={"Ir a"}
                 rightIcon={
-                  router.pathname !== "/search/cart" ? (
+                  router.pathname !== "/cart" ? (
                     <CartIcon />
                   ) : (
                     <Search2Icon />

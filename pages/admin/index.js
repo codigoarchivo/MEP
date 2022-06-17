@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
 
+import PropTypes from "prop-types";
+
 import { useDispatch, useSelector } from "react-redux";
 
-import { collection, getDocs } from "firebase/firestore";
-
 import { Box, Container, Heading, Stack, Text, VStack } from "@chakra-ui/react";
-
-import { db } from "../../firebase/config";
 
 import SaleScreen from "../../components/sale/SaleScreen";
 
@@ -17,9 +15,10 @@ import Breakpoints from "../../helpers/Breakpoints";
 import Toast from "../../helpers/Toast";
 
 import { cheListAll } from "../../actions/checkout";
+
 import { dbUser } from "../../data/dbUser";
 
-const Sale = ({ dataUser }) => {
+const Sale = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
   // useSelector
@@ -27,19 +26,17 @@ const Sale = ({ dataUser }) => {
   // Breakpoints
   const { bordes, full, content5 } = Breakpoints();
 
-  console.log(history);
-
   useEffect(() => {
-    if (dataUser) {
-      dispatch(cheListAll(dataUser));
+    if (data) {
+      dispatch(cheListAll(data));
     } else {
       dispatch(cheListAll([]));
     }
-  }, [dispatch, dataUser]);
+  }, [dispatch, data]);
 
   return (
-    <ShopLayout>
-      <Container maxW={"container.md"}>
+    <ShopLayout title={"Sale"}>
+      <Container maxW={"container.lg"}>
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>
             <Heading w={full} as="h2" size="lg" fontWeight="semibold">
@@ -57,7 +54,7 @@ const Sale = ({ dataUser }) => {
                       fontWeight={"black"}
                       mb={10}
                     >
-                      Lista de compras
+                      Lista de ventas
                     </Heading>
 
                     {history.map((item) => (
@@ -70,9 +67,9 @@ const Sale = ({ dataUser }) => {
                       Nota:
                     </Heading>{" "}
                     <Text display={"inline"}>
-                      La información se encuentra en el <b>botton resumen</b>{" "}
-                      solo asi, podras notificar del pago tanto al vendedor como
-                      a la tienda.
+                      La información se encuentra en el <b>botton verificar</b>{" "}
+                      solo asi, podras notificar del pago correcto tanto al
+                      cliente y al vendedor.
                     </Text>
                   </Box>
                 </VStack>
@@ -85,12 +82,16 @@ const Sale = ({ dataUser }) => {
   );
 };
 
+Sale.propTypes = {
+  data: PropTypes.array,
+};
+
 export async function getStaticProps() {
   const dA = process.env.NEXT_PUBLIC_ROL_A.toString();
   try {
-    const dataUser = await dbUser(dA, "dbUserFour");
+    const data = await dbUser(dA, "dbUserFour");
 
-    if (!dataUser) {
+    if (!data) {
       return {
         redirect: {
           destination: "/",
@@ -101,7 +102,7 @@ export async function getStaticProps() {
 
     return {
       props: {
-        dataUser,
+        data,
       },
     };
   } catch (error) {

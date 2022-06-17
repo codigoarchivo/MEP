@@ -2,7 +2,7 @@ import { types } from "../type";
 
 const initialStates = {
   list: [],
-  activeSelect: null,
+  active: null,
   history: [],
 };
 
@@ -22,6 +22,16 @@ export const checkoutReducer = (state = initialStates, action) => {
       return {
         ...state,
         list: [...state.list, action.payload],
+      };
+    case types.cheListAllActive:
+      return {
+        ...state,
+        active: { ...action.payload },
+      };
+    case types.cheClear:
+      return {
+        ...state,
+        active: null,
       };
     default:
       return state;

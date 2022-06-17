@@ -142,7 +142,7 @@ export const startGoogleLogin = () => {
 
 export const sendEmail = (email) => {
   const actionCodeSettings = {
-    url: "http://localhost:3000/account/reset?mode=action&oobCode=code",
+    url: "http://localhost:3000/auth/reset?mode=action&oobCode=code",
     handleCodeInApp: true,
   };
   return async (dispatch) => {

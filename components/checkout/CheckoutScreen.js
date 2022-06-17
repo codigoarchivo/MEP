@@ -37,6 +37,7 @@ const CheckoutScreen = ({
   lim,
   count,
   uid,
+  sale = {},
 }) => {
   // useSelector
   const { activeSelectCheck: check = [] } = useSelector(
@@ -94,7 +95,7 @@ const CheckoutScreen = ({
             // idThree es id del la compra del producto
             idThree={idThree}
             // toda la informacion del producto, que se guardo en el uid del comprador
-            product={product}
+            sale={sale}
             // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
             // sale={sale}
           />

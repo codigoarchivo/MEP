@@ -102,7 +102,7 @@ const ReviewUser = () => {
           </Button>
           <DividerWithText>OR</DividerWithText>
           <Center>
-            <NavLink href={"/account"} variant={"secondary"} name={"Login"} />
+            <NavLink href={"/auth"} variant={"secondary"} name={"Login"} />
           </Center>
         </VStack>
       </chakra.form>

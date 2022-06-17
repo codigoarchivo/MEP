@@ -41,9 +41,9 @@ const Category = ({ data = [] }) => {
   // breakpoints
   const { center, bordes } = Breakpoints();
   // selector
-  const { listData } = useSelector(({ category }) => category);
+  const { listData = [] } = useSelector(({ category }) => category);
   // selector
-  const { activeSelect: a } = useSelector(({ auth }) => auth);
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
 
   if (a?.rol === "user") {
     router.push("/");
@@ -61,7 +61,7 @@ const Category = ({ data = [] }) => {
     );
 
     router.push({
-      pathname: "/category/[id]",
+      pathname: "/admin/[id]",
       query: { id: "new", pid: "Add" },
     });
   };

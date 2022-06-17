@@ -159,15 +159,26 @@ export const DrawerNavbar = ({
                       </chakra.li>
                     )}
                     {a?.rol === "owner" && (
-                      <chakra.li mx={"3"}>
-                        <NavLink
-                          leftIcon={<Category />}
-                          fontWeight={"normal"}
-                          variant={"secondary"}
-                          href={"/category"}
-                          name={"category"}
-                        />
-                      </chakra.li>
+                      <>
+                        <chakra.li mx={"3"}>
+                          <NavLink
+                            leftIcon={<Category />}
+                            fontWeight={"normal"}
+                            variant={"secondary"}
+                            href={"/admin/category"}
+                            name={"category"}
+                          />
+                        </chakra.li>
+                        <chakra.li mx={"3"}>
+                          <NavLink
+                            leftIcon={<Category />}
+                            fontWeight={"normal"}
+                            variant={"secondary"}
+                            href={"/admin"}
+                            name={"ventas"}
+                          />
+                        </chakra.li>
+                      </>
                     )}
                     <chakra.li mx={"3"} onClick={handleObservator}>
                       <NavLink

@@ -1,8 +1,12 @@
 import React from "react";
 
-import { HStack, Tag, TagLabel, TagRightIcon } from "@chakra-ui/react";
+import { Box, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 
-import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
+import PropTypes from "prop-types";
+
+import { formatDistanceToNow } from "date-fns";
+
+import localEs from "date-fns/locale/es";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
@@ -12,38 +16,60 @@ const SaleScreen = ({ item = {} }) => {
   // Breakpoints
   const { bordes, full } = Breakpoints();
 
-  const { idThree } = item;
+  const { cre, uidBuy, fer, co, nap, id } = item;
 
   const { uid, to } = item.product;
   return (
     <HStack
       w={full}
       justifyContent={"space-between"}
+      alignItems={"flex-end"}
       borderBottom={bordes}
       p={2}
     >
-      <HStack spacing={"5"}>
+      <VStack w={full} spacing={0}>
+        <HStack w={full}>
+          <Heading as="h3" size="sm">
+            Nombre:
+          </Heading>
+          <Text size={"sm"}>{nap}</Text>
+        </HStack>
+        <HStack w={full}>
+          <Heading as="h3" size="sm">
+            Correo:
+          </Heading>
+          <Text size={"sm"}>{co}</Text>
+        </HStack>
+        <HStack w={full}>
+          <Heading as="h3" size="sm">
+            Fecha de creación:
+          </Heading>
+          <Text size={"sm"}>{fer}</Text>
+        </HStack>
+      </VStack>
+
+      <HStack spacing={"5"} w={full} py={1} justifyContent={"flex-end"}>
+        <Box as="span" color="gray.600" fontSize="sm">
+          hace{" "}
+          {formatDistanceToNow(cre, {
+            locale: localEs,
+          })}
+        </Box>
         <NavLink
-          href={`/history/verify/[verify]?uid=${uid}`}
-          as={`/history/verify/${idThree}?uid=${uid}`}
+          href={`/admin/orders/[id]?s=${uid}&b=${uidBuy}`}
+          as={`/admin/orders/${id}?s=${uid}&b=${uidBuy}`}
           name={`Verificar $${to}`}
           variant={"primary"}
           size={"xs"}
           textTransform={"uppercase"}
         />
       </HStack>
-      <HStack spacing={"5"}>
-        <Tag
-          size={"md"}
-          variant="outline"
-          colorScheme={process ? "green" : "blue"}
-        >
-          <TagLabel>{process ? "Pagado" : "Proceso"}</TagLabel>
-          <TagRightIcon as={process ? UnlockIcon : LockIcon} />
-        </Tag>
-      </HStack>
     </HStack>
   );
+};
+
+SaleScreen.propTypes = {
+  item: PropTypes.object,
 };
 
 export default SaleScreen;

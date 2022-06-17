@@ -51,6 +51,9 @@ export const dbUserByUID = async (uid, dbU, val) => {
     case "dbuserTwoID":
       q = doc(db, "users", uid, "buys", val);
       break;
+    case "dbuserThreeID":
+      q = doc(db, "users", uid, "sales", val);
+      break;
   }
 
   const docSnap = await getDoc(q);

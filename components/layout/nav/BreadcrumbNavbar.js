@@ -80,15 +80,26 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
           </chakra.li>
 
           {a?.rol === "owner" && (
-            <chakra.li mx={"3"}>
-              <NavLink
-                fontWeight={"normal"}
-                variant={"secondary"}
-                href={"/category"}
-                as={"/category"}
-                name={"category"}
-              />
-            </chakra.li>
+            <>
+              <chakra.li mx={"3"}>
+                <NavLink
+                  fontWeight={"normal"}
+                  variant={"secondary"}
+                  href={"/admin/category"}
+                  as={"/admin/category"}
+                  name={"category"}
+                />
+              </chakra.li>
+              <chakra.li mx={"3"}>
+                <NavLink
+                  fontWeight={"normal"}
+                  variant={"secondary"}
+                  href={"/admin"}
+                  as={"/admin"}
+                  name={"ventas"}
+                />
+              </chakra.li>
+            </>
           )}
           <chakra.li mx={"3"} onClick={handleObservator}>
             <NavLink

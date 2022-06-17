@@ -10,7 +10,7 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import CheckVerify from "../../components/checkout/CheckVerify";
 
-import { dbUser, dbUserByUID } from "../../data/dbUser";
+import { dbUserByUID } from "../../data/dbUser";
 
 import Toast from "../../helpers/Toast";
 

@@ -2,37 +2,44 @@ import React from "react";
 
 import { useRouter } from "next/router";
 
-import Image from "next/image";
+import PropTypes from "prop-types";
 
 import {
-  AspectRatio,
-  Button,
   Heading,
   HStack,
   Stack,
   Text,
   VStack,
   chakra,
+  Box,
 } from "@chakra-ui/react";
 
 import { useDispatch } from "react-redux";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import { validPago } from "../../actions/checkout";
+import { checkRevert, validPago } from "../../actions/checkout";
 
 import Toast from "../../helpers/Toast";
+
+import GridValueClose from "../../utils/GridValueClose";
+
+import Salemodal from "./Salemodal";
 
 const SaleModal = ({
   bordes,
   // id del referencia product
-  idThree,
+  idThree = "",
   // product
-  product,
+  product = {},
   // sale
-  sale = {},
+  sale = null,
   // información del pago del producto
   referencia = {},
+  // uid del comprador
+  uidBuy = {},
+  // uid del vendedor
+  idProduct = "",
 }) => {
   // dispatch
   const router = useRouter();
@@ -44,166 +51,246 @@ const SaleModal = ({
   // handleLiberate
   const handleLiberate = (e) => {
     e.preventDefault();
+
+    if ([idThree, idProduct, uidBuy.id].includes("")) {
+      return Toast("Error al liberar el producto", "error", 5000);
+    }
+
+
     const dataL = {
-      co: "puede ser una Correo",
-      dt: "puede ser una fecha",
-      na: "puede ser un nombre",
-      te: "puede ser un telefono",
+      na: "Edgar Marcano",
+      co: "+1 973 510 8452",
+      te: "ehms1975@gmail.com",
+      dt: "381053465609",
     };
-    // Todo agregar los datos en duro y agregar los datos del vendedor
-    const sales = sale ? dataL : sale;
+
     const data = {
-      // id del la venta - compra
-      idThree,
-      // información para el vendedor
-      buy: referencia.uidBuy,
       // información para el comprador
-      sale: sales,
+      sale: sale === null ? dataL : sale,
       // información del pago del producto
       product,
     };
-    dispatch(validPago(data));
-    // pago verificado
+    // console.log(data, idThree, idProduct, uidBuy.id);
+    dispatch(validPago(data, idThree, idProduct, uidBuy.id));
+  
     Toast("Pago ha sido verificado", "success", 5000);
 
-    router.push("/history/sale");
+    router.back();
   };
 
   const closeVerify = () => {
-    router.push("/history/sale");
+    router.back();
+    dispatch(checkRevert());
   };
 
   return (
     <>
-      <VStack w={full} spacing={0} mr={5}>
-        <Heading w={full} mb={5} size={"sm"} border={bordes} p={2}>
-          Información de la transferencia
-        </Heading>
-        <Stack w={full} mt={5} spacing={5} border={bordes} p={5}>
-          <HStack justifyContent={"space-between"}>
-            <AspectRatio
-              border={bordes}
-              ratio={1}
-              w={"full"}
-              h={300}
-              position={"relative"}
+      <Stack flexDirection={"row"} w={full} spacing={0} mb={5}>
+        <VStack shadow={"lg"} w={full} spacing={5} border={bordes} p={5} mr={5}>
+          <Heading
+            textTransform={"uppercase"}
+            w={full}
+            mb={5}
+            size={"sm"}
+            p={5}
+          >
+            Información del vendedor
+          </Heading>
+          {[
+            {
+              nombre: "Nombre",
+              Valor: `${sale === null ? "Edgar Marcano" : sale?.na}`,
+            },
+            {
+              nombre: "Telefono",
+              Valor: `${sale === null ? "+1 973 510 8452" : sale?.te}`,
+            },
+            {
+              nombre: "Correo",
+              Valor: `${sale === null ? "ehms1975@gmail.com" : sale?.co}`,
+            },
+            {
+              nombre: "Información Adicional",
+              Valor: `${sale === null ? "381053465609" : sale?.dt}`,
+            },
+          ].map(({ nombre, Valor }, key) => (
+            <HStack
+              w={full}
+              key={key}
+              justifyContent={"space-between"}
+              borderBottom={bordes}
             >
-              <Image
-                src={referencia?.imp}
-                alt="Recibo pago"
-                layout="fill"
-                objectFit="contain"
-              />
-            </AspectRatio>
-          </HStack>
-          <VStack w={full} spacing={0}>
-            <Heading w={full} mb={5} size={"sm"} border={bordes} p={2}>
-              Información de la venta
-            </Heading>
-            <Stack w={full} mt={5} spacing={5} border={bordes} p={5}>
-              <HStack justifyContent={"space-between"} borderBottom={bordes}>
-                <Text fontWeight={"black"}>Nombre: </Text>
-                <Text>{product.na}</Text>
-              </HStack>
-
-              <HStack justifyContent={"space-between"} borderBottom={bordes}>
-                <Text fontWeight={"black"}>Cantidad: </Text>
-                <Text>{product.cn}</Text>
-              </HStack>
-              <HStack justifyContent={"space-between"} borderBottom={bordes}>
-                <Text fontWeight={"black"}>Precio: </Text>
-                <Text>${product.pr}</Text>
-              </HStack>
-              <HStack justifyContent={"space-between"} borderBottom={bordes}>
-                <Text fontWeight={"black"}>Total reflejado: </Text>
-                <Text>${product.to}</Text>
-              </HStack>
-              <HStack justifyContent={"space-between"} borderBottom={bordes}>
-                <Text fontWeight={"black"}>Comision: </Text>
-                <Text>${product.in}</Text>
-              </HStack>
-            </Stack>
-          </VStack>
-
-          <chakra.form onSubmit={handleLiberate}>
-            <HStack mt={10} w={"full"} justifyContent="flex-end" spacing={10}>
-              <Button variant={"secondary"} onClick={closeVerify}>
-                Close
-              </Button>
-              <Button variant={"primary"} type="submit" ml={3}>
-                Liberar Proceso
-              </Button>
+              <Text fontWeight={"black"}>{nombre}: </Text>
+              <Text>{Valor}</Text>
             </HStack>
-          </chakra.form>
-        </Stack>
-      </VStack>
-      <Stack w={full} spacing={10}>
-        <VStack w={full} spacing={0}>
-          <Heading w={full} mb={5} size={"sm"} border={bordes} p={2}>
+          ))}
+        </VStack>
+        <VStack shadow={"lg"} w={full} spacing={5} p={5} border={bordes}>
+          <Heading
+            textTransform={"uppercase"}
+            w={full}
+            mb={5}
+            size={"sm"}
+            p={2}
+          >
             Información del cliente
           </Heading>
-          <Stack w={full} mt={5} spacing={5} border={bordes} p={5}>
-            <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Text fontWeight={"black"}>Nombre: </Text>
-              <Text>{referencia.na}</Text>
-            </HStack>
-            <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Text fontWeight={"black"}>Telefono: </Text>
-              <Text>{referencia.te}</Text>
-            </HStack>
-            <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Text fontWeight={"black"}>Correo: </Text>
-              <Text>{referencia.co}</Text>
-            </HStack>
-            <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Text fontWeight={"black"}>Información adicional: </Text>
-              <Text>{referencia.inf}</Text>
-            </HStack>
+          <Stack w={full} spacing={5} p={5}>
+            {[
+              {
+                nombre: "Nombre",
+                Valor: uidBuy?.na,
+              },
+              {
+                nombre: "Telefono",
+                Valor: uidBuy?.te,
+              },
+              {
+                nombre: "Correo",
+                Valor: uidBuy?.co,
+              },
+              {
+                nombre: "Información Adicional",
+                Valor: uidBuy?.dt,
+              },
+            ].map(({ nombre, Valor }, key) => (
+              <HStack
+                w={full}
+                key={key}
+                justifyContent={"space-between"}
+                borderBottom={bordes}
+              >
+                <Text fontWeight={"black"}>{nombre}: </Text>
+                <Text>{Valor}</Text>
+              </HStack>
+            ))}
           </Stack>
         </VStack>
-        <VStack w={full} spacing={0}>
-          <Heading w={full} mb={5} size={"sm"} border={bordes} p={2}>
+      </Stack>
+
+      <Stack flexDirection={"row"} w={full} spacing={0} mb={20}>
+        <VStack
+          h={"min-content"}
+          shadow={"lg"}
+          w={full}
+          mr={5}
+          spacing={5}
+          p={5}
+          border={bordes}
+        >
+          <Heading
+            textTransform={"uppercase"}
+            w={full}
+            mb={5}
+            size={"sm"}
+            p={2}
+          >
+            Información del producto o servicio
+          </Heading>
+          <Stack w={full} spacing={5} p={5}>
+            {[
+              {
+                nombre: "Nombre",
+                Valor: product?.na,
+              },
+              {
+                nombre: "Cantidad",
+                Valor: "N°" + product?.cn,
+              },
+              {
+                nombre: "Impuesto",
+                Valor: "$" + product?.in,
+              },
+              {
+                nombre: "Precio",
+                Valor: "$" + product?.pj,
+              },
+              {
+                nombre: "Precio Unitario",
+                Valor: "$" + product?.pr,
+              },
+              {
+                nombre: "Total",
+                Valor: "$" + product?.to,
+              },
+            ].map(({ nombre, Valor }, key) => (
+              <HStack
+                w={full}
+                key={key}
+                justifyContent={"space-between"}
+                borderBottom={bordes}
+              >
+                <Text fontWeight={"black"}>{nombre}: </Text>
+                <Text>{Valor}</Text>
+              </HStack>
+            ))}
+          </Stack>
+        </VStack>
+        <VStack
+          h={"min-content"}
+          shadow={"lg"}
+          w={full}
+          spacing={5}
+          p={5}
+          border={bordes}
+        >
+          <Heading
+            textTransform={"uppercase"}
+            w={full}
+            mb={5}
+            size={"sm"}
+            p={2}
+          >
             Información de la transferencia
           </Heading>
-          <Stack w={full} mt={5} spacing={5} border={bordes} p={5}>
-            <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Text fontWeight={"black"}>Nombre: </Text>
-              <Text>{referencia.nap}</Text>
-            </HStack>
-            <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Text fontWeight={"black"}>Referencia: </Text>
-              <Text>{referencia.ref}</Text>
-            </HStack>
-            <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Text fontWeight={"black"}>Fecha: </Text>
-              <Text>{referencia.fer}</Text>
-            </HStack>
-            <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Text fontWeight={"black"}>Correo: </Text>
-              <Text>{referencia.cor}</Text>
-            </HStack>
-            <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Text fontWeight={"black"}>Cantidad: </Text>
-              <Text>{product.cn}</Text>
-            </HStack>
-            <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Text fontWeight={"black"}>Total reflejado: </Text>
-              <Text>${product.to}</Text>
-            </HStack>
-            <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Text fontWeight={"black"}>Comision: </Text>
-              <Text>${product.in}</Text>
-            </HStack>
-
-            <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Text fontWeight={"black"}>Información adicional: </Text>
-              <Text>{referencia.inf}</Text>
-            </HStack>
-          </Stack>
+          <Stack w={full} spacing={5} p={5}>
+            {[
+              {
+                nombre: "Nombre",
+                Valor: referencia?.nap,
+              },
+              {
+                nombre: "Referencia",
+                Valor: referencia?.ref,
+              },
+              {
+                nombre: "Fecha",
+                Valor: referencia?.fer,
+              },
+              {
+                nombre: "Correo",
+                Valor: referencia?.co,
+              },
+            ].map(({ nombre, Valor }, key) => (
+              <HStack
+                w={full}
+                key={key}
+                justifyContent={"space-between"}
+                borderBottom={bordes}
+              >
+                <Text fontWeight={"black"}>{nombre}: </Text>
+                <Text>{Valor}</Text>
+              </HStack>
+            ))}
+          </Stack>{" "}
+          <chakra.form onSubmit={handleLiberate} w={full}>
+            <Salemodal imgs={referencia?.imp} />{" "}
+            <GridValueClose onClose={closeVerify} set={"Liberar Proceso"} />
+          </chakra.form>
         </VStack>
       </Stack>
     </>
   );
 };
+
+SaleModal.propTypes = {
+  bordes: PropTypes.string,
+  idThree: PropTypes.string,
+  product: PropTypes.object,
+  sale: PropTypes.object,
+  referencia: PropTypes.object,
+  uidBuy: PropTypes.object,
+  idProduct: PropTypes.string,
+}
 
 export default SaleModal;

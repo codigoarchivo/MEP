@@ -68,8 +68,18 @@ const PopoverUserNavbar = ({
                 leftIcon={<Category />}
                 fontWeight={"normal"}
                 variant={"secondary"}
-                href={"/category"}
+                href={"/admin/category"}
                 name={"category"}
+              />
+            </ListItem>
+            <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
+            <ListItem>
+              <NavLink
+                leftIcon={<Category />}
+                fontWeight={"normal"}
+                variant={"secondary"}
+                href={"/admin"}
+                name={"ventas"}
               />
             </ListItem>
             <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />

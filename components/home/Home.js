@@ -71,7 +71,7 @@ const Home = () => {
             <NavLink
               variant={"primary"}
               name={"Crea Una Cuenta"}
-              href={"/account/create"}
+              href={"/auth/create"}
             />
           </Box>
         </Stack>

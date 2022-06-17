@@ -159,7 +159,7 @@ const LoginUser = ({ handleReview }) => {
           <Flex w={"full"} alignItems={"center"} justifyContent={"center"}>
             <Text>¿No tienes una cuenta?</Text>
             <NavLink
-              href={"/account/create"}
+              href={"/auth/create"}
               variant={"secondary"}
               name={"Regístrate"}
             />

@@ -106,7 +106,7 @@ const Details = ({ message = [], product = {} }) => {
       })
     );
 
-    router.push("/search/cart");
+    router.push("/cart");
   };
 
   return (

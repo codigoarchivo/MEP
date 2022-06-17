@@ -35,7 +35,7 @@ const CategoryScrenn = ({ id, na }) => {
     }
 
     router.push({
-      pathname: "/category/[id]",
+      pathname: "/admin/[id]",
       query: { id, na, pid: "Edit" },
     });
   };
@@ -50,7 +50,7 @@ const CategoryScrenn = ({ id, na }) => {
     }
 
     router.push({
-      pathname: "/category/[id]",
+      pathname: "/admin/[id]",
       query: { id, na, pid: "Delete" },
     });
   };

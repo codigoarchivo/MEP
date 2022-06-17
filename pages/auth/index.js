@@ -21,7 +21,7 @@ const Account = () => {
   // handleReview
   const handleReview = () => {
     router.push({
-      pathname: "/account/[pid]",
+      pathname: "/auth/[pid]",
       query: { pid: "review", word: "Email" },
     });
   };

@@ -101,11 +101,11 @@ const CheckVerify = ({
       product,
       // uid del comprador que se encuentra logeado
       uidBuy: uid,
-      // idThree es id del la compra del producto
-      idThree,
+      // tiempo del recibo de la compra
+      cre: Date.now(),
     };
 
-    dispatch(validShop(shop));
+    dispatch(validShop(shop, idThree));
 
     Toast("Enviada Verificación espere a que recibe", "success", 5000);
 
