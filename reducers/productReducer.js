@@ -8,11 +8,12 @@ const initialStates = {
   // lista de productos /product/[uid]
   listData: [],
   saveCartSelect: [],
-  // lista de los ultimos productos agregados 
+  // lista de los ultimos productos agregados
   latestCartSelect: [],
   activeCartSelect: [],
   activeSelectCheck: [],
   productSerchCategory: null,
+  active: null,
 };
 export const productReducer = (state = initialStates, action) => {
   switch (action.type) {
@@ -120,6 +121,17 @@ export const productReducer = (state = initialStates, action) => {
         activeCartSelect: [],
         activeSelectCheck: [],
       };
+    case types.productDetails:
+      return {
+        ...state,
+        active: action.payload,
+      };
+    case types.productcloseDetails:
+      return {
+        ...state,
+        active: null,
+      };
+
     default:
       return state;
   }

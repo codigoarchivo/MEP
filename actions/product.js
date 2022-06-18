@@ -34,9 +34,7 @@ const productDataList = (data) => ({
 export const serchProductList = (filtro) => {
   return async (dispatch) => {
     try {
-      if (filtro.length > 0) {
-        dispatch(listProductSerch(filtro));
-      }
+      await dispatch(listProductSerch(filtro));
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }
@@ -179,13 +177,14 @@ const LatestSaveCart = (data) => ({
   payload: data,
 });
 
-export const saveSale = (data = [], uid) => {
+export const saveSale = (data = []) => {
   return async (dispatch) => {
     try {
       const newData = data.map(async (item) => {
+        // resta la cantidad del producto
         await dbProductEdit(item.product.id, "dbProEditOne", item.product.cnr);
-
-        const { id } = await addDoc(collection(db, "users", uid, "buys"), {
+        // agrega una compra
+        const { id } = await addDoc(collection(db, "buys"), {
           ...item,
         });
 
@@ -203,24 +202,27 @@ export const saveSale = (data = [], uid) => {
 };
 
 export const saveSaleRevert = (data) => {
-  return (dispatch) => {
+  return () => {
     try {
       data.map(async (item) => {
         if (item.process === false) {
           const cnr = item.cnr + item.cn;
           await dbProductEdit(item.id, "dbProEditOne", cnr);
-          await deleteDoc(doc(db, "users", item.uid, "buys", item.idP));
+          await deleteDoc(doc(db, "buys", item.idP));
         }
       });
-
-      dispatch(closeRevert());
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
 
-export const activeProduct = (data) => ({
+const activeProduct = (data) => ({
+  type: types.productActive,
+  payload: data,
+});
+
+export const activeProductList = (data) => ({
   type: types.productActive,
   payload: data,
 });
@@ -233,6 +235,16 @@ export const deleteProductCart = (id) => ({
 export const closeActive = () => ({
   type: types.closeActive,
 });
+
 export const closeRevert = () => ({
   type: types.productRevert,
+});
+
+export const productDetails = (data) => ({
+  type: types.productDetails,
+  payload: data,
+});
+
+export const closeProductDetails = () => ({
+  type: types.productcloseDetails,
 });

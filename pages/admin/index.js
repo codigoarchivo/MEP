@@ -86,10 +86,10 @@ Sale.propTypes = {
   data: PropTypes.array,
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const dA = process.env.NEXT_PUBLIC_ROL_A.toString();
   try {
-    const data = await dbUser(dA, "dbUserFour");
+    const data = await dbUser(dA, "dbUserThree");
 
     if (!data) {
       return {

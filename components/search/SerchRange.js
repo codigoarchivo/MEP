@@ -1,10 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import PropTypes from "prop-types";
 
 import { useRouter } from "next/router";
-
-import { useDispatch } from "react-redux";
 
 import {
   Box,
@@ -24,65 +22,39 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import { serchProductList } from "../../actions/product";
-
-import { dbProducts } from "../../data/dbProducts";
-
 const SerchRange = ({ product }) => {
   // dispatch
   const router = useRouter();
-  // dispatch
-  const dispatch = useDispatch();
   // Breakpoints
   const { bordes } = Breakpoints();
-  // selector
-  const [listP, setListP] = useState([]);
   // useRef
   const max = useRef(0);
   // useRef
   const min = useRef(0);
+  // useRef
+  const inc = useRef(0);
+  // useRef
+  const dec = useRef(0);
 
-  useEffect(() => {
-    if (product) {
-      setListP(product);
-    }
-  }, [setListP, product]);
+  useMemo(() => {
+    max.current = product.reduce(
+      (n, m) => Math.max(Number(n), m.pr),
+      -Number.POSITIVE_INFINITY
+    );
 
-  max.current = listP.reduce(
-    (n, m) => Math.max(Number(n), m.pr),
-    -Number.POSITIVE_INFINITY
-  );
+    min.current = product.reduce(
+      (n, m) => Math.min(Number(n), m.pr),
+      Number.POSITIVE_INFINITY
+    );
+  }, [product]);
 
-  min.current = listP.reduce(
-    (n, m) => Math.min(Number(n), m.pr),
-    Number.POSITIVE_INFINITY
-  );
-
-  // useState
-  const [listPrice, setListPrice] = useState([0, 0]);
-
-  useEffect(() => setListPrice([min.current, max.current]), [min, max]);
-
-  const handleChangeEnd = async (r) => {
+  const handleChangeEnd = (r) => {
     router.push({
       pathname: "/search",
-      query: { r },
+      query: { r, q: "range" },
     });
-
-    setListPrice(r);
-
-    const newData = await dbProducts(r, "dbProSix");
-
-    if (newData.length === 0) {
-      return Toast(
-        "No hay resultados, reinicia con boton Shop All",
-        "info",
-        5000
-      );
-    }
-
-    dispatch(serchProductList(newData));
   };
+  
   return (
     <Stack w={"full"} spacing={"10"} border={bordes} rounded="md" p={5}>
       <Box borderBottom={bordes} py={5} w={"full"}>
@@ -93,8 +65,8 @@ const SerchRange = ({ product }) => {
 
       <RangeSlider
         defaultValue={[min.current, max.current]}
-        min={min.current}
-        max={max.current}
+        min={dec.current = min.current}
+        max={inc.current = max.current}
         step={5}
         onChangeEnd={(val) => handleChangeEnd(val)}
       >
@@ -113,14 +85,14 @@ const SerchRange = ({ product }) => {
         <Stat>
           <StatLabel>Min</StatLabel>
           <StatNumber fontWeight={"normal"}>
-            $ {listPrice[0] === Infinity ? 0 : listPrice[0]}
+            $ {min.current === Infinity ? 0 : min.current}
           </StatNumber>
         </Stat>
 
         <Stat>
           <StatLabel>Max</StatLabel>
           <StatNumber fontWeight={"normal"}>
-            $ {listPrice[1] === -Infinity ? 0 : listPrice[1]}
+            $ {max.current === -Infinity ? 0 : max.current}
           </StatNumber>
         </Stat>
       </StatGroup>

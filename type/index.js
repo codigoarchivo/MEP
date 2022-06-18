@@ -28,6 +28,8 @@ export const types = {
   productCategory: "[PRODUCT] Serch Category",
   productCategoryClose: "[PRODUCT] Close Category",
   productClose: "[PRODUCT] Close",
+  productDetails: "[PRODUCT] Details Cart",
+  productcloseDetails: "[PRODUCT] Details Close",
 
   active: "[DATA] Active",
   closeActive: "[DATA] Close",
@@ -49,10 +51,13 @@ export const types = {
   cheListAllHistory: "[CHECKOUT] History",
   cheListAllActive: "[CHECKOUT] Active",
   cheClear: "[CHECKOUT] Clear",
+  cheActiveVerify: "[CHECKOUT] Active",
+  cheClearVerify: "[CHECKOUT] Clear",
 
   user: "[USER] List",
   userAdd: "[USER] Add",
   userEdit: "[USER] Edit",
   userDelete: "[USER] Delete",
   userActive: "[USER] Active",
+  userClose: "[USER] Close",
 };

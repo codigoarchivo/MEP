@@ -81,7 +81,9 @@ export async function getServerSideProps({ query }) {
       uidSale = await dbUserByUID(ids, "dbUserOneID");
     }
     const uidBuy = await dbUserByUID(idb, "dbUserOneID");
-    const productbuy = await dbUserByUID(ids, "dbuserThreeID", idp);
+
+    // compra del producto
+    const productbuy = await dbUserByUID(idp, "dbuserThreeID");
 
     if (!uidSale || !productbuy || !uidBuy) {
       return {

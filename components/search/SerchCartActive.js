@@ -25,6 +25,7 @@ const SerchCartActive = ({ item, inc }) => {
   const { list = [] } = useSelector(({ category }) => category);
   // Breakpoints
   const { full } = Breakpoints();
+
   // delete cart
   const handleDeleteCart = (id) => {
     dispatch(deleteProductCart(id));

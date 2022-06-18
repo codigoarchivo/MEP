@@ -82,31 +82,24 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
     }
     // saveCartSelect
     if (matchValid.current) {
-      Toast("Producto ya esta en la lista deseo", "info", 5000);
       router.push({
         pathname: "/cart",
         query: { pid: id },
       });
+      return Toast("Producto ya esta en la lista deseo", "info", 5000);
     }
+
     // dispatch
     router.push({
-      pathname: "/search/[details]",
+      pathname: "/search/[id]",
       query: {
-        details: id,
+        id,
       },
     });
 
-    handleSaveLatest();
+    dispatch(cartSaveLatest(data));
   };
 
-  // Latest
-  const handleSaveLatest = () => {
-    dispatch(
-      cartSaveLatest({
-        ...data,
-      })
-    );
-  };
   // save
   const handleSave = () => {
     // activeCartSelect
@@ -120,7 +113,8 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
         matchValid.current ? "error" : "success",
         5000
       );
-      dispatch(saveProductCart({ ...data }));
+
+      dispatch(saveProductCart(data));
     }
   };
 
@@ -197,9 +191,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
               </HStack>
 
               <Stat size={"sm"} width={"full"}>
-                <StatLabel>
-                  {na.charAt(0).toUpperCase() + na.slice(1)}
-                </StatLabel>
+                <StatLabel textTransform={"capitalize"}>{na}</StatLabel>
                 <StatNumber>
                   <HStack w={"full"} justifyContent={"space-between"}>
                     <Text>${pr}</Text>

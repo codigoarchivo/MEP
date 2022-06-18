@@ -278,8 +278,8 @@ const Navbar = () => {
                       <NavLink
                         px={0}
                         variant={"secondary"}
-                        href={"/checkout/[uid]"}
-                        as={`/checkout/${a?.uid}`}
+                        href={"/checkout"}
+                        as={`/checkout`}
                         name={<OrdenpagoIcon boxSize={points11} />}
                       />
 

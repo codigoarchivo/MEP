@@ -22,8 +22,9 @@ import ShopLayout from "../../components/layout/ShopLayout";
 import Breakpoints from "../../helpers/Breakpoints";
 
 import {
-  activeProduct,
+  activeProductList,
   closeActive,
+  closeProductDetails,
   saveSaleRevert,
 } from "../../actions/product";
 
@@ -33,30 +34,35 @@ import { dbUser } from "../../data/dbUser";
 
 import Toast from "../../helpers/Toast";
 
-const Checkout = ({ product, uid }) => {
+const Checkout = ({ product = [], uid = "" }) => {
+  // useSelector
+  const { activeSelectCheck: check = [] } = useSelector(
+    ({ product }) => product
+  );
   // dispatch
   const router = useRouter();
   // useDispatch
   const dispatch = useDispatch();
   // Breakpoints
   const { bordes, full, content5 } = Breakpoints();
-  // useSelector
-  const { activeSelectCheck: check = [] } = useSelector(
-    ({ product }) => product
-  );
 
   useEffect(() => {
     if (product) {
-      dispatch(activeProduct(product));
-      dispatch(closeActive());
+      dispatch(activeProductList(product));
     }
   }, [dispatch, product]);
+
+  useEffect(() => {
+    // path: /cart
+    dispatch(closeActive());
+    // path: /details
+    dispatch(closeProductDetails());
+  }, [dispatch]);
 
   const handleRevert = async () => {
     // revertir
     const data = await check.map((item) => {
       return {
-        uid: a.uid,
         idP: item.id,
         process: item.process,
         cnr: item.product.cnr,
@@ -140,10 +146,9 @@ Checkout.propTypes = {
   uid: PropTypes.string,
 };
 
-export async function getServerSideProps({ params }) {
-  const uid = await params.uid.toString();
+export async function getServerSideProps() {
   try {
-    const product = await dbUser(uid, "dbUserOne");
+    const product = await dbUser("", "dbUserOne");
 
     if (!product) {
       return {
@@ -157,7 +162,6 @@ export async function getServerSideProps({ params }) {
     return {
       props: {
         product,
-        uid,
       },
     };
   } catch (error) {

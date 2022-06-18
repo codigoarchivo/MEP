@@ -66,8 +66,8 @@ const CheckoutScreen = ({
       >
         <HStack spacing={"3"}>
           <NavLink
-            href={`/verify/[uid]?v=${idThree}`}
-            as={`/verify/${[uid]}?v=${idThree}`}
+            href={`/verify/[id]`}
+            as={`/verify/${[idThree]}`}
             name={`Resumén $${product.to}`}
             variant={"primary"}
             size={"xs"}

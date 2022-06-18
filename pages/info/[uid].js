@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import { Grid, chakra, Heading, Container, VStack } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { Container } from "@chakra-ui/react";
 
 import PropTypes from "prop-types";
 
@@ -8,134 +10,29 @@ import Toast from "../../helpers/Toast";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import useFormAll from "../../hooks/useFormAll";
-
-import ModeColor from "../../helpers/ModeColor";
-
-import Breakpoints from "../../helpers/Breakpoints";
-
-import { useRouter } from "next/router";
-
-import { DataUserAdicional } from "../../actions/user";
-
-import { useDispatch, useSelector } from "react-redux";
-
-import GridItemForm from "../../utils/GridItemForm";
-import GridItemFormTextarea from "../../utils/GridItemFormTextarea";
-import GridValueClose from "../../utils/GridValueClose";
-
 import { dbUser, dbUserByUID } from "../../data/dbUser";
 
-const initialStates = {
-  na: "",
-  te: "",
-  co: "",
-  dt: "",
-};
+import UserScreen from "../../components/user/UserScreen";
+import { UserAdicionalData } from "../../actions/user";
 
 const Informacion = ({ user = {} }) => {
-  // selector
-  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+  // useSelector
+  const { activeUsuario } = useSelector(({ user }) => user);
   // dispatch
   const dispatch = useDispatch();
-  // router
-  const router = useRouter();
-  // Breakpoints
-  const { repeat1, points3, bordes } = Breakpoints();
-  // mode Color
-  const { bg, brand } = ModeColor();
-  // useForm
-  const { values, handleInputChange } = useFormAll(initialStates, user);
-  // values
-  const { na, te, co, dt, id, rol } = values;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (na === "" || te === "" || co === "" || dt === "") {
-      return Toast(
-        "Si vas a vender tiene llenar todos los campos",
-        "error",
-        5000
-      );
+  useEffect(() => {
+    if (user) {
+      dispatch(UserAdicionalData(user));
+    } else {
+      dispatch(UserAdicionalData(null));
     }
+  }, [dispatch, user]);
 
-    dispatch(DataUserAdicional({ na, te, co, dt, id, rol }));
-
-    router.back()
-  };
-
-  // cerrar
-  const onCloseSelling = () => {
-    router.back()
-  };
   return (
     <ShopLayout title={"Información | Usuario"}>
-      <Container maxW="sm">
-        <VStack
-          alignContent={"center"}
-          h={"full"}
-          border={bordes}
-          spacing={0}
-          my={10}
-        >
-          <Heading
-            pt={5}
-            size={"xs"}
-            textTransform={"uppercase"}
-            fontWeight={"normal"}
-          >
-            informacion Personal
-          </Heading>
-          <chakra.form onSubmit={handleSubmit} w={"full"} p={3}>
-            <Grid
-              templateRows={`repeat(5, 1fr)`}
-              templateColumns={repeat1}
-              alignItems={"center"}
-              columnGap={points3}
-            >
-              <GridItemForm
-                points={2}
-                name={"Nombre"}
-                na={"na"}
-                val={na}
-                type={"text"}
-                place={"Nombre"}
-                handle={handleInputChange}
-              />
-              <GridItemForm
-                points={2}
-                name={"Correo"}
-                na={"co"}
-                val={co}
-                type={"text"}
-                place={"Correo"}
-                handle={handleInputChange}
-              />
-              <GridItemForm
-                points={2}
-                name={"Telefono"}
-                na={"te"}
-                val={te}
-                type={"tel"}
-                place={"000-000-0000"}
-                handle={handleInputChange}
-              />
-
-              <GridItemFormTextarea
-                points={2}
-                name={"Informacion Adicional"}
-                na={"dt"}
-                val={dt}
-                place={"Detalles"}
-                handle={handleInputChange}
-                bg={bg}
-                brand={brand}
-              />
-              <GridValueClose onClose={onCloseSelling} set={"Guardar"} />
-            </Grid>
-          </chakra.form>
-        </VStack>
+      <Container maxW="lg">
+        <UserScreen user={{...activeUsuario}} />
       </Container>
     </ShopLayout>
   );

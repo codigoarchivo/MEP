@@ -192,12 +192,7 @@ const Rate = () => {
       if (router.query.li === "1") {
         router.push("/");
       } else {
-        router.push({
-          pathname: "/checkout/[checkout]",
-          query: {
-            checkout: uid,
-          },
-        });
+        router.back()
       }
     }
   };

@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
+import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 
 import { categoryReducer } from "./categoryReducer";
 import { productReducer } from "./productReducer";
@@ -10,9 +10,29 @@ import { uiReducer } from "./uiReducer";
 import { checkoutReducer } from "./checkoutReducer";
 import { userReducer } from "./userReducer";
 
+const createNoopStorage = () => {
+  return {
+    getItem(_key) {
+      return Promise.resolve(null);
+    },
+    setItem(_key, value) {
+      return Promise.resolve(value);
+    },
+    removeItem(_key) {
+      return Promise.resolve();
+    },
+  };
+};
+
+const storage =
+  typeof window !== "undefined"
+    ? createWebStorage("local")
+    : createNoopStorage();
+    
+
 const persistConfig = {
   key: "root",
-  storage: storage,
+  storage,
   whitelist: ["auth", "category", "product", "checkout", "user"],
   blacklist: ["ui"],
 };

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Image from "next/image";
 
@@ -55,8 +55,6 @@ const initialStates = {
 };
 
 const CheckVerify = ({
-  // uid del comprador que se encuentra logeado
-  uid = "",
   // BORDES
   bordes = "",
   // id del buy del la compra del producto
@@ -64,6 +62,9 @@ const CheckVerify = ({
   // product
   product = {},
 }) => {
+  // useSelector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+  // useState
   const [urlImage, setUrlImage] = useState("");
   // router
   const router = useRouter();
@@ -100,45 +101,35 @@ const CheckVerify = ({
       // información del producto
       product,
       // uid del comprador que se encuentra logeado
-      uidBuy: uid,
+      uidBuy: a.uid,
       // tiempo del recibo de la compra
       cre: Date.now(),
     };
 
     dispatch(validShop(shop, idThree));
 
-    Toast("Enviada Verificación espere a que recibe", "success", 5000);
+    Toast("Enviada Verificación", "success", 5000);
 
     reset();
 
-    router.push({
-      pathname: "/checkout/[uid]",
-      query: {
-        uid,
-      },
-    });
+    router.push("/checkout");
   };
 
   const closeVerify = () => {
-    router.push({
-      pathname: "/checkout/[uid]",
-      query: {
-        uid,
-      },
-    });
+    router.push("/checkout");
   };
 
   const handleClient = () => {
     router.push({
       pathname: "/info/[uid]",
-      query: { uid },
+      query: { uid: a.uid },
     });
   };
 
   return (
     <>
       <Text py={5}>
-        !importante Información para que el vendedor -{" "}
+        <b>!importante Información para que el vendedor</b> -{" "}
         <Button onClick={handleClient} variant={"primary"}>
           ir
         </Button>{" "}
@@ -365,7 +356,6 @@ const CheckVerify = ({
 };
 
 CheckVerify.propTypes = {
-  uid: PropTypes.string.isRequired,
   product: PropTypes.object.isRequired,
   idThree: PropTypes.string.isRequired,
   bordes: PropTypes.string.isRequired,

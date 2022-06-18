@@ -7,15 +7,13 @@ import SerchCart from "../../components/search/SerchCart";
 import ShopLayout from "../../components/layout/ShopLayout";
 
 const Cart = () => {
-  {
-    return (
-      <ShopLayout title={"Cart"}>
-        <Container maxW="container.lg">
-          <SerchCart />
-        </Container>
-      </ShopLayout>
-    );
-  }
+  return (
+    <ShopLayout title={"Cart"}>
+      <Container maxW="container.xl">
+        <SerchCart />
+      </Container>
+    </ShopLayout>
+  );
 };
 
 export default Cart;

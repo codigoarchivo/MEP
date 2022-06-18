@@ -111,9 +111,13 @@ Search.propTypes = {
   listProductSerchClose: PropTypes.func,
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps({ query }) {
+  const r = query.r;
+  const q = query.q;
+
   try {
-    const product = await dbProducts("", "dbProOne");
+    const product = await dbProducts(r || "", q || "dbProOne");
+    // const product = await dbProducts("", "dbProOne");
 
     return {
       props: {

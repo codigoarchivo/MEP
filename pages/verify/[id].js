@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
 
@@ -10,12 +12,27 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import CheckVerify from "../../components/checkout/CheckVerify";
 
-import { dbUserByUID } from "../../data/dbUser";
+import { dbUser, dbUserByUID } from "../../data/dbUser";
 
 import Toast from "../../helpers/Toast";
 
-const Verify = ({ data: { product }, verify, uid }) => {
+import { cheVerify } from "../../actions/checkout";
+
+const Verify = ({ data }) => {
+  // useDispatch
+  const dispatch = useDispatch();
+  // useSelector
+  const { verify } = useSelector(({ checkout }) => checkout);
+  // Breakpoints
   const { content5, bordes, full } = Breakpoints();
+
+  useEffect(() => {
+    if (data) {
+      dispatch(cheVerify(data));
+    } else {
+      dispatch(cheVerify(null));
+    }
+  }, [dispatch, data]);
 
   return (
     <ShopLayout title={"Verificar"}>
@@ -28,14 +45,12 @@ const Verify = ({ data: { product }, verify, uid }) => {
           py={10}
         >
           <CheckVerify
-            // uid del comprador
-            uid={uid}
             // boides
             bordes={bordes}
             // idThree es id del la compra del data
-            idThree={verify}
+            idThree={verify.id}
             // toda la informacion del data, que se guardo en el uid del comprador
-            product={product}
+            product={verify.product}
           />
         </Stack>
       </Container>
@@ -45,16 +60,25 @@ const Verify = ({ data: { product }, verify, uid }) => {
 
 Verify.propTypes = {
   data: PropTypes.object.isRequired,
-  verify: PropTypes.string.isRequired,
-  uid: PropTypes.string.isRequired,
 };
 
-export async function getServerSideProps({ query }) {
-  const v = await query.v.toString();
-  const uid = await query.uid.toString();
+export async function getStaticPaths() {
+  const product = await dbUser("", "dbUserOne");
+  return {
+    paths: product.map(({ id }) => ({
+      params: {
+        id: id.toString(),
+      },
+    })),
+    fallback: "blocking",
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const id = await params.id.toString();
 
   try {
-    const data = await dbUserByUID(uid, "dbuserTwoID", v);
+    const data = await dbUserByUID(id, "dbuserTwoID");
 
     if (!data) {
       return {
@@ -68,8 +92,6 @@ export async function getServerSideProps({ query }) {
     return {
       props: {
         data,
-        verify: v,
-        uid,
       },
     };
   } catch (error) {

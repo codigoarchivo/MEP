@@ -33,6 +33,11 @@ export const userReducer = (state = initialStates, action) => {
         ...state,
         activeUsuario: action.payload,
       };
+    case types.userClose:
+      return {
+        ...state,
+        activeUsuario: null,
+      };
     default:
       return state;
   }

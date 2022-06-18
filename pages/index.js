@@ -18,6 +18,8 @@ import { dbProducts } from "../data/dbProducts";
 
 import { dbCategory } from "../data/dbCategory";
 
+import { closeRevert } from "../actions/checkout";
+
 const HomeL = ({ product = [], category = [] }) => {
   // dispatch
   const dispatch = useDispatch();
@@ -26,6 +28,11 @@ const HomeL = ({ product = [], category = [] }) => {
     dispatch(listDataProduct(product));
     dispatch(listDataCategory(category));
   }, [dispatch, product, category]);
+
+  useEffect(() => {
+    // closeRevert(); // close revert  the path:/checkout
+    dispatch(closeRevert());
+  }, [dispatch]);
 
   return (
     <ShopLayout title={"Home"}>

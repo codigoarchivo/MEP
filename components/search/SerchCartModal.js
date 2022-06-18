@@ -23,6 +23,7 @@ import {
 } from "@chakra-ui/react";
 
 import { saveSale } from "../../actions/product";
+
 import Toast from "../../helpers/Toast";
 
 const SerchCartModal = ({ isOpen, onClose }) => {
@@ -77,17 +78,13 @@ const SerchCartModal = ({ isOpen, onClose }) => {
   });
 
   const confirmSale = () => {
-    dispatch(saveSale(data, a.uid));
-
-    // save cart
-    router.push({
-      pathname: "/checkout/[uid]",
-      query: {
-        uid: a.uid,
-      },
-    });
+    dispatch(saveSale(data));
 
     Toast("Gracias por su compra", "success", 5000);
+    
+    // save cart
+
+    router.push("/checkout");
   };
 
   return (

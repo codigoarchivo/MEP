@@ -108,21 +108,11 @@ const productEdit = (data) => ({
   payload: data,
 });
 
-export const cheListAll = (data) => ({
-  type: types.cheListAllHistory,
-  payload: data,
-});
-
-export const cheListAllActive = (data) => ({
-  type: types.cheListAllActive,
-  payload: data,
-});
-
 export const validShop = (sale, idThree) => {
   return async () => {
     try {
       // principal
-      await setDoc(doc(db, "users", dA, "sales", idThree), {
+      await setDoc(doc(db,"sales", idThree), {
         ...sale,
       });
     } catch (error) {
@@ -145,7 +135,6 @@ export const validPago = (
           sale: info.sale,
           process: true,
         });
-        dispatch(checkRevert());
       }
 
       if (dA.toString() !== idProduct.toString()) {
@@ -159,12 +148,29 @@ export const validPago = (
           sale: info.sale,
           process: true,
         });
-        dispatch(checkRevert());
       }
-
-    
+      dispatch(checkRevert());
     } catch (error) {
       Toast("Al parecer hay un errorqsqsq", "error", 5000);
     }
   };
 };
+
+export const cheListAll = (data) => ({
+  type: types.cheListAllHistory,
+  payload: data,
+});
+
+export const cheListAllActive = (data) => ({
+  type: types.cheListAllActive,
+  payload: data,
+});
+
+export const cheVerify = (data) => ({
+  type: types.cheActiveVerify,
+  payload: data,
+});
+
+export const cheCloseVerify = () => ({
+  type: types.cheClearVerify,
+});
