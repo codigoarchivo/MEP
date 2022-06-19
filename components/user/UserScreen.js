@@ -1,6 +1,14 @@
 import React from "react";
 
-import { Grid, chakra, Heading,  VStack } from "@chakra-ui/react";
+import {
+  Grid,
+  chakra,
+  Heading,
+  VStack,
+  HStack,
+  GridItem,
+  Button,
+} from "@chakra-ui/react";
 
 import PropTypes from "prop-types";
 
@@ -16,11 +24,10 @@ import { useRouter } from "next/router";
 
 import { DataUserAdicional } from "../../actions/user";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import GridItemForm from "../../utils/GridItemForm";
 import GridItemFormTextarea from "../../utils/GridItemFormTextarea";
-import GridValueClose from "../../utils/GridValueClose";
 
 const initialStates = {
   na: "",
@@ -30,6 +37,8 @@ const initialStates = {
 };
 
 const UserScreen = ({ user = {} }) => {
+  // useSelector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -41,7 +50,7 @@ const UserScreen = ({ user = {} }) => {
   // useForm
   const { values, handleInputChange } = useFormAll(initialStates, user);
   // values
-  const { na, te, co, dt, id, rol } = values;
+  const { na, te, co, dt, id } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,7 +63,15 @@ const UserScreen = ({ user = {} }) => {
       );
     }
 
-    dispatch(DataUserAdicional({ na, te, co, dt, id, rol }));
+    if (a.uid !== id) {
+      return Toast(
+        "No puedes editar un usuario que no te pertenezca",
+        "error",
+        5000
+      );
+    }
+
+    dispatch(DataUserAdicional({ na, te, co, dt }, id));
 
     router.back();
   };
@@ -63,7 +80,7 @@ const UserScreen = ({ user = {} }) => {
   const onCloseSelling = () => {
     router.back();
   };
-  
+
   return (
     <VStack
       alignContent={"center"}
@@ -111,6 +128,7 @@ const UserScreen = ({ user = {} }) => {
             },
           ].map(({ nombre, Valor, na, place, type }, key) => (
             <GridItemForm
+              isReadOnly={a.uid !== id ? true : false}
               key={key}
               points={2}
               name={nombre}
@@ -122,6 +140,7 @@ const UserScreen = ({ user = {} }) => {
             />
           ))}
           <GridItemFormTextarea
+            isReadOnly={a.uid !== id ? true : false}
             points={2}
             name={"Información Adicional"}
             na={"dt"}
@@ -130,8 +149,20 @@ const UserScreen = ({ user = {} }) => {
             handle={handleInputChange}
             bg={bg}
             brand={brand}
+            size={"lg"}
           />
-          <GridValueClose onClose={onCloseSelling} set={"Guardar"} />
+          <GridItem colSpan={2} mt={5}>
+            <HStack w={"full"} justifyContent="flex-end" spacing={10}>
+              <Button variant={"secondary"} onClick={onCloseSelling}>
+                Close
+              </Button>
+              {a.uid === id && (
+                <Button variant={"primary"} type="submit" ml={3}>
+                  Guardar
+                </Button>
+              )}
+            </HStack>
+          </GridItem>
         </Grid>
       </chakra.form>
     </VStack>

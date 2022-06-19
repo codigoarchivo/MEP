@@ -20,13 +20,7 @@ import Toast from "../helpers/Toast";
 
 import { closeRevert } from "./checkout";
 
-export const login = (
-  uid = null,
-  displayName = null,
-  photoURL = null,
-  email = null,
-  rol = null
-) => ({
+export const login = (uid, displayName, photoURL, email, rol) => ({
   type: types.login,
   payload: {
     uid,

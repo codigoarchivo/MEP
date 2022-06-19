@@ -3,7 +3,7 @@ import { types } from "../type";
 const initialStates = {
   list: [],
   listData: [],
-  activeSelect: null,
+  activeSelect: {},
 };
 export const categoryReducer = (state = initialStates, action) => {
   switch (action.type) {
@@ -33,18 +33,18 @@ export const categoryReducer = (state = initialStates, action) => {
         list: state.list.map((e) =>
           e.id === action.payload.id ? (e = action.payload) : e
         ),
-        activeSelect: null,
+        activeSelect: {},
       };
     case types.categoryDelete:
       return {
         ...state,
         list: state.list.filter((e) => e.id !== action.payload),
-        activeSelect: null,
+        activeSelect: {},
       };
     case types.closeActive:
       return {
         ...state,
-        activeSelect: null,
+        activeSelect: {},
       };
 
     default:

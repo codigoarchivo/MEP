@@ -10,6 +10,8 @@ const GridItemFormTextarea = ({
   bg,
   brand,
   mb,
+  size = "xs",
+  isReadOnly = false,
 }) => {
   return (
     <>
@@ -22,6 +24,7 @@ const GridItemFormTextarea = ({
           {name}
         </FormLabel>
         <Textarea
+          isReadOnly={isReadOnly}
           bg={bg}
           _focus={brand}
           variant="filled"
@@ -30,7 +33,7 @@ const GridItemFormTextarea = ({
           value={val}
           onChange={handle}
           placeholder={place}
-          size="xs"
+          size={size}
         />
       </GridItem>
     </>

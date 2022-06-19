@@ -12,19 +12,21 @@ import {
   VStack,
   chakra,
   Box,
+  Button,
 } from "@chakra-ui/react";
 
 import { useDispatch } from "react-redux";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import { checkRevert, validPago } from "../../actions/checkout";
+import { validPago } from "../../actions/checkout";
 
 import Toast from "../../helpers/Toast";
 
 import GridValueClose from "../../utils/GridValueClose";
 
 import Salemodal from "./Salemodal";
+import { checkRevert } from "../../actions/sales";
 
 const SaleModal = ({
   bordes,
@@ -32,14 +34,12 @@ const SaleModal = ({
   idThree = "",
   // product
   product = {},
-  // sale
-  sale = null,
   // información del pago del producto
   referencia = {},
   // uid del comprador
-  uidBuy = {},
+  uidBuy = "",
   // uid del vendedor
-  idProduct = "",
+  uidSale = "",
 }) => {
   // dispatch
   const router = useRouter();
@@ -48,34 +48,29 @@ const SaleModal = ({
   // Breakpoints
   const { full } = Breakpoints();
 
+  const handleUser = (uid) => {
+    router.push({
+      pathname: "/info/[uid]",
+      query: {
+        uid,
+      },
+    });
+  };
+
   // handleLiberate
   const handleLiberate = (e) => {
     e.preventDefault();
 
-    if ([idThree, idProduct, uidBuy.id].includes("")) {
+    if ([idThree, uidSale, uidBuy].includes("")) {
       return Toast("Error al liberar el producto", "error", 5000);
     }
 
+    dispatch(validPago(referencia, idThree, uidSale));
 
-    const dataL = {
-      na: "Edgar Marcano",
-      co: "+1 973 510 8452",
-      te: "ehms1975@gmail.com",
-      dt: "381053465609",
-    };
-
-    const data = {
-      // información para el comprador
-      sale: sale === null ? dataL : sale,
-      // información del pago del producto
-      product,
-    };
-    // console.log(data, idThree, idProduct, uidBuy.id);
-    dispatch(validPago(data, idThree, idProduct, uidBuy.id));
-  
     Toast("Pago ha sido verificado", "success", 5000);
 
     router.back();
+    dispatch(checkRevert());
   };
 
   const closeVerify = () => {
@@ -85,99 +80,24 @@ const SaleModal = ({
 
   return (
     <>
-      <Stack flexDirection={"row"} w={full} spacing={0} mb={5}>
-        <VStack shadow={"lg"} w={full} spacing={5} border={bordes} p={5} mr={5}>
-          <Heading
-            textTransform={"uppercase"}
-            w={full}
-            mb={5}
-            size={"sm"}
-            p={5}
-          >
-            Información del vendedor
-          </Heading>
-          {[
-            {
-              nombre: "Nombre",
-              Valor: `${sale === null ? "Edgar Marcano" : sale?.na}`,
-            },
-            {
-              nombre: "Telefono",
-              Valor: `${sale === null ? "+1 973 510 8452" : sale?.te}`,
-            },
-            {
-              nombre: "Correo",
-              Valor: `${sale === null ? "ehms1975@gmail.com" : sale?.co}`,
-            },
-            {
-              nombre: "Información Adicional",
-              Valor: `${sale === null ? "381053465609" : sale?.dt}`,
-            },
-          ].map(({ nombre, Valor }, key) => (
-            <HStack
-              w={full}
-              key={key}
-              justifyContent={"space-between"}
-              borderBottom={bordes}
-            >
-              <Text fontWeight={"black"}>{nombre}: </Text>
-              <Text>{Valor}</Text>
-            </HStack>
-          ))}
-        </VStack>
-        <VStack shadow={"lg"} w={full} spacing={5} p={5} border={bordes}>
-          <Heading
-            textTransform={"uppercase"}
-            w={full}
-            mb={5}
-            size={"sm"}
-            p={2}
-          >
-            Información del cliente
-          </Heading>
-          <Stack w={full} spacing={5} p={5}>
-            {[
-              {
-                nombre: "Nombre",
-                Valor: uidBuy?.na,
-              },
-              {
-                nombre: "Telefono",
-                Valor: uidBuy?.te,
-              },
-              {
-                nombre: "Correo",
-                Valor: uidBuy?.co,
-              },
-              {
-                nombre: "Información Adicional",
-                Valor: uidBuy?.dt,
-              },
-            ].map(({ nombre, Valor }, key) => (
-              <HStack
-                w={full}
-                key={key}
-                justifyContent={"space-between"}
-                borderBottom={bordes}
-              >
-                <Text fontWeight={"black"}>{nombre}: </Text>
-                <Text>{Valor}</Text>
-              </HStack>
-            ))}
-          </Stack>
-        </VStack>
-      </Stack>
-
-      <Stack flexDirection={"row"} w={full} spacing={0} mb={20}>
-        <VStack
-          h={"min-content"}
-          shadow={"lg"}
-          w={full}
-          mr={5}
-          spacing={5}
-          p={5}
-          border={bordes}
+      <HStack w={full} border={bordes} p={5} justifyContent={"flex-end"} mb={5}>
+        <Button
+          variant={"primary"}
+          textTransform={"capitalize"}
+          onClick={() => handleUser(uidSale)}
         >
+          Información del vendedor
+        </Button>
+        <Button
+          variant={"primary"}
+          textTransform={"capitalize"}
+          onClick={() => handleUser(uidBuy)}
+        >
+          Información del comprador
+        </Button>
+      </HStack>
+      <Stack flexDirection={"row"} w={full} spacing={0} mb={20}>
+        <VStack shadow={"lg"} w={full} mr={5} spacing={5} p={5} border={bordes}>
           <Heading
             textTransform={"uppercase"}
             w={full}
@@ -198,11 +118,11 @@ const SaleModal = ({
                 Valor: "N°" + product?.cn,
               },
               {
-                nombre: "Impuesto",
+                nombre: "Precio",
                 Valor: "$" + product?.in,
               },
               {
-                nombre: "Precio",
+                nombre: "Impuesto",
                 Valor: "$" + product?.pj,
               },
               {
@@ -289,8 +209,8 @@ SaleModal.propTypes = {
   product: PropTypes.object,
   sale: PropTypes.object,
   referencia: PropTypes.object,
-  uidBuy: PropTypes.object,
-  idProduct: PropTypes.string,
-}
+  uidBuy: PropTypes.string,
+  uidSale: PropTypes.string,
+};
 
 export default SaleModal;

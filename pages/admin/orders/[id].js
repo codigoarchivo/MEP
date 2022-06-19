@@ -16,27 +16,22 @@ import Toast from "../../../helpers/Toast";
 
 import { dbUserByUID } from "../../../data/dbUser";
 
-import { cheListAllActive } from "../../../actions/checkout";
+import { cheListAllActive } from "../../../actions/sales";
 
-const Verify = ({ uidSale, productbuy, uidBuy }) => {
+
+const Orders = ({ productbuy }) => {
   // useSelector
-  const { active } = useSelector(({ checkout }) => checkout);
+  const { active } = useSelector(({ sale }) => sale);
   // Breakpoints
   const { content5, bordes } = Breakpoints();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (uidSale || productbuy || uidBuy) {
-      dispatch(
-        cheListAllActive({
-          uidSale,
-          productbuy,
-          uidBuy,
-        })
-      );
-    }
-  }, [dispatch, uidSale, productbuy, uidBuy]);
+    if (productbuy) {
+      dispatch(cheListAllActive(productbuy));
+    } 
+  }, [dispatch, productbuy]);
 
   return (
     <ShopLayout>
@@ -45,17 +40,15 @@ const Verify = ({ uidSale, productbuy, uidBuy }) => {
           <SaleVerify
             bordes={bordes}
             // toda la informacion del producto, que se guardo en el uid del comprador
-            product={active?.productbuy?.product}
-            // la referenciadel pago
-            referencia={active?.productbuy}
-            // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
-            sale={!active?.uidSale ? active?.uidSale : null}
+            product={active?.product}
+            // la referencia del pago
+            referencia={active}
+            // id del proceso de pago
+            idThree={active?.id}
             // toda la informacion del comprador, que se guardo para que se refleje en el checkout
             uidBuy={active?.uidBuy}
-            // id del proceso de pago
-            idThree={active?.productbuy?.id}
-            // id del producto
-            idProduct={active?.productbuy?.product?.uid}
+            // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
+            uidSale={active?.product?.uid}
           />
         </Stack>
       </Container>
@@ -63,29 +56,17 @@ const Verify = ({ uidSale, productbuy, uidBuy }) => {
   );
 };
 
-Verify.propTypes = {
-  uidSale: PropTypes.object,
+Orders.propTypes = {
   productbuy: PropTypes.object,
-  uidBuy: PropTypes.object,
 };
 
 export async function getServerSideProps({ query }) {
-  const dA = process.env.NEXT_PUBLIC_ROL_A.toString();
-  const idp = await query.id.toString();
-  const idb = await query.b.toString();
-  let ids = await query.s.toString();
-
+  const id = await query.id.toString();
   try {
-    let uidSale = {};
-    if (dA !== ids) {
-      uidSale = await dbUserByUID(ids, "dbUserOneID");
-    }
-    const uidBuy = await dbUserByUID(idb, "dbUserOneID");
+    // compra del producto path: /buys
+    const productbuy = await dbUserByUID(id, "dbuserThreeID");
 
-    // compra del producto
-    const productbuy = await dbUserByUID(idp, "dbuserThreeID");
-
-    if (!uidSale || !productbuy || !uidBuy) {
+    if (!productbuy) {
       return {
         redirect: {
           destination: "/",
@@ -96,8 +77,6 @@ export async function getServerSideProps({ query }) {
 
     return {
       props: {
-        uidBuy,
-        uidSale,
         productbuy,
       },
     };
@@ -106,4 +85,4 @@ export async function getServerSideProps({ query }) {
     return { props: {} };
   }
 }
-export default Verify;
+export default Orders;

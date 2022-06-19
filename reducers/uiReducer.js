@@ -2,7 +2,7 @@ import { types } from "../type";
 
 const initialState = {
   loading: false,
-  activeDisabled: null,
+  activeDisabled: {},
 };
 export const uiReducer = (states = initialState, action) => {
   switch (action.type) {

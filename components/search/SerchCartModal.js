@@ -49,6 +49,8 @@ const SerchCartModal = ({ isOpen, onClose }) => {
 
   const data = active.map((item) => {
     return {
+      // uid del comprador
+      uid: a.uid,
       process: false,
       close: false,
       lim: addDays(Date.now(), 3),
@@ -78,13 +80,12 @@ const SerchCartModal = ({ isOpen, onClose }) => {
   });
 
   const confirmSale = () => {
+    // save cart
     dispatch(saveSale(data));
 
     Toast("Gracias por su compra", "success", 5000);
-    
-    // save cart
 
-    router.push("/checkout");
+    router.push(`/checkout?q=${a.uid}`);
   };
 
   return (

@@ -2,7 +2,6 @@ import { types } from "../type";
 
 const initialStates = {
   list: [],
-  activeUsuario: null,
 };
 export const userReducer = (state = initialStates, action) => {
   switch (action.type) {
@@ -27,16 +26,6 @@ export const userReducer = (state = initialStates, action) => {
       return {
         ...state,
         list: state.list.filter((e) => e.id !== action.payload),
-      };
-    case types.userActive:
-      return {
-        ...state,
-        activeUsuario: action.payload,
-      };
-    case types.userClose:
-      return {
-        ...state,
-        activeUsuario: null,
       };
     default:
       return state;

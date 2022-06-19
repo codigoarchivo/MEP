@@ -61,7 +61,7 @@ export const checkoutAdd = (data) => {
 export const closeRevert = () => ({
   type: types.productRevert,
 });
-
+// TODO: creo qu lo voy a cambiar
 export const checkRevert = () => ({
   type: types.cheClear,
 });
@@ -112,7 +112,7 @@ export const validShop = (sale, idThree) => {
   return async () => {
     try {
       // principal
-      await setDoc(doc(db,"sales", idThree), {
+      await setDoc(doc(db, "sales", idThree), {
         ...sale,
       });
     } catch (error) {
@@ -121,35 +121,39 @@ export const validShop = (sale, idThree) => {
   };
 };
 
-export const validPago = (
-  info = {},
-  idThree = "",
-  idProduct = "",
-  uidBuy = ""
-) => {
+export const validPago = (referencia = {}, idThree = "", uidSale = "") => {
   return async (dispatch) => {
     try {
-      if (dA.toString() === idProduct.toString()) {
+      if (dA.toString() === uidSale.toString()) {
+        
+        // principal
+        await updateDoc(doc(db, "sales", idThree), {
+          process: true,
+        });
+
         // buy
-        await updateDoc(doc(db, "users", uidBuy, "buys", idThree), {
-          sale: info.sale,
+        await updateDoc(doc(db, "buys", idThree), {
           process: true,
         });
       }
 
-      if (dA.toString() !== idProduct.toString()) {
+      if (dA.toString() !== uidSale.toString()) {
         // sales
-        await setDoc(doc(db, "users", idProduct, "sales", idThree), {
-          buy: info.buy,
-          product: info.product,
+        await setDoc(doc(db, "sales"), {
+          ...referencia,
+          uid: uidSale,
         });
+
+        // principal
+        await updateDoc(doc(db, "sales", idThree), {
+          process: true,
+        });
+
         // buy
-        await updateDoc(doc(db, "users", uidBuy, "buys", idThree), {
-          sale: info.sale,
+        await updateDoc(doc(db, "buys", idThree), {
           process: true,
         });
       }
-      dispatch(checkRevert());
     } catch (error) {
       Toast("Al parecer hay un errorqsqsq", "error", 5000);
     }
@@ -161,11 +165,7 @@ export const cheListAll = (data) => ({
   payload: data,
 });
 
-export const cheListAllActive = (data) => ({
-  type: types.cheListAllActive,
-  payload: data,
-});
-
+// verify
 export const cheVerify = (data) => ({
   type: types.cheActiveVerify,
   payload: data,

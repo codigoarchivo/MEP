@@ -34,7 +34,7 @@ import { dbUser } from "../../data/dbUser";
 
 import Toast from "../../helpers/Toast";
 
-const Checkout = ({ product = [], uid = "" }) => {
+const Checkout = ({ product = [] }) => {
   // useSelector
   const { activeSelectCheck: check = [] } = useSelector(
     ({ product }) => product
@@ -55,6 +55,9 @@ const Checkout = ({ product = [], uid = "" }) => {
   useEffect(() => {
     // path: /cart
     dispatch(closeActive());
+  }, [dispatch]);
+  
+  useEffect(() => {
     // path: /details
     dispatch(closeProductDetails());
   }, [dispatch]);
@@ -96,40 +99,40 @@ const Checkout = ({ product = [], uid = "" }) => {
                       fontWeight={"black"}
                       mb={10}
                     >
-                      Lista de compras
+                      {!!check
+                        ? "No hay compras asociadas"
+                        : "Lista de compras"}
                     </Heading>
                     {check.map((item, key) => (
-                      <CheckoutScreen
-                        key={key}
-                        {...item}
-                        count={(key += 1)}
-                        uid={uid}
-                      />
+                      <CheckoutScreen key={key} {...item} count={(key += 1)} />
                     ))}
                   </VStack>
                   <Box w={"full"}>
-                    <HStack>
-                      <Text>
-                        Si sientes que as cometido una equivocación puede
-                        revertir haciendo{" "}
-                      </Text>
-                      <Button
-                        onClick={handleRevert}
-                        textTransform={"uppercase"}
-                        variant={"secondary"}
-                      >
-                        clik aqui
-                      </Button>{" "}
-                    </HStack>
-
-                    <Box mt={5}>
-                      <Heading size={"sm"}>Nota:</Heading>{" "}
-                      <Text>
-                        La información se encuentra en el <b>botton resumen</b>{" "}
-                        solo asi, podras notificar del pago tanto al vendedor
-                        como a la tienda.
-                      </Text>
-                    </Box>
+                    {!check && (
+                      <>
+                        <HStack>
+                          <Text>
+                            Si sientes que as cometido una equivocación puede
+                            revertir haciendo{" "}
+                          </Text>
+                          <Button
+                            onClick={handleRevert}
+                            textTransform={"uppercase"}
+                            variant={"secondary"}
+                          >
+                            clik aqui
+                          </Button>{" "}
+                        </HStack>
+                        <Box mt={5}>
+                          <Heading size={"sm"}>Nota:</Heading>{" "}
+                          <Text>
+                            La información se encuentra en el{" "}
+                            <b>botton resumen</b> solo asi, podras notificar del
+                            pago tanto al vendedor como a la tienda.
+                          </Text>
+                        </Box>
+                      </>
+                    )}
                   </Box>
                 </VStack>
               </Box>
@@ -143,12 +146,12 @@ const Checkout = ({ product = [], uid = "" }) => {
 
 Checkout.propTypes = {
   product: PropTypes.array,
-  uid: PropTypes.string,
 };
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ query }) {
+  const q = await query.q.toString();
   try {
-    const product = await dbUser("", "dbUserOne");
+    const product = await dbUser(q, "dbUserFour");
 
     if (!product) {
       return {

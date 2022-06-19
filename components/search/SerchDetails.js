@@ -38,7 +38,7 @@ import { activeProductCart } from "../../actions/product";
 import SerchRat from "../../components/search/SerchRat";
 import SerchMessage from "../../components/search/SerchMessage";
 
-const SerchDetails = ({ message = [], product = [] }) => {
+const SerchDetails = ({ message = [], product = {} }) => {
   // dispatch
   const dispatch = useDispatch();
   // router
@@ -219,8 +219,8 @@ const SerchDetails = ({ message = [], product = [] }) => {
 };
 
 SerchDetails.propTypes = {
-  product: PropTypes.object.isRequired,
-  message: PropTypes.array.isRequired,
+  product: PropTypes.object,
+  message: PropTypes.array,
 };
 
 export default SerchDetails;

@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 
 import { useSelector } from "react-redux";
 
+import PropTypes from "prop-types";
+
 import {
   HStack,
   Popover,
@@ -36,7 +38,6 @@ const CheckoutScreen = ({
   id: idThree,
   lim,
   count,
-  uid,
   sale = {},
 }) => {
   // useSelector
@@ -100,8 +101,8 @@ const CheckoutScreen = ({
             // sale={sale}
           />
           <NavLink
-            href={`/checkout/[rate]?ve=${uid}&glo=${idThree}&rat=${rat}&li=${check.length}&close=true`}
-            as={`/checkout/${id}?ve=${uid}&glo=${idThree}&rat=${rat}&li=${check.length}&close=true`}
+            href={`/checkout/[rate]?glo=${idThree}&rat=${rat}&li=${check.length}&close=true`}
+            as={`/checkout/${id}?glo=${idThree}&rat=${rat}&li=${check.length}&close=true`}
             name={"Calificar"}
             variant={"primary"}
             fontWeight={"normal"}
@@ -154,6 +155,15 @@ const CheckoutScreen = ({
       </HStack>
     </>
   );
+};
+
+CheckoutScreen.propTypes = {
+  product: PropTypes.object,
+  process: PropTypes.bool,
+  id: PropTypes.string,
+  lim: PropTypes.object,
+  count: PropTypes.number,
+  sale: PropTypes.object,
 };
 
 export default CheckoutScreen;

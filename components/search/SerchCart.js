@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 
-import { useRouter } from "next/router";
+import PropTypes from "prop-types";
 
-import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 import {
   Button,
@@ -29,14 +29,9 @@ import SerchCartActive from "./SerchCartActive";
 
 import SerchCartModal from "./SerchCartModal";
 
-const SerchCart = () => {
+const SerchCart = ({ active, save }) => {
   // useRouter
   const router = useRouter();
-  // selector
-  const {
-    activeCartSelect: active = [],
-    saveCartSelect: save = [],
-  } = useSelector(({ product }) => product);
   // Breakpoints
   const { bordes, full } = Breakpoints();
   // useRef
@@ -131,6 +126,11 @@ const SerchCart = () => {
       )}
     </>
   );
+};
+
+SerchCart.propTypes = {
+  active: PropTypes.array,
+  save: PropTypes.array,
 };
 
 export default SerchCart;

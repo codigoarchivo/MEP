@@ -1,18 +1,28 @@
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
 import { db } from "../firebase/config";
 
-export const dbUser = async (id, dbU, val) => {
+export const dbUser = async (id, dbU) => {
   let q = "";
   switch (dbU) {
     case "dbUserOne":
-      q = collection(db, "buys");
+      q = collection(db, "buys"); // dbUserOne getStaticPaths;
       break;
     case "dbUserTwo":
       q = collection(db, "users");
       break;
     case "dbUserThree":
       q = collection(db, "sales");
+      break;
+    case "dbUserFour": // dbUserFour path /checkout
+      q = query(collection(db, "buys"), where("uid", "==", id));
       break;
   }
 

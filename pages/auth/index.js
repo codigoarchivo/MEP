@@ -11,10 +11,12 @@ import { useSelector } from "react-redux";
 const Account = () => {
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
+
   // router
   const router = useRouter();
 
-  if (activeSelect) {
+  const { uid, displayName, email } = activeSelect;
+  if (uid || displayName || email !== undefined) {
     router.push("/");
   }
 

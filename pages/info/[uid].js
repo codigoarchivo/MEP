@@ -1,6 +1,4 @@
-import React, { useEffect } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 
 import { Container } from "@chakra-ui/react";
 
@@ -13,26 +11,13 @@ import ShopLayout from "../../components/layout/ShopLayout";
 import { dbUser, dbUserByUID } from "../../data/dbUser";
 
 import UserScreen from "../../components/user/UserScreen";
-import { UserAdicionalData } from "../../actions/user";
 
 const Informacion = ({ user = {} }) => {
-  // useSelector
-  const { activeUsuario } = useSelector(({ user }) => user);
-  // dispatch
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (user) {
-      dispatch(UserAdicionalData(user));
-    } else {
-      dispatch(UserAdicionalData(null));
-    }
-  }, [dispatch, user]);
 
   return (
     <ShopLayout title={"Información | Usuario"}>
       <Container maxW="lg">
-        <UserScreen user={{...activeUsuario}} />
+        <UserScreen user={{ ...user }} />
       </Container>
     </ShopLayout>
   );

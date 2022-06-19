@@ -34,7 +34,7 @@ const Buy = ({ dataUser }) => {
     router.push("/");
     dispatch(closeRevert());
   };
-  console.log(dataUser);
+
   return (
     <ShopLayout>
       <Container maxW={"container.xl"}>

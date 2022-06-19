@@ -12,8 +12,8 @@ const initialStates = {
   latestCartSelect: [],
   activeCartSelect: [],
   activeSelectCheck: [],
-  productSerchCategory: null,
-  active: null,
+  productSerchCategory: {},
+  active: {},
 };
 export const productReducer = (state = initialStates, action) => {
   switch (action.type) {
@@ -129,7 +129,7 @@ export const productReducer = (state = initialStates, action) => {
     case types.productcloseDetails:
       return {
         ...state,
-        active: null,
+        active: {},
       };
 
     default:

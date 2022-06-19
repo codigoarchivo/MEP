@@ -36,7 +36,7 @@ import ModeColor from "../../helpers/ModeColor";
 
 import useFormAll from "../../hooks/useFormAll";
 
-import { validShop } from "../../actions/checkout";
+import { cheCloseVerify, validShop } from "../../actions/checkout";
 
 import Toast from "../../helpers/Toast";
 
@@ -105,18 +105,23 @@ const CheckVerify = ({
       // tiempo del recibo de la compra
       cre: Date.now(),
     };
-
     dispatch(validShop(shop, idThree));
 
     Toast("Enviada Verificación", "success", 5000);
 
     reset();
 
-    router.push("/checkout");
+    router.back();
+    setTimeout(() => {
+      dispatch(cheCloseVerify());
+    }, 2000);
   };
 
   const closeVerify = () => {
-    router.push("/checkout");
+    router.back();
+    setTimeout(() => {
+      dispatch(cheCloseVerify());
+    }, 2000);
   };
 
   const handleClient = () => {
@@ -159,11 +164,11 @@ const CheckVerify = ({
                 Valor: "N°" + product?.cn,
               },
               {
-                nombre: "Impuesto",
+                nombre: "Precio",
                 Valor: "$" + product?.in,
               },
               {
-                nombre: "Precio",
+                nombre: "Impuesto",
                 Valor: "$" + product?.pj,
               },
               {
@@ -356,9 +361,9 @@ const CheckVerify = ({
 };
 
 CheckVerify.propTypes = {
-  product: PropTypes.object.isRequired,
-  idThree: PropTypes.string.isRequired,
-  bordes: PropTypes.string.isRequired,
+  product: PropTypes.object,
+  idThree: PropTypes.string,
+  bordes: PropTypes.string,
 };
 
 export default CheckVerify;

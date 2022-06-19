@@ -3,8 +3,7 @@ import { types } from "../type";
 const initialStates = {
   list: [],
   history: [],
-  active: null,
-  verify: null,
+  daVery: {},
 };
 
 export const checkoutReducer = (state = initialStates, action) => {
@@ -19,30 +18,20 @@ export const checkoutReducer = (state = initialStates, action) => {
         ...state,
         history: [...action.payload],
       };
-    case types.checkoutAdd:
-      return {
-        ...state,
-        list: [...state.list, action.payload],
-      };
-    case types.cheListAllActive:
-      return {
-        ...state,
-        active: { ...action.payload },
-      };
-    case types.cheClear:
-      return {
-        ...state,
-        active: null,
-      };
     case types.cheActiveVerify:
       return {
         ...state,
-        verify: { ...action.payload },
+        daVery: { ...action.payload },
       };
     case types.cheClearVerify:
       return {
         ...state,
-        verify: null,
+        daVery: {},
+      };
+    case types.checkoutAdd:
+      return {
+        ...state,
+        list: [...state.list, action.payload],
       };
     default:
       return state;

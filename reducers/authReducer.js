@@ -1,7 +1,7 @@
 import { types } from "../type";
 
 const initialStates = {
-  activeSelect: null,
+  activeSelect: {},
 };
 
 export const authReducer = (states = initialStates, action) => {
@@ -14,7 +14,7 @@ export const authReducer = (states = initialStates, action) => {
     case types.logout:
       return {
         ...states,
-        activeSelect: null,
+        activeSelect: {},
       };
     case types.active:
       return {
@@ -24,7 +24,7 @@ export const authReducer = (states = initialStates, action) => {
     case types.closeActive:
       return {
         ...states,
-        activeSelect: null,
+        activeSelect: {},
       };
 
     default:

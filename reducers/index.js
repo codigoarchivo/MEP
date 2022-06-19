@@ -9,6 +9,7 @@ import { authReducer } from "./authReducer";
 import { uiReducer } from "./uiReducer";
 import { checkoutReducer } from "./checkoutReducer";
 import { userReducer } from "./userReducer";
+import { salesReducer } from "./salesReducer";
 
 const createNoopStorage = () => {
   return {
@@ -33,7 +34,6 @@ const storage =
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "category", "product", "checkout", "user"],
   blacklist: ["ui"],
 };
 
@@ -43,6 +43,7 @@ const rootReducer = combineReducers({
   product: productReducer,
   checkout: checkoutReducer,
   user: userReducer,
+  sale: salesReducer,
   ui: uiReducer,
 });
 

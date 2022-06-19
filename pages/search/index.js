@@ -105,10 +105,7 @@ const Search = ({ product }) => {
 };
 
 Search.propTypes = {
-  list: PropTypes.array,
-  listSerch: PropTypes.array,
-  serchProductList: PropTypes.func,
-  listProductSerchClose: PropTypes.func,
+  product: PropTypes.array,
 };
 
 export async function getServerSideProps({ query }) {

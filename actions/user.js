@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, setDoc, updateDoc } from "firebase/firestore";
 
 import { db } from "../firebase/config";
 
@@ -78,29 +78,12 @@ const userDelete = (id) => ({
   payload: id,
 });
 
-export const DataUserAdicional = (data) => {
+export const DataUserAdicional = (data, id) => {
   return async () => {
-    const vendedor = {
-      na: data.na,
-      te: data.te,
-      co: data.co,
-      dt: data.dt,
-      rol: data.rol,
-    };
     try {
-      await setDoc(doc(db, "users", data.id), vendedor);
+      await updateDoc(doc(db, "users", id), data);
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }
   };
 };
-
-export const UserAdicionalData = (data) => ({
-  type: types.userActive,
-  payload: data,
-});
-export const UserAdicionalDataClose = () => ({
-  type: types.userClose,
-});
-
-

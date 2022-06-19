@@ -49,15 +49,18 @@ export const types = {
   checkoutList: "[CHECKOUT] List",
   checkoutDelete: "[CHECKOUT] Delete",
   cheListAllHistory: "[CHECKOUT] History",
-  cheListAllActive: "[CHECKOUT] Active",
-  cheClear: "[CHECKOUT] Clear",
   cheActiveVerify: "[CHECKOUT] Active",
   cheClearVerify: "[CHECKOUT] Clear",
+
+  cheListAllActive: "[SALES] Active",
+  cheClear: "[SALES] Clear",
+  
 
   user: "[USER] List",
   userAdd: "[USER] Add",
   userEdit: "[USER] Edit",
   userDelete: "[USER] Delete",
-  userActive: "[USER] Active",
-  userClose: "[USER] Close",
+  
+  userActive: "[ACTIVE] User",
+  userClose: "[ACTIVE] Close",
 };

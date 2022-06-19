@@ -18,19 +18,17 @@ import Toast from "../../helpers/Toast";
 
 import { cheVerify } from "../../actions/checkout";
 
-const Verify = ({ data }) => {
+const Verification = ({ data }) => {
   // useDispatch
   const dispatch = useDispatch();
   // useSelector
-  const { verify } = useSelector(({ checkout }) => checkout);
+  const { daVery } = useSelector(({ checkout }) => checkout);
   // Breakpoints
   const { content5, bordes, full } = Breakpoints();
 
   useEffect(() => {
     if (data) {
       dispatch(cheVerify(data));
-    } else {
-      dispatch(cheVerify(null));
     }
   }, [dispatch, data]);
 
@@ -39,18 +37,18 @@ const Verify = ({ data }) => {
       <Container maxW={"container.xl"}>
         <Stack
           flexDirection={"column"}
+          justifyContent={"space-around"}
           spacing={0}
           w={full}
-          justifyContent={"space-around"}
           py={10}
         >
           <CheckVerify
             // boides
             bordes={bordes}
             // idThree es id del la compra del data
-            idThree={verify.id}
+            idThree={daVery.id}
             // toda la informacion del data, que se guardo en el uid del comprador
-            product={verify.product}
+            product={daVery.product}
           />
         </Stack>
       </Container>
@@ -58,7 +56,7 @@ const Verify = ({ data }) => {
   );
 };
 
-Verify.propTypes = {
+Verification.propTypes = {
   data: PropTypes.object.isRequired,
 };
 
@@ -102,4 +100,4 @@ export async function getStaticProps({ params }) {
   }
 }
 
-export default Verify;
+export default Verification;

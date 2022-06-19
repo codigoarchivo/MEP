@@ -10,6 +10,7 @@ const GridItemForm = ({
   place,
   handle,
   maxlength,
+  isReadOnly = false,
 }) => {
   return (
     <>
@@ -22,6 +23,7 @@ const GridItemForm = ({
           {name}
         </FormLabel>
         <Input
+          isReadOnly={isReadOnly}
           maxLength={maxlength}
           name={na}
           id={na}

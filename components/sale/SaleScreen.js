@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Heading, HStack, Tag, Text, VStack } from "@chakra-ui/react";
 
 import PropTypes from "prop-types";
 
@@ -16,9 +16,9 @@ const SaleScreen = ({ item = {} }) => {
   // Breakpoints
   const { bordes, full } = Breakpoints();
 
-  const { cre, uidBuy, fer, co, nap, id } = item;
+  const { cre, process, fer, co, nap, id } = item;
 
-  const { uid, to } = item.product;
+  const { to } = item.product;
   return (
     <HStack
       w={full}
@@ -49,15 +49,22 @@ const SaleScreen = ({ item = {} }) => {
       </VStack>
 
       <HStack spacing={"5"} w={full} py={1} justifyContent={"flex-end"}>
-        <Box as="span" color="gray.600" fontSize="sm">
-          hace{" "}
-          {formatDistanceToNow(cre, {
-            locale: localEs,
-          })}
-        </Box>
+        {process === true ? (
+          <Tag textTransform={"uppercase"} size={"sm"} variant="solid" colorScheme="teal">
+            Pagado
+          </Tag>
+        ) : (
+          <Box as="span" color="gray.600" fontSize="sm">
+            hace{" "}
+            {formatDistanceToNow(cre, {
+              locale: localEs,
+            })}
+          </Box>
+        )}
+
         <NavLink
-          href={`/admin/orders/[id]?s=${uid}&b=${uidBuy}`}
-          as={`/admin/orders/${id}?s=${uid}&b=${uidBuy}`}
+          href={`/admin/orders/[id]`}
+          as={`/admin/orders/${id}`}
           name={`Verificar $${to}`}
           variant={"primary"}
           size={"xs"}
