@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 
 import PropTypes from "prop-types";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import ShopLayout from "../components/layout/ShopLayout";
 
-import { listDataProduct } from "../actions/product";
+import { productListIndex } from "../actions/product";
 
 import Home from "../components/home/Home";
 
@@ -18,25 +18,22 @@ import { dbProducts } from "../data/dbProducts";
 
 import { dbCategory } from "../data/dbCategory";
 
-import { closeRevert } from "../actions/checkout";
-
 const HomeL = ({ product = [], category = [] }) => {
+  // selector
+  const { listData = [], latestCartSelect = [] } = useSelector(
+    ({ product }) => product
+  );
   // dispatch
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(listDataProduct(product));
+    dispatch(productListIndex(product));
     dispatch(listDataCategory(category));
   }, [dispatch, product, category]);
 
-  useEffect(() => {
-    // closeRevert(); // close revert  the path:/checkout
-    dispatch(closeRevert());
-  }, [dispatch]);
-
   return (
     <ShopLayout title={"Home"}>
-      <Home />
+      <Home listData={listData} latestCartSelect={latestCartSelect} />
     </ShopLayout>
   );
 };

@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import PropTypes from "prop-types";
-
-import { useDispatch, useSelector } from "react-redux";
 
 import { Container, Stack } from "@chakra-ui/react";
 
@@ -14,24 +12,11 @@ import SaleVerify from "../../../components/sale/SaleVerify";
 
 import Toast from "../../../helpers/Toast";
 
-import { dbUserByUID } from "../../../data/dbUser";
+import { dbUser, dbUserByUID } from "../../../data/dbUser";
 
-import { cheListAllActive } from "../../../actions/sales";
-
-
-const Orders = ({ productbuy }) => {
-  // useSelector
-  const { active } = useSelector(({ sale }) => sale);
+const Orders = ({ active }) => {
   // Breakpoints
   const { content5, bordes } = Breakpoints();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (productbuy) {
-      dispatch(cheListAllActive(productbuy));
-    } 
-  }, [dispatch, productbuy]);
 
   return (
     <ShopLayout>
@@ -57,16 +42,28 @@ const Orders = ({ productbuy }) => {
 };
 
 Orders.propTypes = {
-  productbuy: PropTypes.object,
+  active: PropTypes.object,
 };
 
-export async function getServerSideProps({ query }) {
-  const id = await query.id.toString();
+export async function getStaticPaths() {
+  const sales = await dbUser("", "dbUserThree");
+  return {
+    paths: sales.map(({ id }) => ({
+      params: {
+        id: id.toString(),
+      },
+    })),
+    fallback: "blocking",
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const id = await params.id.toString();
   try {
     // compra del producto path: /buys
-    const productbuy = await dbUserByUID(id, "dbuserThreeID");
+    const active = await dbUserByUID(id, "dbuserThreeID");
 
-    if (!productbuy) {
+    if (!active) {
       return {
         redirect: {
           destination: "/",
@@ -77,12 +74,15 @@ export async function getServerSideProps({ query }) {
 
     return {
       props: {
-        productbuy,
+        active,
       },
     };
   } catch (error) {
     Toast("Al parecer hay un error", "error", 5000);
-    return { props: {} };
+    return {
+      props: {},
+    };
   }
 }
+
 export default Orders;

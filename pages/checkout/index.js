@@ -24,7 +24,6 @@ import Breakpoints from "../../helpers/Breakpoints";
 import {
   activeProductList,
   closeActive,
-  closeProductDetails,
   saveSaleRevert,
 } from "../../actions/product";
 
@@ -37,7 +36,7 @@ import Toast from "../../helpers/Toast";
 const Checkout = ({ product = [] }) => {
   // useSelector
   const { activeSelectCheck: check = [] } = useSelector(
-    ({ product }) => product
+    ({ process }) => process
   );
   // dispatch
   const router = useRouter();
@@ -55,11 +54,6 @@ const Checkout = ({ product = [] }) => {
   useEffect(() => {
     // path: /cart
     dispatch(closeActive());
-  }, [dispatch]);
-  
-  useEffect(() => {
-    // path: /details
-    dispatch(closeProductDetails());
   }, [dispatch]);
 
   const handleRevert = async () => {
@@ -99,16 +93,16 @@ const Checkout = ({ product = [] }) => {
                       fontWeight={"black"}
                       mb={10}
                     >
-                      {!!check
-                        ? "No hay compras asociadas"
-                        : "Lista de compras"}
+                      {!!check[0]
+                        ? "Lista de compras"
+                        : "No hay compras asociadas"}
                     </Heading>
                     {check.map((item, key) => (
                       <CheckoutScreen key={key} {...item} count={(key += 1)} />
                     ))}
                   </VStack>
                   <Box w={"full"}>
-                    {!check && (
+                    {!!check[0] && (
                       <>
                         <HStack>
                           <Text>

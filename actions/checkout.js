@@ -8,49 +8,79 @@ import { types } from "../type";
 
 const dA = process.env.NEXT_PUBLIC_ROL_A;
 
-export const checkoutList = (data) => {
-  return async (dispatch) => {
-    dispatch(listcheckout(data));
+export const validPago = (referencia = {}, idThree = "", uidSale = "") => {
+  return async () => {
+    try {
+      if (dA.toString() === uidSale.toString()) {
+        // principal
+        await updateDoc(doc(db, "sales", idThree), {
+          process: true,
+        });
+
+        // buy
+        await updateDoc(doc(db, "buys", idThree), {
+          process: true,
+        });
+      }
+
+      if (dA.toString() !== uidSale.toString()) {
+        // sales
+        await setDoc(doc(db, "sales"), {
+          ...referencia,
+        });
+
+        // principal
+        await updateDoc(doc(db, "sales", idThree), {
+          process: true,
+        });
+
+        // buy
+        await updateDoc(doc(db, "buys", idThree), {
+          process: true,
+        });
+      }
+    } catch (error) {
+      Toast("Al parecer hay un errorqsqsq", "error", 5000);
+    }
   };
 };
 
-const listcheckout = (data) => ({
-  type: types.checkoutList,
+export const validShop = (sale, idThree) => {
+  return async () => {
+    try {
+      // principal
+      await setDoc(doc(db, "sales", idThree), {
+        ...sale,
+      });
+    } catch (error) {
+      Toast("Al parecer hay un error", "error", 5000);
+    }
+  };
+};
+
+export const cheListAll = (data) => ({
+  type: types.cheListAllHistory,
   payload: data,
 });
 
-export const checkoutAdd = (data) => {
-  console.log(data);
-  return async (dispatch) => {
+export const checkoutAdd = (data, rat, g, p) => {
+  return async (dispatch, getState) => {
+    const { activeCartSelect: check = [] } = await getState().checkout;
     try {
-      const dataList = {
-        uid: data.uidC,
-        com: data.com,
-        nam: data.nam,
-        pho: data.pho,
-        cre: data.cre,
-        rat: data.rat,
-      };
+      // p es el id del producto
+      await setDoc(doc(collection(db, "serchs", p, "messages")), data);
 
-      await setDoc(
-        doc(collection(db, "serchs", data.idPV, "messages")),
-        dataList
-      );
-
-      // sales
-      await updateDoc(doc(db, "users", data.uidV, "sales", data.idGlobal), {
-        close: data.close,
+      // g es el id del buys
+      await updateDoc(doc(db, "buys", g), {
+        close: true,
       });
+      // rat es el rating se agrega al producto
+      await updateDoc(doc(db, "serchs", p), rat);
 
-      // buy
-      await updateDoc(doc(db, "users", data.uidC, "buys", data.idGlobal), {
-        close: data.close,
-      });
-
-      if (data.li === "1") {
+      if (check.lenght === 0) {
         await dispatch(closeRevert());
       } else {
-        await dispatch(deletecheckout(data.idC));
+        await dispatch(deletecheckout(g));
       }
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
@@ -61,15 +91,16 @@ export const checkoutAdd = (data) => {
 export const closeRevert = () => ({
   type: types.productRevert,
 });
-// TODO: creo qu lo voy a cambiar
-export const checkRevert = () => ({
-  type: types.cheClear,
-});
 
 const deletecheckout = (id) => ({
   type: types.checkoutDelete,
   payload: id,
 });
+
+export const checkRevert = () => ({
+  type: types.cheClear,
+});
+
 
 // checkoutEdit comentario
 export const checkoutEdit = (data) => {
@@ -91,86 +122,13 @@ export const checkoutEdit = (data) => {
   };
 };
 
-// editProduct message
-export const valueInProduct = (data) => {
+export const checkoutList = (data) => {
   return async (dispatch) => {
-    try {
-      await updateDoc(doc(db, "serchs", data.id), data);
-      await dispatch(productEdit(data));
-    } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
-    }
+    dispatch(listcheckout(data));
   };
 };
 
-const productEdit = (data) => ({
-  type: types.productEdit,
+const listcheckout = (data) => ({
+  type: types.checkoutList,
   payload: data,
-});
-
-export const validShop = (sale, idThree) => {
-  return async () => {
-    try {
-      // principal
-      await setDoc(doc(db, "sales", idThree), {
-        ...sale,
-      });
-    } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
-    }
-  };
-};
-
-export const validPago = (referencia = {}, idThree = "", uidSale = "") => {
-  return async (dispatch) => {
-    try {
-      if (dA.toString() === uidSale.toString()) {
-        
-        // principal
-        await updateDoc(doc(db, "sales", idThree), {
-          process: true,
-        });
-
-        // buy
-        await updateDoc(doc(db, "buys", idThree), {
-          process: true,
-        });
-      }
-
-      if (dA.toString() !== uidSale.toString()) {
-        // sales
-        await setDoc(doc(db, "sales"), {
-          ...referencia,
-          uid: uidSale,
-        });
-
-        // principal
-        await updateDoc(doc(db, "sales", idThree), {
-          process: true,
-        });
-
-        // buy
-        await updateDoc(doc(db, "buys", idThree), {
-          process: true,
-        });
-      }
-    } catch (error) {
-      Toast("Al parecer hay un errorqsqsq", "error", 5000);
-    }
-  };
-};
-
-export const cheListAll = (data) => ({
-  type: types.cheListAllHistory,
-  payload: data,
-});
-
-// verify
-export const cheVerify = (data) => ({
-  type: types.cheActiveVerify,
-  payload: data,
-});
-
-export const cheCloseVerify = () => ({
-  type: types.cheClearVerify,
 });

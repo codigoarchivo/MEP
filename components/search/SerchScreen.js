@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useMemo, useRef } from "react";
 
 import PropTypes from "prop-types";
 
@@ -44,7 +44,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
   const { bordes } = Breakpoints();
   // selector
   const { activeCartSelect = [], saveCartSelect = [] } = useSelector(
-    ({ product }) => product
+    ({ process }) => process
   );
 
   // dispatch
@@ -72,8 +72,15 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
   };
 
   // ref
-  match.current = activeCartSelect.map((item) => item.id).includes(id);
-  matchValid.current = saveCartSelect.map((item) => item.id).includes(id);
+  match.current = useMemo(
+    () => activeCartSelect.map((item) => item.id).includes(id),
+    [activeCartSelect, id]
+  );
+  // ref
+  matchValid.current = useMemo(
+    () => saveCartSelect.map((item) => item.id).includes(id),
+    [saveCartSelect, id]
+  );
   // select
   const handleSelect = () => {
     // activeCartSelect

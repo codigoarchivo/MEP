@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import PropTypes from "prop-types";
-
-import { useDispatch, useSelector } from "react-redux";
 
 import { Container } from "@chakra-ui/react";
 
@@ -14,19 +12,8 @@ import { dbProducts, dbProductsById } from "../../data/dbProducts";
 
 import SerchDetails from "../../components/search/SerchDetails";
 
-import { productDetails } from "../../actions/product";
-
 const Details = ({ message = [], product = {} }) => {
-  // selector
-  const { active } = useSelector(({ product }) => product);
-  // dispatch
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (message || product) {
-      dispatch(productDetails({ message, product }));
-    }
-  }, [dispatch, message, product]);
+  const active = { message, product };
 
   return (
     <ShopLayout title={"Details"}>
@@ -59,7 +46,7 @@ export async function getStaticProps({ params }) {
     // message
     const id = params.id;
     // product
-    const product = await dbProductsById(id);
+    const product = await dbProductsById(id, "dbProOneID");
 
     const message = await dbProducts(id, "dbProThree");
 

@@ -3,7 +3,6 @@ import { types } from "../type";
 const initialStates = {
   list: [],
   history: [],
-  daVery: {},
 };
 
 export const checkoutReducer = (state = initialStates, action) => {
@@ -17,16 +16,6 @@ export const checkoutReducer = (state = initialStates, action) => {
       return {
         ...state,
         history: [...action.payload],
-      };
-    case types.cheActiveVerify:
-      return {
-        ...state,
-        daVery: { ...action.payload },
-      };
-    case types.cheClearVerify:
-      return {
-        ...state,
-        daVery: {},
       };
     case types.checkoutAdd:
       return {

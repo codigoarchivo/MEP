@@ -9,7 +9,7 @@ import { authReducer } from "./authReducer";
 import { uiReducer } from "./uiReducer";
 import { checkoutReducer } from "./checkoutReducer";
 import { userReducer } from "./userReducer";
-import { salesReducer } from "./salesReducer";
+import { processReducer } from "./processReducer";
 
 const createNoopStorage = () => {
   return {
@@ -29,7 +29,6 @@ const storage =
   typeof window !== "undefined"
     ? createWebStorage("local")
     : createNoopStorage();
-    
 
 const persistConfig = {
   key: "root",
@@ -41,9 +40,9 @@ const rootReducer = combineReducers({
   auth: authReducer,
   category: categoryReducer,
   product: productReducer,
+  process: processReducer,
   checkout: checkoutReducer,
   user: userReducer,
-  sale: salesReducer,
   ui: uiReducer,
 });
 

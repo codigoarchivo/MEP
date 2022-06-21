@@ -46,7 +46,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const id = await params.id.toString();
   try {
-    const product = await dbProductsById(id);
+    const product = await dbProductsById(id, "dbProOneID");
 
     return {
       props: {

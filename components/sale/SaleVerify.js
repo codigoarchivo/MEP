@@ -26,7 +26,6 @@ import Toast from "../../helpers/Toast";
 import GridValueClose from "../../utils/GridValueClose";
 
 import Salemodal from "./Salemodal";
-import { checkRevert } from "../../actions/sales";
 
 const SaleModal = ({
   bordes,
@@ -56,7 +55,7 @@ const SaleModal = ({
       },
     });
   };
-
+console.log(referencia);
   // handleLiberate
   const handleLiberate = (e) => {
     e.preventDefault();
@@ -70,12 +69,10 @@ const SaleModal = ({
     Toast("Pago ha sido verificado", "success", 5000);
 
     router.back();
-    dispatch(checkRevert());
   };
 
   const closeVerify = () => {
     router.back();
-    dispatch(checkRevert());
   };
 
   return (

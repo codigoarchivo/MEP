@@ -11,9 +11,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import { useSelector } from "react-redux";
-
 import Image from "next/image";
+
+import PropTypes from "prop-types";
 
 import Marquee from "react-fast-marquee";
 
@@ -27,11 +27,7 @@ import NavLink from "../../utils/Navlink";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
-const Home = () => {
-  // selector
-  const { list = [], latestCartSelect = [] } = useSelector(
-    ({ product }) => product
-  );
+const Home = ({ listData, latestCartSelect }) => {
   // Breakpoints
   const { content5, bordes } = Breakpoints();
   return (
@@ -77,14 +73,14 @@ const Home = () => {
         </Stack>
       </VStack>
       <VStack spacing={10} mt={16}>
-        {list[0] ? (
+        {listData[0] ? (
           <Stack w={"full"} spacing={10}>
             <Heading w={"full"} size={"lg"}>
               Recorrido De Todos Nuestros Productos
             </Heading>
             <HStack>
               <Marquee>
-                {list.map((data) => (
+                {listData.map((data) => (
                   <SerchScreen key={data.id} {...data} />
                 ))}
               </Marquee>
@@ -154,6 +150,11 @@ const Home = () => {
       </VStack>
     </Container>
   );
+};
+
+PropTypes.Home = {
+  listData: PropTypes.array,
+  latestCartSelect: PropTypes.array,
 };
 
 export default Home;

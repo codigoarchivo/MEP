@@ -31,7 +31,7 @@ const SerchCartModal = ({ isOpen, onClose }) => {
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector
   const { activeCartSelect: active = [] } = useSelector(
-    ({ product }) => product
+    ({ process }) => process
   );
   // useDispatch
   const dispatch = useDispatch();

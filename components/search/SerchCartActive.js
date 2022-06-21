@@ -19,7 +19,7 @@ const SerchCartActive = ({ item, inc }) => {
   const dispatch = useDispatch();
   // selector
   const { activeCartSelect: active = [] } = useSelector(
-    ({ product }) => product
+    ({ process }) => process
   );
   // selector
   const { list = [] } = useSelector(({ category }) => category);

@@ -11,28 +11,26 @@ export const types = {
   serchList: "[SERCH] List",
   serchActive: "[SERCH] active",
   serchInactive: "[SERCH] desactive",
-  emptySerch: "[SERCH] Empty",
 
   product: "[PRODUCT] List",
-  productList: "[PRODUCT] List Config",
+  productList: "[PRODUCT] List Index",
   productAdd: "[PRODUCT] Add",
   productEdit: "[PRODUCT] Edit",
   productDelete: "[PRODUCT] Delete",
-  productActive: "[PRODUCT] Active",
-  productRevert: "[PRODUCT] Inactive",
-  productActiveCart: "[PRODUCT] Active Cart",
-  productSaveCart: "[PRODUCT] Save Cart",
-  productDeleteCart: "[PRODUCT] Delete Cart",
-  productDeleteSave: "[PRODUCT] Delete Save",
   productSaveLatest: "[PRODUCT] Save Latest",
-  productCategory: "[PRODUCT] Serch Category",
-  productCategoryClose: "[PRODUCT] Close Category",
   productClose: "[PRODUCT] Close",
-  productDetails: "[PRODUCT] Details Cart",
-  productcloseDetails: "[PRODUCT] Details Close",
+  
+  productSaveCart: "[PROCESS] Save Cart",
+  productDeleteSave: "[PROCESS] Delete Save",
+  productActiveCart: "[PROCESS] Active Cart",
+  productDeleteCart: "[PROCESS] Delete Cart",
+  productActive: "[PROCESS] Active",
+  checkoutDelete: "[PROCESS] Delete",
+  closeActive: "[PROCESS] Close",
+  productRevert: "[PROCESS] Inactive",
+  
 
   active: "[DATA] Active",
-  closeActive: "[DATA] Close",
 
   category: "[CATEGORY] List",
   categoryList: "[CATEGORY] List Config",
@@ -47,14 +45,7 @@ export const types = {
 
   checkoutAdd: "[CHECKOUT] Add",
   checkoutList: "[CHECKOUT] List",
-  checkoutDelete: "[CHECKOUT] Delete",
   cheListAllHistory: "[CHECKOUT] History",
-  cheActiveVerify: "[CHECKOUT] Active",
-  cheClearVerify: "[CHECKOUT] Clear",
-
-  cheListAllActive: "[SALES] Active",
-  cheClear: "[SALES] Clear",
-  
 
   user: "[USER] List",
   userAdd: "[USER] Add",

@@ -55,11 +55,18 @@ export const dbProducts = async (id = "", dbP = "") => {
   return JSON.parse(JSON.stringify(data));
 };
 
-export const dbProductsById = async (id) => {
-  //  product
-  const docRef = doc(db, "serchs", id);
+export const dbProductsById = async (id, dbP) => {
+  let q = "";
+  switch (dbP) {
+    case "dbProOneID":
+      q = doc(db, "serchs", id);
+      break;
+    case "dbProTwoID":
+      q = doc(db, "serchs", id, "messages");
+      break;
+  }
 
-  const docSnap = await getDoc(docRef);
+  const docSnap = await getDoc(q);
 
   const data = {
     id: docSnap.id,

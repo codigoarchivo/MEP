@@ -8,6 +8,7 @@ import {
   HStack,
   GridItem,
   Button,
+  CloseButton,
 } from "@chakra-ui/react";
 
 import PropTypes from "prop-types";
@@ -89,14 +90,17 @@ const UserScreen = ({ user = {} }) => {
       spacing={0}
       my={10}
     >
-      <Heading
-        pt={5}
-        size={"xs"}
-        textTransform={"uppercase"}
-        fontWeight={"normal"}
+      <HStack
+        p={5}
+        w={"full"}
+        alignItems={"center"}
+        justifyContent={"space-between"}
       >
-        Información Personal
-      </Heading>
+        <Heading size={"xs"} textTransform={"uppercase"} fontWeight={"normal"}>
+          Información Personal
+        </Heading>
+        <CloseButton onClick={onCloseSelling} />
+      </HStack>
       <chakra.form onSubmit={handleSubmit} w={"full"} p={5}>
         <Grid
           templateRows={`repeat(5, 1fr)`}
@@ -151,18 +155,20 @@ const UserScreen = ({ user = {} }) => {
             brand={brand}
             size={"lg"}
           />
-          <GridItem colSpan={2} mt={5}>
-            <HStack w={"full"} justifyContent="flex-end" spacing={10}>
-              <Button variant={"secondary"} onClick={onCloseSelling}>
-                Close
-              </Button>
-              {a.uid === id && (
-                <Button variant={"primary"} type="submit" ml={3}>
-                  Guardar
-                </Button>
-              )}
-            </HStack>
-          </GridItem>
+          {a.uid === id && (
+            <GridItem colSpan={2} mt={5}>
+              <HStack w={"full"} justifyContent="flex-end" spacing={10}>
+                <>
+                  <Button variant={"secondary"} onClick={onCloseSelling}>
+                    Close
+                  </Button>
+                  <Button variant={"primary"} type="submit" ml={3}>
+                    Guardar
+                  </Button>
+                </>
+              </HStack>
+            </GridItem>
+          )}
         </Grid>
       </chakra.form>
     </VStack>

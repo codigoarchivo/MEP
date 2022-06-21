@@ -22,7 +22,11 @@ export const dbUser = async (id, dbU) => {
       q = collection(db, "sales");
       break;
     case "dbUserFour": // dbUserFour path /checkout
-      q = query(collection(db, "buys"), where("uid", "==", id));
+      q = query(
+        collection(db, "buys"),
+        where("uid", "==", id),
+        where("close", "==", false)
+      );
       break;
   }
 

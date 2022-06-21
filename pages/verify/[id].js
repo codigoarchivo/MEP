@@ -1,6 +1,4 @@
-import React, { useEffect } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 
 import PropTypes from "prop-types";
 
@@ -16,21 +14,9 @@ import { dbUser, dbUserByUID } from "../../data/dbUser";
 
 import Toast from "../../helpers/Toast";
 
-import { cheVerify } from "../../actions/checkout";
-
 const Verification = ({ data }) => {
-  // useDispatch
-  const dispatch = useDispatch();
-  // useSelector
-  const { daVery } = useSelector(({ checkout }) => checkout);
   // Breakpoints
   const { content5, bordes, full } = Breakpoints();
-
-  useEffect(() => {
-    if (data) {
-      dispatch(cheVerify(data));
-    }
-  }, [dispatch, data]);
 
   return (
     <ShopLayout title={"Verificar"}>
@@ -46,9 +32,9 @@ const Verification = ({ data }) => {
             // boides
             bordes={bordes}
             // idThree es id del la compra del data
-            idThree={daVery.id}
+            idThree={data.id}
             // toda la informacion del data, que se guardo en el uid del comprador
-            product={daVery.product}
+            product={data.product}
           />
         </Stack>
       </Container>

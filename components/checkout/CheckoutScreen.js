@@ -1,10 +1,13 @@
 import React, { useRef } from "react";
 
+import { useRouter } from "next/router";
+
 import { useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
 
 import {
+  Button,
   HStack,
   Popover,
   PopoverBody,
@@ -17,7 +20,6 @@ import {
   TagLabel,
   TagRightIcon,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 
 import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
@@ -26,35 +28,48 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import { CartList } from "../../helpers/IconNew";
 
-import CheckModalSale from "./CheckModalSale";
-
-import NavLink from "../../utils/Navlink";
-
 import ContadorRegresivo from "../../helpers/ContadorRegresivo";
 
-const CheckoutScreen = ({
-  product = {},
-  process,
-  id: idThree,
-  lim,
-  count,
-  sale = {},
-}) => {
-  // useSelector
-  const { activeSelectCheck: check = [] } = useSelector(
-    ({ product }) => product
-  );
-  // useRef
-  const initialRef = useRef();
+const CheckoutScreen = ({ product = {}, process, id, lim, count }) => {
+  const router = useRouter();
   // useRef
   const initRef = useRef();
-  // useDisclosure
-  const { isOpen, onOpen, onClose } = useDisclosure();
   // Breakpoints
   const { bordes, full } = Breakpoints();
 
-  // id del producto y el rat que esta acumulado
-  const { rat, id } = product;
+  // envia el recibo del pago a la base de datos
+  const handleVerify = () => {
+    router.push({
+      pathname: "/verify/[id]",
+      query: {
+        id,
+      },
+    });
+  };
+
+  // despues de verificar el pago se puede ver los datos del vendedor
+  const handleUser = () => {
+    if (process !== false) {
+      router.push({
+        pathname: "/info/[uid]",
+        query: {
+          uid: product.uid,
+        },
+      });
+    }
+  };
+
+  //  puede enviarle un comentario al vendedor
+  const handleReview = () => {
+    router.push({
+      pathname: "/review",
+      query: {
+        p: product.id,
+        g: id,
+        i: "new",
+      },
+    });
+  };
 
   return (
     <>
@@ -66,51 +81,45 @@ const CheckoutScreen = ({
         p={2}
       >
         <HStack spacing={"3"}>
-          <NavLink
-            href={`/verify/[id]`}
-            as={`/verify/${[idThree]}`}
-            name={`Resumén $${product.to}`}
-            variant={"primary"}
-            size={"xs"}
-            textTransform={"uppercase"}
-            disabled={process ? true : false}
-            backgroundColor={"grey.100"}
-            border={bordes}
+          <Button
             leftIcon={<CartList h={5} w={5} />}
-          />
-
-          <CheckModalSale
-            textTransform={"uppercase"}
             backgroundColor={"grey.100"}
-            variant={"primary"}
             size={"xs"}
-            border={bordes}
-            w={"min-content"}
-            disabled={process ? false : true}
-            isOpen={isOpen}
-            onOpen={onOpen}
-            onClose={onClose}
-            initialRef={initialRef}
-            nameButton={"Datos del vendedor"}
-            bordes={bordes}
-            // idThree es id del la compra del producto
-            idThree={idThree}
-            // toda la informacion del producto, que se guardo en el uid del comprador
-            sale={sale}
-            // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
-            // sale={sale}
-          />
-          <NavLink
-            href={`/checkout/[rate]?glo=${idThree}&rat=${rat}&li=${check.length}&close=true`}
-            as={`/checkout/${id}?glo=${idThree}&rat=${rat}&li=${check.length}&close=true`}
-            name={"Calificar"}
-            variant={"primary"}
             fontWeight={"normal"}
+            variant={"secondary"}
+            w={"min-content"}
+            disabled={process ? true : false}
+            border={bordes}
+            onClick={handleVerify}
+            textTransform={"uppercase"}
+          >
+            {`Resumén $${product.to}`}
+          </Button>
+          <Button
+            size={"xs"}
+            fontWeight={"normal"}
+            variant={"secondary"}
             w={"min-content"}
             disabled={process ? false : true}
-            size={"xs"}
             border={bordes}
-          />
+            onClick={handleUser}
+            textTransform={"uppercase"}
+          >
+            Datos del vendedor
+          </Button>
+
+          <Button
+            size={"xs"}
+            fontWeight={"normal"}
+            variant={"primary"}
+            w={"min-content"}
+            disabled={process ? false : true}
+            border={bordes}
+            onClick={handleReview}
+            textTransform={"uppercase"}
+          >
+            Calificar
+          </Button>
         </HStack>
         <HStack spacing={"5"}>
           <Popover
@@ -127,7 +136,7 @@ const CheckoutScreen = ({
                     cursor={process ? "not-allowed" : "pointer"}
                     colorScheme={process ? "green" : "blue"}
                   >
-                    <TagLabel>
+                    <TagLabel textTransform={"uppercase"}>
                       Click to {isOpen ? "close" : "open"}{" "}
                       {process ? "Pagado" : "Proceso"}
                     </TagLabel>
@@ -163,7 +172,6 @@ CheckoutScreen.propTypes = {
   id: PropTypes.string,
   lim: PropTypes.object,
   count: PropTypes.number,
-  sale: PropTypes.object,
 };
 
 export default CheckoutScreen;

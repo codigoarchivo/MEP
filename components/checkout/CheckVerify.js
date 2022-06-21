@@ -36,7 +36,7 @@ import ModeColor from "../../helpers/ModeColor";
 
 import useFormAll from "../../hooks/useFormAll";
 
-import { cheCloseVerify, validShop } from "../../actions/checkout";
+import { validShop } from "../../actions/checkout";
 
 import Toast from "../../helpers/Toast";
 
@@ -112,16 +112,10 @@ const CheckVerify = ({
     reset();
 
     router.back();
-    setTimeout(() => {
-      dispatch(cheCloseVerify());
-    }, 2000);
   };
 
   const closeVerify = () => {
     router.back();
-    setTimeout(() => {
-      dispatch(cheCloseVerify());
-    }, 2000);
   };
 
   const handleClient = () => {

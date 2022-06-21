@@ -29,8 +29,6 @@ const Sale = ({ data }) => {
   useEffect(() => {
     if (data) {
       dispatch(cheListAll(data));
-    } else {
-      dispatch(cheListAll([]));
     }
   }, [dispatch, data]);
 

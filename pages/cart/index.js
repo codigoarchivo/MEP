@@ -11,7 +11,7 @@ import ShopLayout from "../../components/layout/ShopLayout";
 const Cart = () => {
   // selector
   const { activeCartSelect = [], saveCartSelect = [] } = useSelector(
-    ({ product }) => product
+    ({ process }) => process
   );
 
   return (

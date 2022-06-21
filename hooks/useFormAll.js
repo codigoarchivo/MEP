@@ -15,14 +15,17 @@ const useFormAll = (initialStates = {}, data = {}) => {
   const reset = (newFormState = initialStates) => {
     setValues(newFormState);
   };
+
   // handleInputChange
   const handleInputChange = ({ target }) => {
     setValues({ ...values, [target.name]: target.value });
   };
   // handlePassword
   const handlePassword = () => setValues({ ...values, pass: !values.pass });
+
   // handleRePassword
   const handleRePassword = () => setValues({ ...values, rPass: !values.rPass });
+
   // handleNumberInput
   const handleNumberInputCn = (e) => {
     setValues({ ...values, cn: e });
@@ -34,6 +37,15 @@ const useFormAll = (initialStates = {}, data = {}) => {
     setValues({ ...values, pr: e });
   };
 
+  //  rating: realiza una evaluación si viene o no un array de valores
+  const handleRating = (rat) => {
+    if (values.rat !== null && data.rat !== undefined) {
+      setValues({ ...values, rat: [...data.rat, rat] });
+    } else {
+      setValues({ ...values, rat: [rat] });
+    }
+  };
+
   return {
     values,
     handleInputChange,
@@ -42,6 +54,7 @@ const useFormAll = (initialStates = {}, data = {}) => {
     handleNumberInputCn,
     handleNumberInputPj,
     handleNumberInputPr,
+    handleRating,
     reset,
   };
 };

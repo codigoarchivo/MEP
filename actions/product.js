@@ -46,11 +46,8 @@ export const listProductSerch = (data) => ({
   payload: data,
 });
 
-export const listProductSerchClose = () => ({
-  type: types.emptySerch,
-});
-// Product config
-export const productListConfig = (data) => ({
+// Product path: /
+export const productListIndex = (data) => ({
   type: types.productList,
   payload: data,
 });
@@ -112,7 +109,7 @@ const productDelete = (id) => ({
 
 export const activeProductCart = (data) => {
   return async (dispatch, getState) => {
-    const { activeCartSelect } = await getState().product;
+    const { activeCartSelect } = await getState().process;
     try {
       const match = await activeCartSelect.find((obj) => obj.id === data.id);
       if (match) {
@@ -134,7 +131,7 @@ export const cartProductActive = (data) => ({
 
 export const saveProductCart = (data) => {
   return async (dispatch, getState) => {
-    const { saveCartSelect } = await getState().product;
+    const { saveCartSelect } = await getState().process;
     try {
       const match = await saveCartSelect.find((obj) => obj?.id === data.id);
       if (match) {
@@ -143,7 +140,7 @@ export const saveProductCart = (data) => {
         dispatch(cartProductSave(data));
       }
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast("Al parecer hay un errordsdsd", "error", 5000);
     }
   };
 };
@@ -217,6 +214,12 @@ export const saveSaleRevert = (data) => {
   };
 };
 
+export const deleteProductCart = (id) => ({
+  type: types.productDeleteCart,
+  payload: id,
+});
+
+
 const activeProduct = (data) => ({
   type: types.productActive,
   payload: data,
@@ -227,11 +230,6 @@ export const activeProductList = (data) => ({
   payload: data,
 });
 
-export const deleteProductCart = (id) => ({
-  type: types.productDeleteCart,
-  payload: id,
-});
-
 export const closeActive = () => ({
   type: types.closeActive,
 });
@@ -240,11 +238,3 @@ export const closeRevert = () => ({
   type: types.productRevert,
 });
 
-export const productDetails = (data) => ({
-  type: types.productDetails,
-  payload: data,
-});
-
-export const closeProductDetails = () => ({
-  type: types.productcloseDetails,
-});

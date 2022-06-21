@@ -26,7 +26,7 @@ import ProductScrenn from "../../components/product/ProductScreen";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import { productListConfig } from "../../actions/product";
+import { listDataProduct } from "../../actions/product";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
@@ -44,12 +44,12 @@ const List = ({ product = [] }) => {
   // breakpoints
   const { bordes } = Breakpoints();
   // selector
-  const { listData = [] } = useSelector(({ product }) => product);
+  const { list = [] } = useSelector(({ product }) => product);
   // dispatch
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(productListConfig(product));
+    dispatch(listDataProduct(product));
   }, [dispatch, product]);
 
   // add
@@ -71,7 +71,7 @@ const List = ({ product = [] }) => {
     <ShopLayout title={"All Products"}>
       <Container maxW={"container.lg"} my={10}>
         <Box p={5}>
-          {!listData[0] && (
+          {!list[0] && (
             <Center border={bordes} py={30}>
               <Heading size={"sm"} textTransform={"uppercase"}>
                 Agrega una producto
@@ -107,7 +107,7 @@ const List = ({ product = [] }) => {
                 </Tr>
               </Thead>
               <Tbody>
-                {listData.map((data) => (
+                {list.map((data) => (
                   <ProductScrenn key={data.id} {...data} />
                 ))}
               </Tbody>
@@ -115,14 +115,14 @@ const List = ({ product = [] }) => {
           </TableContainer>
         </Box>
         <Box>
-          {listData.length > 0 && (
+          {list.length > 0 && (
             <Paginator
               window={"serchs"}
               word={"na"}
-              list={listData}
-              firstVisible={listData[0].na}
-              lastVisible={listData[listData.length - 1].na}
-              newList={productListConfig}
+              list={list}
+              firstVisible={list[0].na}
+              lastVisible={list[list.length - 1].na}
+              newList={listDataProduct}
               nLimit={2}
               orHome={"desc"}
               orPrevious={"desc"}

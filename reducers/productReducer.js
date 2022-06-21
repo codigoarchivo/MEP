@@ -1,66 +1,27 @@
 import { types } from "../type";
 
 const initialStates = {
-  // list genereal
+  // list genereal path: /product[uid]
   list: [],
-  // busqueda por el porcentaje /search
+  // busqueda por el porcentaje path: /search
   listSerch: [],
-  // lista de productos /product/[uid]
+  // lista de productos path: /
   listData: [],
-  saveCartSelect: [],
   // lista de los ultimos productos agregados
   latestCartSelect: [],
-  activeCartSelect: [],
-  activeSelectCheck: [],
-  productSerchCategory: {},
-  active: {},
 };
 export const productReducer = (state = initialStates, action) => {
   switch (action.type) {
-    case types.productList:
-      return {
-        ...state,
-        listData: [...action.payload],
-      };
+    // list de la aplicación
     case types.product:
       return {
         ...state,
         list: [...action.payload],
       };
-    case types.serchList:
-      return {
-        ...state,
-        listSerch: [...action.payload],
-      };
     case types.productAdd:
       return {
         ...state,
         list: [...state.list, action.payload],
-      };
-    case types.productActive:
-      return {
-        ...state,
-        activeSelectCheck: action.payload,
-      };
-    case types.productSaveCart:
-      return {
-        ...state,
-        saveCartSelect: [...state.saveCartSelect, action.payload],
-      };
-    case types.productActiveCart:
-      return {
-        ...state,
-        activeCartSelect: [...state.activeCartSelect, action.payload],
-      };
-    case types.productSaveLatest:
-      return {
-        ...state,
-        latestCartSelect: [action.payload, ...state.latestCartSelect],
-      };
-    case types.productCategory:
-      return {
-        ...state,
-        productSerchCategory: action.payload,
       };
     case types.productEdit:
       return {
@@ -74,64 +35,21 @@ export const productReducer = (state = initialStates, action) => {
         ...state,
         list: state.list.filter((e) => e.id !== action.payload),
       };
-    case types.productDeleteCart:
+    case types.productList:
       return {
         ...state,
-        activeCartSelect: state.activeCartSelect.filter(
-          (e) => e.id !== action.payload
-        ),
+        listData: [...action.payload],
       };
-    case types.checkoutDelete:
+    case types.serchList:
       return {
         ...state,
-        activeSelectCheck: state.activeSelectCheck.filter(
-          (e) => e.id !== action.payload
-        ),
+        listSerch: [...action.payload],
       };
-    case types.productDeleteSave:
+    case types.productSaveLatest:
       return {
         ...state,
-        saveCartSelect: state.saveCartSelect.filter(
-          (e) => e.id !== action.payload
-        ),
+        latestCartSelect: [action.payload, ...state.latestCartSelect],
       };
-    case types.productCategoryClose:
-      return {
-        ...state,
-        productSerchCategory: [],
-      };
-    case types.emptySerch:
-      return {
-        ...state,
-        listSerch: [],
-      };
-    case types.closeActive:
-      return {
-        ...state,
-        activeCartSelect: [],
-      };
-    case types.closeActive:
-      return {
-        ...state,
-        activeCartSelect: [],
-      };
-    case types.productRevert:
-      return {
-        ...state,
-        activeCartSelect: [],
-        activeSelectCheck: [],
-      };
-    case types.productDetails:
-      return {
-        ...state,
-        active: action.payload,
-      };
-    case types.productcloseDetails:
-      return {
-        ...state,
-        active: {},
-      };
-
     default:
       return state;
   }
