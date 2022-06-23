@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import PropTypes from "prop-types";
 
@@ -14,7 +14,6 @@ import {
   Badge,
   Box,
   Button,
-  Container,
   Heading,
   HStack,
   Input,
@@ -69,17 +68,12 @@ const SerchDetails = ({ message = [], product = {} }) => {
   // input
   const input = getInputProps({ isReadOnly: true });
 
-  // message obtiene rating individuales crear un array con todos los rating
-  const match = message.map((item) => ({ rat: item.rat, id: item.id }));
 
-  // crea una referencia de lista de rat
-  const lisDat = match.map((item) => ({
-    rat: Number(item.rat),
-    nam: String(item.rat),
-  }));
-
-  // Calculate product price
-  const { listRat, listRang, listRang2 } = Calculate(lisDat);
+  // Calculate product price individual y global
+  const { global, globalRanking, globalPorcentaje } = useMemo(
+    () => Calculate(message.map((item) => ({ rat: item.rat }))),
+    [message]
+  );
 
   // select product in cart
   const handleSelect = () => {
@@ -130,12 +124,12 @@ const SerchDetails = ({ message = [], product = {} }) => {
           </Heading>
           <HStack w={full}>
             <Text color="gray.600" fontSize={"xl"} fontWeight={"bold"}>
-              {isNaN(listRang) ? "0.0" : listRang}
+              {globalRanking || "0.0"}
             </Text>{" "}
             <Box p={0.5}>
               <Rating
                 size={25}
-                ratingValue={isNaN(listRang) ? 0 : listRang2}
+                ratingValue={globalPorcentaje || 0}
                 readonly={true}
               />
             </Box>
@@ -180,7 +174,7 @@ const SerchDetails = ({ message = [], product = {} }) => {
         <Tabs w={"full"}>
           <TabList>
             <Tab>Detalles</Tab>
-            <Tab>({message.length ? message.length : 0}) reviews</Tab>
+            <Tab>({message.length || 0}) reviews</Tab>
           </TabList>
 
           <TabPanels>
@@ -192,12 +186,12 @@ const SerchDetails = ({ message = [], product = {} }) => {
                 <Stack w={"full"} mb={10} border={bordes}>
                   <HStack p={5} w={full}>
                     <Box p={5} textAlign={"center"}>
-                      <Heading>{isNaN(listRang) ? "0.0" : listRang}</Heading>
+                      <Heading>{globalRanking || "0.0"}</Heading>
                       <Text>Valoración total</Text>
                     </Box>
                     <Stack w={full}>
                       {/* SerchRat */}
-                      {listRat.map((item, key) => (
+                      {global.map((item, key) => (
                         <SerchRat key={key} {...item} />
                       ))}
                     </Stack>
@@ -206,7 +200,7 @@ const SerchDetails = ({ message = [], product = {} }) => {
                 <Box>
                   {/* SerchMessage */}
                   {message.map((item) => (
-                    <SerchMessage key={item.id} {...item} match={match} />
+                    <SerchMessage key={item.id} {...item} p={id} />
                   ))}
                 </Box>
               </>

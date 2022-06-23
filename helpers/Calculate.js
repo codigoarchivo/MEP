@@ -1,74 +1,67 @@
-const Calculate = (data = []) => {
-  // sumar y acumular los valores de los ratings de los productos de la lista de productos
-  let listRat = [];
-  data.forEach(function (a) {
-    if (!this[a.nam]) {
-      this[a.nam] = {
-        nam: a.nam,
-        rat: 0,
-      };
-      listRat.push(this[a.nam]);
-    }
-    this[a.nam].rat += 1;
-  }, Object.create(null));
-
+const Calculate = (data) => {
   // ordenar de mayor a menor y obtener el promedio de las calificaciones de los productos de la lista
-  listRat.sort(function (a, b) {
+  data.sort(function (a, b) {
     return b.rat - a.rat;
   });
 
-  // porcentaje de cada uno de los elementos de la lista de ratings y guardarlos en una lista de porcentajes de acuerdo a la cantidad de ratings que tenga cada uno de los elementos de la lista de ratings
-  listRat.forEach(function (a) {
-    a["per"] = a.rat;
-    a["est"] = a.nam;
-    a.rat = Math.round((a.rat / data.length) * 100);
-  });
-
-  // calculo de la cantidad de productos que se encuentran en el rango de calificaciones de los productos de la lista de productos
-  let a = [];
-  let t = 110;
-  let p = 5.5;
-  while (a.length < 10) {
-    a.push({ dt: (t -= 10), do: (p -= 0.5) });
-  }
-
   // calculo ranking de los productos de la lista de productos
   let b = [];
+  let e = 103;
   let i = 102;
   let c = 5.1;
-  while (b.length < 50) {
-    b.push({ ini: (i -= 2), ran: (c -= 0.1).toFixed(1) });
+  while (b.length < 51) {
+    b.push({
+      inp: (e -= 2),
+      ini: (i -= 2),
+      ran: (c -= 0.1).toFixed(1),
+    });
   }
 
-  // obtener el rango de calificaciones de los productos de la lista de productos
-  let listRang = 0;
-  a.forEach(function (a) {
-    listRat.forEach(function (b) {
-      switch (Number(b.nam)) {
-        case a.dt:
-          b.nam = a.do;
-          listRang += b.nam;
-          break;
-      }
-    });
-  });
+  // sumar y acumular los valores de los ratings de los productos de la lista de productos
+  let global = [];
+  data.forEach(function (a) {
+    // filtra el ranking indiviadual  example 3.5
+    const data = b.filter((i) => i.inp === a.rat || i.ini === a.rat)[0].ran;
 
-  // obtener el ranking de los productos de la lista de productos
-  listRang = (listRang / listRat.length).toFixed(1);
-
-  // obtener el ranking de los productos de la lista de productos
-  let listRang2 = 0;
-  b.forEach(function (a) {
-    if (Number(listRang) === Number(a.ran)) {
-      listRang2 = a.ini;
+    if (!this[a.rat]) {
+      this[a.rat] = {
+        est: a.rat, // porcentaje individual
+        nam: 0,
+        per: 0,
+      };
+      global.push(this[a.rat]);
     }
-  });
+    // porcentaje individual
+    this[a.rat].nam = data;
+    // acumular personas iguales example 5
+    this[a.rat].per += 1;
+  }, Object.create(null));
+
+  global.map((a) => ({
+    ...a,
+    rat: (a["rat"] = (a.per * 100) / global.reduce((n, m) => (n += m.per), 0)), // porcentaje de cada uno de los elementos de la lista de ratings y guardarlos en una lista de porcentajes de acuerdo a la cantidad de ratings que tenga cada uno de los elementos de la lista de ratings
+  }));
+
+  // creado ranking global examnple: 3.4
+  const globalRanking = Number(
+    (
+      global.reduce((n, m) => (n += Number(m.nam)), 0) /
+      global.reduce((n, m) => (n += m.per), 0)
+    ).toFixed(1)
+  );
+
+  // creado porcentaje  global example: 68
+  const globalPorcentaje = Number(
+    (
+      global.reduce((n, m) => (n += m.est), 0) /
+      global.reduce((n, m) => (n += m.per), 0)
+    ).toFixed(0)
+  );
 
   return {
-    listRat,
-    listRang,
-    listRang2,
+    global,
+    globalRanking,
+    globalPorcentaje,
   };
 };
-
 export default Calculate;

@@ -3,6 +3,8 @@ import {
   doc,
   getDoc,
   getDocs,
+  limit,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -19,7 +21,7 @@ export const dbUser = async (id, dbU) => {
       q = collection(db, "users");
       break;
     case "dbUserThree":
-      q = collection(db, "sales");
+      q = query(collection(db, "sales"), orderBy("cre", "desc"), limit(2));
       break;
     case "dbUserFour": // dbUserFour path /checkout
       q = query(

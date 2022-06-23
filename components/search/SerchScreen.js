@@ -218,7 +218,6 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
 };
 
 SerchScreen.propTypes = {
-  rat: PropTypes.array,
   id: PropTypes.string.isRequired,
   na: PropTypes.string.isRequired,
   cn: PropTypes.number.isRequired,

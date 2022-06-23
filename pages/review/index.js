@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import { Container } from "@chakra-ui/react";
 
@@ -8,15 +8,27 @@ import ShopLayout from "../../components/layout/ShopLayout";
 
 import ReviewScreen from "../../components/review/ReviewScreen";
 
-import { dbProductsById } from "../../data/dbProducts";
+import { dbProducts } from "../../data/dbProducts";
 
 import Toast from "../../helpers/Toast";
 
 const Review = ({ message = [], p = "", i = "", g = "" }) => {
+  // guardamos solamente el mensaje que necesitamos editar
+  const match = message.find((i) => String(i.id) === g);
+  match.rat = [match.rat];
+
+  // creamos  una nueva instancia con todos los valores rat menos el que vamos a modificar
+  let el = [];
+  message.map((i) => {
+    if (String(i.id) !== g) {
+      return el.push(i.rat);
+    }
+  });
+  
   return (
-    <ShopLayout>
+    <ShopLayout title={"Review"}>
       <Container maxW={"container.sm"}>
-        <ReviewScreen message={message} p={p} i={i} g={g} />
+        <ReviewScreen calculo={el} message={match} p={p} i={i} g={g} />
       </Container>
     </ShopLayout>
   );
@@ -30,7 +42,7 @@ Review.propTypes = {
 };
 
 export async function getServerSideProps({ query }) {
-  // id three 
+  // id three
   const g = query.g.toString();
   // id del producto que esta dentro id three
   const p = query.p.toString();
@@ -38,7 +50,7 @@ export async function getServerSideProps({ query }) {
   const i = query.i.toString();
   try {
     // message
-    const message = i !== "new" ? await dbProductsById(p, "dbProTwoID") : [];
+    const message = i !== "new" ? await dbProducts(p, "dbProThree") : [];
 
     return { props: { message, p, i, g } };
   } catch (error) {

@@ -37,12 +37,13 @@ const initialStates = {
   com: "",
 };
 
-const data = {
-  rat: [50, 60, 70, 80, 90],
-  com: "hola",
-};
-
-const ReviewScreen = ({ message, p, i, g }) => {
+const ReviewScreen = ({
+  calculo = [],
+  message = {},
+  p = "",
+  i = "",
+  g = "",
+}) => {
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
   // dispatch
@@ -64,25 +65,46 @@ const ReviewScreen = ({ message, p, i, g }) => {
 
   // useFormAll
   const { values, handleInputChange, handleRating } = useFormAll(
-    initialStates
-    // data
+    initialStates,
+    message
   );
   //   valores
   const { rat, com } = values;
 
-  // crea una referencia de lista de rat
-  const list = useMemo(
+  // Calculate product price individual y global
+  const { globalRanking, globalPorcentaje } = useMemo(
     () =>
-      rat !== null ? rat.map((item) => ({ rat: item, nam: String(item) })) : "",
-    [rat]
+      rat !== null &&
+      Calculate([...calculo, ...rat].map((item) => ({ rat: item }))),
+    [calculo, rat]
   );
-
-  // Calculate review
-  const { listRang, listRang2 } = rat !== null && Calculate(list);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (i !== "new") {
+      // edit review
+      dispatch(
+        checkoutEdit(
+          {
+            // cuando fue creado
+            cre: Date.now(),
+            // ranking indiviadual para editar
+            rat: rat[0],
+            // comentario
+            com,
+          },
+          {
+            rat: {
+              est: globalPorcentaje,
+              nam: globalRanking,
+            },
+          },
+          g,
+          p
+        )
+      );
+      router.back();
+    } else {
       // add review
       dispatch(
         checkoutAdd(
@@ -93,53 +115,25 @@ const ReviewScreen = ({ message, p, i, g }) => {
             pho: photoURL,
             // nombre del usuario
             nam: displayName,
-            // nombre usuario
-            rat: ratingValue,
+            // ranking indiviadual para agregar
+            rat: rat[0],
             // comentario
             com,
           },
           {
             rat: {
-              est: listRang2,
-              nam: listRang,
+              // porcentaje global  example: 68
+              est: globalPorcentaje,
+              // ranking global examnple: 3.4
+              nam: globalRanking,
             },
           },
           g,
           p
         )
       );
-      if (router.query.li === "1") {
-        router.push("/");
-      } else {
-        router.back();
-      }
-    } else {
-      // edit review
-      dispatch(
-        checkoutEdit({
-          // id del mensaje
-          id: router.query.idm,
-          // id del producto
-          idC: router.query.m,
-          // raiting
-          rat: ratingValue,
-          // comentario nuevo
-          com: comentario,
-          // creado
-          cre: Date.now(),
-        })
-      );
 
-      dispatch(
-        valueInProduct({
-          id: router.query.m,
-          rat: {
-            est: listRang2,
-            nam: listRang,
-          },
-        })
-      );
-      router.push("/");
+      router.back();
     }
   };
 
@@ -196,7 +190,8 @@ const ReviewScreen = ({ message, p, i, g }) => {
 };
 
 ReviewScreen.propTypes = {
-  message: PropTypes.array,
+  message: PropTypes.object,
+  calculo: PropTypes.array,
   p: PropTypes.string,
   i: PropTypes.string,
   g: PropTypes.string,

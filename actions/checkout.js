@@ -77,7 +77,7 @@ export const checkoutAdd = (data, rat, g, p) => {
       // rat es el rating se agrega al producto
       await updateDoc(doc(db, "serchs", p), rat);
 
-      if (check.lenght === 0) {
+      if (check.length === 1) {
         await dispatch(closeRevert());
       } else {
         await dispatch(deletecheckout(g));
@@ -101,21 +101,13 @@ export const checkRevert = () => ({
   type: types.cheClear,
 });
 
-
 // checkoutEdit comentario
-export const checkoutEdit = (data) => {
+export const checkoutEdit = (data, rat, g, p) => {
   return async () => {
     try {
-      const dataList = {
-        com: data.com,
-        cre: data.cre,
-        rat: data.rat,
-      };
+      await updateDoc(doc(db, "serchs", p, "messages", g), data);
 
-      await updateDoc(
-        doc(db, "serchs", data.idC, "messages", data.id),
-        dataList
-      );
+      await updateDoc(doc(db, "serchs", p), rat);
     } catch (error) {
       Toast("Al parecer hay un error", "error", 5000);
     }

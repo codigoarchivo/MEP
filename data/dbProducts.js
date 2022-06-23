@@ -24,7 +24,7 @@ export const dbProducts = async (id = "", dbP = "") => {
       q = query(ref, where("uid", "==", id), limit(2));
       break;
     case "dbProThree":
-      q = collection(db, "serchs", id.toString(), "messages");
+      q = collection(db, "serchs", id, "messages");
       break;
     case "dbProFour":
       q = ref;
@@ -32,7 +32,7 @@ export const dbProducts = async (id = "", dbP = "") => {
     case "dbProFive":
       q = query(ref, where("ct", "==", id), limit(1));
       break;
-    case "range":
+    case "dbProSix":
       q = query(
         ref,
         where("pr", ">=", Number(id[0])),
@@ -60,9 +60,6 @@ export const dbProductsById = async (id, dbP) => {
   switch (dbP) {
     case "dbProOneID":
       q = doc(db, "serchs", id);
-      break;
-    case "dbProTwoID":
-      q = doc(db, "serchs", id, "messages");
       break;
   }
 

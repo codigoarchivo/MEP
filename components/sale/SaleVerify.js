@@ -55,7 +55,7 @@ const SaleModal = ({
       },
     });
   };
-console.log(referencia);
+
   // handleLiberate
   const handleLiberate = (e) => {
     e.preventDefault();

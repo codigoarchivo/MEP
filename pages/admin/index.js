@@ -18,9 +18,13 @@ import { cheListAll } from "../../actions/checkout";
 
 import { dbUser } from "../../data/dbUser";
 
+import Paginator from "../../utils/Paginator";
+
 const Sale = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
+  // useSelector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useSelector
   const { history = [] } = useSelector(({ checkout }) => checkout);
   // Breakpoints
@@ -55,8 +59,8 @@ const Sale = ({ data }) => {
                       Lista de ventas
                     </Heading>
 
-                    {history.map((item) => (
-                      <SaleScreen item={item} key={item} />
+                    {history.map((item, key) => (
+                      <SaleScreen item={item} key={key} />
                     ))}
                   </VStack>
 
@@ -75,6 +79,24 @@ const Sale = ({ data }) => {
             </Stack>
           </VStack>
         </Stack>
+
+        <Box>
+          {history.length > 0 && (
+            <Paginator
+              window={"sales"}
+              word={"cre"}
+              list={history}
+              firstVisible={history[0].cre}
+              lastVisible={history[history.length - 1].cre}
+              newList={cheListAll}
+              nLimit={2}
+              orHome={"desc"}
+              orPrevious={"desc"}
+              orNext={"desc"}
+              uid={undefined}
+            />
+          )}
+        </Box>
       </Container>
     </ShopLayout>
   );

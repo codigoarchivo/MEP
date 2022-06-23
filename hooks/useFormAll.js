@@ -39,11 +39,7 @@ const useFormAll = (initialStates = {}, data = {}) => {
 
   //  rating: realiza una evaluación si viene o no un array de valores
   const handleRating = (rat) => {
-    if (values.rat !== null && data.rat !== undefined) {
-      setValues({ ...values, rat: [...data.rat, rat] });
-    } else {
-      setValues({ ...values, rat: [rat] });
-    }
+    setValues({ ...values, rat: [rat] });
   };
 
   return {
