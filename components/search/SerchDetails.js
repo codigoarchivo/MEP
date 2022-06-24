@@ -43,7 +43,7 @@ const SerchDetails = ({ message = [], product = {} }) => {
   // router
   const router = useRouter();
   // selector
-  const { list } = useSelector(({ category }) => category);
+  const { list = [] } = useSelector(({ category }) => category);
   // Breakpoints
   const { content5, full, bordes } = Breakpoints();
   // values

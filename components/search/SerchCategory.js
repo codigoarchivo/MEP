@@ -2,7 +2,14 @@ import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { Box, Heading, List, ListIcon, ListItem, Stack } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  List,
+  ListIcon,
+  ListItem,
+  Stack,
+} from "@chakra-ui/react";
 
 import { CheckCircleIcon } from "@chakra-ui/icons";
 
@@ -16,12 +23,11 @@ import { dbProducts } from "../../data/dbProducts";
 
 import Toast from "../../helpers/Toast";
 
-
 const SerchCategory = () => {
   // dispatch
   const dispatch = useDispatch();
   // selector
-  const { list } = useSelector(({ category }) => category);
+  const { list = [] } = useSelector(({ category }) => category);
   // Breakpoints
   const { bordes } = Breakpoints();
 

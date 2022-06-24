@@ -2,13 +2,7 @@ import React, { useEffect } from "react";
 
 import PropTypes from "prop-types";
 
-import {
-  Box,
-  Container,
-  Heading,
-  Stack,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Container, Heading, Stack, VStack } from "@chakra-ui/react";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,7 +14,9 @@ import { cheListAllBuy, cheListAllClearBu } from "../../actions/checkout";
 
 import CheckoutScreenAll from "../../components/checkout/CheckoutScreenAll";
 
-import { dbUser, dbUserData } from "../../data/dbUser";
+import { dbUserData } from "../../data/dbUser";
+
+import Paginator from "../../utils/Paginator";
 
 import Toast from "../../helpers/Toast";
 
@@ -65,7 +61,11 @@ const Checkout = ({ product = [] }) => {
                         : "No hay compras asociadas"}
                     </Heading>
                     {buy.map((item, key) => (
-                      <CheckoutScreenAll key={key} {...item} count={(key += 1)} />
+                      <CheckoutScreenAll
+                        key={key}
+                        {...item}
+                        count={(key += 1)}
+                      />
                     ))}
                   </VStack>
                 </VStack>
@@ -73,6 +73,23 @@ const Checkout = ({ product = [] }) => {
             </Stack>
           </VStack>
         </Stack>
+        <Box>
+          {buy.length > 0 && (
+            <Paginator
+              window={"buys"}
+              word={"cre"}
+              list={buy}
+              firstVisible={buy[0].cre}
+              lastVisible={buy[buy.length - 1].cre}
+              newList={cheListAllBuy}
+              nLimit={2}
+              orHome={"desc"}
+              orPrevious={"desc"}
+              orNext={"desc"}
+              uid={undefined}
+            />
+          )}
+        </Box>
       </Container>
     </ShopLayout>
   );

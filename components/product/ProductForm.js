@@ -49,7 +49,7 @@ const ProductForm = ({
   // mode Color
   const { bg, brand } = ModeColor();
   // selector
-  const { list } = useSelector(({ category }) => category);
+  const { list = [] } = useSelector(({ category }) => category);
 
   return (
     <>

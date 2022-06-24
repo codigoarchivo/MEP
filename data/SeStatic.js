@@ -35,32 +35,6 @@ export const seWork = [
   },
 ];
 
-export const seOutstanding = [
-  {
-    title: "Sports",
-    price: "0$",
-    dato1: "Get a contract",
-    dato2: "Beat the competition",
-    dato3: "Improve in Training",
-    dato4: "Search opportunities",
-  },
-  {
-    title: "Artists",
-    price: "0$",
-    dato1: "Power your brand",
-    dato2: "Break the barriers",
-    dato3: "Surround yourself with the best",
-    dato4: "Get a Contract",
-  },
-  {
-    title: "Industry",
-    price: "0$",
-    dato1: "Production improvements",
-    dato2: "We avoid losses",
-    dato3: "New opportunities",
-    dato4: "feel in harmony",
-  },
-];
 
 export const seAside = [
   {

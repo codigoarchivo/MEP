@@ -22,6 +22,8 @@ const NavLink = ({
   backgroundColor,
   color,
   display,
+  boxShadow,
+  rounded,
 }) => {
   return (
     <Link href={href} as={as} passHref>
@@ -42,6 +44,8 @@ const NavLink = ({
         backgroundColor={backgroundColor}
         color={color}
         display={display}
+        boxShadow={boxShadow}
+        rounded={rounded}
       >
         {name}
       </Button>

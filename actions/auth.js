@@ -155,6 +155,7 @@ export const sendEmail = (email) => {
     }
   };
 };
+
 const emailSend = (data) => ({
   type: types.active,
   payload: data,
