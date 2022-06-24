@@ -19,10 +19,21 @@ const Calculate = (data) => {
 
   // sumar y acumular los valores de los ratings de los productos de la lista de productos
   let global = [];
+  let uni = [];
   data.forEach(function (a) {
     // filtra el ranking indiviadual  example 3.5
-    const data = b.filter((i) => i.inp === a.rat || i.ini === a.rat)[0].ran;
+    const { ran } = b.filter((i) => i.inp === a.rat || i.ini === a.rat)[0];
 
+    // no se unen los repetidos
+    if (a) {
+      uni.push({
+        est: a.rat,
+        nam: ran || 0,
+        per: a.rat !== 0 ? 1 : 0,
+      });
+    }
+
+    // unimos los repetidos
     if (!this[a.rat]) {
       this[a.rat] = {
         est: a.rat, // porcentaje individual
@@ -32,9 +43,9 @@ const Calculate = (data) => {
       global.push(this[a.rat]);
     }
     // porcentaje individual
-    this[a.rat].nam = data;
+    this[a.rat].nam = ran || 0;
     // acumular personas iguales example 5
-    this[a.rat].per += 1;
+    this[a.rat].per = a.rat !== 0 ? (this[a.rat].per += 1) : 0;
   }, Object.create(null));
 
   global.map((a) => ({
@@ -45,16 +56,16 @@ const Calculate = (data) => {
   // creado ranking global examnple: 3.4
   const globalRanking = Number(
     (
-      global.reduce((n, m) => (n += Number(m.nam)), 0) /
-      global.reduce((n, m) => (n += m.per), 0)
+      uni.reduce((n, m) => (n += Number(m.nam)), 0) /
+      uni.reduce((n, m) => (n += m.per), 0)
     ).toFixed(1)
   );
 
   // creado porcentaje  global example: 68
   const globalPorcentaje = Number(
     (
-      global.reduce((n, m) => (n += m.est), 0) /
-      global.reduce((n, m) => (n += m.per), 0)
+      uni.reduce((n, m) => (n += m.est), 0) /
+      uni.reduce((n, m) => (n += m.per), 0)
     ).toFixed(0)
   );
 

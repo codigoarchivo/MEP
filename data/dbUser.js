@@ -4,7 +4,6 @@ import {
   getDoc,
   getDocs,
   limit,
-  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -21,7 +20,7 @@ export const dbUser = async (id, dbU) => {
       q = collection(db, "users");
       break;
     case "dbUserThree":
-      q = query(collection(db, "sales"), orderBy("cre", "desc"), limit(2));
+      q = collection(db, "sales");
       break;
     case "dbUserFour": // dbUserFour path /checkout
       q = query(
@@ -34,10 +33,39 @@ export const dbUser = async (id, dbU) => {
 
   const { docs } = await getDocs(q);
 
-  const data = docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+  const data = docs
+    .map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
+    .sort(function (a, b) {
+      return b.cre - a.cre;
+    });
+
+  return JSON.parse(JSON.stringify(data));
+};
+
+export const dbUserData = async (id, dbU) => {
+  let q = "";
+  switch (dbU) {
+    case "dbUserData":
+      q = query(collection(db, "sales"), where("uid", "==", id), limit(2));
+      break;
+    case "dbUserTwo":
+      q = query(collection(db, "buys"), where("uid", "==", id), limit(2));
+      break;
+  }
+
+  const { docs } = await getDocs(q);
+
+  const data = docs
+    .map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
+    .sort(function (a, b) {
+      return b.cre - a.cre;
+    });
 
   return JSON.parse(JSON.stringify(data));
 };

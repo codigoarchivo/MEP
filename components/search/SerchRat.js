@@ -16,7 +16,7 @@ const SerchRat = (item) => {
       <Box p={0.5}>{item.per}</Box>
       <Rating size={25} ratingValue={item.est || 0} readonly={true} />
       <Box p={0.5}>
-        <Heading size={"xs"}>{item.rat}%</Heading>
+        <Heading size={"xs"}>{item.rat.toFixed(0)}%</Heading>
       </Box>
     </HStack>
   );

@@ -3,6 +3,9 @@ import { types } from "../type";
 const initialStates = {
   list: [],
   history: [],
+  message: [],
+  sale: [],
+  buy: [],
 };
 
 export const checkoutReducer = (state = initialStates, action) => {
@@ -21,6 +24,36 @@ export const checkoutReducer = (state = initialStates, action) => {
       return {
         ...state,
         list: [...state.list, action.payload],
+      };
+    case types.cheListMessage:
+      return {
+        ...state,
+        message: [...action.payload],
+      };
+    case types.cheListMessageClear:
+      return {
+        ...state,
+        message: [],
+      };
+    case types.cheListAllSa:
+      return {
+        ...state,
+        sale: [...action.payload],
+      };
+    case types.cheListAllCle:
+      return {
+        ...state,
+        sale: [],
+      };
+    case types.cheListAllBu:
+      return {
+        ...state,
+        buy: [...action.payload],
+      };
+    case types.cheListAllCleBu:
+      return {
+        ...state,
+        buy: [],
       };
     default:
       return state;

@@ -10,39 +10,25 @@ import {
   Stack,
   Text,
   VStack,
-  chakra,
   Button,
+  CloseButton,
 } from "@chakra-ui/react";
-
-import { useDispatch } from "react-redux";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import { validPago } from "../../actions/checkout";
-
-import Toast from "../../helpers/Toast";
-
-import GridValueClose from "../../utils/GridValueClose";
-
 import Salemodal from "./Salemodal";
 
-const SaleVerify = ({
+const SaleVerifyAll = ({
   bordes,
-  // id del referencia product
-  idThree = "",
   // product
   product = {},
   // información del pago del producto
   referencia = {},
   // uid del comprador
   uidBuy = "",
-  // uid del vendedor
-  uidSale = "",
 }) => {
   // dispatch
   const router = useRouter();
-  // dispatch
-  const dispatch = useDispatch();
   // Breakpoints
   const { full } = Breakpoints();
 
@@ -55,21 +41,6 @@ const SaleVerify = ({
     });
   };
 
-  // handleLiberate
-  const handleLiberate = (e) => {
-    e.preventDefault();
-
-    if ([idThree, uidSale, uidBuy].includes("")) {
-      return Toast("Error al liberar el producto", "error", 5000);
-    }
-
-    dispatch(validPago(referencia, idThree, uidSale));
-
-    Toast("Pago ha sido verificado", "success", 5000);
-
-    router.back();
-  };
-
   const closeVerify = () => {
     router.back();
   };
@@ -77,13 +48,7 @@ const SaleVerify = ({
   return (
     <>
       <HStack w={full} border={bordes} p={5} justifyContent={"flex-end"} mb={5}>
-        <Button
-          variant={"primary"}
-          textTransform={"capitalize"}
-          onClick={() => handleUser(uidSale)}
-        >
-          Información del vendedor
-        </Button>
+        <Salemodal imgs={referencia?.imp} />{" "}
         <Button
           variant={"primary"}
           textTransform={"capitalize"}
@@ -91,6 +56,7 @@ const SaleVerify = ({
         >
           Información del comprador
         </Button>
+        <CloseButton px={10} onClick={closeVerify} />
       </HStack>
       <Stack flexDirection={"row"} w={full} spacing={0} mb={20}>
         <VStack shadow={"lg"} w={full} mr={5} spacing={5} p={5} border={bordes}>
@@ -189,17 +155,13 @@ const SaleVerify = ({
               </HStack>
             ))}
           </Stack>{" "}
-          <chakra.form onSubmit={handleLiberate} w={full}>
-            <Salemodal imgs={referencia?.imp} />{" "}
-            <GridValueClose onClose={closeVerify} set={"Liberar Proceso"} />
-          </chakra.form>
         </VStack>
       </Stack>
     </>
   );
 };
 
-SaleVerify.propTypes = {
+SaleVerifyAll.propTypes = {
   bordes: PropTypes.string,
   idThree: PropTypes.string,
   product: PropTypes.object,
@@ -209,4 +171,4 @@ SaleVerify.propTypes = {
   uidSale: PropTypes.string,
 };
 
-export default SaleVerify;
+export default SaleVerifyAll;

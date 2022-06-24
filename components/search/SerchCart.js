@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useMemo, useRef } from "react";
 
 import PropTypes from "prop-types";
 
@@ -40,7 +40,10 @@ const SerchCart = ({ active, save }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   // incrementa y encapsula información para evitar que se actualice
-  inc.current = active.reduce((total, item) => (total += item.cn * item.pr), 0);
+  inc.current = useMemo(
+    () => active.reduce((total, item) => (total += item.cn * item.pr), 0),
+    [active]
+  );
 
   return (
     <>

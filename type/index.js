@@ -19,7 +19,7 @@ export const types = {
   productDelete: "[PRODUCT] Delete",
   productSaveLatest: "[PRODUCT] Save Latest",
   productClose: "[PRODUCT] Close",
-  
+
   productSaveCart: "[PROCESS] Save Cart",
   productDeleteSave: "[PROCESS] Delete Save",
   productActiveCart: "[PROCESS] Active Cart",
@@ -28,7 +28,6 @@ export const types = {
   checkoutDelete: "[PROCESS] Delete",
   closeActive: "[PROCESS] Close",
   productRevert: "[PROCESS] Inactive",
-  
 
   active: "[DATA] Active",
 
@@ -46,12 +45,19 @@ export const types = {
   checkoutAdd: "[CHECKOUT] Add",
   checkoutList: "[CHECKOUT] List",
   cheListAllHistory: "[CHECKOUT] History",
+  cheListMessage: "[CHECKOUT] Message",
+  cheListMessageClear: "[CHECKOUT] Clear",
+  cheListAllSa: "[CHECKOUT] Sale",
+  cheListAllCle: "[CHECKOUT] Clear",
+  cheListAllBu: "[CHECKOUT] Buy",
+  cheListAllCleBu: "[CHECKOUT] Clear",
+
 
   user: "[USER] List",
   userAdd: "[USER] Add",
   userEdit: "[USER] Edit",
   userDelete: "[USER] Delete",
-  
+
   userActive: "[ACTIVE] User",
   userClose: "[ACTIVE] Close",
 };

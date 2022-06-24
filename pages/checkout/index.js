@@ -29,7 +29,7 @@ import {
 
 import CheckoutScreen from "../../components/checkout/CheckoutScreen";
 
-import { dbUser } from "../../data/dbUser";
+import { dbUserData } from "../../data/dbUser";
 
 import Toast from "../../helpers/Toast";
 
@@ -145,7 +145,7 @@ Checkout.propTypes = {
 export async function getServerSideProps({ query }) {
   const q = await query.q.toString();
   try {
-    const product = await dbUser(q, "dbUserFour");
+    const product = await dbUserData(q, "dbUserTwo");
 
     if (!product) {
       return {

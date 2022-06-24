@@ -35,8 +35,8 @@ const MenuHistory = ({ color }) => {
         <MenuList display={displayOff2} minWidth={0} border={bordes}>
           <MenuItem>
             <NavLink
-              href={`/buy/[buy]`}
-              as={`/buy/${a?.uid}`}
+              href={`/buy?u=${a?.uid}`}
+              as={`/buy?u=${a?.uid}`}
               name={"Historia de compra"}
               variant={"secondary"}
               fontWeight={"normal"}
@@ -44,8 +44,8 @@ const MenuHistory = ({ color }) => {
           </MenuItem>
           <MenuItem>
             <NavLink
-              href={`/admin/sale`}
-              as={`/admin/sale`}
+              href={`/sale?u=${a?.uid}`}
+              as={`/sale?u=${a?.uid}`}
               name={"Historia de venta"}
               variant={"secondary"}
               fontWeight={"normal"}

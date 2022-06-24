@@ -24,7 +24,10 @@ export const dbProducts = async (id = "", dbP = "") => {
       q = query(ref, where("uid", "==", id), limit(2));
       break;
     case "dbProThree":
-      q = collection(db, "serchs", id, "messages");
+      q = query(
+        collection(db, "serchs", id, "messages"),
+        orderBy("cre", "desc")
+      );
       break;
     case "dbProFour":
       q = ref;

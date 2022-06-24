@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, setDoc, updateDoc } from "firebase/firestore";
 
 import { db } from "../firebase/config";
 
@@ -15,6 +15,7 @@ export const validPago = (referencia = {}, idThree = "", uidSale = "") => {
         // principal
         await updateDoc(doc(db, "sales", idThree), {
           process: true,
+          uid: uidSale.toString(),
         });
 
         // buy
@@ -27,6 +28,8 @@ export const validPago = (referencia = {}, idThree = "", uidSale = "") => {
         // sales
         await setDoc(doc(db, "sales"), {
           ...referencia,
+          process: true,
+          uid: uidSale.toString(),
         });
 
         // principal
@@ -63,6 +66,24 @@ export const cheListAll = (data) => ({
   payload: data,
 });
 
+export const cheListAllSale = (data) => ({
+  type: types.cheListAllSa,
+  payload: data,
+});
+
+export const cheListAllClear = () => ({
+  type: types.cheListAllCle,
+});
+
+export const cheListAllBuy = (data) => ({
+  type: types.cheListAllBu,
+  payload: data,
+});
+
+export const cheListAllClearBu = () => ({
+  type: types.cheListAllCleBu,
+});
+
 export const checkoutAdd = (data, rat, g, p) => {
   return async (dispatch, getState) => {
     const { activeCartSelect: check = [] } = await getState().checkout;
@@ -97,10 +118,6 @@ const deletecheckout = (id) => ({
   payload: id,
 });
 
-export const checkRevert = () => ({
-  type: types.cheClear,
-});
-
 // checkoutEdit comentario
 export const checkoutEdit = (data, rat, g, p) => {
   return async () => {
@@ -122,5 +139,15 @@ export const checkoutList = (data) => {
 
 const listcheckout = (data) => ({
   type: types.checkoutList,
+  payload: data,
+});
+
+export const messagesList = (data) => ({
+  type: types.cheListMessage,
+  payload: data,
+});
+
+export const messagesClear = (data) => ({
+  type: types.cheListMessageClear,
   payload: data,
 });

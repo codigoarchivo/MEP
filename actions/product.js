@@ -199,13 +199,14 @@ export const saveSale = (data = []) => {
 };
 
 export const saveSaleRevert = (data) => {
-  return () => {
+  return (dispatch) => {
     try {
       data.map(async (item) => {
         if (item.process === false) {
           const cnr = item.cnr + item.cn;
           await dbProductEdit(item.id, "dbProEditOne", cnr);
           await deleteDoc(doc(db, "buys", item.idP));
+          await dispatch(closeRevert());
         }
       });
     } catch (error) {
@@ -214,11 +215,14 @@ export const saveSaleRevert = (data) => {
   };
 };
 
+export const closeRevert = () => ({
+  type: types.productRevert,
+});
+
 export const deleteProductCart = (id) => ({
   type: types.productDeleteCart,
   payload: id,
 });
-
 
 const activeProduct = (data) => ({
   type: types.productActive,
@@ -233,8 +237,3 @@ export const activeProductList = (data) => ({
 export const closeActive = () => ({
   type: types.closeActive,
 });
-
-export const closeRevert = () => ({
-  type: types.productRevert,
-});
-

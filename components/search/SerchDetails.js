@@ -68,10 +68,9 @@ const SerchDetails = ({ message = [], product = {} }) => {
   // input
   const input = getInputProps({ isReadOnly: true });
 
-
   // Calculate product price individual y global
   const { global, globalRanking, globalPorcentaje } = useMemo(
-    () => Calculate(message.map((item) => ({ rat: item.rat }))),
+    () => Calculate(message.map((item) => ({ rat: item.rat || 0 }))),
     [message]
   );
 

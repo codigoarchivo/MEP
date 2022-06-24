@@ -66,7 +66,7 @@ const ReviewScreen = ({
   // useFormAll
   const { values, handleInputChange, handleRating } = useFormAll(
     initialStates,
-    message
+    { ...message, rat: [message.rat] }
   );
   //   valores
   const { rat, com } = values;
@@ -75,10 +75,10 @@ const ReviewScreen = ({
   const { globalRanking, globalPorcentaje } = useMemo(
     () =>
       rat !== null &&
-      Calculate([...calculo, ...rat].map((item) => ({ rat: item }))),
+      Calculate([...calculo, ...rat].map((item) => ({ rat: item || 0 }))),
     [calculo, rat]
   );
-
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (i !== "new") {

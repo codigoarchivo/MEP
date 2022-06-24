@@ -8,23 +8,33 @@ import ShopLayout from "../../components/layout/ShopLayout";
 
 import ReviewScreen from "../../components/review/ReviewScreen";
 
-import { dbProducts } from "../../data/dbProducts";
-
 import Toast from "../../helpers/Toast";
 
-const Review = ({ message = [], p = "", i = "", g = "" }) => {
+import { useSelector } from "react-redux";
+
+const Review = ({ p = "", i = "", g = "" }) => {
+  // useSelector
+  const { message } = useSelector(({ checkout }) => checkout);
+
   // guardamos solamente el mensaje que necesitamos editar
-  const match = message.find((i) => String(i.id) === g);
-  match.rat = [match.rat];
+
+  const match = useMemo(() => message.find((i) => String(i.id) === g), [
+    message,
+  ]);
 
   // creamos  una nueva instancia con todos los valores rat menos el que vamos a modificar
   let el = [];
-  message.map((i) => {
-    if (String(i.id) !== g) {
-      return el.push(i.rat);
-    }
-  });
-  
+
+  useMemo(
+    () =>
+      message.map((i) => {
+        if (String(i.id) !== g) {
+          return el.push(i.rat);
+        }
+      }),
+    [message]
+  );
+  // console.log(el);
   return (
     <ShopLayout title={"Review"}>
       <Container maxW={"container.sm"}>
@@ -35,7 +45,6 @@ const Review = ({ message = [], p = "", i = "", g = "" }) => {
 };
 
 Review.propTypes = {
-  message: PropTypes.array,
   p: PropTypes.string,
   i: PropTypes.string,
   g: PropTypes.string,
@@ -49,13 +58,10 @@ export async function getServerSideProps({ query }) {
   // id del mensaje o es new
   const i = query.i.toString();
   try {
-    // message
-    const message = i !== "new" ? await dbProducts(p, "dbProThree") : [];
-
-    return { props: { message, p, i, g } };
+    return { props: { p, i, g } };
   } catch (error) {
     Toast("Al parecer hay un error", "error", 5000);
-    return { props: { message: [] } };
+    return { props: {} };
   }
 }
 

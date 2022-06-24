@@ -4,25 +4,25 @@ import PropTypes from "prop-types";
 
 import { Container, Stack } from "@chakra-ui/react";
 
-import ShopLayout from "../../../components/layout/ShopLayout";
+import ShopLayout from "../../components/layout/ShopLayout";
 
-import Breakpoints from "../../../helpers/Breakpoints";
+import Breakpoints from "../../helpers/Breakpoints";
 
-import SaleVerify from "../../../components/sale/SaleVerify";
+import SaleVerifyAll from "../../components/sale/SaleVerifyAll";
 
-import Toast from "../../../helpers/Toast";
+import Toast from "../../helpers/Toast";
 
-import { dbUser, dbUserByUID } from "../../../data/dbUser";
+import { dbUser, dbUserByUID } from "../../data/dbUser";
 
 const Orders = ({ active }) => {
   // Breakpoints
   const { content5, bordes } = Breakpoints();
 
   return (
-    <ShopLayout title={"orders"}>
+    <ShopLayout title={"sales"}>
       <Container maxW={"container.xl"} py={10}>
         <Stack flexDirection={"column"} spacing={0}>
-          <SaleVerify
+          <SaleVerifyAll
             bordes={bordes}
             // toda la informacion del producto, que se guardo en el uid del comprador
             product={active?.product}

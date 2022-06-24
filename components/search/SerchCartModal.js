@@ -54,6 +54,7 @@ const SerchCartModal = ({ isOpen, onClose }) => {
       process: false,
       close: false,
       lim: addDays(Date.now(), 3),
+      cre: Date.now(),
       product: {
         // raiting del producto
         rat: item.rat,

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Box, Container, Heading, Stack, Text, VStack } from "@chakra-ui/react";
 
-import SaleScreen from "../../components/sale/SaleScreen";
+import SaleScreenAll from "../../components/sale/SaleScreenAll";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
@@ -14,7 +14,7 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import Toast from "../../helpers/Toast";
 
-import { cheListAll } from "../../actions/checkout";
+import { cheListAllClear, cheListAllSale } from "../../actions/checkout";
 
 import { dbUserData } from "../../data/dbUser";
 
@@ -24,15 +24,15 @@ const Sale = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
   // useSelector
-  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
-  // useSelector
-  const { history = [] } = useSelector(({ checkout }) => checkout);
-  // Breakpoints
+  const { sale = [] } = useSelector(({ checkout }) => checkout);
+  // // Breakpoints
   const { bordes, full, content5 } = Breakpoints();
 
   useEffect(() => {
     if (data) {
-      dispatch(cheListAll(data));
+      dispatch(cheListAllSale(data));
+    } else {
+      dispatch(cheListAllClear());
     }
   }, [dispatch, data]);
 
@@ -59,8 +59,8 @@ const Sale = ({ data }) => {
                       Lista de ventas
                     </Heading>
 
-                    {history.map((item, key) => (
-                      <SaleScreen item={item} key={key} />
+                    {sale.map((item, key) => (
+                      <SaleScreenAll item={item} key={key} />
                     ))}
                   </VStack>
 
@@ -81,14 +81,14 @@ const Sale = ({ data }) => {
         </Stack>
 
         <Box>
-          {history.length > 0 && (
+          {sale.length > 0 && (
             <Paginator
               window={"sales"}
               word={"cre"}
-              list={history}
-              firstVisible={history[0].cre}
-              lastVisible={history[history.length - 1].cre}
-              newList={cheListAll}
+              list={sale}
+              firstVisible={sale[0].cre}
+              lastVisible={sale[sale.length - 1].cre}
+              newList={cheListAllSale}
               nLimit={2}
               orHome={"desc"}
               orPrevious={"desc"}
@@ -106,8 +106,8 @@ Sale.propTypes = {
   data: PropTypes.array,
 };
 
-export async function getServerSideProps() {
-  const dA = process.env.NEXT_PUBLIC_ROL_A.toString();
+export async function getServerSideProps({ query }) {
+  const dA = query.u.toString();
   try {
     const data = await dbUserData(dA, "dbUserData");
 
