@@ -12,7 +12,7 @@ import {
 
 import { db } from "../firebase/config";
 
-export const dbProducts = async (id = "", dbP = "") => {
+export const dbProducts = async (id = "", dbP = "", valA = "") => {
   let q = "";
   let ref = collection(db, "serchs");
 
@@ -38,8 +38,8 @@ export const dbProducts = async (id = "", dbP = "") => {
     case "dbProSix":
       q = query(
         ref,
-        where("pr", ">=", Number(id[0])),
-        where("pr", "<=", Number(id[1])),
+        where("pr", ">=", Number(valA[0])),
+        where("pr", "<=", Number(valA[1])),
         limit(25)
       );
       break;

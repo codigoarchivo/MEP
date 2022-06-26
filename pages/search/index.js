@@ -42,7 +42,7 @@ const Search = ({ product }) => {
       dispatch(serchProductList(product));
     }
   }, [dispatch, product]);
-
+  console.log(product);
   return (
     <>
       <ShopLayout title={"Shop All"}>
@@ -57,7 +57,7 @@ const Search = ({ product }) => {
               mr={2}
             >
               {/* Rangos de precio */}
-              <SerchRange product={product} />
+              <SerchRange product={listSerch} />
 
               {/* Todas las categorias */}
               <SerchCategory />
@@ -113,8 +113,11 @@ export async function getServerSideProps({ query }) {
   const q = query.q;
 
   try {
-    const product = await dbProducts(r || "", q || "dbProOne");
-    // const product = await dbProducts("", "dbProOne");
+    let product = "";
+    if ((r !== undefined, q === "range")) {
+      product = await dbProducts("", "dbProSix", r);
+    }
+    product = await dbProducts("", "dbProOne");
 
     return {
       props: {

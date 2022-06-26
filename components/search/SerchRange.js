@@ -36,17 +36,18 @@ const SerchRange = ({ product }) => {
   // useRef
   const dec = useRef(0);
 
-  useMemo(() => {
-    max.current = product.reduce(
-      (n, m) => Math.max(Number(n), m.pr),
-      -Number.POSITIVE_INFINITY
-    );
+  max.current = product.reduce(
+    (n, m) => Math.max(Number(n), m.pr),
+    -Number.POSITIVE_INFINITY
+  );
 
-    min.current = product.reduce(
-      (n, m) => Math.min(Number(n), m.pr),
-      Number.POSITIVE_INFINITY
-    );
-  }, [product]);
+  min.current = product.reduce(
+    (n, m) => Math.min(Number(n), m.pr),
+    Number.POSITIVE_INFINITY
+  );
+
+  // console.log(max.current);
+  // console.log(min.current);
 
   const handleChangeEnd = (r) => {
     router.push({
@@ -54,7 +55,7 @@ const SerchRange = ({ product }) => {
       query: { r, q: "range" },
     });
   };
-  
+
   return (
     <Stack w={"full"} spacing={"10"} border={bordes} rounded="md" p={5}>
       <Box borderBottom={bordes} py={5} w={"full"}>
@@ -64,9 +65,13 @@ const SerchRange = ({ product }) => {
       </Box>
 
       <RangeSlider
-        defaultValue={[min.current, max.current]}
-        min={dec.current = min.current}
-        max={inc.current = max.current}
+        aria-label={[min.current, max.current]}
+        defaultValue={[
+          (min.current = min.current),
+          (inc.current = max.current),
+        ]}
+        min={min.current}
+        max={max.current}
         step={5}
         onChangeEnd={(val) => handleChangeEnd(val)}
       >

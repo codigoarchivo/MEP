@@ -49,7 +49,7 @@ const SerchDetails = ({ message = [], product = {} }) => {
   // values
   const { id, na, pr, im, ds, ct, cn, dt, uid, ps, pj } = product;
   // list Category
-  const listCt = list.filter((item) => item.id === ct);
+  const listCt = useMemo(() => list.filter((item) => item.id === ct), [list]);
   // Incremen and Decrement
   const {
     getInputProps,
