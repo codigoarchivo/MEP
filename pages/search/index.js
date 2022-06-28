@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 
+import { useRouter } from "next/router";
+
 import PropTypes from "prop-types";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -35,6 +37,8 @@ const Search = ({ product }) => {
   const { listSerch } = useSelector(({ product }) => product);
   // dispatch
   const dispatch = useDispatch();
+  // useRouter
+  const { asPath, locale, locales } = useRouter();
 
   // useState
   useEffect(() => {
@@ -42,7 +46,7 @@ const Search = ({ product }) => {
       dispatch(serchProductList(product));
     }
   }, [dispatch, product]);
-  console.log(product);
+
   return (
     <>
       <ShopLayout title={"Shop All"}>
@@ -65,8 +69,9 @@ const Search = ({ product }) => {
             {!listSerch[0] ? (
               <Center py={"48"} w={"full"}>
                 <Heading size={"sm"} textTransform={"uppercase"}>
-                  Al parecer no encontramos lo que buscas, reinicia con boton
-                  Shop All
+                  {locale === "es"
+                    ? "Al parecer no encontramos lo que buscas, reinicia con boton Shop All"
+                    : "It seems that we did not find what you are looking for, restart with the Shop All button"}
                 </Heading>
               </Center>
             ) : (

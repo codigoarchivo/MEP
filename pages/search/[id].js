@@ -48,7 +48,8 @@ Details.propType = {
   product: PropTypes.object,
 };
 
-export async function getStaticPaths() {
+export async function getStaticPaths(data) {
+  console.log(data);
   const producto = await dbProducts("", "dbProFour");
   return {
     paths: producto.map(({ id }) => ({

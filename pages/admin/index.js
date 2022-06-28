@@ -24,8 +24,6 @@ const Sale = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
   // useSelector
-  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
-  // useSelector
   const { history = [] } = useSelector(({ checkout }) => checkout);
   // Breakpoints
   const { bordes, full, content5 } = Breakpoints();
