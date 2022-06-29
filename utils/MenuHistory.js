@@ -15,7 +15,7 @@ import NavLink from "./Navlink";
 
 import Breakpoints from "../helpers/Breakpoints";
 
-const MenuHistory = ({ color }) => {
+const MenuHistory = ({ color, buys, sales, history }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // Breakpoints
@@ -29,7 +29,7 @@ const MenuHistory = ({ color }) => {
         fontWeight={"normal"}
         color={color}
       >
-        Historial
+        {history}
       </MenuButton>
       <Portal>
         <MenuList display={displayOff2} minWidth={0} border={bordes}>
@@ -37,7 +37,7 @@ const MenuHistory = ({ color }) => {
             <NavLink
               href={`/buy?u=${a?.uid}`}
               as={`/buy?u=${a?.uid}`}
-              name={"Historia de compra"}
+              name={buys}
               variant={"secondary"}
               fontWeight={"normal"}
             />
@@ -46,7 +46,7 @@ const MenuHistory = ({ color }) => {
             <NavLink
               href={`/sale?u=${a?.uid}`}
               as={`/sale?u=${a?.uid}`}
-              name={"Historia de venta"}
+              name={sales}
               variant={"secondary"}
               fontWeight={"normal"}
             />

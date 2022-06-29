@@ -24,16 +24,6 @@ const CheckoutScreenAll = ({ product = {}, process, id, lim, count }) => {
   // Breakpoints
   const { bordes, full } = Breakpoints();
 
-  // envia el recibo del pago a la base de datos
-  const handleVerify = () => {
-    router.push({
-      pathname: "/verify/[id]",
-      query: {
-        id,
-      },
-    });
-  };
-
   // despues de verificar el pago se puede ver los datos del vendedor
   const handleUser = () => {
     if (process !== false) {

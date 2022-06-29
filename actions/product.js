@@ -4,7 +4,6 @@ import {
   deleteDoc,
   doc,
   setDoc,
-  updateDoc,
 } from "firebase/firestore";
 import { dbProductEdit } from "../data/dbProducts";
 

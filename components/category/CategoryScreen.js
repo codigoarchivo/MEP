@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useSelector } from "react-redux";
+
 import PropTypes from "prop-types";
 
 import { useRouter } from "next/router";
@@ -22,6 +24,7 @@ import { DeleteIcon, EditIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import { dbProducts } from "../../data/dbProducts";
 
 const CategoryScrenn = ({ id, na }) => {
+  const { t } = useSelector(({ translate }) => translate);
   // router
   const router = useRouter();
 
@@ -76,7 +79,7 @@ const CategoryScrenn = ({ id, na }) => {
                   onClick={handleEdit}
                 >
                   <EditIcon w={3} h={3} />
-                  <Text>Editar</Text>
+                  <Text>{t.edit}</Text>
                 </HStack>
               </MenuItem>
 
@@ -89,7 +92,7 @@ const CategoryScrenn = ({ id, na }) => {
                   onClick={handleDelete}
                 >
                   <DeleteIcon w={3} h={3} />
-                  <Text>Eliminar</Text>
+                  <Text>{t.delete}</Text>
                 </HStack>
               </MenuItem>
             </MenuList>

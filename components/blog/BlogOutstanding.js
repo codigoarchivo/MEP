@@ -1,13 +1,4 @@
-import {
-  Box,
-  List,
-  ListIcon,
-  ListItem,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
-
-import { CheckIcon } from "@chakra-ui/icons";
+import { Box, Stack, Text } from "@chakra-ui/react";
 
 import ModeColor from "../../helpers/ModeColor";
 
@@ -18,14 +9,20 @@ const BlogOutstanding = (item) => {
 
   return (
     <Box
-      maxW={"330px"}
+      maxW={"250px"}
       w={"full"}
       bg={bg3}
       boxShadow={"2xl"}
       rounded={"md"}
       overflow={"hidden"}
     >
-      <Stack textAlign={"center"} p={6} color={bgText} align={"center"}>
+      <Stack
+        w={"full"}
+        textAlign={"center"}
+        p={6}
+        color={bgText}
+        align={"center"}
+      >
         <Text
           fontSize={"sm"}
           fontWeight={500}
@@ -42,38 +39,17 @@ const BlogOutstanding = (item) => {
             {item.price}
           </Text>
         </Stack>
+        <Box bg={bg5} px={3} py={10}>
+          <NavLink
+            w={"full"}
+            variant={"primary"}
+            href={`/search/[id]`}
+            as={`/search/${item.date5}`}
+            name={item.nam}
+            boxShadow={"0 5px 20px 0px rgb(72 187 120 / 43%)"}
+          />
+        </Box>
       </Stack>
-
-      <Box bg={bg5} px={3} py={10}>
-        <List spacing={3} mb={10}>
-          <ListItem>
-            <ListIcon as={CheckIcon} color="brand.500" />
-            {item.date1}
-          </ListItem>
-          <ListItem>
-            <ListIcon as={CheckIcon} color="brand.500" />
-            {item.date2}
-          </ListItem>
-          <ListItem>
-            <ListIcon as={CheckIcon} color="brand.500" />
-            {item.date3}
-          </ListItem>
-          <ListItem>
-            <ListIcon as={CheckIcon} color="brand.500" />
-            {item.date4}
-          </ListItem>
-        </List>
-
-        <NavLink
-          w={"full"}
-          rounded={"xl"}
-          variant={"primary"}
-          href={`/search/[id]`}
-          as={`/search/${item.date5}`}
-          name={"Start your trial"}
-          boxShadow={"0 5px 20px 0px rgb(72 187 120 / 43%)"}
-        />
-      </Box>
     </Box>
   );
 };

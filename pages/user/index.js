@@ -34,6 +34,8 @@ const initialStates = {
 };
 
 const User = () => {
+  // useSelector
+  const { t } = useSelector(({ translate }) => translate);
   // selector
   const { activeSelect: data } = useSelector(({ auth }) => auth);
   // dispatch
@@ -60,11 +62,15 @@ const User = () => {
     <ShopLayout>
       <Container maxW={"container.lg"} mt={10}>
         <VStack>
-          <Heading size={"lg"} textAlign="center">
-            Perfil público
+          <Heading textTransform={"capitalize"} size={"lg"} textAlign="center">
+            {t.user.uA}
           </Heading>
-          <Heading size={"sm"} fontWeight={"normal"}>
-            Información Basica
+          <Heading
+            size={"sm"}
+            textTransform={"capitalize"}
+            fontWeight={"normal"}
+          >
+            {t.user.uB}
           </Heading>
         </VStack>
         <Stack
@@ -89,8 +95,12 @@ const User = () => {
               )}
             </Box>
             <VStack>
-              <Heading size={"md"}>Perfil Usuario</Heading>
-              <Heading size={"sm"} fontWeight={"normal"}>
+              <Heading size={"md"}>{t.user.uC}</Heading>
+              <Heading
+                textTransform={"capitalize"}
+                size={"sm"}
+                fontWeight={"normal"}
+              >
                 {displayName}
               </Heading>
             </VStack>
@@ -103,10 +113,19 @@ const User = () => {
             onSubmit={handleSubmit}
           >
             <VStack spacing={10}>
-              <Heading size={"xs"} w={"full"} fontWeight={"normal"}>
-                Información Basica
+              <Heading
+                textTransform={"capitalize"}
+                size={"xs"}
+                w={"full"}
+                fontWeight={"normal"}
+              >
+                {t.user.uB}
               </Heading>
-              <FileAll setUrlImage={setUrlImage} fileName={"fotosPerfil"} />
+              <FileAll
+                save={t.goup}
+                setUrlImage={setUrlImage}
+                fileName={"fotosPerfil"}
+              />
 
               <Input
                 onChange={handleInputChange}
@@ -115,7 +134,7 @@ const User = () => {
                 placeholder="Escribe tu nombre"
               />
               <Button variant={"primary"} type="submit" ml={3}>
-                Guardar
+                {t.save}
               </Button>
             </VStack>
           </chakra.form>

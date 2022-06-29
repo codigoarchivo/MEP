@@ -1,21 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import { Box, Divider, List, ListItem, Select } from "@chakra-ui/react";
+import { Box, Divider, List, ListItem, chakra } from "@chakra-ui/react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { useRouter } from "next/router";
 
 import {
-  AboutIcon,
   Category,
   Global,
   Home,
+  ListEspera,
   Logout,
   Perfil,
   Product,
   ShopAll,
-  VentaIcon,
   VentasClient,
 } from "../../../helpers/IconNew";
+
+import { listTraslate } from "../../../actions/translate";
 
 const PopoverUserNavbar = ({
   HStack,
@@ -25,8 +28,22 @@ const PopoverUserNavbar = ({
   Button,
   handleLogout,
 }) => {
+  // useDispatch
+  const dispatch = useDispatch();
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+  // useSelector
+  const { t } = useSelector(({ translate }) => translate);
+  // useRouter
+  const { locale, locales, asPath } = useRouter();
+
+  // translate
+  const data = `/translations/${locale}/global.json`;
+  useEffect(() => {
+    fetch(data)
+      .then((res) => res.json())
+      .then((t) => dispatch(listTraslate(t)));
+  }, [dispatch, data]);
 
   return (
     <>
@@ -37,27 +54,28 @@ const PopoverUserNavbar = ({
             fontWeight={"normal"}
             variant={"secondary"}
             href={"/"}
-            name={"Home"}
+            name={t.major.mA}
           />
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
         <ListItem>
           <NavLink
-            leftIcon={<VentaIcon />}
+            leftIcon={<Perfil />}
+            href={"/user"}
             fontWeight={"normal"}
             variant={"secondary"}
-            href={"/user/selling"}
-            name={"Quieres vender"}
+            name={t.major.mD}
           />
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
+
         <ListItem>
           <NavLink
-            leftIcon={<ShopAll />}
+            leftIcon={<ListEspera />}
             fontWeight={"normal"}
             variant={"secondary"}
             href={"/blog"}
-            name={"Blog"}
+            name={t.major.mE}
           />
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
@@ -69,17 +87,17 @@ const PopoverUserNavbar = ({
                 fontWeight={"normal"}
                 variant={"secondary"}
                 href={"/admin/category"}
-                name={"category"}
+                name={t.major.mF}
               />
             </ListItem>
             <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
             <ListItem>
               <NavLink
-                leftIcon={<Category />}
+                leftIcon={<VentasClient />}
                 fontWeight={"normal"}
                 variant={"secondary"}
                 href={"/admin"}
-                name={"ventas"}
+                name={t.major.mH}
               />
             </ListItem>
             <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
@@ -92,7 +110,7 @@ const PopoverUserNavbar = ({
             variant={"secondary"}
             href={`/product/[uid]`}
             as={`/product/${a?.uid}`}
-            name={"product"}
+            name={t.major.mG}
           />
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
@@ -102,17 +120,7 @@ const PopoverUserNavbar = ({
             fontWeight={"normal"}
             variant={"secondary"}
             href={"/search"}
-            name={"Shop All"}
-          />
-        </ListItem>
-        <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
-        <ListItem>
-          <NavLink
-            leftIcon={<Perfil />}
-            href={"/user"}
-            fontWeight={"normal"}
-            variant={"secondary"}
-            name={"Editar Perfil"}
+            name={t.major.mI}
           />
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
@@ -123,21 +131,30 @@ const PopoverUserNavbar = ({
             leftIcon={<Logout />}
             onClick={handleLogout}
           >
-            Logout
+            {t.Logout}
           </Button>
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
         <ListItem>
-          <HStack w={"full"} alignItems={"stretch"}>
+          <HStack w={"full"} alignItems={"center"} py={5}>
             <Box w={6} h={6} as={Global} />
 
             <Heading textTransform={"uppercase"} size="sm">
-              Idioma
+              {t.language}
             </Heading>
 
-            <Select placeholder="English" size="sx" fontSize={"sm"}>
-              <option value="option1">Español</option>
-            </Select>
+            {locales.map((lo, i) => (
+              <chakra.li key={i} sx={{ listStyle: "none" }}>
+                <NavLink
+                  variant={"primary"}
+                  href={asPath}
+                  locale={lo}
+                  name={lo}
+                  px={0}
+                  w={0}
+                />
+              </chakra.li>
+            ))}
           </HStack>
         </ListItem>
       </List>

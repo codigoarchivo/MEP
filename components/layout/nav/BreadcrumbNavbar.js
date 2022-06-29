@@ -15,7 +15,10 @@ import MenuHistory from "../../../utils/MenuHistory";
 import { dbProducts } from "../../../data/dbProducts";
 
 export const BreadcrumbNavbar = ({ NavLink, Box }) => {
+  // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+  // useSelector
+  const { t } = useSelector(({ translate }) => translate);
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -45,11 +48,15 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
               variant={"secondary"}
               href={"/"}
               as={"/"}
-              name={"Home"}
+              name={t.major.mA}
             />
           </chakra.li>
           <chakra.li mx={"3"}>
-            <MenuHistory />
+            <MenuHistory
+              buys={t.major.mB}
+              sales={t.major.mC}
+              history={t.history}
+            />
           </chakra.li>
           <chakra.li mx={"3"} onClick={handleObservator}>
             <NavLink
@@ -57,16 +64,16 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
               as={"/user"}
               fontWeight={"normal"}
               variant={"secondary"}
-              name={"Editar Perfil"}
+              name={t.major.mD}
             />
           </chakra.li>
           <chakra.li mx={"3"} onClick={handleObservator}>
             <NavLink
               href={"/blog"}
               as={"/blog"}
-              name={"Blog"}
               fontWeight={"normal"}
               variant={"secondary"}
+              name={t.major.mE}
             />
           </chakra.li>
           <chakra.li mx={"3"}>
@@ -75,7 +82,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
               variant={"secondary"}
               href={`/product/[uid]`}
               as={`/product/${a?.uid}`}
-              name={"product"}
+              name={t.major.mG}
             />
           </chakra.li>
 
@@ -87,7 +94,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
                   variant={"secondary"}
                   href={"/admin/category"}
                   as={"/admin/category"}
-                  name={"category"}
+                  name={t.major.mF}
                 />
               </chakra.li>
               <chakra.li mx={"3"}>
@@ -96,7 +103,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
                   variant={"secondary"}
                   href={"/admin"}
                   as={"/admin"}
-                  name={"ventas"}
+                  name={t.major.mH}
                 />
               </chakra.li>
             </>
@@ -107,7 +114,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
               variant={"secondary"}
               href={"/search"}
               as={"/search"}
-              name={"Shop All"}
+              name={t.major.mI}
             />
           </chakra.li>
         </Stack>

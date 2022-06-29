@@ -52,7 +52,6 @@ export const types = {
   cheListAllBu: "[CHECKOUT] Buy",
   cheListAllCleBu: "[CHECKOUT] Clear",
 
-
   user: "[USER] List",
   userAdd: "[USER] Add",
   userEdit: "[USER] Edit",
@@ -60,4 +59,8 @@ export const types = {
 
   userActive: "[ACTIVE] User",
   userClose: "[ACTIVE] Close",
+
+  translate: "[TRANSLATE] Locale",
+  translateList: "[TRANSLATE] List",
+  closeTranslate: "[TRANSLATE] Close",
 };

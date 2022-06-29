@@ -18,7 +18,7 @@ import Toast from "../helpers/Toast";
 
 import ModeColor from "../helpers/ModeColor";
 
-const FileAll = ({ setUrlImage, fileName }) => {
+const FileAll = ({ setUrlImage, fileName, save }) => {
   const [progress, setProgress] = useState(0);
   // mode Color
   const { bg } = ModeColor();
@@ -84,7 +84,7 @@ const FileAll = ({ setUrlImage, fileName }) => {
         _hover={{ border: bg }}
         p={1}
       >
-        Subir: {progress}%
+        {save}: {progress}%
       </Button>
     </InputGroup>
   );

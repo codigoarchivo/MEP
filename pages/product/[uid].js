@@ -37,6 +37,8 @@ import Paginator from "../../utils/Paginator";
 import { dbProducts } from "../../data/dbProducts";
 
 const List = ({ product = [] }) => {
+  // useSelector
+  const { t } = useSelector(({ translate }) => translate);
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // router
@@ -74,21 +76,23 @@ const List = ({ product = [] }) => {
           {!list[0] && (
             <Center border={bordes} py={30}>
               <Heading size={"sm"} textTransform={"uppercase"}>
-                Agrega una producto
+                {t.product.pA}
               </Heading>
             </Center>
           )}
           <Text py={5}>
-            !importante Información para que el cliente -{" "}
-            <Button onClick={handleClient} variant={"primary"}>
-              ir
+            <Button
+              textTransform={"capitalize"}
+              onClick={handleClient}
+              variant={"primary"}
+            >
+              {t.product.pB}
             </Button>{" "}
-            - Datos quedara guardado en la base de datos y se utilizara para
-            futuras ventas.
+            - {t.product.pC}
           </Text>
           <TableContainer w={"full"} border={bordes}>
             <Table variant="striped" colorScheme="brand">
-              <TableCaption>Tus publicaciones en nuestro sitio</TableCaption>
+              <TableCaption>{t.public}</TableCaption>
               <Thead>
                 <Tr>
                   <Th isNumeric></Th>
@@ -101,7 +105,7 @@ const List = ({ product = [] }) => {
                       textTransform="uppercase"
                       fontSize={"x-small"}
                     >
-                      Agregar
+                      {t.add}
                     </Button>
                   </Th>
                 </Tr>

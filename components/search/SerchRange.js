@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import PropTypes from "prop-types";
 
+import { useSelector } from "react-redux";
+
 import { useRouter } from "next/router";
 
 import {
@@ -23,6 +25,8 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import Breakpoints from "../../helpers/Breakpoints";
 
 const SerchRange = ({ product }) => {
+  // useSelector
+  const { t } = useSelector(({ translate }) => translate);
   // dispatch
   const router = useRouter();
   // Breakpoints
@@ -60,7 +64,7 @@ const SerchRange = ({ product }) => {
     <Stack w={"full"} spacing={"10"} border={bordes} rounded="md" p={5}>
       <Box borderBottom={bordes} py={5} w={"full"}>
         <Heading size={"md"} textTransform={"uppercase"} fontWeight={"normal"}>
-          Buscar Rango precios
+          {t.search.sA}
         </Heading>
       </Box>
 

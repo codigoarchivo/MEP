@@ -23,6 +23,8 @@ import Toast from "../../helpers/Toast";
 const Checkout = ({ product = [] }) => {
   // useSelector
   const { buy = [] } = useSelector(({ checkout }) => checkout);
+  // useSelector
+  const { t } = useSelector(({ translate }) => translate);
   // useDispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -42,35 +44,23 @@ const Checkout = ({ product = [] }) => {
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>
             <Heading w={full} as="h2" size="lg" fontWeight="semibold">
-              Envia el dinero a la cuenta de la tienda
+              {t.historyBuy.sA}
             </Heading>
-            <Stack w={full} flexDirection={content5} spacing={0}>
-              <Box w={full} mx={2}>
-                <VStack spacing={5} border={bordes} p={10} boxShadow={"lg"}>
-                  <VStack w={full} py={5}>
-                    <Heading
-                      w={full}
-                      size={"md"}
-                      textTransform={"uppercase"}
-                      px={2}
-                      fontWeight={"black"}
-                      mb={10}
-                    >
-                      {!!buy[0]
-                        ? "Lista de compras"
-                        : "No hay compras asociadas"}
-                    </Heading>
-                    {buy.map((item, key) => (
-                      <CheckoutScreenAll
-                        key={key}
-                        {...item}
-                        count={(key += 1)}
-                      />
-                    ))}
-                  </VStack>
-                </VStack>
-              </Box>
-            </Stack>
+            <VStack w={full} p={5} border={bordes}>
+              <Heading
+                w={full}
+                size={"md"}
+                textTransform={"uppercase"}
+                px={2}
+                fontWeight={"black"}
+                mb={10}
+              >
+                {!!buy[0] ? t.historyBuy.sB : t.historyBuy.sC}
+              </Heading>
+              {buy.map((item, key) => (
+                <CheckoutScreenAll key={key} {...item} count={(key += 1)} />
+              ))}
+            </VStack>
           </VStack>
         </Stack>
         <Box>

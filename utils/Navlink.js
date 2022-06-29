@@ -24,9 +24,10 @@ const NavLink = ({
   display,
   boxShadow,
   rounded,
+  locale,
 }) => {
   return (
-    <Link href={href} as={as} passHref>
+    <Link href={href} as={as} locale={locale} passHref>
       <Button
         rightIcon={rightIcon}
         leftIcon={leftIcon}

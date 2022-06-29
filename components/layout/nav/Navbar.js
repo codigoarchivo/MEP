@@ -71,7 +71,9 @@ const Navbar = () => {
   const dispatch = useDispatch();
   // dispatch
   const router = useRouter();
-
+  // useSelector
+  const { t } = useSelector(({ translate }) => translate);
+  // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector
   const {
@@ -183,7 +185,7 @@ const Navbar = () => {
                   />
                 </Box>
                 <Box as={"div"} display={displayOff2}>
-                  <MenuCategoria />
+                  <MenuCategoria categories={t.categories} />
                 </Box>
               </HStack>
             </GridItem>

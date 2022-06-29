@@ -34,16 +34,18 @@ import { dbCategory } from "../../data/dbCategory";
 import Toast from "../../helpers/Toast";
 
 const Category = ({ data = [] }) => {
+  const { t } = useSelector(({ translate }) => translate);
+  // selector
+  const { listData = [] } = useSelector(({ category }) => category);
+  // selector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // dispatch
   const dispatch = useDispatch();
   // router
   const router = useRouter();
   // breakpoints
   const { center, bordes } = Breakpoints();
-  // selector
-  const { listData = [] } = useSelector(({ category }) => category);
-  // selector
-  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+  // useSelector
 
   if (a?.rol === "user") {
     router.push("/");
@@ -74,16 +76,16 @@ const Category = ({ data = [] }) => {
             {!listData[0] && (
               <Center border={bordes} py={30}>
                 <Heading size={"sm"} textTransform={"uppercase"}>
-                  Agrega una categoria
+                  {t.category.cA}
                 </Heading>
               </Center>
             )}
             <TableContainer w={"full"} border={bordes}>
               <Table variant="striped" colorScheme="brand">
-                <TableCaption>Lista de Categorias</TableCaption>
+                <TableCaption>{t.category.cB}</TableCaption>
                 <Thead>
                   <Tr>
-                    <Th>Categoria</Th>
+                    <Th>{t.major.mF}</Th>
                     <Th isNumeric textAlign={center}>
                       <Button
                         onClick={handleAdd}
@@ -93,7 +95,7 @@ const Category = ({ data = [] }) => {
                         textTransform="uppercase"
                         fontSize={"x-small"}
                       >
-                        Agregar
+                        {t.add}
                       </Button>
                     </Th>
                   </Tr>

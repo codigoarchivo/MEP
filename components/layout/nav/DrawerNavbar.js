@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import PropTypes from "prop-types";
 
@@ -17,8 +17,9 @@ import {
   Button,
   HStack,
   Heading,
-  Select,
 } from "@chakra-ui/react";
+
+import { useRouter } from "next/router";
 
 import Breakpoints from "../../../helpers/Breakpoints";
 
@@ -37,8 +38,10 @@ import {
   Perfil,
   Global,
   Logout,
-  VentaIcon,
+  VentasClient,
+  ListEspera,
 } from "../../../helpers/IconNew";
+import { listTraslate } from "../../../actions/translate";
 
 export const DrawerNavbar = ({
   onClose,
@@ -54,13 +57,27 @@ export const DrawerNavbar = ({
   MoonIcon,
   handleLogout,
 }) => {
+  // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+  // useSelector
+  const { t } = useSelector(({ translate }) => translate);
   // Breakpoints
   const { displayOn2, bordes } = Breakpoints();
   // dispatch
   const dispatch = useDispatch();
   // selector
   const { list = [] } = useSelector(({ category }) => category);
+  // useRouter
+  const { locale, locales, asPath } = useRouter();
+
+  // translate
+  const data = `/translations/${locale}/global.json`;
+  useEffect(() => {
+    fetch(data)
+      .then((res) => res.json())
+      .then((t) => dispatch(listTraslate(t)));
+  }, [dispatch, data]);
+
   // handleObservator
   const handleObservator = () => {
     dispatch(serchProductList(list));
@@ -78,7 +95,7 @@ export const DrawerNavbar = ({
             display="flex"
             alignItems={"center"}
           >
-            Basic Drawer
+            {a?.displayName}
             <Icon
               display={displayOn2}
               boxSize={6}
@@ -98,7 +115,7 @@ export const DrawerNavbar = ({
                 textTransform={"uppercase"}
                 w={"full"}
               >
-                Todas Categorias
+                {t.categories}
               </MenuButton>
               <Portal>
                 <MenuList zIndex={"modal"} border={bordes}>
@@ -134,68 +151,7 @@ export const DrawerNavbar = ({
                         fontWeight={"normal"}
                         variant={"secondary"}
                         href={"/"}
-                        name={"Home"}
-                      />
-                    </chakra.li>
-                    <chakra.li mx={"3"}>
-                      <NavLink
-                        leftIcon={<VentaIcon />}
-                        fontWeight={"normal"}
-                        variant={"secondary"}
-                        href={"/user/selling"}
-                        name={"Quieres vender"}
-                      />
-                    </chakra.li>
-                    {a?.rol === "owner" && (
-                      <chakra.li mx={"3"}>
-                        <NavLink
-                          leftIcon={<Product />}
-                          fontWeight={"normal"}
-                          variant={"secondary"}
-                          href={`/product/[uid]`}
-                          as={`/product/${a?.uid}`}
-                          name={"product"}
-                        />
-                      </chakra.li>
-                    )}
-                    {a?.rol === "owner" && (
-                      <>
-                        <chakra.li mx={"3"}>
-                          <NavLink
-                            leftIcon={<Category />}
-                            fontWeight={"normal"}
-                            variant={"secondary"}
-                            href={"/admin/category"}
-                            name={"category"}
-                          />
-                        </chakra.li>
-                        <chakra.li mx={"3"}>
-                          <NavLink
-                            leftIcon={<Category />}
-                            fontWeight={"normal"}
-                            variant={"secondary"}
-                            href={"/admin"}
-                            name={"ventas"}
-                          />
-                        </chakra.li>
-                      </>
-                    )}
-                    <chakra.li mx={"3"} onClick={handleObservator}>
-                      <NavLink
-                        leftIcon={<ShopAll />}
-                        fontWeight={"normal"}
-                        variant={"secondary"}
-                        href={"/search"}
-                        name={"Shop All"}
-                      />
-                    </chakra.li>
-                    <chakra.li mx={"3"} onClick={handleObservator}>
-                      <NavLink
-                        leftIcon={<ShopAll />}
-                        fontWeight={"normal"}
-                        variant={"secondary"}
-                        href={"/blog"}
-                        name={"Blog"}
+                        name={t.major.mA}
                       />
                     </chakra.li>
                     <chakra.li mx={"3"} onClick={handleObservator}>
@@ -204,7 +160,59 @@ export const DrawerNavbar = ({
                         href={"/user"}
                         fontWeight={"normal"}
                         variant={"secondary"}
-                        name={"Editar Perfil"}
+                        name={t.major.mD}
+                      />
+                    </chakra.li>
+                    <chakra.li mx={"3"} onClick={handleObservator}>
+                      <NavLink
+                        leftIcon={<ListEspera />}
+                        fontWeight={"normal"}
+                        variant={"secondary"}
+                        href={"/blog"}
+                        name={t.major.mE}
+                      />
+                    </chakra.li>
+
+                    {a?.rol === "owner" && (
+                      <>
+                        <chakra.li mx={"3"}>
+                          <NavLink
+                            leftIcon={<Category />}
+                            fontWeight={"normal"}
+                            variant={"secondary"}
+                            href={"/admin/category"}
+                            name={t.major.mF}
+                          />
+                        </chakra.li>
+                        <chakra.li mx={"3"}>
+                          <NavLink
+                            leftIcon={<VentasClient />}
+                            fontWeight={"normal"}
+                            variant={"secondary"}
+                            href={"/admin"}
+                            name={t.major.mH}
+                          />
+                        </chakra.li>
+                      </>
+                    )}
+
+                    <chakra.li mx={"3"}>
+                      <NavLink
+                        leftIcon={<Product />}
+                        fontWeight={"normal"}
+                        variant={"secondary"}
+                        href={`/product/[uid]`}
+                        as={`/product/${a?.uid}`}
+                        name={t.major.mG}
+                      />
+                    </chakra.li>
+                    <chakra.li mx={"3"} onClick={handleObservator}>
+                      <NavLink
+                        leftIcon={<ShopAll />}
+                        fontWeight={"normal"}
+                        variant={"secondary"}
+                        href={"/search"}
+                        name={t.major.mI}
                       />
                     </chakra.li>
                     <chakra.li mx={"3"} onClick={handleObservator}>
@@ -214,20 +222,29 @@ export const DrawerNavbar = ({
                         leftIcon={<Logout />}
                         onClick={handleLogout}
                       >
-                        Logout
+                        {t.Logout}
                       </Button>
                     </chakra.li>
                     <chakra.li mx={"3"} onClick={handleObservator}>
-                      <HStack w={"full"} alignItems={"stretch"}>
+                      <HStack w={"full"} alignItems={"center"}>
                         <Box w={6} h={6} as={Global} />
 
                         <Heading textTransform={"uppercase"} size="sm">
                           Idioma
                         </Heading>
 
-                        <Select placeholder="English" size="sx" fontSize={"sm"}>
-                          <option value="option1">Español</option>
-                        </Select>
+                        {locales.map((lo, i) => (
+                          <chakra.li key={i} sx={{ listStyle: "none" }}>
+                            <NavLink
+                              variant={"primary"}
+                              href={asPath}
+                              locale={lo}
+                              name={lo}
+                              px={0}
+                              w={0}
+                            />
+                          </chakra.li>
+                        ))}
                       </HStack>
                     </chakra.li>
                   </Stack>

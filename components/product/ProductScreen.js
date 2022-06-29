@@ -32,6 +32,8 @@ import {
 import Breakpoints from "../../helpers/Breakpoints";
 
 const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
+  // useSelector
+  const { t } = useSelector(({ translate }) => translate);
   // Breakpoints
   const { full, bordes } = Breakpoints();
   // selector
@@ -82,37 +84,37 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
             <VStack spacing={1}>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  Nombre:
+                  {t.Name}:
                 </Heading>
                 <Text size={"sm"}>{na}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  Descripción:
+                  {t.Description}:
                 </Heading>
                 <Text size={"sm"}>{ds}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  Precio:
+                  {t.Price}:
                 </Heading>
                 <Text size={"sm"}>${pr}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  Cantidad:
+                  {t.Quantity}:
                 </Heading>
                 <Text size={"sm"}>N°{cn}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  Porcentaje:
+                  {t.Percentage}:
                 </Heading>
                 <Text size={"sm"}>%{pj}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  Categoria:
+                  {t.major.mF}:
                 </Heading>
                 <Text size={"sm"}>
                   {list.map((item) => item.id === ct && item.na)}
@@ -120,7 +122,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  Tipo:
+                  {t.Guy}:
                 </Heading>
                 <Text size={"sm"}>{ps}</Text>
               </HStack>
@@ -143,7 +145,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
                   onClick={handleDetails}
                 >
                   <ExternalLinkIcon w={3} h={3} />
-                  <Text>Detalles</Text>
+                  <Text>{t.details}</Text>
                 </HStack>
               </MenuItem>
 
@@ -156,7 +158,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
                   onClick={handleEdit}
                 >
                   <EditIcon w={3} h={3} />
-                  <Text>Editar</Text>
+                  <Text>{t.edit}</Text>
                 </HStack>
               </MenuItem>
 
@@ -169,7 +171,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
                   onClick={handleDelete}
                 >
                   <DeleteIcon w={3} h={3} />
-                  <Text>Eliminar</Text>
+                  <Text>{t.delete}</Text>
                 </HStack>
               </MenuItem>
             </MenuList>

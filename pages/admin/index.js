@@ -24,6 +24,8 @@ const Sale = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
   // useSelector
+  const { t } = useSelector(({ translate }) => translate);
+  // useSelector
   const { history = [] } = useSelector(({ checkout }) => checkout);
   // Breakpoints
   const { bordes, full, content5 } = Breakpoints();
@@ -40,41 +42,28 @@ const Sale = ({ data }) => {
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>
             <Heading w={full} as="h2" size="lg" fontWeight="semibold">
-              Historial de ventas
+              {t.historySale.sA}
             </Heading>
-            <Stack w={full} flexDirection={content5} spacing={0}>
-              <Box w={full} mx={2}>
-                <VStack p={3} spacing={5} border={bordes}>
-                  <VStack w={full} py={5}>
-                    <Heading
-                      w={full}
-                      size={"md"}
-                      textTransform={"uppercase"}
-                      px={2}
-                      fontWeight={"black"}
-                      mb={10}
-                    >
-                      Lista de ventas
-                    </Heading>
+            <VStack w={full} p={5} border={bordes}>
+              <Heading
+                w={full}
+                size={"md"}
+                textTransform={"uppercase"}
+                px={2}
+                fontWeight={"black"}
+                mb={10}
+              >
+                {!!history[0] ? t.historySale.sB : t.historySale.sC}
+              </Heading>
 
-                    {history.map((item, key) => (
-                      <SaleScreen item={item} key={key} />
-                    ))}
-                  </VStack>
+              {history.map((item, key) => (
+                <SaleScreenAll item={item} key={key} />
+              ))}
+            </VStack>
 
-                  <Box mt={5} w={"full"}>
-                    <Heading display={"inline"} size={"sm"}>
-                      Nota:
-                    </Heading>{" "}
-                    <Text display={"inline"}>
-                      La información se encuentra en el <b>botton verificar</b>{" "}
-                      solo asi, podras notificar del pago correcto tanto al
-                      cliente y al vendedor.
-                    </Text>
-                  </Box>
-                </VStack>
-              </Box>
-            </Stack>
+            <Text display={"inline"} w={full}>
+              {t.admin.aA}
+            </Text>
           </VStack>
         </Stack>
 

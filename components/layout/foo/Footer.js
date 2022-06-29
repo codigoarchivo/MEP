@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+import { useRouter } from "next/router";
 
 import Image from "next/image";
+
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   Box,
@@ -14,14 +18,15 @@ import {
   Link,
   List,
   ListItem,
-  Select,
   Stack,
   Text,
   VStack,
+  chakra,
 } from "@chakra-ui/react";
 
 import ModeColor from "../../../helpers/ModeColor";
 import Breakpoints from "../../../helpers/Breakpoints";
+
 import NavLink from "../../../utils/Navlink";
 
 import {
@@ -34,7 +39,17 @@ import MenuHistory from "../../../utils/MenuHistory";
 
 import MenuCategoria from "../../../utils/MenuCategoria";
 
+import { listTraslate } from "../../../actions/translate";
+
 const Footer = () => {
+  // useSelector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+  // useSelector
+  const { t } = useSelector(({ translate }) => translate);
+  // useDispatch
+  const dispatch = useDispatch();
+  // useRouter
+  const { locale, locales, asPath } = useRouter();
   // Breakpoints
   const {
     repeat2,
@@ -45,16 +60,21 @@ const Footer = () => {
     points9,
     points10,
     points11,
-    points12,
     points14,
     content1,
     content2,
     content3,
-    porcent2,
     bordes,
   } = Breakpoints();
   // mode Color
   const { bg2 } = ModeColor();
+  // translate
+  const data = `/translations/${locale}/global.json`;
+  useEffect(() => {
+    fetch(data)
+      .then((res) => res.json())
+      .then((t) => dispatch(listTraslate(t)));
+  }, [dispatch, data]);
 
   return (
     <Container maxW={"full"} px={4} mt={20} pb={4}>
@@ -79,8 +99,12 @@ const Footer = () => {
                 height={110}
               />
             </Box>
-            <Text fontSize={"sm"} color={"brand.600"}>
-              © {new Date().getFullYear()} All rights reserved
+            <Text
+              fontSize={"sm"}
+              color={"brand.600"}
+              textTransform={"capitalize"}
+            >
+              © {new Date().getFullYear()} {t.footer.fA}
             </Text>
             <List display="flex" alignItems={"center"}>
               <ListItem mr={3}>
@@ -153,13 +177,13 @@ const Footer = () => {
                 size={"md"}
                 textTransform={"uppercase"}
               >
-                Información
+                {t.footer.fB}
               </Heading>
               <ListItem>
                 <Text color={"brand.600"}>Tel +1 9735108452</Text>
               </ListItem>
               <ListItem>
-                <Text color={"brand.600"}> Location New Jersey, USA</Text>
+                <Text color={"brand.600"}> {t.footer.fC}</Text>
               </ListItem>
             </List>
             <List px={points14} py={5} w="full" spacing={1}>
@@ -171,7 +195,7 @@ const Footer = () => {
                   px={0}
                   variant={"secondary"}
                   href={"/"}
-                  name={"Home"}
+                  name={t.major.mA}
                 />
               </ListItem>
               <ListItem>
@@ -181,41 +205,8 @@ const Footer = () => {
                   size="sm"
                   px={0}
                   variant={"secondary"}
-                  href={"/user/selling"}
-                  name={"Quieres vender"}
-                />
-              </ListItem>
-              <ListItem>
-                <NavLink
-                  display={"inline"}
-                  color={"brand.600"}
-                  size="sm"
-                  px={0}
-                  variant={"secondary"}
-                  href={"/user/list"}
-                  name={"Mis ventas"}
-                />
-              </ListItem>
-              <ListItem>
-                <NavLink
-                  display={"inline"}
-                  color={"brand.600"}
-                  size="sm"
-                  px={0}
-                  variant={"secondary"}
-                  href={"/product"}
-                  name={"Productos"}
-                />
-              </ListItem>
-              <ListItem>
-                <NavLink
-                  display={"inline"}
-                  color={"brand.600"}
-                  size="sm"
-                  px={0}
-                  variant={"secondary"}
-                  href={"/search"}
-                  name={"Shop All"}
+                  href={"/user"}
+                  name={t.major.mD}
                 />
               </ListItem>
               <ListItem>
@@ -227,7 +218,56 @@ const Footer = () => {
                   variant={"secondary"}
                   href={"/blog"}
                   as={"/blog"}
-                  name={"Blog"}
+                  name={t.major.mE}
+                />
+              </ListItem>
+              <ListItem>
+                <NavLink
+                  display={"inline"}
+                  color={"brand.600"}
+                  size="sm"
+                  px={0}
+                  variant={"secondary"}
+                  href={"/product"}
+                  name={t.major.mG}
+                />
+              </ListItem>
+              {a?.rol === "owner" && (
+                <>
+                  <ListItem>
+                    <NavLink
+                      display={"inline"}
+                      color={"brand.600"}
+                      size="sm"
+                      px={0}
+                      variant={"secondary"}
+                      href={"/admin/category"}
+                      name={t.major.mF}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <NavLink
+                      display={"inline"}
+                      color={"brand.600"}
+                      size="sm"
+                      px={0}
+                      variant={"secondary"}
+                      href={"/admin"}
+                      name={t.major.mH}
+                    />
+                  </ListItem>
+                </>
+              )}
+
+              <ListItem>
+                <NavLink
+                  display={"inline"}
+                  color={"brand.600"}
+                  size="sm"
+                  px={0}
+                  variant={"secondary"}
+                  href={"/search"}
+                  name={t.major.mI}
                 />
               </ListItem>
             </List>
@@ -239,11 +279,20 @@ const Footer = () => {
         <GridItem colSpan={points10} columnGap={50}>
           <HStack justifyContent={content1} spacing={3} w={"full"}>
             <Heading color={"brand.600"} size="sm" mx={2}>
-              Idioma
+              {t.language}
             </Heading>{" "}
-            <Select mx={2} placeholder="English" size="xs" w={porcent2}>
-              <option value="option1">Español</option>
-            </Select>
+            {locales.map((lo, i) => (
+              <chakra.li key={i} sx={{ listStyle: "none" }}>
+                <NavLink
+                  variant={"primary"}
+                  href={asPath}
+                  locale={lo}
+                  name={lo}
+                  px={0}
+                  w={0}
+                />
+              </chakra.li>
+            ))}
           </HStack>
         </GridItem>
         <GridItem colSpan={points5}>
@@ -255,10 +304,15 @@ const Footer = () => {
             px={points14}
           >
             <ListItem mx={2}>
-              <MenuHistory color={"brand.600"} />
+              <MenuHistory
+                buys={t.major.mB}
+                sales={t.major.mC}
+                history={t.history}
+                color={"brand.600"}
+              />
             </ListItem>
             <ListItem mx={2}>
-              <MenuCategoria />
+              <MenuCategoria categories={t.categories} />
             </ListItem>
           </List>
         </GridItem>

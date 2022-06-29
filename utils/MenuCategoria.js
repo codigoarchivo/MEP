@@ -23,7 +23,7 @@ import Toast from "../helpers/Toast";
 
 import { serchProductList } from "../actions/product";
 
-const MenuCategoria = () => {
+const MenuCategoria = ({ categories }) => {
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -54,7 +54,7 @@ const MenuCategoria = () => {
         as={Button}
         textTransform={"uppercase"}
       >
-        Categorias
+        {categories}
       </MenuButton>
       <Portal>
         <MenuList display={displayOff2} minWidth={0} border={bordes}>
