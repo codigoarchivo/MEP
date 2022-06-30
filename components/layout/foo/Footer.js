@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { useRouter } from "next/router";
 
 import Image from "next/image";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Box,
@@ -36,18 +36,14 @@ import {
 } from "../../../helpers/IconNew";
 
 import MenuHistory from "../../../utils/MenuHistory";
-
 import MenuCategoria from "../../../utils/MenuCategoria";
 
-import { listTraslate } from "../../../actions/translate";
+import en from "../../../translations/en";
+import es from "../../../translations/es";
 
 const Footer = () => {
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
-  // useDispatch
-  const dispatch = useDispatch();
   // useRouter
   const { locale, locales, asPath } = useRouter();
   // Breakpoints
@@ -68,13 +64,6 @@ const Footer = () => {
   } = Breakpoints();
   // mode Color
   const { bg2 } = ModeColor();
-  // translate
-  const data = `/translations/${locale}/global.json`;
-  useEffect(() => {
-    fetch(data)
-      .then((res) => res.json())
-      .then((t) => dispatch(listTraslate(t)));
-  }, [dispatch, data]);
 
   return (
     <Container maxW={"full"} px={4} mt={20} pb={4}>
@@ -104,7 +93,8 @@ const Footer = () => {
               color={"brand.600"}
               textTransform={"capitalize"}
             >
-              © {new Date().getFullYear()} {t.footer.fA}
+              © {new Date().getFullYear()}{" "}
+              {locale === "en" ? en.footer.fA : es.footer.fA}
             </Text>
             <List display="flex" alignItems={"center"}>
               <ListItem mr={3}>
@@ -177,13 +167,16 @@ const Footer = () => {
                 size={"md"}
                 textTransform={"uppercase"}
               >
-                {t.footer.fB}
+                {locale === "en" ? en.footer.fB : es.footer.fB}
               </Heading>
               <ListItem>
                 <Text color={"brand.600"}>Tel +1 9735108452</Text>
               </ListItem>
               <ListItem>
-                <Text color={"brand.600"}> {t.footer.fC}</Text>
+                <Text color={"brand.600"}>
+                  {" "}
+                  {locale === "en" ? en.footer.fC : es.footer.fC}
+                </Text>
               </ListItem>
             </List>
             <List px={points14} py={5} w="full" spacing={1}>
@@ -195,7 +188,7 @@ const Footer = () => {
                   px={0}
                   variant={"secondary"}
                   href={"/"}
-                  name={t.major.mA}
+                  name={locale === "en" ? en.major.mA : es.major.mA}
                 />
               </ListItem>
               <ListItem>
@@ -206,7 +199,7 @@ const Footer = () => {
                   px={0}
                   variant={"secondary"}
                   href={"/user"}
-                  name={t.major.mD}
+                  name={locale === "en" ? en.major.mD : es.major.mD}
                 />
               </ListItem>
               <ListItem>
@@ -218,7 +211,7 @@ const Footer = () => {
                   variant={"secondary"}
                   href={"/blog"}
                   as={"/blog"}
-                  name={t.major.mE}
+                  name={locale === "en" ? en.major.mE : es.major.mE}
                 />
               </ListItem>
               <ListItem>
@@ -228,8 +221,9 @@ const Footer = () => {
                   size="sm"
                   px={0}
                   variant={"secondary"}
-                  href={"/product"}
-                  name={t.major.mG}
+                  href={`/product/[uid]`}
+                  as={`/product/${a?.uid}`}
+                  name={locale === "en" ? en.major.mG : es.major.mG}
                 />
               </ListItem>
               {a?.rol === "owner" && (
@@ -242,7 +236,7 @@ const Footer = () => {
                       px={0}
                       variant={"secondary"}
                       href={"/admin/category"}
-                      name={t.major.mF}
+                      name={locale === "en" ? en.major.mF : es.major.mF}
                     />
                   </ListItem>
                   <ListItem>
@@ -253,7 +247,7 @@ const Footer = () => {
                       px={0}
                       variant={"secondary"}
                       href={"/admin"}
-                      name={t.major.mH}
+                      name={locale === "en" ? en.major.mH : es.major.mH}
                     />
                   </ListItem>
                 </>
@@ -267,7 +261,7 @@ const Footer = () => {
                   px={0}
                   variant={"secondary"}
                   href={"/search"}
-                  name={t.major.mI}
+                  name={locale === "en" ? en.major.mI : es.major.mI}
                 />
               </ListItem>
             </List>
@@ -279,7 +273,7 @@ const Footer = () => {
         <GridItem colSpan={points10} columnGap={50}>
           <HStack justifyContent={content1} spacing={3} w={"full"}>
             <Heading color={"brand.600"} size="sm" mx={2}>
-              {t.language}
+              {locale === "en" ? en.language : es.language}
             </Heading>{" "}
             {locales.map((lo, i) => (
               <chakra.li key={i} sx={{ listStyle: "none" }}>
@@ -305,14 +299,16 @@ const Footer = () => {
           >
             <ListItem mx={2}>
               <MenuHistory
-                buys={t.major.mB}
-                sales={t.major.mC}
-                history={t.history}
+                buys={locale === "en" ? en.major.mB : es.major.mB}
+                sales={locale === "en" ? en.major.mC : es.major.mC}
+                history={locale === "en" ? en.history : es.history}
                 color={"brand.600"}
               />
             </ListItem>
             <ListItem mx={2}>
-              <MenuCategoria categories={t.categories} />
+              <MenuCategoria
+                categories={locale === "en" ? en.categories : es.categories}
+              />
             </ListItem>
           </List>
         </GridItem>

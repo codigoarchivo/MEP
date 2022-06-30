@@ -10,7 +10,6 @@ import { uiReducer } from "./uiReducer";
 import { checkoutReducer } from "./checkoutReducer";
 import { userReducer } from "./userReducer";
 import { processReducer } from "./processReducer";
-import { translateReducer } from "./translateReducer";
 
 const createNoopStorage = () => {
   return {
@@ -44,8 +43,7 @@ const rootReducer = combineReducers({
   process: processReducer,
   checkout: checkoutReducer,
   user: userReducer,
-  ui: uiReducer,
-  translate: translateReducer,
+  ui: uiReducer
 });
 
 export const persistingReducer = persistReducer(persistConfig, rootReducer);

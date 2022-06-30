@@ -63,6 +63,11 @@ import useFormAll from "../../../hooks/useFormAll";
 import Toast from "../../../helpers/Toast";
 import MenuCategoria from "../../../utils/MenuCategoria";
 
+import useTranslations from "../../../hooks/useTranslations";
+
+import en from "../../../translations/en";
+import es from "../../../translations/es";
+
 const initialStates = {
   q: "",
 };
@@ -71,8 +76,6 @@ const Navbar = () => {
   const dispatch = useDispatch();
   // dispatch
   const router = useRouter();
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector
@@ -125,6 +128,7 @@ const Navbar = () => {
   const handleSerchProductCart = (data) => {
     return Toast(data, "info", 5000);
   };
+
   return (
     <>
       {/* DrawerNavbar */}
@@ -185,7 +189,11 @@ const Navbar = () => {
                   />
                 </Box>
                 <Box as={"div"} display={displayOff2}>
-                  <MenuCategoria categories={t.categories} />
+                  <MenuCategoria
+                    categories={
+                      router.location === "en" ? en.categories : es.categories
+                    }
+                  />
                 </Box>
               </HStack>
             </GridItem>

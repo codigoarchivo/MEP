@@ -36,13 +36,14 @@ import Paginator from "../../utils/Paginator";
 
 import { dbProducts } from "../../data/dbProducts";
 
+import en from "../../translations/en";
+import es from "../../translations/es";
+
 const List = ({ product = [] }) => {
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // router
-  const router = useRouter();
+  const { push, locale } = useRouter();
   // breakpoints
   const { bordes } = Breakpoints();
   // selector
@@ -63,7 +64,7 @@ const List = ({ product = [] }) => {
   };
 
   const handleClient = () => {
-    router.push({
+    push({
       pathname: "/info/[uid]",
       query: { uid: a?.uid.toString() },
     });
@@ -76,7 +77,7 @@ const List = ({ product = [] }) => {
           {!list[0] && (
             <Center border={bordes} py={30}>
               <Heading size={"sm"} textTransform={"uppercase"}>
-                {t.product.pA}
+                {locale === "en" ? en.product.pA : es.product.pA}
               </Heading>
             </Center>
           )}
@@ -86,13 +87,15 @@ const List = ({ product = [] }) => {
               onClick={handleClient}
               variant={"primary"}
             >
-              {t.product.pB}
+              {locale === "en" ? en.product.pB : es.product.pB}
             </Button>{" "}
-            - {t.product.pC}
+            - {locale === "en" ? en.product.pC : es.product.pC}
           </Text>
           <TableContainer w={"full"} border={bordes}>
             <Table variant="striped" colorScheme="brand">
-              <TableCaption>{t.public}</TableCaption>
+              <TableCaption>
+                {locale === "en" ? en.public : es.public}
+              </TableCaption>
               <Thead>
                 <Tr>
                   <Th isNumeric></Th>
@@ -105,7 +108,7 @@ const List = ({ product = [] }) => {
                       textTransform="uppercase"
                       fontSize={"x-small"}
                     >
-                      {t.add}
+                      {locale === "en" ? en.add : es.add}
                     </Button>
                   </Th>
                 </Tr>

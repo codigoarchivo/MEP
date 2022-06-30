@@ -26,9 +26,10 @@ import BlogOutstanding from "./BlogOutstanding";
 import BlogCategory from "./BlogCategory";
 import BlogEnergy from "./BlogEnergy";
 
+import en from "../../translations/en";
+import es from "../../translations/es";
+
 const BlogScreen = ({ categories, buys, product }) => {
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
   // Breakpoints
   const { content5, bordes } = Breakpoints();
   // selector
@@ -36,10 +37,10 @@ const BlogScreen = ({ categories, buys, product }) => {
   // selector
   const { listData = [] } = useSelector(({ product }) => product);
   // router
-  const router = useRouter();
+  const { push, locale } = useRouter();
 
   if ([!!list[0] || !!listData[0]].includes(false)) {
-    router.push("/");
+    push("/");
   }
 
   const one = useMemo(
@@ -61,9 +62,15 @@ const BlogScreen = ({ categories, buys, product }) => {
     <Stack flexDirection={content5} spacing={0}>
       <VStack w={"80%"} boxShadow={"lg"} border={bordes} p={5} mr={5}>
         {/* BlogWork */}
-        <BlogWork />
+        <BlogWork
+          bA={locale === "en" ? en.blog.bA : es.blog.bA}
+          bB={locale === "en" ? en.blog.bB : es.blog.bB}
+          bC={locale === "en" ? en.blog.bC : es.blog.bC}
+          bD={locale === "en" ? en.blog.bD : es.blog.bD}
+          create={locale === "en" ? en.create : es.create}
+        />
         {/* bienvenida */}
-        <BlogEdgar />
+        <BlogEdgar data={locale === "en" ? en.blog.bE : es.blog.bE} />
         <Box maxW="7xl" mx={"auto"} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
           <chakra.h1
             textAlign={"center"}
@@ -71,21 +78,21 @@ const BlogScreen = ({ categories, buys, product }) => {
             py={10}
             fontWeight={"bold"}
           >
-            {t.blog.bF}
+            {locale === "en" ? en.blog.bF : es.blog.bF}
           </chakra.h1>
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
             <StatsCard
-              title={t.products}
+              title={locale === "en" ? en.products : es.products}
               stat={product || 0}
               icon={<Product h={12} w={12} />}
             />
             <StatsCard
-              title={t.sales}
+              title={locale === "en" ? en.sales : es.sales}
               stat={buys || 0}
               icon={<ShopAll h={12} w={12} />}
             />
             <StatsCard
-              title={t.categories}
+              title={locale === "en" ? en.categories : es.categories}
               stat={categories || 0}
               icon={<CategoryAll h={12} w={12} />}
             />
@@ -99,9 +106,9 @@ const BlogScreen = ({ categories, buys, product }) => {
               color={"brand.900"}
               fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }}
             >
-              {t.blog.bG}{" "}
+              {locale === "en" ? en.blog.bG : es.blog.bG}{" "}
               <Text as={"span"} color={"brand.500"}>
-                {t.blog.bH}
+                {locale === "en" ? en.blog.bH : es.blog.bH}
               </Text>
             </Heading>
           </Stack>
@@ -128,7 +135,11 @@ const BlogScreen = ({ categories, buys, product }) => {
                 date5: `${three.id}`,
               },
             ].map((item, index) => (
-              <BlogOutstanding key={index} {...item} nam={t.blog.bI} />
+              <BlogOutstanding
+                key={index}
+                {...item}
+                nam={locale === "en" ? en.blog.bI : es.blog.bI}
+              />
             ))}
           </Stack>
         </Stack>
@@ -141,9 +152,9 @@ const BlogScreen = ({ categories, buys, product }) => {
               color={"brand.900"}
               fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }}
             >
-              {t.blog.bJ}{" "}
+              {locale === "en" ? en.blog.bJ : es.blog.bJ}{" "}
               <Text as={"span"} color={"brand.500"}>
-                {t.blog.bK}
+                {locale === "en" ? en.blog.bK : es.blog.bK}
               </Text>
             </Heading>
           </Stack>
@@ -152,36 +163,36 @@ const BlogScreen = ({ categories, buys, product }) => {
             <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={10}>
               {[
                 {
-                  title: t.blog.bL,
-                  text: t.blog.bLL,
+                  title: locale === "en" ? en.blog.bL : es.blog.bL,
+                  text: locale === "en" ? en.blog.bLL : es.blog.bLL,
                 },
                 {
-                  title: t.blog.bM,
-                  text: t.blog.bN,
+                  title: locale === "en" ? en.blog.bM : es.blog.bM,
+                  text: locale === "en" ? en.blog.bN : es.blog.bN,
                 },
                 {
-                  title: t.blog.bÑ,
-                  text: t.blog.bO,
+                  title: locale === "en" ? en.blog.bÑ : es.blog.bÑ,
+                  text: locale === "en" ? en.blog.bO : es.blog.bO,
                 },
                 {
-                  title: t.blog.bP,
-                  text: t.blog.bR,
+                  title: locale === "en" ? en.blog.bP : es.blog.bP,
+                  text: locale === "en" ? en.blog.bR : es.blog.bR,
                 },
                 {
-                  title: t.blog.bS,
-                  text: t.blog.bT,
+                  title: locale === "en" ? en.blog.bS : es.blog.bS,
+                  text: locale === "en" ? en.blog.bT : es.blog.bT,
                 },
                 {
-                  title: t.blog.bU,
-                  text: t.blog.bV,
+                  title: locale === "en" ? en.blog.bU : es.blog.bU,
+                  text: locale === "en" ? en.blog.bV : es.blog.bV,
                 },
                 {
-                  title: t.blog.bW,
-                  text: t.blog.bX,
+                  title: locale === "en" ? en.blog.bW : es.blog.bW,
+                  text: locale === "en" ? en.blog.bX : es.blog.bX,
                 },
                 {
-                  title: t.blog.bY,
-                  text: t.blog.bZ,
+                  title: locale === "en" ? en.blog.bY : es.blog.bY,
+                  text: locale === "en" ? en.blog.bZ : es.blog.bZ,
                 },
               ].map((item, index) => (
                 <BlogCategory key={index} {...item} />
@@ -190,7 +201,16 @@ const BlogScreen = ({ categories, buys, product }) => {
           </Container>
         </Box>
         {/* BlogEnergy */}
-        <BlogEnergy />
+        <BlogEnergy
+          bAa={locale === "en" ? en.blog.bAa : es.blog.bAa}
+          bBb={locale === "en" ? en.blog.bBb : es.blog.bBb}
+          bCc={locale === "en" ? en.blog.bCc : es.blog.bCc}
+          bDd={locale === "en" ? en.blog.bDd : es.blog.bDd}
+          bEe={locale === "en" ? en.blog.bEe : es.blog.bEe}
+          bFf={locale === "en" ? en.blog.bFf : es.blog.bFf}
+          bHh={locale === "en" ? en.blog.bHh : es.blog.bHh}
+          bIi={locale === "en" ? en.blog.bIi : es.blog.bIi}
+        />
       </VStack>
       <Stack
         w={"20%"}
@@ -203,28 +223,28 @@ const BlogScreen = ({ categories, buys, product }) => {
       >
         {[
           {
-            title: t.blog.bJj,
-            text: t.blog.bKk,
+            title: locale === "en" ? en.blog.bJj : es.blog.bJj,
+            text: locale === "en" ? en.blog.bKk : es.blog.bKk,
           },
           {
-            title: t.blog.bLl,
-            text: t.blog.bMm,
+            title: locale === "en" ? en.blog.bLl : es.blog.bLl,
+            text: locale === "en" ? en.blog.bMm : es.blog.bMm,
           },
           {
-            title: t.blog.bNn,
-            text: t.blog.bOo,
+            title: locale === "en" ? en.blog.bNn : es.blog.bNn,
+            text: locale === "en" ? en.blog.bOo : es.blog.bOo,
           },
           {
-            title: t.blog.bPp,
-            text: t.blog.bQq,
+            title: locale === "en" ? en.blog.bPp : es.blog.bPp,
+            text: locale === "en" ? en.blog.bQq : es.blog.bQq,
           },
           {
-            title: t.blog.bRr,
-            text: t.blog.bSs,
+            title: locale === "en" ? en.blog.bRr : es.blog.bRr,
+            text: locale === "en" ? en.blog.bSs : es.blog.bSs,
           },
           {
-            title: t.blog.bTt,
-            text: t.blog.bUu,
+            title: locale === "en" ? en.blog.bTt : es.blog.bTt,
+            text: locale === "en" ? en.blog.bUu : es.blog.bUu,
           },
         ].map((item, key) => (
           <VStack key={key} w={"full"} p={1} display={"inline-block"}>

@@ -1,7 +1,5 @@
 import Image from "next/image";
 
-import { useSelector } from "react-redux";
-
 import {
   Box,
   Flex,
@@ -17,16 +15,13 @@ import { Arrow } from "../../helpers/IconNew";
 
 import NavLink from "../../utils/Navlink";
 
-const BlogWork = () => {
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
-
+const BlogWork = ({ bA, bB, bC, bD, create }) => {
   const myLoader = ({ src, width, quality }) => {
     return `https://firebasestorage.googleapis.com/v0/b/epmp-199ff.appspot.com/o/fotosStaticas%2${src}?alt=media&token=28a889c0-ef17-46c8-8880-98643a43b838&w=${width}&q=${
       quality || 75
     }`;
   };
-  
+
   return (
     <Stack w={"full"} minH={"50vh"} direction={{ base: "column", md: "row" }}>
       <Flex flex={1} align={"center"} justify={"center"}>
@@ -47,15 +42,15 @@ const BlogWork = () => {
                 zIndex: -1,
               }}
             >
-              {t.blog.bA}
+              {bA}
             </Text>
             <br />{" "}
             <Text color={"brand.500"} as={"span"}>
-              {t.blog.bB}
+              {bB}
             </Text>{" "}
           </Heading>
           <Text fontSize={{ base: "md", lg: "lg" }} color={"gray.500"}>
-            {t.blog.bC}
+            {bC}
           </Text>
           <Stack
             direction={{ base: "column", md: "row" }}
@@ -67,7 +62,7 @@ const BlogWork = () => {
               variant={"primary"}
               href={`/auth/create`}
               as={`/auth/create`}
-              name={t.create}
+              name={create}
             />
             <Box right={20}>
               <Icon
@@ -86,7 +81,7 @@ const BlogWork = () => {
                 top={"-10px"}
                 transform={"rotate(10deg)"}
               >
-                {t.blog.bD}
+                {bD}
               </Text>
             </Box>
           </Stack>

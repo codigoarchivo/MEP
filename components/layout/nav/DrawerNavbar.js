@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import PropTypes from "prop-types";
 
@@ -25,9 +25,7 @@ import Breakpoints from "../../../helpers/Breakpoints";
 
 import NavLink from "../../../utils/Navlink";
 
-import { useDispatch, useSelector } from "react-redux";
-
-import { serchProductList } from "../../../actions/product";
+import { useSelector } from "react-redux";
 
 import {
   Category,
@@ -41,7 +39,9 @@ import {
   VentasClient,
   ListEspera,
 } from "../../../helpers/IconNew";
-import { listTraslate } from "../../../actions/translate";
+
+import en from "../../../translations/en";
+import es from "../../../translations/es";
 
 export const DrawerNavbar = ({
   onClose,
@@ -57,31 +57,15 @@ export const DrawerNavbar = ({
   MoonIcon,
   handleLogout,
 }) => {
-  // useSelector
-  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
-  // Breakpoints
-  const { displayOn2, bordes } = Breakpoints();
-  // dispatch
-  const dispatch = useDispatch();
-  // selector
-  const { list = [] } = useSelector(({ category }) => category);
   // useRouter
   const { locale, locales, asPath } = useRouter();
+  // useSelector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+  // Breakpoints
+  const { displayOn2, bordes } = Breakpoints();
+  // selector
+  const { list = [] } = useSelector(({ category }) => category);
 
-  // translate
-  const data = `/translations/${locale}/global.json`;
-  useEffect(() => {
-    fetch(data)
-      .then((res) => res.json())
-      .then((t) => dispatch(listTraslate(t)));
-  }, [dispatch, data]);
-
-  // handleObservator
-  const handleObservator = () => {
-    dispatch(serchProductList(list));
-  };
   return (
     <>
       <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
@@ -115,7 +99,7 @@ export const DrawerNavbar = ({
                 textTransform={"uppercase"}
                 w={"full"}
               >
-                {t.categories}
+                {locale === "en" ? en.categories : es.categories}
               </MenuButton>
               <Portal>
                 <MenuList zIndex={"modal"} border={bordes}>
@@ -151,25 +135,25 @@ export const DrawerNavbar = ({
                         fontWeight={"normal"}
                         variant={"secondary"}
                         href={"/"}
-                        name={t.major.mA}
+                        name={locale === "en" ? en.major.mA : es.major.mA}
                       />
                     </chakra.li>
-                    <chakra.li mx={"3"} onClick={handleObservator}>
+                    <chakra.li mx={"3"}>
                       <NavLink
                         leftIcon={<Perfil />}
                         href={"/user"}
                         fontWeight={"normal"}
                         variant={"secondary"}
-                        name={t.major.mD}
+                        name={locale === "en" ? en.major.mD : es.major.mD}
                       />
                     </chakra.li>
-                    <chakra.li mx={"3"} onClick={handleObservator}>
+                    <chakra.li mx={"3"}>
                       <NavLink
                         leftIcon={<ListEspera />}
                         fontWeight={"normal"}
                         variant={"secondary"}
                         href={"/blog"}
-                        name={t.major.mE}
+                        name={locale === "en" ? en.major.mE : es.major.mE}
                       />
                     </chakra.li>
 
@@ -181,7 +165,7 @@ export const DrawerNavbar = ({
                             fontWeight={"normal"}
                             variant={"secondary"}
                             href={"/admin/category"}
-                            name={t.major.mF}
+                            name={locale === "en" ? en.major.mF : es.major.mF}
                           />
                         </chakra.li>
                         <chakra.li mx={"3"}>
@@ -190,7 +174,7 @@ export const DrawerNavbar = ({
                             fontWeight={"normal"}
                             variant={"secondary"}
                             href={"/admin"}
-                            name={t.major.mH}
+                            name={locale === "en" ? en.major.mH : es.major.mH}
                           />
                         </chakra.li>
                       </>
@@ -203,34 +187,34 @@ export const DrawerNavbar = ({
                         variant={"secondary"}
                         href={`/product/[uid]`}
                         as={`/product/${a?.uid}`}
-                        name={t.major.mG}
+                        name={locale === "en" ? en.major.mG : es.major.mG}
                       />
                     </chakra.li>
-                    <chakra.li mx={"3"} onClick={handleObservator}>
+                    <chakra.li mx={"3"}>
                       <NavLink
                         leftIcon={<ShopAll />}
                         fontWeight={"normal"}
                         variant={"secondary"}
                         href={"/search"}
-                        name={t.major.mI}
+                        name={locale === "en" ? en.major.mI : es.major.mI}
                       />
                     </chakra.li>
-                    <chakra.li mx={"3"} onClick={handleObservator}>
+                    <chakra.li mx={"3"}>
                       <Button
                         variant={"secondary"}
                         fontWeight={"normal"}
                         leftIcon={<Logout />}
                         onClick={handleLogout}
                       >
-                        {t.Logout}
+                        {locale === "en" ? en.logout : es.logout}
                       </Button>
                     </chakra.li>
-                    <chakra.li mx={"3"} onClick={handleObservator}>
+                    <chakra.li mx={"3"}>
                       <HStack w={"full"} alignItems={"center"}>
                         <Box w={6} h={6} as={Global} />
 
                         <Heading textTransform={"uppercase"} size="sm">
-                          Idioma
+                          {locale === "en" ? en.language : es.language}
                         </Heading>
 
                         {locales.map((lo, i) => (

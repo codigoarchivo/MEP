@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { Box, Divider, List, ListItem, chakra } from "@chakra-ui/react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
 
@@ -18,7 +18,8 @@ import {
   VentasClient,
 } from "../../../helpers/IconNew";
 
-import { listTraslate } from "../../../actions/translate";
+import en from "../../../translations/en";
+import es from "../../../translations/es";
 
 const PopoverUserNavbar = ({
   HStack,
@@ -28,22 +29,10 @@ const PopoverUserNavbar = ({
   Button,
   handleLogout,
 }) => {
-  // useDispatch
-  const dispatch = useDispatch();
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
   // useRouter
   const { locale, locales, asPath } = useRouter();
-
-  // translate
-  const data = `/translations/${locale}/global.json`;
-  useEffect(() => {
-    fetch(data)
-      .then((res) => res.json())
-      .then((t) => dispatch(listTraslate(t)));
-  }, [dispatch, data]);
 
   return (
     <>
@@ -54,7 +43,7 @@ const PopoverUserNavbar = ({
             fontWeight={"normal"}
             variant={"secondary"}
             href={"/"}
-            name={t.major.mA}
+            name={locale === "en" ? en.major.mA : es.major.mA}
           />
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
@@ -64,7 +53,7 @@ const PopoverUserNavbar = ({
             href={"/user"}
             fontWeight={"normal"}
             variant={"secondary"}
-            name={t.major.mD}
+            name={locale === "en" ? en.major.mD : es.major.mD}
           />
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
@@ -75,7 +64,7 @@ const PopoverUserNavbar = ({
             fontWeight={"normal"}
             variant={"secondary"}
             href={"/blog"}
-            name={t.major.mE}
+            name={locale === "en" ? en.major.mE : es.major.mE}
           />
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
@@ -87,7 +76,7 @@ const PopoverUserNavbar = ({
                 fontWeight={"normal"}
                 variant={"secondary"}
                 href={"/admin/category"}
-                name={t.major.mF}
+                name={locale === "en" ? en.major.mF : es.major.mF}
               />
             </ListItem>
             <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
@@ -97,7 +86,7 @@ const PopoverUserNavbar = ({
                 fontWeight={"normal"}
                 variant={"secondary"}
                 href={"/admin"}
-                name={t.major.mH}
+                name={locale === "en" ? en.major.mH : es.major.mH}
               />
             </ListItem>
             <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
@@ -110,7 +99,7 @@ const PopoverUserNavbar = ({
             variant={"secondary"}
             href={`/product/[uid]`}
             as={`/product/${a?.uid}`}
-            name={t.major.mG}
+            name={locale === "en" ? en.major.mG : es.major.mG}
           />
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
@@ -120,7 +109,7 @@ const PopoverUserNavbar = ({
             fontWeight={"normal"}
             variant={"secondary"}
             href={"/search"}
-            name={t.major.mI}
+            name={locale === "en" ? en.major.mI : es.major.mI}
           />
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
@@ -131,7 +120,7 @@ const PopoverUserNavbar = ({
             leftIcon={<Logout />}
             onClick={handleLogout}
           >
-            {t.Logout}
+            {locale === "en" ? en.logout : es.logout}
           </Button>
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
@@ -140,7 +129,7 @@ const PopoverUserNavbar = ({
             <Box w={6} h={6} as={Global} />
 
             <Heading textTransform={"uppercase"} size="sm">
-              {t.language}
+              {locale === "en" ? en.language : es.language}
             </Heading>
 
             {locales.map((lo, i) => (

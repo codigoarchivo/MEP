@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useRouter } from "next/router";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
@@ -14,11 +16,14 @@ import MenuHistory from "../../../utils/MenuHistory";
 
 import { dbProducts } from "../../../data/dbProducts";
 
+import en from "../../../translations/en";
+import es from "../../../translations/es";
+
 export const BreadcrumbNavbar = ({ NavLink, Box }) => {
+  // useRouter
+  const { locale } = useRouter();
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -31,6 +36,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
       dispatch(serchProductList(allData));
     }
   };
+
   return (
     <Box display={displayOff2} mb={5} borderTop={bordes}>
       <chakra.nav boxShadow="md">
@@ -48,32 +54,32 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
               variant={"secondary"}
               href={"/"}
               as={"/"}
-              name={t.major.mA}
+              name={locale === "en" ? en.major.mA : es.major.mA}
             />
           </chakra.li>
           <chakra.li mx={"3"}>
             <MenuHistory
-              buys={t.major.mB}
-              sales={t.major.mC}
-              history={t.history}
+              buys={locale === "en" ? en.major.mB : es.major.mB}
+              sales={locale === "en" ? en.major.mC : es.major.mC}
+              history={locale === "en" ? en.history : es.history}
             />
           </chakra.li>
-          <chakra.li mx={"3"} onClick={handleObservator}>
+          <chakra.li mx={"3"}>
             <NavLink
               href={"/user"}
               as={"/user"}
               fontWeight={"normal"}
               variant={"secondary"}
-              name={t.major.mD}
+              name={locale === "en" ? en.major.mD : es.major.mD}
             />
           </chakra.li>
-          <chakra.li mx={"3"} onClick={handleObservator}>
+          <chakra.li mx={"3"}>
             <NavLink
               href={"/blog"}
               as={"/blog"}
               fontWeight={"normal"}
               variant={"secondary"}
-              name={t.major.mE}
+              name={locale === "en" ? en.major.mE : es.major.mE}
             />
           </chakra.li>
           <chakra.li mx={"3"}>
@@ -82,7 +88,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
               variant={"secondary"}
               href={`/product/[uid]`}
               as={`/product/${a?.uid}`}
-              name={t.major.mG}
+              name={locale === "en" ? en.major.mG : es.major.mG}
             />
           </chakra.li>
 
@@ -94,7 +100,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
                   variant={"secondary"}
                   href={"/admin/category"}
                   as={"/admin/category"}
-                  name={t.major.mF}
+                  name={locale === "en" ? en.major.mF : es.major.mF}
                 />
               </chakra.li>
               <chakra.li mx={"3"}>
@@ -103,7 +109,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
                   variant={"secondary"}
                   href={"/admin"}
                   as={"/admin"}
-                  name={t.major.mH}
+                  name={locale === "en" ? en.major.mH : es.major.mH}
                 />
               </chakra.li>
             </>
@@ -114,7 +120,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
               variant={"secondary"}
               href={"/search"}
               as={"/search"}
-              name={t.major.mI}
+              name={locale === "en" ? en.major.mI : es.major.mI}
             />
           </chakra.li>
         </Stack>

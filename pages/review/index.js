@@ -20,6 +20,7 @@ const Review = ({ p = "", i = "", g = "" }) => {
 
   const match = useMemo(() => message.find((i) => String(i.id) === g), [
     message,
+    g,
   ]);
 
   // creamos  una nueva instancia con todos los valores rat menos el que vamos a modificar
@@ -32,7 +33,7 @@ const Review = ({ p = "", i = "", g = "" }) => {
           return el.push(i.rat);
         }
       }),
-    [message]
+    [message, g, el]
   );
   // console.log(el);
   return (

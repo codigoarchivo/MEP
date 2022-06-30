@@ -1,10 +1,6 @@
-import { useSelector } from "react-redux";
-
 import { Heading, Stack, Text } from "@chakra-ui/react";
 
-const BlogEdgar = () => {
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
+const BlogEdgar = ({ data }) => {
   return (
     <Stack pt={20} spacing={10}>
       <Heading
@@ -24,7 +20,7 @@ const BlogEdgar = () => {
         color={"gray.500"}
         style={{ textIndent: "2em" }}
       >
-        {t.blog.bE}
+        {data}
       </Text>
     </Stack>
   );

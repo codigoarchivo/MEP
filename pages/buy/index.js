@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 
+import { useRouter } from "next/router";
+
 import PropTypes from "prop-types";
 
 import { Box, Container, Heading, Stack, VStack } from "@chakra-ui/react";
@@ -20,11 +22,15 @@ import Paginator from "../../utils/Paginator";
 
 import Toast from "../../helpers/Toast";
 
-const Checkout = ({ product = [] }) => {
+import useTranslations from "../../hooks/useTranslations";
+import en from "../../translations/en";
+import es from "../../translations/es";
+
+const Buy = ({ product = [] }) => {
+  // useRouter
+  const { locale } = useRouter();
   // useSelector
   const { buy = [] } = useSelector(({ checkout }) => checkout);
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
   // useDispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -38,13 +44,16 @@ const Checkout = ({ product = [] }) => {
     }
   }, [dispatch, product]);
 
+  // useTranslations
+  const { t: h } = useTranslations(`/translations/${locale}/historyBuy.json`);
+
   return (
     <ShopLayout title={"buys"}>
       <Container maxW={"container.lg"}>
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>
             <Heading w={full} as="h2" size="lg" fontWeight="semibold">
-              {t.historyBuy.sA}
+              {locale === "en" ? en.historyBuy.sA : es.historyBuy.sA}
             </Heading>
             <VStack w={full} p={5} border={bordes}>
               <Heading
@@ -55,7 +64,13 @@ const Checkout = ({ product = [] }) => {
                 fontWeight={"black"}
                 mb={10}
               >
-                {!!buy[0] ? t.historyBuy.sB : t.historyBuy.sC}
+                {!!buy[0]
+                  ? locale === "en"
+                    ? en.historyBuy.sB
+                    : es.historyBuy.sB
+                  : locale === "en"
+                  ? en.historyBuy.sC
+                  : es.historyBuy.sC}
               </Heading>
               {buy.map((item, key) => (
                 <CheckoutScreenAll key={key} {...item} count={(key += 1)} />
@@ -85,7 +100,7 @@ const Checkout = ({ product = [] }) => {
   );
 };
 
-Checkout.propTypes = {
+Buy.propTypes = {
   product: PropTypes.array,
 };
 
@@ -116,4 +131,4 @@ export async function getServerSideProps({ query }) {
   }
 }
 
-export default Checkout;
+export default Buy;

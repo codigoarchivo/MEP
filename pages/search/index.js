@@ -32,13 +32,16 @@ import SerchCategory from "../../components/search/SerchCategory";
 
 import SerchRange from "../../components/search/SerchRange";
 
+import en from "../../translations/en";
+import es from "../../translations/es";
+
 const Search = ({ product }) => {
   // selector
   const { listSerch } = useSelector(({ product }) => product);
   // dispatch
   const dispatch = useDispatch();
   // useRouter
-  const { asPath, locale, locales } = useRouter();
+  const { locale } = useRouter();
 
   // useState
   useEffect(() => {
@@ -61,10 +64,15 @@ const Search = ({ product }) => {
               mr={2}
             >
               {/* Rangos de precio */}
-              <SerchRange product={listSerch} />
+              <SerchRange
+                product={listSerch}
+                dato={locale === "en" ? en.search.sA : es.search.sA}
+              />
 
               {/* Todas las categorias */}
-              <SerchCategory />
+              <SerchCategory
+                dato={locale === "en" ? en.search.sB : es.search.sB}
+              />
             </VStack>
             {!listSerch[0] ? (
               <Center py={"48"} w={"full"}>

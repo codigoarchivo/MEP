@@ -1,7 +1,5 @@
 import Image from "next/image";
 
-import { useSelector } from "react-redux";
-
 import {
   Box,
   Container,
@@ -13,14 +11,14 @@ import {
 
 import BlogTags from "./BlogTags";
 
-const BlogEnergy = () => {
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
+const BlogEnergy = ({ bAa, bBb, bCc, bDd, bEe, bFf, bHh, bIi }) => {
+
   const myLoader = ({ src, width, quality }) => {
     return `https://firebasestorage.googleapis.com/v0/b/epmp-199ff.appspot.com/o/fotosStaticas%2${src}?alt=media&token=28a889c0-ef17-46c8-8880-98643a43b838&w=${width}&q=${
       quality || 75
     }`;
   };
+  
   return (
     <Container maxW={"7xl"} p="12">
       <Heading
@@ -29,9 +27,9 @@ const BlogEnergy = () => {
         color={"brand.900"}
         fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }}
       >
-        {t.blog.bAa}{" "}
+        {bAa}{" "}
         <Text as={"span"} color={"brand.500"}>
-          {t.blog.bBb}
+          {bBb}
         </Text>
       </Heading>
       <Box
@@ -83,10 +81,10 @@ const BlogEnergy = () => {
           justifyContent="center"
           marginTop={{ base: "3", sm: "0" }}
         >
-          <BlogTags tags={[t.blog.bCc, t.blog.bDd, t.blog.bEe, t.blog.bFf]} />
+          <BlogTags tags={[bCc, bDd, bEe, bFf]} />
           <Heading marginTop="1">
             <Link textDecoration="none" _hover={{ textDecoration: "none" }}>
-              {t.blog.bHh}
+              {bHh}
             </Link>
           </Heading>
           <Text
@@ -95,7 +93,7 @@ const BlogEnergy = () => {
             color={useColorModeValue("gray.700", "gray.200")}
             fontSize="lg"
           >
-            {t.blog.bIi}
+            {bIi}
           </Text>
         </Box>
       </Box>

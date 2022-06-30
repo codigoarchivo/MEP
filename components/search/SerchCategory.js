@@ -23,7 +23,7 @@ import { dbProducts } from "../../data/dbProducts";
 
 import Toast from "../../helpers/Toast";
 
-const SerchCategory = () => {
+const SerchCategory = ({ dato }) => {
   // dispatch
   const dispatch = useDispatch();
   // selector
@@ -49,7 +49,7 @@ const SerchCategory = () => {
     <Stack w={"full"} spacing={"10"} border={bordes} rounded="md" p={5}>
       <Box borderBottom={bordes} py={5} w={"full"}>
         <Heading size={"md"} textTransform={"uppercase"} fontWeight={"normal"}>
-          Todas las categorias
+          {dato}
         </Heading>
       </Box>
       <List spacing={3}>

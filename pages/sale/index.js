@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 
+import { useRouter } from "next/router";
+
 import PropTypes from "prop-types";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -20,14 +22,18 @@ import { dbUserData } from "../../data/dbUser";
 
 import Paginator from "../../utils/Paginator";
 
+import useTranslations from "../../hooks/useTranslations";
+import en from "../../translations/en";
+import es from "../../translations/es";
+
 const Sale = ({ data }) => {
+  // useRouter
+  const { locale } = useRouter();
   // dispatch
   const dispatch = useDispatch();
   // useSelector
   const { sale = [] } = useSelector(({ checkout }) => checkout);
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
-  // // Breakpoints
+  // // Breakponts
   const { bordes, full, content5 } = Breakpoints();
 
   useEffect(() => {
@@ -38,13 +44,16 @@ const Sale = ({ data }) => {
     }
   }, [dispatch, data]);
 
+  // useTranslations
+  const { t: h } = useTranslations(`/translations/${locale}/historySale.json`);
+
   return (
     <ShopLayout title={"Sale"}>
       <Container maxW={"container.lg"}>
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>
             <Heading w={full} as="h2" size="lg" fontWeight="semibold">
-              {t.historySale.sA}
+              {locale === "en" ? en.historySale.sA : es.historySale.sA}
             </Heading>
             <VStack w={full} p={5} border={bordes}>
               <Heading
@@ -55,7 +64,13 @@ const Sale = ({ data }) => {
                 fontWeight={"black"}
                 mb={10}
               >
-                {!!sale[0] ? t.historySale.sB : t.historySale.sC}
+                {!!sale[0]
+                  ? locale === "en"
+                    ? en.historySale.sB
+                    : es.historySale.sB
+                  : locale === "en"
+                  ? en.historySale.sC
+                  : es.historySale.sC}
               </Heading>
 
               {sale.map((item, key) => (

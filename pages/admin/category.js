@@ -30,11 +30,14 @@ import ShopLayout from "../../components/layout/ShopLayout";
 import { activeCategory, categoryListConfig } from "../../actions/category";
 
 import Paginator from "../../utils/Paginator";
+
 import { dbCategory } from "../../data/dbCategory";
+
 import Toast from "../../helpers/Toast";
 
+import useTranslations from "../../hooks/useTranslations";
+
 const Category = ({ data = [] }) => {
-  const { t } = useSelector(({ translate }) => translate);
   // selector
   const { listData = [] } = useSelector(({ category }) => category);
   // selector
@@ -68,6 +71,15 @@ const Category = ({ data = [] }) => {
     });
   };
 
+  // useTranslations
+  const { t: c } = useTranslations(
+    `/translations/${router.locale}/category.json`
+  );
+  // useTranslations
+  const { t: i } = useTranslations(
+    `/translations/${router.locale}/individual.json`
+  );
+
   return (
     <ShopLayout title={"All Category"}>
       {a?.rol === "owner" ? (
@@ -76,16 +88,16 @@ const Category = ({ data = [] }) => {
             {!listData[0] && (
               <Center border={bordes} py={30}>
                 <Heading size={"sm"} textTransform={"uppercase"}>
-                  {t.category.cA}
+                  {c.cA}
                 </Heading>
               </Center>
             )}
             <TableContainer w={"full"} border={bordes}>
               <Table variant="striped" colorScheme="brand">
-                <TableCaption>{t.category.cB}</TableCaption>
+                <TableCaption>{c.cB}</TableCaption>
                 <Thead>
                   <Tr>
-                    <Th>{t.major.mF}</Th>
+                    <Th>{i.category}</Th>
                     <Th isNumeric textAlign={center}>
                       <Button
                         onClick={handleAdd}
@@ -95,7 +107,7 @@ const Category = ({ data = [] }) => {
                         textTransform="uppercase"
                         fontSize={"x-small"}
                       >
-                        {t.add}
+                        {i.add}
                       </Button>
                     </Th>
                   </Tr>

@@ -6,8 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Box, Container, Heading, Stack, Text, VStack } from "@chakra-ui/react";
 
-import SaleScreen from "../../components/sale/SaleScreen";
-
 import ShopLayout from "../../components/layout/ShopLayout";
 
 import Breakpoints from "../../helpers/Breakpoints";
@@ -20,11 +18,18 @@ import { dbUserData } from "../../data/dbUser";
 
 import Paginator from "../../utils/Paginator";
 
+import { useRouter } from "next/router";
+
+import SaleScreenAll from "../../components/sale/SaleScreenAll";
+
+import es from "../../translations/es";
+import en from "../../translations/en";
+
 const Sale = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
+  // useRouter
+  const { locale } = useRouter();
   // useSelector
   const { history = [] } = useSelector(({ checkout }) => checkout);
   // Breakpoints
@@ -42,7 +47,7 @@ const Sale = ({ data }) => {
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>
             <Heading w={full} as="h2" size="lg" fontWeight="semibold">
-              {t.historySale.sA}
+              {locale === "en" ? en.historySale.sA : es.historySale.sA}
             </Heading>
             <VStack w={full} p={5} border={bordes}>
               <Heading
@@ -53,7 +58,13 @@ const Sale = ({ data }) => {
                 fontWeight={"black"}
                 mb={10}
               >
-                {!!history[0] ? t.historySale.sB : t.historySale.sC}
+                {!!history[0]
+                  ? locale === "en"
+                    ? en.historySale.sB
+                    : es.historySale.sB
+                  : locale === "en"
+                  ? en.historySale.sC
+                  : es.historySale.sC}
               </Heading>
 
               {history.map((item, key) => (
@@ -62,7 +73,7 @@ const Sale = ({ data }) => {
             </VStack>
 
             <Text display={"inline"} w={full}>
-              {t.admin.aA}
+              {locale === "en" ? en.admin.aA : es.admin.aA}
             </Text>
           </VStack>
         </Stack>

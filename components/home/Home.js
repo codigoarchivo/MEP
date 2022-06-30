@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useRouter } from "next/router";
+
 import {
   Box,
   Button,
@@ -12,8 +14,6 @@ import {
 } from "@chakra-ui/react";
 
 import Image from "next/image";
-
-import { useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
 
@@ -29,20 +29,24 @@ import NavLink from "../../utils/Navlink";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
+import en from "../../translations/en";
+import es from "../../translations/es";
+
 const Home = ({ listData, latestCartSelect }) => {
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
+  // useRouter
+  const { locale } = useRouter();
   // Breakpoints
   const { content5, bordes } = Breakpoints();
+
   return (
     <Container maxW={"container.xs"}>
       <VStack spacing={0}>
         <Stack flexDirection={content5} alignItems={"center"}>
           <VStack w={"md"} border={bordes} p={5} boxShadow={"lg"}>
             <Heading w={"full"} size={"lg"}>
-              {t.home.hA}
+              {locale === "en" ? en.home.hA : es.home.hA}
             </Heading>
-            <Text>{t.home.hB}</Text>
+            <Text>{locale === "en" ? en.home.hB : es.home.hB}</Text>
           </VStack>
           <Box w={"lg"} h={500} position={"relative"}>
             <Image
@@ -67,12 +71,12 @@ const Home = ({ listData, latestCartSelect }) => {
             size={"sm"}
             color={"brand.500"}
           >
-            {t.home.hC}
+            {locale === "en" ? en.home.hC : es.home.hC}
           </Heading>
           <Box>
             <NavLink
               variant={"primary"}
-              name={t.create}
+              name={locale === "en" ? en.create : es.create}
               href={"/auth/create"}
             />
           </Box>
@@ -82,7 +86,7 @@ const Home = ({ listData, latestCartSelect }) => {
         {listData[0] ? (
           <Stack w={"full"} spacing={10}>
             <Heading w={"full"} size={"lg"}>
-              {t.home.hD}
+              {locale === "en" ? en.home.hD : es.home.hD}
             </Heading>
             <HStack>
               <Marquee>
@@ -99,7 +103,7 @@ const Home = ({ listData, latestCartSelect }) => {
         {!!latestCartSelect[2] ? (
           <Stack w={"full"} spacing={10}>
             <Heading w={"full"} size={"lg"}>
-              {t.home.hE}
+              {locale === "en" ? en.home.hE : es.home.hE}
             </Heading>
             <Box position={"relative"}>
               <Carousel

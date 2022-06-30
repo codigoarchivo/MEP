@@ -22,12 +22,11 @@ import Toast from "../../helpers/Toast";
 import { DeleteIcon, EditIcon, PlusSquareIcon } from "@chakra-ui/icons";
 
 import { dbProducts } from "../../data/dbProducts";
+import useTranslations from "../../hooks/useTranslations";
 
 const CategoryScrenn = ({ id, na }) => {
-  const { t } = useSelector(({ translate }) => translate);
   // router
   const router = useRouter();
-
   // edit
   const handleEdit = async () => {
     // evita que se pueda editar  un producto que posee una categoria
@@ -58,6 +57,10 @@ const CategoryScrenn = ({ id, na }) => {
     });
   };
 
+  // useTranslations
+  const { t: i } = useTranslations(
+    `/translations/${router.locale}/individual.json`
+  );
   return (
     <>
       <Tr>
@@ -79,7 +82,7 @@ const CategoryScrenn = ({ id, na }) => {
                   onClick={handleEdit}
                 >
                   <EditIcon w={3} h={3} />
-                  <Text>{t.edit}</Text>
+                  <Text>{i.edit}</Text>
                 </HStack>
               </MenuItem>
 
@@ -92,7 +95,7 @@ const CategoryScrenn = ({ id, na }) => {
                   onClick={handleDelete}
                 >
                   <DeleteIcon w={3} h={3} />
-                  <Text>{t.delete}</Text>
+                  <Text>{i.delete}</Text>
                 </HStack>
               </MenuItem>
             </MenuList>

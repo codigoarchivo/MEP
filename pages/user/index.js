@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { useRouter } from "next/router";
+
 import Image from "next/image";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +27,11 @@ import ShopLayout from "../../components/layout/ShopLayout";
 import useFormAll from "../../hooks/useFormAll";
 
 import { changeNameImgTel } from "../../actions/auth";
+
 import FileAll from "../../utils/FileAll";
+
+import en from "../../translations/en";
+import es from "../../translations/es";
 
 const initialStates = {
   uid: "",
@@ -34,8 +40,8 @@ const initialStates = {
 };
 
 const User = () => {
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
+  // useRouter
+  const { locale } = useRouter();
   // selector
   const { activeSelect: data } = useSelector(({ auth }) => auth);
   // dispatch
@@ -63,14 +69,14 @@ const User = () => {
       <Container maxW={"container.lg"} mt={10}>
         <VStack>
           <Heading textTransform={"capitalize"} size={"lg"} textAlign="center">
-            {t.user.uA}
+            {locale === "en" ? en.user.uA : es.user.uA}
           </Heading>
           <Heading
             size={"sm"}
             textTransform={"capitalize"}
             fontWeight={"normal"}
           >
-            {t.user.uB}
+            {locale === "en" ? en.user.uB : es.user.uB}
           </Heading>
         </VStack>
         <Stack
@@ -95,7 +101,9 @@ const User = () => {
               )}
             </Box>
             <VStack>
-              <Heading size={"md"}>{t.user.uC}</Heading>
+              <Heading size={"md"}>
+                {locale === "en" ? en.user.uC : es.user.uC}
+              </Heading>
               <Heading
                 textTransform={"capitalize"}
                 size={"sm"}
@@ -119,10 +127,10 @@ const User = () => {
                 w={"full"}
                 fontWeight={"normal"}
               >
-                {t.user.uB}
+                {locale === "en" ? en.user.uB : es.user.uB}
               </Heading>
               <FileAll
-                save={t.goup}
+                save={locale === "en" ? en.goup : es.goup}
                 setUrlImage={setUrlImage}
                 fileName={"fotosPerfil"}
               />
@@ -134,7 +142,7 @@ const User = () => {
                 placeholder="Escribe tu nombre"
               />
               <Button variant={"primary"} type="submit" ml={3}>
-                {t.save}
+                {locale === "en" ? en.save : es.save}
               </Button>
             </VStack>
           </chakra.form>

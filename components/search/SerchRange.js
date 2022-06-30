@@ -2,8 +2,6 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import PropTypes from "prop-types";
 
-import { useSelector } from "react-redux";
-
 import { useRouter } from "next/router";
 
 import {
@@ -24,11 +22,9 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-const SerchRange = ({ product }) => {
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
+const SerchRange = ({ product, dato }) => {
   // dispatch
-  const router = useRouter();
+  const { push } = useRouter();
   // Breakpoints
   const { bordes } = Breakpoints();
   // useRef
@@ -50,11 +46,8 @@ const SerchRange = ({ product }) => {
     Number.POSITIVE_INFINITY
   );
 
-  // console.log(max.current);
-  // console.log(min.current);
-
   const handleChangeEnd = (r) => {
-    router.push({
+    push({
       pathname: "/search",
       query: { r, q: "range" },
     });
@@ -64,7 +57,7 @@ const SerchRange = ({ product }) => {
     <Stack w={"full"} spacing={"10"} border={bordes} rounded="md" p={5}>
       <Box borderBottom={bordes} py={5} w={"full"}>
         <Heading size={"md"} textTransform={"uppercase"} fontWeight={"normal"}>
-          {t.search.sA}
+          {dato}
         </Heading>
       </Box>
 

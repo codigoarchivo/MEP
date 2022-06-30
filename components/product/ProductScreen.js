@@ -31,19 +31,20 @@ import {
 
 import Breakpoints from "../../helpers/Breakpoints";
 
+import en from "../../translations/en";
+import es from "../../translations/es";
+
 const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
-  // useSelector
-  const { t } = useSelector(({ translate }) => translate);
+  // router
+  const { push, locale } = useRouter();
   // Breakpoints
   const { full, bordes } = Breakpoints();
   // selector
   const { list = [] } = useSelector(({ category }) => category);
-  // router
-  const router = useRouter();
 
   // edit
   const handleEdit = () => {
-    router.push({
+    push({
       pathname: "/set/[id]",
       query: { id, set: "edit" },
     });
@@ -51,7 +52,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
 
   // delete
   const handleDelete = () => {
-    router.push({
+    push({
       pathname: "/set/[id]",
       query: { id, set: "delete" },
     });
@@ -59,7 +60,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
 
   // detalles
   const handleDetails = () => {
-    router.push({
+    push({
       pathname: "/set/[id]",
       query: { id: "1", set: "details", dt },
     });
@@ -84,37 +85,37 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
             <VStack spacing={1}>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {t.Name}:
+                  {locale === "en" ? en.name : es.name}:
                 </Heading>
                 <Text size={"sm"}>{na}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {t.Description}:
+                  {locale === "en" ? en.description : es.description}:
                 </Heading>
                 <Text size={"sm"}>{ds}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {t.Price}:
+                  {locale === "en" ? en.price : es.price}:
                 </Heading>
                 <Text size={"sm"}>${pr}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {t.Quantity}:
+                  {locale === "en" ? en.quantity : es.quantity}:
                 </Heading>
                 <Text size={"sm"}>N°{cn}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {t.Percentage}:
+                  {locale === "en" ? en.percentage : es.percentage}:
                 </Heading>
                 <Text size={"sm"}>%{pj}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {t.major.mF}:
+                  {locale === "en" ? en.major.mF : es.major.mF}:
                 </Heading>
                 <Text size={"sm"}>
                   {list.map((item) => item.id === ct && item.na)}
@@ -122,7 +123,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {t.Guy}:
+                  {locale === "en" ? en.guy : es.guy}:
                 </Heading>
                 <Text size={"sm"}>{ps}</Text>
               </HStack>
@@ -145,7 +146,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
                   onClick={handleDetails}
                 >
                   <ExternalLinkIcon w={3} h={3} />
-                  <Text>{t.details}</Text>
+                  <Text>{locale === "en" ? en.details : es.details}</Text>
                 </HStack>
               </MenuItem>
 
@@ -158,7 +159,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
                   onClick={handleEdit}
                 >
                   <EditIcon w={3} h={3} />
-                  <Text>{t.edit}</Text>
+                  <Text>{locale === "en" ? en.edit : es.edit}</Text>
                 </HStack>
               </MenuItem>
 
@@ -171,7 +172,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
                   onClick={handleDelete}
                 >
                   <DeleteIcon w={3} h={3} />
-                  <Text>{t.delete}</Text>
+                  <Text>{locale === "en" ? en.delete : es.delete}</Text>
                 </HStack>
               </MenuItem>
             </MenuList>

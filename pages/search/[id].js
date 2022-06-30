@@ -33,7 +33,7 @@ const Details = ({ product = {} }) => {
     } else {
       dispatch(messagesClear([]));
     }
-  }, [dispatch]);
+  }, [dispatch, query.id]);
 
   return (
     <ShopLayout title={"Details"}>
