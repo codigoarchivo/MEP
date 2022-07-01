@@ -1,10 +1,4 @@
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  setDoc,
-} from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
 import { dbProductEdit } from "../data/dbProducts";
 
 import { db } from "../firebase/config";
@@ -106,19 +100,19 @@ const productDelete = (id) => ({
   payload: id,
 });
 
-export const activeProductCart = (data) => {
+export const activeProductCart = (data, err, added, already) => {
   return async (dispatch, getState) => {
     const { activeCartSelect } = await getState().process;
     try {
       const match = await activeCartSelect.find((obj) => obj.id === data.id);
       if (match) {
-        return Toast("Product already added to cart", "error", 5000);
+        return Toast(already, "error", 5000);
       }
 
-      Toast("Producto agregado al carrito", "success", 5000);
+      Toast(added, "success", 5000);
       dispatch(cartProductActive(data));
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
@@ -173,31 +167,24 @@ const LatestSaveCart = (data) => ({
   payload: data,
 });
 
-export const saveSale = (data = []) => {
+export const saveSale = (data = [], del) => {
   return async (dispatch) => {
     try {
-      const newData = data.map(async (item) => {
+      data.map(async (item) => {
         // resta la cantidad del producto
         await dbProductEdit(item.product.id, "dbProEditOne", item.product.cnr);
         // agrega una compra
-        const { id } = await addDoc(collection(db, "buys"), {
+        await addDoc(collection(db, "buys"), {
           ...item,
         });
-
-        return {
-          ...item,
-          id: (item["id"] = id),
-        };
       });
-
-      dispatch(activeProduct(newData));
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(del, "error", 5000);
     }
   };
 };
 
-export const saveSaleRevert = (data) => {
+export const saveSaleRevert = (data, err) => {
   return (dispatch) => {
     try {
       data.map(async (item) => {
@@ -209,7 +196,7 @@ export const saveSaleRevert = (data) => {
         }
       });
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };

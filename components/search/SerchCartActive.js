@@ -2,6 +2,8 @@ import React from "react";
 
 import Image from "next/image";
 
+import PropTypes from "prop-types";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { DeleteIcon } from "@chakra-ui/icons";
@@ -14,7 +16,18 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import { deleteProductCart } from "../../actions/product";
 
-const SerchCartActive = ({ item, inc }) => {
+const SerchCartActive = ({
+  item,
+  inc,
+  name,
+  description,
+  price,
+  quantity,
+  category,
+  guy,
+  subtotal,
+  removed,
+}) => {
   // dispatch
   const dispatch = useDispatch();
   // selector
@@ -31,7 +44,7 @@ const SerchCartActive = ({ item, inc }) => {
     dispatch(deleteProductCart(id));
     // dcr
     active.map((item) => (inc.current -= item.pr));
-    Toast("Eliminado con exito", "error", 5000);
+    Toast(removed, "error", 5000);
   };
 
   return (
@@ -51,31 +64,31 @@ const SerchCartActive = ({ item, inc }) => {
           <VStack spacing={1}>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                Nombre:
+                {name}:
               </Heading>
               <Text size={"sm"}>{item.na}</Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                Descripción:
+                {description}:
               </Heading>
               <Text size={"sm"}>{item.ds}</Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                Precio:
+                {price}:
               </Heading>
               <Text size={"sm"}>${item.pr}</Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                Cantidad:
+                {quantity}:
               </Heading>
               <Text size={"sm"}>N°{item.cn}</Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                Categoria:
+                {category}:
               </Heading>
               <Text size={"sm"}>
                 {list.map(({ id, na }) => id === item.ct && na)}
@@ -83,13 +96,13 @@ const SerchCartActive = ({ item, inc }) => {
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                Tipo:
+                {guy}:
               </Heading>
               <Text size={"sm"}>{item.ps}</Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                Sub Total:
+                {subtotal}:
               </Heading>
               <Text size={"sm"}>${item.cn * item.pr}</Text>
             </HStack>
@@ -105,6 +118,19 @@ const SerchCartActive = ({ item, inc }) => {
       </Td>
     </Tr>
   );
+};
+
+SerchCartActive.propTypes = {
+  item: PropTypes.object.isRequired,
+  inc: PropTypes.object.isRequired,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired,
+  quantity: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  guy: PropTypes.string.isRequired,
+  subtotal: PropTypes.string.isRequired,
+  removed: PropTypes.string.isRequired,
 };
 
 export default SerchCartActive;

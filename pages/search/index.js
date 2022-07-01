@@ -52,7 +52,7 @@ const Search = ({ product }) => {
 
   return (
     <>
-      <ShopLayout title={"Shop All"}>
+      <ShopLayout title={locale === "en" ? en.search.sI : es.search.sI}>
         <Container maxW="container.xs">
           <Stack flexDirection={"row"}>
             <VStack
@@ -66,20 +66,18 @@ const Search = ({ product }) => {
               {/* Rangos de precio */}
               <SerchRange
                 product={listSerch}
-                dato={locale === "en" ? en.search.sA : es.search.sA}
+                data={locale === "en" ? en.search.sA : es.search.sA}
               />
 
               {/* Todas las categorias */}
               <SerchCategory
-                dato={locale === "en" ? en.search.sB : es.search.sB}
+                data={locale === "en" ? en.search.sB : es.search.sB}
               />
             </VStack>
             {!listSerch[0] ? (
               <Center py={"48"} w={"full"}>
                 <Heading size={"sm"} textTransform={"uppercase"}>
-                  {locale === "es"
-                    ? "Al parecer no encontramos lo que buscas, reinicia con boton Shop All"
-                    : "It seems that we did not find what you are looking for, restart with the Shop All button"}
+                  {locale === "en" ? en.search.sC : es.search.sC}
                 </Heading>
               </Center>
             ) : (
@@ -90,7 +88,15 @@ const Search = ({ product }) => {
                 justifyContent={"space-around"}
               >
                 {listSerch.map((data) => (
-                  <SerchScreen key={data.id} {...data} />
+                  <SerchScreen
+                    key={data.id}
+                    {...data}
+                    sD={locale === "en" ? en.search.sD : es.search.sD}
+                    sE={locale === "en" ? en.search.sE : es.search.sE}
+                    sF={locale === "en" ? en.search.sF : es.search.sF}
+                    sG={locale === "en" ? en.search.sG : es.search.sG}
+                    sH={locale === "en" ? en.search.sH : es.search.sH}
+                  />
                 ))}
               </Wrap>
             )}
@@ -138,7 +144,7 @@ export async function getServerSideProps({ query }) {
       },
     };
   } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
+    Toast(locale === "en" ? en.error : es.error, 5000);
     return {
       props: {},
     };

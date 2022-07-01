@@ -2,6 +2,8 @@ import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import PropTypes from "prop-types";
+
 import {
   Box,
   Heading,
@@ -23,7 +25,7 @@ import { dbProducts } from "../../data/dbProducts";
 
 import Toast from "../../helpers/Toast";
 
-const SerchCategory = ({ dato }) => {
+const SerchCategory = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
   // selector
@@ -49,7 +51,7 @@ const SerchCategory = ({ dato }) => {
     <Stack w={"full"} spacing={"10"} border={bordes} rounded="md" p={5}>
       <Box borderBottom={bordes} py={5} w={"full"}>
         <Heading size={"md"} textTransform={"uppercase"} fontWeight={"normal"}>
-          {dato}
+          {data}
         </Heading>
       </Box>
       <List spacing={3}>
@@ -71,5 +73,9 @@ const SerchCategory = ({ dato }) => {
     </Stack>
   );
 };
+
+serchProductList.propTypes = {
+  data: PropTypes.string
+}
 
 export default SerchCategory;

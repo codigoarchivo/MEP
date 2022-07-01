@@ -37,11 +37,14 @@ import { activeProductCart } from "../../actions/product";
 import SerchRat from "../../components/search/SerchRat";
 import SerchMessage from "../../components/search/SerchMessage";
 
+import en from "../../translations/en";
+import es from "../../translations/es";
+
 const SerchDetails = ({ message = [], product = {} }) => {
   // dispatch
   const dispatch = useDispatch();
   // router
-  const router = useRouter();
+  const { push, locale } = useRouter();
   // selector
   const { list = [] } = useSelector(({ category }) => category);
   // Breakpoints
@@ -79,25 +82,33 @@ const SerchDetails = ({ message = [], product = {} }) => {
 
   // select product in cart
   const handleSelect = () => {
+    const err = locale === "en" ? en.error : es.error;
+    const added = locale === "en" ? en.cart.cG : es.cart.cG;
+    const already = locale === "en" ? en.cart.cH : es.cart.cH;
     dispatch(
-      activeProductCart({
-        id,
-        na,
-        pr,
-        im,
-        ds,
-        ct,
-        dt,
-        ps,
-        pj,
-        uid,
-        cnr: cn,
-        cn: Number(input.value),
-        rat: message.map((item) => item.rat.toString()),
-      })
+      activeProductCart(
+        {
+          id,
+          na,
+          pr,
+          im,
+          ds,
+          ct,
+          dt,
+          ps,
+          pj,
+          uid,
+          cnr: cn,
+          cn: Number(input.value),
+          rat: message.map((item) => item.rat.toString()),
+        },
+        err,
+        added,
+        already
+      )
     );
 
-    router.push("/cart");
+    push("/cart");
   };
   return (
     <>
@@ -137,12 +148,20 @@ const SerchDetails = ({ message = [], product = {} }) => {
             </Box>
           </HStack>
           <Box w={full}>
-            <Badge colorScheme="green">En stock ({cn})</Badge>
+            <Badge colorScheme="green">Stock ({cn})</Badge>
           </Box>
-          <Heading w={full} as="h1" size="md" fontWeight={"normal"}>
-            Precio: ${pr * input.value}
-          </Heading>
-          <Text w={full}>{ds}</Text>
+          <HStack w={full}>
+            <Heading textTransform={"uppercase"} as="h3" size="sm">
+              {locale === "en" ? en.price : es.price}:
+            </Heading>
+            <Text>${pr * input.value}</Text>
+          </HStack>
+          <HStack w={full}>
+            <Heading textTransform={"uppercase"} as="h3" size="sm">
+              {locale === "en" ? en.search.sJ : es.search.sJ}:
+            </Heading>
+            <Text w={full}>{ds}</Text>
+          </HStack>
           <Box w={full}>
             <HStack maxW="180px">
               <Button fontSize={20} variant={"primary"} {...dec}>
@@ -156,7 +175,7 @@ const SerchDetails = ({ message = [], product = {} }) => {
           </Box>
           <HStack w={full}>
             <Heading textTransform={"uppercase"} as="h3" size="sm">
-              Categoria:
+              {locale === "en" ? en.major.mF : es.major.mF}:
             </Heading>
             <Text>{listCt[0]?.na}</Text>
           </HStack>
@@ -166,7 +185,7 @@ const SerchDetails = ({ message = [], product = {} }) => {
               variant={"primary"}
               onClick={handleSelect}
             >
-              Añadir
+              {locale === "en" ? en.add : es.add}
             </Button>
           </Box>
         </VStack>
@@ -175,8 +194,11 @@ const SerchDetails = ({ message = [], product = {} }) => {
       <HStack mt={10} border={bordes} p={5}>
         <Tabs w={"full"}>
           <TabList>
-            <Tab>Detalles</Tab>
-            <Tab>({message.length || 0}) reviews</Tab>
+            <Tab>{locale === "en" ? en.details : es.details}</Tab>
+            <Tab>
+              ({message.length || 0}){" "}
+              {locale === "en" ? en.reviews : es.reviews}
+            </Tab>
           </TabList>
 
           <TabPanels>
@@ -189,7 +211,9 @@ const SerchDetails = ({ message = [], product = {} }) => {
                   <HStack p={5} w={full}>
                     <Box p={5} textAlign={"center"}>
                       <Heading>{globalRanking || "0.0"}</Heading>
-                      <Text>Valoración total</Text>
+                      <Text>
+                        {locale === "en" ? en.search.sK : es.search.sK}
+                      </Text>
                     </Box>
                     <Stack w={full}>
                       {/* SerchRat */}

@@ -8,28 +8,29 @@ import { types } from "../type";
 
 const dA = process.env.NEXT_PUBLIC_ROL_A;
 
-export const validPago = (referencia = {}, idThree = "", uidSale = "") => {
+export const validPago = (referencia = {}, idThree = "", sal = "", err) => {
   return async () => {
     try {
-      if (dA.toString() === uidSale.toString()) {
+      if (dA.toString() === sal.toString()) {
         // principal
         await updateDoc(doc(db, "sales", idThree), {
           process: true,
-          uid: uidSale.toString(),
         });
 
         // buy
         await updateDoc(doc(db, "buys", idThree), {
           process: true,
+          sal: sal.toString(), // solo para la informacion para cliente
         });
       }
 
-      if (dA.toString() !== uidSale.toString()) {
+      if (dA.toString() !== sal.toString()) {
+        delete referencia.own; // elimina uid owner
         // sales
         await setDoc(doc(db, "sales"), {
           ...referencia,
           process: true,
-          uid: uidSale.toString(),
+          sal: sal.toString(), // para que el vendedor sepa cual venta realizo
         });
 
         // principal
@@ -40,15 +41,16 @@ export const validPago = (referencia = {}, idThree = "", uidSale = "") => {
         // buy
         await updateDoc(doc(db, "buys", idThree), {
           process: true,
+          sal: sal.toString(), // solo para la informacion para cliente
         });
       }
     } catch (error) {
-      Toast("Al parecer hay un errorqsqsq", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
 
-export const validShop = (sale, idThree) => {
+export const validShop = (sale, idThree, err) => {
   return async () => {
     try {
       // principal
@@ -56,7 +58,7 @@ export const validShop = (sale, idThree) => {
         ...sale,
       });
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, 5000);
     }
   };
 };

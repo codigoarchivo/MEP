@@ -35,7 +35,25 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import { ShopAll } from "../../helpers/IconNew";
 
-const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
+const SerchScreen = ({
+  id,
+  na,
+  cn,
+  ct,
+  ds,
+  dt,
+  im,
+  pr,
+  rat,
+  ps,
+  uid,
+  pj,
+  sD,
+  sE,
+  sF,
+  sG,
+  sH,
+}) => {
   // useRef
   const match = useRef();
   // useRef
@@ -85,7 +103,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
   const handleSelect = () => {
     // activeCartSelect
     if (match.current) {
-      return Toast("Producto ya esta en el carrito", "error", 5000);
+      return Toast(sD, "error", 5000);
     }
     // saveCartSelect
     if (matchValid.current) {
@@ -93,7 +111,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
         pathname: "/cart",
         query: { pid: id },
       });
-      return Toast("Producto ya esta en la lista deseo", "info", 5000);
+      return Toast(sE, "info", 5000);
     }
 
     // dispatch
@@ -111,12 +129,10 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
   const handleSave = () => {
     // activeCartSelect
     if (match.current) {
-      return Toast("Producto ya esta en el carrito", "error", 5000);
+      return Toast(sF, "error", 5000);
     } else {
       Toast(
-        matchValid.current
-          ? "Eliminado lista deseos"
-          : "Lista de deseos guardada",
+        matchValid.current ? sG : sH,
         matchValid.current ? "error" : "success",
         5000
       );
@@ -229,6 +245,11 @@ SerchScreen.propTypes = {
   ps: PropTypes.string.isRequired,
   uid: PropTypes.string.isRequired,
   pj: PropTypes.number.isRequired,
+  sD: PropTypes.string,
+  sE: PropTypes.string,
+  sF: PropTypes.string,
+  sG: PropTypes.string,
+  sH: PropTypes.string,
 };
 
 export default SerchScreen;

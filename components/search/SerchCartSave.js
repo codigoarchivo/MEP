@@ -4,6 +4,8 @@ import Image from "next/image";
 
 import { useDispatch } from "react-redux";
 
+import PropTypes from "prop-types";
+
 import {
   Button,
   Heading,
@@ -28,7 +30,21 @@ import Toast from "../../helpers/Toast";
 
 import { activeProductCart, deleteProductSave } from "../../actions/product";
 
-const SerchCartSave = ({ id, na, pr, cn, im }) => {
+const SerchCartSave = ({
+  id,
+  na,
+  pr,
+  cn,
+  im,
+  name,
+  price,
+  available,
+  add,
+  del,
+  err,
+  added,
+  already,
+}) => {
   // useDispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -58,7 +74,7 @@ const SerchCartSave = ({ id, na, pr, cn, im }) => {
 
   const handleSelect = () => {
     const cn = input.value;
-    dispatch(activeProductCart({ id, na, pr, im, cn }));
+    dispatch(activeProductCart({ id, na, pr, im, cn }, err, added, already));
     dispatch(deleteProductSave(id));
   };
 
@@ -74,17 +90,34 @@ const SerchCartSave = ({ id, na, pr, cn, im }) => {
               height={100}
             />
             <VStack>
-              <Heading w={full} size={"sm"}>
-                {na}
-              </Heading>
-
-              <Text w={full}>Precio: ${pr}</Text>
-              <Text w={full}>Disponible: {cn}</Text>
+              <HStack w={full}>
+                <Heading as="h3" size="sm">
+                  {name}:
+                </Heading>
+                <Text size={"sm"}>{na}</Text>
+              </HStack>
+              <HStack w={full}>
+                <Heading as="h3" size="sm">
+                  {price}:
+                </Heading>
+                <Text size={"sm"}>{pr}</Text>
+              </HStack>
+              <HStack w={full}>
+                <Heading as="h3" size="sm">
+                  {available}:
+                </Heading>
+                <Text size={"sm"}>{cn}</Text>
+              </HStack>
             </VStack>
           </HStack>
         </Td>
-        <Td display={"flex"} justifyContent={"center"} alignItems={"center"} h={"130px"}>
-          <HStack maxW="160px"  >
+        <Td
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          h={"130px"}
+        >
+          <HStack maxW="160px">
             <Button fontSize={20} variant={"primary"} {...dec}>
               -
             </Button>
@@ -110,7 +143,7 @@ const SerchCartSave = ({ id, na, pr, cn, im }) => {
                   onClick={handleSelect}
                 >
                   <SmallAddIcon w={3} h={3} />
-                  <Text>Agregar</Text>
+                  <Text>{add}</Text>
                 </HStack>
               </MenuItem>
 
@@ -123,7 +156,7 @@ const SerchCartSave = ({ id, na, pr, cn, im }) => {
                   onClick={handleDeleteSave}
                 >
                   <DeleteIcon w={3} h={3} />
-                  <Text>Eliminar</Text>
+                  <Text>{del}</Text>
                 </HStack>
               </MenuItem>
             </MenuList>
@@ -132,6 +165,22 @@ const SerchCartSave = ({ id, na, pr, cn, im }) => {
       </Tr>
     </>
   );
+};
+
+SerchCartSave.propTypes = {
+  id: PropTypes.string.isRequired,
+  na: PropTypes.string.isRequired,
+  pr: PropTypes.number.isRequired,
+  cn: PropTypes.number.isRequired,
+  im: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired,
+  available: PropTypes.string.isRequired,
+  add: PropTypes.string.isRequired,
+  del: PropTypes.string.isRequired,
+  err: PropTypes.string.isRequired,
+  added: PropTypes.string.isRequired,
+  already: PropTypes.string.isRequired,
 };
 
 export default SerchCartSave;

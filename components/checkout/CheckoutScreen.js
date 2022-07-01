@@ -2,8 +2,6 @@ import React, { useRef } from "react";
 
 import { useRouter } from "next/router";
 
-import { useSelector } from "react-redux";
-
 import PropTypes from "prop-types";
 
 import {
@@ -30,7 +28,18 @@ import { CartList } from "../../helpers/IconNew";
 
 import ContadorRegresivo from "../../helpers/ContadorRegresivo";
 
-const CheckoutScreen = ({ product = {}, process, id, lim, count }) => {
+const CheckoutScreen = ({
+  product = {},
+  process,
+  id,
+  lim,
+  count,
+  sE,
+  sF,
+  sH,
+  sI,
+  sJ,
+}) => {
   const router = useRouter();
   // useRef
   const initRef = useRef();
@@ -93,7 +102,7 @@ const CheckoutScreen = ({ product = {}, process, id, lim, count }) => {
             onClick={handleVerify}
             textTransform={"uppercase"}
           >
-            {`Resumén $${product.to}`}
+            {`${sE} $${product.to}`}
           </Button>
           <Button
             size={"xs"}
@@ -105,7 +114,7 @@ const CheckoutScreen = ({ product = {}, process, id, lim, count }) => {
             onClick={handleUser}
             textTransform={"uppercase"}
           >
-            Datos del vendedor
+            {sF}
           </Button>
 
           <Button
@@ -118,7 +127,7 @@ const CheckoutScreen = ({ product = {}, process, id, lim, count }) => {
             onClick={handleReview}
             textTransform={"uppercase"}
           >
-            Calificar
+            {sH}
           </Button>
         </HStack>
         <HStack spacing={"5"}>
@@ -127,38 +136,33 @@ const CheckoutScreen = ({ product = {}, process, id, lim, count }) => {
             placement="left"
             initialFocusRef={initRef}
           >
-            {({ isOpen }) => (
-              <>
-                <PopoverTrigger>
-                  <Tag
-                    size={"md"}
-                    variant="outline"
-                    cursor={process ? "not-allowed" : "pointer"}
-                    colorScheme={process ? "green" : "blue"}
-                  >
-                    <TagLabel textTransform={"uppercase"}>
-                      Click to {isOpen ? "close" : "open"}{" "}
-                      {process ? "Pagado" : "Proceso"}
-                    </TagLabel>
-                    <TagRightIcon as={process ? UnlockIcon : LockIcon} />
-                  </Tag>
-                </PopoverTrigger>
-                <Portal>
-                  <PopoverContent>
-                    <PopoverHeader>Tiempo para realizar pago</PopoverHeader>
-                    <PopoverCloseButton />
-                    <PopoverBody>
-                      <Text
-                        as={"span"}
-                        id={`resLimit_${count}`}
-                        fontWeight={"black"}
-                        fontSize={"small"}
-                      ></Text>
-                    </PopoverBody>
-                  </PopoverContent>
-                </Portal>
-              </>
-            )}
+            <>
+              <PopoverTrigger>
+                <Tag
+                  size={"md"}
+                  variant="outline"
+                  cursor={process ? "not-allowed" : "pointer"}
+                  colorScheme={process ? "green" : "blue"}
+                >
+                  <TagLabel textTransform={"uppercase"}>{sI}</TagLabel>
+                  <TagRightIcon as={process ? UnlockIcon : LockIcon} />
+                </Tag>
+              </PopoverTrigger>
+              <Portal>
+                <PopoverContent>
+                  <PopoverHeader>{sJ}</PopoverHeader>
+                  <PopoverCloseButton />
+                  <PopoverBody>
+                    <Text
+                      as={"span"}
+                      id={`resLimit_${count}`}
+                      fontWeight={"black"}
+                      fontSize={"small"}
+                    ></Text>
+                  </PopoverBody>
+                </PopoverContent>
+              </Portal>
+            </>
           </Popover>
         </HStack>
       </HStack>
@@ -172,6 +176,11 @@ CheckoutScreen.propTypes = {
   id: PropTypes.string,
   lim: PropTypes.object,
   count: PropTypes.number,
+  sE: PropTypes.string,
+  sF: PropTypes.string,
+  sH: PropTypes.string,
+  sI: PropTypes.string,
+  sJ: PropTypes.string,
 };
 
 export default CheckoutScreen;

@@ -22,7 +22,6 @@ import { dbUserData } from "../../data/dbUser";
 
 import Paginator from "../../utils/Paginator";
 
-import useTranslations from "../../hooks/useTranslations";
 import en from "../../translations/en";
 import es from "../../translations/es";
 
@@ -44,11 +43,8 @@ const Sale = ({ data }) => {
     }
   }, [dispatch, data]);
 
-  // useTranslations
-  const { t: h } = useTranslations(`/translations/${locale}/historySale.json`);
-
   return (
-    <ShopLayout title={"Sale"}>
+    <ShopLayout title={locale === "en" ? en.historySale.sA : es.historySale.sA}>
       <Container maxW={"container.lg"}>
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>

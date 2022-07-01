@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useRouter } from "next/router";
+import PropTypes from "prop-types";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -26,7 +26,17 @@ import { saveSale } from "../../actions/product";
 
 import Toast from "../../helpers/Toast";
 
-const SerchCartModal = ({ isOpen, onClose }) => {
+const SerchCartModal = ({
+  isOpen,
+  onClose,
+  cD,
+  cE,
+  cF,
+  close,
+  toBuy,
+  del,
+  push,
+}) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector
@@ -35,8 +45,6 @@ const SerchCartModal = ({ isOpen, onClose }) => {
   );
   // useDispatch
   const dispatch = useDispatch();
-  // useRouter
-  const router = useRouter();
 
   const OverlayOne = () => (
     <ModalOverlay
@@ -47,46 +55,44 @@ const SerchCartModal = ({ isOpen, onClose }) => {
 
   const [overlay, setOverlay] = useState(<OverlayOne />);
 
-  const data = active.map((item) => {
-    return {
-      // uid del comprador
-      uid: a.uid,
-      process: false,
-      close: false,
-      lim: addDays(Date.now(), 3),
-      cre: Date.now(),
-      product: {
-        // raiting del producto
-        rat: item.rat,
-        // id del producto
-        id: item.id,
-        // catidad del producto seleccionado
-        cn: item.cn,
-        // catidad restada producto en stock
-        cnr: item.cnr !== 1 ? item.cnr - item.cn : 1,
-        // nombre del producto
-        na: item.na,
-        // uid del  vendedor
-        uid: item.uid,
-        // precio del producto
-        pr: item.pr,
-        //  total del producto a comprar
-        to: item.cn * item.pr,
-        // porcentaje de ganancia para cliente
-        in: (item.pj * (item.cn * item.pr)) / 100,
-        // porcentaje de ganancia para vendedor
-        pj: item.cn * item.pr - (item.pj * (item.cn * item.pr)) / 100,
-      },
-    };
-  });
-
+  const data = active.map((item) => ({
+    // uid del comprador
+    buy: a.uid,
+    process: false,
+    close: false,
+    lim: addDays(Date.now(), 3),
+    cre: Date.now(),
+    product: {
+      // raiting del producto
+      rat: item.rat,
+      // id del producto
+      id: item.id,
+      // catidad del producto seleccionado
+      cn: item.cn,
+      // catidad restada producto en stock
+      cnr: item.cnr !== 1 ? item.cnr - item.cn : 1,
+      // nombre del producto
+      na: item.na,
+      // uid del  vendedor
+      uid: item.uid,
+      // precio del producto
+      pr: item.pr,
+      //  total del producto a comprar
+      to: item.cn * item.pr,
+      // porcentaje de ganancia para cliente
+      in: (item.pj * (item.cn * item.pr)) / 100,
+      // porcentaje de ganancia para vendedor
+      pj: item.cn * item.pr - (item.pj * (item.cn * item.pr)) / 100,
+    },
+  }));
+  
   const confirmSale = () => {
     // save cart
-    dispatch(saveSale(data));
+    dispatch(saveSale(data, del));
 
-    Toast("Gracias por su compra", "success", 5000);
+    Toast(cF, "success", 5000);
 
-    router.push(`/checkout?q=${a.uid}`);
+    push(`/checkout?q=${a.uid}`);
   };
 
   return (
@@ -102,17 +108,19 @@ const SerchCartModal = ({ isOpen, onClose }) => {
         <ModalContent>
           <ModalHeader>{a.displayName}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody textAlign={"center"}>
             <Box textAlign={"center"} mb={10} w={"full"}>
               <QuestionOutlineIcon w={20} h={20} color="red.500" />
             </Box>
 
-            <Heading size={"lg"}>No podrás revertir esto!,</Heading>
-            <Text>¿Estas seguro de que quieres realizar la compra?</Text>
+            <Heading size={"md"} mb={3}>
+              {cD},
+            </Heading>
+            <Text>{cE}</Text>
           </ModalBody>
           <ModalFooter>
             <Button variant={"secondary"} mr={3} onClick={onClose}>
-              Close
+              {close}
             </Button>
             <Button
               variant="primary"
@@ -121,13 +129,24 @@ const SerchCartModal = ({ isOpen, onClose }) => {
               }}
               mr={3}
             >
-              Comprar
+              {toBuy}
             </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
     </>
   );
+};
+
+SerchCartModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  cD: PropTypes.string.isRequired,
+  cE: PropTypes.string.isRequired,
+  cF: PropTypes.string.isRequired,
+  del: PropTypes.string.isRequired,
+  close: PropTypes.string.isRequired,
+  toBuy: PropTypes.string.isRequired,
 };
 
 export default SerchCartModal;

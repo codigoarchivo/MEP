@@ -17,25 +17,25 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-
-const Salemodal = ({ imgs }) => {
+const Salemodal = ({ imgs, receipt, close, picture }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
       <Button variant={"primary"} onClick={onOpen} m={4}>
-        Ver Recibo
+        {receipt}
       </Button>
 
       <Modal onClose={onClose} size={"xl"} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Recibo de Pago</ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton onClick={onClose} />
           <ModalBody>
             <Box w={"full"} position={"relative"} textAlign="center">
               <Image
-                src={imgs || "https://via.placeholder.com/1000.png?text=Imagen"}
+                src={
+                  imgs || `https://via.placeholder.com/1000.png?text=${picture}`
+                }
                 alt="Recibo pago"
                 width={1000}
                 height={1000}
@@ -45,7 +45,7 @@ const Salemodal = ({ imgs }) => {
             </Box>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
+            <Button onClick={onClose}>{close}</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -55,6 +55,9 @@ const Salemodal = ({ imgs }) => {
 
 Salemodal.propTypes = {
   imgs: PropTypes.string,
-}
+  receipt: PropTypes.string,
+  close: PropTypes.string,
+  picture: PropTypes.string,
+};
 
 export default Salemodal;

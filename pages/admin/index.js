@@ -42,39 +42,40 @@ const Sale = ({ data }) => {
   }, [dispatch, data]);
 
   return (
-    <ShopLayout title={"Sale"}>
+    <ShopLayout title={locale === "en" ? en.historySale.sB : es.historySale.sB}>
       <Container maxW={"container.lg"}>
-        <Stack flexDirection={"row"} my={20} w={full}>
-          <VStack w={full} spacing={5}>
-            <Heading w={full} as="h2" size="lg" fontWeight="semibold">
-              {locale === "en" ? en.historySale.sA : es.historySale.sA}
+        <Stack flexDirection={"column"} my={20} w={full}>
+          <Heading w={full} as="h2" size="lg" fontWeight="semibold">
+            {locale === "en" ? en.historySale.sA : es.historySale.sA}
+          </Heading>
+          <VStack w={full} p={5} border={bordes}>
+            <Heading
+              w={full}
+              size={"md"}
+              textTransform={"uppercase"}
+              px={2}
+              fontWeight={"black"}
+              mb={10}
+            >
+              {!!history[0]
+                ? locale === "en"
+                  ? en.historySale.sB
+                  : es.historySale.sB
+                : locale === "en"
+                ? en.historySale.sC
+                : es.historySale.sC}
             </Heading>
-            <VStack w={full} p={5} border={bordes}>
-              <Heading
-                w={full}
-                size={"md"}
-                textTransform={"uppercase"}
-                px={2}
-                fontWeight={"black"}
-                mb={10}
-              >
-                {!!history[0]
-                  ? locale === "en"
-                    ? en.historySale.sB
-                    : es.historySale.sB
-                  : locale === "en"
-                  ? en.historySale.sC
-                  : es.historySale.sC}
-              </Heading>
 
-              {history.map((item, key) => (
-                <SaleScreenAll item={item} key={key} />
-              ))}
-            </VStack>
-
-            <Text display={"inline"} w={full}>
-              {locale === "en" ? en.admin.aA : es.admin.aA}
-            </Text>
+            {history.map((item, key) => (
+              <SaleScreenAll
+                item={item}
+                key={key}
+                name={locale === "en" ? en.name : es.name}
+                mail={locale === "en" ? en.mail : es.mail}
+                creation={locale === "en" ? en.creation : es.creation}
+                verify={locale === "en" ? en.historyBuy.sE : es.historyBuy.sE}
+              />
+            ))}
           </VStack>
         </Stack>
 

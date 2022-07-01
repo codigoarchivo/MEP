@@ -63,8 +63,6 @@ import useFormAll from "../../../hooks/useFormAll";
 import Toast from "../../../helpers/Toast";
 import MenuCategoria from "../../../utils/MenuCategoria";
 
-import useTranslations from "../../../hooks/useTranslations";
-
 import en from "../../../translations/en";
 import es from "../../../translations/es";
 
@@ -191,7 +189,7 @@ const Navbar = () => {
                 <Box as={"div"} display={displayOff2}>
                   <MenuCategoria
                     categories={
-                      router.location === "en" ? en.categories : es.categories
+                      router.locale === "en" ? en.categories : es.categories
                     }
                   />
                 </Box>
@@ -234,7 +232,7 @@ const Navbar = () => {
                         variant={"secondary"}
                         onClick={() =>
                           handleSerchProductCart(
-                            "No puede Ingresar hasta que concretes o elimine la oferta en la lista"
+                            router.locale === "en" ? en.you : es.you
                           )
                         }
                       >

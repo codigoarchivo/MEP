@@ -1,5 +1,7 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import { Box, Heading, HStack, Progress } from "@chakra-ui/react";
 
 import { Rating } from "react-simple-star-rating";
@@ -20,6 +22,10 @@ const SerchRat = (item) => {
       </Box>
     </HStack>
   );
+};
+
+SerchRat.propTypes = {
+  item: PropTypes.object,
 };
 
 export default SerchRat;

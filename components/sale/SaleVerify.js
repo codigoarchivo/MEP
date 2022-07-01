@@ -26,6 +26,10 @@ import GridValueClose from "../../utils/GridValueClose";
 
 import Salemodal from "./Salemodal";
 
+import en from "../../translations/en";
+import es from "../../translations/es";
+import { CloseIcon } from "@chakra-ui/icons";
+
 const SaleVerify = ({
   bordes,
   // id del referencia product
@@ -35,19 +39,19 @@ const SaleVerify = ({
   // información del pago del producto
   referencia = {},
   // uid del comprador
-  uidBuy = "",
+  buy = "",
   // uid del vendedor
-  uidSale = "",
+  sal = "",
 }) => {
   // dispatch
-  const router = useRouter();
+  const { push, locale, back } = useRouter();
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
   const { full } = Breakpoints();
 
   const handleUser = (uid) => {
-    router.push({
+    push({
       pathname: "/info/[uid]",
       query: {
         uid,
@@ -59,38 +63,54 @@ const SaleVerify = ({
   const handleLiberate = (e) => {
     e.preventDefault();
 
-    if ([idThree, uidSale, uidBuy].includes("")) {
-      return Toast("Error al liberar el producto", "error", 5000);
+    if ([idThree, sal, buy].includes("")) {
+      return Toast(
+        locale === "en" ? en.historySale.sI : es.historySale.sI,
+        "error",
+        5000
+      );
     }
+    const err = locale === "en" ? en.error : es.error;
 
-    dispatch(validPago(referencia, idThree, uidSale));
+    dispatch(validPago(referencia, idThree, sal, err));
 
-    Toast("Pago ha sido verificado", "success", 5000);
+    Toast(
+      locale === "en" ? en.historySale.sH : es.historySale.sH,
+      "success",
+      5000
+    );
 
-    router.back();
+    back();
   };
 
   const closeVerify = () => {
-    router.back();
+    back();
   };
 
   return (
     <>
-      <HStack w={full} border={bordes} p={5} justifyContent={"flex-end"} mb={5}>
+      <HStack
+        spacing={5}
+        w={full}
+        border={bordes}
+        p={5}
+        justifyContent={"flex-end"}
+        mb={5}
+      >
+        <Salemodal
+          imgs={referencia?.imp}
+          receipt={locale === "en" ? en.receipt : es.receipt}
+          close={locale === "en" ? en.close : es.close}
+          picture={locale === "en" ? en.picture : es.picture}
+        />{" "}
         <Button
           variant={"primary"}
           textTransform={"capitalize"}
-          onClick={() => handleUser(uidSale)}
+          onClick={() => handleUser(buy)}
         >
-          Información del vendedor
+          {locale === "en" ? en.buyer : es.buyer}
         </Button>
-        <Button
-          variant={"primary"}
-          textTransform={"capitalize"}
-          onClick={() => handleUser(uidBuy)}
-        >
-          Información del comprador
-        </Button>
+        <CloseIcon onClick={() => closeVerify()} cursor="pointer" />
       </HStack>
       <Stack flexDirection={"row"} w={full} spacing={0} mb={20}>
         <VStack shadow={"lg"} w={full} mr={5} spacing={5} p={5} border={bordes}>
@@ -101,28 +121,28 @@ const SaleVerify = ({
             size={"sm"}
             p={2}
           >
-            Información del producto o servicio
+            {locale === "en" ? en.historySale.sE : es.historySale.sE}
           </Heading>
           <Stack w={full} spacing={5} p={5}>
             {[
               {
-                nombre: "Nombre",
+                nombre: locale === "en" ? en.name : es.name,
                 Valor: product?.na,
               },
               {
-                nombre: "Cantidad",
+                nombre: locale === "en" ? en.quantity : es.quantity,
                 Valor: "N°" + product?.cn,
               },
               {
-                nombre: "Precio",
+                nombre: locale === "en" ? en.price : es.price,
                 Valor: "$" + product?.in,
               },
               {
-                nombre: "Impuesto",
+                nombre: locale === "en" ? en.tax : es.tax,
                 Valor: "$" + product?.pj,
               },
               {
-                nombre: "Precio Unitario",
+                nombre: locale === "en" ? en.unit : es.unit,
                 Valor: "$" + product?.pr,
               },
               {
@@ -157,24 +177,24 @@ const SaleVerify = ({
             size={"sm"}
             p={2}
           >
-            Información de la transferencia
+            {locale === "en" ? en.historySale.sF : es.historySale.sF}
           </Heading>
           <Stack w={full} spacing={5} p={5}>
             {[
               {
-                nombre: "Nombre",
+                nombre: locale === "en" ? en.name : es.name,
                 Valor: referencia?.nap,
               },
               {
-                nombre: "Referencia",
+                nombre: locale === "en" ? en.reference : es.reference,
                 Valor: referencia?.ref,
               },
               {
-                nombre: "Fecha",
+                nombre: locale === "en" ? en.payment : es.payment,
                 Valor: referencia?.fer,
               },
               {
-                nombre: "Correo",
+                nombre: locale === "en" ? en.mail : es.mail,
                 Valor: referencia?.co,
               },
             ].map(({ nombre, Valor }, key) => (
@@ -190,8 +210,9 @@ const SaleVerify = ({
             ))}
           </Stack>{" "}
           <chakra.form onSubmit={handleLiberate} w={full}>
-            <Salemodal imgs={referencia?.imp} />{" "}
-            <GridValueClose onClose={closeVerify} set={"Liberar Proceso"} />
+            <GridValueClose
+              set={locale === "en" ? en.historySale.sG : es.historySale.sG}
+            />
           </chakra.form>
         </VStack>
       </Stack>
@@ -205,8 +226,8 @@ SaleVerify.propTypes = {
   product: PropTypes.object,
   sale: PropTypes.object,
   referencia: PropTypes.object,
-  uidBuy: PropTypes.string,
-  uidSale: PropTypes.string,
+  buy: PropTypes.string,
+  sal: PropTypes.string,
 };
 
 export default SaleVerify;

@@ -12,7 +12,7 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import NavLink from "../../utils/Navlink";
 
-const SaleScreenAll = ({ item = {} }) => {
+const SaleScreenAll = ({ item = {}, name, mail, creation, verify }) => {
   // Breakpoints
   const { bordes, full } = Breakpoints();
 
@@ -30,19 +30,19 @@ const SaleScreenAll = ({ item = {} }) => {
       <VStack w={full} spacing={0}>
         <HStack w={full}>
           <Heading as="h3" size="sm">
-            Nombre:
+            {name}:
           </Heading>
           <Text size={"sm"}>{nap}</Text>
         </HStack>
         <HStack w={full}>
           <Heading as="h3" size="sm">
-            Correo:
+            {mail}:
           </Heading>
           <Text size={"sm"}>{co}</Text>
         </HStack>
         <HStack w={full}>
-          <Heading as="h3" size="sm">
-            Fecha de creación:
+          <Heading as="h3" size="sm" textTransform={"capitalize"}>
+            {creation}:
           </Heading>
           <Text size={"sm"}>{fer}</Text>
         </HStack>
@@ -50,7 +50,12 @@ const SaleScreenAll = ({ item = {} }) => {
 
       <HStack spacing={"5"} w={full} py={1} justifyContent={"flex-end"}>
         {process === true ? (
-          <Tag textTransform={"uppercase"} size={"sm"} variant="solid" colorScheme="teal">
+          <Tag
+            textTransform={"uppercase"}
+            size={"sm"}
+            variant="solid"
+            colorScheme="teal"
+          >
             Pagado
           </Tag>
         ) : (
@@ -63,9 +68,9 @@ const SaleScreenAll = ({ item = {} }) => {
         )}
 
         <NavLink
-          href={`/sale/[id]`}
-          as={`/sale/${id}`}
-          name={`Verificar $${to}`}
+          href={`/admin/orders/[id]`}
+          as={`/admin/orders/${id}`}
+          name={`${verify} $${to}`}
           variant={"primary"}
           size={"xs"}
           textTransform={"uppercase"}
@@ -77,6 +82,10 @@ const SaleScreenAll = ({ item = {} }) => {
 
 SaleScreenAll.propTypes = {
   item: PropTypes.object,
+  name: PropTypes.string,
+  mail: PropTypes.string,
+  creation: PropTypes.string,
+  verify: PropTypes.string,
 };
 
 export default SaleScreenAll;

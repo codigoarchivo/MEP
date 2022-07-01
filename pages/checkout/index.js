@@ -33,13 +33,16 @@ import { dbUserData } from "../../data/dbUser";
 
 import Toast from "../../helpers/Toast";
 
+import es from "../../translations/es";
+import en from "../../translations/en";
+
 const Checkout = ({ product = [] }) => {
   // useSelector
   const { activeSelectCheck: check = [] } = useSelector(
     ({ process }) => process
   );
   // dispatch
-  const router = useRouter();
+  const { push, locale } = useRouter();
   // useDispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -67,19 +70,19 @@ const Checkout = ({ product = [] }) => {
         id: item.product.id,
       };
     });
+    const err = locale === "en" ? en.error : es.error;
+    dispatch(saveSaleRevert(data, err));
 
-    dispatch(saveSaleRevert(data));
-
-    router.push("/");
+    push("/");
   };
 
   return (
-    <ShopLayout title={"Tus Compras"}>
+    <ShopLayout title={locale === "en" ? en.historyBuy.sL : es.historyBuy.sL}>
       <Container maxW={"container.lg"}>
         <Stack flexDirection={"row"} my={20} w={full}>
           <VStack w={full} spacing={5}>
             <Heading w={full} as="h2" size="lg" fontWeight="semibold">
-              Envia el dinero a la cuenta de la tienda
+              {locale === "en" ? en.historyBuy.sD : es.historyBuy.sD}
             </Heading>
             <Stack w={full} flexDirection={content5} spacing={0}>
               <Box w={full} mx={2}>
@@ -94,11 +97,34 @@ const Checkout = ({ product = [] }) => {
                       mb={10}
                     >
                       {!!check[0]
-                        ? "Lista de compras"
-                        : "No hay compras asociadas"}
+                        ? locale === "en"
+                          ? en.historyBuy.sB
+                          : es.historyBuy.sB
+                        : locale === "en"
+                        ? en.historyBuy.sC
+                        : es.historyBuy.sC}
                     </Heading>
                     {check.map((item, key) => (
-                      <CheckoutScreen key={key} {...item} count={(key += 1)} />
+                      <CheckoutScreen
+                        key={key}
+                        {...item}
+                        count={(key += 1)}
+                        sE={
+                          locale === "en" ? en.historyBuy.sE : es.historyBuy.sE
+                        }
+                        sF={
+                          locale === "en" ? en.historyBuy.sF : es.historyBuy.sF
+                        }
+                        sH={
+                          locale === "en" ? en.historyBuy.sH : es.historyBuy.sH
+                        }
+                        sI={
+                          locale === "en" ? en.historyBuy.sI : es.historyBuy.sI
+                        }
+                        sJ={
+                          locale === "en" ? en.historyBuy.sJ : es.historyBuy.sJ
+                        }
+                      />
                     ))}
                   </VStack>
                   <Box w={"full"}>
@@ -106,25 +132,18 @@ const Checkout = ({ product = [] }) => {
                       <>
                         <HStack>
                           <Text>
-                            Si sientes que as cometido una equivocación puede
-                            revertir haciendo{" "}
+                            {locale === "en"
+                              ? en.historyBuy.sK
+                              : es.historyBuy.sK}{" "}
                           </Text>
                           <Button
                             onClick={handleRevert}
                             textTransform={"uppercase"}
                             variant={"secondary"}
                           >
-                            clik aqui
+                            {locale === "en" ? en.clickHere : es.clickHere}
                           </Button>{" "}
                         </HStack>
-                        <Box mt={5}>
-                          <Heading size={"sm"}>Nota:</Heading>{" "}
-                          <Text>
-                            La información se encuentra en el{" "}
-                            <b>botton resumen</b> solo asi, podras notificar del
-                            pago tanto al vendedor como a la tienda.
-                          </Text>
-                        </Box>
                       </>
                     )}
                   </Box>

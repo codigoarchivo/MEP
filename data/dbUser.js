@@ -49,10 +49,10 @@ export const dbUserData = async (id, dbU) => {
   let q = "";
   switch (dbU) {
     case "dbUserData":
-      q = query(collection(db, "sales"), where("uid", "==", id), limit(2));
+      q = query(collection(db, "sales"), where("own", "==", id), limit(2));
       break;
     case "dbUserTwo":
-      q = query(collection(db, "buys"), where("uid", "==", id), limit(2));
+      q = query(collection(db, "buys"), where("buy", "==", id), limit(2));
       break;
   }
 

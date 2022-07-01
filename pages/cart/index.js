@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useRouter } from "next/router";
+
 import { Container } from "@chakra-ui/react";
 
 import SerchCart from "../../components/search/SerchCart";
@@ -8,14 +10,25 @@ import { useSelector } from "react-redux";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
+import en from "../../translations/en";
+import es from "../../translations/es";
+
 const Cart = () => {
   // selector
-  const { activeCartSelect = [], saveCartSelect = [] } = useSelector(
-    ({ process }) => process
-  );
+  const {
+    activeCartSelect = [],
+    activeSelectCheck: check = [],
+    saveCartSelect = [],
+  } = useSelector(({ process }) => process);
+
+  const { locale, back } = useRouter();
+
+  if (check.length > 0) {
+    back();
+  }
 
   return (
-    <ShopLayout title={"Cart"}>
+    <ShopLayout title={locale === "en" ? en.cart.cA : es.cart.cA}>
       <Container maxW="container.xl">
         <SerchCart active={activeCartSelect} save={saveCartSelect} />
       </Container>

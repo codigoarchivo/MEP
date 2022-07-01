@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useRouter } from "next/router";
+
 import PropTypes from "prop-types";
 
 import { Container, Stack } from "@chakra-ui/react";
@@ -14,12 +16,17 @@ import Toast from "../../../helpers/Toast";
 
 import { dbUser, dbUserByUID } from "../../../data/dbUser";
 
+import es from "../../../translations/es";
+import en from "../../../translations/en";
+
 const Orders = ({ active }) => {
+  // useRouter
+  const { locale } = useRouter();
   // Breakpoints
   const { content5, bordes } = Breakpoints();
 
   return (
-    <ShopLayout title={"orders"}>
+    <ShopLayout title={locale === "en" ? en.historySale.sD : es.historySale.sD}>
       <Container maxW={"container.xl"} py={10}>
         <Stack flexDirection={"column"} spacing={0}>
           <SaleVerify
@@ -29,11 +36,11 @@ const Orders = ({ active }) => {
             // la referencia del pago
             referencia={active}
             // id del proceso de pago
-            idThree={active?.id}
+            idThree={active.id}
             // toda la informacion del comprador, que se guardo para que se refleje en el checkout
-            uidBuy={active?.uidBuy}
+            buy={active.buy}
             // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
-            uidSale={active?.product?.uid}
+            sal={active.product.uid}
           />
         </Stack>
       </Container>

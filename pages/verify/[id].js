@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useRouter } from "next/router";
+
 import PropTypes from "prop-types";
 
 import ShopLayout from "../../components/layout/ShopLayout";
@@ -14,12 +16,17 @@ import { dbUser, dbUserByUID } from "../../data/dbUser";
 
 import Toast from "../../helpers/Toast";
 
+import en from "../../translations/en";
+import es from "../../translations/es";
+
 const Verification = ({ data }) => {
+  // useRouter
+  const { locale } = useRouter();
   // Breakpoints
   const { content5, bordes, full } = Breakpoints();
 
   return (
-    <ShopLayout title={"Verificar"}>
+    <ShopLayout title={locale === "en" ? en.verify.vG : es.verify.vG}>
       <Container maxW={"container.xl"}>
         <Stack
           flexDirection={"column"}

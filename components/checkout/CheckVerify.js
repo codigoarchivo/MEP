@@ -45,6 +45,9 @@ import GridItemForm from "../../utils/GridItemForm";
 import GridItemFormTextarea from "../../utils/GridItemFormTextarea";
 import GridValueClose from "../../utils/GridValueClose";
 
+import en from "../../translations/en";
+import es from "../../translations/es";
+
 const initialStates = {
   nap: "",
   co: "",
@@ -67,7 +70,7 @@ const CheckVerify = ({
   // useState
   const [urlImage, setUrlImage] = useState("");
   // router
-  const router = useRouter();
+  const { push, locale, back } = useRouter();
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -86,10 +89,13 @@ const CheckVerify = ({
   // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
+    const err = locale === "en" ? en.error : es.error;
 
     if ([nap, co, imp, fer, dt, ref].includes("") || !urlImage) {
-      return Toast("Todos los campos son obligatorios", "error", 5000);
+      return Toast(locale === "en" ? en.fields : es.fields, "error", 5000);
     }
+
+    Toast(locale === "en" ? en.verify.vI : es.verify.vI, "success", 5000);
 
     const shop = {
       nap,
@@ -100,26 +106,28 @@ const CheckVerify = ({
       ref,
       // información del producto
       product,
+      // uid del principal
+      own: process.env.NEXT_PUBLIC_ROL_A,
       // uid del comprador que se encuentra logeado
-      uidBuy: a.uid,
+      buy: a.uid,
       // tiempo del recibo de la compra
       cre: Date.now(),
     };
-    dispatch(validShop(shop, idThree));
 
-    Toast("Enviada Verificación", "success", 5000);
-
+    dispatch(validShop(shop, idThree, err));
     reset();
+    back();
 
-    router.back();
+    values.imp = "";
+    values.imp = "";
   };
 
   const closeVerify = () => {
-    router.back();
+    back();
   };
 
   const handleClient = () => {
-    router.push({
+    push({
       pathname: "/info/[uid]",
       query: { uid: a.uid },
     });
@@ -128,12 +136,10 @@ const CheckVerify = ({
   return (
     <>
       <Text py={5}>
-        <b>!importante Información para que el vendedor</b> -{" "}
         <Button onClick={handleClient} variant={"primary"}>
-          ir
+          {locale === "en" ? en.verify.vA : es.verify.vA}
         </Button>{" "}
-        - Datos quedara guardado en la base de datos y se utilizara para futuras
-        compras.
+        - {locale === "en" ? en.verify.vB : es.verify.vB}
       </Text>
       <Stack flexDirection={"row"} w={full} spacing={0}>
         <VStack shadow={"lg"} w={full} mr={5} spacing={2} border={bordes} p={5}>
@@ -145,28 +151,28 @@ const CheckVerify = ({
             border={bordes}
             p={2}
           >
-            Información de Pago
+            {locale === "en" ? en.verify.vC : es.verify.vC}
           </Heading>
           <Stack w={full} spacing={3} border={bordes} p={5}>
             {[
               {
-                nombre: "Nombre",
+                nombre: locale === "en" ? en.name : es.name,
                 Valor: product?.na,
               },
               {
-                nombre: "Cantidad",
+                nombre: locale === "en" ? en.quantity : es.quantity,
                 Valor: "N°" + product?.cn,
               },
               {
-                nombre: "Precio",
+                nombre: locale === "en" ? en.price : es.price,
                 Valor: "$" + product?.in,
               },
               {
-                nombre: "Impuesto",
+                nombre: locale === "en" ? en.tax : es.tax,
                 Valor: "$" + product?.pj,
               },
               {
-                nombre: "Precio Unitario",
+                nombre: locale === "en" ? en.unit : es.unit,
                 Valor: "$" + product?.pr,
               },
               {
@@ -196,29 +202,43 @@ const CheckVerify = ({
             border={bordes}
             p={2}
           >
-            Información de la tienda
+            {locale === "en" ? en.verify.vH : es.verify.vH}
           </Heading>
           <Stack w={full} spacing={2} border={bordes} p={5}>
             <List spacing={3}>
               <ListItem>
                 <ListIcon as={CheckCircleIcon} color="brand.700" />
-                Transferencia por Zelle
+                {locale === "en" ? en.verify.vE : es.verify.vE}
               </ListItem>
             </List>
             <HStack justifyContent={"space-between"} borderBottom={bordes}>
-              <Heading size={"sm"}>Información:</Heading>
+              <Heading size={"sm"}>
+                {locale === "en" ? en.Information : es.Information}:
+              </Heading>
               <Link
                 href="https://www.bankofamerica.com/online-banking/mobile-and-online-banking-features/money-transfer/es/#:~:text=Seleccione%20Transferir%20%7C%20Enviar%20y%20despu%C3%A9s,transferencia%20y%20luego%20toque%20Continuar."
                 isExternal
               >
-                Ir a<ExternalLinkIcon mx="2px" />
+                <ExternalLinkIcon mx="2px" />
               </Link>
             </HStack>
             {[
-              { nombre: "Nombre", Valor: "Edgar Marcano" },
-              { nombre: "Correo", Valor: "ehms1975@gmail.com" },
-              { nombre: "Telefono", Valor: "+1 973 510 8452" },
-              { nombre: "N° Cuenta", Valor: "381053465609" },
+              {
+                nombre: locale === "en" ? en.name : es.name,
+                Valor: "Edgar Marcano",
+              },
+              {
+                nombre: locale === "en" ? en.mail : es.mail,
+                Valor: "ehms1975@gmail.com",
+              },
+              {
+                nombre: locale === "en" ? en.phone : es.phone,
+                Valor: "+1 973 510 8452",
+              },
+              {
+                nombre: locale === "en" ? en.accountNo : es.accountNo,
+                Valor: "381053465609",
+              },
             ].map(({ nombre, Valor }, key) => (
               <HStack
                 py={1}
@@ -259,7 +279,7 @@ const CheckVerify = ({
               p={2}
             >
               <HStack w={full} justifyContent={"space-between"}>
-                <Text>informacion pago para la tienda</Text>
+                <Text>{locale === "en" ? en.verify.vF : es.verify.vF}</Text>
                 <CloseButton onClick={closeVerify} />
               </HStack>
             </Heading>
@@ -267,28 +287,28 @@ const CheckVerify = ({
 
           {[
             {
-              nombre: "Nombre realizo pago",
+              nombre: locale === "en" ? en.person : es.person,
               Valor: nap,
               na: "nap",
-              place: "Nombre",
+              place: locale === "en" ? en.name : es.name,
               type: "text",
             },
             {
-              nombre: "Referencia",
+              nombre: locale === "en" ? en.reference : es.reference,
               Valor: ref,
               na: "ref",
-              place: "N° Referencia",
+              place: `N° ${locale === "en" ? en.reference : es.reference}`,
               type: "text",
             },
             {
-              nombre: "Correo",
+              nombre: locale === "en" ? en.mail : es.mail,
               Valor: co,
               na: "co",
-              place: "Correo",
+              place: locale === "en" ? en.mail : es.mail,
               type: "email",
             },
             {
-              nombre: "Fecha de pago",
+              nombre: locale === "en" ? en.payment : es.payment,
               Valor: fer,
               na: "fer",
               type: "date",
@@ -308,10 +328,10 @@ const CheckVerify = ({
           ))}
           <GridItemFormTextarea
             points={2}
-            name={"Informacion Adicional"}
+            name={locale === "en" ? en.additional : es.additional}
             na={"dt"}
             val={dt}
-            place={"Informacion Adicional"}
+            place={locale === "en" ? en.additional : es.additional}
             handle={handleInputChange}
             bg={bg}
             brand={brand}
@@ -323,19 +343,25 @@ const CheckVerify = ({
               fontWeight={"bold"}
               textTransform={"uppercase"}
             >
-              Imagen del recibo
+              {locale === "en" ? en.receipt : es.receipt}
             </FormLabel>
             <HStack justifyContent={"space-between"} w={"full"} spacing={20}>
               {/* save file */}
               <Box w={"full"}>
-                <FileAll setUrlImage={setUrlImage} fileName={"fotosRecibo"} />
+                <FileAll
+                  setUrlImage={setUrlImage}
+                  fileName={"fotosRecibo"}
+                  save={locale === "en" ? en.goup : es.goup}
+                />
               </Box>
 
               <Box w="full" h={"full"} position={"relative"}>
                 <Image
                   src={
                     urlImage ||
-                    "https://via.placeholder.com/100.png?text=Imagen"
+                    `https://via.placeholder.com/100.png?text=${
+                      locale === "en" ? en.picture : es.picture
+                    }`
                   }
                   alt="Recibo pago"
                   width={100}
@@ -347,7 +373,11 @@ const CheckVerify = ({
             </HStack>
           </GridItem>
 
-          <GridValueClose onClose={closeVerify} set={"Envio del recibo"} />
+          <GridValueClose
+            close={locale === "en" ? en.close : es.close}
+            onClose={closeVerify}
+            set={locale === "en" ? en.send : es.send}
+          />
         </Grid>
       </chakra.form>
     </>

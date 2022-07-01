@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useRef } from "react";
 
 import PropTypes from "prop-types";
 
@@ -22,7 +22,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-const SerchRange = ({ product, dato }) => {
+const SerchRange = ({ product, data }) => {
   // dispatch
   const { push } = useRouter();
   // Breakpoints
@@ -57,7 +57,7 @@ const SerchRange = ({ product, dato }) => {
     <Stack w={"full"} spacing={"10"} border={bordes} rounded="md" p={5}>
       <Box borderBottom={bordes} py={5} w={"full"}>
         <Heading size={"md"} textTransform={"uppercase"} fontWeight={"normal"}>
-          {dato}
+          {data}
         </Heading>
       </Box>
 
@@ -104,6 +104,7 @@ const SerchRange = ({ product, dato }) => {
 
 SerchRange.propTypes = {
   product: PropTypes.array,
+  data: PropTypes.string,
 };
 
 export default SerchRange;

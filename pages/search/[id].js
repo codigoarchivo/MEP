@@ -18,11 +18,14 @@ import { dbProducts, dbProductsById } from "../../data/dbProducts";
 
 import SerchDetails from "../../components/search/SerchDetails";
 
+import en from "../../translations/en";
+import es from "../../translations/es";
+
 const Details = ({ product = {} }) => {
   // useDispatch
   const dispatch = useDispatch();
   // useRouter
-  const { query } = useRouter();
+  const { query, locale } = useRouter();
   // useSelector
   const { message: m } = useSelector(({ checkout }) => checkout);
 
@@ -36,7 +39,7 @@ const Details = ({ product = {} }) => {
   }, [dispatch, query.id]);
 
   return (
-    <ShopLayout title={"Details"}>
+    <ShopLayout title={locale === "en" ? en.details : es.details}>
       <Container maxW="container.lg" py={10}>
         <SerchDetails message={m} product={product} />
       </Container>
