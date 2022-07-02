@@ -64,7 +64,7 @@ export const DrawerNavbar = ({
   // Breakpoints
   const { displayOn2, bordes } = Breakpoints();
   // selector
-  const { list = [] } = useSelector(({ category }) => category);
+  const { listData = [] } = useSelector(({ category }) => category);
 
   return (
     <>
@@ -103,7 +103,7 @@ export const DrawerNavbar = ({
               </MenuButton>
               <Portal>
                 <MenuList zIndex={"modal"} border={bordes}>
-                  {list.map(({ na, id }) => (
+                  {listData.map(({ na, id }) => (
                     <MenuItem key={id}>
                       <NavLink
                         href={{

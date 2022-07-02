@@ -54,6 +54,9 @@ export const dbUserData = async (id, dbU) => {
     case "dbUserTwo":
       q = query(collection(db, "buys"), where("buy", "==", id), limit(2));
       break;
+    case "dbUserThree":
+      q = query(collection(db, "sales"), where("sal", "==", id), limit(2));
+      break;
   }
 
   const { docs } = await getDocs(q);

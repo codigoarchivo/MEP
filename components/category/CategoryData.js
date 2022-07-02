@@ -21,57 +21,75 @@ import {
 
 import useFormAll from "../../hooks/useFormAll";
 
-import { dbCategory } from "../../data/dbCategory";
+import { dbCategoryValid } from "../../data/dbCategory";
 
 const initialStates = {
   na: "",
   pid: "",
 };
 
-const CategoryData = ({ router, category, pid }) => {
+const CategoryData = ({ back, category, pid, es, en, locale }) => {
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
   const { bordes } = Breakpoints();
 
   // useForm
-  const { values, handleInputChange } = useFormAll(initialStates, category);
+  const { values, handleInputChange } = useFormAll(
+    initialStates,
+    pid !== "Add" ? category : {}
+  );
   // validar
-  const { fiel, ErrorCatData } = Validator(values);
+  const { ErrorCatData } = Validator(values);
   // values
   const { na, id } = values;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    let err = locale === "en" ? en.error : es.error;
+
     if (ErrorCatData) {
-      return Toast(fiel, "error", 5000);
+      return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     }
 
     if (pid === "Add") {
-      const match = await dbCategory(na, "dbCatThree");
+      const { r } = await dbCategoryValid(na, "dbCatTwo");
 
-      if (match.length > 0) {
+      if (r > 0) {
         return Toast(
-          "Hay una categoria asociada al nombre quiere agregar",
+          locale === "en" ? en.category.cD : es.category.cD,
           "error",
           5000
         );
       }
 
-      dispatch(addCategory(na));
+      dispatch(addCategory(na, err));
     }
 
-    pid === "Edit" && dispatch(editCategory(na, id));
-    pid === "Delete" && dispatch(deleteCategory(id));
+    pid === "Edit" && dispatch(editCategory(na, id, err));
+    pid === "Delete" && dispatch(deleteCategory(id, err));
 
-    await router.push("/admin/category");
+    back("/admin/category");
   };
 
   // cerrar
   const onClose = () => {
-    router.push("/admin/category");
+    back("/admin/category");
   };
+
+  let info = "";
+  switch (pid) {
+    case "Add":
+      info = locale === "en" ? en.add : es.add;
+      break;
+    case "Edit":
+      info = locale === "en" ? en.edit : es.edit;
+      break;
+    case "Delete":
+      info = locale === "en" ? en.delete : es.delete;
+      break;
+  }
 
   return (
     <>
@@ -79,27 +97,33 @@ const CategoryData = ({ router, category, pid }) => {
         <HStack w={"full"}>
           <CloseButton size="md" onClick={onClose} />
           <Heading as="h1" size={"md"} textTransform={"uppercase"}>
-            {pid}
+            {info}
           </Heading>
         </HStack>
 
         {pid === "Delete" ? (
           <CategoryFormWord
-            pid={pid}
+            info={info}
             HStack={HStack}
             VStack={VStack}
             onClose={onClose}
             handleSubmit={handleSubmit}
+            locale={locale}
+            es={es}
+            en={en}
           />
         ) : (
           <CategoryForm
             na={na}
-            pid={pid}
+            info={info}
             HStack={HStack}
             VStack={VStack}
             onClose={onClose}
             handleSubmit={handleSubmit}
             handleInputChange={handleInputChange}
+            locale={locale}
+            es={es}
+            en={en}
           />
         )}
       </VStack>
@@ -108,7 +132,6 @@ const CategoryData = ({ router, category, pid }) => {
 };
 
 CategoryData.propTypes = {
-  router: PropTypes.object.isRequired,
   category: PropTypes.object.isRequired,
   pid: PropTypes.string.isRequired,
 };

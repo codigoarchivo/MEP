@@ -10,7 +10,7 @@ import ShopLayout from "../../../components/layout/ShopLayout";
 
 import Breakpoints from "../../../helpers/Breakpoints";
 
-import SaleVerify from "../../../components/sale/SaleVerify";
+import SaleVerifyAll from "../../../components/admin/SaleVerifyAll";
 
 import Toast from "../../../helpers/Toast";
 
@@ -20,8 +20,8 @@ import es from "../../../translations/es";
 import en from "../../../translations/en";
 
 const Orders = ({ active }) => {
-  // useRouter
-  const { locale } = useRouter();
+  // dispatch
+  const { push, locale, back } = useRouter();
   // Breakpoints
   const { content5, bordes } = Breakpoints();
 
@@ -29,18 +29,24 @@ const Orders = ({ active }) => {
     <ShopLayout title={locale === "en" ? en.historySale.sD : es.historySale.sD}>
       <Container maxW={"container.xl"} py={10}>
         <Stack flexDirection={"column"} spacing={0}>
-          <SaleVerify
+          <SaleVerifyAll
             bordes={bordes}
-            // toda la informacion del producto, que se guardo en el uid del comprador
-            product={active?.product}
-            // la referencia del pago
+            // toda la informacion del producto
+            product={active.product}
+            // toda la imformación en general
             referencia={active}
-            // id del proceso de pago
+            // id del proceso
             idThree={active.id}
-            // toda la informacion del comprador, que se guardo para que se refleje en el checkout
+            // uid del comprador
             buy={active.buy}
-            // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
+            // uid que esta producto se utiliza para comparar con el uid owner
             sal={active.product.uid}
+            
+            push={push}
+            locale={locale}
+            back={back}
+            es={es}
+            en={en}
           />
         </Stack>
       </Container>

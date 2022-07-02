@@ -29,12 +29,7 @@ import NavLink from "../../utils/Navlink";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
-import en from "../../translations/en";
-import es from "../../translations/es";
-
-const Home = ({ listData, latestCartSelect }) => {
-  // useRouter
-  const { locale } = useRouter();
+const Home = ({ listData, latestCartSelect, locale, es, en }) => {
   // Breakpoints
   const { content5, bordes } = Breakpoints();
 

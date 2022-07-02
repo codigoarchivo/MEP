@@ -25,23 +25,33 @@ const Details = ({ product = {} }) => {
   // useDispatch
   const dispatch = useDispatch();
   // useRouter
-  const { query, locale } = useRouter();
+  const { query, locale, push } = useRouter();
   // useSelector
   const { message: m } = useSelector(({ checkout }) => checkout);
 
-  useEffect(async () => {
-    const message = await dbProducts(query.id, "dbProThree");
-    if (message) {
-      dispatch(messagesList(message));
-    } else {
-      dispatch(messagesClear([]));
+  useEffect(() => {
+    async function fetchData() {
+      const message = await dbProducts(query.id, "dbProThree");
+      if (message) {
+        dispatch(messagesList(message));
+      } else {
+        dispatch(messagesList([]));
+      }
     }
+    fetchData();
   }, [dispatch, query.id]);
 
   return (
     <ShopLayout title={locale === "en" ? en.details : es.details}>
       <Container maxW="container.lg" py={10}>
-        <SerchDetails message={m} product={product} />
+        <SerchDetails
+          message={m}
+          product={product}
+          push={push}
+          locale={locale}
+          es={es}
+          en={en}
+        />
       </Container>
     </ShopLayout>
   );

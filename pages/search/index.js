@@ -41,12 +41,13 @@ const Search = ({ product }) => {
   // dispatch
   const dispatch = useDispatch();
   // useRouter
-  const { locale } = useRouter();
+  const { locale, push } = useRouter();
 
   // useState
   useEffect(() => {
+    const err = locale === "en" ? en.error : es.error;
     if (product) {
-      dispatch(serchProductList(product));
+      dispatch(serchProductList(product, err));
     }
   }, [dispatch, product]);
 
@@ -65,14 +66,15 @@ const Search = ({ product }) => {
             >
               {/* Rangos de precio */}
               <SerchRange
+                locale={locale}
+                en={en}
+                es={es}
+                push={push}
                 product={listSerch}
-                data={locale === "en" ? en.search.sA : es.search.sA}
               />
 
               {/* Todas las categorias */}
-              <SerchCategory
-                data={locale === "en" ? en.search.sB : es.search.sB}
-              />
+              <SerchCategory locale={locale} en={en} es={es} />
             </VStack>
             {!listSerch[0] ? (
               <Center py={"48"} w={"full"}>
@@ -91,11 +93,13 @@ const Search = ({ product }) => {
                   <SerchScreen
                     key={data.id}
                     {...data}
+                    push={push}
                     sD={locale === "en" ? en.search.sD : es.search.sD}
                     sE={locale === "en" ? en.search.sE : es.search.sE}
                     sF={locale === "en" ? en.search.sF : es.search.sF}
                     sG={locale === "en" ? en.search.sG : es.search.sG}
                     sH={locale === "en" ? en.search.sH : es.search.sH}
+                    err={locale === "en" ? en.error : es.error}
                   />
                 ))}
               </Wrap>

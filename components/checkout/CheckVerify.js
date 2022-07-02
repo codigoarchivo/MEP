@@ -45,9 +45,6 @@ import GridItemForm from "../../utils/GridItemForm";
 import GridItemFormTextarea from "../../utils/GridItemFormTextarea";
 import GridValueClose from "../../utils/GridValueClose";
 
-import en from "../../translations/en";
-import es from "../../translations/es";
-
 const initialStates = {
   nap: "",
   co: "",
@@ -64,13 +61,16 @@ const CheckVerify = ({
   idThree = "",
   // product
   product = {},
+  locale,
+  back,
+  push,
+  en,
+  es,
 }) => {
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useState
   const [urlImage, setUrlImage] = useState("");
-  // router
-  const { push, locale, back } = useRouter();
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints

@@ -1,5 +1,7 @@
 import React, { useMemo } from "react";
 
+import { useRouter } from "next/router";
+
 import { Container } from "@chakra-ui/react";
 
 import PropTypes from "prop-types";
@@ -12,7 +14,12 @@ import Toast from "../../helpers/Toast";
 
 import { useSelector } from "react-redux";
 
+import es from "../../translations/es";
+import en from "../../translations/en";
+
 const Review = ({ p = "", i = "", g = "" }) => {
+  // useRouter
+  const { locale, back, push } = useRouter();
   // useSelector
   const { message } = useSelector(({ checkout }) => checkout);
 
@@ -25,21 +32,27 @@ const Review = ({ p = "", i = "", g = "" }) => {
 
   // creamos  una nueva instancia con todos los valores rat menos el que vamos a modificar
   let el = [];
+  message.map((i) => {
+    if (String(i.id) !== g) {
+      el.push(i.rat);
+    }
+  });
 
-  useMemo(
-    () =>
-      message.map((i) => {
-        if (String(i.id) !== g) {
-          return el.push(i.rat);
-        }
-      }),
-    [message, g, el]
-  );
-  // console.log(el);
   return (
     <ShopLayout title={"Review"}>
       <Container maxW={"container.sm"}>
-        <ReviewScreen calculo={el} message={match} p={p} i={i} g={g} />
+        <ReviewScreen
+          calculo={el}
+          message={match}
+          p={p}
+          i={i}
+          g={g}
+          back={back}
+          locale={locale}
+          push={push}
+          es={es}
+          en={en}
+        />
       </Container>
     </ShopLayout>
   );

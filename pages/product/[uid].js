@@ -52,12 +52,13 @@ const List = ({ product = [] }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(listDataProduct(product));
+    const err = locale === "en" ? en.error : es.error;
+    dispatch(listDataProduct(product, err));
   }, [dispatch, product]);
 
   // add
   const handleAdd = () => {
-    router.push({
+    push({
       pathname: "/set/[id]",
       query: { id: "1", set: "add" },
     });
@@ -71,7 +72,7 @@ const List = ({ product = [] }) => {
   };
 
   return (
-    <ShopLayout title={"All Products"}>
+    <ShopLayout title={locale === "en" ? en.major.mG : es.major.mG}>
       <Container maxW={"container.lg"} my={10}>
         <Box p={5}>
           {!list[0] && (

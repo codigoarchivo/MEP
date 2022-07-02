@@ -11,17 +11,33 @@ import {
 
 import { db } from "../firebase/config";
 
+export const dbCategoryValid = async (id, dbC) => {
+  let q = "";
+  const pro = collection(db, "serchs");
+  const cat = collection(db, "categories");
+  switch (dbC) {
+    case "dbCatOne":
+      q = query(pro, where("ct", "==", id), limit(1));
+      break;
+    case "dbCatTwo":
+      q = query(cat, where("na", "==", id), limit(1));
+      break;
+  }
+  const r = await getDocs(q);
+  return {
+    r: r.size,
+  };
+};
+
 export const dbCategory = async (na = "", dbC = "") => {
   let q = "";
+
   switch (dbC) {
     case "dbCatOne":
       q = query(collection(db, "categories"), orderBy("na", "asc"));
       break;
     case "dbCatTwo":
       q = query(collection(db, "categories"), limit(25), orderBy("na", "asc"));
-      break;
-    case "dbCatThree":
-      q = query(collection(db, "categories"), where("na", "==", na), limit(1));
       break;
   }
 

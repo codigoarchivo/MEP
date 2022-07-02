@@ -2,8 +2,6 @@ import React, { useMemo } from "react";
 
 import PropTypes from "prop-types";
 
-import { useRouter } from "next/router";
-
 import { Rating } from "react-simple-star-rating";
 
 import Image from "next/image";
@@ -37,14 +35,9 @@ import { activeProductCart } from "../../actions/product";
 import SerchRat from "../../components/search/SerchRat";
 import SerchMessage from "../../components/search/SerchMessage";
 
-import en from "../../translations/en";
-import es from "../../translations/es";
-
-const SerchDetails = ({ message = [], product = {} }) => {
+const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
   // dispatch
   const dispatch = useDispatch();
-  // router
-  const { push, locale } = useRouter();
   // selector
   const { list = [] } = useSelector(({ category }) => category);
   // Breakpoints

@@ -2,8 +2,6 @@ import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import PropTypes from "prop-types";
-
 import {
   Box,
   Heading,
@@ -25,7 +23,7 @@ import { dbProducts } from "../../data/dbProducts";
 
 import Toast from "../../helpers/Toast";
 
-const SerchCategory = ({ data }) => {
+const SerchCategory = ({ locale, en, es }) => {
   // dispatch
   const dispatch = useDispatch();
   // selector
@@ -37,21 +35,17 @@ const SerchCategory = ({ data }) => {
     const newData = await dbProducts(id, "dbProSeven");
 
     if (newData.length === 0) {
-      return Toast(
-        "No hay resultados, reinicia con boton Shop All",
-        "info",
-        5000
-      );
+      return Toast(locale === "en" ? en.search.sC : es.search.sC, "info", 5000);
     }
-
-    dispatch(serchProductList(newData));
+    const err = locale === "en" ? en.error : es.error;
+    dispatch(serchProductList(newData, err));
   };
 
   return (
     <Stack w={"full"} spacing={"10"} border={bordes} rounded="md" p={5}>
       <Box borderBottom={bordes} py={5} w={"full"}>
         <Heading size={"md"} textTransform={"uppercase"} fontWeight={"normal"}>
-          {data}
+          {locale === "en" ? en.search.sB : es.search.sB}
         </Heading>
       </Box>
       <List spacing={3}>
@@ -73,9 +67,5 @@ const SerchCategory = ({ data }) => {
     </Stack>
   );
 };
-
-serchProductList.propTypes = {
-  data: PropTypes.string
-}
 
 export default SerchCategory;

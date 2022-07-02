@@ -45,6 +45,9 @@ const ProductForm = ({
   handleNumberInputCn,
   handleNumberInputPj,
   handleNumberInputPr,
+  locale,
+  es,
+  en,
 }) => {
   // mode Color
   const { bg, brand } = ModeColor();
@@ -65,14 +68,19 @@ const ProductForm = ({
             <HStack justifyContent="space-between" w="full">
               <Box w="full">
                 <FileAll
-                  //  save={locale === "en" ? en.goup : es.goup}
+                  save={locale === "en" ? en.goup : es.goup}
                   setUrlImage={setUrlImage}
-                   fileName={"fotosTienda"}
+                  fileName={"fotosTienda"}
                 />
               </Box>
               <Box w="full" h={"full"} position={"relative"}>
                 <Image
-                  src={im || "https://via.placeholder.com/100.png?text=Imagen"}
+                  src={
+                    im ||
+                    `https://via.placeholder.com/100.png?text=${
+                      locale === "en" ? en.picture : es.picture
+                    }`
+                  }
                   alt="Imagen"
                   width={100}
                   height={100}
@@ -85,18 +93,18 @@ const ProductForm = ({
           {/* nombre del producto */}
           <GridItemForm
             points={points1}
-            name={"Nombre"}
+            name={locale === "en" ? en.name : es.name}
             maxlength="50"
             na={"na"}
             val={na}
             type={"text"}
-            place={"Coloca el nombre del producto"}
+            place={locale === "en" ? en.name : es.name}
             handle={handleInputChange}
           />
 
           <GridItemFormNumber
             points={points1}
-            name={"Precio $"}
+            name={`${locale === "en" ? en.price : es.price} $`}
             na={"pr"}
             handle={handleNumberInputPr}
             val={pr}
@@ -106,7 +114,7 @@ const ProductForm = ({
 
           <GridItemFormNumber
             points={points1}
-            name={"Porcentaje %"}
+            name={`${locale === "en" ? en.percentage : es.percentage} %`}
             na={"pj"}
             handle={handleNumberInputPj}
             val={pj}
@@ -116,7 +124,7 @@ const ProductForm = ({
 
           <GridItemFormNumber
             points={points1}
-            name={"Cantidad"}
+            name={locale === "en" ? en.quantity : es.quantity}
             na={"cn"}
             handle={handleNumberInputCn}
             val={cn}
@@ -125,15 +133,19 @@ const ProductForm = ({
           />
 
           <GridItem colSpan={points1}>
-            <FormLabel htmlFor="ps">Producto o Services</FormLabel>
+            <FormLabel htmlFor="ps">
+              {locale === "en" ? en.pOrS : es.pOrS}
+            </FormLabel>
             <Select
               name="ps"
               variant="filled"
-              placeholder="Agrega un producto o servicio"
               value={ps}
               onChange={handleInputChange}
             >
-              {["Product", "Services"].map((ps, key) => (
+              {[
+                locale === "en" ? en.major.mG : es.major.mG,
+                locale === "en" ? en.blog.bG : es.blog.bG,
+              ].map((ps, key) => (
                 <option key={key} value={ps}>
                   {ps}
                 </option>
@@ -142,11 +154,12 @@ const ProductForm = ({
           </GridItem>
 
           <GridItem colSpan={points1}>
-            <FormLabel htmlFor="ct">Categoria</FormLabel>
+            <FormLabel htmlFor="ct">
+              {locale === "en" ? en.major.mF : es.major.mF}
+            </FormLabel>
             <Select
               name="ct"
               variant="filled"
-              placeholder="Agrega una categoria"
               value={ct}
               onChange={handleInputChange}
             >
@@ -162,19 +175,19 @@ const ProductForm = ({
           <GridItemForm
             maxlength="20"
             points={points1}
-            name={"Descripción"}
+            name={locale === "en" ? en.description : es.description}
             na={"ds"}
             val={ds}
             type={"text"}
-            place={"Coloca una Descripción del producto"}
+            place={locale === "en" ? en.description : es.description}
             handle={handleInputChange}
           />
           <GridItemFormTextarea
             points={2}
-            name={"Detalles"}
+            name={locale === "en" ? en.details : es.details}
             na={"dt"}
             val={dt}
-            place={"Detalles"}
+            place={locale === "en" ? en.details : es.details}
             handle={handleInputChange}
             bg={bg}
             brand={brand}

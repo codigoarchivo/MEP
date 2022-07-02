@@ -4,20 +4,29 @@ import PropTypes from "prop-types";
 
 import { Button, Heading, chakra } from "@chakra-ui/react";
 
-const CategoryFormWord = ({ HStack, onClose, handleSubmit, pid, VStack }) => {
+const CategoryFormWord = ({
+  HStack,
+  onClose,
+  handleSubmit,
+  VStack,
+  locale,
+  es,
+  en,
+  info,
+}) => {
   return (
     <>
       <chakra.form onSubmit={handleSubmit} w="full" p={3}>
         <VStack spacing={7}>
           <Heading mb={6} size={"lg"}>
-            Esta seguro que desea eliminar
+            {locale === "en" ? en.sure : es.sure}
           </Heading>
           <HStack justifyContent="end" w={"full"}>
             <Button variant={"secondary"} onClick={onClose}>
-              Close
+              {locale === "en" ? en.close : es.close}
             </Button>
             <Button variant={"primary"} type="submit" ml={3}>
-              {pid}
+              {info}
             </Button>
           </HStack>
         </VStack>
@@ -30,7 +39,6 @@ CategoryFormWord.propTypes = {
   HStack: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  pid: PropTypes.string.isRequired,
   VStack: PropTypes.object.isRequired,
 };
 

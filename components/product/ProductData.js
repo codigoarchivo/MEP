@@ -32,7 +32,15 @@ const initialStates = {
   im: "",
 };
 
-const ProductData = ({ product = {}, set = "", router = {}, details = "" }) => {
+const ProductData = ({
+  product = {},
+  set = "",
+  push,
+  details = "",
+  locale,
+  es,
+  en,
+}) => {
   // useState
   const [word, setWord] = useState("");
   // selector
@@ -64,57 +72,65 @@ const ProductData = ({ product = {}, set = "", router = {}, details = "" }) => {
   values.cn = Number(values.cn);
   values.pr = Number(values.pr);
   // validar
-  const { fiel, ErrorRetur } = Validator(values);
+  const { ErrorRetur } = Validator(values);
 
   // values
   const { na, ds, ct, dt, im, id, ps, pj, cn, pr } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const err = locale === "en" ? en.error : es.error;
+
     if (ErrorRetur) {
-      return Toast(fiel, "error", 5000);
+      return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     }
 
     if (word === "delete") {
-      dispatch(deleteProduct(id));
+      dispatch(deleteProduct(id, err));
     }
 
     if (word === "add") {
       dispatch(
-        addProduct({
-          na,
-          pr,
-          ds,
-          ct,
-          cn,
-          dt,
-          im,
-          ps,
-          pj,
-          uid: a?.uid,
-        })
+        addProduct(
+          {
+            na,
+            pr,
+            ds,
+            ct,
+            cn,
+            dt,
+            im,
+            ps,
+            pj,
+            uid: a?.uid,
+          },
+          err
+        )
       );
     }
 
     if (word === "edit") {
       dispatch(
-        editProduct({
-          na,
-          pr,
-          ds,
-          ct,
-          cn,
-          dt,
-          im,
-          id,
-          ps,
-          pj,
-          uid: a?.uid,
-        })
+        editProduct(
+          {
+            na,
+            pr,
+            ds,
+            ct,
+            cn,
+            dt,
+            im,
+            id,
+            ps,
+            pj,
+            uid: a?.uid,
+          },
+          err
+        )
       );
     }
 
-    router.push({
+    push({
       pathname: `/product/[uid]`,
       query: {
         uid: a?.uid,
@@ -124,7 +140,7 @@ const ProductData = ({ product = {}, set = "", router = {}, details = "" }) => {
 
   // cerrar
   const onClose = () => {
-    router.push({
+    push({
       pathname: `/product/[uid]`,
       query: {
         uid: a?.uid,
@@ -132,13 +148,29 @@ const ProductData = ({ product = {}, set = "", router = {}, details = "" }) => {
     });
   };
 
+  let info = "";
+  switch (word) {
+    case "add":
+      info = locale === "en" ? en.add : es.add;
+      break;
+    case "edit":
+      info = locale === "en" ? en.edit : es.edit;
+      break;
+    case "delete":
+      info = locale === "en" ? en.delete : es.delete;
+      break;
+    case "details":
+      info = locale === "en" ? en.details : es.details;
+      break;
+  }
+
   return (
     <>
       <VStack spacing={5} w={"full"} border={bordes} p={6} boxShadow={"xl"}>
         <HStack w={"full"}>
           <CloseButton size="md" onClick={onClose} />
           <Heading as="h1" size={"md"} textTransform={"uppercase"}>
-            {word}
+            {info}
           </Heading>
         </HStack>
 
@@ -153,7 +185,7 @@ const ProductData = ({ product = {}, set = "", router = {}, details = "" }) => {
             ds={ds}
             ct={ct}
             dt={dt}
-            word={word}
+            word={info}
             HStack={HStack}
             repeat1={repeat1}
             points1={points1}
@@ -165,6 +197,9 @@ const ProductData = ({ product = {}, set = "", router = {}, details = "" }) => {
             handleNumberInputPr={handleNumberInputPr}
             handleSubmit={handleSubmit}
             setUrlImage={setUrlImage}
+            locale={locale}
+            es={es}
+            en={en}
           />
         )}
 
@@ -172,8 +207,11 @@ const ProductData = ({ product = {}, set = "", router = {}, details = "" }) => {
           <ProductFormWord
             handleSubmit={handleSubmit}
             HStack={HStack}
-            word={word}
+            word={info}
             onClose={onClose}
+            locale={locale}
+            es={es}
+            en={en}
           />
         )}
 
@@ -186,7 +224,6 @@ const ProductData = ({ product = {}, set = "", router = {}, details = "" }) => {
 ProductData.propTypes = {
   product: PropTypes.object,
   set: PropTypes.string,
-  router: PropTypes.object,
   details: PropTypes.string,
 };
 

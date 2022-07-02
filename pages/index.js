@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 
+import { useRouter } from "next/router";
+
 import PropTypes from "prop-types";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +12,7 @@ import { productListIndex } from "../actions/product";
 
 import Home from "../components/home/Home";
 
-import { listDataCategory } from "../actions/category";
+import { categoryListConfig } from "../actions/category";
 
 import Toast from "../helpers/Toast";
 
@@ -18,7 +20,12 @@ import { dbProducts } from "../data/dbProducts";
 
 import { dbCategory } from "../data/dbCategory";
 
+import en from "../translations/en";
+import es from "../translations/es";
+
 const HomeL = ({ product = [], category = [] }) => {
+  // useRouter
+  const { locale } = useRouter();
   // selector
   const { listData = [], latestCartSelect = [] } = useSelector(
     ({ product }) => product
@@ -27,13 +34,26 @@ const HomeL = ({ product = [], category = [] }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(productListIndex(product));
-    dispatch(listDataCategory(category));
-  }, [dispatch, product, category]);
+    if (product) {
+      dispatch(productListIndex(product));
+    }
+  }, [dispatch, product]);
+
+  useEffect(() => {
+    if (category) {
+      dispatch(categoryListConfig(category));
+    }
+  }, [dispatch, category]);
 
   return (
-    <ShopLayout title={"Home"}>
-      <Home listData={listData} latestCartSelect={latestCartSelect} />
+    <ShopLayout title={locale === "en" ? en.major.mA : es.major.mA}>
+      <Home
+        listData={listData}
+        latestCartSelect={latestCartSelect}
+        locale={locale}
+        en={en}
+        es={es}
+      />
     </ShopLayout>
   );
 };

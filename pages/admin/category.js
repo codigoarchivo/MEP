@@ -25,37 +25,44 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import CategoryScrenn from "../../components/category/CategoryScreen";
 
+import { dbCategory } from "../../data/dbCategory";
+
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import { activeCategory, categoryListConfig } from "../../actions/category";
+import {
+  activeCategory,
+  categoryListConfig,
+  listDataCategory,
+} from "../../actions/category";
 
 import Paginator from "../../utils/Paginator";
 
-import { dbCategory } from "../../data/dbCategory";
-
 import Toast from "../../helpers/Toast";
 
-import useTranslations from "../../hooks/useTranslations";
+import es from "../../translations/es";
+import en from "../../translations/en";
 
 const Category = ({ data = [] }) => {
   // selector
-  const { listData = [] } = useSelector(({ category }) => category);
+  const { list = [] } = useSelector(({ category }) => category);
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // dispatch
   const dispatch = useDispatch();
   // router
-  const router = useRouter();
+  const { locale, push } = useRouter();
   // breakpoints
   const { center, bordes } = Breakpoints();
-  // useSelector
 
   if (a?.rol === "user") {
-    router.push("/");
+    push("/");
   }
+  const err = locale === "en" ? en.error : es.error;
   useEffect(() => {
-    dispatch(categoryListConfig(data));
-  }, [dispatch, data]);
+    if (data) {
+      dispatch(listDataCategory(data, err));
+    }
+  }, [dispatch, data, err]);
 
   // add
   const handleAdd = () => {
@@ -65,39 +72,32 @@ const Category = ({ data = [] }) => {
       })
     );
 
-    router.push({
+    push({
       pathname: "/admin/[id]",
       query: { id: "new", pid: "Add" },
     });
   };
 
-  // useTranslations
-  const { t: c } = useTranslations(
-    `/translations/${router.locale}/category.json`
-  );
-  // useTranslations
-  const { t: i } = useTranslations(
-    `/translations/${router.locale}/individual.json`
-  );
-
   return (
-    <ShopLayout title={"All Category"}>
+    <ShopLayout title={locale === "en" ? en.categories : es.categories}>
       {a?.rol === "owner" ? (
         <Container maxW={"container.sm"} my={10}>
           <Box p={5}>
-            {!listData[0] && (
+            {!list[0] && (
               <Center border={bordes} py={30}>
                 <Heading size={"sm"} textTransform={"uppercase"}>
-                  {c.cA}
+                  {locale === "en" ? en.category.cA : es.category.cA}
                 </Heading>
               </Center>
             )}
             <TableContainer w={"full"} border={bordes}>
               <Table variant="striped" colorScheme="brand">
-                <TableCaption>{c.cB}</TableCaption>
+                <TableCaption>
+                  {locale === "en" ? en.category.cB : es.category.cB}
+                </TableCaption>
                 <Thead>
                   <Tr>
-                    <Th>{i.category}</Th>
+                    <Th>{locale === "en" ? en.categories : es.categories}</Th>
                     <Th isNumeric textAlign={center}>
                       <Button
                         onClick={handleAdd}
@@ -107,27 +107,34 @@ const Category = ({ data = [] }) => {
                         textTransform="uppercase"
                         fontSize={"x-small"}
                       >
-                        {i.add}
+                        {locale === "en" ? en.add : es.add}
                       </Button>
                     </Th>
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {listData.map((data) => (
-                    <CategoryScrenn key={data.id} {...data} />
+                  {list.map((data) => (
+                    <CategoryScrenn
+                      key={data.id}
+                      {...data}
+                      edi={locale === "en" ? en.edit : es.edit}
+                      del={locale === "en" ? en.delete : es.delete}
+                      cC={locale === "en" ? en.category.cC : es.category.cC}
+                      push={push}
+                    />
                   ))}
                 </Tbody>
               </Table>
             </TableContainer>
           </Box>
           <Box>
-            {listData.length > 0 && (
+            {list.length > 0 && (
               <Paginator
                 window={"categories"}
                 word={"na"}
-                list={listData}
-                firstVisible={listData[0].na}
-                lastVisible={listData[listData.length - 1].na}
+                list={list}
+                firstVisible={list[0].na}
+                lastVisible={list[list.length - 1].na}
                 newList={categoryListConfig}
                 nLimit={2}
                 orHome={"asc"}
@@ -151,6 +158,7 @@ Category.propTypes = {
 export async function getServerSideProps() {
   try {
     const data = await dbCategory("", "dbCatTwo");
+
     return {
       props: {
         data,

@@ -22,9 +22,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-const SerchRange = ({ product, data }) => {
-  // dispatch
-  const { push } = useRouter();
+const SerchRange = ({ product, locale, en, es, push }) => {
   // Breakpoints
   const { bordes } = Breakpoints();
   // useRef
@@ -57,12 +55,12 @@ const SerchRange = ({ product, data }) => {
     <Stack w={"full"} spacing={"10"} border={bordes} rounded="md" p={5}>
       <Box borderBottom={bordes} py={5} w={"full"}>
         <Heading size={"md"} textTransform={"uppercase"} fontWeight={"normal"}>
-          {data}
+          {locale === "en" ? en.search.sA : es.search.sA}
         </Heading>
       </Box>
 
       <RangeSlider
-        aria-label={[min.current, max.current]}
+        aria-label={[min.current.toString(), max.current.toString()]}
         defaultValue={[
           (min.current = min.current),
           (inc.current = max.current),

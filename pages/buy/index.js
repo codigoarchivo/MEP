@@ -22,13 +22,12 @@ import Paginator from "../../utils/Paginator";
 
 import Toast from "../../helpers/Toast";
 
-import useTranslations from "../../hooks/useTranslations";
 import en from "../../translations/en";
 import es from "../../translations/es";
 
 const Buy = ({ product = [] }) => {
   // useRouter
-  const { locale } = useRouter();
+  const { locale, push } = useRouter();
   // useSelector
   const { buy = [] } = useSelector(({ checkout }) => checkout);
   // useDispatch
@@ -43,9 +42,6 @@ const Buy = ({ product = [] }) => {
       dispatch(cheListAllClearBu());
     }
   }, [dispatch, product]);
-
-  // useTranslations
-  const { t: h } = useTranslations(`/translations/${locale}/historyBuy.json`);
 
   return (
     <ShopLayout title={"buys"}>
@@ -73,7 +69,20 @@ const Buy = ({ product = [] }) => {
                   : es.historyBuy.sC}
               </Heading>
               {buy.map((item, key) => (
-                <CheckoutScreenAll key={key} {...item} count={(key += 1)} />
+                <CheckoutScreenAll
+                  key={key}
+                  {...item}
+                  count={(key += 1)}
+                  name={locale === "en" ? en.name : es.name}
+                  quantity={locale === "en" ? en.quantity : es.quantity}
+                  tax={locale === "en" ? en.tax : es.tax}
+                  unit={locale === "en" ? en.unit : es.unit}
+                  price={locale === "en" ? en.price : es.price}
+                  paid={locale === "en" ? en.paid : es.paid}
+                  pro={locale === "en" ? en.process : es.process}
+                  sF={locale === "en" ? en.historyBuy.sF : es.historyBuy.sF}
+                  push={push}
+                />
               ))}
             </VStack>
           </VStack>

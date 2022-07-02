@@ -37,13 +37,11 @@ const initialStates = {
   dt: "",
 };
 
-const UserScreen = ({ user = {} }) => {
+const UserScreen = ({ user = {}, locale, back, es, en }) => {
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // dispatch
   const dispatch = useDispatch();
-  // router
-  const router = useRouter();
   // Breakpoints
   const { repeat1, points3, bordes } = Breakpoints();
   // mode Color
@@ -57,29 +55,21 @@ const UserScreen = ({ user = {} }) => {
     e.preventDefault();
 
     if ([na, te, co, dt].includes("")) {
-      return Toast(
-        "Si vas a vender tiene llenar todos los campos",
-        "error",
-        5000
-      );
+      return Toast(locale === "en" ? en.user.uD : es.user.uD, "error", 5000);
     }
 
     if (a.uid !== id) {
-      return Toast(
-        "No puedes editar un usuario que no te pertenezca",
-        "error",
-        5000
-      );
+      return Toast(locale === "en" ? en.user.uE : es.user.uE, "error", 5000);
     }
+    const err = locale === "en" ? en.error : es.error;
+    dispatch(DataUserAdicional({ na, te, co, dt }, id, err));
 
-    dispatch(DataUserAdicional({ na, te, co, dt }, id));
-
-    router.back();
+    back();
   };
 
   // cerrar
   const onCloseSelling = () => {
-    router.back();
+    back();
   };
 
   return (
@@ -97,34 +87,34 @@ const UserScreen = ({ user = {} }) => {
         justifyContent={"space-between"}
       >
         <Heading size={"xs"} textTransform={"uppercase"} fontWeight={"normal"}>
-          Información Personal
+          {locale === "en" ? en.user.uF : es.user.uF}
         </Heading>
         <CloseButton onClick={onCloseSelling} />
       </HStack>
       <chakra.form onSubmit={handleSubmit} w={"full"} p={5}>
         <Grid
-          templateRows={`repeat(5, 1fr)`}
+          templateRows={`repeat(${a.uid !== id ? 4 : 5}, 1fr)`}
           templateColumns={repeat1}
           alignItems={"center"}
           columnGap={points3}
         >
           {[
             {
-              nombre: "Nombre",
+              nombre: locale === "en" ? en.name : es.name,
               Valor: na,
               na: "na",
-              place: "Nombre",
+              place: locale === "en" ? en.name : es.name,
               type: "text",
             },
             {
-              nombre: "Correo",
+              nombre: locale === "en" ? en.mail : es.mail,
               Valor: co,
               na: "co",
-              place: "Correo",
+              place: locale === "en" ? en.mail : es.mail,
               type: "email",
             },
             {
-              nombre: "Telefono",
+              nombre: locale === "en" ? en.phone : es.phone,
               Valor: te,
               na: "te",
               place: "000-000-0000",
@@ -146,10 +136,10 @@ const UserScreen = ({ user = {} }) => {
           <GridItemFormTextarea
             isReadOnly={a.uid !== id ? true : false}
             points={2}
-            name={"Información Adicional"}
+            name={locale === "en" ? en.additional : es.additional}
             na={"dt"}
             val={dt}
-            place={"cuenta de transferencia"}
+            place={locale === "en" ? en.additional : es.additional}
             handle={handleInputChange}
             bg={bg}
             brand={brand}
@@ -160,10 +150,10 @@ const UserScreen = ({ user = {} }) => {
               <HStack w={"full"} justifyContent="flex-end" spacing={10}>
                 <>
                   <Button variant={"secondary"} onClick={onCloseSelling}>
-                    Close
+                    {locale === "en" ? en.close : es.close}
                   </Button>
                   <Button variant={"primary"} type="submit" ml={3}>
-                    Guardar
+                    {locale === "en" ? en.save : es.save}
                   </Button>
                 </>
               </HStack>

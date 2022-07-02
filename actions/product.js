@@ -7,14 +7,14 @@ import Toast from "../helpers/Toast";
 
 import { types } from "../type";
 
-export const listDataProduct = (data) => {
+export const listDataProduct = (data, err) => {
   return async (dispatch) => {
     try {
       if (data) {
         await dispatch(productDataList(data));
       }
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
@@ -24,12 +24,12 @@ const productDataList = (data) => ({
   payload: data || [],
 });
 
-export const serchProductList = (filtro) => {
+export const serchProductList = (filtro, err) => {
   return async (dispatch) => {
     try {
       await dispatch(listProductSerch(filtro));
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
@@ -45,7 +45,7 @@ export const productListIndex = (data) => ({
   payload: data,
 });
 
-export const addProduct = (resData = {}) => {
+export const addProduct = (resData = {}, err) => {
   return async (dispatch) => {
     try {
       const { id } = await addDoc(collection(db, "serchs"), {
@@ -58,7 +58,7 @@ export const addProduct = (resData = {}) => {
         dispatch(productAdd(data));
       }
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
@@ -68,13 +68,13 @@ const productAdd = (data) => ({
   payload: data,
 });
 
-export const editProduct = (data) => {
+export const editProduct = (data, err) => {
   return async (dispatch) => {
     try {
       await setDoc(doc(db, "serchs", data.id), data);
       dispatch(productEdit(data));
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
@@ -84,13 +84,13 @@ const productEdit = (data) => ({
   payload: data,
 });
 
-export const deleteProduct = (id) => {
+export const deleteProduct = (id, err) => {
   return async (dispatch) => {
     try {
       await deleteDoc(doc(db, "serchs", id));
       dispatch(productDelete(id));
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
@@ -122,7 +122,7 @@ export const cartProductActive = (data) => ({
   payload: data,
 });
 
-export const saveProductCart = (data) => {
+export const saveProductCart = (data, err) => {
   return async (dispatch, getState) => {
     const { saveCartSelect } = await getState().process;
     try {
@@ -133,7 +133,7 @@ export const saveProductCart = (data) => {
         dispatch(cartProductSave(data));
       }
     } catch (error) {
-      Toast("Al parecer hay un errordsdsd", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
@@ -148,7 +148,7 @@ export const deleteProductSave = (id) => ({
   payload: id,
 });
 
-export const cartSaveLatest = (data) => {
+export const cartSaveLatest = (data, err) => {
   return async (dispatch, getState) => {
     const { latestCartSelect } = await getState().product;
     try {
@@ -157,7 +157,7 @@ export const cartSaveLatest = (data) => {
         dispatch(LatestSaveCart(data));
       }
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };

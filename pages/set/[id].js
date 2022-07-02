@@ -14,17 +14,23 @@ import { dbProducts, dbProductsById } from "../../data/dbProducts";
 
 import Toast from "../../helpers/Toast";
 
+import es from "../../translations/es";
+import en from "../../translations/en";
+
 const ConfigDashboard = ({ product = {} }) => {
   // router
-  const router = useRouter();
+  const { push, locale, query } = useRouter();
   return (
-    <ShopLayout title={router.query.set}>
+    <ShopLayout title={query.set}>
       <Container maxW={"container.sm"} py={10}>
         <ProductData
           product={product}
-          set={router.query.set}
-          router={router}
-          details={router.query.dt}
+          set={query.set}
+          details={query.dt}
+          push={push}
+          locale={locale}
+          es={es}
+          en={en}
         />
       </Container>
     </ShopLayout>

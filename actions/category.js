@@ -12,14 +12,14 @@ import Toast from "../helpers/Toast";
 
 import { types } from "../type";
 
-export const listDataCategory = (data) => {
+export const listDataCategory = (data, err) => {
   return async (dispatch) => {
     try {
       if (data) {
         await dispatch(categoryDataList(data));
       }
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
@@ -34,7 +34,7 @@ export const categoryListConfig = (data) => ({
   payload: data,
 });
 
-export const addCategory = (na) => {
+export const addCategory = (na, err) => {
   return async (dispatch) => {
     try {
       const { id } = await addDoc(collection(db, "categories"), {
@@ -45,7 +45,7 @@ export const addCategory = (na) => {
         dispatch(categoryAdd(data));
       }
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
@@ -55,7 +55,7 @@ const categoryAdd = (data) => ({
   payload: data,
 });
 
-export const editCategory = (na, id) => {
+export const editCategory = (na, id, err) => {
   return async (dispatch) => {
     try {
       const dataRef = doc(db, "categories", id);
@@ -69,7 +69,7 @@ export const editCategory = (na, id) => {
         dispatch(categoryEdit(data));
       }
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
@@ -79,13 +79,13 @@ const categoryEdit = (data) => ({
   payload: data,
 });
 
-export const deleteCategory = (id) => {
+export const deleteCategory = (id, err) => {
   return async (dispatch) => {
     try {
       await deleteDoc(doc(db, "categories", id));
       dispatch(categoryDelete(id));
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };

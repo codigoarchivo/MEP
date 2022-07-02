@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useRouter } from "next/router";
+
 import {
   Button,
   Menu,
@@ -22,8 +24,12 @@ import { dbProducts } from "../data/dbProducts";
 import Toast from "../helpers/Toast";
 
 import { serchProductList } from "../actions/product";
+import en from "../translations/en";
+import es from "../translations/es";
 
 const MenuCategoria = ({ categories }) => {
+  // useRouter
+  const { locale } = useRouter();
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -41,8 +47,8 @@ const MenuCategoria = ({ categories }) => {
         5000
       );
     }
-
-    dispatch(serchProductList(newData));
+    const err = locale === "en" ? en.error : es.error;
+    dispatch(serchProductList(newData, err));
   };
 
   return (

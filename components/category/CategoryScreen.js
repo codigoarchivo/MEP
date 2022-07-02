@@ -1,10 +1,6 @@
 import React from "react";
 
-import { useSelector } from "react-redux";
-
 import PropTypes from "prop-types";
-
-import { useRouter } from "next/router";
 
 import {
   HStack,
@@ -21,22 +17,19 @@ import Toast from "../../helpers/Toast";
 
 import { DeleteIcon, EditIcon, PlusSquareIcon } from "@chakra-ui/icons";
 
-import { dbProducts } from "../../data/dbProducts";
-import useTranslations from "../../hooks/useTranslations";
+import { dbCategoryValid } from "../../data/dbCategory";
 
-const CategoryScrenn = ({ id, na }) => {
-  // router
-  const router = useRouter();
+const CategoryScrenn = ({ id, na, edi, del, cC, push }) => {
   // edit
   const handleEdit = async () => {
     // evita que se pueda editar  un producto que posee una categoria
-    const match = await dbProducts(id, "dbProFive");
+    const { r } = await dbCategoryValid(id, "dbCatOne");
 
-    if (match.length > 0) {
-      return Toast("Category tiene un producto asociado", "error", 5000);
+    if (r > 0) {
+      return Toast(cC, "error", 5000);
     }
 
-    router.push({
+    push({
       pathname: "/admin/[id]",
       query: { id, na, pid: "Edit" },
     });
@@ -45,22 +38,18 @@ const CategoryScrenn = ({ id, na }) => {
   // delete
   const handleDelete = async () => {
     // evita que se pueda eliminar  un producto que posee una categoria
-    const match = await dbProducts(id, "dbProFive");
+    const { r } = await dbCategoryValid(id, "dbCatOne");
 
-    if (match.length > 0) {
-      return Toast("Category tiene un producto asociado", "error", 5000);
+    if (r > 0) {
+      return Toast(cC, "error", 5000);
     }
 
-    router.push({
+    push({
       pathname: "/admin/[id]",
       query: { id, na, pid: "Delete" },
     });
   };
 
-  // useTranslations
-  const { t: i } = useTranslations(
-    `/translations/${router.locale}/individual.json`
-  );
   return (
     <>
       <Tr>
@@ -82,7 +71,7 @@ const CategoryScrenn = ({ id, na }) => {
                   onClick={handleEdit}
                 >
                   <EditIcon w={3} h={3} />
-                  <Text>{i.edit}</Text>
+                  <Text>{edi}</Text>
                 </HStack>
               </MenuItem>
 
@@ -95,7 +84,7 @@ const CategoryScrenn = ({ id, na }) => {
                   onClick={handleDelete}
                 >
                   <DeleteIcon w={3} h={3} />
-                  <Text>{i.delete}</Text>
+                  <Text>{del}</Text>
                 </HStack>
               </MenuItem>
             </MenuList>
@@ -109,6 +98,9 @@ const CategoryScrenn = ({ id, na }) => {
 CategoryScrenn.propTypes = {
   id: PropTypes.string.isRequired,
   na: PropTypes.string.isRequired,
+  edi: PropTypes.string,
+  del: PropTypes.string,
+  cC: PropTypes.string,
 };
 
 export default CategoryScrenn;

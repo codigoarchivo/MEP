@@ -20,8 +20,8 @@ import en from "../../translations/en";
 import es from "../../translations/es";
 
 const Verification = ({ data }) => {
-  // useRouter
-  const { locale } = useRouter();
+  // router
+  const { push, locale, back } = useRouter();
   // Breakpoints
   const { content5, bordes, full } = Breakpoints();
 
@@ -42,6 +42,11 @@ const Verification = ({ data }) => {
             idThree={data.id}
             // toda la informacion del data, que se guardo en el uid del comprador
             product={data.product}
+            locale={locale}
+            push={push}
+            back={back}
+            en={en}
+            es={es}
           />
         </Stack>
       </Container>

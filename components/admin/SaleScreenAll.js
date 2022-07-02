@@ -7,12 +7,13 @@ import PropTypes from "prop-types";
 import { formatDistanceToNow } from "date-fns";
 
 import localEs from "date-fns/locale/es";
+import localEn from "date-fns/locale/en-US";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
 import NavLink from "../../utils/Navlink";
 
-const SaleScreenAll = ({ item = {}, name, mail, creation, verify }) => {
+const SaleScreenAll = ({ item = {}, name, mail, creation, verify, locale }) => {
   // Breakpoints
   const { bordes, full } = Breakpoints();
 
@@ -60,9 +61,9 @@ const SaleScreenAll = ({ item = {}, name, mail, creation, verify }) => {
           </Tag>
         ) : (
           <Box as="span" color="gray.600" fontSize="sm">
-            hace{" "}
+            {locale === "es" && "hace"}{" "}
             {formatDistanceToNow(cre, {
-              locale: localEs,
+              locale: locale === "en" ? localEn : localEs,
             })}
           </Box>
         )}

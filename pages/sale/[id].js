@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useRouter } from "next/router";
+
 import PropTypes from "prop-types";
 
 import { Container, Stack } from "@chakra-ui/react";
@@ -8,13 +10,18 @@ import ShopLayout from "../../components/layout/ShopLayout";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import SaleVerifyAll from "../../components/sale/SaleVerifyAll";
-
 import Toast from "../../helpers/Toast";
 
 import { dbUser, dbUserByUID } from "../../data/dbUser";
 
-const Orders = ({ active }) => {
+import SaleVerify from "../../components/sale/SaleVerify";
+
+import es from "../../translations/es";
+import en from "../../translations/en";
+
+const Sales = ({ sale }) => {
+  // dispatch
+  const { push, locale, back } = useRouter();
   // Breakpoints
   const { content5, bordes } = Breakpoints();
 
@@ -22,18 +29,21 @@ const Orders = ({ active }) => {
     <ShopLayout title={"sales"}>
       <Container maxW={"container.xl"} py={10}>
         <Stack flexDirection={"column"} spacing={0}>
-          <SaleVerifyAll
+          <SaleVerify
             bordes={bordes}
             // toda la informacion del producto, que se guardo en el uid del comprador
-            product={active?.product}
+            product={sale.product}
             // la referencia del pago
-            referencia={active}
+            referencia={sale}
             // id del proceso de pago
-            idThree={active?.id}
+            idThree={sale.id}
             // toda la informacion del comprador, que se guardo para que se refleje en el checkout
-            uidBuy={active?.uidBuy}
-            // toda la informacion del vendedor, que se guardo para que se refleje en el checkout
-            uidSale={active?.product?.uid}
+            buy={sale.buy}
+            push={push}
+            locale={locale}
+            back={back}
+            es={es}
+            en={en}
           />
         </Stack>
       </Container>
@@ -41,8 +51,8 @@ const Orders = ({ active }) => {
   );
 };
 
-Orders.propTypes = {
-  active: PropTypes.object,
+Sales.propTypes = {
+  sale: PropTypes.object,
 };
 
 export async function getStaticPaths() {
@@ -61,9 +71,9 @@ export async function getStaticProps({ params }) {
   const id = await params.id.toString();
   try {
     // compra del producto path: /buys
-    const active = await dbUserByUID(id, "dbuserThreeID");
+    const sale = await dbUserByUID(id, "dbuserThreeID");
 
-    if (!active) {
+    if (!sale) {
       return {
         redirect: {
           destination: "/",
@@ -74,7 +84,7 @@ export async function getStaticProps({ params }) {
 
     return {
       props: {
-        active,
+        sale,
       },
     };
   } catch (error) {
@@ -85,4 +95,4 @@ export async function getStaticProps({ params }) {
   }
 }
 
-export default Orders;
+export default Sales;

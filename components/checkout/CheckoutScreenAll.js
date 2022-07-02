@@ -1,7 +1,5 @@
 import React from "react";
 
-import { useRouter } from "next/router";
-
 import PropTypes from "prop-types";
 
 import {
@@ -19,18 +17,30 @@ import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-const CheckoutScreenAll = ({ product = {}, process, id, lim, count }) => {
-  const router = useRouter();
+const CheckoutScreenAll = ({
+  product = {},
+  process,
+  name,
+  quantity,
+  tax,
+  unit,
+  price,
+  sF,
+  paid,
+  pro,
+  sal,
+  push,
+}) => {
   // Breakpoints
   const { bordes, full } = Breakpoints();
 
   // despues de verificar el pago se puede ver los datos del vendedor
   const handleUser = () => {
     if (process !== false) {
-      router.push({
+      push({
         pathname: "/info/[uid]",
         query: {
-          uid: product.uid,
+          uid: sal,
         },
       });
     }
@@ -48,31 +58,31 @@ const CheckoutScreenAll = ({ product = {}, process, id, lim, count }) => {
         <VStack spacing={0}>
           <HStack w={full}>
             <Heading as="h3" size="sm">
-              Nombre:
+              {name}:
             </Heading>
             <Text size={"sm"}>{product.na}</Text>
           </HStack>
           <HStack w={full}>
             <Heading as="h3" size="sm">
-              Cantidad:
+              {quantity}:
             </Heading>
             <Text size={"sm"}>N°{product.cn}</Text>
           </HStack>
           <HStack w={full}>
             <Heading as="h3" size="sm">
-              Precio:
+              {unit}:
             </Heading>
             <Text size={"sm"}>${product.pr}</Text>
           </HStack>
           <HStack w={full}>
             <Heading as="h3" size="sm">
-              Inpuesto:
+              {tax}:
             </Heading>
             <Text size={"sm"}>${product.pj}</Text>
           </HStack>
           <HStack w={full}>
             <Heading as="h3" size="sm">
-              Precio Unitario:
+              {price}:
             </Heading>
             <Text size={"sm"}>${product.in}</Text>
           </HStack>
@@ -95,7 +105,7 @@ const CheckoutScreenAll = ({ product = {}, process, id, lim, count }) => {
             onClick={handleUser}
             textTransform={"uppercase"}
           >
-            Datos del vendedor
+            {sF}
           </Button>
           <Tag
             size={"md"}
@@ -104,7 +114,7 @@ const CheckoutScreenAll = ({ product = {}, process, id, lim, count }) => {
             colorScheme={process ? "green" : "blue"}
           >
             <TagLabel textTransform={"uppercase"}>
-              {process ? "Pagado" : "Proceso"}
+              {process ? paid : pro}
             </TagLabel>
             <TagRightIcon as={process ? UnlockIcon : LockIcon} />
           </Tag>
@@ -117,9 +127,14 @@ const CheckoutScreenAll = ({ product = {}, process, id, lim, count }) => {
 CheckoutScreenAll.propTypes = {
   product: PropTypes.object,
   process: PropTypes.bool,
-  id: PropTypes.string,
-  lim: PropTypes.object,
-  count: PropTypes.number,
+  name: PropTypes.string,
+  quantity: PropTypes.string,
+  tax: PropTypes.string,
+  unit: PropTypes.string,
+  price: PropTypes.string,
+  sF: PropTypes.string,
+  paid: PropTypes.string,
+  pro: PropTypes.string,
 };
 
 export default CheckoutScreenAll;

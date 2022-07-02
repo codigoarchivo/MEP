@@ -2,6 +2,8 @@ import React from "react";
 
 import { Container } from "@chakra-ui/react";
 
+import { useRouter } from "next/router";
+
 import PropTypes from "prop-types";
 
 import Toast from "../../helpers/Toast";
@@ -12,12 +14,23 @@ import { dbUser, dbUserByUID } from "../../data/dbUser";
 
 import UserScreen from "../../components/user/UserScreen";
 
+import es from "../../translations/es";
+import en from "../../translations/en";
+
 const Informacion = ({ user = {} }) => {
+  
+  const { locale, back } = useRouter();
 
   return (
-    <ShopLayout title={"Información | Usuario"}>
+    <ShopLayout title={locale === "en" ? en.personal : es.personal}>
       <Container maxW="lg">
-        <UserScreen user={{ ...user }} />
+        <UserScreen
+          user={{ ...user }}
+          locale={locale}
+          back={back}
+          es={es}
+          en={en}
+        />
       </Container>
     </ShopLayout>
   );

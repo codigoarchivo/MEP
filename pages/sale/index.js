@@ -8,8 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Box, Container, Heading, Stack, VStack } from "@chakra-ui/react";
 
-import SaleScreenAll from "../../components/sale/SaleScreenAll";
-
 import ShopLayout from "../../components/layout/ShopLayout";
 
 import Breakpoints from "../../helpers/Breakpoints";
@@ -21,6 +19,8 @@ import { cheListAllClear, cheListAllSale } from "../../actions/checkout";
 import { dbUserData } from "../../data/dbUser";
 
 import Paginator from "../../utils/Paginator";
+
+import SaleScreen from "../../components/sale/SaleScreen";
 
 import en from "../../translations/en";
 import es from "../../translations/es";
@@ -70,7 +70,7 @@ const Sale = ({ data }) => {
               </Heading>
 
               {sale.map((item, key) => (
-                <SaleScreenAll item={item} key={key} />
+                <SaleScreen item={item} key={key} />
               ))}
             </VStack>
           </VStack>
@@ -105,7 +105,7 @@ Sale.propTypes = {
 export async function getServerSideProps({ query }) {
   const dA = query.u.toString();
   try {
-    const data = await dbUserData(dA, "dbUserData");
+    const data = await dbUserData(dA, "dbUserThree");
 
     if (!data) {
       return {

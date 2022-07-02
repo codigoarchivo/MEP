@@ -20,7 +20,7 @@ import Paginator from "../../utils/Paginator";
 
 import { useRouter } from "next/router";
 
-import SaleScreenAll from "../../components/sale/SaleScreenAll";
+import SaleScreenAll from "../../components/admin/SaleScreenAll";
 
 import es from "../../translations/es";
 import en from "../../translations/en";
@@ -40,7 +40,7 @@ const Sale = ({ data }) => {
       dispatch(cheListAll(data));
     }
   }, [dispatch, data]);
-
+console.log(data);
   return (
     <ShopLayout title={locale === "en" ? en.historySale.sB : es.historySale.sB}>
       <Container maxW={"container.lg"}>
@@ -74,6 +74,7 @@ const Sale = ({ data }) => {
                 mail={locale === "en" ? en.mail : es.mail}
                 creation={locale === "en" ? en.creation : es.creation}
                 verify={locale === "en" ? en.historyBuy.sE : es.historyBuy.sE}
+                locale={locale}
               />
             ))}
           </VStack>

@@ -45,6 +45,9 @@ export default {
     uA: "Perfil público",
     uB: "Información Básica",
     uC: "Perfil Usuario",
+    uD: "Si vas a vender, tienes que rellenar todos los campos",
+    uE: "No puedes editar un usuario que no te pertenece",
+    uF: "Informacion personal",
   },
   product: {
     pA: "Agrega un producto",
@@ -54,6 +57,8 @@ export default {
   category: {
     cA: "Agrega una categoria",
     cB: "Lista de categoría",
+    cC: "La categoría tiene un producto asociado",
+    cD: "Hay una categoría asociada con el nombre que desea agregar",
   },
   search: {
     sA: "Buscar rango de precios",
@@ -96,6 +101,11 @@ export default {
     fB: "información",
     fC: "Ubicación New Jersey, USA",
   },
+  pOrS: "Producto o Servicios",
+  check: "Compruebe si algún campo está vacío",
+  sure: "¿Estás seguro de que quieres eliminar?",
+  process: "Proceso",
+  paid: "Pagado",
   buyer: "Información del comprador",
   creation: "Fecha de creación",
   reference: "Referencia",

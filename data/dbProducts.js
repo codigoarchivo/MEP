@@ -32,9 +32,6 @@ export const dbProducts = async (id = "", dbP = "", valA = "") => {
     case "dbProFour":
       q = ref;
       break;
-    case "dbProFive":
-      q = query(ref, where("ct", "==", id), limit(1));
-      break;
     case "dbProSix":
       q = query(
         ref,

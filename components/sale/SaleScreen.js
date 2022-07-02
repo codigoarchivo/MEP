@@ -63,8 +63,8 @@ const SaleScreen = ({ item = {} }) => {
         )}
 
         <NavLink
-          href={`/admin/orders/[id]`}
-          as={`/admin/orders/${id}`}
+          href={`/sale/[id]`}
+          as={`/sale/${id}`}
           name={`Verificar $${to}`}
           variant={"primary"}
           size={"xs"}

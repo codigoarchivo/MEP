@@ -12,34 +12,39 @@ import {
 
 const CategoryForm = ({
   na,
-  pid,
   HStack,
   VStack,
   onClose,
   handleSubmit,
   handleInputChange,
+  locale,
+  es,
+  en,
+  info,
 }) => {
   return (
     <>
       <chakra.form onSubmit={handleSubmit} w="full" p={3}>
         <VStack spacing={7}>
           <FormControl>
-            <FormLabel htmlFor="na">Nombre</FormLabel>
+            <FormLabel htmlFor="na">
+              {locale === "en" ? en.name : es.name}
+            </FormLabel>
             <Input
               name="na"
               id="na"
               value={na}
               type={"text"}
-              placeholder="Nombre"
+              placeholder={locale === "en" ? en.name : es.name}
               onChange={handleInputChange}
             />
           </FormControl>
           <HStack w={"full"} justifyContent="flex-end">
             <Button variant={"secondary"} onClick={onClose}>
-              Close
+              {locale === "en" ? en.close : es.close}
             </Button>
             <Button variant={"primary"} type="submit" ml={3}>
-              {pid}
+              {info}
             </Button>
           </HStack>
         </VStack>
@@ -50,7 +55,6 @@ const CategoryForm = ({
 
 CategoryForm.propTypes = {
   na: PropTypes.string.isRequired,
-  pid: PropTypes.string.isRequired,
   HStack: PropTypes.object.isRequired,
   VStack: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,

@@ -1,7 +1,5 @@
 import React, { useRef } from "react";
 
-import { useRouter } from "next/router";
-
 import PropTypes from "prop-types";
 
 import {
@@ -31,16 +29,19 @@ import ContadorRegresivo from "../../helpers/ContadorRegresivo";
 const CheckoutScreen = ({
   product = {},
   process,
+  push,
+  locale,
   id,
   lim,
   count,
+  sal,
+  paid,
+  pro,
   sE,
   sF,
   sH,
-  sI,
   sJ,
 }) => {
-  const router = useRouter();
   // useRef
   const initRef = useRef();
   // Breakpoints
@@ -48,7 +49,7 @@ const CheckoutScreen = ({
 
   // envia el recibo del pago a la base de datos
   const handleVerify = () => {
-    router.push({
+    push({
       pathname: "/verify/[id]",
       query: {
         id,
@@ -59,10 +60,10 @@ const CheckoutScreen = ({
   // despues de verificar el pago se puede ver los datos del vendedor
   const handleUser = () => {
     if (process !== false) {
-      router.push({
+      push({
         pathname: "/info/[uid]",
         query: {
-          uid: product.uid,
+          uid: sal,
         },
       });
     }
@@ -70,7 +71,7 @@ const CheckoutScreen = ({
 
   //  puede enviarle un comentario al vendedor
   const handleReview = () => {
-    router.push({
+    push({
       pathname: "/review",
       query: {
         p: product.id,
@@ -144,7 +145,7 @@ const CheckoutScreen = ({
                   cursor={process ? "not-allowed" : "pointer"}
                   colorScheme={process ? "green" : "blue"}
                 >
-                  <TagLabel textTransform={"uppercase"}>{sI}</TagLabel>
+                  <TagLabel textTransform={"uppercase"}>{process ? paid : pro}</TagLabel>
                   <TagRightIcon as={process ? UnlockIcon : LockIcon} />
                 </Tag>
               </PopoverTrigger>
@@ -176,11 +177,13 @@ CheckoutScreen.propTypes = {
   id: PropTypes.string,
   lim: PropTypes.object,
   count: PropTypes.number,
+  sal: PropTypes.string,
   sE: PropTypes.string,
   sF: PropTypes.string,
   sH: PropTypes.string,
-  sI: PropTypes.string,
   sJ: PropTypes.string,
+  paid: PropTypes.string,
+  pro: PropTypes.string,
 };
 
 export default CheckoutScreen;

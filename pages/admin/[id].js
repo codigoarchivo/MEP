@@ -12,16 +12,22 @@ import ShopLayout from "../../components/layout/ShopLayout";
 
 import { dbCategory, dbCategoryById } from "../../data/dbCategory";
 
+import en from "../../translations/en";
+import es from "../../translations/es";
+
 const ConfigCategory = ({ category }) => {
   // router
-  const router = useRouter();
+  const { locale, back, query } = useRouter();
   return (
-    <ShopLayout title={router.query.pid}>
-      <Container maxW={"container.sm"}>
+    <ShopLayout title={locale === "en" ? en.major.mF : es.major.mF}>
+      <Container maxW={"container.sm"} py={20}>
         <CategoryData
-          router={router}
           category={category}
-          pid={router.query.pid}
+          pid={query.pid}
+          back={back}
+          locale={locale}
+          es={es}
+          en={en}
         />
       </Container>
     </ShopLayout>

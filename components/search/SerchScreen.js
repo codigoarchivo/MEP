@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { useRouter } from "next/router";
-
 import { Rating } from "react-simple-star-rating";
 
 import Image from "next/image";
@@ -32,7 +30,6 @@ import { cartSaveLatest, saveProductCart } from "../../actions/product";
 import { LoveIcon } from "../../helpers/IconNew";
 import Toast from "../../helpers/Toast";
 import Breakpoints from "../../helpers/Breakpoints";
-
 import { ShopAll } from "../../helpers/IconNew";
 
 const SerchScreen = ({
@@ -53,6 +50,8 @@ const SerchScreen = ({
   sF,
   sG,
   sH,
+  err,
+  push,
 }) => {
   // useRef
   const match = useRef();
@@ -67,8 +66,6 @@ const SerchScreen = ({
 
   // dispatch
   const dispatch = useDispatch();
-  // router
-  const router = useRouter();
   // disclosure
   const { isOpen, onToggle } = useDisclosure();
 
@@ -99,6 +96,7 @@ const SerchScreen = ({
     () => saveCartSelect.map((item) => item.id).includes(id),
     [saveCartSelect, id]
   );
+
   // select
   const handleSelect = () => {
     // activeCartSelect
@@ -107,7 +105,7 @@ const SerchScreen = ({
     }
     // saveCartSelect
     if (matchValid.current) {
-      router.push({
+      push({
         pathname: "/cart",
         query: { pid: id },
       });
@@ -115,14 +113,14 @@ const SerchScreen = ({
     }
 
     // dispatch
-    router.push({
+    push({
       pathname: "/search/[id]",
       query: {
         id,
       },
     });
 
-    dispatch(cartSaveLatest(data));
+    dispatch(cartSaveLatest(data, err));
   };
 
   // save
@@ -137,7 +135,7 @@ const SerchScreen = ({
         5000
       );
 
-      dispatch(saveProductCart(data));
+      dispatch(saveProductCart(data, err));
     }
   };
 

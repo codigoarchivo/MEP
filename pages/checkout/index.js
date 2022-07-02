@@ -118,12 +118,13 @@ const Checkout = ({ product = [] }) => {
                         sH={
                           locale === "en" ? en.historyBuy.sH : es.historyBuy.sH
                         }
-                        sI={
-                          locale === "en" ? en.historyBuy.sI : es.historyBuy.sI
-                        }
                         sJ={
                           locale === "en" ? en.historyBuy.sJ : es.historyBuy.sJ
                         }
+                        paid={locale === "en" ? en.paid : es.paid}
+                        pro={locale === "en" ? en.process : es.process}
+                        locale={locale}
+                        push={push}
                       />
                     ))}
                   </VStack>

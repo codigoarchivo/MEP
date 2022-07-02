@@ -26,8 +26,6 @@ import GridValueClose from "../../utils/GridValueClose";
 
 import Salemodal from "./Salemodal";
 
-import en from "../../translations/en";
-import es from "../../translations/es";
 import { CloseIcon } from "@chakra-ui/icons";
 
 const SaleVerify = ({
@@ -42,9 +40,12 @@ const SaleVerify = ({
   buy = "",
   // uid del vendedor
   sal = "",
+  push,
+  locale,
+  back,
+  es,
+  en,
 }) => {
-  // dispatch
-  const { push, locale, back } = useRouter();
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints

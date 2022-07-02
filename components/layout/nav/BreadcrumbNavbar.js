@@ -32,8 +32,9 @@ export const BreadcrumbNavbar = ({ NavLink, Box }) => {
   // handleObservator
   const handleObservator = async () => {
     const allData = await dbProducts("", "dbProOne");
+    const err = locale === "en" ? en.error : es.error;
     if (allData.length > 0) {
-      dispatch(serchProductList(allData));
+      dispatch(serchProductList(allData, err));
     }
   };
 
