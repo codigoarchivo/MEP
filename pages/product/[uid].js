@@ -54,7 +54,7 @@ const List = ({ product = [] }) => {
   const err = locale === "en" ? en.error : es.error;
   useEffect(() => {
     dispatch(listDataProduct(product, err));
-  }, [dispatch, product]);
+  }, [dispatch, product, err]);
 
   // add
   const handleAdd = () => {

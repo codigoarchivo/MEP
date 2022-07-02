@@ -49,7 +49,7 @@ const Search = ({ product }) => {
     if (product) {
       dispatch(serchProductList(product, err));
     }
-  }, [dispatch, product]);
+  }, [dispatch, product, err]);
 
   return (
     <>
