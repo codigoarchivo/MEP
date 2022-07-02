@@ -39,7 +39,7 @@ const initialStates = {
 const data = {
   pass: false,
 };
-const LoginUser = ({ handleReview }) => {
+const LoginUser = ({ handleReview, locale, es, en }) => {
   // selector
   const { loading } = useSelector(({ ui }) => ui);
   // dispatch
@@ -49,42 +49,53 @@ const LoginUser = ({ handleReview }) => {
     initialStates,
     data
   );
+  const aM = locale === "en" ? en.auth.aM : es.auth.aM;
+  const aL = locale === "en" ? en.auth.aL : es.auth.aL;
+  const aK = locale === "en" ? en.auth.aK : es.auth.aK;
+  const aN = locale === "en" ? en.auth.aN : es.auth.aN;
   // validar
-  const { emailE, passwordL, field, fiel, ErrorRorL } = Validator(values);
+  const { emailE, passwordL, field, ErrorRorL } = Validator(
+    values,
+    aM,
+    aL,
+    aK,
+    aN
+  );
   // mode Color
   const { textError, bgTextError } = ModeColor();
   // valores
   const { email, password, pass } = values;
 
+  let err = locale === "en" ? en.error : es.error;
   // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
     if (ErrorRorL) {
-      return Toast(fiel, "error", 5000);
+      return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     } else {
-      dispatch(startLoginEmailPassword(email, password));
+      dispatch(startLoginEmailPassword(email, password, err));
     }
   };
   // handleGooglelogin
   const handleGooglelogin = () => {
-    dispatch(startGoogleLogin());
+    dispatch(startGoogleLogin(err));
   };
 
   return (
     <>
-      <chakra.form onSubmit={handleSubmit} boxShadow="2xl" p={5}>
+      <chakra.form onSubmit={handleSubmit} boxShadow="2xl" p={5} w="70%">
         <VStack spacing={5}>
           <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
-            Login
+            {locale === "en" ? en.auth.aA : es.auth.aA}
           </Heading>
           <FormControl isInvalid>
             {!emailE && (
               <FormHelperText>
-                {" Enter the email you'd like to receive the newsletter on."}
+                {locale === "en" ? en.auth.aI : es.auth.aI}
               </FormHelperText>
             )}
             <FormLabel htmlFor="email">
-              Email{" "}
+              {locale === "en" ? en.mail : es.mail}{" "}
               <Tooltip
                 color={textError}
                 bg={bgTextError}
@@ -100,13 +111,13 @@ const LoginUser = ({ handleReview }) => {
               onChange={handleInputChange}
               value={email}
               type={"email"}
-              placeholder="Agrega un correo"
+              placeholder={locale === "en" ? en.mail : es.mail}
               autoComplete="new-email"
             />
           </FormControl>
           <FormControl isInvalid>
             <FormLabel htmlFor="password">
-              Contraseña{" "}
+              {locale === "en" ? en.password : es.password}{" "}
               <Tooltip
                 color={textError}
                 bg={bgTextError}
@@ -124,7 +135,7 @@ const LoginUser = ({ handleReview }) => {
                 value={password}
                 pr="4.5rem"
                 type={pass ? "text" : "password"}
-                placeholder="Agregar password"
+                placeholder={locale === "en" ? en.password : es.password}
                 autoComplete="new-password"
               />
               <InputRightElement width="4.5rem">
@@ -145,7 +156,7 @@ const LoginUser = ({ handleReview }) => {
             rightIcon={<GoogleIcon />}
             onClick={handleGooglelogin}
           >
-            Hacer registro mediante google
+            {locale === "en" ? en.auth.aC : es.auth.aC}
           </Button>
           <Button
             isLoading={loading}
@@ -154,21 +165,23 @@ const LoginUser = ({ handleReview }) => {
             variant={"primary"}
             textTransform={"uppercase"}
           >
-            Registrar
+            {locale === "en" ? en.auth.aD : es.auth.aD}
           </Button>
           <Flex w={"full"} alignItems={"center"} justifyContent={"center"}>
-            <Text>¿No tienes una cuenta?</Text>
+            <Text>{locale === "en" ? en.auth.aF : es.auth.aF}</Text>
             <NavLink
               href={"/auth/create"}
               variant={"secondary"}
-              name={"Regístrate"}
+              name={locale === "en" ? en.auth.aH : es.auth.aH}
             />
           </Flex>
-          <DividerWithText>OR</DividerWithText>
+          <DividerWithText>
+            {locale === "en" ? en.auth.aE : es.auth.aE}
+          </DividerWithText>
           <Flex w={"full"} alignItems={"center"} justifyContent={"center"}>
-            <Text>¿Forgot password?</Text>
+            <Text>{locale === "en" ? en.auth.aG : es.auth.aG}</Text>
             <Button variant={"secondary"} onClick={handleReview}>
-              Ingresa
+              {locale === "en" ? en.auth.aD : es.auth.aD}
             </Button>
           </Flex>
         </VStack>

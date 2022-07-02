@@ -116,7 +116,7 @@ Buy.propTypes = {
 export async function getServerSideProps({ query }) {
   const u = await query.u.toString();
   try {
-    const product = await dbUserData(u, "dbUserTwo");
+    const product = await dbUserData(u, "dbUserFour");
 
     if (!product) {
       return {

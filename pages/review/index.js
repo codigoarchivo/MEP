@@ -19,7 +19,7 @@ import en from "../../translations/en";
 
 const Review = ({ p = "", i = "", g = "" }) => {
   // useRouter
-  const { locale, back, push } = useRouter();
+  const { locale, push, back } = useRouter();
   // useSelector
   const { message } = useSelector(({ checkout }) => checkout);
 
@@ -39,7 +39,7 @@ const Review = ({ p = "", i = "", g = "" }) => {
   });
 
   return (
-    <ShopLayout title={"Review"}>
+    <ShopLayout title={locale === "en" ? en.review.rC : es.review.rC}>
       <Container maxW={"container.sm"}>
         <ReviewScreen
           calculo={el}
@@ -47,9 +47,9 @@ const Review = ({ p = "", i = "", g = "" }) => {
           p={p}
           i={i}
           g={g}
-          back={back}
           locale={locale}
           push={push}
+          back={back}
           es={es}
           en={en}
         />

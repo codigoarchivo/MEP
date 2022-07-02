@@ -1,5 +1,7 @@
 import React, { useRef } from "react";
 
+import { useSelector } from "react-redux";
+
 import PropTypes from "prop-types";
 
 import {
@@ -30,7 +32,6 @@ const CheckoutScreen = ({
   product = {},
   process,
   push,
-  locale,
   id,
   lim,
   count,
@@ -42,6 +43,8 @@ const CheckoutScreen = ({
   sH,
   sJ,
 }) => {
+  // useSelector
+  const { message } = useSelector(({ checkout }) => checkout);
   // useRef
   const initRef = useRef();
   // Breakpoints
@@ -69,12 +72,20 @@ const CheckoutScreen = ({
     }
   };
 
+  // aqui va estar todos los mensajes 
+  // let el = [];
+  // message.map((i) => {
+  //   if (String(i.id) !== g) {
+  //     el.push(i.rat);
+  //   }
+  // });
+
   //  puede enviarle un comentario al vendedor
   const handleReview = () => {
     push({
       pathname: "/review",
       query: {
-        p: product.id,
+        p: product.id, // id del producto se utilizara para guardar ranking
         g: id,
         i: "new",
       },
@@ -145,7 +156,9 @@ const CheckoutScreen = ({
                   cursor={process ? "not-allowed" : "pointer"}
                   colorScheme={process ? "green" : "blue"}
                 >
-                  <TagLabel textTransform={"uppercase"}>{process ? paid : pro}</TagLabel>
+                  <TagLabel textTransform={"uppercase"}>
+                    {process ? paid : pro}
+                  </TagLabel>
                   <TagRightIcon as={process ? UnlockIcon : LockIcon} />
                 </Tag>
               </PopoverTrigger>

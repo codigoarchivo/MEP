@@ -1,10 +1,9 @@
 import React from "react";
 
-import { Box, Divider, List, ListItem, chakra } from "@chakra-ui/react";
-
 import { useSelector } from "react-redux";
 
-import { useRouter } from "next/router";
+import { Box, Divider, List, ListItem, chakra } from "@chakra-ui/react";
+
 
 import {
   Category,
@@ -18,9 +17,6 @@ import {
   VentasClient,
 } from "../../../helpers/IconNew";
 
-import en from "../../../translations/en";
-import es from "../../../translations/es";
-
 const PopoverUserNavbar = ({
   HStack,
   Heading,
@@ -28,11 +24,14 @@ const PopoverUserNavbar = ({
   bg2,
   Button,
   handleLogout,
+  es,
+  en,
+  locale,
+  locales,
+  asPath,
 }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
-  // useRouter
-  const { locale, locales, asPath } = useRouter();
 
   return (
     <>

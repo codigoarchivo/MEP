@@ -21,37 +21,45 @@ import useFormAll from "../../hooks/useFormAll";
 
 import Validator from "../../helpers/Validator";
 import ModeColor from "../../helpers/ModeColor";
+import Toast from "../../helpers/Toast";
 
 import { sendEmail } from "../../actions/auth";
+
 import DividerWithText from "../../utils/DividerWithText";
 import NavLink from "../../utils/Navlink";
-import Toast from "../../helpers/Toast";
 
 const initialStates = {
   email: "jacksonescuques@gmail.com",
 };
 
-const ReviewUser = () => {
+const ReviewUser = ({ locale, es, en }) => {
   // dispatch
   const dispatch = useDispatch();
   // guardar states
   const { values, handleInputChange } = useFormAll(initialStates);
+
+  const aL = locale === "en" ? en.auth.aL : es.auth.aL;
+  const aK = locale === "en" ? en.auth.aK : es.auth.aK;
   // validar
-  const { emailE, field, ErrorLorR, fiel } = Validator(values);
+  const { emailE, field, ErrorLorR } = Validator(values, "", aL, aK);
+
   // mode Color
   const { textError, bgTextError } = ModeColor();
+
   // valores
   const { email } = values;
-
   // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
+    const err = locale === "en" ? en.error : es.error;
     if (ErrorLorR) {
-      return Toast(fiel, "error", 5000);
+      return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     } else {
-      dispatch(sendEmail(email));
+      dispatch(sendEmail(email, err));
       Toast(
-        "An email is sent to ${email} for password reset instructions.",
+        `${locale === "en" ? en.auth.aS : es.auth.aS} ${email} ${
+          locale === "en" ? en.auth.aT : es.auth.aT
+        }`,
         "success",
         5000
       );
@@ -60,19 +68,19 @@ const ReviewUser = () => {
 
   return (
     <>
-      <chakra.form onSubmit={handleSubmit} boxShadow="2xl" p={5}>
+      <chakra.form onSubmit={handleSubmit} boxShadow="2xl" p={5} w="70%">
         <VStack spacing={5}>
           <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
-            Forgot password
+            {locale === "en" ? en.auth.aH : es.auth.aH}
           </Heading>
           <FormControl isInvalid>
             {!emailE && (
               <FormHelperText>
-                {"Enter the email you'd like to receive the newsletter on."}
+                {locale === "en" ? en.auth.aI : es.auth.aI}
               </FormHelperText>
             )}
             <FormLabel htmlFor="email">
-              Email{" "}
+              {locale === "en" ? en.mail : es.mail}{" "}
               <Tooltip
                 color={textError}
                 bg={bgTextError}
@@ -88,7 +96,7 @@ const ReviewUser = () => {
               onChange={handleInputChange}
               value={email}
               type={"email"}
-              placeholder="Agrega un correo"
+              placeholder={locale === "en" ? en.mail : es.mail}
               autoComplete="new-email"
             />
           </FormControl>
@@ -98,11 +106,17 @@ const ReviewUser = () => {
             variant={"primary"}
             textTransform={"uppercase"}
           >
-            Reguperar
+            {locale === "en" ? en.auth.aJ : es.auth.aJ}
           </Button>
-          <DividerWithText>OR</DividerWithText>
+          <DividerWithText>
+            {locale === "en" ? en.auth.aE : es.auth.aE}
+          </DividerWithText>
           <Center>
-            <NavLink href={"/auth"} variant={"secondary"} name={"Login"} />
+            <NavLink
+              href={"/auth"}
+              variant={"secondary"}
+              name={locale === "en" ? en.auth.aA : es.auth.aA}
+            />
           </Center>
         </VStack>
       </chakra.form>

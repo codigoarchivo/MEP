@@ -19,8 +19,6 @@ import {
   Heading,
 } from "@chakra-ui/react";
 
-import { useRouter } from "next/router";
-
 import Breakpoints from "../../../helpers/Breakpoints";
 
 import NavLink from "../../../utils/Navlink";
@@ -40,9 +38,6 @@ import {
   ListEspera,
 } from "../../../helpers/IconNew";
 
-import en from "../../../translations/en";
-import es from "../../../translations/es";
-
 export const DrawerNavbar = ({
   onClose,
   isOpen,
@@ -56,9 +51,12 @@ export const DrawerNavbar = ({
   SunIcon,
   MoonIcon,
   handleLogout,
+  es,
+  en,
+  locale,
+  locales,
+  asPath,
 }) => {
-  // useRouter
-  const { locale, locales, asPath } = useRouter();
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // Breakpoints

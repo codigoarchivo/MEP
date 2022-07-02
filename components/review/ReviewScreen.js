@@ -22,11 +22,7 @@ import ModeColor from "../../helpers/ModeColor";
 import Breakpoints from "../../helpers/Breakpoints";
 import Calculate from "../../helpers/Calculate";
 
-import {
-  checkoutAdd,
-  checkoutEdit,
-  valueInProduct,
-} from "../../actions/checkout";
+import { checkoutAdd, checkoutEdit } from "../../actions/checkout";
 
 import useFormAll from "../../hooks/useFormAll";
 
@@ -43,13 +39,16 @@ const ReviewScreen = ({
   p = "",
   i = "",
   g = "",
+  locale,
+  push,
+  back,
+  es,
+  en,
 }) => {
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
   // dispatch
   const dispatch = useDispatch();
-  // useRouter
-  const router = useRouter();
   // mode Color
   const { bg, brand } = ModeColor();
   // Breakpoints
@@ -60,7 +59,7 @@ const ReviewScreen = ({
 
   // si no esta logueado no puede ver ni editar el review
   if ([uid, displayName].includes(undefined)) {
-    router.push("/");
+    push("/");
   }
 
   // useFormAll
@@ -78,9 +77,10 @@ const ReviewScreen = ({
       Calculate([...calculo, ...rat].map((item) => ({ rat: item || 0 }))),
     [calculo, rat]
   );
- 
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    let err = locale === "en" ? en.error : es.error;
     if (i !== "new") {
       // edit review
       dispatch(
@@ -100,10 +100,11 @@ const ReviewScreen = ({
             },
           },
           g,
-          p
+          p,
+          err
         )
       );
-      router.back();
+      back();
     } else {
       // add review
       dispatch(
@@ -129,11 +130,12 @@ const ReviewScreen = ({
             },
           },
           g,
-          p
+          p,
+          err
         )
       );
 
-      router.back();
+      back();
     }
   };
 
@@ -147,7 +149,7 @@ const ReviewScreen = ({
             textTransform={"uppercase"}
             fontWeight={"normal"}
           >
-            Como calificarias esta compra
+            {locale === "en" ? en.review.rA : es.review.rA}
           </Heading>
           <Box w={full}>
             <Rating
@@ -168,20 +170,20 @@ const ReviewScreen = ({
             textTransform={"uppercase"}
             fontWeight={"normal"}
           >
-            Puedes dejar un comentario
+            {locale === "en" ? en.review.rB : es.review.rB}
           </Heading>
           <Textarea
             name="com"
             value={com}
             onChange={handleInputChange}
-            placeholder="Escribe tu comentario"
+            placeholder={locale === "en" ? en.review.rB : es.review.rB}
             size="sm"
             variant="filled"
             bg={bg}
             _focus={brand}
           />
           <Button type={"submit"} variant={"primary"}>
-            Enviar
+            {locale === "en" ? en.send : es.send}
           </Button>
         </VStack>
       </chakra.form>

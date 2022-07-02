@@ -18,7 +18,7 @@ import Toast from "../helpers/Toast";
 
 import ModeColor from "../helpers/ModeColor";
 
-const FileAll = ({ setUrlImage, fileName, save }) => {
+const FileAll = ({ setUrlImage, fileName, save, image }) => {
   const [progress, setProgress] = useState(0);
   // mode Color
   const { bg } = ModeColor();
@@ -30,9 +30,9 @@ const FileAll = ({ setUrlImage, fileName, save }) => {
   function handleUpload({ target }) {
     const file = target.files[0];
 
-    const { mImage, esImg } = Validator({ imgsize: file.size });
+    const { mImage } = Validator({ imgsize: file.size });
 
-    if (mImage) return Toast(esImg, "error", 5000);
+    if (mImage) return Toast(image, "error", 5000);
 
     try {
       const uploadTask = uploadBytesResumable(

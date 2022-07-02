@@ -62,6 +62,8 @@ const Breakpoints = () => {
   const full = "full";
   const bordes = "1px solid #d0d0d0";
 
+  const calc = "calc(100vh - 50px)";
+
   return {
     displayOn1,
     displayOn2,
@@ -110,6 +112,7 @@ const Breakpoints = () => {
     center,
     full,
     bordes,
+    calc,
   };
 };
 

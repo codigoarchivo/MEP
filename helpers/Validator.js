@@ -1,4 +1,13 @@
-const Validator = (values) => {
+const Validator = (
+  values,
+  aM = "",
+  aL = "",
+  aK = "",
+  aN = "",
+  aO = "",
+  aP = "",
+  aQ = ""
+) => {
   // Register
   const nameV = values?.name === "";
   const naV = values?.na === "";
@@ -24,39 +33,38 @@ const Validator = (values) => {
   const mCategory = values?.ct === "";
   const mTipos = values?.ti === "";
 
-  const nameE = nameV && "Nombre is required.";
+  const nameE = nameV && aO;
 
   let emailE;
   if (emailV) {
-    emailE = emailV && "Email is required.";
+    emailE = emailV && aL;
   } else {
-    emailE = emailVa && "Verifique su correo.";
+    emailE = emailVa && aN;
   }
 
   let passwordE;
   if (passwordV) {
-    passwordE = passwordV && "Password is required.";
+    passwordE = passwordV && aM;
   } else {
-    passwordE = minPasswordV && "Password requiere al menos 6 caracteres.";
+    passwordE = minPasswordV && aP;
   }
 
   let rePasswordE;
   if (rePasswordV) {
-    rePasswordE = rePasswordV && "Password is required.";
+    rePasswordE = rePasswordV && aM;
   } else {
-    rePasswordE = minRePasswordV && "Password requiere al menos 6 caracteres.";
+    rePasswordE = minRePasswordV && aP;
   }
 
-  const samePasswordE =
-    !samePasswordV && "Los caracteres deben se ser iguales.";
+  const samePasswordE = !samePasswordV && aQ;
 
   const coPasswordE = passwordE ? passwordE : samePasswordE;
 
   const coRePasswordE = rePasswordE ? rePasswordE : samePasswordE;
 
-  const field = "Campo Correcto";
+  const field = aK;
   // login
-  const passwordL = passwordV && "Password is required.";
+  const passwordL = passwordV && aM;
 
   let ErrorLorR;
   if (
@@ -100,13 +108,7 @@ const Validator = (values) => {
     ErrorCatData = true;
   }
 
-  const fiel = "Revisa si algun campo esta vacio";
-  const estado = "El estado de la operación es Desactivado";
-  const esImg = "Imagen no tiene que ser mayor a 5mb";
-
   return {
-    fiel,
-    estado,
     nameE,
     emailE,
     coPasswordE,
@@ -114,7 +116,6 @@ const Validator = (values) => {
     passwordL,
     field,
     mImage,
-    esImg,
     mNombre,
     mPrecio,
     mDetalles,

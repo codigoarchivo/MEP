@@ -68,9 +68,10 @@ const ProductForm = ({
             <HStack justifyContent="space-between" w="full">
               <Box w="full">
                 <FileAll
-                  save={locale === "en" ? en.goup : es.goup}
                   setUrlImage={setUrlImage}
                   fileName={"fotosTienda"}
+                  save={locale === "en" ? en.goup : es.goup}
+                  image={locale === "en" ? en.image : es.image}
                 />
               </Box>
               <Box w="full" h={"full"} position={"relative"}>

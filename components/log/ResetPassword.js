@@ -32,7 +32,7 @@ const data = {
   pass: false,
 };
 
-const ResetPassword = () => {
+const ResetPassword = ({ locale, es, en }) => {
   // dispatch
   const dispatch = useDispatch();
   // guardar states
@@ -40,8 +40,12 @@ const ResetPassword = () => {
     initialStates,
     data
   );
+
+  const aM = locale === "en" ? en.auth.aM : es.auth.aM;
+  const aK = locale === "en" ? en.auth.aK : es.auth.aK;
+
   // validar
-  const { field, passwordV, fiel } = Validator(values);
+  const { field, passwordV } = Validator(values, aM, "", aK);
   // mode Color
   const { textError, bgTextError } = ModeColor();
   // valores
@@ -50,11 +54,12 @@ const ResetPassword = () => {
   // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
+    const err = locale === "en" ? en.error : es.error;
     if (passwordV) {
-      return Toast(fiel, "error", 5000);
+      return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     } else {
-      dispatch(resetPassword(password, getParameterByName("oobCode")));
-      Toast("Password has been changed, you can login now.", "success", 5000);
+      dispatch(resetPassword(password, getParameterByName("oobCode"), err));
+      Toast(locale === "en" ? en.auth.aU : es.auth.aU, "success", 5000);
       reset();
     }
   };
@@ -64,11 +69,11 @@ const ResetPassword = () => {
       <chakra.form onSubmit={handleSubmit} boxShadow="2xl" p={5}>
         <VStack spacing={10}>
           <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
-            New password
+            {locale === "en" ? en.auth.aV : es.auth.aV}
           </Heading>
           <FormControl isInvalid>
             <FormLabel htmlFor="password">
-              Contraseña{" "}
+              {locale === "en" ? en.password : es.password}{" "}
               <Tooltip
                 color={textError}
                 bg={bgTextError}
@@ -86,7 +91,7 @@ const ResetPassword = () => {
                 value={password}
                 pr="4.5rem"
                 type={pass ? "text" : "password"}
-                placeholder="new password"
+                placeholder={locale === "en" ? en.password : es.password}
                 autoComplete="new-password"
               />
               <InputRightElement width="4.5rem">
@@ -106,7 +111,7 @@ const ResetPassword = () => {
             variant={"primary"}
             textTransform={"uppercase"}
           >
-            recover
+            {locale === "en" ? en.auth.aJ : es.auth.aJ}
           </Button>
         </VStack>
       </chakra.form>

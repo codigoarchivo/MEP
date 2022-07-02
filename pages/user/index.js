@@ -57,10 +57,12 @@ const User = () => {
   values.photoURL = urlImage ? urlImage : values.photoURL;
   // values
   const { uid, photoURL, displayName } = values;
-
+  const err = locale === "en" ? en.error : es.error;
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(changeNameImgTel(uid, photoURL, displayName, a?.email, a?.rol));
+    dispatch(
+      changeNameImgTel(uid, photoURL, displayName, a?.email, a?.rol, err)
+    );
     Toast("Datos actualizados", "success", 5000);
   };
 
@@ -130,9 +132,10 @@ const User = () => {
                 {locale === "en" ? en.user.uB : es.user.uB}
               </Heading>
               <FileAll
-                save={locale === "en" ? en.goup : es.goup}
                 setUrlImage={setUrlImage}
                 fileName={"fotosPerfil"}
+                save={locale === "en" ? en.goup : es.goup}
+                image={locale === "en" ? en.image : es.image}
               />
 
               <Input

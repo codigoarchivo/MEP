@@ -352,6 +352,7 @@ const CheckVerify = ({
                   setUrlImage={setUrlImage}
                   fileName={"fotosRecibo"}
                   save={locale === "en" ? en.goup : es.goup}
+                  image={locale === "en" ? en.image : es.image}
                 />
               </Box>
 

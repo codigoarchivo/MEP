@@ -31,7 +31,7 @@ export const login = (uid, displayName, photoURL, email, rol) => ({
   },
 });
 
-export const startLoginEmailPassword = (email, password) => {
+export const startLoginEmailPassword = (email, password, err) => {
   return async (dispatch) => {
     try {
       // start
@@ -50,40 +50,17 @@ export const startLoginEmailPassword = (email, password) => {
         });
     } catch (error) {
       // error
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
 
-export const listDataUserUID = () => {
-  return async (dispatch) => {
-    try {
-      onAuthStateChanged(auth, (user) => {
-        // dispatch
-        const dA = process.env.NEXT_PUBLIC_ROL_A;
-
-        if (user) {
-          dispatch(
-            login(
-              user.uid,
-              user.displayName,
-              user.photoURL,
-              user.email,
-              user.uid === dA.toString() ? "owner" : "user"
-            )
-          );
-        } else {
-          dispatch(logoutClose());
-        }
-      });
-    } catch (error) {
-      // error
-      Toast("Al parecer hay un error", "error", 5000);
-    }
-  };
-};
-
-export const startRegisterWithNameEmailPassword = (email, password, name) => {
+export const startRegisterWithNameEmailPassword = (
+  email,
+  password,
+  name,
+  err
+) => {
   return (dispatch) => {
     try {
       // start
@@ -110,12 +87,12 @@ export const startRegisterWithNameEmailPassword = (email, password, name) => {
         });
     } catch (error) {
       // error
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
 
-export const startGoogleLogin = () => {
+export const startGoogleLogin = (err) => {
   // google
   return async (dispatch) => {
     try {
@@ -129,12 +106,12 @@ export const startGoogleLogin = () => {
         });
     } catch (error) {
       // error
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
 
-export const sendEmail = (email) => {
+export const sendEmail = (email, err) => {
   const actionCodeSettings = {
     url: "http://localhost:3000/auth/reset?mode=action&oobCode=code",
     handleCodeInApp: true,
@@ -151,7 +128,7 @@ export const sendEmail = (email) => {
         });
     } catch (error) {
       // error
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
@@ -161,7 +138,7 @@ const emailSend = (data) => ({
   payload: data,
 });
 
-export const resetPassword = (newPassword, actionCode) => {
+export const resetPassword = (newPassword, actionCode, err) => {
   return async (dispatch) => {
     try {
       await confirmPasswordReset(auth, actionCode, newPassword)
@@ -174,7 +151,7 @@ export const resetPassword = (newPassword, actionCode) => {
         });
     } catch (error) {
       // error
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
@@ -183,7 +160,7 @@ const passwordReset = () => ({
   type: types.closeActive,
 });
 
-export const logout = () => {
+export const logout = (err) => {
   return async (dispatch) => {
     try {
       await signOut(auth)
@@ -198,7 +175,7 @@ export const logout = () => {
       await dispatch(closeRevert());
     } catch (error) {
       // error
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
@@ -207,7 +184,14 @@ export const logoutClose = () => ({
   type: types.logout,
 });
 
-export const changeNameImgTel = (uid, photoURL, displayName, email, rol) => {
+export const changeNameImgTel = (
+  uid,
+  photoURL,
+  displayName,
+  email,
+  rol,
+  err
+) => {
   return async (dispatch) => {
     try {
       await updateProfile(auth.currentUser, {
@@ -223,7 +207,7 @@ export const changeNameImgTel = (uid, photoURL, displayName, email, rol) => {
         });
     } catch (error) {
       // error
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };

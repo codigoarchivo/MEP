@@ -86,7 +86,7 @@ export const cheListAllClearBu = () => ({
   type: types.cheListAllCleBu,
 });
 
-export const checkoutAdd = (data, rat, g, p) => {
+export const checkoutAdd = (data, rat, g, p, err) => {
   return async (dispatch, getState) => {
     const { activeCartSelect: check = [] } = await getState().checkout;
     try {
@@ -106,7 +106,7 @@ export const checkoutAdd = (data, rat, g, p) => {
         await dispatch(deletecheckout(g));
       }
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };
@@ -121,14 +121,14 @@ const deletecheckout = (id) => ({
 });
 
 // checkoutEdit comentario
-export const checkoutEdit = (data, rat, g, p) => {
+export const checkoutEdit = (data, rat, g, p, err) => {
   return async () => {
     try {
       await updateDoc(doc(db, "serchs", p, "messages", g), data);
 
       await updateDoc(doc(db, "serchs", p), rat);
     } catch (error) {
-      Toast("Al parecer hay un error", "error", 5000);
+      Toast(err, "error", 5000);
     }
   };
 };

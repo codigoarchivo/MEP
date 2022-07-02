@@ -39,11 +39,13 @@ const data = {
   pass: false,
   rPass: false,
 };
-const CreateUser = () => {
+const CreateUser = ({ locale, es, en }) => {
   // selector
   const { loading } = useSelector(({ ui }) => ui);
+
   // dispatch
   const dispatch = useDispatch();
+
   // useFormAll
   const {
     values,
@@ -51,6 +53,15 @@ const CreateUser = () => {
     handlePassword,
     handleRePassword,
   } = useFormAll(initialStates, data);
+
+  const aM = locale === "en" ? en.auth.aM : es.auth.aM;
+  const aL = locale === "en" ? en.auth.aL : es.auth.aL;
+  const aK = locale === "en" ? en.auth.aK : es.auth.aK;
+  const aN = locale === "en" ? en.auth.aN : es.auth.aN;
+  const aO = locale === "en" ? en.auth.aO : es.auth.aO;
+  const aP = locale === "en" ? en.auth.aP : es.auth.aP;
+  const aQ = locale === "en" ? en.auth.aQ : es.auth.aQ;
+
   // validar
   const {
     nameE,
@@ -59,34 +70,36 @@ const CreateUser = () => {
     coRePasswordE,
     field,
     ErrorLorR,
-    fiel,
-  } = Validator(values);
+  } = Validator(values, aM, aL, aK, aN, aO, aP, aQ);
+
   // mode Color
   const { textError, bgTextError } = ModeColor();
+
   // valores
   const { name, email, password, rePassword, pass, rPass } = values;
 
+  const err = locale === "en" ? en.error : es.error;
   // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (ErrorLorR) {
-      return Toast(fiel, "error", 5000);
+      return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     } else {
-      dispatch(startRegisterWithNameEmailPassword(email, password, name));
+      dispatch(startRegisterWithNameEmailPassword(email, password, name, err));
     }
   };
 
   return (
     <>
-      <chakra.form onSubmit={handleSubmit} boxShadow="2xl" p={5}>
+      <chakra.form onSubmit={handleSubmit} boxShadow="2xl" p={5} w="70%">
         <VStack spacing={5}>
           <Heading w={"full"} as="h1" size={"md"} textTransform={"uppercase"}>
-            Crear cuenta
+            {locale === "en" ? en.auth.aH : es.auth.aH}
           </Heading>
           <FormControl isInvalid>
             <FormLabel htmlFor="name">
-              Nombre{" "}
+              {locale === "en" ? en.name : es.name}{" "}
               <Tooltip
                 color={textError}
                 bg={bgTextError}
@@ -103,17 +116,17 @@ const CreateUser = () => {
               onChange={handleInputChange}
               value={name}
               type={"text"}
-              placeholder="Agrega un nombre"
+              placeholder={locale === "en" ? en.name : es.name}
             />
           </FormControl>
           <FormControl isInvalid>
             {!emailE && (
               <FormHelperText>
-                {" Enter the email you'd like to receive the newsletter on."}
+                {locale === "en" ? en.auth.aI : es.auth.aI}
               </FormHelperText>
             )}
             <FormLabel htmlFor="email">
-              Email{" "}
+              {locale === "en" ? en.mail : es.mail}{" "}
               <Tooltip
                 color={textError}
                 bg={bgTextError}
@@ -129,13 +142,13 @@ const CreateUser = () => {
               onChange={handleInputChange}
               value={email}
               type={"email"}
-              placeholder="Agrega un correo"
+              placeholder={locale === "en" ? en.mail : es.mail}
               autoComplete="new-email"
             />
           </FormControl>
           <FormControl isInvalid>
             <FormLabel htmlFor="password">
-              Contraseña{" "}
+              {locale === "en" ? en.password : es.password}{" "}
               <Tooltip
                 color={textError}
                 bg={bgTextError}
@@ -153,7 +166,7 @@ const CreateUser = () => {
                 value={password}
                 pr="4.5rem"
                 type={pass ? "text" : "password"}
-                placeholder="Agregar password"
+                placeholder={locale === "en" ? en.password : es.password}
                 autoComplete="new-password"
               />
               <InputRightElement width="4.5rem">
@@ -169,7 +182,7 @@ const CreateUser = () => {
           </FormControl>
           <FormControl isInvalid>
             <FormLabel htmlFor="rePassword">
-              Repetir Contraseña{" "}
+              {locale === "en" ? en.auth.aR : es.auth.aR}{" "}
               <Tooltip
                 color={textError}
                 bg={bgTextError}
@@ -187,7 +200,7 @@ const CreateUser = () => {
                 value={rePassword}
                 pr="4.5rem"
                 type={rPass ? "text" : "password"}
-                placeholder="Repetir password"
+                placeholder={locale === "en" ? en.auth.aR : es.auth.aR}
                 autoComplete="new-rePassword"
               />
               <InputRightElement width="4.5rem">
@@ -208,11 +221,17 @@ const CreateUser = () => {
             variant={"primary"}
             textTransform={"uppercase"}
           >
-            Registrar
+            {locale === "en" ? en.auth.aH : es.auth.aH}
           </Button>
-          <DividerWithText>OR</DividerWithText>
+          <DividerWithText>
+            {locale === "en" ? en.auth.aE : es.auth.aE}
+          </DividerWithText>
           <Center>
-            <NavLink href={"/auth"} variant={"secondary"} name={"Login"} />
+            <NavLink
+              href={"/auth"}
+              variant={"secondary"}
+              name={locale === "en" ? en.auth.aA : es.auth.aA}
+            />
           </Center>
         </VStack>
       </chakra.form>

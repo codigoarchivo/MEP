@@ -27,6 +27,7 @@ export const DialogSerchNavbar = ({
   InputLeftElement,
   Input,
   SearchIcon,
+  serch,
 }) => {
   // cerrar
   const onSerch = () => setIsSerch(false);
@@ -69,7 +70,7 @@ export const DialogSerchNavbar = ({
                   </InputLeftElement>
                   <Input
                     type={"search"}
-                    placeholder="Buscar"
+                    placeholder={serch}
                     value={values.q}
                     name={"q"}
                     onChange={handleInputChange}

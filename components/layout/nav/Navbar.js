@@ -73,7 +73,7 @@ const Navbar = () => {
   // dispatch
   const dispatch = useDispatch();
   // dispatch
-  const router = useRouter();
+  const { push, locale, locales, asPath } = useRouter();
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector
@@ -104,10 +104,11 @@ const Navbar = () => {
   } = Breakpoints();
 
   const handleLogout = () => {
-    dispatch(logout());
+    const err = locale === "en" ? en.error : es.error;
+    dispatch(logout(err));
 
     if (logout) {
-      router.push("/");
+      push("/");
     }
   };
 
@@ -116,7 +117,7 @@ const Navbar = () => {
   const handleSerchProduct = (e) => {
     e.preventDefault();
     const q = values.q;
-    router.push({
+    push({
       pathname: "/search",
       query: { q },
     });
@@ -144,6 +145,11 @@ const Navbar = () => {
         toggleColorMode={toggleColorMode}
         colorMode={colorMode}
         handleLogout={handleLogout}
+        es={es}
+        en={en}
+        locale={locale}
+        locales={locales}
+        asPath={asPath}
       />
       {/* DialogSerchNavbar */}
       <DialogSerchNavbar
@@ -153,6 +159,7 @@ const Navbar = () => {
         InputLeftElement={InputLeftElement}
         Input={Input}
         SearchIcon={SearchIcon}
+        serch={locale === "en" ? en.searchs : es.searchs}
       />
       <Container maxW={"container.xs"}>
         <chakra.nav>
@@ -188,9 +195,7 @@ const Navbar = () => {
                 </Box>
                 <Box as={"div"} display={displayOff2}>
                   <MenuCategoria
-                    categories={
-                      router.locale === "en" ? en.categories : es.categories
-                    }
+                    categories={locale === "en" ? en.categories : es.categories}
                   />
                 </Box>
               </HStack>
@@ -213,7 +218,7 @@ const Navbar = () => {
 
                   <Input
                     type={"search"}
-                    placeholder="Buscar"
+                    placeholder={locale === "en" ? en.searchs : es.searchs}
                     value={values.q}
                     name={"q"}
                     onChange={handleInputChange}
@@ -232,7 +237,7 @@ const Navbar = () => {
                         variant={"secondary"}
                         onClick={() =>
                           handleSerchProductCart(
-                            router.locale === "en" ? en.you : es.you
+                            locale === "en" ? en.you : es.you
                           )
                         }
                       >
@@ -315,7 +320,7 @@ const Navbar = () => {
                     size="md"
                     variant={"secondary"}
                     href={"/auth"}
-                    name={"Inicia Sesión"}
+                    name={locale === "en" ? en.auth.aA : es.auth.aA}
                   />
                 )}
 
@@ -348,7 +353,7 @@ const Navbar = () => {
                     size="md"
                     variant={"primary"}
                     href={"/auth/create"}
-                    name={"Regístrate"}
+                    name={locale === "en" ? en.auth.aH : es.auth.aH}
                   />
                 )}
 
@@ -409,6 +414,11 @@ const Navbar = () => {
                         bg2={bg2}
                         porcent2={porcent2}
                         Button={Button}
+                        es={es}
+                        en={en}
+                        locale={locale}
+                        locales={locales}
+                        asPath={asPath}
                       />
                     </PopoverBody>
                   </PopoverContent>
@@ -420,7 +430,13 @@ const Navbar = () => {
       </Container>
 
       {/* BreadcrumbNavbar */}
-      <BreadcrumbNavbar NavLink={NavLink} Box={Box} />
+      <BreadcrumbNavbar
+        NavLink={NavLink}
+        Box={Box}
+        locale={locale}
+        es={es}
+        en={en}
+      />
     </>
   );
 };

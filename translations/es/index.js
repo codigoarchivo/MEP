@@ -1,4 +1,28 @@
 export default {
+  auth: {
+    aA: "Iniciar sesión",
+    aB: "Registrarse",
+    aC: "Hacer un registro usando google",
+    aD: "Ingresar",
+    aE: "O",
+    aF: "¿No tienes una cuenta?",
+    aG: "¿Olvidaste tu contraseña?",
+    aH: "Inscribirse",
+    aI: "Ingrese el correo electrónico en el que desea recibir el boletín.",
+    aJ: "Recuperar",
+    aK: "Campo correcto",
+    aL: "Correo electronico es requerido.",
+    aM: "Se requiere contraseña.",
+    aN: "Revisa tu correo.",
+    aO: "Se requiere el nombre.",
+    aP: "La contraseña requiere al menos 6 caracteres.",
+    aQ: "Las contraseñas deben ser los mismos.",
+    aR: "Repita la contraseña",
+    aS: "Se envía un correo electrónico a",
+    aT: "Para obtener instrucciones para restablecer la contraseña.",
+    aU: "Se ha cambiado la contraseña, ya puede iniciar sesión.",
+    aV: "Nueva contraseña",
+  },
   major: {
     mA: "Hogar",
     mB: "Historial de compras",
@@ -54,13 +78,18 @@ export default {
     pB: "Información para cliente",
     pC: "Quedará guardado y se utilizara para futuras ventas.",
   },
+  review: {
+    rA: "¿Cómo calificará esta compra?",
+    rB: "Puedes dejar un comentario",
+    rC: "Reseñas",
+  },
   category: {
     cA: "Agrega una categoria",
     cB: "Lista de categoría",
     cC: "La categoría tiene un producto asociado",
     cD: "Hay una categoría asociada con el nombre que desea agregar",
   },
-  search: {
+  searchs: {
     sA: "Buscar rango de precios",
     sB: "Todas las categorías",
     sC:
@@ -101,6 +130,9 @@ export default {
     fB: "información",
     fC: "Ubicación New Jersey, USA",
   },
+  image: "La imagen no tiene que ser más grande que 5mb",
+  password: "Contraseña",
+  searchs: "Búsqueda",
   pOrS: "Producto o Servicios",
   check: "Compruebe si algún campo está vacío",
   sure: "¿Estás seguro de que quieres eliminar?",

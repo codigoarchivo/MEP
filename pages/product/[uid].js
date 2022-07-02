@@ -51,8 +51,8 @@ const List = ({ product = [] }) => {
   // dispatch
   const dispatch = useDispatch();
 
+  const err = locale === "en" ? en.error : es.error;
   useEffect(() => {
-    const err = locale === "en" ? en.error : es.error;
     dispatch(listDataProduct(product, err));
   }, [dispatch, product]);
 

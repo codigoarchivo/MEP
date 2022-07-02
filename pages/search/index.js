@@ -44,8 +44,8 @@ const Search = ({ product }) => {
   const { locale, push } = useRouter();
 
   // useState
+  const err = locale === "en" ? en.error : es.error;
   useEffect(() => {
-    const err = locale === "en" ? en.error : es.error;
     if (product) {
       dispatch(serchProductList(product, err));
     }

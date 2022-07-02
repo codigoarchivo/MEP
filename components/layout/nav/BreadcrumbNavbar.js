@@ -1,7 +1,5 @@
 import React from "react";
 
-import { useRouter } from "next/router";
-
 import { useDispatch, useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
@@ -16,12 +14,7 @@ import MenuHistory from "../../../utils/MenuHistory";
 
 import { dbProducts } from "../../../data/dbProducts";
 
-import en from "../../../translations/en";
-import es from "../../../translations/es";
-
-export const BreadcrumbNavbar = ({ NavLink, Box }) => {
-  // useRouter
-  const { locale } = useRouter();
+export const BreadcrumbNavbar = ({ NavLink, Box, locale, es, en }) => {
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // dispatch
