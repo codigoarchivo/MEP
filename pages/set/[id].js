@@ -30,7 +30,7 @@ const ConfigDashboard = ({ product = {} }) => {
           push={push}
           locale={locale}
           es={es}
-          en={en}
+          en={en} 
         />
       </Container>
     </ShopLayout>
