@@ -16,12 +16,15 @@ const ShopLayout = ({ children, title }) => {
         <title>{title || "Market | Edgars Pendulum"}</title>
       </Head>
 
-      <AuthChange />
+      {/* <AuthChange /> */}
       <chakra.header>
         <Navbar />
       </chakra.header>
 
-      <chakra.main>{children}</chakra.main>
+      <chakra.main>
+        <AuthChange />
+        {children}
+      </chakra.main>
 
       <chakra.footer w={"full"}>
         <Footer />

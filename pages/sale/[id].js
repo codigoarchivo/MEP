@@ -58,11 +58,22 @@ Sales.propTypes = {
 export async function getStaticPaths() {
   const sales = await dbUser("", "dbUserThree");
   return {
-    paths: sales.map(({ id }) => ({
-      params: {
-        id: id.toString(),
-      },
-    })),
+    paths: sales.map(
+      ({ id }) => (
+        {
+          params: {
+            id,
+          },
+          locale: "en",
+        },
+        {
+          params: {
+            id,
+          },
+          locale: "es",
+        }
+      )
+    ),
     fallback: "blocking",
   };
 }

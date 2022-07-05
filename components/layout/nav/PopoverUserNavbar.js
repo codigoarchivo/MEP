@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 import { Box, Divider, List, ListItem, chakra } from "@chakra-ui/react";
 
-
 import {
   Category,
   Global,
@@ -123,29 +122,28 @@ const PopoverUserNavbar = ({
           </Button>
         </ListItem>
         <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
-        <ListItem>
-          <HStack w={"full"} alignItems={"center"} py={5}>
-            <Box w={6} h={6} as={Global} />
-
-            <Heading textTransform={"uppercase"} size="sm">
-              {locale === "en" ? en.language : es.language}
-            </Heading>
-
-            {locales.map((lo, i) => (
-              <chakra.li key={i} sx={{ listStyle: "none" }}>
-                <NavLink
-                  variant={"primary"}
-                  href={asPath}
-                  locale={lo}
-                  name={lo}
-                  px={0}
-                  w={0}
-                />
-              </chakra.li>
-            ))}
-          </HStack>
-        </ListItem>
       </List>
+
+      <HStack w={"full"} alignItems={"center"} py={5}>
+        <Heading textTransform={"uppercase"} size="sm">
+          <Box w={6} h={6} as={Global} />{" "}
+          {locale === "en" ? en.language : es.language}
+        </Heading>
+
+        {locales.map((lo, i) => (
+          <chakra.li key={i} sx={{ listStyle: "none" }}>
+            <NavLink
+              size={"sm"}
+              variant={"primary"}
+              href={asPath}
+              locale={lo}
+              name={lo}
+              px={0}
+              w={0}
+            />
+          </chakra.li>
+        ))}
+      </HStack>
     </>
   );
 };

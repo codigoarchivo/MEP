@@ -54,7 +54,7 @@ const MenuCategoria = ({ categories }) => {
   return (
     <Menu>
       <MenuButton
-        fontSize={["sm"]}
+        size={"sm"}
         leftIcon={<CategoryAll />}
         variant={"primary"}
         as={Button}

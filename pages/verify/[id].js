@@ -61,11 +61,22 @@ Verification.propTypes = {
 export async function getStaticPaths() {
   const product = await dbUser("", "dbUserOne");
   return {
-    paths: product.map(({ id }) => ({
-      params: {
-        id: id.toString(),
-      },
-    })),
+    paths: product.map(
+      ({ id }) => (
+        {
+          params: {
+            id,
+          },
+          locale: "en",
+        },
+        {
+          params: {
+            id,
+          },
+          locale: "es",
+        }
+      )
+    ),
     fallback: "blocking",
   };
 }

@@ -1,7 +1,5 @@
 import React from "react";
 
-import { useRouter } from "next/router";
-
 import {
   Box,
   Button,
@@ -31,56 +29,81 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 const Home = ({ listData, latestCartSelect, locale, es, en }) => {
   // Breakpoints
-  const { content5, bordes } = Breakpoints();
+  const { content5, bordes, displayOff1, all1, points25 } = Breakpoints();
 
   return (
-    <Container maxW={"container.xs"}>
-      <VStack spacing={0}>
-        <Stack flexDirection={content5} alignItems={"center"}>
-          <VStack w={"md"} border={bordes} p={5} boxShadow={"lg"}>
-            <Heading w={"full"} size={"lg"}>
-              {locale === "en" ? en.home.hA : es.home.hA}
-            </Heading>
-            <Text>{locale === "en" ? en.home.hB : es.home.hB}</Text>
-          </VStack>
-          <Box w={"lg"} h={500} position={"relative"}>
-            <Image
-              src={"/img/primary.png"}
-              alt="Picture of the author"
-              layout="fill"
-              objectFit="contain"
-            />
-          </Box>
-        </Stack>
-        <Stack
+    <Container
+      maxW={"container.xs"}
+      p={{ base: 1, sm: 4 }}
+      py={{ base: 10, sm: 20, md: 0 }}
+    >
+      <Stack
+        flexDirection={content5}
+        justifyContent={"center"}
+        alignItems={"center"}
+        spacing={10}
+      >
+        <VStack
+          w={all1}
+          border={bordes}
           p={5}
-          w={"full"}
-          flexDirection={"row"}
-          backgroundColor={"brand.900"}
-          alignItems={"center"}
-          spacing={0}
+          boxShadow={"lg"}
+          backgroundColor={"brand.800"}
         >
-          <Heading
-            textTransform={"capitalize"}
-            w={"full"}
-            size={"sm"}
-            color={"brand.500"}
-          >
-            {locale === "en" ? en.home.hC : es.home.hC}
+          <Heading w={"full"} fontSize={points25}>
+            {locale === "en" ? en.home.hA : es.home.hA}
           </Heading>
-          <Box>
-            <NavLink
-              variant={"primary"}
-              name={locale === "en" ? en.create : es.create}
-              href={"/auth/create"}
-            />
-          </Box>
-        </Stack>
-      </VStack>
+          <Text size={["sx", "sm", "md", "lg", "xl"]}>
+            {locale === "en" ? en.home.hB : es.home.hB}
+          </Text>
+        </VStack>
+        <Box
+          w={{ base: 300, md: 400, lg: 500 }}
+          h={{ base: 300, md: 400, lg: 500 }}
+          position={"relative"}
+          alignSelf={"self-end"}
+        >
+          <Image
+            src={"/img/primary.png"}
+            alt="Picture of the author"
+            layout="fill"
+            objectFit="contain"
+          />
+        </Box>
+      </Stack>
+      <Stack
+        p={5}
+        w={"full"}
+        flexDirection={"row"}
+        backgroundColor={"brand.800"}
+        alignItems={"center"}
+        spacing={0}
+      >
+        <Heading
+          display={displayOff1}
+          textTransform={"capitalize"}
+          w={"full"}
+          mr={5}
+          size={"sm"}
+          color={"brand.900"}
+        >
+          {locale === "en" ? en.home.hC : es.home.hC}
+        </Heading>
+        <Box>
+          <NavLink
+            backgroundColor={"brand.900"}
+            color={"brand.700"}
+            size={"sm"}
+            variant={"primary"}
+            name={locale === "en" ? en.create : es.create}
+            href={"/auth/create"}
+          />
+        </Box>
+      </Stack>
       <VStack spacing={10} mt={16}>
         {listData[0] ? (
           <Stack w={"full"} spacing={10}>
-            <Heading w={"full"} size={"lg"}>
+            <Heading w={"full"} fontSize={points25}>
               {locale === "en" ? en.home.hD : es.home.hD}
             </Heading>
             <HStack>

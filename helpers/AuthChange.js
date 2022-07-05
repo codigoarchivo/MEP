@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect } from "react";
 
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -12,8 +12,8 @@ const AuthChange = () => {
   // dispatch
   const dispatch = useDispatch();
 
-  useMemo(() => {
-    onAuthStateChanged(auth, (user) => {
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const dA = process.env.NEXT_PUBLIC_ROL_A;
         dispatch(
@@ -27,7 +27,9 @@ const AuthChange = () => {
         );
       }
     });
-  }, [dispatch]);
+
+    return () => unsubscribe();
+  }, [auth]);
 
   return null;
 };

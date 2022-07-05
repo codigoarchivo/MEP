@@ -7,13 +7,10 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  AspectRatio,
   Avatar,
   Box,
   Button,
   chakra,
-  Container,
-  Divider,
   Flex,
   Grid,
   GridItem,
@@ -101,6 +98,7 @@ const Navbar = () => {
     repeat4,
     porcent2,
     bordes,
+    points14,
   } = Breakpoints();
 
   const handleLogout = () => {
@@ -161,72 +159,62 @@ const Navbar = () => {
         SearchIcon={SearchIcon}
         serch={locale === "en" ? en.searchs : es.searchs}
       />
-      <Container maxW={"container.xs"}>
-        <chakra.nav>
-          <Grid
-            as={"ul"}
-            gridTemplateColumns={repeat4}
-            alignItems={"center"}
-            py={1}
-          >
-            <GridItem
-              as={"li"}
-              colSpan={3}
-              justifyContent={"center"}
-              display={displayOn2}
-            >
-              <Icon boxSize={6} mx={7} cursor={"pointer"} onClick={onOpen}>
-                <HamburgerIcon />
-              </Icon>
-            </GridItem>
-            <GridItem as={"li"} colSpan={points15}>
-              <HStack mx={4} justifyContent="space-around">
-                <Box
-                  position={"relative"}
-                  display={"flex"}
-                  alignItems={"center"}
-                >
-                  <Image
-                    src={"/img/logo.png"}
-                    alt="Picture of the author"
-                    width={100}
-                    height={70}
-                  />
-                </Box>
-                <Box as={"div"} display={displayOff2}>
-                  <MenuCategoria
-                    categories={locale === "en" ? en.categories : es.categories}
-                  />
-                </Box>
-              </HStack>
-            </GridItem>
-            <GridItem as={"li"} colSpan={points5}>
-              <Icon
-                onClick={() => setModality(true)}
-                boxSize={4}
-                display={displayOn2}
-                cursor={"pointer"}
-                mx={{ base: "5" }}
-              >
-                <SearchIcon />
-              </Icon>
-              <chakra.form onSubmit={handleSerchProduct}>
-                <InputGroup display={displayOff2}>
-                  <InputLeftElement pointerEvents="none">
-                    <SearchIcon color="gray.300" />
-                  </InputLeftElement>
 
-                  <Input
-                    type={"search"}
-                    placeholder={locale === "en" ? en.searchs : es.searchs}
-                    value={values.q}
-                    name={"q"}
-                    onChange={handleInputChange}
-                  />
-                </InputGroup>
-              </chakra.form>
-            </GridItem>
-            <GridItem as={"li"} colSpan={1} justifySelf="center">
+      <chakra.nav py={1}>
+        <Grid gridTemplateColumns={repeat4} alignItems={"center"}>
+          <GridItem
+            colSpan={{ base: 4, sm: 4 }}
+            justifyContent={"center"}
+            display={displayOn2}
+          >
+            <Icon boxSize={6} mx={7} cursor={"pointer"} onClick={onOpen}>
+              <HamburgerIcon />
+            </Icon>
+          </GridItem>
+          <GridItem colSpan={points15} display={displayOff2}>
+            <HStack mx={4} justifyContent="space-around">
+              <Box position={"relative"} alignItems={"center"} minWidth={70}>
+                <Image
+                  src={"/img/logo.png"}
+                  alt="Picture of the author"
+                  width={130}
+                  height={100}
+                />
+              </Box>
+              <Box as={"div"}>
+                <MenuCategoria
+                  categories={locale === "en" ? en.categories : es.categories}
+                />
+              </Box>
+            </HStack>
+          </GridItem>
+          <GridItem colSpan={{ base: 3, md: 4 }}>
+            <Icon
+              onClick={() => setModality(true)}
+              boxSize={4}
+              display={displayOn2}
+              cursor={"pointer"}
+            >
+              <SearchIcon px={3} />
+            </Icon>
+            <chakra.form onSubmit={handleSerchProduct}>
+              <InputGroup display={displayOff2}>
+                <InputLeftElement pointerEvents="none">
+                  <SearchIcon color="gray.300" />
+                </InputLeftElement>
+
+                <Input
+                  type={"search"}
+                  placeholder={locale === "en" ? en.searchs : es.searchs}
+                  value={values.q}
+                  name={"q"}
+                  onChange={handleInputChange}
+                />
+              </InputGroup>
+            </chakra.form>
+          </GridItem>
+          <GridItem colSpan={{ base: 2, sm: 4, md: 3 }}>
+            <Flex mx={4} justifyContent="space-around" alignItems={"center"}>
               <Popover isLazy>
                 <PopoverTrigger>
                   <Box position={"relative"}>
@@ -244,15 +232,15 @@ const Navbar = () => {
                         <CartIcon boxSize={points11} />
                       </Button>
                     ) : (
-                      <Button size="xs" px={0} variant={"secondary"}>
-                        <CartIcon boxSize={points11} />
+                      <Button size="xs" px={3} variant={"secondary"}>
+                        <CartIcon boxSize={7} />
                       </Button>
                     )}
 
                     <Flex
-                      cursor={"pointer"}
                       right={-1}
                       top={-2}
+                      zIndex={-10}
                       border={bordes}
                       alignItems={"center"}
                       justifyContent="center"
@@ -282,59 +270,20 @@ const Navbar = () => {
                   </PopoverContent>
                 )}
               </Popover>
-            </GridItem>
-            <GridItem as={"li"} colSpan={5} display={displayOff2}>
-              <Flex mx={4} justifyContent="space-around" alignItems={"center"}>
-                {a?.email && a?.rol && a?.displayName ? (
-                  <>
-                    <Box position={"relative"}>
-                      <NavLink
-                        px={0}
-                        variant={"secondary"}
-                        href={`/checkout?q=${a.uid}`}
-                        as={`/checkout?q=${a.uid}`}
-                        name={<OrdenpagoIcon boxSize={points11} />}
-                      />
-
-                      <Flex
-                        right={-2}
-                        zIndex={-10}
-                        cursor={"pointer"}
-                        top={0}
-                        border={bordes}
-                        alignItems={"center"}
-                        justifyContent="center"
-                        backgroundColor={"brand.800"}
-                        borderRadius={"full"}
-                        position={"absolute"}
-                        w={5}
-                        h={5}
-                      >
-                        {check.length > 0 ? check.length : 0}
-                      </Flex>
-                    </Box>
-                  </>
-                ) : (
-                  <NavLink
-                    px={0}
-                    size="md"
-                    variant={"secondary"}
-                    href={"/auth"}
-                    name={locale === "en" ? en.auth.aA : es.auth.aA}
-                  />
-                )}
-
-                {a?.email && a?.rol && a?.displayName ? (
+              {a?.email && a?.rol && a?.displayName ? (
+                <>
                   <Box position={"relative"}>
                     <NavLink
-                      px={0}
+                      px={3}
                       variant={"secondary"}
-                      href={"/cart"}
-                      name={<LoveIcon boxSize={points11} />}
+                      href={`/checkout?q=${a.uid}`}
+                      as={`/checkout?q=${a.uid}`}
+                      name={<OrdenpagoIcon boxSize={7} />}
                     />
+
                     <Flex
-                      cursor={"pointer"}
                       right={0}
+                      zIndex={-10}
                       top={0}
                       border={bordes}
                       alignItems={"center"}
@@ -345,89 +294,122 @@ const Navbar = () => {
                       w={5}
                       h={5}
                     >
-                      {!saveCartSelect[0] ? 0 : saveCartSelect.length}
+                      {check.length > 0 ? check.length : 0}
                     </Flex>
                   </Box>
-                ) : (
-                  <NavLink
-                    size="md"
-                    variant={"primary"}
-                    href={"/auth/create"}
-                    name={locale === "en" ? en.auth.aH : es.auth.aH}
-                  />
-                )}
+                </>
+              ) : (
+                <NavLink
+                  px={0}
+                  size="sm"
+                  variant={"secondary"}
+                  href={"/auth"}
+                  name={locale === "en" ? en.auth.aA : es.auth.aA}
+                />
+              )}
 
-                <Popover isLazy>
-                  <PopoverTrigger>
-                    {!a?.photoURL ? (
-                      <Avatar cursor={"pointer"} name={a?.displayName} />
-                    ) : (
-                      <AspectRatio
-                        ratio={16 / 9}
-                        w={30}
-                        h={30}
-                        position={"relative"}
-                        cursor={"pointer"}
-                      >
-                        <Image
-                          src={a?.photoURL}
-                          alt="Perfil"
-                          layout="fill"
-                          objectFit="contain"
-                        />
-                      </AspectRatio>
-                    )}
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <PopoverHeader fontWeight="semibold" borderBottomWidth={0}>
-                      <HStack spacing={6}>
-                        <Heading size={"md"}>{a?.displayName}</Heading>
-                        <Button
-                          onClick={toggleColorMode}
-                          size="xs"
-                          px={0}
-                          variant={"secondary"}
-                        >
-                          {colorMode === "light" ? (
-                            <MoonIcon boxSize={6} />
-                          ) : (
-                            <SunIcon boxSize={6} />
-                          )}
-                        </Button>
-                      </HStack>
-                      <Text fontSize="sm">{a?.email}</Text>
-                    </PopoverHeader>
-                    <PopoverArrow />
-                    <PopoverCloseButton />
-                    <Divider
-                      orientation="horizontal"
-                      variant={"dashed"}
-                      bg={bg2}
+              {a?.email && a?.rol && a?.displayName ? (
+                <Box position={"relative"}>
+                  <NavLink
+                    px={3}
+                    variant={"secondary"}
+                    href={"/cart"}
+                    name={<LoveIcon boxSize={7} />}
+                  />
+                  <Flex
+                    right={-1}
+                    zIndex={-10}
+                    top={0}
+                    border={bordes}
+                    alignItems={"center"}
+                    justifyContent="center"
+                    backgroundColor={"brand.800"}
+                    borderRadius={"full"}
+                    position={"absolute"}
+                    w={5}
+                    h={5}
+                  >
+                    {!saveCartSelect[0] ? 0 : saveCartSelect.length}
+                  </Flex>
+                </Box>
+              ) : (
+                <NavLink
+                  size="sm"
+                  variant={"primary"}
+                  href={"/auth/create"}
+                  name={locale === "en" ? en.auth.aH : es.auth.aH}
+                />
+              )}
+            </Flex>
+          </GridItem>
+          <GridItem colSpan={2} justifySelf="center" display={displayOff2}>
+            {" "}
+            <Popover isLazy>
+              <PopoverTrigger>
+                {!a?.photoURL ? (
+                  <Avatar
+                    cursor={"pointer"}
+                    name={a?.displayName}
+                    w={10}
+                    h={10}
+                  />
+                ) : (
+                  <Box position={"relative"} cursor={"pointer"}>
+                    <Image
+                      src={a?.photoURL}
+                      alt="Perfil"
+                      width={30}
+                      height={30}
                     />
-                    <PopoverBody>
-                      {/* PopoverUserNavbar */}
-                      <PopoverUserNavbar
-                        handleLogout={handleLogout}
-                        HStack={HStack}
-                        Heading={Heading}
-                        NavLink={NavLink}
-                        bg2={bg2}
-                        porcent2={porcent2}
-                        Button={Button}
-                        es={es}
-                        en={en}
-                        locale={locale}
-                        locales={locales}
-                        asPath={asPath}
-                      />
-                    </PopoverBody>
-                  </PopoverContent>
-                </Popover>
-              </Flex>
-            </GridItem>
-          </Grid>
-        </chakra.nav>
-      </Container>
+                  </Box>
+                )}
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverHeader fontWeight="semibold" borderBottomWidth={0}>
+                  <HStack spacing={6}>
+                    <Heading size={"md"}>{a?.displayName}</Heading>
+                    <Button
+                      onClick={toggleColorMode}
+                      size="xs"
+                      px={0}
+                      variant={"secondary"}
+                    >
+                      {colorMode === "light" ? (
+                        <MoonIcon boxSize={6} />
+                      ) : (
+                        <SunIcon boxSize={6} />
+                      )}
+                    </Button>
+                  </HStack>
+                  <Text fontSize="sm">{a?.email}</Text>
+                </PopoverHeader>
+                <PopoverArrow />
+                <PopoverCloseButton />
+
+                <PopoverBody>
+                  {/* PopoverUserNavbar */}
+
+                  <PopoverUserNavbar
+                    handleLogout={handleLogout}
+                    HStack={HStack}
+                    Heading={Heading}
+                    NavLink={NavLink}
+                    bg2={bg2}
+                    porcent2={porcent2}
+                    Button={Button}
+                    es={es}
+                    en={en}
+                    locale={locale}
+                    locales={locales}
+                    asPath={asPath}
+                    push={push}
+                  />
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+          </GridItem>
+        </Grid>
+      </chakra.nav>
 
       {/* BreadcrumbNavbar */}
       <BreadcrumbNavbar

@@ -41,7 +41,6 @@ const Orders = ({ active }) => {
             buy={active.buy}
             // uid que esta producto se utiliza para comparar con el uid owner
             sal={active.product.uid}
-            
             push={push}
             locale={locale}
             back={back}
@@ -61,11 +60,22 @@ Orders.propTypes = {
 export async function getStaticPaths() {
   const sales = await dbUser("", "dbUserThree");
   return {
-    paths: sales.map(({ id }) => ({
-      params: {
-        id: id.toString(),
-      },
-    })),
+    paths: sales.map(
+      ({ id }) => (
+        {
+          params: {
+            id,
+          },
+          locale: "en",
+        },
+        {
+          params: {
+            id,
+          },
+          locale: "es",
+        }
+      )
+    ),
     fallback: "blocking",
   };
 }

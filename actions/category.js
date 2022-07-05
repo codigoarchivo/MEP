@@ -58,8 +58,7 @@ const categoryAdd = (data) => ({
 export const editCategory = (na, id, err) => {
   return async (dispatch) => {
     try {
-      const dataRef = doc(db, "categories", id);
-      await updateDoc(dataRef, {
+      await updateDoc(doc(db, "categories", id), {
         na,
       });
 

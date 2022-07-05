@@ -18,7 +18,6 @@ import es from "../../translations/es";
 import en from "../../translations/en";
 
 const Informacion = ({ user = {} }) => {
-  
   const { locale, back } = useRouter();
 
   return (
@@ -43,11 +42,22 @@ Informacion.propTypes = {
 export async function getStaticPaths() {
   const user = await dbUser("", "dbUserTwo");
   return {
-    paths: user.map(({ id }) => ({
-      params: {
-        uid: id.toString(),
-      },
-    })),
+    paths: user.map(
+      ({ id }) => (
+        {
+          params: {
+            uid: id,
+          },
+          locale: "en",
+        },
+        {
+          params: {
+            uid: id,
+          },
+          locale: "es",
+        }
+      )
+    ),
     fallback: "blocking",
   };
 }

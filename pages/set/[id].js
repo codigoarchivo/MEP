@@ -30,7 +30,7 @@ const ConfigDashboard = ({ product = {} }) => {
           push={push}
           locale={locale}
           es={es}
-          en={en} 
+          en={en}
         />
       </Container>
     </ShopLayout>
@@ -40,11 +40,22 @@ const ConfigDashboard = ({ product = {} }) => {
 export async function getStaticPaths() {
   const producto = await dbProducts("", "dbProFour");
   return {
-    paths: producto.map(({ id }) => ({
-      params: {
-        id: id.toString(),
-      },
-    })),
+    paths: producto.map(
+      ({ id }) => (
+        {
+          params: {
+            id,
+          },
+          locale: "en",
+        },
+        {
+          params: {
+            id,
+          },
+          locale: "es",
+        }
+      )
+    ),
     fallback: "blocking",
   };
 }

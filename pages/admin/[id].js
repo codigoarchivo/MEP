@@ -41,11 +41,22 @@ ConfigCategory.propTypes = {
 export async function getStaticPaths() {
   const category = await dbCategory("", "dbCatOne");
   return {
-    paths: category.map(({ id }) => ({
-      params: {
-        id: id.toString(),
-      },
-    })),
+    paths: category.map(
+      ({ id }) => (
+        {
+          params: {
+            id,
+          },
+          locale: "en",
+        },
+        {
+          params: {
+            id,
+          },
+          locale: "es",
+        }
+      )
+    ),
     fallback: "blocking",
   };
 }

@@ -33,7 +33,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box, locale, es, en }) => {
 
   return (
     <Box display={displayOff2} mb={5} borderTop={bordes}>
-      <chakra.nav boxShadow="md">
+      <chakra.nav boxShadow="md" backgroundColor={"brand.800"}>
         <Stack
           spacing={0}
           as={"ul"}

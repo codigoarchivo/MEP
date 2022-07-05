@@ -44,6 +44,7 @@ const SerchScreen = ({
   rat,
   ps,
   uid,
+  push,
   pj,
   sD,
   sE,
@@ -51,7 +52,6 @@ const SerchScreen = ({
   sG,
   sH,
   err,
-  push,
 }) => {
   // useRef
   const match = useRef();

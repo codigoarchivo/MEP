@@ -10,7 +10,7 @@ import { Container } from "@chakra-ui/react";
 
 import Toast from "../../helpers/Toast";
 
-import { messagesClear, messagesList } from "../../actions/checkout";
+import { messagesList } from "../../actions/checkout";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
@@ -65,11 +65,22 @@ export async function getStaticPaths(data) {
   console.log(data);
   const producto = await dbProducts("", "dbProFour");
   return {
-    paths: producto.map(({ id }) => ({
-      params: {
-        id: id.toString(),
-      },
-    })),
+    paths: producto.map(
+      ({ id }) => (
+        {
+          params: {
+            id,
+          },
+          locale: "en",
+        },
+        {
+          params: {
+            id,
+          },
+          locale: "es",
+        }
+      )
+    ),
     fallback: "blocking",
   };
 }

@@ -10,7 +10,6 @@ import {
   Box,
   Button,
   Container,
-  Divider,
   Grid,
   GridItem,
   Heading,
@@ -31,12 +30,10 @@ import NavLink from "../../../utils/Navlink";
 
 import {
   FacebookIcon,
+  Global,
   InstagramIcon,
   TwitterIcon,
 } from "../../../helpers/IconNew";
-
-import MenuHistory from "../../../utils/MenuHistory";
-import MenuCategoria from "../../../utils/MenuCategoria";
 
 import en from "../../../translations/en";
 import es from "../../../translations/es";
@@ -50,7 +47,6 @@ const Footer = () => {
   const {
     repeat2,
     points3,
-    points5,
     points7,
     points8,
     points9,
@@ -58,7 +54,6 @@ const Footer = () => {
     points11,
     points14,
     content1,
-    content2,
     content3,
     bordes,
   } = Breakpoints();
@@ -66,19 +61,18 @@ const Footer = () => {
   const { bg2 } = ModeColor();
 
   return (
-    <Container maxW={"full"} px={4} mt={20} pb={4}>
+    <Container maxW={"full"} px={{ base: 0, sm: 4 }} mt={20} pb={4}>
       <Grid
         templateColumns={repeat2}
         columnGap={points3}
         gridAutoRows={"minmax(50px, auto)"}
         gap={4}
         alignItems={"center"}
-        backgroundColor={"brand.900"}
-        py={10}
+        py={3}
         border={bordes}
         boxShadow={"lg"}
       >
-        <GridItem colSpan={points8}>
+        <GridItem colSpan={points8} px={5}>
           <VStack spacing={5}>
             <Box position={"relative"} display={"flex"} alignItems={"center"}>
               <Image
@@ -90,7 +84,7 @@ const Footer = () => {
             </Box>
             <Text
               fontSize={"sm"}
-              color={"brand.600"}
+              color={"brand.900"}
               textTransform={"capitalize"}
             >
               © {new Date().getFullYear()}{" "}
@@ -105,7 +99,7 @@ const Footer = () => {
                   isExternal
                 >
                   <Button
-                    color={"brand.600"}
+                    color={"brand.900"}
                     as={"span"}
                     size="xs"
                     px={0}
@@ -123,7 +117,7 @@ const Footer = () => {
                   isExternal
                 >
                   <Button
-                    color={"brand.600"}
+                    color={"brand.900"}
                     as={"span"}
                     size="xs"
                     px={0}
@@ -141,7 +135,7 @@ const Footer = () => {
                   isExternal
                 >
                   <Button
-                    color={"brand.600"}
+                    color={"brand.900"}
                     as={"span"}
                     size="xs"
                     px={0}
@@ -162,28 +156,31 @@ const Footer = () => {
             spacing={0}
           >
             <List px={points14} py={5} w="full" spacing={1}>
-              <Heading
-                color={"brand.600"}
-                size={"md"}
-                textTransform={"uppercase"}
-              >
-                {locale === "en" ? en.footer.fB : es.footer.fB}
-              </Heading>
-              <ListItem>
-                <Text color={"brand.600"}>Tel +1 9735108452</Text>
-              </ListItem>
-              <ListItem>
-                <Text color={"brand.600"}>
-                  {" "}
-                  {locale === "en" ? en.footer.fC : es.footer.fC}
-                </Text>
-              </ListItem>
+              <VStack spacing={5}>
+                <Heading
+                  w="full"
+                  color={"brand.900"}
+                  size={"sm"}
+                  textTransform={"uppercase"}
+                >
+                  {locale === "en" ? en.footer.fB : es.footer.fB}
+                </Heading>
+                <ListItem w="full">
+                  <Text color={"brand.900"}>Tel +1 9735108452</Text>
+                </ListItem>
+                <ListItem w="full">
+                  <Text color={"brand.900"}>
+                    {" "}
+                    {locale === "en" ? en.footer.fC : es.footer.fC}
+                  </Text>
+                </ListItem>
+              </VStack>
             </List>
             <List px={points14} py={5} w="full" spacing={1}>
               <ListItem>
                 <NavLink
                   display={"inline"}
-                  color={"brand.600"}
+                  color={"brand.900"}
                   size="sm"
                   px={0}
                   variant={"secondary"}
@@ -194,7 +191,7 @@ const Footer = () => {
               <ListItem>
                 <NavLink
                   display={"inline"}
-                  color={"brand.600"}
+                  color={"brand.900"}
                   size="sm"
                   px={0}
                   variant={"secondary"}
@@ -205,7 +202,7 @@ const Footer = () => {
               <ListItem>
                 <NavLink
                   display={"inline"}
-                  color={"brand.600"}
+                  color={"brand.900"}
                   size="sm"
                   px={0}
                   variant={"secondary"}
@@ -217,7 +214,7 @@ const Footer = () => {
               <ListItem>
                 <NavLink
                   display={"inline"}
-                  color={"brand.600"}
+                  color={"brand.900"}
                   size="sm"
                   px={0}
                   variant={"secondary"}
@@ -231,7 +228,7 @@ const Footer = () => {
                   <ListItem>
                     <NavLink
                       display={"inline"}
-                      color={"brand.600"}
+                      color={"brand.900"}
                       size="sm"
                       px={0}
                       variant={"secondary"}
@@ -242,7 +239,7 @@ const Footer = () => {
                   <ListItem>
                     <NavLink
                       display={"inline"}
-                      color={"brand.600"}
+                      color={"brand.900"}
                       size="sm"
                       px={0}
                       variant={"secondary"}
@@ -256,7 +253,7 @@ const Footer = () => {
               <ListItem>
                 <NavLink
                   display={"inline"}
-                  color={"brand.600"}
+                  color={"brand.900"}
                   size="sm"
                   px={0}
                   variant={"secondary"}
@@ -267,52 +264,28 @@ const Footer = () => {
             </List>
           </Stack>
         </GridItem>
-        <GridItem colSpan={points9}>
-          <Divider orientation="horizontal" variant={"dashed"} bg={bg2} />
-        </GridItem>
-        <GridItem colSpan={points10} columnGap={50}>
-          <HStack justifyContent={content1} spacing={3} w={"full"}>
-            <Heading color={"brand.600"} size="sm" mx={2}>
-              {locale === "en" ? en.language : es.language}
-            </Heading>{" "}
-            {locales.map((lo, i) => (
-              <chakra.li key={i} sx={{ listStyle: "none" }}>
-                <NavLink
-                  variant={"primary"}
-                  href={asPath}
-                  locale={lo}
-                  name={lo}
-                  px={0}
-                  w={0}
-                />
-              </chakra.li>
-            ))}
-          </HStack>
-        </GridItem>
-        <GridItem colSpan={points5}>
-          <List
-            display="flex"
-            justifyContent={content2}
-            flexDirection={content3}
-            w={"full"}
-            px={points14}
-          >
-            <ListItem mx={2}>
-              <MenuHistory
-                buys={locale === "en" ? en.major.mB : es.major.mB}
-                sales={locale === "en" ? en.major.mC : es.major.mC}
-                history={locale === "en" ? en.history : es.history}
-                color={"brand.600"}
-              />
-            </ListItem>
-            <ListItem mx={2}>
-              <MenuCategoria
-                categories={locale === "en" ? en.categories : es.categories}
-              />
-            </ListItem>
-          </List>
-        </GridItem>
       </Grid>
+      <Box px={10} backgroundColor={"brand.800"}>
+        <HStack w={"full"} py={10} spacing={3}>
+          <Heading textTransform={"uppercase"} size="sm" color={"brand.900"}>
+            <Box w={6} h={6} as={Global} />{" "}
+            {locale === "en" ? en.language : es.language}
+          </Heading>{" "}
+          {locales.map((lo, i) => (
+            <chakra.li key={i} sx={{ listStyle: "none" }}>
+              <NavLink
+                size={"sm"}
+                variant={"secondary"}
+                href={asPath}
+                locale={lo}
+                name={lo}
+                px={0}
+                w={0}
+              />
+            </chakra.li>
+          ))}
+        </HStack>
+      </Box>
     </Container>
   );
 };

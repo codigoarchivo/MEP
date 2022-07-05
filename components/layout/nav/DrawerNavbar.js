@@ -129,6 +129,7 @@ export const DrawerNavbar = ({
                   >
                     <chakra.li>
                       <NavLink
+                        px={0}
                         leftIcon={<Home />}
                         fontWeight={"normal"}
                         variant={"secondary"}
@@ -138,6 +139,7 @@ export const DrawerNavbar = ({
                     </chakra.li>
                     <chakra.li mx={"3"}>
                       <NavLink
+                        px={0}
                         leftIcon={<Perfil />}
                         href={"/user"}
                         fontWeight={"normal"}
@@ -147,6 +149,7 @@ export const DrawerNavbar = ({
                     </chakra.li>
                     <chakra.li mx={"3"}>
                       <NavLink
+                        px={0}
                         leftIcon={<ListEspera />}
                         fontWeight={"normal"}
                         variant={"secondary"}
@@ -159,6 +162,7 @@ export const DrawerNavbar = ({
                       <>
                         <chakra.li mx={"3"}>
                           <NavLink
+                            px={0}
                             leftIcon={<Category />}
                             fontWeight={"normal"}
                             variant={"secondary"}
@@ -168,6 +172,7 @@ export const DrawerNavbar = ({
                         </chakra.li>
                         <chakra.li mx={"3"}>
                           <NavLink
+                            px={0}
                             leftIcon={<VentasClient />}
                             fontWeight={"normal"}
                             variant={"secondary"}
@@ -180,6 +185,7 @@ export const DrawerNavbar = ({
 
                     <chakra.li mx={"3"}>
                       <NavLink
+                        px={0}
                         leftIcon={<Product />}
                         fontWeight={"normal"}
                         variant={"secondary"}
@@ -190,6 +196,7 @@ export const DrawerNavbar = ({
                     </chakra.li>
                     <chakra.li mx={"3"}>
                       <NavLink
+                        px={0}
                         leftIcon={<ShopAll />}
                         fontWeight={"normal"}
                         variant={"secondary"}
@@ -199,6 +206,7 @@ export const DrawerNavbar = ({
                     </chakra.li>
                     <chakra.li mx={"3"}>
                       <Button
+                        px={0}
                         variant={"secondary"}
                         fontWeight={"normal"}
                         leftIcon={<Logout />}
@@ -207,28 +215,26 @@ export const DrawerNavbar = ({
                         {locale === "en" ? en.logout : es.logout}
                       </Button>
                     </chakra.li>
-                    <chakra.li mx={"3"}>
-                      <HStack w={"full"} alignItems={"center"}>
-                        <Box w={6} h={6} as={Global} />
 
-                        <Heading textTransform={"uppercase"} size="sm">
-                          {locale === "en" ? en.language : es.language}
-                        </Heading>
-
-                        {locales.map((lo, i) => (
-                          <chakra.li key={i} sx={{ listStyle: "none" }}>
-                            <NavLink
-                              variant={"primary"}
-                              href={asPath}
-                              locale={lo}
-                              name={lo}
-                              px={0}
-                              w={0}
-                            />
-                          </chakra.li>
-                        ))}
-                      </HStack>
-                    </chakra.li>
+                    <HStack w={"full"} alignItems={"center"}>
+                      <Heading textTransform={"uppercase"} size="sm">
+                        <Box w={6} h={6} as={Global} />{" "}
+                        {locale === "en" ? en.language : es.language}
+                      </Heading>
+                      {locales.map((lo, i) => (
+                        <chakra.li key={i} sx={{ listStyle: "none" }}>
+                          <NavLink
+                            size={"sm"}
+                            variant={"primary"}
+                            href={asPath}
+                            locale={lo}
+                            name={lo}
+                            px={0}
+                            w={0}
+                          />
+                        </chakra.li>
+                      ))}
+                    </HStack>
                   </Stack>
                 </chakra.nav>
               </Box>
