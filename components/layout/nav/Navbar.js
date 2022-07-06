@@ -21,6 +21,8 @@ import {
   InputGroup,
   InputLeftElement,
   Link,
+  List,
+  ListItem,
   Menu,
   MenuButton,
   MenuItem,
@@ -32,6 +34,7 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
+  Stack,
   Text,
   useColorMode,
   useDisclosure,
@@ -160,256 +163,280 @@ const Navbar = () => {
         serch={locale === "en" ? en.searchs : es.searchs}
       />
 
-      <chakra.nav py={1}>
-        <Grid gridTemplateColumns={repeat4} alignItems={"center"}>
-          <GridItem
-            colSpan={{ base: 4, sm: 4 }}
-            justifyContent={"center"}
-            display={displayOn2}
+      <Flex
+        as={"nav"}
+        direction={"row"}
+        py={{ base: 2 }}
+        px={{ base: 4 }}
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        w={"100%"}
+        borderStyle={"solid"}
+        minWidth={"100%"}
+      >
+        <Flex
+          flex={{ base: 1, md: "auto" }}
+          ml={{ base: -2 }}
+          display={displayOn2}
+        >
+          <Icon
+            boxSize={6}
+            mx={{ base: 3, sm: 7 }}
+            cursor={"pointer"}
+            onClick={onOpen}
           >
-            <Icon boxSize={6} mx={7} cursor={"pointer"} onClick={onOpen}>
-              <HamburgerIcon />
-            </Icon>
-          </GridItem>
-          <GridItem colSpan={points15} display={displayOff2}>
-            <HStack mx={4} justifyContent="space-around">
-              <Box position={"relative"} alignItems={"center"} minWidth={70}>
-                <Image
-                  src={"/img/logo.png"}
-                  alt="Picture of the author"
-                  width={130}
-                  height={100}
-                />
-              </Box>
-              <Box as={"div"}>
-                <MenuCategoria
-                  categories={locale === "en" ? en.categories : es.categories}
-                />
-              </Box>
-            </HStack>
-          </GridItem>
-          <GridItem colSpan={{ base: 3, md: 4 }}>
-            <Icon
-              onClick={() => setModality(true)}
-              boxSize={4}
-              display={displayOn2}
-              cursor={"pointer"}
-            >
-              <SearchIcon px={3} />
-            </Icon>
-            <chakra.form onSubmit={handleSerchProduct}>
-              <InputGroup display={displayOff2}>
-                <InputLeftElement pointerEvents="none">
-                  <SearchIcon color="gray.300" />
-                </InputLeftElement>
+            <HamburgerIcon />
+          </Icon>
+        </Flex>
+        <Flex display={displayOff2}>
+          <Box position={"relative"} alignItems={"center"} minWidth={70}>
+            <Image
+              src={"/img/logo.png"}
+              alt="Picture of the author"
+              width={130}
+              height={100}
+            />
+          </Box>
+        </Flex>
+        <Flex display={displayOff2}>
+          <Box as={"div"}>
+            <MenuCategoria
+              categories={locale === "en" ? en.categories : es.categories}
+            />
+          </Box>
+        </Flex>
+        {/* serch */}
+        <Flex display={displayOff2}>
+          <chakra.form onSubmit={handleSerchProduct}>
+            <InputGroup>
+              <InputLeftElement pointerEvents="none">
+                <SearchIcon color="gray.300" display={"block"} />
+              </InputLeftElement>
 
-                <Input
-                  type={"search"}
-                  placeholder={locale === "en" ? en.searchs : es.searchs}
-                  value={values.q}
-                  name={"q"}
-                  onChange={handleInputChange}
-                />
-              </InputGroup>
-            </chakra.form>
-          </GridItem>
-          <GridItem colSpan={{ base: 2, sm: 4, md: 3 }}>
-            <Flex mx={4} justifyContent="space-around" alignItems={"center"}>
-              <Popover isLazy>
-                <PopoverTrigger>
-                  <Box position={"relative"}>
-                    {check.length > 0 ? (
-                      <Button
-                        size="xs"
-                        px={0}
-                        variant={"secondary"}
-                        onClick={() =>
-                          handleSerchProductCart(
-                            locale === "en" ? en.you : es.you
-                          )
-                        }
-                      >
-                        <CartIcon boxSize={points11} />
-                      </Button>
-                    ) : (
-                      <Button size="xs" px={3} variant={"secondary"}>
-                        <CartIcon boxSize={7} />
-                      </Button>
-                    )}
-
-                    <Flex
-                      right={-1}
-                      top={-2}
-                      zIndex={-10}
-                      border={bordes}
-                      alignItems={"center"}
-                      justifyContent="center"
-                      backgroundColor={"brand.800"}
-                      borderRadius={"full"}
-                      position={"absolute"}
-                      w={5}
-                      h={5}
-                    >
-                      {!activeCartSelect[0] ? 0 : activeCartSelect.length}
-                    </Flex>
-                  </Box>
-                </PopoverTrigger>
+              <Input
+                type={"search"}
+                placeholder={locale === "en" ? en.searchs : es.searchs}
+                value={values.q}
+                name={"q"}
+                onChange={handleInputChange}
+              />
+            </InputGroup>
+          </chakra.form>
+        </Flex>
+        {/* button */}
+        <Stack
+          display={"flex"}
+          alignItems={"center"}
+          direction={"row"}
+          spacing={6}
+        >
+          <Icon
+            onClick={() => setModality(true)}
+            boxSize={4}
+            display={displayOn2}
+            cursor={"pointer"}
+          >
+            <SearchIcon mx={0} />
+          </Icon>
+          <Popover isLazy>
+            <PopoverTrigger>
+              <Box position={"relative"}>
                 {check.length > 0 ? (
-                  ""
-                ) : (
-                  <PopoverContent>
-                    <PopoverHeader fontWeight="semibold">
-                      Carrito Compras
-                    </PopoverHeader>
-                    <PopoverArrow />
-                    <PopoverCloseButton />
-                    <PopoverBody>
-                      {/* cart */}
-                      <NavbarCart />
-                    </PopoverBody>
-                  </PopoverContent>
-                )}
-              </Popover>
-              {a?.email && a?.rol && a?.displayName ? (
-                <>
-                  <Box position={"relative"}>
-                    <NavLink
-                      px={3}
-                      variant={"secondary"}
-                      href={`/checkout?q=${a.uid}`}
-                      as={`/checkout?q=${a.uid}`}
-                      name={<OrdenpagoIcon boxSize={7} />}
-                    />
-
-                    <Flex
-                      right={0}
-                      zIndex={-10}
-                      top={0}
-                      border={bordes}
-                      alignItems={"center"}
-                      justifyContent="center"
-                      backgroundColor={"brand.800"}
-                      borderRadius={"full"}
-                      position={"absolute"}
-                      w={5}
-                      h={5}
-                    >
-                      {check.length > 0 ? check.length : 0}
-                    </Flex>
-                  </Box>
-                </>
-              ) : (
-                <NavLink
-                  px={0}
-                  size="sm"
-                  variant={"secondary"}
-                  href={"/auth"}
-                  name={locale === "en" ? en.auth.aA : es.auth.aA}
-                />
-              )}
-
-              {a?.email && a?.rol && a?.displayName ? (
-                <Box position={"relative"}>
-                  <NavLink
-                    px={3}
+                  <Button
+                    size="xs"
+                    px={0}
                     variant={"secondary"}
-                    href={"/cart"}
-                    name={<LoveIcon boxSize={7} />}
-                  />
-                  <Flex
-                    right={-1}
-                    zIndex={-10}
-                    top={0}
-                    border={bordes}
-                    alignItems={"center"}
-                    justifyContent="center"
-                    backgroundColor={"brand.800"}
-                    borderRadius={"full"}
-                    position={"absolute"}
-                    w={5}
-                    h={5}
+                    onClick={() =>
+                      handleSerchProductCart(locale === "en" ? en.you : es.you)
+                    }
                   >
-                    {!saveCartSelect[0] ? 0 : saveCartSelect.length}
-                  </Flex>
-                </Box>
-              ) : (
-                <NavLink
-                  size="sm"
-                  variant={"primary"}
-                  href={"/auth/create"}
-                  name={locale === "en" ? en.auth.aH : es.auth.aH}
-                />
-              )}
-            </Flex>
-          </GridItem>
-          <GridItem colSpan={2} justifySelf="center" display={displayOff2}>
-            {" "}
-            <Popover isLazy>
-              <PopoverTrigger>
-                {!a?.photoURL ? (
-                  <Avatar
-                    cursor={"pointer"}
-                    name={a?.displayName}
-                    w={10}
-                    h={10}
-                  />
+                    <CartIcon boxSize={points11} />
+                  </Button>
                 ) : (
-                  <Box position={"relative"} cursor={"pointer"}>
-                    <Image
-                      src={a?.photoURL}
-                      alt="Perfil"
-                      width={30}
-                      height={30}
-                    />
-                  </Box>
+                  <Button
+                    size="xs"
+                    mx={{ base: 2, sm: 3 }}
+                    variant={"secondary"}
+                    px={0}
+                    display={"block"}
+                  >
+                    <CartIcon boxSize={{ base: 6, sm: 7 }} />
+                  </Button>
                 )}
-              </PopoverTrigger>
+
+                <Flex
+                  right={-1}
+                  top={-2}
+                  zIndex={-10}
+                  border={bordes}
+                  alignItems={"center"}
+                  justifyContent="center"
+                  backgroundColor={"brand.800"}
+                  borderRadius={"full"}
+                  position={"absolute"}
+                  w={{ base: 4, sm: 5 }}
+                  h={{ base: 4, sm: 5 }}
+                >
+                  {!activeCartSelect[0] ? 0 : activeCartSelect.length}
+                </Flex>
+              </Box>
+            </PopoverTrigger>
+            {check.length > 0 ? (
+              ""
+            ) : (
               <PopoverContent>
-                <PopoverHeader fontWeight="semibold" borderBottomWidth={0}>
-                  <HStack spacing={6}>
-                    <Heading size={"md"}>{a?.displayName}</Heading>
-                    <Button
-                      onClick={toggleColorMode}
-                      size="xs"
-                      px={0}
-                      variant={"secondary"}
-                    >
-                      {colorMode === "light" ? (
-                        <MoonIcon boxSize={6} />
-                      ) : (
-                        <SunIcon boxSize={6} />
-                      )}
-                    </Button>
-                  </HStack>
-                  <Text fontSize="sm">{a?.email}</Text>
+                <PopoverHeader fontWeight="semibold">
+                  Carrito Compras
                 </PopoverHeader>
                 <PopoverArrow />
                 <PopoverCloseButton />
-
                 <PopoverBody>
-                  {/* PopoverUserNavbar */}
-
-                  <PopoverUserNavbar
-                    handleLogout={handleLogout}
-                    HStack={HStack}
-                    Heading={Heading}
-                    NavLink={NavLink}
-                    bg2={bg2}
-                    porcent2={porcent2}
-                    Button={Button}
-                    es={es}
-                    en={en}
-                    locale={locale}
-                    locales={locales}
-                    asPath={asPath}
-                    push={push}
-                  />
+                  {/* cart */}
+                  <NavbarCart />
                 </PopoverBody>
               </PopoverContent>
-            </Popover>
-          </GridItem>
-        </Grid>
-      </chakra.nav>
+            )}
+          </Popover>
+          {a?.email && a?.rol && a?.displayName ? (
+            <>
+              <Box position={"relative"}>
+                <NavLink
+                  mx={{ base: 2, sm: 3 }}
+                  px={0}
+                  variant={"secondary"}
+                  href={`/checkout?q=${a.uid}`}
+                  as={`/checkout?q=${a.uid}`}
+                  name={<OrdenpagoIcon boxSize={{ base: 6, sm: 7 }} />}
+                />
+
+                <Flex
+                  right={-2}
+                  zIndex={-10}
+                  top={0}
+                  border={bordes}
+                  alignItems={"center"}
+                  justifyContent="center"
+                  backgroundColor={"brand.800"}
+                  borderRadius={"full"}
+                  position={"absolute"}
+                  w={{ base: 4, sm: 5 }}
+                  h={{ base: 4, sm: 5 }}
+                >
+                  {check.length > 0 ? check.length : 0}
+                </Flex>
+              </Box>
+            </>
+          ) : (
+            <NavLink
+              px={{ base: 2, sm: 3 }}
+              size="sm"
+              variant={"secondary"}
+              href={"/auth"}
+              name={locale === "en" ? en.auth.aA : es.auth.aA}
+            />
+          )}
+
+          {a?.email && a?.rol && a?.displayName ? (
+            <Box position={"relative"}>
+              <NavLink
+                mx={{ base: 2, sm: 3 }}
+                px={0}
+                variant={"secondary"}
+                href={"/cart"}
+                name={<LoveIcon boxSize={{ base: 6, sm: 7 }} />}
+              />
+              <Flex
+                right={-3}
+                zIndex={-10}
+                top={0}
+                border={bordes}
+                alignItems={"center"}
+                justifyContent="center"
+                backgroundColor={"brand.800"}
+                borderRadius={"full"}
+                position={"absolute"}
+                w={{ base: 4, sm: 5 }}
+                h={{ base: 4, sm: 5 }}
+              >
+                {!saveCartSelect[0] ? 0 : saveCartSelect.length}
+              </Flex>
+            </Box>
+          ) : (
+            <NavLink
+              size="sm"
+              variant={"primary"}
+              href={"/auth/create"}
+              name={locale === "en" ? en.auth.aH : es.auth.aH}
+            />
+          )}
+        </Stack>
+        <Flex display={displayOff2}>
+          <Popover isLazy>
+            <PopoverTrigger>
+              {!a?.photoURL ? (
+                <Avatar
+                  cursor={"pointer"}
+                  name={a?.displayName}
+                  w={10}
+                  h={10}
+                />
+              ) : (
+                <Box position={"relative"} cursor={"pointer"}>
+                  <Image
+                    src={a?.photoURL}
+                    alt="Perfil"
+                    width={30}
+                    height={30}
+                  />
+                </Box>
+              )}
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverHeader fontWeight="semibold" borderBottomWidth={0}>
+                <HStack spacing={6}>
+                  <Heading size={"md"}>{a?.displayName}</Heading>
+                  <Button
+                    onClick={toggleColorMode}
+                    size="xs"
+                    px={0}
+                    variant={"secondary"}
+                  >
+                    {colorMode === "light" ? (
+                      <MoonIcon boxSize={6} />
+                    ) : (
+                      <SunIcon boxSize={6} />
+                    )}
+                  </Button>
+                </HStack>
+                <Text fontSize="sm">{a?.email}</Text>
+              </PopoverHeader>
+              <PopoverArrow />
+              <PopoverCloseButton />
+
+              <PopoverBody>
+                {/* PopoverUserNavbar */}
+
+                <PopoverUserNavbar
+                  handleLogout={handleLogout}
+                  HStack={HStack}
+                  Heading={Heading}
+                  NavLink={NavLink}
+                  bg2={bg2}
+                  porcent2={porcent2}
+                  Button={Button}
+                  es={es}
+                  en={en}
+                  locale={locale}
+                  locales={locales}
+                  asPath={asPath}
+                  push={push}
+                />
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+        </Flex>
+      </Flex>
 
       {/* BreadcrumbNavbar */}
       <BreadcrumbNavbar

@@ -8,6 +8,7 @@ import Navbar from "./nav/Navbar";
 import Footer from "./foo/Footer";
 
 import AuthChange from "../../helpers/AuthChange";
+import WithSubnavigation from "./nav/WithSubnavigation";
 
 const ShopLayout = ({ children, title }) => {
   return (
@@ -18,6 +19,7 @@ const ShopLayout = ({ children, title }) => {
 
       {/* <AuthChange /> */}
       <chakra.header>
+        <WithSubnavigation />
         <Navbar />
       </chakra.header>
 

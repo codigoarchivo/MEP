@@ -141,7 +141,7 @@ const SerchScreen = ({
 
   return (
     <>
-      <WrapItem mx={5}>
+      <WrapItem mx={5} justifyContent={"center"}>
         <Box position={"relative"}>
           <Box
             as={LoveIcon}
@@ -154,7 +154,7 @@ const SerchScreen = ({
             onClick={handleSave}
           />
         </Box>
-        <Box
+        <Box  
           height={"410px"}
           w="250px"
           position={"relative"}
@@ -167,6 +167,7 @@ const SerchScreen = ({
             cursor={"pointer"}
             w="250px"
             position={"absolute"}
+            backgroundColor={"#fff"}
             border={bordes}
             rounded="md"
             _hover={{

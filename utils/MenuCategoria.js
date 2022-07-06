@@ -59,6 +59,7 @@ const MenuCategoria = ({ categories }) => {
         variant={"primary"}
         as={Button}
         textTransform={"uppercase"}
+        minWidth={"fit-content"}
       >
         {categories}
       </MenuButton>

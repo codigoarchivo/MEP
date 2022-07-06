@@ -8,7 +8,9 @@ import {
   HStack,
   Stack,
   Text,
+  useBreakpointValue,
   VStack,
+  chakra,
 } from "@chakra-ui/react";
 
 import Image from "next/image";
@@ -30,6 +32,8 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 const Home = ({ listData, latestCartSelect, locale, es, en }) => {
   // Breakpoints
   const { content5, bordes, displayOff1, all1, points25 } = Breakpoints();
+  // use Carousel
+  const variant = useBreakpointValue({ base: 1, sm: 2, md: 2, lg: 3, xl: 4 });
 
   return (
     <Container
@@ -50,10 +54,10 @@ const Home = ({ listData, latestCartSelect, locale, es, en }) => {
           boxShadow={"lg"}
           backgroundColor={"brand.800"}
         >
-          <Heading w={"full"} fontSize={points25}>
+          <Heading w={"full"} fontSize={points25} wordBreak={"break-word"}>
             {locale === "en" ? en.home.hA : es.home.hA}
           </Heading>
-          <Text size={["sx", "sm", "md", "lg", "xl"]}>
+          <Text size={["sx", "sm", "md", "lg", "xl"]} wordBreak={"break-word"}>
             {locale === "en" ? en.home.hB : es.home.hB}
           </Text>
         </VStack>
@@ -107,7 +111,7 @@ const Home = ({ listData, latestCartSelect, locale, es, en }) => {
               {locale === "en" ? en.home.hD : es.home.hD}
             </Heading>
             <HStack>
-              <Marquee>
+              <Marquee gradient={false} style={{ height: "420px" }}>
                 {listData.map((data) => (
                   <SerchScreen key={data.id} {...data} />
                 ))}
@@ -119,58 +123,59 @@ const Home = ({ listData, latestCartSelect, locale, es, en }) => {
         )}
 
         {!!latestCartSelect[2] ? (
-          <Stack w={"full"} spacing={10}>
-            <Heading w={"full"} size={"lg"}>
+          <Stack w={"full"} spacing={0} justifyContent={"center"}>
+            <Heading w={"full"} size={"lg"} fontSize={points25} mb={10}>
               {locale === "en" ? en.home.hE : es.home.hE}
             </Heading>
-            <Box position={"relative"}>
-              <Carousel
-                easing="easeInOutElastic"
-                wrapAround={true}
-                slidesToScroll={4}
-                slidesToShow={4}
-                cellSpacing={40}
-                slideWidth={0.75}
-                cellAlign={"left"}
-                defaultControlsConfig={{
-                  nextButtonText: (
-                    <Button
-                      as={"div"}
-                      variant={"primary"}
-                      rounded={"full"}
-                      w={11}
-                      fontSize={"2xl"}
-                    >
-                      <ChevronRightIcon />
-                    </Button>
-                  ),
-                  prevButtonText: (
-                    <Button
-                      as={"div"}
-                      variant={"primary"}
-                      rounded={"full"}
-                      w={11}
-                      fontSize={"2xl"}
-                    >
-                      <ChevronLeftIcon />
-                    </Button>
-                  ),
-                  pagingDotsStyle: {
-                    fill: "transparent",
-                  },
-                  nextButtonStyle: {
-                    backgroundColor: "transparent",
-                  },
-                  prevButtonStyle: {
-                    backgroundColor: "transparent",
-                  },
-                }}
-              >
-                {latestCartSelect.map((data) => (
-                  <SerchScreen key={data.id} {...data} />
-                ))}
-              </Carousel>
-            </Box>
+
+            <Carousel
+              easing="easeInOutElastic"
+              wrapAround={true}
+              slidesToScroll={3}
+              slidesToShow={variant}
+              cellSpacing={0}
+              slideWidth={0.75}
+              cellAlign={"center"}
+              defaultControlsConfig={{
+                nextButtonText: (
+                  <Button
+                    as={"div"}
+                    variant={"primary"}
+                    rounded={"full"}
+                    w={11}
+                    fontSize={"2xl"}
+                  >
+                    <ChevronRightIcon />
+                  </Button>
+                ),
+                prevButtonText: (
+                  <Button
+                    as={"div"}
+                    variant={"primary"}
+                    rounded={"full"}
+                    w={11}
+                    fontSize={"2xl"}
+                  >
+                    <ChevronLeftIcon />
+                  </Button>
+                ),
+                pagingDotsStyle: {
+                  fill: "transparent",
+                },
+                nextButtonStyle: {
+                  backgroundColor: "transparent",
+                },
+                prevButtonStyle: {
+                  backgroundColor: "transparent",
+                },
+              }}
+            >
+              {latestCartSelect.map((data) => (
+                <chakra.ul key={data.id}>
+                  <SerchScreen {...data} />
+                </chakra.ul>
+              ))}
+            </Carousel>
           </Stack>
         ) : (
           ""

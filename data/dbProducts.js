@@ -18,7 +18,7 @@ export const dbProducts = async (id = "", dbP = "", valA = "") => {
 
   switch (dbP) {
     case "dbProOne":
-      q = query(ref, limit(2), orderBy("na", "asc"));
+      q = query(ref, limit(4), orderBy("na", "asc"));
       break;
     case "dbProTwo":
       q = query(ref, where("uid", "==", id), limit(2));

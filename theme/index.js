@@ -23,8 +23,8 @@ const colors = {
     400: "#676",
     500: "#ffd60a",
     600: "#E9E9E9",
-    700: "#ffd60a",
-    800: "#ffc301",
+    700: "#ffc301",
+    800: "#FFD700",
     900: "#00020f",
   },
 };
@@ -99,7 +99,9 @@ const globalStyles = {
     global: {
       html: {},
       svg: { display: "inline" },
-      body: {},
+      body: {
+        backgroundColor: "#ebebeb",
+      },
       ".css-1xjer9p": {
         justifyContent: "center",
       },
@@ -124,7 +126,7 @@ const brandRing = {
   _hover: {
     backgroundColor: "brand.600",
     color: "brand.900",
-  }
+  },
 };
 
 export const theme = extendTheme(
