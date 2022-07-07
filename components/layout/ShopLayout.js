@@ -4,10 +4,10 @@ import Head from "next/head";
 
 import { chakra } from "@chakra-ui/react";
 
-import Navbar from "./nav/Navbar";
 import Footer from "./foo/Footer";
 
 import AuthChange from "../../helpers/AuthChange";
+
 import WithSubnavigation from "./nav/WithSubnavigation";
 
 const ShopLayout = ({ children, title }) => {
@@ -20,7 +20,6 @@ const ShopLayout = ({ children, title }) => {
       {/* <AuthChange /> */}
       <chakra.header>
         <WithSubnavigation />
-        <Navbar />
       </chakra.header>
 
       <chakra.main>

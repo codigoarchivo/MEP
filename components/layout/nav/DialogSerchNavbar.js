@@ -10,6 +10,7 @@ import {
   AlertDialogOverlay,
   CloseButton,
   chakra,
+  Icon,
 } from "@chakra-ui/react";
 
 import { useRouter } from "next/router";
@@ -21,6 +22,8 @@ const initialStates = {
 };
 
 export const DialogSerchNavbar = ({
+  setModality,
+  displayOn2,
   isSerch,
   setIsSerch,
   InputGroup,
@@ -51,6 +54,15 @@ export const DialogSerchNavbar = ({
 
   return (
     <>
+      <Icon
+        onClick={() => setModality(true)}
+        boxSize={4}
+        display={displayOn2}
+        cursor={"pointer"}
+      >
+        <SearchIcon mx={0} />
+      </Icon>
+
       <AlertDialog
         isOpen={isSerch}
         leastDestructiveRef={cancelRef}

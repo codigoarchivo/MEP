@@ -52,9 +52,9 @@ const SerchRange = ({ product, locale, en, es, push }) => {
   };
 
   return (
-    <Stack w={"full"} spacing={"10"} border={bordes} rounded="md" p={5}>
+    <Stack w={"full"} spacing={"5"} border={bordes} rounded="md" p={4}>
       <Box borderBottom={bordes} py={5} w={"full"}>
-        <Heading size={"md"} textTransform={"uppercase"} fontWeight={"normal"}>
+        <Heading size={"sm"} textTransform={"uppercase"} fontWeight={"normal"}>
           {locale === "en" ? en.search.sA : es.search.sA}
         </Heading>
       </Box>
@@ -71,12 +71,12 @@ const SerchRange = ({ product, locale, en, es, push }) => {
         onChangeEnd={(val) => handleChangeEnd(val)}
       >
         <RangeSliderTrack bg="brand.800">
-          <RangeSliderFilledTrack bg="brand.700" />
+          <RangeSliderFilledTrack bg="brand.700" width={"95%"} />
         </RangeSliderTrack>
-        <RangeSliderThumb boxSize={6} index={0}>
+        <RangeSliderThumb boxSize={5} index={0}>
           <Box color="brand.700" as={ChevronLeftIcon} />
         </RangeSliderThumb>
-        <RangeSliderThumb boxSize={6} index={1}>
+        <RangeSliderThumb boxSize={5} index={1}>
           <Box color="brand.700" as={ChevronRightIcon} />
         </RangeSliderThumb>
       </RangeSlider>

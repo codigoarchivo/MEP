@@ -1,74 +1,85 @@
+import React from "react";
+
+import Image from "next/image";
+
+import { useSelector } from "react-redux";
+
+import { useRouter } from "next/router";
+
 import {
   Box,
   Flex,
-  Text,
   IconButton,
   Button,
   Stack,
   Collapse,
-  Icon,
-  Link,
-  chakra,
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
   Menu,
   MenuButton,
-  Avatar,
-  MenuItem,
   MenuList,
-  MenuDivider,
   InputGroup,
   InputLeftElement,
   Input,
   HStack,
-  useColorMode,
   Heading,
+  chakra,
 } from "@chakra-ui/react";
+
 import {
   HamburgerIcon,
   CloseIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-  AddIcon,
   SearchIcon,
-  MoonIcon,
-  SunIcon,
+  Search2Icon,
 } from "@chakra-ui/icons";
-import Image from "next/image";
-import { useDispatch, useSelector } from "react-redux";
-import MenuCategoria from "../../../utils/MenuCategoria";
-import { useRouter } from "next/router";
-import en from "../../../translations/en";
-import es from "../../../translations/es";
-import useFormAll from "../../../hooks/useFormAll";
-import NavbarCart from "./NavbarCart";
+
 import {
   CartIcon,
-  Category,
   Global,
-  Home,
-  ListEspera,
   Logout,
-  Perfil,
-  Product,
-  ShopAll,
-  VentasClient,
+  LoveIcon,
+  OrdenpagoIcon,
 } from "../../../helpers/IconNew";
+
+import { useModality } from "../../../hooks/useModality";
+
+import NavbarCart from "./NavbarCart";
+import ListRoute from "./ListRoute";
+import { DialogSerchNavbar } from "./DialogSerchNavbar";
+
 import Breakpoints from "../../../helpers/Breakpoints";
+import Toast from "../../../helpers/Toast";
+
 import NavLink from "../../../utils/Navlink";
+
+import { BreadcrumbNavbar } from "./BreadcrumbNavbar";
+import DesktopNav from "./DesktopNav";
+
+import en from "../../../translations/en";
+import es from "../../../translations/es";
+import MenuNavButton from "./MenuNavButton";
 import { logout } from "../../../actions/auth";
 
 export default function WithSubnavigation() {
-  const { isOpen, onToggle } = useDisclosure();
-  const dispatch = useDispatch();
-  const { points11 } = Breakpoints();
-  // toogle color
-  const { toggleColorMode, colorMode } = useColorMode();
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+  // selector
+  const {
+    activeCartSelect = [],
+    activeSelectCheck: check = [],
+    saveCartSelect = [],
+  } = useSelector(({ process }) => process);
+  // useDisclosure
+  const { isOpen, onToggle } = useDisclosure();
+  // Breakpoints
+  const { points11, bordes, displayOff2, displayOn2 } = Breakpoints();
+  // Modality
+  const { modality, setModality } = useModality();
   // dispatch
-  const { push, locale, locales, asPath } = useRouter();
+  const { locale, push, pathname, locales, asPath } = useRouter();
+
+  const { dataRoute } = ListRoute();
 
   const handleLogout = () => {
     const err = locale === "en" ? en.error : es.error;
@@ -102,7 +113,22 @@ export default function WithSubnavigation() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
+          <Box display={displayOn2}>
+            <DialogSerchNavbar
+              setModality={setModality}
+              displayOn2={displayOn2}
+              isSerch={modality}
+              setIsSerch={setModality}
+              InputGroup={InputGroup}
+              InputLeftElement={InputLeftElement}
+              Input={Input}
+              SearchIcon={SearchIcon}
+              serch={locale === "en" ? en.searchs : es.searchs}
+            />
+          </Box>
+
           <Box
+            display={displayOff2}
             position={"relative"}
             alignItems={"center"}
             textAlign={useBreakpointValue({ base: "center", md: "left" })}
@@ -123,408 +149,221 @@ export default function WithSubnavigation() {
         <Stack
           flex={{ base: 1, md: 0 }}
           justify={"flex-end"}
+          justifyContent={"space-around"}
           direction={"row"}
           spacing={6}
           alignItems={"center"}
-          ml={3}
+          ml={{ base: 0, sm: 3 }}
         >
-          <Menu >
-            <MenuButton
-              as={Button}
-              rounded={"full"}
-              variant={"secondary"}
-              px={0}
-              cursor={"pointer"}
-              minW={0}
-            >
-              <CartIcon boxSize={points11} />
-            </MenuButton>
-            <MenuList>
-              <NavbarCart />
-            </MenuList>
-          </Menu>
-          <Button
-            as={"a"}
-            fontSize={"sm"}
-            fontWeight={400}
-            variant={"secondary"}
-            href={"#"}
-            size={"sm"}
-            px={0}
-          >
-            Sign In
-          </Button>
-          <Button
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"sm"}
-            fontWeight={600}
-            href={"#"}
-            variant={"primary"}
-            size={"sm"}
-          >
-            Sign Up
-          </Button>
-          <Menu>
-            <MenuButton
-              as={Button}
-              rounded={"full"}
-              variant={"link"}
-              cursor={"pointer"}
-              minW={0}
-            >
-              <Avatar
-                size={"sm"}
-                src={
-                  "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+          <Flex alignItems={"center"} display={displayOn2}>
+            <Box position={"relative"}>
+              <NavLink
+                px={0}
+                fontWeight={400}
+                variant={"secodary"}
+                onClick={() =>
+                  check.length > 0 &&
+                  (Toast(locale === "en" ? en.you : es.you, "info", 5000),
+                  push("/"))
+                }
+                href={pathname !== "/cart" ? "/cart" : "/search"}
+                name={
+                  pathname !== "/cart" ? (
+                    <CartIcon boxSize={{ base: 6, sm: 7 }} />
+                  ) : (
+                    <Search2Icon boxSize={{ base: 6, sm: 7 }} />
+                  )
                 }
               />
-            </MenuButton>
-            <MenuList>
-              <MenuItem as={"div"}>
-                <HStack spacing={6}>
-                  <Heading size={"md"}>{a?.displayName}</Heading>
-                  <Button
-                    onClick={toggleColorMode}
-                    size="xs"
-                    px={0}
-                    variant={"secondary"}
-                  >
-                    {colorMode === "light" ? (
-                      <MoonIcon boxSize={6} />
-                    ) : (
-                      <SunIcon boxSize={6} />
-                    )}
-                  </Button>
-                </HStack>
-              </MenuItem>
-              <MenuDivider />
-              {[
-                {
-                  icon: <Home />,
-                  ref: "/",
-                  as: "/",
-                  nam: locale === "en" ? en.major.mA : es.major.mA,
-                },
-                {
-                  icon: <Perfil />,
-                  ref: "/user",
-                  as: "/user",
-                  nam: locale === "en" ? en.major.mD : es.major.mD,
-                },
-                {
-                  icon: <ListEspera />,
-                  ref: "/blog",
-                  as: "/blog",
-                  nam: locale === "en" ? en.major.mE : es.major.mE,
-                },
-                {
-                  icon: <Category />,
-                  ref: "/admin/category",
-                  as: "/admin/category",
-                  nam: locale === "en" ? en.major.mF : es.major.mF,
-                },
-                {
-                  icon: <VentasClient />,
-                  ref: "/admin",
-                  as: "/admin",
-                  nam: locale === "en" ? en.major.mH : es.major.mH,
-                },
-                {
-                  icon: <Product />,
-                  ref: `/product/[uid]`,
-                  as: `/product/${a?.uid}`,
-                  nam: locale === "en" ? en.major.mG : es.major.mG,
-                },
-                {
-                  icon: <ShopAll />,
-                  ref: "/search",
-                  as: "/search",
-                  nam: locale === "en" ? en.major.mI : es.major.mI,
-                },
-              ].map(({ icon, ref, as, nam, click }, key) => (
-                <MenuItem as={"div"} key={key}>
-                  <NavLink
-                    leftIcon={icon}
-                    fontWeight={"normal"}
-                    variant={"secondary"}
-                    href={ref}
-                    as={as}
-                    name={nam}
-                  />
-                </MenuItem>
-              ))}
-
-              <MenuItem as={"div"}>
-                <Button
-                  variant={"secondary"}
-                  fontWeight={"normal"}
-                  leftIcon={<Logout />}
-                  onClick={handleLogout}
+              <Flex
+                right={{ base: -2, sm: -4 }}
+                top={0}
+                zIndex={-10}
+                border={bordes}
+                alignItems={"center"}
+                justifyContent="center"
+                backgroundColor={"brand.800"}
+                borderRadius={"full"}
+                position={"absolute"}
+                w={{ base: 4, sm: 5 }}
+                h={{ base: 4, sm: 5 }}
+                fontWeight={"bold"}
+                fontSize={{ base: "x-small", sm: "smaller" }}
+              >
+                {!activeCartSelect[0] ? 0 : activeCartSelect.length}
+              </Flex>
+            </Box>
+          </Flex>
+          <Flex alignItems={"center"} display={displayOff2}>
+            <Menu>
+              <MenuButton
+                as={Button}
+                rounded={"full"}
+                variant={"secondary"}
+                position={"relative"}
+                px={0}
+                cursor={"pointer"}
+                minW={0}
+                onClick={() =>
+                  check.length > 0 &&
+                  (Toast(locale === "en" ? en.you : es.you, "info", 5000),
+                  push("/"))
+                }
+              >
+                <CartIcon boxSize={points11} />
+                <Flex
+                  right={{ base: -3, sm: -4 }}
+                  top={0}
+                  zIndex={-10}
+                  border={bordes}
+                  alignItems={"center"}
+                  justifyContent="center"
+                  backgroundColor={"brand.800"}
+                  borderRadius={"full"}
+                  position={"absolute"}
+                  w={{ base: 4, sm: 5 }}
+                  h={{ base: 4, sm: 5 }}
+                  fontWeight={"bold"}
+                  fontSize={{ base: "x-small", sm: "smaller" }}
                 >
-                  {locale === "en" ? en.logout : es.logout}
-                </Button>
-              </MenuItem>
+                  {!activeCartSelect[0] ? 0 : activeCartSelect.length}
+                </Flex>
+              </MenuButton>
 
-              <MenuItem as={"div"}>
-                <HStack w={"full"} alignItems={"center"} py={5}>
-                  <Heading textTransform={"uppercase"} size="sm">
-                    <Box w={6} h={6} as={Global} />{" "}
-                    {locale === "en" ? en.language : es.language}
-                  </Heading>
+              <MenuList zIndex={10}>
+                <NavbarCart />
+              </MenuList>
+            </Menu>
+          </Flex>
 
-                  {locales.map((lo, i) => (
-                    <chakra.li key={i} sx={{ listStyle: "none" }}>
-                      <NavLink
-                        size={"sm"}
-                        variant={"primary"}
-                        href={asPath}
-                        locale={lo}
-                        name={lo}
-                        px={0}
-                        w={0}
-                      />
-                    </chakra.li>
-                  ))}
-                </HStack>
-              </MenuItem>
-            </MenuList>
-          </Menu>
+          <Box position={"relative"}>
+            <NavLink
+              px={0}
+              fontWeight={400}
+              variant={"secondary"}
+              href={a.uid ? `/checkout?q=${a.uid}` : "/auth"}
+              name={
+                a.uid ? (
+                  <OrdenpagoIcon boxSize={{ base: 6, sm: 7 }} />
+                ) : locale === "en" ? (
+                  en.auth.aB
+                ) : (
+                  es.auth.aB
+                )
+              }
+            />
+
+            <Box
+              display={a.uid ? "block" : "none"}
+              right={{ base: -1, sm: -2 }}
+              zIndex={-10}
+              top={0}
+              border={bordes}
+              textAlign={"center"}
+              backgroundColor={"brand.800"}
+              borderRadius={"full"}
+              position={"absolute"}
+              w={{ base: 4, sm: 5 }}
+              h={{ base: 4, sm: 5 }}
+              fontWeight={"bold"}
+              fontSize={{ base: "x-small", sm: "smaller" }}
+            >
+              {check.length > 0 ? check.length : 0}
+            </Box>
+          </Box>
+
+          <Box position={"relative"}>
+            <NavLink
+              px={0}
+              variant={"secondary"}
+              href={a.uid ? "/cart" : "/auth/create"}
+              name={
+                a.uid ? (
+                  <LoveIcon boxSize={{ base: 6, sm: 7 }} />
+                ) : locale === "en" ? (
+                  en.auth.aH
+                ) : (
+                  es.auth.aH
+                )
+              }
+            />
+            <Box
+              display={a.uid ? "block" : "none"}
+              right={{ base: -1, sm: -3 }}
+              zIndex={-10}
+              top={0}
+              border={bordes}
+              textAlign={"center"}
+              backgroundColor={"brand.800"}
+              borderRadius={"full"}
+              position={"absolute"}
+              w={{ base: 4, sm: 5 }}
+              h={{ base: 4, sm: 5 }}
+              fontWeight={"bold"}
+              fontSize={{ base: "x-small", sm: "smaller" }}
+            >
+              {!saveCartSelect[0] ? 0 : saveCartSelect.length}
+            </Box>
+          </Box>
+
+          <Flex alignItems={"center"} display={displayOff2}>
+            <MenuNavButton />
+          </Flex>
         </Stack>
       </Flex>
-
+      {/* Collapse */}
       <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
+        <Stack p={4} display={{ md: "none" }}>
+          {dataRoute.map(({ icon, ref, as, nam, rol }, key) => (
+            <div key={key} display={rol && rol}>
+              <NavLink
+                leftIcon={icon}
+                fontWeight={"normal"}
+                variant={"secondary"}
+                href={ref}
+                as={as}
+                name={nam}
+              />
+            </div>
+          ))}
+          <Button
+            variant={"secondary"}
+            fontWeight={"normal"}
+            leftIcon={<Logout />}
+            onClick={handleLogout}
+          >
+            {locale === "en" ? en.logout : es.logout}
+          </Button>
+          <HStack w={"full"} alignItems={"center"} px={3}>
+            <Heading textTransform={"uppercase"} size="sm">
+              <Box w={6} h={6} as={Global} />{" "}
+              {locale === "en" ? en.language : es.language}
+            </Heading>
+
+            {locales.map((lo, i) => (
+              <chakra.li key={i} sx={{ listStyle: "none" }}>
+                <NavLink
+                  size={"sm"}
+                  variant={"primary"}
+                  href={asPath}
+                  locale={lo}
+                  name={lo}
+                  px={0}
+                  w={0}
+                />
+              </chakra.li>
+            ))}
+          </HStack>
+        </Stack>
       </Collapse>
+      {/* BreadcrumbNavbar */}
+      <BreadcrumbNavbar
+        NavLink={NavLink}
+        Box={Box}
+        locale={locale}
+        es={es}
+        en={en}
+      />
     </Box>
   );
 }
-const initialStates = {
-  q: "",
-};
-const DesktopNav = () => {
-  // dispatch
-  const { push, locale, locales, asPath } = useRouter();
-
-  const { values, reset, handleInputChange } = useFormAll(initialStates);
-
-  const handleSerchProduct = (e) => {
-    e.preventDefault();
-    const q = values.q;
-    push({
-      pathname: "/search",
-      query: { q },
-    });
-    reset();
-  };
-
-  return (
-    <Stack
-      direction={"row"}
-      spacing={4}
-      alignItems={"center"}
-      justifyContent={"space-around"}
-    >
-      <MenuCategoria
-        categories={locale === "en" ? en.categories : es.categories}
-      />
-      <chakra.form onSubmit={handleSerchProduct} pl={{ base: 0, lg: 20 }}>
-        <InputGroup>
-          <InputLeftElement pointerEvents="none">
-            <SearchIcon color="gray.300" display={"block"} />
-          </InputLeftElement>
-
-          <Input
-            type={"search"}
-            placeholder={locale === "en" ? en.searchs : es.searchs}
-            value={values.q}
-            name={"q"}
-            onChange={handleInputChange}
-          />
-        </InputGroup>
-      </chakra.form>
-      {/* {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
-          <Popover trigger={"hover"} placement={"bottom-start"}>
-            <PopoverTrigger>
-              <Link
-                p={2}
-                href={navItem.href ?? "#"}
-                fontSize={"sm"}
-                fontWeight={500}
-                color={linkColor}
-                _hover={{
-                  textDecoration: "none",
-                  color: linkHoverColor,
-                }}
-              >
-                {navItem.label}
-              </Link>
-            </PopoverTrigger>
-
-            {navItem.children && (
-              <PopoverContent
-                border={0}
-                boxShadow={"xl"}
-                bg={popoverContentBgColor}
-                p={4}
-                rounded={"xl"}
-                minW={"sm"}
-              >
-                <Stack>
-                  {navItem.children.map((child) => (
-                    <DesktopSubNav key={child.label} {...child} />
-                  ))}
-                </Stack>
-              </PopoverContent>
-            )}
-          </Popover>
-        </Box>
-      ))} */}
-    </Stack>
-  );
-};
-
-// const DesktopSubNav = ({ label, href, subLabel }) => {
-//   return (
-//     <Link
-//       href={href}
-//       role={"group"}
-//       display={"block"}
-//       p={2}
-//       rounded={"md"}
-//       _hover={{ bg: useColorModeValue("pink.50", "gray.900") }}
-//     >
-//       <Stack direction={"row"} align={"center"}>
-//         <Box>
-//           <Text
-//             transition={"all .3s ease"}
-//             _groupHover={{ color: "pink.400" }}
-//             fontWeight={500}
-//           >
-//             {label}
-//           </Text>
-//           <Text fontSize={"sm"}>{subLabel}</Text>
-//         </Box>
-//         <Flex
-//           transition={"all .3s ease"}
-//           transform={"translateX(-10px)"}
-//           opacity={0}
-//           _groupHover={{ opacity: "100%", transform: "translateX(0)" }}
-//           justify={"flex-end"}
-//           align={"center"}
-//           flex={1}
-//         >
-//           <Icon color={"pink.400"} w={5} h={5} as={ChevronRightIcon} />
-//         </Flex>
-//       </Stack>
-//     </Link>
-//   );
-// };
-
-const MobileNav = () => {
-  return (
-    <Stack
-      bg={useColorModeValue("white", "gray.800")}
-      p={4}
-      display={{ md: "none" }}
-    >
-      {NAV_ITEMS.map((navItem) => (
-        <MobileNavItem key={navItem.label} {...navItem} />
-      ))}
-    </Stack>
-  );
-};
-
-const MobileNavItem = ({ label, children, href }) => {
-  const { isOpen, onToggle } = useDisclosure();
-
-  return (
-    <Stack spacing={4} onClick={children && onToggle}>
-      <Flex
-        py={2}
-        as={Link}
-        href={href ?? "#"}
-        justify={"space-between"}
-        align={"center"}
-        _hover={{
-          textDecoration: "none",
-        }}
-      >
-        <Text
-          fontWeight={600}
-          color={useColorModeValue("gray.600", "gray.200")}
-        >
-          {label}
-        </Text>
-        {children && (
-          <Icon
-            as={ChevronDownIcon}
-            transition={"all .25s ease-in-out"}
-            transform={isOpen ? "rotate(180deg)" : ""}
-            w={6}
-            h={6}
-          />
-        )}
-      </Flex>
-
-      <Collapse in={isOpen} animateOpacity style={{ marginTop: "0!important" }}>
-        <Stack
-          mt={2}
-          pl={4}
-          borderLeft={1}
-          borderStyle={"solid"}
-          borderColor={useColorModeValue("gray.200", "gray.700")}
-          align={"start"}
-        >
-          {children &&
-            children.map((child) => (
-              <Link key={child.label} py={2} href={child.href}>
-                {child.label}
-              </Link>
-            ))}
-        </Stack>
-      </Collapse>
-    </Stack>
-  );
-};
-
-const NAV_ITEMS = [
-  {
-    label: "Inspiration",
-    children: [
-      {
-        label: "Explore Design Work",
-        subLabel: "Trending Design to inspire you",
-        href: "#",
-      },
-      {
-        label: "New & Noteworthy",
-        subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-    ],
-  },
-  {
-    label: "Find Work",
-    children: [
-      {
-        label: "Job Board",
-        subLabel: "Find your dream design job",
-        href: "#",
-      },
-      {
-        label: "Freelance Projects",
-        subLabel: "An exclusive list for contract work",
-        href: "#",
-      },
-    ],
-  },
-  {
-    label: "Learn Design",
-    href: "#",
-  },
-  {
-    label: "Hire Designers",
-    href: "#",
-  },
-];

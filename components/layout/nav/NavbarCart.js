@@ -29,11 +29,14 @@ import { deleteProductCart } from "../../../actions/product";
 
 import Breakpoints from "../../../helpers/Breakpoints";
 import { CartIcon } from "../../../helpers/IconNew";
+
 import NavLink from "../../../utils/Navlink";
+import en from "../../../translations/en";
+import es from "../../../translations/es";
 
 const NavbarCart = () => {
   // router
-  const router = useRouter();
+  const { pathname, locale } = useRouter();
   // Breakpoints
   const { full, bordes } = Breakpoints();
   // useDispatch
@@ -41,7 +44,7 @@ const NavbarCart = () => {
   // useRef
   const inc = useRef(0);
   // selector
-  const { activeCartSelect = [] } = useSelector(({ product }) => product);
+  const { activeCartSelect = [] } = useSelector(({ process }) => process);
   // incrementa y encapsula información para evitar que se actualice
   inc.current = activeCartSelect.reduce(
     (total, item) => (total += Number(item.cn) * Number(item.pr)),
@@ -55,7 +58,7 @@ const NavbarCart = () => {
   };
 
   return (
-    <TableContainer w={"full"} border={bordes}>
+    <TableContainer w={"full"} border={bordes} >
       <Table variant="simple">
         <Thead>
           <Tr>
@@ -64,19 +67,8 @@ const NavbarCart = () => {
               <NavLink
                 size={"sm"}
                 variant={"primary"}
-                href={
-                  router.pathname !== "/cart"
-                    ? "/cart"
-                    : "/search"
-                }
-                name={"Ir a"}
-                rightIcon={
-                  router.pathname !== "/cart" ? (
-                    <CartIcon />
-                  ) : (
-                    <Search2Icon />
-                  )
-                }
+                href={pathname !== "/cart" ? "/cart" : "/search"}
+                name={pathname !== "/cart" ? <CartIcon /> : <Search2Icon />}
               />
             </Th>
           </Tr>
@@ -84,14 +76,18 @@ const NavbarCart = () => {
         <Tbody>
           {activeCartSelect.map((item) => (
             <Tr key={item.id}>
-              <Td>
+              <Td position={"relative"}>
                 <CloseButton
                   onClick={() => handleDeleteCart(item.id)}
                   rounded={"full"}
                   backgroundColor={"red.100"}
                   size="sm"
+                  position={"absolute"}
+                  top={9}
+                  right={4}
+                  zIndex={10}
                 />
-                <AspectRatio ratio={1} w={59} h={59} position={"relative"}>
+                <AspectRatio ratio={1} w={120} h={120} position={"relative"}>
                   <Image
                     src={item.im}
                     alt="Picture of the author"
@@ -101,31 +97,30 @@ const NavbarCart = () => {
                 </AspectRatio>
               </Td>
               <Td>
-                <VStack spacing={1}>
-                  <HStack w={full}>
-                    <Heading textTransform={"uppercase"} fontSize={"small"}>
-                      nombre:{" "}
-                    </Heading>
-                    <Text>{item.na}</Text>
-                  </HStack>
-                  <HStack w={full}>
-                    <Heading textTransform={"uppercase"} fontSize={"small"}>
-                      precio:{" "}
-                    </Heading>
-                    <Text>${item.pr}</Text>
-                  </HStack>
-                  <HStack w={full}>
-                    <Heading textTransform={"uppercase"} fontSize={"small"}>
-                      cantidad:{" "}
-                    </Heading>
-                    <Text>{item.cn}</Text>
-                  </HStack>
-                  <HStack w={full}>
-                    <Heading textTransform={"uppercase"} fontSize={"small"}>
-                      Sub Total:{" "}
-                    </Heading>
-                    <Text>${item.pr * item.cn}</Text>
-                  </HStack>
+                <VStack spacing={0}>
+                  {[
+                    {
+                      nombre: locale === "en" ? en.name : es.name,
+                      Valor: item.na,
+                    },
+                    {
+                      nombre: locale === "en" ? en.quantity : es.quantity,
+                      Valor: "N°" + item.cn,
+                    },
+                    {
+                      nombre: locale === "en" ? en.price : es.price,
+                      Valor: "$" + item.pr,
+                    },
+                    {
+                      nombre: locale === "en" ? en.subtotal : es.subtotal,
+                      Valor: "$" + item.pr * item.cn,
+                    },
+                  ].map(({ nombre, Valor }, key) => (
+                    <HStack w={full} key={key} justifyContent={"space-between"}>
+                      <Text fontWeight={"black"}>{nombre}: </Text>
+                      <Text>{Valor}</Text>
+                    </HStack>
+                  ))}
                 </VStack>
               </Td>
             </Tr>

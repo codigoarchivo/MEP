@@ -23,7 +23,6 @@ import {
   chakra,
 } from "@chakra-ui/react";
 
-import ModeColor from "../../../helpers/ModeColor";
 import Breakpoints from "../../../helpers/Breakpoints";
 
 import NavLink from "../../../utils/Navlink";
@@ -34,6 +33,8 @@ import {
   InstagramIcon,
   TwitterIcon,
 } from "../../../helpers/IconNew";
+
+import ListRoute from "../nav/ListRoute";
 
 import en from "../../../translations/en";
 import es from "../../../translations/es";
@@ -49,16 +50,13 @@ const Footer = () => {
     points3,
     points7,
     points8,
-    points9,
-    points10,
     points11,
     points14,
-    content1,
     content3,
     bordes,
   } = Breakpoints();
-  // mode Color
-  const { bg2 } = ModeColor();
+
+  const { dataRoute } = ListRoute();
 
   return (
     <Container maxW={"full"} px={{ base: 0, sm: 4 }} mt={20} pb={4}>
@@ -177,90 +175,21 @@ const Footer = () => {
               </VStack>
             </List>
             <List px={points14} py={5} w="full" spacing={1}>
-              <ListItem>
-                <NavLink
-                  display={"inline"}
-                  color={"brand.900"}
-                  size="sm"
-                  px={0}
-                  variant={"secondary"}
-                  href={"/"}
-                  name={locale === "en" ? en.major.mA : es.major.mA}
-                />
-              </ListItem>
-              <ListItem>
-                <NavLink
-                  display={"inline"}
-                  color={"brand.900"}
-                  size="sm"
-                  px={0}
-                  variant={"secondary"}
-                  href={"/user"}
-                  name={locale === "en" ? en.major.mD : es.major.mD}
-                />
-              </ListItem>
-              <ListItem>
-                <NavLink
-                  display={"inline"}
-                  color={"brand.900"}
-                  size="sm"
-                  px={0}
-                  variant={"secondary"}
-                  href={"/blog"}
-                  as={"/blog"}
-                  name={locale === "en" ? en.major.mE : es.major.mE}
-                />
-              </ListItem>
-              <ListItem>
-                <NavLink
-                  display={"inline"}
-                  color={"brand.900"}
-                  size="sm"
-                  px={0}
-                  variant={"secondary"}
-                  href={`/product/[uid]`}
-                  as={`/product/${a?.uid}`}
-                  name={locale === "en" ? en.major.mG : es.major.mG}
-                />
-              </ListItem>
-              {a?.rol === "owner" && (
-                <>
-                  <ListItem>
-                    <NavLink
-                      display={"inline"}
-                      color={"brand.900"}
-                      size="sm"
-                      px={0}
-                      variant={"secondary"}
-                      href={"/admin/category"}
-                      name={locale === "en" ? en.major.mF : es.major.mF}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <NavLink
-                      display={"inline"}
-                      color={"brand.900"}
-                      size="sm"
-                      px={0}
-                      variant={"secondary"}
-                      href={"/admin"}
-                      name={locale === "en" ? en.major.mH : es.major.mH}
-                    />
-                  </ListItem>
-                </>
-              )}
-
-              <ListItem>
-                <NavLink
-                  display={"inline"}
-                  color={"brand.900"}
-                  size="sm"
-                  px={0}
-                  variant={"secondary"}
-                  href={"/search"}
-                  name={locale === "en" ? en.major.mI : es.major.mI}
-                />
-              </ListItem>
+              {dataRoute.map(({ icon, ref, as, nam, rol }, key) => (
+                <ListItem key={key} display={rol && rol}>
+                  <NavLink
+                    color={"brand.900"}
+                    display={"inline"}
+                    leftIcon={icon}
+                    fontWeight={"normal"}
+                    variant={"secondary"}
+                    size="sm"
+                    href={ref}
+                    as={as}
+                    name={nam}
+                  />
+                </ListItem>
+              ))}
             </List>
           </Stack>
         </GridItem>

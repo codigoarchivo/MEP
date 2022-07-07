@@ -12,6 +12,7 @@ import {
   Container,
   Heading,
   Stack,
+  useBreakpointValue,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
@@ -32,6 +33,8 @@ import SerchCategory from "../../components/search/SerchCategory";
 
 import SerchRange from "../../components/search/SerchRange";
 
+import Breakpoints from "../../helpers/Breakpoints";
+
 import en from "../../translations/en";
 import es from "../../translations/es";
 
@@ -51,6 +54,9 @@ const Search = ({ product }) => {
     }
   }, [dispatch, product, err]);
 
+  const { displayOff2 } = Breakpoints();
+  const variant = useBreakpointValue({ base: "outline", md: "solid" });
+
   return (
     <>
       <ShopLayout title={locale === "en" ? en.search.sI : es.search.sI}>
@@ -58,7 +64,8 @@ const Search = ({ product }) => {
           <Stack flexDirection={"row"}>
             <VStack
               as={"aside"}
-              w={"25%"}
+              display={displayOff2}
+              w={{ base: "0%", md: "40%", lg: "20%" }}
               h={"full"}
               spacing={"10"}
               mt={2}
@@ -84,10 +91,12 @@ const Search = ({ product }) => {
               </Center>
             ) : (
               <Wrap
-                w={"70%"}
-                spacing={"50px"}
+                justify={{ base: "center", md: "start" }}
+                w={{ base: "100%", md: "60%", lg: "80%" }}
+                spacing={{ base: "0px", sm: "150px" }}
                 display={"flex"}
-                justifyContent={"space-around"}
+                px={{ base: 0, sm: 10 }}
+                justifyContent={"space-between"}
               >
                 {listSerch.map((data) => (
                   <SerchScreen

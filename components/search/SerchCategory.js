@@ -42,9 +42,9 @@ const SerchCategory = ({ locale, en, es }) => {
   };
 
   return (
-    <Stack w={"full"} spacing={"10"} border={bordes} rounded="md" p={5}>
+    <Stack w={"full"} spacing={"5"} border={bordes} rounded="md" p={4}>
       <Box borderBottom={bordes} py={5} w={"full"}>
-        <Heading size={"md"} textTransform={"uppercase"} fontWeight={"normal"}>
+        <Heading size={"sm"} textTransform={"uppercase"} fontWeight={"normal"}>
           {locale === "en" ? en.search.sB : es.search.sB}
         </Heading>
       </Box>
