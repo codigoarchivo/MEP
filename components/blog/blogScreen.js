@@ -31,7 +31,7 @@ import es from "../../translations/es";
 
 const BlogScreen = ({ categories, buys, product }) => {
   // Breakpoints
-  const { content5, bordes } = Breakpoints();
+  const { content5, bordes, points25, content7 } = Breakpoints();
   // selector
   const { list = [] } = useSelector(({ category }) => category);
   // selector
@@ -59,8 +59,15 @@ const BlogScreen = ({ categories, buys, product }) => {
   );
 
   return (
-    <Stack flexDirection={content5} spacing={0}>
-      <VStack w={"80%"} boxShadow={"lg"} border={bordes} p={5} mr={5}>
+    <Stack flexDirection={content7} spacing={0}>
+      <VStack
+        mb={{ base: "50px", lg: "0px" }}
+        w={{ base: "100%", lg: "75%" }}
+        boxShadow={"lg"}
+        border={bordes}
+        p={5}
+        mr={5}
+      >
         {/* BlogWork */}
         <BlogWork
           bA={locale === "en" ? en.blog.bA : es.blog.bA}
@@ -68,6 +75,7 @@ const BlogScreen = ({ categories, buys, product }) => {
           bC={locale === "en" ? en.blog.bC : es.blog.bC}
           bD={locale === "en" ? en.blog.bD : es.blog.bD}
           create={locale === "en" ? en.create : es.create}
+          points={points25}
         />
         {/* bienvenida */}
         <BlogEdgar data={locale === "en" ? en.blog.bE : es.blog.bE} />
@@ -80,7 +88,10 @@ const BlogScreen = ({ categories, buys, product }) => {
           >
             {locale === "en" ? en.blog.bF : es.blog.bF}
           </chakra.h1>
-          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
+          <SimpleGrid
+            columns={{ base: 1, lg: 3 }}
+            spacing={{ base: 5, lg: 8 }}
+          >
             <StatsCard
               title={locale === "en" ? en.products : es.products}
               stat={product || 0}
@@ -98,39 +109,46 @@ const BlogScreen = ({ categories, buys, product }) => {
             />
           </SimpleGrid>
         </Box>
-        <Stack pt={30} w={"full"}>
-          <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
-            <Heading
-              fontWeight={600}
-              lineHeight={"110%"}
-              color={"brand.900"}
-              fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }}
-            >
-              {locale === "en" ? en.blog.bG : es.blog.bG}{" "}
-              <Text as={"span"} color={"brand.500"}>
-                {locale === "en" ? en.blog.bH : es.blog.bH}
-              </Text>
-            </Heading>
-          </Stack>
-          <Stack
-            py={6}
-            flexDirection={content5}
-            justifyContent={"space-between"}
-            spacing={0}
+        <Stack
+          pt={30}
+          w={"full"}
+          justifyContent={"center"}
+          textAlign={"center"}
+        >
+          <Heading
+            fontWeight={600}
+            lineHeight={"110%"}
+            color={"brand.900"}
+            fontSize={points25}
+            my={10}
+          >
+            {locale === "en" ? en.blog.bG : es.blog.bG}{" "}
+            <Text as={"span"} color={"brand.500"}>
+              {locale === "en" ? en.blog.bH : es.blog.bH}
+            </Text>
+          </Heading>
+
+          <SimpleGrid
+            columns={{ base: 1, lg: 3 }}
+            spacing={{ base: 5, lg: 6 }}
+            justifyItems={"center"}
           >
             {[
               {
                 title: `${list.find((item) => item.id === one.ct).na}`,
+                name: one.na,
                 price: `${one.pr}$`,
                 date5: `${one.id}`,
               },
               {
                 title: `${list.find((item) => item.id === two.ct).na}`,
+                name: two.na,
                 price: `${two.pr}$`,
                 date5: `${two.id}`,
               },
               {
                 title: `${list.find((item) => item.id === three.ct).na}`,
+                name: three.na,
                 price: `${three.pr}$`,
                 date5: `${three.id}`,
               },
@@ -141,7 +159,7 @@ const BlogScreen = ({ categories, buys, product }) => {
                 nam={locale === "en" ? en.blog.bI : es.blog.bI}
               />
             ))}
-          </Stack>
+          </SimpleGrid>
         </Stack>
         {/* trabajo */}
         <Box p={4} pt={20}>
@@ -150,7 +168,7 @@ const BlogScreen = ({ categories, buys, product }) => {
               fontWeight={600}
               lineHeight={"110%"}
               color={"brand.900"}
-              fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }}
+              fontSize={points25}
             >
               {locale === "en" ? en.blog.bJ : es.blog.bJ}{" "}
               <Text as={"span"} color={"brand.500"}>
@@ -210,10 +228,11 @@ const BlogScreen = ({ categories, buys, product }) => {
           bFf={locale === "en" ? en.blog.bFf : es.blog.bFf}
           bHh={locale === "en" ? en.blog.bHh : es.blog.bHh}
           bIi={locale === "en" ? en.blog.bIi : es.blog.bIi}
+          points={points25}
         />
       </VStack>
       <Stack
-        w={"20%"}
+        w={{ base: "100%", lg: "25%" }}
         boxShadow={"lg"}
         height={"min-content"}
         as={"aside"}

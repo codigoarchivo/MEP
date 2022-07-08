@@ -11,21 +11,14 @@ import {
 
 import BlogTags from "./BlogTags";
 
-const BlogEnergy = ({ bAa, bBb, bCc, bDd, bEe, bFf, bHh, bIi }) => {
-
-  const myLoader = ({ src, width, quality }) => {
-    return `https://firebasestorage.googleapis.com/v0/b/epmp-199ff.appspot.com/o/fotosStaticas%2${src}?alt=media&token=28a889c0-ef17-46c8-8880-98643a43b838&w=${width}&q=${
-      quality || 75
-    }`;
-  };
-  
+const BlogEnergy = ({ bAa, bBb, bCc, bDd, bEe, bFf, bHh, bIi, points }) => {
   return (
     <Container maxW={"7xl"} p="12">
       <Heading
         fontWeight={600}
         lineHeight={"110%"}
         color={"brand.900"}
-        fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }}
+        fontSize={points}
       >
         {bAa}{" "}
         <Text as={"span"} color={"brand.500"}>
@@ -54,8 +47,7 @@ const BlogEnergy = ({ bAa, bBb, bCc, bDd, bEe, bFf, bHh, bIi }) => {
           >
             <Link textDecoration="none" _hover={{ textDecoration: "none" }}>
               <Image
-                loader={myLoader}
-                src={"Fenergia.jpg"}
+                src={"/img/pendulo.png"}
                 alt="energia"
                 width={"200px"}
                 height={"300px"}

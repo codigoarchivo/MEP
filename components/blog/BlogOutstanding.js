@@ -1,4 +1,5 @@
-import { Box, Stack, Text } from "@chakra-ui/react";
+import { Box, Heading, Stack, Text } from "@chakra-ui/react";
+import Breakpoints from "../../helpers/Breakpoints";
 
 import ModeColor from "../../helpers/ModeColor";
 
@@ -6,15 +7,17 @@ import NavLink from "../../utils/Navlink";
 
 const BlogOutstanding = (item) => {
   const { bg3, bgText, bg4, bg5 } = ModeColor();
-
+  const { bordes } = Breakpoints();
   return (
     <Box
-      maxW={"250px"}
+      maxW={"240px"}
       w={"full"}
       bg={bg3}
-      boxShadow={"2xl"}
-      rounded={"md"}
+      boxShadow={"lg"}
+      rounded={"lg"}
       overflow={"hidden"}
+      backgroundColor={"#fff"}
+      border={bordes}
     >
       <Stack
         w={"full"}
@@ -22,6 +25,7 @@ const BlogOutstanding = (item) => {
         p={6}
         color={bgText}
         align={"center"}
+        spacing={10}
       >
         <Text
           fontSize={"sm"}
@@ -34,12 +38,13 @@ const BlogOutstanding = (item) => {
         >
           {item.title}
         </Text>
+        <Heading size={"md"}>{item.name}</Heading>
         <Stack direction={"row"} align={"center"} justify={"center"}>
           <Text fontSize={"6xl"} fontWeight={800}>
             {item.price}
           </Text>
         </Stack>
-        <Box bg={bg5} px={3} py={10}>
+        <Box bg={bg5}>
           <NavLink
             w={"full"}
             variant={"primary"}

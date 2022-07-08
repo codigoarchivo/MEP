@@ -89,7 +89,7 @@ export default {
     cC: "La categoría tiene un producto asociado",
     cD: "Hay una categoría asociada con el nombre que desea agregar",
   },
-  searchs: {
+  search: {
     sA: "Buscar rango de precios",
     sB: "Todas las categorías",
     sC:

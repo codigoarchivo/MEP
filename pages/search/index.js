@@ -12,7 +12,6 @@ import {
   Container,
   Heading,
   Stack,
-  useBreakpointValue,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
@@ -54,22 +53,21 @@ const Search = ({ product }) => {
     }
   }, [dispatch, product, err]);
 
-  const { displayOff2 } = Breakpoints();
-  const variant = useBreakpointValue({ base: "outline", md: "solid" });
+  const { displayOff4 } = Breakpoints();
 
   return (
     <>
       <ShopLayout title={locale === "en" ? en.search.sI : es.search.sI}>
         <Container maxW="container.xs">
-          <Stack flexDirection={"row"}>
+          <Stack flexDirection={"row"} p={{ base: 0, sm: 5 }}>
             <VStack
               as={"aside"}
-              display={displayOff2}
-              w={{ base: "0%", md: "40%", lg: "20%" }}
+              display={displayOff4}
+              w={{ base: "0%", lg: "25%" }}
               h={"full"}
               spacing={"10"}
               mt={2}
-              mr={2}
+              mr={20}
             >
               {/* Rangos de precio */}
               <SerchRange
@@ -91,25 +89,12 @@ const Search = ({ product }) => {
               </Center>
             ) : (
               <Wrap
-                justify={{ base: "center", md: "start" }}
-                w={{ base: "100%", md: "60%", lg: "80%" }}
-                spacing={{ base: "0px", sm: "150px" }}
-                display={"flex"}
-                px={{ base: 0, sm: 10 }}
-                justifyContent={"space-between"}
+                justify={{ base: "center", lg: "start" }}
+                w={{ base: "100%", lg: "75%" }}
+                align="start"
               >
                 {listSerch.map((data) => (
-                  <SerchScreen
-                    key={data.id}
-                    {...data}
-                    push={push}
-                    sD={locale === "en" ? en.search.sD : es.search.sD}
-                    sE={locale === "en" ? en.search.sE : es.search.sE}
-                    sF={locale === "en" ? en.search.sF : es.search.sF}
-                    sG={locale === "en" ? en.search.sG : es.search.sG}
-                    sH={locale === "en" ? en.search.sH : es.search.sH}
-                    err={locale === "en" ? en.error : es.error}
-                  />
+                  <SerchScreen key={data.id} {...data} />
                 ))}
               </Wrap>
             )}

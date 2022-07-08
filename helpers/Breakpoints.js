@@ -4,6 +4,7 @@ const Breakpoints = () => {
   const displayOff1 = { base: "none", sm: "block" };
   const displayOff2 = { base: "none", md: "block" };
   const displayOff3 = { base: "none", md: "table-cell" };
+  const displayOff4 = { base: "none", lg: "block" };
 
   const points1 = { base: 2, md: 1 };
   const points2 = { base: 10, md: 5 };
@@ -55,6 +56,7 @@ const Breakpoints = () => {
   const content4 = { base: "row", sm: "column" };
   const content5 = { base: "column", md: "row" };
   const content6 = { base: "row", md: "column" };
+  const content7 = { base: "column", lg: "row" };
 
   const porcent1 = { base: "full", sm: "75%", md: "50%", lg: "40%" };
   const porcent2 = { base: "40%", md: "15%", lg: "35%" };
@@ -73,6 +75,7 @@ const Breakpoints = () => {
     displayOff1,
     displayOff2,
     displayOff3,
+    displayOff4,
     points1,
     points2,
     points3,
@@ -113,6 +116,7 @@ const Breakpoints = () => {
     porcent4,
     content5,
     content6,
+    content7,
     center,
     full,
     bordes,

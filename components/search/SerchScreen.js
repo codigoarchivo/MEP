@@ -31,34 +31,20 @@ import { LoveIcon } from "../../helpers/IconNew";
 import Toast from "../../helpers/Toast";
 import Breakpoints from "../../helpers/Breakpoints";
 import { ShopAll } from "../../helpers/IconNew";
+import { useRouter } from "next/router";
 
-const SerchScreen = ({
-  id,
-  na,
-  cn,
-  ct,
-  ds,
-  dt,
-  im,
-  pr,
-  rat,
-  ps,
-  uid,
-  push,
-  pj,
-  sD,
-  sE,
-  sF,
-  sG,
-  sH,
-  err,
-}) => {
+import en from "../../translations/en";
+import es from "../../translations/es";
+
+const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
   // useRef
   const match = useRef();
   // useRef
   const matchValid = useRef();
   // Breakpoints
   const { bordes } = Breakpoints();
+  // Breakpoints
+  const { push, locale } = useRouter();
   // selector
   const { activeCartSelect = [], saveCartSelect = [] } = useSelector(
     ({ process }) => process
@@ -101,7 +87,11 @@ const SerchScreen = ({
   const handleSelect = () => {
     // activeCartSelect
     if (match.current) {
-      return Toast(sD, "error", 5000);
+      return Toast(
+        locale === "en" ? en.search.sD : es.search.sD,
+        "error",
+        5000
+      );
     }
     // saveCartSelect
     if (matchValid.current) {
@@ -109,7 +99,7 @@ const SerchScreen = ({
         pathname: "/cart",
         query: { pid: id },
       });
-      return Toast(sE, "info", 5000);
+      return Toast(locale === "en" ? en.search.sE : es.search.sE, "info", 5000);
     }
 
     // dispatch
@@ -119,7 +109,7 @@ const SerchScreen = ({
         id,
       },
     });
-
+    const err = locale === "en" ? en.error : es.error;
     dispatch(cartSaveLatest(data, err));
   };
 
@@ -127,10 +117,20 @@ const SerchScreen = ({
   const handleSave = () => {
     // activeCartSelect
     if (match.current) {
-      return Toast(sF, "error", 5000);
+      return Toast(
+        locale === "en" ? en.search.sF : es.search.sF,
+        "error",
+        5000
+      );
     } else {
       Toast(
-        matchValid.current ? sG : sH,
+        matchValid.current
+          ? locale === "en"
+            ? en.search.sG
+            : es.search.sG
+          : locale === "en"
+          ? en.search.sH
+          : es.search.sH,
         matchValid.current ? "error" : "success",
         5000
       );
@@ -141,25 +141,27 @@ const SerchScreen = ({
 
   return (
     <>
-      <WrapItem mx={5} justifyContent={"center"} py={{ base: 5, sm: 0 }}>
-        <Box position={"relative"}>
-          <Box
-            as={LoveIcon}
-            color={matchValid.current ? "red" : "GrayText"}
-            position={"absolute"}
-            zIndex={1}
-            left={3}
-            top={3}
-            cursor={"pointer"}
-            onClick={handleSave}
-          />
-        </Box>
+      <WrapItem justifyContent={"center"}>
         <Box
           height={"410px"}
           w="250px"
           position={"relative"}
           onClick={handleSelect}
+          mx={5}
+          py={{ base: 5, sm: 0 }}
         >
+          <Box position={"relative"}>
+            <Box
+              as={LoveIcon}
+              color={matchValid.current ? "red" : "GrayText"}
+              position={"absolute"}
+              zIndex={1}
+              left={3}
+              top={3}
+              cursor={"pointer"}
+              onClick={handleSave}
+            />
+          </Box>
           <VStack
             spacing={0}
             onMouseEnter={() => onToggle()}
@@ -244,11 +246,6 @@ SerchScreen.propTypes = {
   ps: PropTypes.string.isRequired,
   uid: PropTypes.string.isRequired,
   pj: PropTypes.number.isRequired,
-  sD: PropTypes.string,
-  sE: PropTypes.string,
-  sF: PropTypes.string,
-  sG: PropTypes.string,
-  sH: PropTypes.string,
 };
 
 export default SerchScreen;
