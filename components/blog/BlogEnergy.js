@@ -13,7 +13,7 @@ import BlogTags from "./BlogTags";
 
 const BlogEnergy = ({ bAa, bBb, bCc, bDd, bEe, bFf, bHh, bIi, points }) => {
   return (
-    <Container maxW={"7xl"} p="12">
+    <Container maxW={"7xl"} p={{ base: 0, sm: "12" }}>
       <Heading
         fontWeight={600}
         lineHeight={"110%"}

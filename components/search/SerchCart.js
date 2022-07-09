@@ -36,7 +36,7 @@ const SerchCart = ({ active, save }) => {
   // useRouter
   const { locale, push } = useRouter();
   // Breakpoints
-  const { bordes, full } = Breakpoints();
+  const { bordes, full, content7 } = Breakpoints();
   // useRef
   const inc = useRef(0);
   // useDisclosure
@@ -51,14 +51,24 @@ const SerchCart = ({ active, save }) => {
   return (
     <>
       {/* carrito */}
-      <Stack flexDirection={"row"} w={full} spacing={0}>
+      <Stack
+        flexDirection={content7}
+        w={full}
+        spacing={0}
+        alignItems={{ base: "center", lg: "start" }}
+      >
         {!active[0] ? (
           <Heading my={20} w={full} textAlign={"center"}>
             {locale === "en" ? en.empty : es.empty}
           </Heading>
         ) : (
           <>
-            <TableContainer w={"70%"} px={5} my={20} border={bordes}>
+            <TableContainer
+              mr={{ base: 0, lg: 5 }}
+              mb={{ base: 5, lg: 0 }}
+              w={{ base: "100%", lg: "70%" }}
+              border={bordes}
+            >
               <Table variant="striped" colorScheme="brand">
                 <TableCaption>
                   {locale === "en" ? en.cart.cA : es.cart.cA}
@@ -90,7 +100,7 @@ const SerchCart = ({ active, save }) => {
                 </Tbody>
               </Table>
             </TableContainer>
-            <VStack py={20} px={5} spacing={0} w={"30%"}>
+            <VStack w={{ base: "100%", md: "70%", lg: "30%" }} spacing={0}>
               <Stack w={full} p={3} spacing={5} border={bordes}>
                 <HStack w={full} justifyContent={"space-between"}>
                   <Heading size={"md"}>Total:</Heading>

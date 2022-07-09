@@ -29,7 +29,7 @@ const Cart = () => {
 
   return (
     <ShopLayout title={locale === "en" ? en.cart.cA : es.cart.cA}>
-      <Container maxW="container.xl">
+      <Container maxW="container.xl" py={{ base: 0, lg: 10 }}>
         <SerchCart active={activeCartSelect} save={saveCartSelect} />
       </Container>
     </ShopLayout>

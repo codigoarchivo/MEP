@@ -27,12 +27,7 @@ import {
   chakra,
 } from "@chakra-ui/react";
 
-import {
-  HamburgerIcon,
-  CloseIcon,
-  SearchIcon,
-  Search2Icon,
-} from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, SearchIcon } from "@chakra-ui/icons";
 
 import {
   CartIcon,
@@ -40,6 +35,7 @@ import {
   Logout,
   LoveIcon,
   OrdenpagoIcon,
+  ShopAll,
 } from "../../../helpers/IconNew";
 
 import { useModality } from "../../../hooks/useModality";
@@ -90,6 +86,7 @@ export default function WithSubnavigation() {
     <Box>
       <Flex
         color={useColorModeValue("gray.600", "white")}
+        mb={{ base: 5, md: 0 }}
         minH={"60px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
@@ -171,12 +168,12 @@ export default function WithSubnavigation() {
                   pathname !== "/cart" ? (
                     <CartIcon boxSize={{ base: 6, sm: 7 }} />
                   ) : (
-                    <Search2Icon boxSize={{ base: 6, sm: 7 }} />
+                    <ShopAll boxSize={{ base: 6, sm: 7 }} />
                   )
                 }
               />
               <Flex
-                right={{ base: -2, sm: -4 }}
+                right={{ base: 0, sm: -2 }}
                 top={0}
                 zIndex={-10}
                 border={bordes}

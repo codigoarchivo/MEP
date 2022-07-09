@@ -41,7 +41,7 @@ const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
   // selector
   const { list = [] } = useSelector(({ category }) => category);
   // Breakpoints
-  const { content5, full, bordes } = Breakpoints();
+  const { content5, full, bordes, points25 } = Breakpoints();
   // values
   const { id, na, pr, im, ds, ct, cn, dt, uid, ps, pj } = product;
   // list Category
@@ -103,10 +103,17 @@ const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
 
     push("/cart");
   };
+  
   return (
     <>
       <Stack flexDirection={content5} spacing={0}>
-        <Box position={"relative"} w={full}>
+        <Box
+          position={"relative"}
+          w={full}
+          textAlign={"center"}
+          mr={{ base: 0, md: 10 }}
+          mb={{ base: 10, md: 0 }}
+        >
           <Image
             src={im || "https://via.placeholder.com/450.png?text=Imagen"}
             alt={na}
@@ -124,8 +131,8 @@ const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
           />
         </Box>
 
-        <VStack px={10} spacing={6} w={full}>
-          <Heading w={full} textTransform={"capitalize"}>
+        <VStack spacing={{ base: 3, md: 6 }} w={full}>
+          <Heading w={full} fontSize={points25} textTransform={"capitalize"}>
             {na}
           </Heading>
           <HStack w={full}>
@@ -184,7 +191,11 @@ const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
         </VStack>
       </Stack>
 
-      <HStack mt={10} border={bordes} p={5}>
+      <HStack
+        mt={10}
+        border={bordes}
+        p={{ base: 1, md: 5 }}
+      >
         <Tabs w={"full"}>
           <TabList>
             <Tab>{locale === "en" ? en.details : es.details}</Tab>
@@ -195,14 +206,14 @@ const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
           </TabList>
 
           <TabPanels>
-            <TabPanel>
-              <Text>{dt}</Text>
+            <TabPanel p={{ base: 2, md: 5 }}>
+              <Text overflowX={"hidden"}>{dt}</Text>
             </TabPanel>
-            <TabPanel>
+            <TabPanel  p={{ base: 0, md: 10 }}>
               <>
-                <Stack w={"full"} mb={10} border={bordes}>
-                  <HStack p={5} w={full}>
-                    <Box p={5} textAlign={"center"}>
+                <Stack mb={10} border={bordes}>
+                  <HStack p={{ base: 1, md: 5 }} w={full}>
+                    <Box p={{ base: 0, md: 5 }} textAlign={"center"}>
                       <Heading>{globalRanking || "0.0"}</Heading>
                       <Text>
                         {locale === "en" ? en.search.sK : es.search.sK}

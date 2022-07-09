@@ -1,6 +1,14 @@
 import React from "react";
 
-import { Box, Heading, HStack, Tag, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  HStack,
+  Stack,
+  Tag,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 
 import PropTypes from "prop-types";
 
@@ -13,40 +21,51 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import NavLink from "../../utils/Navlink";
 
-const SaleScreenAll = ({ item = {}, name, mail, creation, verify, locale }) => {
+const SaleScreenAll = ({
+  item = {},
+  name,
+  mail,
+  creation,
+  verify,
+  locale,
+  paid,
+}) => {
   // Breakpoints
-  const { bordes, full } = Breakpoints();
+  const { bordes, full, content5 } = Breakpoints();
 
   const { cre, process, fer, co, nap, id } = item;
 
   const { to } = item.product;
   return (
-    <HStack
+    <Stack
       w={full}
-      justifyContent={"space-between"}
+      flexDirection={content5}
       alignItems={"flex-end"}
       borderBottom={bordes}
       p={2}
     >
       <VStack w={full} spacing={0}>
-        <HStack w={full}>
-          <Heading as="h3" size="sm">
-            {name}:
-          </Heading>
-          <Text size={"sm"}>{nap}</Text>
-        </HStack>
-        <HStack w={full}>
-          <Heading as="h3" size="sm">
-            {mail}:
-          </Heading>
-          <Text size={"sm"}>{co}</Text>
-        </HStack>
-        <HStack w={full}>
-          <Heading as="h3" size="sm" textTransform={"capitalize"}>
-            {creation}:
-          </Heading>
-          <Text size={"sm"}>{fer}</Text>
-        </HStack>
+        {[
+          {
+            all: name,
+            dat: nap,
+          },
+          {
+            all: mail,
+            dat: co,
+          },
+          {
+            all: creation,
+            dat: fer,
+          },
+        ].map(({ all, dat }, key) => (
+          <HStack w={full} key={key}>
+            <Heading as="h3" size="sm">
+              {all}:
+            </Heading>
+            <Text size={"sm"}>{dat}</Text>
+          </HStack>
+        ))}
       </VStack>
 
       <HStack spacing={"5"} w={full} py={1} justifyContent={"flex-end"}>
@@ -57,7 +76,7 @@ const SaleScreenAll = ({ item = {}, name, mail, creation, verify, locale }) => {
             variant="solid"
             colorScheme="teal"
           >
-            Pagado
+            {paid}
           </Tag>
         ) : (
           <Box as="span" color="gray.600" fontSize="sm">
@@ -77,7 +96,7 @@ const SaleScreenAll = ({ item = {}, name, mail, creation, verify, locale }) => {
           textTransform={"uppercase"}
         />
       </HStack>
-    </HStack>
+    </Stack>
   );
 };
 

@@ -194,8 +194,8 @@ const Footer = () => {
           </Stack>
         </GridItem>
       </Grid>
-      <Box px={10} backgroundColor={"brand.800"}>
-        <HStack w={"full"} py={10} spacing={3}>
+      <Box px={{ base: 3, sm: 10 }} backgroundColor={"brand.800"}>
+        <HStack w={"full"} py={10} spacing={{ base: 0, sm: 3 }}>
           <Heading textTransform={"uppercase"} size="sm" color={"brand.900"}>
             <Box w={6} h={6} as={Global} />{" "}
             {locale === "en" ? en.language : es.language}

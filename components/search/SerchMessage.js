@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 
 import { DragHandleIcon } from "@chakra-ui/icons";
 
@@ -20,8 +20,10 @@ import {
   Divider,
   Heading,
   HStack,
+  Stack,
   Text,
   Tooltip,
+  useBreakpointValue,
   VStack,
 } from "@chakra-ui/react";
 
@@ -31,7 +33,7 @@ const SerchMessage = (item) => {
   // router
   const router = useRouter();
   // Breakpoints
-  const { content6, bordes } = Breakpoints();
+  const { bordes } = Breakpoints();
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
 
@@ -48,29 +50,39 @@ const SerchMessage = (item) => {
     });
   };
 
+  const data = useBreakpointValue({ base: 15, md: 20 });
+
   return (
     <>
-      <HStack justifyContent={"space-between"} p={5}>
-        <HStack spacing={10}>
+      <HStack
+        justifyContent={"space-between"}
+        p={{ base: 2, md: 5 }}
+        overflowX={"hidden"}
+      >
+        <Stack spacing={0}>
           <Box position={"relative"}>
             <Image
-              src={item.pho || "https://via.placeholder.com/70.png?text=Imagen"}
+              src={item.pho || "https://via.placeholder.com/40.png?text=Imagen"}
               alt={item.nam}
-              width={70}
-              height={70}
+              width={40}
+              height={40}
               objectFit="cover"
               objectPosition="center"
             />
           </Box>
 
-          <VStack spacing={3}>
-            <Heading w={"full"} size={"md"} textTransform={"capitalize"}>
+          <VStack spacing={1} w={"full"}>
+            <Heading
+              w={"full"}
+              size={{ base: "x-small", sm: "sm" }}
+              textTransform={"capitalize"}
+            >
               {item.nam}
             </Heading>
 
             <HStack w={"full"}>
               <Box>
-                <Rating size={25} ratingValue={item.rat} readonly={true} />
+                <Rating size={data} ratingValue={item.rat} readonly={true} />
               </Box>
               <Box as="span" color="gray.600" fontSize="sm">
                 hace{" "}
@@ -80,9 +92,11 @@ const SerchMessage = (item) => {
               </Box>
             </HStack>
 
-            <Text w={"full"}>{item.com}</Text>
+            <Text w={"full"} overflowX={"hidden"}>
+              {item.com}
+            </Text>
           </VStack>
-        </HStack>
+        </Stack>
 
         {item.uid !== a?.uid && (
           <Tooltip
@@ -97,7 +111,7 @@ const SerchMessage = (item) => {
           </Tooltip>
         )}
       </HStack>
-      <Divider w={"full"} mt={5} borderBottom={bordes} />
+      <Divider w={"full"} mt={{ base: 0, md: 5 }} borderBottom={bordes} />
     </>
   );
 };

@@ -7,10 +7,11 @@ import NavLink from "../../utils/Navlink";
 
 const BlogOutstanding = (item) => {
   const { bg3, bgText, bg4, bg5 } = ModeColor();
+
   const { bordes } = Breakpoints();
   return (
     <Box
-      maxW={"240px"}
+      maxW={{ base: "240px", sm: "470px", lg: "240px" }}
       w={"full"}
       bg={bg3}
       boxShadow={"lg"}
@@ -22,7 +23,7 @@ const BlogOutstanding = (item) => {
       <Stack
         w={"full"}
         textAlign={"center"}
-        p={6}
+        p={{ base: 3, md: 6 }}
         color={bgText}
         align={"center"}
         spacing={10}

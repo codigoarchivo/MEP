@@ -33,29 +33,29 @@ const Sale = ({ data }) => {
   // useSelector
   const { history = [] } = useSelector(({ checkout }) => checkout);
   // Breakpoints
-  const { bordes, full, content5 } = Breakpoints();
+  const { bordes, full } = Breakpoints();
 
   useEffect(() => {
     if (data) {
       dispatch(cheListAll(data));
     }
   }, [dispatch, data]);
-console.log(data);
+
   return (
     <ShopLayout title={locale === "en" ? en.historySale.sB : es.historySale.sB}>
       <Container maxW={"container.lg"}>
-        <Stack flexDirection={"column"} my={20} w={full}>
+        <Stack flexDirection={"column"} my={{ base: 10, md: 20 }} w={full}>
           <Heading w={full} as="h2" size="lg" fontWeight="semibold">
             {locale === "en" ? en.historySale.sA : es.historySale.sA}
           </Heading>
-          <VStack w={full} p={5} border={bordes}>
+          <VStack w={full} p={{ base: 2, md: 5 }} border={bordes}>
             <Heading
               w={full}
               size={"md"}
               textTransform={"uppercase"}
               px={2}
               fontWeight={"black"}
-              mb={10}
+              mb={{ base: 0, md: 10 }}
             >
               {!!history[0]
                 ? locale === "en"
@@ -75,6 +75,7 @@ console.log(data);
                 creation={locale === "en" ? en.creation : es.creation}
                 verify={locale === "en" ? en.historyBuy.sE : es.historyBuy.sE}
                 locale={locale}
+                paid={locale === "en" ? en.paid : es.paid}
               />
             ))}
           </VStack>

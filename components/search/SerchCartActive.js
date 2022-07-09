@@ -37,7 +37,7 @@ const SerchCartActive = ({
   // selector
   const { list = [] } = useSelector(({ category }) => category);
   // Breakpoints
-  const { full } = Breakpoints();
+  const { full, displayOff2 } = Breakpoints();
 
   // delete cart
   const handleDeleteCart = (id) => {
@@ -51,7 +51,7 @@ const SerchCartActive = ({
     <Tr>
       <Td>
         <HStack>
-          <Flex position={"relative"}>
+          <Flex position={"relative"} display={displayOff2}>
             <Image
               src={item.im || "https://via.placeholder.com/155.png?text=Imagen"}
               alt={item.na}
@@ -112,7 +112,7 @@ const SerchCartActive = ({
       <Td isNumeric>
         <DeleteIcon
           onClick={() => handleDeleteCart(item.id)}
-          mx={5}
+          mx={{ base: 0, md: 5 }}
           cursor={"pointer"}
         />
       </Td>

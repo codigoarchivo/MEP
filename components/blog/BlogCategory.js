@@ -4,7 +4,7 @@ import { CheckIcon } from "@chakra-ui/icons";
 
 const BlogCategory = (item) => {
   return (
-    <HStack key={item.title} align={"top"}>
+    <HStack align={"top"}>
       <Box color={"brand.500"} px={2}>
         <Icon as={CheckIcon} />
       </Box>

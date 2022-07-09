@@ -22,7 +22,12 @@ const Salemodal = ({ imgs, receipt, close, picture }) => {
 
   return (
     <>
-      <Button variant={"primary"} onClick={onOpen} m={4}>
+      <Button
+        variant={"primary"}
+        size={"sm"}
+        fontSize={"xx-small"}
+        onClick={onOpen}
+      >
         {receipt}
       </Button>
 

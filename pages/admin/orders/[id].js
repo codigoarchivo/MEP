@@ -27,7 +27,7 @@ const Orders = ({ active }) => {
 
   return (
     <ShopLayout title={locale === "en" ? en.historySale.sD : es.historySale.sD}>
-      <Container maxW={"container.xl"} py={10}>
+      <Container maxW={"container.xl"} py={{ base: 0, md: 10 }}>
         <Stack flexDirection={"column"} spacing={0}>
           <SaleVerifyAll
             bordes={bordes}

@@ -15,9 +15,13 @@ import { Arrow } from "../../helpers/IconNew";
 
 import NavLink from "../../utils/Navlink";
 
-const BlogWork = ({ bA, bB, bC, bD, create, points }) => {
+const BlogWork = ({ bA, bB, bC, bD, create, points, displayOff }) => {
   return (
-    <Stack w={"full"} minH={"50vh"} direction={{ base: "column", md: "row" }}>
+    <Stack
+      w={"full"}
+      minH={{ base: "40vh", md: "50vh" }}
+      direction={{ base: "column", md: "row" }}
+    >
       <Stack
         flex={1}
         align={"center"}
@@ -64,7 +68,7 @@ const BlogWork = ({ bA, bB, bC, bD, create, points }) => {
             as={`/auth/create`}
             name={create}
           />
-          <Box right={20}>
+          <Box right={20} display={displayOff}>
             <Icon
               as={Arrow}
               color={useColorModeValue("gray.800", "gray.300")}
@@ -87,7 +91,13 @@ const BlogWork = ({ bA, bB, bC, bD, create, points }) => {
         </Stack>
       </Stack>
 
-      <Flex flex={1} position={"relative"}>
+      <Flex
+        flex={1}
+        w={"100%"}
+        h={"auto"}
+        position={"relative"}
+        display={{ base: "none", md: "flex" }}
+      >
         <Image
           src={"/img/secondary.png"}
           alt="Hero"

@@ -31,7 +31,7 @@ import es from "../../translations/es";
 
 const BlogScreen = ({ categories, buys, product }) => {
   // Breakpoints
-  const { content5, bordes, points25, content7 } = Breakpoints();
+  const { displayOff2, bordes, points25, content7 } = Breakpoints();
   // selector
   const { list = [] } = useSelector(({ category }) => category);
   // selector
@@ -65,8 +65,8 @@ const BlogScreen = ({ categories, buys, product }) => {
         w={{ base: "100%", lg: "75%" }}
         boxShadow={"lg"}
         border={bordes}
-        p={5}
-        mr={5}
+        p={{ base: 2, lg: 5 }}
+        mr={{ base: 0, lg: 5 }}
       >
         {/* BlogWork */}
         <BlogWork
@@ -76,6 +76,7 @@ const BlogScreen = ({ categories, buys, product }) => {
           bD={locale === "en" ? en.blog.bD : es.blog.bD}
           create={locale === "en" ? en.create : es.create}
           points={points25}
+          displayOff={displayOff2}
         />
         {/* bienvenida */}
         <BlogEdgar data={locale === "en" ? en.blog.bE : es.blog.bE} />
@@ -88,10 +89,7 @@ const BlogScreen = ({ categories, buys, product }) => {
           >
             {locale === "en" ? en.blog.bF : es.blog.bF}
           </chakra.h1>
-          <SimpleGrid
-            columns={{ base: 1, lg: 3 }}
-            spacing={{ base: 5, lg: 8 }}
-          >
+          <SimpleGrid columns={{ base: 1, lg: 3 }} spacing={{ base: 5, lg: 8 }}>
             <StatsCard
               title={locale === "en" ? en.products : es.products}
               stat={product || 0}
@@ -162,7 +160,7 @@ const BlogScreen = ({ categories, buys, product }) => {
           </SimpleGrid>
         </Stack>
         {/* trabajo */}
-        <Box p={4} pt={20}>
+        <Box p={{ base: 0, sm: 4 }} pt={20}>
           <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
             <Heading
               fontWeight={600}
@@ -177,7 +175,7 @@ const BlogScreen = ({ categories, buys, product }) => {
             </Heading>
           </Stack>
 
-          <Container maxW={"6xl"} mt={20}>
+          <Container maxW={"6xl"} mt={20} px={0}>
             <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={10}>
               {[
                 {

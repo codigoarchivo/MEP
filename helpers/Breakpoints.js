@@ -30,7 +30,7 @@ const Breakpoints = () => {
   const points22 = { base: 10, sm: 0 };
   const points23 = { base: 5, md: 20 };
   const points24 = { base: 5, md: 10 };
-  const points25 = { base: 24, md: 40, lg: 56 };
+  const points25 = { base: 24, md: 40, lg: 50 };
 
   const auto1 = { base: "auto", md: "90vh" };
 

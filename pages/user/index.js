@@ -7,7 +7,6 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  AspectRatio,
   Avatar,
   Box,
   Button,
@@ -47,7 +46,7 @@ const User = () => {
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
-  const { content5, points24, porcent3, porcent4, bordes } = Breakpoints();
+  const { content5, porcent3, porcent4, bordes } = Breakpoints();
 
   const [urlImage, setUrlImage] = useState("");
 
@@ -67,9 +66,9 @@ const User = () => {
   };
 
   return (
-    <ShopLayout>
-      <Container maxW={"container.lg"} mt={10}>
-        <VStack>
+    <ShopLayout title={locale === "en" ? en.user.uA : es.user.uA}>
+      <Container maxW={"container.lg"} py={{ base: 0, md: 20 }}>
+        <VStack mb={{ base: 5, md: 10 }}>
           <Heading textTransform={"capitalize"} size={"lg"} textAlign="center">
             {locale === "en" ? en.user.uA : es.user.uA}
           </Heading>
@@ -84,23 +83,21 @@ const User = () => {
         <Stack
           flexDirection={content5}
           justifyContent={"space-around"}
-          p={points24}
           alignItems={"center"}
+          spacing={0}
         >
-          <VStack spacing={12} h={"full"} p={5} mx={5} w={porcent4}>
-            <Box border={bordes} p={5} rounded={5}>
-              {!photoURL ? (
-                <Avatar size="2xl" name={displayName} />
-              ) : (
-                <AspectRatio ratio={16 / 9} w={70} h={70} position={"relative"}>
-                  <Image
-                    src={photoURL}
-                    alt="Perfil"
-                    layout="fill"
-                    objectFit="contain"
-                  />
-                </AspectRatio>
-              )}
+          <VStack spacing={12} h={"full"} mb={{ base: 5, md: 0 }} w={porcent4}>
+            <Box p={{ base: 0, md: 5 }} rounded={5}>
+              <Avatar
+                size="2xl"
+                name={displayName}
+                src={
+                  photoURL ||
+                  `https://via.placeholder.com/90.png?text=${
+                    locale === "en" ? en.picture : es.picture
+                  }`
+                }
+              />
             </Box>
             <VStack>
               <Heading size={"md"}>
@@ -117,8 +114,7 @@ const User = () => {
           </VStack>
           <chakra.form
             w={porcent3}
-            p={5}
-            mx={5}
+            p={{ base: 2, sm: 5 }}
             border={bordes}
             onSubmit={handleSubmit}
           >

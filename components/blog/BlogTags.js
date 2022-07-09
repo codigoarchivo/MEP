@@ -8,6 +8,7 @@ const BlogTags = (props) => {
           <Tag
             key={key}
             size={"md"}
+            fontSize={{ base: "8px", md: "16px" }}
             variant="solid"
             colorScheme="brand"
             color={"brand.900"}

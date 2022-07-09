@@ -47,7 +47,7 @@ const SaleVerify = ({
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
-  const { full } = Breakpoints();
+  const { full, content7 } = Breakpoints();
 
   const handleUser = (uid) => {
     push({
@@ -89,11 +89,12 @@ const SaleVerify = ({
   return (
     <>
       <HStack
-        spacing={5}
+        spacing={{ base: 0, sm: 5 }}
         w={full}
         border={bordes}
-        p={5}
-        justifyContent={"flex-end"}
+        px={{ base: 1, sm: 5 }}
+        py={{ base: 3, sm: 5 }}
+        justifyContent={{ base: "space-between", sm: "flex-end" }}
         mb={5}
       >
         <Salemodal
@@ -103,6 +104,8 @@ const SaleVerify = ({
           picture={locale === "en" ? en.picture : es.picture}
         />{" "}
         <Button
+          fontSize={"xx-small"}
+          size={"sm"}
           variant={"primary"}
           textTransform={"capitalize"}
           onClick={() => handleUser(buy)}
@@ -111,18 +114,21 @@ const SaleVerify = ({
         </Button>
         <CloseIcon onClick={() => closeVerify()} cursor="pointer" />
       </HStack>
-      <Stack flexDirection={"row"} w={full} spacing={0} mb={20}>
-        <VStack shadow={"lg"} w={full} mr={5} spacing={5} p={5} border={bordes}>
-          <Heading
-            textTransform={"uppercase"}
-            w={full}
-            mb={5}
-            size={"sm"}
-            p={2}
-          >
+      <Stack flexDirection={content7} w={full} spacing={0} mb={20}>
+        <VStack
+          backgroundColor={"#fff"}
+          shadow={"lg"}
+          w={full}
+          mr={{ base: 0, lg: 5 }}
+          mb={{ base: 5, lg: 0 }}
+          spacing={5}
+          p={{ base: 3, sm: 5 }}
+          border={bordes}
+        >
+          <Heading textTransform={"uppercase"} w={full} mb={5} size={"sm"}>
             {locale === "en" ? en.historySale.sE : es.historySale.sE}
           </Heading>
-          <Stack w={full} spacing={5} p={5}>
+          <Stack w={full} spacing={5}>
             {[
               {
                 nombre: locale === "en" ? en.name : es.name,
@@ -156,7 +162,7 @@ const SaleVerify = ({
                 borderBottom={bordes}
               >
                 <Text fontWeight={"black"}>{nombre}: </Text>
-                <Text>{Valor}</Text>
+                <Text overflowX={"hidden"}>{Valor}</Text>
               </HStack>
             ))}
           </Stack>
@@ -166,19 +172,14 @@ const SaleVerify = ({
           shadow={"lg"}
           w={full}
           spacing={5}
-          p={5}
+          p={{ base: 3, sm: 5 }}
           border={bordes}
+          backgroundColor={"#fff"}
         >
-          <Heading
-            textTransform={"uppercase"}
-            w={full}
-            mb={5}
-            size={"sm"}
-            p={2}
-          >
+          <Heading textTransform={"uppercase"} w={full} mb={5} size={"sm"}>
             {locale === "en" ? en.historySale.sF : es.historySale.sF}
           </Heading>
-          <Stack w={full} spacing={5} p={5}>
+          <Stack w={full} spacing={5}>
             {[
               {
                 nombre: locale === "en" ? en.name : es.name,
@@ -204,7 +205,7 @@ const SaleVerify = ({
                 borderBottom={bordes}
               >
                 <Text fontWeight={"black"}>{nombre}: </Text>
-                <Text>{Valor}</Text>
+                <Text overflowX={"hidden"}>{Valor}</Text>
               </HStack>
             ))}
           </Stack>{" "}

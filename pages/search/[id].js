@@ -43,7 +43,7 @@ const Details = ({ product = {} }) => {
 
   return (
     <ShopLayout title={locale === "en" ? en.details : es.details}>
-      <Container maxW="container.lg" py={10}>
+      <Container maxW="container.lg" py={{ base: 0, md: 10 }}>
         <SerchDetails
           message={m}
           product={product}
@@ -61,8 +61,7 @@ Details.propType = {
   product: PropTypes.object,
 };
 
-export async function getStaticPaths(data) {
-  console.log(data);
+export async function getStaticPaths() {
   const producto = await dbProducts("", "dbProFour");
   return {
     paths: producto.map(
