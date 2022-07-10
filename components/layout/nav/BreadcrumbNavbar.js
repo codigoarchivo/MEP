@@ -27,7 +27,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box, locale, es, en }) => {
           py={2}
         >
           {dataRoute.map(({ icon, ref, as, nam, rol }, key) => (
-            <chakra.li mx={"3"} key={key} display={rol && rol}>
+            <chakra.li  key={key} display={rol && rol}>
               <NavLink
                 leftIcon={icon}
                 fontWeight={"normal"}

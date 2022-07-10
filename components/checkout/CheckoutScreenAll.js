@@ -6,6 +6,7 @@ import {
   Button,
   Heading,
   HStack,
+  Stack,
   Tag,
   TagLabel,
   TagRightIcon,
@@ -32,7 +33,7 @@ const CheckoutScreenAll = ({
   push,
 }) => {
   // Breakpoints
-  const { bordes, full } = Breakpoints();
+  const { bordes, full, content3 } = Breakpoints();
 
   // despues de verificar el pago se puede ver los datos del vendedor
   const handleUser = () => {
@@ -48,44 +49,45 @@ const CheckoutScreenAll = ({
 
   return (
     <>
-      <HStack
+      <Stack
         w={full}
         justifyContent={"space-between"}
-        alignItems={"end"}
+        flexDirection={content3}
+        alignItems={{ base: "start", sm: "flex-end" }}
         borderBottom={bordes}
-        p={2}
       >
-        <VStack spacing={0}>
-          <HStack w={full}>
-            <Heading as="h3" size="sm">
-              {name}:
-            </Heading>
-            <Text size={"sm"}>{product.na}</Text>
-          </HStack>
-          <HStack w={full}>
-            <Heading as="h3" size="sm">
-              {quantity}:
-            </Heading>
-            <Text size={"sm"}>N°{product.cn}</Text>
-          </HStack>
-          <HStack w={full}>
-            <Heading as="h3" size="sm">
-              {unit}:
-            </Heading>
-            <Text size={"sm"}>${product.pr}</Text>
-          </HStack>
-          <HStack w={full}>
-            <Heading as="h3" size="sm">
-              {tax}:
-            </Heading>
-            <Text size={"sm"}>${product.pj}</Text>
-          </HStack>
-          <HStack w={full}>
-            <Heading as="h3" size="sm">
-              {price}:
-            </Heading>
-            <Text size={"sm"}>${product.in}</Text>
-          </HStack>
+        <VStack w={full} spacing={0} overflow={"auto"} >
+          {[
+            {
+              all: name,
+              dat: product.na,
+            },
+            {
+              all: quantity,
+              dat: `N°${product.cn}`,
+            },
+            {
+              all: unit,
+              dat: `$${product.pr}`,
+            },
+            {
+              all: tax,
+              dat: `$${product.pj}`,
+            },
+            {
+              all: price,
+              dat: `$${product.in}`,
+            },
+          ].map(({ all, dat }, key) => (
+            <HStack w={full} key={key}>
+              <Heading as="h3" size="sm">
+                {all}:
+              </Heading>
+              <Text  size={"sm"}>
+                {dat}
+              </Text>
+            </HStack>
+          ))}
           <HStack w={full}>
             <Heading as="h3" size="sm">
               Total:
@@ -94,7 +96,7 @@ const CheckoutScreenAll = ({
           </HStack>
         </VStack>
 
-        <HStack spacing={"5"}>
+        <HStack spacing={{ base: 1, md: 5 }}>
           <Button
             size={"xs"}
             fontWeight={"normal"}
@@ -119,7 +121,7 @@ const CheckoutScreenAll = ({
             <TagRightIcon as={process ? UnlockIcon : LockIcon} />
           </Tag>
         </HStack>
-      </HStack>
+      </Stack>
     </>
   );
 };

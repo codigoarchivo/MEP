@@ -43,7 +43,7 @@ const UserScreen = ({ user = {}, locale, back, es, en }) => {
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
-  const { repeat1, points3, bordes } = Breakpoints();
+  const { repeat1, points3, bordes, all2 } = Breakpoints();
   // mode Color
   const { bg, brand } = ModeColor();
   // useForm
@@ -81,7 +81,7 @@ const UserScreen = ({ user = {}, locale, back, es, en }) => {
       my={10}
     >
       <HStack
-        p={5}
+        p={{ base: 2, md: 5 }}
         w={"full"}
         alignItems={"center"}
         justifyContent={"space-between"}
@@ -91,7 +91,12 @@ const UserScreen = ({ user = {}, locale, back, es, en }) => {
         </Heading>
         <CloseButton onClick={onCloseSelling} />
       </HStack>
-      <chakra.form onSubmit={handleSubmit} w={"full"} p={5}>
+      <chakra.form
+        onSubmit={handleSubmit}
+        w={"full"}
+        p={{ base: 0, sm: 5 }}
+        overflow={"auto"}
+      >
         <Grid
           templateRows={`repeat(${a.uid !== id ? 4 : 5}, 1fr)`}
           templateColumns={repeat1}
@@ -130,9 +135,11 @@ const UserScreen = ({ user = {}, locale, back, es, en }) => {
               val={Valor}
               type={type}
               place={place}
+              all={all2}
               handle={handleInputChange}
             />
           ))}
+
           <GridItemFormTextarea
             isReadOnly={a.uid !== id ? true : false}
             points={2}
@@ -143,7 +150,7 @@ const UserScreen = ({ user = {}, locale, back, es, en }) => {
             handle={handleInputChange}
             bg={bg}
             brand={brand}
-            size={"lg"}
+            size={"md"}
           />
           {a.uid === id && (
             <GridItem colSpan={2} mt={5}>

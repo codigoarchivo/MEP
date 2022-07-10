@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-import { useRouter } from "next/router";
-
 import PropTypes from "prop-types";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -27,7 +25,7 @@ import {
   Grid,
   Box,
   CloseButton,
-  Divider,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 
 import Breakpoints from "../../helpers/Breakpoints";
@@ -74,7 +72,7 @@ const CheckVerify = ({
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
-  const { repeat1, points3, full } = Breakpoints();
+  const { repeat1, points3, full, content7, all2 } = Breakpoints();
   // mode Color
   const { bg, brand } = ModeColor();
 
@@ -133,27 +131,31 @@ const CheckVerify = ({
     });
   };
 
+  const poin = useBreakpointValue({ base: 2, lg: 1 });
+
   return (
     <>
-      <Text py={5}>
-        <Button onClick={handleClient} variant={"primary"}>
+      <Text py={5} overflowX={"hidden"}>
+        <Button onClick={handleClient} variant={"primary"} size={"sm"}>
           {locale === "en" ? en.verify.vA : es.verify.vA}
         </Button>{" "}
         - {locale === "en" ? en.verify.vB : es.verify.vB}
       </Text>
-      <Stack flexDirection={"row"} w={full} spacing={0}>
-        <VStack shadow={"lg"} w={full} mr={5} spacing={2} border={bordes} p={5}>
-          <Heading
-            textTransform={"uppercase"}
-            w={full}
-            mb={5}
-            size={"sm"}
-            border={bordes}
-            p={2}
-          >
+      <Stack flexDirection={content7} w={full} spacing={0}>
+        <VStack
+          backgroundColor={"#fff"}
+          shadow={"lg"}
+          w={full}
+          mr={{ base: 0, lg: 5 }}
+          mb={{ base: 5, lg: 0 }}
+          spacing={5}
+          p={{ base: 3, sm: 5 }}
+          border={bordes}
+        >
+          <Heading textTransform={"uppercase"} w={full} mb={5} size={"sm"}>
             {locale === "en" ? en.verify.vC : es.verify.vC}
           </Heading>
-          <Stack w={full} spacing={3} border={bordes} p={5}>
+          <Stack w={full} spacing={5}>
             {[
               {
                 nombre: locale === "en" ? en.name : es.name,
@@ -187,24 +189,25 @@ const CheckVerify = ({
                 borderBottom={bordes}
               >
                 <Text fontWeight={"black"}>{nombre}: </Text>
-                <Text>{Valor}</Text>
+                <Text overflowX={"hidden"}>{Valor}</Text>
               </HStack>
             ))}
           </Stack>
         </VStack>
 
-        <VStack shadow={"lg"} w={full} spacing={2} border={bordes} p={5}>
-          <Heading
-            textTransform={"uppercase"}
-            w={full}
-            mb={5}
-            size={"sm"}
-            border={bordes}
-            p={2}
-          >
+        <VStack
+          h={"min-content"}
+          shadow={"lg"}
+          w={full}
+          spacing={5}
+          p={{ base: 3, sm: 5 }}
+          border={bordes}
+          backgroundColor={"#fff"}
+        >
+          <Heading textTransform={"uppercase"} w={full} mb={5} size={"sm"}>
             {locale === "en" ? en.verify.vH : es.verify.vH}
           </Heading>
-          <Stack w={full} spacing={2} border={bordes} p={5}>
+          <Stack w={full} spacing={5}>
             <List spacing={3}>
               <ListItem>
                 <ListIcon as={CheckCircleIcon} color="brand.700" />
@@ -247,19 +250,18 @@ const CheckVerify = ({
                 borderBottom={bordes}
               >
                 <Heading size={"sm"}>{nombre}:</Heading>
-                <Text>{Valor}</Text>
+                <Text overflowX={"hidden"}>{Valor}</Text>
               </HStack>
             ))}
           </Stack>
         </VStack>
       </Stack>
 
-      <Divider py={5} />
-
       <chakra.form
         onSubmit={handleSubmit}
         w={full}
-        p={10}
+        p={{ base: 3, lg: 10 }}
+        backgroundColor={"#fff"}
         border={bordes}
         shadow={"lg"}
       >
@@ -270,19 +272,12 @@ const CheckVerify = ({
           w={full}
         >
           <GridItem mb={3} colSpan={2}>
-            <Heading
-              textTransform={"uppercase"}
-              w={full}
-              mb={5}
-              size={"sm"}
-              border={bordes}
-              p={2}
-            >
-              <HStack w={full} justifyContent={"space-between"}>
-                <Text>{locale === "en" ? en.verify.vF : es.verify.vF}</Text>
-                <CloseButton onClick={closeVerify} />
-              </HStack>
-            </Heading>
+            <HStack w={full} justifyContent={"space-between"}>
+              <Heading textTransform={"uppercase"} w={full} mb={5} size={"sm"}>
+                {locale === "en" ? en.verify.vF : es.verify.vF}
+              </Heading>
+              <CloseButton onClick={closeVerify} />
+            </HStack>
           </GridItem>
 
           {[
@@ -292,6 +287,7 @@ const CheckVerify = ({
               na: "nap",
               place: locale === "en" ? en.name : es.name,
               type: "text",
+              poi: poin,
             },
             {
               nombre: locale === "en" ? en.reference : es.reference,
@@ -299,6 +295,7 @@ const CheckVerify = ({
               na: "ref",
               place: `N° ${locale === "en" ? en.reference : es.reference}`,
               type: "text",
+              poi: poin,
             },
             {
               nombre: locale === "en" ? en.mail : es.mail,
@@ -306,18 +303,21 @@ const CheckVerify = ({
               na: "co",
               place: locale === "en" ? en.mail : es.mail,
               type: "email",
+              poi: poin,
             },
             {
               nombre: locale === "en" ? en.payment : es.payment,
               Valor: fer,
               na: "fer",
               type: "date",
+              poi: poin,
             },
-          ].map(({ nombre, Valor, na, place, type }, key) => (
+          ].map(({ nombre, Valor, na, place, type, poi }, key) => (
             <GridItemForm
               key={key}
               mb={3}
-              points={1}
+              points={poin}
+              all={all2}
               na={na}
               name={nombre}
               val={Valor}
@@ -337,7 +337,7 @@ const CheckVerify = ({
             brand={brand}
             mb={10}
           />
-          <GridItem mb={3} colSpan={1} p={5}>
+          <GridItem colSpan={1}>
             <FormLabel
               htmlFor="imp"
               fontWeight={"bold"}
@@ -345,9 +345,13 @@ const CheckVerify = ({
             >
               {locale === "en" ? en.receipt : es.receipt}
             </FormLabel>
-            <HStack justifyContent={"space-between"} w={"full"} spacing={20}>
+            <HStack
+              justifyContent={"space-between"}
+              w={"full"}
+              spacing={{ base: 5, md: 20 }}
+            >
               {/* save file */}
-              <Box w={"full"}>
+              <Box w={"full"} shadow={"lg"} border={bordes} rounded={"sm"}>
                 <FileAll
                   setUrlImage={setUrlImage}
                   fileName={"fotosRecibo"}

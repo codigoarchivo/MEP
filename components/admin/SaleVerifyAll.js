@@ -128,7 +128,7 @@ const SaleVerify = ({
           <Heading textTransform={"uppercase"} w={full} mb={5} size={"sm"}>
             {locale === "en" ? en.historySale.sE : es.historySale.sE}
           </Heading>
-          <Stack w={full} spacing={5}>
+          <Stack w={full} spacing={5} overflow={"auto"}>
             {[
               {
                 nombre: locale === "en" ? en.name : es.name,
@@ -162,7 +162,7 @@ const SaleVerify = ({
                 borderBottom={bordes}
               >
                 <Text fontWeight={"black"}>{nombre}: </Text>
-                <Text overflowX={"hidden"}>{Valor}</Text>
+                <Text>{Valor}</Text>
               </HStack>
             ))}
           </Stack>
@@ -179,7 +179,7 @@ const SaleVerify = ({
           <Heading textTransform={"uppercase"} w={full} mb={5} size={"sm"}>
             {locale === "en" ? en.historySale.sF : es.historySale.sF}
           </Heading>
-          <Stack w={full} spacing={5}>
+          <Stack w={full} spacing={5} overflow={"auto"}>
             {[
               {
                 nombre: locale === "en" ? en.name : es.name,
@@ -199,13 +199,13 @@ const SaleVerify = ({
               },
             ].map(({ nombre, Valor }, key) => (
               <HStack
-                w={full}
+                py={1}
                 key={key}
                 justifyContent={"space-between"}
                 borderBottom={bordes}
               >
                 <Text fontWeight={"black"}>{nombre}: </Text>
-                <Text overflowX={"hidden"}>{Valor}</Text>
+                <Text>{Valor}</Text>
               </HStack>
             ))}
           </Stack>{" "}

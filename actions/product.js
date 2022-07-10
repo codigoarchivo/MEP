@@ -192,7 +192,6 @@ export const saveSaleRevert = (data, err) => {
           const cnr = item.cnr + item.cn;
           await dbProductEdit(item.id, "dbProEditOne", cnr);
           await deleteDoc(doc(db, "buys", item.idP));
-          await dispatch(closeRevert());
         }
       });
     } catch (error) {

@@ -10,6 +10,11 @@ const Toast = (desc, stat, dura) => {
       duration: dura,
       isClosable: true,
       position: "top-right",
+      containerStyle: {
+        minWidth: 250,
+        fontSize: 12,
+        textTransform: "uppercase",
+      },
     });
   }
 };

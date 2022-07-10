@@ -12,7 +12,15 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import NavLink from "../../utils/Navlink";
 
-const SaleScreen = ({ item = {} }) => {
+const SaleScreen = ({
+  item = {},
+  name,
+  mail,
+  creation,
+  verify,
+  locale,
+  paid,
+}) => {
   // Breakpoints
   const { bordes, full } = Breakpoints();
 
@@ -27,37 +35,50 @@ const SaleScreen = ({ item = {} }) => {
       borderBottom={bordes}
       p={2}
     >
-      <VStack w={full} spacing={0}>
-        <HStack w={full}>
-          <Heading as="h3" size="sm">
-            Nombre:
-          </Heading>
-          <Text size={"sm"}>{nap}</Text>
-        </HStack>
-        <HStack w={full}>
-          <Heading as="h3" size="sm">
-            Correo:
-          </Heading>
-          <Text size={"sm"}>{co}</Text>
-        </HStack>
-        <HStack w={full}>
-          <Heading as="h3" size="sm">
-            Fecha de creación:
-          </Heading>
-          <Text size={"sm"}>{fer}</Text>
-        </HStack>
+      <VStack w={full} spacing={0} overflow={"auto"}>
+        {[
+          {
+            all: name,
+            dat: nap,
+          },
+          {
+            all: mail,
+            dat: co,
+          },
+          {
+            all: creation,
+            dat: fer,
+          },
+        ].map(({ all, dat }, key) => (
+          <HStack w={full} key={key}>
+            <Heading as="h3" size="sm">
+              {all}:
+            </Heading>
+            <Text size={"sm"}>{dat}</Text>
+          </HStack>
+        ))}
       </VStack>
 
-      <HStack spacing={"5"} w={full} py={1} justifyContent={"flex-end"}>
+      <HStack
+        spacing={{ base: 1, md: 5 }}
+        w={full}
+        py={1}
+        justifyContent={"flex-end"}
+      >
         {process === true ? (
-          <Tag textTransform={"uppercase"} size={"sm"} variant="solid" colorScheme="teal">
-            Pagado
+          <Tag
+            textTransform={"uppercase"}
+            size={"sm"}
+            variant="solid"
+            colorScheme="teal"
+          >
+            {paid}
           </Tag>
         ) : (
           <Box as="span" color="gray.600" fontSize="sm">
-            hace{" "}
+            {locale === "es" && "hace"}{" "}
             {formatDistanceToNow(cre, {
-              locale: localEs,
+              locale: locale === "en" ? localEn : localEs,
             })}
           </Box>
         )}
@@ -65,7 +86,7 @@ const SaleScreen = ({ item = {} }) => {
         <NavLink
           href={`/sale/[id]`}
           as={`/sale/${id}`}
-          name={`Verificar $${to}`}
+          name={`${verify} $${to}`}
           variant={"primary"}
           size={"xs"}
           textTransform={"uppercase"}

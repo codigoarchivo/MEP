@@ -1,11 +1,10 @@
 import React, { useRef } from "react";
 
-import { useSelector } from "react-redux";
-
 import PropTypes from "prop-types";
 
 import {
   Button,
+  Flex,
   HStack,
   Popover,
   PopoverBody,
@@ -14,6 +13,7 @@ import {
   PopoverHeader,
   PopoverTrigger,
   Portal,
+  Stack,
   Tag,
   TagLabel,
   TagRightIcon,
@@ -43,12 +43,10 @@ const CheckoutScreen = ({
   sH,
   sJ,
 }) => {
-  // useSelector
-  const { message } = useSelector(({ checkout }) => checkout);
   // useRef
   const initRef = useRef();
   // Breakpoints
-  const { bordes, full } = Breakpoints();
+  const { bordes, full, content5 } = Breakpoints();
 
   // envia el recibo del pago a la base de datos
   const handleVerify = () => {
@@ -72,14 +70,6 @@ const CheckoutScreen = ({
     }
   };
 
-  // aqui va estar todos los mensajes 
-  // let el = [];
-  // message.map((i) => {
-  //   if (String(i.id) !== g) {
-  //     el.push(i.rat);
-  //   }
-  // });
-
   //  puede enviarle un comentario al vendedor
   const handleReview = () => {
     push({
@@ -95,57 +85,59 @@ const CheckoutScreen = ({
   return (
     <>
       <ContadorRegresivo lim={lim} count={count} />
-      <HStack
+      <Stack
         w={full}
+        flexDirection={content5}
+        alignItems={{ base: "start", md: "flex-end" }}
         justifyContent={"space-between"}
         borderBottom={bordes}
         p={2}
       >
-        <HStack spacing={"3"}>
-          <Button
-            leftIcon={<CartList h={5} w={5} />}
-            backgroundColor={"grey.100"}
-            size={"xs"}
-            fontWeight={"normal"}
-            variant={"secondary"}
-            w={"min-content"}
-            disabled={process ? true : false}
-            border={bordes}
-            onClick={handleVerify}
-            textTransform={"uppercase"}
-          >
-            {`${sE} $${product.to}`}
-          </Button>
-          <Button
-            size={"xs"}
-            fontWeight={"normal"}
-            variant={"secondary"}
-            w={"min-content"}
-            disabled={process ? false : true}
-            border={bordes}
-            onClick={handleUser}
-            textTransform={"uppercase"}
-          >
-            {sF}
-          </Button>
+        <Button
+          leftIcon={<CartList h={5} w={5} />}
+          backgroundColor={"grey.100"}
+          size={"xs"}
+          fontWeight={"normal"}
+          variant={"secondary"}
+          w={"min-content"}
+          disabled={process ? true : false}
+          border={bordes}
+          onClick={handleVerify}
+          textTransform={"uppercase"}
+        >
+          {`${sE} $${product.to}`}
+        </Button>
+        <Button
+          size={"xs"}
+          fontWeight={"normal"}
+          variant={"secondary"}
+          w={"min-content"}
+          disabled={process ? false : true}
+          border={bordes}
+          onClick={handleUser}
+          textTransform={"uppercase"}
+        >
+          {sF}
+        </Button>
 
-          <Button
-            size={"xs"}
-            fontWeight={"normal"}
-            variant={"primary"}
-            w={"min-content"}
-            disabled={process ? false : true}
-            border={bordes}
-            onClick={handleReview}
-            textTransform={"uppercase"}
-          >
-            {sH}
-          </Button>
-        </HStack>
-        <HStack spacing={"5"}>
+        <Button
+          size={"xs"}
+          fontWeight={"normal"}
+          variant={"primary"}
+          w={"min-content"}
+          disabled={process ? false : true}
+          border={bordes}
+          onClick={handleReview}
+          textTransform={"uppercase"}
+          rounded={"lg"}
+        >
+          {sH}
+        </Button>
+        <Flex>
           <Popover
+            boundary={HTMLElement | "clippingParents" | "scrollParent"}
+            matchWidth={true}
             closeOnBlur={false}
-            placement="left"
             initialFocusRef={initRef}
           >
             <>
@@ -163,7 +155,7 @@ const CheckoutScreen = ({
                 </Tag>
               </PopoverTrigger>
               <Portal>
-                <PopoverContent>
+                <PopoverContent w={260}>
                   <PopoverHeader>{sJ}</PopoverHeader>
                   <PopoverCloseButton />
                   <PopoverBody>
@@ -171,15 +163,16 @@ const CheckoutScreen = ({
                       as={"span"}
                       id={`resLimit_${count}`}
                       fontWeight={"black"}
-                      fontSize={"small"}
+                      fontSize={"x-small"}
+                      textTransform={"uppercase"}
                     ></Text>
                   </PopoverBody>
                 </PopoverContent>
               </Portal>
             </>
           </Popover>
-        </HStack>
-      </HStack>
+        </Flex>
+      </Stack>
     </>
   );
 };

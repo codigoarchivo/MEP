@@ -134,7 +134,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
         matchValid.current ? "error" : "success",
         5000
       );
-
+      const err = locale === "en" ? en.error : es.error;
       dispatch(saveProductCart(data, err));
     }
   };
@@ -142,26 +142,28 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
   return (
     <>
       <WrapItem justifyContent={"center"}>
+        <Box position={"relative"}>
+          <Box
+            as={LoveIcon}
+            color={matchValid.current ? "red" : "GrayText"}
+            position={"absolute"}
+            zIndex={2}
+            left={"20px"}
+            top={0}
+            p={4}
+            w={12}
+            h={12}
+            cursor={"pointer"}
+            onClick={handleSave}
+          />
+        </Box>
         <Box
           height={"410px"}
           w="250px"
           position={"relative"}
           onClick={handleSelect}
           mx={5}
-          py={{ base: 5, sm: 0 }}
         >
-          <Box position={"relative"}>
-            <Box
-              as={LoveIcon}
-              color={matchValid.current ? "red" : "GrayText"}
-              position={"absolute"}
-              zIndex={1}
-              left={3}
-              top={3}
-              cursor={"pointer"}
-              onClick={handleSave}
-            />
-          </Box>
           <VStack
             spacing={0}
             onMouseEnter={() => onToggle()}

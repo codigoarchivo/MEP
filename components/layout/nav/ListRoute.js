@@ -45,6 +45,7 @@ const ListRoute = () => {
       ref: "/admin",
       as: "/admin",
       nam: locale === "en" ? en.major.mH : es.major.mH,
+      rol: a.rol === "owner" ? "block" : "none",
     },
     {
       icon: <Product />,
@@ -64,7 +65,6 @@ const ListRoute = () => {
       ref: "/search",
       as: "/search",
       nam: locale === "en" ? en.major.mI : es.major.mI,
-      rol: a.rol === "owner" ? "block" : "none",
     },
   ];
 

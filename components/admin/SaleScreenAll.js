@@ -31,7 +31,7 @@ const SaleScreenAll = ({
   paid,
 }) => {
   // Breakpoints
-  const { bordes, full, content5 } = Breakpoints();
+  const { bordes, full, content3 } = Breakpoints();
 
   const { cre, process, fer, co, nap, id } = item;
 
@@ -39,12 +39,12 @@ const SaleScreenAll = ({
   return (
     <Stack
       w={full}
-      flexDirection={content5}
-      alignItems={"flex-end"}
+      justifyContent={"space-between"}
+      flexDirection={content3}
+      alignItems={{ base: "start", sm: "flex-end" }}
       borderBottom={bordes}
-      p={2}
     >
-      <VStack w={full} spacing={0}>
+      <VStack w={full} spacing={0} overflow={"auto"} >
         {[
           {
             all: name,
@@ -68,7 +68,12 @@ const SaleScreenAll = ({
         ))}
       </VStack>
 
-      <HStack spacing={"5"} w={full} py={1} justifyContent={"flex-end"}>
+      <HStack
+        spacing={{ base: 1, md: 5 }}
+        w={full}
+        py={1}
+        justifyContent={"flex-end"}
+      >
         {process === true ? (
           <Tag
             textTransform={"uppercase"}

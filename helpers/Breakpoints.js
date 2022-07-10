@@ -35,6 +35,7 @@ const Breakpoints = () => {
   const auto1 = { base: "auto", md: "90vh" };
 
   const all1 = ["sx", "sm", "md", "lg", "xl"];
+  const all2 = ["sx", "sm", "md", "lg"];
 
   const repeat1 = { base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" };
 
@@ -122,6 +123,7 @@ const Breakpoints = () => {
     bordes,
     calc,
     all1,
+    all2,
   };
 };
 

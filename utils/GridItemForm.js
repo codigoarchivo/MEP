@@ -3,6 +3,7 @@ import { FormLabel, GridItem, Input } from "@chakra-ui/react";
 const GridItemForm = ({
   mb,
   points,
+  all,
   name,
   na,
   val,
@@ -23,6 +24,7 @@ const GridItemForm = ({
           {name}
         </FormLabel>
         <Input
+          size={all}
           isReadOnly={isReadOnly}
           maxLength={maxlength}
           name={na}

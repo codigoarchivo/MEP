@@ -70,7 +70,16 @@ const Sale = ({ data }) => {
               </Heading>
 
               {sale.map((item, key) => (
-                <SaleScreen item={item} key={key} />
+                <SaleScreen
+                  item={item}
+                  key={key}
+                  name={locale === "en" ? en.name : es.name}
+                  mail={locale === "en" ? en.mail : es.mail}
+                  creation={locale === "en" ? en.creation : es.creation}
+                  verify={locale === "en" ? en.historyBuy.sE : es.historyBuy.sE}
+                  locale={locale}
+                  paid={locale === "en" ? en.paid : es.paid}
+                />
               ))}
             </VStack>
           </VStack>

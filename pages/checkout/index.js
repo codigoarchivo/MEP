@@ -24,6 +24,7 @@ import Breakpoints from "../../helpers/Breakpoints";
 import {
   activeProductList,
   closeActive,
+  closeRevert,
   saveSaleRevert,
 } from "../../actions/product";
 
@@ -46,7 +47,7 @@ const Checkout = ({ product = [] }) => {
   // useDispatch
   const dispatch = useDispatch();
   // Breakpoints
-  const { bordes, full, content5 } = Breakpoints();
+  const { bordes, full, content3, points25 } = Breakpoints();
 
   useEffect(() => {
     if (product) {
@@ -59,9 +60,10 @@ const Checkout = ({ product = [] }) => {
     dispatch(closeActive());
   }, [dispatch]);
 
-  const handleRevert = async () => {
+  const handleRevert = (e) => {
+    e.preventDefault();
     // revertir
-    const data = await check.map((item) => {
+    const data = check.map((item) => {
       return {
         idP: item.id,
         process: item.process,
@@ -73,84 +75,78 @@ const Checkout = ({ product = [] }) => {
     const err = locale === "en" ? en.error : es.error;
     dispatch(saveSaleRevert(data, err));
 
-    push("/");
+    dispatch(closeRevert());
   };
 
   return (
     <ShopLayout title={locale === "en" ? en.historyBuy.sL : es.historyBuy.sL}>
       <Container maxW={"container.lg"}>
-        <Stack flexDirection={"row"} my={20} w={full}>
-          <VStack w={full} spacing={5}>
-            <Heading w={full} as="h2" size="lg" fontWeight="semibold">
-              {locale === "en" ? en.historyBuy.sD : es.historyBuy.sD}
+        <Stack flexDirection={"column"} my={{ base: 10, md: 20 }} w={full}>
+          <Heading
+            overflowY={"hidden"}
+            w={full}
+            as="h2"
+            size="lg"
+            fontWeight="semibold"
+            fontSize={points25}
+            mb={5}
+          >
+            {locale === "en" ? en.historyBuy.sD : es.historyBuy.sD}
+          </Heading>
+          <VStack w={full} p={{ base: 2, md: 5 }} border={bordes}>
+            <Heading
+              w={full}
+              size={"md"}
+              textTransform={"uppercase"}
+              px={2}
+              fontWeight={"black"}
+              mb={{ base: 0, md: 10 }}
+            >
+              {!!check[0]
+                ? locale === "en"
+                  ? en.historyBuy.sB
+                  : es.historyBuy.sB
+                : locale === "en"
+                ? en.historyBuy.sC
+                : es.historyBuy.sC}
             </Heading>
-            <Stack w={full} flexDirection={content5} spacing={0}>
-              <Box w={full} mx={2}>
-                <VStack spacing={5} border={bordes} p={10} boxShadow={"lg"}>
-                  <VStack w={full} py={5}>
-                    <Heading
-                      w={full}
-                      size={"md"}
-                      textTransform={"uppercase"}
-                      px={2}
-                      fontWeight={"black"}
-                      mb={10}
-                    >
-                      {!!check[0]
-                        ? locale === "en"
-                          ? en.historyBuy.sB
-                          : es.historyBuy.sB
-                        : locale === "en"
-                        ? en.historyBuy.sC
-                        : es.historyBuy.sC}
-                    </Heading>
-                    {check.map((item, key) => (
-                      <CheckoutScreen
-                        key={key}
-                        {...item}
-                        count={(key += 1)}
-                        sE={
-                          locale === "en" ? en.historyBuy.sE : es.historyBuy.sE
-                        }
-                        sF={
-                          locale === "en" ? en.historyBuy.sF : es.historyBuy.sF
-                        }
-                        sH={
-                          locale === "en" ? en.historyBuy.sH : es.historyBuy.sH
-                        }
-                        sJ={
-                          locale === "en" ? en.historyBuy.sJ : es.historyBuy.sJ
-                        }
-                        paid={locale === "en" ? en.paid : es.paid}
-                        pro={locale === "en" ? en.process : es.process}
-                        locale={locale}
-                        push={push}
-                      />
-                    ))}
-                  </VStack>
-                  <Box w={"full"}>
-                    {!!check[0] && (
-                      <>
-                        <HStack>
-                          <Text>
-                            {locale === "en"
-                              ? en.historyBuy.sK
-                              : es.historyBuy.sK}{" "}
-                          </Text>
-                          <Button
-                            onClick={handleRevert}
-                            textTransform={"uppercase"}
-                            variant={"secondary"}
-                          >
-                            {locale === "en" ? en.clickHere : es.clickHere}
-                          </Button>{" "}
-                        </HStack>
-                      </>
-                    )}
-                  </Box>
-                </VStack>
-              </Box>
-            </Stack>
+            {check.map((item, key) => (
+              <CheckoutScreen
+                key={key}
+                {...item}
+                count={(key += 1)}
+                sE={locale === "en" ? en.historyBuy.sE : es.historyBuy.sE}
+                sF={locale === "en" ? en.historyBuy.sF : es.historyBuy.sF}
+                sH={locale === "en" ? en.historyBuy.sH : es.historyBuy.sH}
+                sJ={locale === "en" ? en.historyBuy.sJ : es.historyBuy.sJ}
+                paid={locale === "en" ? en.paid : es.paid}
+                pro={locale === "en" ? en.process : es.process}
+                locale={locale}
+                push={push}
+              />
+            ))}
+            {!!check[0] && (
+              <Stack
+                as={"form"}
+                onSubmit={handleRevert}
+                w={"full"}
+                py={5}
+                flexDirection={content3}
+                alignItems={"center"}
+                justifyContent={"space-between"}
+              >
+                <Text overflowY={"hidden"}>
+                  {locale === "en" ? en.historyBuy.sK : es.historyBuy.sK}{" "}
+                </Text>
+                <Button
+                  textTransform={"uppercase"}
+                  variant={"secondary"}
+                  type="submit"
+                >
+                  {locale === "en" ? en.clickHere : es.clickHere}
+                </Button>{" "}
+              </Stack>
+            )}
           </VStack>
         </Stack>
       </Container>

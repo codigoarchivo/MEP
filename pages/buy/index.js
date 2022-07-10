@@ -51,7 +51,7 @@ const Buy = ({ product = [] }) => {
             <Heading w={full} as="h2" size="lg" fontWeight="semibold">
               {locale === "en" ? en.historyBuy.sA : es.historyBuy.sA}
             </Heading>
-            <VStack w={full} p={5} border={bordes}>
+            <VStack w={full} p={{ base: 1, md: 5 }} border={bordes}>
               <Heading
                 w={full}
                 size={"md"}

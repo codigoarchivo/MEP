@@ -23,7 +23,7 @@ const Orders = ({ active }) => {
   // dispatch
   const { push, locale, back } = useRouter();
   // Breakpoints
-  const { content5, bordes } = Breakpoints();
+  const { bordes } = Breakpoints();
 
   return (
     <ShopLayout title={locale === "en" ? en.historySale.sD : es.historySale.sD}>

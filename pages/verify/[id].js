@@ -27,14 +27,8 @@ const Verification = ({ data }) => {
 
   return (
     <ShopLayout title={locale === "en" ? en.verify.vG : es.verify.vG}>
-      <Container maxW={"container.xl"}>
-        <Stack
-          flexDirection={"column"}
-          justifyContent={"space-around"}
-          spacing={0}
-          w={full}
-          py={10}
-        >
+      <Container maxW={"container.xl"} py={{ base: 0, md: 10 }}>
+        <Stack flexDirection={"column"} spacing={10}>
           <CheckVerify
             // boides
             bordes={bordes}
