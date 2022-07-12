@@ -35,8 +35,8 @@ export const dbProducts = async (id = "", dbP = "", valA = "") => {
     case "dbProSix":
       q = query(
         ref,
-        where("pr", ">=", Number(valA[0])),
-        where("pr", "<=", Number(valA[1])),
+        where("pr", ">=", valA.max),
+        where("pr", "<=", valA.min),
         limit(25)
       );
       break;

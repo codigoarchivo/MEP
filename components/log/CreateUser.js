@@ -92,12 +92,19 @@ const CreateUser = ({ locale, es, en }) => {
 
   return (
     <>
-      <chakra.form onSubmit={handleSubmit} boxShadow="2xl" p={5} w="70%">
-        <VStack spacing={5}>
+      <chakra.form
+        onSubmit={handleSubmit}
+        boxShadow="2xl"
+        p={{ base: 2, sm: 5 }}
+        w={{ base: "100%", sm: "70%", md: "60%", lg: "70%" }}
+        backgroundColor={"#fff"}
+        h={"min-content"}
+      >
+        <VStack spacing={{ base: 3, sm: 5 }}>
           <Heading w={"full"} as="h1" size={"md"} textTransform={"uppercase"}>
             {locale === "en" ? en.auth.aH : es.auth.aH}
           </Heading>
-          <FormControl isInvalid>
+          <FormControl>
             <FormLabel htmlFor="name">
               {locale === "en" ? en.name : es.name}{" "}
               <Tooltip
@@ -119,9 +126,9 @@ const CreateUser = ({ locale, es, en }) => {
               placeholder={locale === "en" ? en.name : es.name}
             />
           </FormControl>
-          <FormControl isInvalid>
+          <FormControl>
             {!emailE && (
-              <FormHelperText>
+              <FormHelperText mt={0}>
                 {locale === "en" ? en.auth.aI : es.auth.aI}
               </FormHelperText>
             )}
@@ -146,7 +153,7 @@ const CreateUser = ({ locale, es, en }) => {
               autoComplete="new-email"
             />
           </FormControl>
-          <FormControl isInvalid>
+          <FormControl>
             <FormLabel htmlFor="password">
               {locale === "en" ? en.password : es.password}{" "}
               <Tooltip
@@ -180,7 +187,7 @@ const CreateUser = ({ locale, es, en }) => {
               </InputRightElement>
             </InputGroup>
           </FormControl>
-          <FormControl isInvalid>
+          <FormControl>
             <FormLabel htmlFor="rePassword">
               {locale === "en" ? en.auth.aR : es.auth.aR}{" "}
               <Tooltip

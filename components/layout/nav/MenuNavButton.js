@@ -23,12 +23,14 @@ import {
 
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
-import { Global, Logout } from "../../../helpers/IconNew";
+import { Global } from "../../../helpers/IconNew";
 
 import { logout } from "../../../actions/auth";
 
 import en from "../../../translations/en";
 import es from "../../../translations/es";
+import LogoutAllClear from "./LogoutAllClear";
+import NavbarLocal from "./NavbarLocal";
 
 const MenuNavButton = () => {
   // dispatch
@@ -90,37 +92,11 @@ const MenuNavButton = () => {
         ))}
 
         <MenuItem as={"div"}>
-          <Button
-            variant={"secondary"}
-            fontWeight={"normal"}
-            leftIcon={<Logout />}
-            onClick={handleLogout}
-          >
-            {locale === "en" ? en.logout : es.logout}
-          </Button>
+          <LogoutAllClear />
         </MenuItem>
 
         <MenuItem as={"div"}>
-          <HStack w={"full"} alignItems={"center"} py={5}>
-            <Heading textTransform={"uppercase"} size="sm">
-              <Box w={6} h={6} as={Global} />{" "}
-              {locale === "en" ? en.language : es.language}
-            </Heading>
-
-            {locales.map((lo, i) => (
-              <chakra.li key={i} sx={{ listStyle: "none" }}>
-                <NavLink
-                  size={"sm"}
-                  variant={"primary"}
-                  href={asPath}
-                  locale={lo}
-                  name={lo}
-                  px={0}
-                  w={0}
-                />
-              </chakra.li>
-            ))}
-          </HStack>
+          <NavbarLocal />
         </MenuItem>
       </MenuList>
     </Menu>

@@ -165,14 +165,12 @@ export const logout = (err) => {
     try {
       await signOut(auth)
         .then(() => {
-          dispatch(logoutClose());
+          dispatch(logoutAll());
         })
         .catch(({ message }) => {
           // error
           Toast(message, "error", 5000);
         });
-
-      await dispatch(closeRevert());
     } catch (error) {
       // error
       Toast(err, "error", 5000);
@@ -180,7 +178,7 @@ export const logout = (err) => {
   };
 };
 
-export const logoutClose = () => ({
+const logoutAll = () => ({
   type: types.logout,
 });
 

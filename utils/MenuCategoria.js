@@ -24,10 +24,11 @@ import { dbProducts } from "../data/dbProducts";
 import Toast from "../helpers/Toast";
 
 import { serchProductList } from "../actions/product";
+
 import en from "../translations/en";
 import es from "../translations/es";
 
-const MenuCategoria = ({ categories }) => {
+const MenuCategoria = () => {
   // useRouter
   const { locale } = useRouter();
   // dispatch
@@ -35,19 +36,17 @@ const MenuCategoria = ({ categories }) => {
   // Breakpoints
   const { displayOff2, bordes } = Breakpoints();
   // selector
-  const { list = [] } = useSelector(({ category }) => category);
+  const { listData = [] } = useSelector(({ category }) => category);
 
   const handleOnclick = async (id) => {
     const newData = await dbProducts(id, "dbProSeven");
 
     if (newData.length === 0) {
-      return Toast(
-        "No hay resultados, reinicia con boton Shop All",
-        "info",
-        5000
-      );
+      return Toast(locale === "en" ? en.search.sC : es.search.sC, "info", 5000);
     }
+    
     const err = locale === "en" ? en.error : es.error;
+
     dispatch(serchProductList(newData, err));
   };
 
@@ -61,11 +60,11 @@ const MenuCategoria = ({ categories }) => {
         textTransform={"uppercase"}
         minWidth={"fit-content"}
       >
-        {categories}
+        {locale === "en" ? en.categories : es.categories}
       </MenuButton>
       <Portal>
         <MenuList display={displayOff2} minWidth={0} border={bordes}>
-          {list.map(({ na, id }) => (
+          {listData.map(({ na, id }) => (
             <MenuItem key={id} onClick={() => handleOnclick(id)}>
               <NavLink
                 href={{

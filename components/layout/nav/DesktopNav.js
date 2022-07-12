@@ -2,11 +2,18 @@ import { useRouter } from "next/router";
 
 import { SearchIcon } from "@chakra-ui/icons";
 
-import { Stack, chakra, InputLeftElement, Input, InputGroup } from "@chakra-ui/react";
+import {
+  Stack,
+  chakra,
+  InputLeftElement,
+  Input,
+  InputGroup,
+} from "@chakra-ui/react";
 
 import useFormAll from "../../../hooks/useFormAll";
 
 import MenuCategoria from "../../../utils/MenuCategoria";
+
 import en from "../../../translations/en";
 import es from "../../../translations/es";
 
@@ -36,9 +43,7 @@ const DesktopNav = () => {
       alignItems={"center"}
       justifyContent={"space-around"}
     >
-      <MenuCategoria
-        categories={locale === "en" ? en.categories : es.categories}
-      />
+      <MenuCategoria />
       <chakra.form onSubmit={handleSerchProduct} pl={{ base: 0, lg: 20 }}>
         <InputGroup>
           <InputLeftElement pointerEvents="none">

@@ -98,7 +98,10 @@ const UserScreen = ({ user = {}, locale, back, es, en }) => {
         overflow={"auto"}
       >
         <Grid
-          templateRows={`repeat(${a.uid !== id ? 4 : 5}, 1fr)`}
+          templateRows={{
+            base: `none`,
+            md: `repeat(${a.uid !== id ? 4 : 5}, 1fr)`,
+          }}
           templateColumns={repeat1}
           alignItems={"center"}
           columnGap={points3}

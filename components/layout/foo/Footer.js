@@ -38,6 +38,7 @@ import ListRoute from "../nav/ListRoute";
 
 import en from "../../../translations/en";
 import es from "../../../translations/es";
+import NavbarLocal from "../nav/NavbarLocal";
 
 const Footer = () => {
   // useSelector
@@ -195,25 +196,7 @@ const Footer = () => {
         </GridItem>
       </Grid>
       <Box px={{ base: 3, sm: 10 }} backgroundColor={"brand.800"}>
-        <HStack w={"full"} py={10} spacing={{ base: 0, sm: 3 }}>
-          <Heading textTransform={"uppercase"} size="sm" color={"brand.900"}>
-            <Box w={6} h={6} as={Global} />{" "}
-            {locale === "en" ? en.language : es.language}
-          </Heading>{" "}
-          {locales.map((lo, i) => (
-            <chakra.li key={i} sx={{ listStyle: "none" }}>
-              <NavLink
-                size={"sm"}
-                variant={"secondary"}
-                href={asPath}
-                locale={lo}
-                name={lo}
-                px={0}
-                w={0}
-              />
-            </chakra.li>
-          ))}
-        </HStack>
+        <NavbarLocal />
       </Box>
     </Container>
   );

@@ -1,7 +1,5 @@
 import React, { useMemo } from "react";
 
-import { useRouter } from "next/router";
-
 import { useDispatch, useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
@@ -14,6 +12,7 @@ import {
   VStack,
   Textarea,
   Button,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 
 import { Rating } from "react-simple-star-rating";
@@ -52,7 +51,7 @@ const ReviewScreen = ({
   // mode Color
   const { bg, brand } = ModeColor();
   // Breakpoints
-  const { full, bordes } = Breakpoints();
+  const { full, bordes, points26 } = Breakpoints();
 
   // usuario del store
   const { uid, displayName, photoURL } = activeSelect;
@@ -148,6 +147,7 @@ const ReviewScreen = ({
             size={"md"}
             textTransform={"uppercase"}
             fontWeight={"normal"}
+            fontSize={points26}
           >
             {locale === "en" ? en.review.rA : es.review.rA}
           </Heading>
@@ -156,7 +156,7 @@ const ReviewScreen = ({
               emptyColor="gray"
               onClick={handleRating}
               ratingValue={rat}
-              size={50}
+              size={useBreakpointValue({ base: 30, lg: 50 })}
               transition
               allowHalfIcon
               showTooltip
@@ -169,6 +169,7 @@ const ReviewScreen = ({
             size={"md"}
             textTransform={"uppercase"}
             fontWeight={"normal"}
+            fontSize={points26}
           >
             {locale === "en" ? en.review.rB : es.review.rB}
           </Heading>
@@ -182,7 +183,7 @@ const ReviewScreen = ({
             bg={bg}
             _focus={brand}
           />
-          <Button type={"submit"} variant={"primary"}>
+          <Button w={full} type={"submit"} variant={"primary"}>
             {locale === "en" ? en.send : es.send}
           </Button>
         </VStack>

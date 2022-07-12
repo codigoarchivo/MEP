@@ -11,6 +11,8 @@ import { checkoutReducer } from "./checkoutReducer";
 import { userReducer } from "./userReducer";
 import { processReducer } from "./processReducer";
 
+import { types } from "../type";
+
 const createNoopStorage = () => {
   return {
     getItem(_key) {
@@ -36,14 +38,22 @@ const persistConfig = {
   blacklist: ["ui"],
 };
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   auth: authReducer,
   category: categoryReducer,
   product: productReducer,
   process: processReducer,
   checkout: checkoutReducer,
   user: userReducer,
-  ui: uiReducer
+  ui: uiReducer,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === types.logout) {
+    return appReducer(undefined, action);
+  }
+
+  return appReducer(state, action);
+};
 
 export const persistingReducer = persistReducer(persistConfig, rootReducer);

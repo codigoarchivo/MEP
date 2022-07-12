@@ -27,7 +27,7 @@ const SerchCategory = ({ locale, en, es }) => {
   // dispatch
   const dispatch = useDispatch();
   // selector
-  const { list = [] } = useSelector(({ category }) => category);
+  const { listData = [] } = useSelector(({ category }) => category);
   // Breakpoints
   const { bordes } = Breakpoints();
 
@@ -49,7 +49,7 @@ const SerchCategory = ({ locale, en, es }) => {
         </Heading>
       </Box>
       <List spacing={3}>
-        {list.map((item) => (
+        {listData.map((item) => (
           <ListItem key={item.id} onClick={() => handleOnclick(item.id)}>
             <ListIcon as={CheckCircleIcon} color="brand.700" />
             <NavLink

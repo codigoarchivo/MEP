@@ -107,10 +107,10 @@ Sale.propTypes = {
   data: PropTypes.array,
 };
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ query }) {
   const dA = process.env.NEXT_PUBLIC_ROL_A.toString();
   try {
-    const data = await dbUserData(dA, "dbUserData");
+    const data = query.q === dA && (await dbUserData(query.q, "dbUserData"));
 
     if (!data) {
       return {

@@ -28,18 +28,20 @@ const Account = () => {
 
   // handleReview
   const handleReview = () => {
-    push({
-      pathname: "/auth/[pid]",
-      query: { pid: "review", word: "Email" },
-    });
+    push("/auth/review");
   };
-  
+
   // Breakpoints
   const { calc } = Breakpoints();
 
   return (
     <Container maxW="container.sm">
-      <Flex h={calc} alignItems={["top", "center"]} justifyContent="center">
+      <Flex
+        h={calc}
+        alignItems={["top", "center"]}
+        justifyContent="center"
+        py={5}
+      >
         <LoginUser
           handleReview={handleReview}
           locale={locale}

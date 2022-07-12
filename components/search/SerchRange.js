@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
+import React, { useMemo, useState } from "react";
+
+import { useDispatch } from "react-redux";
 
 import PropTypes from "prop-types";
-
-import { useRouter } from "next/router";
 
 import {
   Box,
@@ -22,33 +22,52 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
+import { dbProducts } from "../../data/dbProducts";
+
+import { serchProductList } from "../../actions/product";
+
 const SerchRange = ({ product, locale, en, es, push }) => {
+  // dispatch
+  const dispatch = useDispatch();
   // Breakpoints
   const { bordes } = Breakpoints();
-  // useRef
-  const max = useRef(0);
-  // useRef
-  const min = useRef(0);
-  // useRef
-  const inc = useRef(0);
-  // useRef
-  const dec = useRef(0);
 
-  max.current = product.reduce(
-    (n, m) => Math.max(Number(n), m.pr),
-    -Number.POSITIVE_INFINITY
+  const [resRange, setResRange] = useState({});
+
+  let maxN = 0;
+  let minN = 0;
+
+  maxN = useMemo(
+    () =>
+      product.reduce(
+        (n, m) => Math.max(Number(n), m.pr),
+        -Number.POSITIVE_INFINITY
+      ),
+    [product]
   );
 
-  min.current = product.reduce(
-    (n, m) => Math.min(Number(n), m.pr),
-    Number.POSITIVE_INFINITY
+  minN = useMemo(
+    () =>
+      product.reduce(
+        (n, m) => Math.min(Number(n), m.pr),
+        Number.POSITIVE_INFINITY
+      ),
+    [product]
   );
 
-  const handleChangeEnd = (r) => {
-    push({
-      pathname: "/search",
-      query: { r, q: "range" },
-    });
+  const err = locale === "en" ? en.error : es.error;
+  const handleChangeEnd = async ({ min, max }) => {
+    const product = await dbProducts("", "dbProSix", { min, max });
+    console.log(product);
+    if (product.length > 0) {
+      dispatch(serchProductList(product, err));
+
+      push({
+        pathname: "/search",
+        query: { min, max },
+      });
+      setResRange({ min, max });
+    }
   };
 
   return (
@@ -60,18 +79,15 @@ const SerchRange = ({ product, locale, en, es, push }) => {
       </Box>
 
       <RangeSlider
-        aria-label={[min.current.toString(), max.current.toString()]}
-        defaultValue={[
-          (min.current = min.current),
-          (inc.current = max.current),
-        ]}
-        min={min.current}
-        max={max.current}
+        aria-label={[minN, maxN]}
+        defaultValue={[minN, maxN]}
+        min={minN}
+        max={maxN}
         step={5}
-        onChangeEnd={(val) => handleChangeEnd(val)}
+        onChangeEnd={(val) => handleChangeEnd({ min: val[0], max: val[1] })}
       >
         <RangeSliderTrack bg="brand.800">
-          <RangeSliderFilledTrack bg="brand.700" width={"95%"} />
+          <RangeSliderFilledTrack bg="brand.700" />
         </RangeSliderTrack>
         <RangeSliderThumb boxSize={5} index={0}>
           <Box color="brand.700" as={ChevronLeftIcon} />
@@ -85,14 +101,14 @@ const SerchRange = ({ product, locale, en, es, push }) => {
         <Stat>
           <StatLabel>Min</StatLabel>
           <StatNumber fontWeight={"normal"}>
-            $ {min.current === Infinity ? 0 : min.current}
+            $ {!resRange.min ? minN : resRange.min}
           </StatNumber>
         </Stat>
 
         <Stat>
           <StatLabel>Max</StatLabel>
           <StatNumber fontWeight={"normal"}>
-            $ {max.current === -Infinity ? 0 : max.current}
+            $ {!resRange.max ? maxN : resRange.max}
           </StatNumber>
         </Stat>
       </StatGroup>

@@ -12,12 +12,24 @@ import { Center, ChakraProvider } from "@chakra-ui/react";
 
 import { theme } from "../theme";
 
+import Breakpoints from "../helpers/Breakpoints";
+
 const App = ({ Component, pageProps }) => {
+
   const persistor = persistStore(store);
+
+  const { points25 } = Breakpoints();
   return (
     <>
       <Provider store={store}>
-        <PersistGate loading={<Center mt={10}>loading</Center>} persistor={persistor}>
+        <PersistGate
+          loading={
+            <Center h={"calc(100vh - 50px)"} fontSize={points25}>
+              loading
+            </Center>
+          }
+          persistor={persistor}
+        >
           <ChakraProvider theme={theme}>
             <Component {...pageProps} />
           </ChakraProvider>

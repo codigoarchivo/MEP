@@ -12,20 +12,10 @@ export const categoryReducer = (state = initialStates, action) => {
         ...state,
         list: [...action.payload],
       };
-    case types.categoryList:
-      return {
-        ...state,
-        listData: [...action.payload],
-      };
     case types.categoryAdd:
       return {
         ...state,
         list: [...state.list, action.payload],
-      };
-    case types.categoryActive:
-      return {
-        ...state,
-        activeSelect: action.payload,
       };
     case types.categoryEdit:
       return {
@@ -40,6 +30,16 @@ export const categoryReducer = (state = initialStates, action) => {
         ...state,
         list: state.list.filter((e) => e.id !== action.payload),
         activeSelect: {},
+      };
+    case types.categoryList:
+      return {
+        ...state,
+        listData: [...action.payload],
+      };
+    case types.categoryActive:
+      return {
+        ...state,
+        activeSelect: action.payload,
       };
     case types.closeActive:
       return {

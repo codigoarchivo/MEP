@@ -42,8 +42,8 @@ const ListRoute = () => {
     },
     {
       icon: <VentasClient />,
-      ref: "/admin",
-      as: "/admin",
+      ref: `/admin?q=${a?.uid}`,
+      as: `/admin?q=${a?.uid}`,
       nam: locale === "en" ? en.major.mH : es.major.mH,
       rol: a.rol === "owner" ? "block" : "none",
     },

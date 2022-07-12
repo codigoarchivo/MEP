@@ -83,12 +83,19 @@ const LoginUser = ({ handleReview, locale, es, en }) => {
 
   return (
     <>
-      <chakra.form onSubmit={handleSubmit} boxShadow="2xl" p={5} w="70%">
+      <chakra.form
+        onSubmit={handleSubmit}
+        boxShadow="2xl"
+        p={{ base: 2, sm: 5 }}
+        w={{ base: "100%", sm: "70%", md: "60%", lg: "70%" }}
+        backgroundColor={"#fff"}
+        h={"min-content"}
+      >
         <VStack spacing={5}>
           <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
             {locale === "en" ? en.auth.aA : es.auth.aA}
           </Heading>
-          <FormControl isInvalid>
+          <FormControl>
             {!emailE && (
               <FormHelperText>
                 {locale === "en" ? en.auth.aI : es.auth.aI}
@@ -115,7 +122,7 @@ const LoginUser = ({ handleReview, locale, es, en }) => {
               autoComplete="new-email"
             />
           </FormControl>
-          <FormControl isInvalid>
+          <FormControl>
             <FormLabel htmlFor="password">
               {locale === "en" ? en.password : es.password}{" "}
               <Tooltip
@@ -155,6 +162,8 @@ const LoginUser = ({ handleReview, locale, es, en }) => {
             textTransform={"uppercase"}
             rightIcon={<GoogleIcon />}
             onClick={handleGooglelogin}
+            size={"sm"}
+            fontSize={{ base: 10, sm: 14 }}
           >
             {locale === "en" ? en.auth.aC : es.auth.aC}
           </Button>

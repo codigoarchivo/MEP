@@ -33,7 +33,7 @@ const BlogScreen = ({ categories, buys, product }) => {
   // Breakpoints
   const { displayOff2, bordes, points25, content7 } = Breakpoints();
   // selector
-  const { list = [] } = useSelector(({ category }) => category);
+  const { listData: list = [] } = useSelector(({ category }) => category);
   // selector
   const { listData = [] } = useSelector(({ product }) => product);
   // router

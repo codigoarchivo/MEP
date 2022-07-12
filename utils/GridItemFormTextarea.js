@@ -24,6 +24,7 @@ const GridItemFormTextarea = ({
           {name}
         </FormLabel>
         <Textarea
+          p={{ base: 1, md: 3 }}
           isReadOnly={isReadOnly}
           bg={bg}
           _focus={brand}

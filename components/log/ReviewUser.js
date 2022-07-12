@@ -68,12 +68,19 @@ const ReviewUser = ({ locale, es, en }) => {
 
   return (
     <>
-      <chakra.form onSubmit={handleSubmit} boxShadow="2xl" p={5} w="70%">
+      <chakra.form
+        onSubmit={handleSubmit}
+        boxShadow="2xl"
+        p={{ base: 2, sm: 5 }}
+        w={{ base: "100%", sm: "70%", md: "60%", lg: "70%" }}
+        backgroundColor={"#fff"}
+        h={"min-content"}
+      >
         <VStack spacing={5}>
           <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
             {locale === "en" ? en.auth.aH : es.auth.aH}
           </Heading>
-          <FormControl isInvalid>
+          <FormControl>
             {!emailE && (
               <FormHelperText>
                 {locale === "en" ? en.auth.aI : es.auth.aI}

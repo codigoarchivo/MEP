@@ -22,17 +22,12 @@ import {
   InputGroup,
   InputLeftElement,
   Input,
-  HStack,
-  Heading,
-  chakra,
 } from "@chakra-ui/react";
 
 import { HamburgerIcon, CloseIcon, SearchIcon } from "@chakra-ui/icons";
 
 import {
   CartIcon,
-  Global,
-  Logout,
   LoveIcon,
   OrdenpagoIcon,
   ShopAll,
@@ -55,7 +50,8 @@ import DesktopNav from "./DesktopNav";
 import en from "../../../translations/en";
 import es from "../../../translations/es";
 import MenuNavButton from "./MenuNavButton";
-import { logout } from "../../../actions/auth";
+import LogoutAllClear from "./LogoutAllClear";
+import NavbarLocal from "./NavbarLocal";
 
 export default function WithSubnavigation() {
   // useSelector
@@ -76,11 +72,6 @@ export default function WithSubnavigation() {
   const { locale, push, pathname, locales, asPath } = useRouter();
 
   const { dataRoute } = ListRoute();
-
-  const handleLogout = () => {
-    const err = locale === "en" ? en.error : es.error;
-    dispatch(logout(err));
-  };
 
   return (
     <Box>
@@ -323,34 +314,10 @@ export default function WithSubnavigation() {
               />
             </div>
           ))}
-          <Button
-            variant={"secondary"}
-            fontWeight={"normal"}
-            leftIcon={<Logout />}
-            onClick={handleLogout}
-          >
-            {locale === "en" ? en.logout : es.logout}
-          </Button>
-          <HStack w={"full"} alignItems={"center"} px={3}>
-            <Heading textTransform={"uppercase"} size="sm">
-              <Box w={6} h={6} as={Global} />{" "}
-              {locale === "en" ? en.language : es.language}
-            </Heading>
-
-            {locales.map((lo, i) => (
-              <chakra.li key={i} sx={{ listStyle: "none" }}>
-                <NavLink
-                  size={"sm"}
-                  variant={"primary"}
-                  href={asPath}
-                  locale={lo}
-                  name={lo}
-                  px={0}
-                  w={0}
-                />
-              </chakra.li>
-            ))}
-          </HStack>
+          {/* logout Clear */}
+          <LogoutAllClear />
+          {/* locales */}
+          <NavbarLocal />
         </Stack>
       </Collapse>
       {/* BreadcrumbNavbar */}

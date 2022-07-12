@@ -47,11 +47,12 @@ const Search = ({ product }) => {
 
   // useState
   const err = locale === "en" ? en.error : es.error;
+
   useEffect(() => {
     if (product) {
       dispatch(serchProductList(product, err));
     }
-  }, [dispatch, product, err]);
+  }, []);
 
   const { displayOff4 } = Breakpoints();
 
@@ -125,21 +126,19 @@ Search.propTypes = {
   product: PropTypes.array,
 };
 
-export async function getServerSideProps({ query }) {
-  const r = query.r;
-  const q = query.q;
-
+export async function getStaticProps() {
   try {
-    let product = "";
-    if ((r !== undefined, q === "range")) {
-      product = await dbProducts("", "dbProSix", r);
-    }
-    product = await dbProducts("", "dbProOne");
+    // let product = "";
+    // if ((r !== undefined, q === "range")) {
+    //   product = await dbProducts("", "dbProSix", r);
+    // }
+    const product = await dbProducts("", "dbProOne");
 
     return {
       props: {
         product,
       },
+      revalidate: 86400, // 60 * 60 * 24 revalidate every 24 hours
     };
   } catch (error) {
     Toast(locale === "en" ? en.error : es.error, 5000);

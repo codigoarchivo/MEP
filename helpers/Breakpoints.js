@@ -31,11 +31,13 @@ const Breakpoints = () => {
   const points23 = { base: 5, md: 20 };
   const points24 = { base: 5, md: 10 };
   const points25 = { base: 24, md: 40, lg: 50 };
+  const points26 = { base: 14, md: 24 };
 
   const auto1 = { base: "auto", md: "90vh" };
 
   const all1 = ["sx", "sm", "md", "lg", "xl"];
   const all2 = ["sx", "sm", "md", "lg"];
+  const all3 = ["sx", "sm", "md"];
 
   const repeat1 = { base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" };
 
@@ -102,6 +104,7 @@ const Breakpoints = () => {
     points23,
     points24,
     points25,
+    points26,
     auto1,
     repeat1,
     repeat2,
@@ -124,6 +127,7 @@ const Breakpoints = () => {
     calc,
     all1,
     all2,
+    all3,
   };
 };
 

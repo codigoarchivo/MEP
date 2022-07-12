@@ -19,7 +19,7 @@ const Review = () => {
   return (
     <>
       <Container maxW={"container.sm"}>
-        <Flex h={calc} alignItems={["top", "center"]} justifyContent="center">
+        <Flex h={calc} alignItems={["top", "center"]} justifyContent="center"  py={5}>
           <ReviewUser locale={locale} es={es} en={en} />
         </Flex>
       </Container>
