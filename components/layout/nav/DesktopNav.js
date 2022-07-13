@@ -49,7 +49,6 @@ const DesktopNav = () => {
           <InputLeftElement pointerEvents="none">
             <SearchIcon color="gray.300" display={"block"} />
           </InputLeftElement>
-
           <Input
             type={"search"}
             placeholder={locale === "en" ? en.searchs : es.searchs}

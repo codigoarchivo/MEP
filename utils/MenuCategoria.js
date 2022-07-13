@@ -19,36 +19,16 @@ import Breakpoints from "../helpers/Breakpoints";
 
 import { CategoryAll } from "../helpers/IconNew";
 
-import { dbProducts } from "../data/dbProducts";
-
-import Toast from "../helpers/Toast";
-
-import { serchProductList } from "../actions/product";
-
 import en from "../translations/en";
 import es from "../translations/es";
 
 const MenuCategoria = () => {
   // useRouter
   const { locale } = useRouter();
-  // dispatch
-  const dispatch = useDispatch();
   // Breakpoints
   const { displayOff2, bordes } = Breakpoints();
   // selector
   const { listData = [] } = useSelector(({ category }) => category);
-
-  const handleOnclick = async (id) => {
-    const newData = await dbProducts(id, "dbProSeven");
-
-    if (newData.length === 0) {
-      return Toast(locale === "en" ? en.search.sC : es.search.sC, "info", 5000);
-    }
-    
-    const err = locale === "en" ? en.error : es.error;
-
-    dispatch(serchProductList(newData, err));
-  };
 
   return (
     <Menu>
@@ -65,11 +45,11 @@ const MenuCategoria = () => {
       <Portal>
         <MenuList display={displayOff2} minWidth={0} border={bordes}>
           {listData.map(({ na, id }) => (
-            <MenuItem key={id} onClick={() => handleOnclick(id)}>
+            <MenuItem key={id}>
               <NavLink
                 href={{
                   pathname: "/search",
-                  query: { n: id, c: na },
+                  query: { n: id, c: na},
                 }}
                 name={na}
                 variant={"secondary"}

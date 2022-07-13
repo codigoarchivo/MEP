@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { useRouter } from "next/router";
 
@@ -38,87 +38,109 @@ import en from "../../translations/en";
 import es from "../../translations/es";
 
 const Search = ({ product }) => {
+  // useDispatch
+  const dispatch = useDispatch();
   // selector
   const { listSerch } = useSelector(({ product }) => product);
-  // dispatch
-  const dispatch = useDispatch();
   // useRouter
-  const { locale, push } = useRouter();
-
-  // useState
-  const err = locale === "en" ? en.error : es.error;
-
-  useEffect(() => {
-    if (product) {
-      dispatch(serchProductList(product, err));
-    }
-  }, []);
-
+  const { locale, query } = useRouter();
+  // data
+  const [dataAll, setDataAll] = useState([]);
+  // Breakpoints
   const { displayOff4 } = Breakpoints();
 
-  return (
-    <>
-      <ShopLayout title={locale === "en" ? en.search.sI : es.search.sI}>
-        <Container maxW="container.xs">
-          <Stack flexDirection={"row"} p={{ base: 0, sm: 5 }}>
-            <VStack
-              as={"aside"}
-              display={displayOff4}
-              w={{ base: "0%", lg: "25%" }}
-              h={"full"}
-              spacing={"10"}
-              mt={2}
-              mr={20}
-            >
-              {/* Rangos de precio */}
-              <SerchRange
-                locale={locale}
-                en={en}
-                es={es}
-                push={push}
-                product={listSerch}
-              />
+  useEffect(() => {
+    // verifica si hay producto  y si el rango esta vacio
+    if (Object.entries(query).length === 0) {
+      dispatch(serchProductList(product));
+    } else {
+      dispatch(serchProductList(dataAll));
+    }
+  }, [dispatch, product, dataAll, query]);
 
-              {/* Todas las categorias */}
-              <SerchCategory locale={locale} en={en} es={es} />
-            </VStack>
-            {!listSerch[0] ? (
-              <Center py={"48"} w={"full"}>
-                <Heading size={"sm"} textTransform={"uppercase"}>
-                  {locale === "en" ? en.search.sC : es.search.sC}
-                </Heading>
-              </Center>
-            ) : (
-              <Wrap
-                justify={{ base: "center", lg: "start" }}
-                w={{ base: "100%", lg: "75%" }}
-                align="start"
-              >
-                {listSerch.map((data) => (
-                  <SerchScreen key={data.id} {...data} />
-                ))}
-              </Wrap>
-            )}
-          </Stack>
-          <Box>
-            {listSerch.length > 0 && (
-              <Paginator
-                window={"serchs"}
-                word={"na"}
-                list={listSerch}
-                firstVisible={listSerch[0].na}
-                lastVisible={listSerch[listSerch.length - 1].na}
-                newList={serchProductList}
-                nLimit={2}
-                orHome={"asc"}
-                orPrevious={"asc"}
-                orNext={"asc"}
-              />
-            )}
-          </Box>
-        </Container>
-      </ShopLayout>
-    </>
+  useMemo(() => {
+    const serchProductSelector = async () => {
+      let newData = [];
+
+      if (query.q) {
+        newData = await dbProducts(query.q, "dbProFive");
+      }
+
+      if (query.n) {
+        newData = await dbProducts(query.n, "dbProSeven");
+      }
+
+      setDataAll(newData);
+    };
+    serchProductSelector();
+  }, [query]);
+
+  return (
+    <ShopLayout title={locale === "en" ? en.search.sI : es.search.sI}>
+      <Container maxW="container.xs">
+        <Stack flexDirection={"row"} p={{ base: 0, sm: 5 }}>
+          <VStack
+            as={"aside"}
+            display={displayOff4}
+            w={{ base: "0%", lg: "25%" }}
+            h={"full"}
+            spacing={"10"}
+            mt={2}
+            mr={20}
+          >
+            {/* Rangos de precio */}
+            <SerchRange
+              locale={locale}
+              en={en}
+              es={es}
+              product={product}
+              setDataAll={setDataAll}
+            />
+
+            {/* Todas las categorias */}
+            <SerchCategory
+              locale={locale}
+              en={en}
+              es={es}
+              setDataAll={setDataAll}
+            />
+          </VStack>
+          {!listSerch[0] ? (
+            <Center py={"48"} w={"full"}>
+              <Heading size={"sm"} textTransform={"uppercase"}>
+                {locale === "en" ? en.search.sC : es.search.sC}
+              </Heading>
+            </Center>
+          ) : (
+            <Wrap
+              justify={{ base: "center", lg: "start" }}
+              w={{ base: "100%", lg: "75%" }}
+              align="start"
+            >
+              {listSerch.map((data) => (
+                <SerchScreen key={data.id} {...data} />
+              ))}
+            </Wrap>
+          )}
+        </Stack>
+        <Box>
+          {listSerch.length > 0 && (
+            <Paginator
+              window={"serchs"}
+              word={"na"}
+              list={listSerch}
+              firstVisible={listSerch[0].na}
+              lastVisible={listSerch[listSerch.length - 1].na}
+              newList={serchProductList}
+              nLimit={2}
+              orHome={"asc"}
+              orPrevious={"asc"}
+              orNext={"asc"}
+            />
+          )}
+        </Box>
+      </Container>
+    </ShopLayout>
   );
 };
 
@@ -128,10 +150,6 @@ Search.propTypes = {
 
 export async function getStaticProps() {
   try {
-    // let product = "";
-    // if ((r !== undefined, q === "range")) {
-    //   product = await dbProducts("", "dbProSix", r);
-    // }
     const product = await dbProducts("", "dbProOne");
 
     return {

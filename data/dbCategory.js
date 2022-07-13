@@ -13,14 +13,12 @@ import { db } from "../firebase/config";
 
 export const dbCategoryValid = async (id, dbC) => {
   let q = "";
-  const pro = collection(db, "serchs");
-  const cat = collection(db, "categories");
   switch (dbC) {
     case "dbCatOne":
-      q = query(pro, where("ct", "==", id), limit(1));
+      q = query(collection(db, "serchs"), where("ct", "==", id), limit(1));
       break;
     case "dbCatTwo":
-      q = query(cat, where("na", "==", id), limit(1));
+      q = query(collection(db, "categories"), where("na", "==", id), limit(1));
       break;
   }
   const r = await getDocs(q);

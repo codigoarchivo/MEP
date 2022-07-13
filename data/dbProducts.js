@@ -12,36 +12,37 @@ import {
 
 import { db } from "../firebase/config";
 
-export const dbProducts = async (id = "", dbP = "", valA = "") => {
+export const dbProducts = async (i = "", dbP = "", val1, val2) => {
   let q = "";
-  let ref = collection(db, "serchs");
-
   switch (dbP) {
     case "dbProOne":
-      q = query(ref, limit(4), orderBy("na", "asc"));
+      q = query(collection(db, "serchs"), limit(4), orderBy("na", "asc"));
       break;
     case "dbProTwo":
-      q = query(ref, where("uid", "==", id), limit(2));
+      q = query(collection(db, "serchs"), where("uid", "==", i), limit(2));
       break;
     case "dbProThree":
       q = query(
-        collection(db, "serchs", id, "messages"),
+        collection(db, "serchs", i, "messages"),
         orderBy("cre", "desc")
       );
       break;
     case "dbProFour":
-      q = ref;
+      q = collection(db, "serchs");
+      break;
+    case "dbProFive":
+      q = query(collection(db, "serchs"), where("na", "==", i), limit(25));
       break;
     case "dbProSix":
       q = query(
-        ref,
-        where("pr", ">=", valA.max),
-        where("pr", "<=", valA.min),
+        collection(db, "serchs"),
+        where("pr", ">=", val1),
+        where("pr", "<=", val2),
         limit(25)
       );
       break;
     case "dbProSeven":
-      q = query(ref, where("ct", "==", id), limit(25));
+      q = query(collection(db, "serchs"), where("ct", "==", i), limit(25));
       break;
   }
 

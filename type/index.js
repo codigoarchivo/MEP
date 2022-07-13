@@ -10,6 +10,7 @@ export const types = {
   serchList: "[SERCH] List",
   serchActive: "[SERCH] active",
   serchInactive: "[SERCH] desactive",
+  serchRange: "[SERCH] range",
 
   product: "[PRODUCT] List",
   productList: "[PRODUCT] List Index",

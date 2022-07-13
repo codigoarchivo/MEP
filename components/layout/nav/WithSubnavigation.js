@@ -49,8 +49,11 @@ import DesktopNav from "./DesktopNav";
 
 import en from "../../../translations/en";
 import es from "../../../translations/es";
+
 import MenuNavButton from "./MenuNavButton";
+
 import LogoutAllClear from "./LogoutAllClear";
+
 import NavbarLocal from "./NavbarLocal";
 
 export default function WithSubnavigation() {

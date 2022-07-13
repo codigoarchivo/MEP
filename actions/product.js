@@ -34,7 +34,7 @@ export const serchProductList = (filtro, err) => {
   };
 };
 
-export const listProductSerch = (data) => ({
+const listProductSerch = (data) => ({
   type: types.serchList,
   payload: data,
 });

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import {
   Box,
@@ -15,17 +15,11 @@ import { CheckCircleIcon } from "@chakra-ui/icons";
 
 import NavLink from "../../utils/Navlink";
 
-import { serchProductList } from "../../actions/product";
-
 import Breakpoints from "../../helpers/Breakpoints";
 
 import { dbProducts } from "../../data/dbProducts";
 
-import Toast from "../../helpers/Toast";
-
-const SerchCategory = ({ locale, en, es }) => {
-  // dispatch
-  const dispatch = useDispatch();
+const SerchCategory = ({ locale, en, es, setDataAll }) => {
   // selector
   const { listData = [] } = useSelector(({ category }) => category);
   // Breakpoints
@@ -34,11 +28,9 @@ const SerchCategory = ({ locale, en, es }) => {
   const handleOnclick = async (id) => {
     const newData = await dbProducts(id, "dbProSeven");
 
-    if (newData.length === 0) {
-      return Toast(locale === "en" ? en.search.sC : es.search.sC, "info", 5000);
+    if (newData.length > 0) {
+      setDataAll(newData);
     }
-    const err = locale === "en" ? en.error : es.error;
-    dispatch(serchProductList(newData, err));
   };
 
   return (

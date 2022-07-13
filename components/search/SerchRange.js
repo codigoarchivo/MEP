@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from "react";
 
-import { useDispatch } from "react-redux";
-
 import PropTypes from "prop-types";
+
+import { useRouter } from "next/router";
 
 import {
   Box,
@@ -24,15 +24,27 @@ import Breakpoints from "../../helpers/Breakpoints";
 
 import { dbProducts } from "../../data/dbProducts";
 
-import { serchProductList } from "../../actions/product";
-
-const SerchRange = ({ product, locale, en, es, push }) => {
-  // dispatch
-  const dispatch = useDispatch();
+const SerchRange = ({ product, locale, en, es, setDataAll }) => {
   // Breakpoints
   const { bordes } = Breakpoints();
 
   const [resRange, setResRange] = useState({});
+
+  const { push } = useRouter();
+
+  const handleChangeEnd = async ([min = 0, max = 0]) => {
+    setResRange({ min, max });
+    push({
+      pathname: "/search",
+      query: { min, max },
+    });
+
+    const product = await dbProducts("", "dbProSix", min, max);
+
+    if (product.length > 0) {
+      setDataAll(product);
+    }
+  };
 
   let maxN = 0;
   let minN = 0;
@@ -55,21 +67,6 @@ const SerchRange = ({ product, locale, en, es, push }) => {
     [product]
   );
 
-  const err = locale === "en" ? en.error : es.error;
-  const handleChangeEnd = async ({ min, max }) => {
-    const product = await dbProducts("", "dbProSix", { min, max });
-    console.log(product);
-    if (product.length > 0) {
-      dispatch(serchProductList(product, err));
-
-      push({
-        pathname: "/search",
-        query: { min, max },
-      });
-      setResRange({ min, max });
-    }
-  };
-
   return (
     <Stack w={"full"} spacing={"5"} border={bordes} rounded="md" p={4}>
       <Box borderBottom={bordes} py={5} w={"full"}>
@@ -79,12 +76,11 @@ const SerchRange = ({ product, locale, en, es, push }) => {
       </Box>
 
       <RangeSlider
-        aria-label={[minN, maxN]}
         defaultValue={[minN, maxN]}
         min={minN}
         max={maxN}
         step={5}
-        onChangeEnd={(val) => handleChangeEnd({ min: val[0], max: val[1] })}
+        onChangeEnd={(val) => handleChangeEnd(val)}
       >
         <RangeSliderTrack bg="brand.800">
           <RangeSliderFilledTrack bg="brand.700" />
