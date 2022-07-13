@@ -15,17 +15,11 @@ import es from "../../translations/es";
 
 const Cart = () => {
   // selector
-  const {
-    activeCartSelect = [],
-    activeSelectCheck: check = [],
-    saveCartSelect = [],
-  } = useSelector(({ process }) => process);
+  const { activeCartSelect = [], saveCartSelect = [] } = useSelector(
+    ({ process }) => process
+  );
 
-  const { locale, back } = useRouter();
-
-  if (check.length > 0) {
-    back();
-  }
+  const { locale } = useRouter();
 
   return (
     <ShopLayout title={locale === "en" ? en.cart.cA : es.cart.cA}>

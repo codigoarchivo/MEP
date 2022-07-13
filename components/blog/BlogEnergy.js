@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import PropTypes from "prop-types";
+
 import {
   Box,
   Container,
@@ -91,6 +93,18 @@ const BlogEnergy = ({ bAa, bBb, bCc, bDd, bEe, bFf, bHh, bIi, points }) => {
       </Box>
     </Container>
   );
+};
+
+BlogEnergy.propTypes = {
+  bAa: PropTypes.string,
+  bBb: PropTypes.string,
+  bCc: PropTypes.string,
+  bDd: PropTypes.string,
+  bEe: PropTypes.string,
+  bFf: PropTypes.string,
+  bHh: PropTypes.string,
+  bIi: PropTypes.string,
+  points: PropTypes.object,
 };
 
 export default BlogEnergy;

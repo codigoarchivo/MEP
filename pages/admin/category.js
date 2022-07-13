@@ -159,6 +159,16 @@ export async function getServerSideProps() {
   try {
     const data = await dbCategory("", "dbCatTwo");
 
+    if (!data) {
+      return {
+        // notFound: true, // Devolverá la página 404
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+
     return {
       props: {
         data,

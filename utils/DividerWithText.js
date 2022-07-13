@@ -1,4 +1,5 @@
-import React from "react";
+import Proptypes from "prop-types";
+
 import { Flex, Box, Divider, useColorModeValue, Text } from "@chakra-ui/react";
 
 const DividerWithText = (props) => {
@@ -22,4 +23,9 @@ const DividerWithText = (props) => {
     </Flex>
   );
 };
+
+DividerWithText.propTypes = {
+  props: Proptypes.object,
+};
+
 export default DividerWithText;

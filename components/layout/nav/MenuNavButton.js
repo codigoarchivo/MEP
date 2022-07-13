@@ -1,6 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
-
-import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 import ListRoute from "./ListRoute";
 
@@ -8,7 +6,6 @@ import NavLink from "../../../utils/Navlink";
 
 import {
   Avatar,
-  Box,
   Button,
   Heading,
   HStack,
@@ -18,25 +15,14 @@ import {
   MenuItem,
   MenuList,
   useColorMode,
-  chakra,
 } from "@chakra-ui/react";
 
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
-import { Global } from "../../../helpers/IconNew";
-
-import { logout } from "../../../actions/auth";
-
-import en from "../../../translations/en";
-import es from "../../../translations/es";
 import LogoutAllClear from "./LogoutAllClear";
 import NavbarLocal from "./NavbarLocal";
 
 const MenuNavButton = () => {
-  // dispatch
-  const dispatch = useDispatch();
-  // useRouter
-  const { locale, locales, asPath } = useRouter();
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // ListRoute
@@ -44,10 +30,6 @@ const MenuNavButton = () => {
   // toogle color
   const { toggleColorMode, colorMode } = useColorMode();
 
-  const handleLogout = () => {
-    const err = locale === "en" ? en.error : es.error;
-    dispatch(logout(err));
-  };
   return (
     <Menu>
       <MenuButton

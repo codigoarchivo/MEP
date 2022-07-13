@@ -221,6 +221,9 @@ ProductForm.propTypes = {
   handleNumberInputCn: PropTypes.func.isRequired,
   handleNumberInputPj: PropTypes.func.isRequired,
   handleNumberInputPr: PropTypes.func.isRequired,
+  locale: PropTypes.string,
+  es: PropTypes.object,
+  en: PropTypes.object,
 };
 
 export default ProductForm;

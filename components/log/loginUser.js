@@ -1,5 +1,7 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { QuestionIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -197,6 +199,13 @@ const LoginUser = ({ handleReview, locale, es, en }) => {
       </chakra.form>
     </>
   );
+};
+
+LoginUser.propTypes = {
+  handleReview: PropTypes.func,
+  locale: PropTypes.string,
+  es: PropTypes.object,
+  en: PropTypes.object,
 };
 
 export default LoginUser;

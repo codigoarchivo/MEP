@@ -19,7 +19,7 @@ import en from "../../translations/en";
 
 const ConfigDashboard = ({ product = {} }) => {
   // router
-  const { push, locale, query } = useRouter();
+  const { push, locale, query, back } = useRouter();
   return (
     <ShopLayout title={query.set}>
       <Container maxW={"container.sm"} py={10}>
@@ -28,6 +28,7 @@ const ConfigDashboard = ({ product = {} }) => {
           set={query.set}
           details={query.dt}
           push={push}
+          back={back}
           locale={locale}
           es={es}
           en={en}
@@ -35,6 +36,10 @@ const ConfigDashboard = ({ product = {} }) => {
       </Container>
     </ShopLayout>
   );
+};
+
+ConfigDashboard.propTypes = {
+  product: PropTypes.object,
 };
 
 export async function getStaticPaths() {
@@ -65,6 +70,16 @@ export async function getStaticProps({ params }) {
   try {
     const product = await dbProductsById(id, "dbProOneID");
 
+    if (!product) {
+      return {
+        // notFound: true, // Devolverá la página 404
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+
     return {
       props: {
         product,
@@ -77,9 +92,5 @@ export async function getStaticProps({ params }) {
     };
   }
 }
-
-ConfigDashboard.propTypes = {
-  product: PropTypes.object,
-};
 
 export default ConfigDashboard;

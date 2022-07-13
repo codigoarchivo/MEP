@@ -4,8 +4,6 @@ import { useRouter } from "next/router";
 
 import Image from "next/image";
 
-import { useSelector } from "react-redux";
-
 import {
   Box,
   Button,
@@ -13,14 +11,12 @@ import {
   Grid,
   GridItem,
   Heading,
-  HStack,
   Link,
   List,
   ListItem,
   Stack,
   Text,
   VStack,
-  chakra,
 } from "@chakra-ui/react";
 
 import Breakpoints from "../../../helpers/Breakpoints";
@@ -29,7 +25,6 @@ import NavLink from "../../../utils/Navlink";
 
 import {
   FacebookIcon,
-  Global,
   InstagramIcon,
   TwitterIcon,
 } from "../../../helpers/IconNew";
@@ -41,10 +36,8 @@ import es from "../../../translations/es";
 import NavbarLocal from "../nav/NavbarLocal";
 
 const Footer = () => {
-  // useSelector
-  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useRouter
-  const { locale, locales, asPath } = useRouter();
+  const { locale } = useRouter();
   // Breakpoints
   const {
     repeat2,

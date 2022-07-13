@@ -11,6 +11,7 @@ import {
   Center,
   Container,
   Heading,
+  Spinner,
   Stack,
   VStack,
   Wrap,
@@ -50,7 +51,6 @@ const Search = ({ product }) => {
   const { displayOff4 } = Breakpoints();
 
   useEffect(() => {
-    // verifica si hay producto  y si el rango esta vacio
     if (Object.entries(query).length === 0) {
       dispatch(serchProductList(product));
     } else {
@@ -62,12 +62,21 @@ const Search = ({ product }) => {
     const serchProductSelector = async () => {
       let newData = [];
 
-      if (query.q) {
+      if (!!query.q) {
         newData = await dbProducts(query.q, "dbProFive");
       }
 
-      if (query.n) {
+      if (!!query.n) {
         newData = await dbProducts(query.n, "dbProSeven");
+      }
+
+      if (!!query.min && !!query.max) {
+        newData = await dbProducts(
+          "",
+          "dbProSix",
+          Number(query.min),
+          Number(query.max)
+        );
       }
 
       setDataAll(newData);
@@ -89,34 +98,39 @@ const Search = ({ product }) => {
             mr={20}
           >
             {/* Rangos de precio */}
-            <SerchRange
-              locale={locale}
-              en={en}
-              es={es}
-              product={product}
-              setDataAll={setDataAll}
-            />
+            <SerchRange locale={locale} en={en} es={es} product={product} />
 
             {/* Todas las categorias */}
-            <SerchCategory
-              locale={locale}
-              en={en}
-              es={es}
-              setDataAll={setDataAll}
-            />
+            <SerchCategory locale={locale} en={en} es={es} />
           </VStack>
           {!listSerch[0] ? (
-            <Center py={"48"} w={"full"}>
-              <Heading size={"sm"} textTransform={"uppercase"}>
-                {locale === "en" ? en.search.sC : es.search.sC}
-              </Heading>
-            </Center>
+            <VStack spacing={0}>
+              <Center py={"10"} w={"full"}>
+                <Heading size={"sm"} textTransform={"uppercase"}>
+                  {locale === "en" ? en.search.sC : es.search.sC}
+                </Heading>
+              </Center>
+              <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.300"
+                color="brand.500"
+                size="xl"
+              />
+            </VStack>
           ) : (
             <Wrap
               justify={{ base: "center", lg: "start" }}
               w={{ base: "100%", lg: "75%" }}
               align="start"
             >
+              {!product[0] && (
+                <Center py={"48"} w={"full"}>
+                  <Heading size={"sm"} textTransform={"uppercase"}>
+                    {locale === "en" ? en.search.sC : es.search.sC}
+                  </Heading>
+                </Center>
+              )}
               {listSerch.map((data) => (
                 <SerchScreen key={data.id} {...data} />
               ))}
@@ -151,6 +165,16 @@ Search.propTypes = {
 export async function getStaticProps() {
   try {
     const product = await dbProducts("", "dbProOne");
+
+    if (!product) {
+      return {
+        // notFound: true, // Devolverá la página 404
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
 
     return {
       props: {

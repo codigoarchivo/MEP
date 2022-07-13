@@ -1,5 +1,7 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { QuestionIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -244,6 +246,12 @@ const CreateUser = ({ locale, es, en }) => {
       </chakra.form>
     </>
   );
+};
+
+CreateUser.propTypes = {
+  locale: PropTypes.string,
+  es: PropTypes.object,
+  en: PropTypes.object,
 };
 
 export default CreateUser;

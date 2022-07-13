@@ -98,6 +98,12 @@ const SaleScreen = ({
 
 SaleScreen.propTypes = {
   item: PropTypes.object,
+  name: PropTypes.string,
+  mail: PropTypes.string,
+  creation: PropTypes.string,
+  verify: PropTypes.string,
+  locale: PropTypes.string,
+  paid: PropTypes.string,
 };
 
 export default SaleScreen;

@@ -1,4 +1,6 @@
-import { Stack, useDisclosure } from "@chakra-ui/react";
+import Proptypes from "prop-types";
+
+import { Stack } from "@chakra-ui/react";
 
 import NavLink from "../../../utils/Navlink";
 
@@ -16,6 +18,14 @@ const MobileNavItem = ({ icon, ref, as, nam, rol }) => {
       />
     </Stack>
   );
+};
+
+MobileNavItem.propTypes = {
+  icon: Proptypes.string,
+  ref: Proptypes.string,
+  as: Proptypes.string,
+  nam: Proptypes.string,
+  rol: Proptypes.string,
 };
 
 export default MobileNavItem;

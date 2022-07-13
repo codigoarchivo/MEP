@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 import { FormLabel, GridItem, Textarea } from "@chakra-ui/react";
 
 const GridItemFormTextarea = ({
@@ -39,6 +41,20 @@ const GridItemFormTextarea = ({
       </GridItem>
     </>
   );
+};
+
+GridItemFormTextarea.propTypes = {
+  points: PropTypes.number,
+  name: PropTypes.string,
+  na: PropTypes.string,
+  val: PropTypes.string,
+  place: PropTypes.string,
+  handle: PropTypes.func,
+  bg: PropTypes.string,
+  brand: PropTypes.object,
+  mb: PropTypes.string,
+  size: PropTypes.string,
+  isReadOnly: PropTypes.bool,
 };
 
 export default GridItemFormTextarea;

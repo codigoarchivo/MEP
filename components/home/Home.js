@@ -72,6 +72,7 @@ const Home = ({ listData, latestCartSelect, locale, es, en }) => {
             alt="Picture of the author"
             layout="fill"
             objectFit="contain"
+            priority={true}
           />
         </Box>
       </Stack>
@@ -188,6 +189,9 @@ const Home = ({ listData, latestCartSelect, locale, es, en }) => {
 PropTypes.Home = {
   listData: PropTypes.array,
   latestCartSelect: PropTypes.array,
+  locale: PropTypes.string,
+  es: PropTypes.object,
+  en: PropTypes.object,
 };
 
 export default Home;

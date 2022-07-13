@@ -1,5 +1,7 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import { Button } from "@chakra-ui/react";
 
 import Link from "next/link";
@@ -53,4 +55,23 @@ const NavLink = ({
     </Link>
   );
 };
+
+NavLink.propTypes = {
+  rightIcon: PropTypes.string,
+  leftIcon: PropTypes.object,
+  variant: PropTypes.string,
+  size: PropTypes.string,
+  border: PropTypes.string,
+  click: PropTypes.string,
+  as: PropTypes.string,
+  disabled: PropTypes.string,
+  textTransform: PropTypes.string,
+  backgroundColor: PropTypes.string,
+  color: PropTypes.string,
+  display: PropTypes.string,
+  boxShadow: PropTypes.string,
+  rounded: PropTypes.string,
+  locale: PropTypes.string,
+};
+
 export default NavLink;

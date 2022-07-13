@@ -1,5 +1,7 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import { useSelector } from "react-redux";
 
 import {
@@ -35,8 +37,8 @@ const MenuHistory = ({ color, buys, sales, history }) => {
         <MenuList display={displayOff2} minWidth={0} border={bordes}>
           <MenuItem>
             <NavLink
-              href={`/buy?u=${a?.uid}`}
-              as={`/buy?u=${a?.uid}`}
+              href={a.uid ? `/buy?u=${a?.uid}` : "/"}
+              as={a.uid ? `/buy?u=${a?.uid}` : "/"}
               name={buys}
               variant={"secondary"}
               fontWeight={"normal"}
@@ -44,8 +46,8 @@ const MenuHistory = ({ color, buys, sales, history }) => {
           </MenuItem>
           <MenuItem>
             <NavLink
-              href={`/sale?u=${a?.uid}`}
-              as={`/sale?u=${a?.uid}`}
+              href={a.uid ? `/sale?u=${a?.uid}` : "/"}
+              as={a.uid ? `/sale?u=${a?.uid}` : "/"}
               name={sales}
               variant={"secondary"}
               fontWeight={"normal"}
@@ -55,6 +57,13 @@ const MenuHistory = ({ color, buys, sales, history }) => {
       </Portal>
     </Menu>
   );
+};
+
+MenuHistory.propTypes = {
+  color: PropTypes.string,
+  buys: PropTypes.string,
+  sales: PropTypes.string,
+  history: PropTypes.string,
 };
 
 export default MenuHistory;

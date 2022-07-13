@@ -103,7 +103,7 @@ const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
 
     push("/cart");
   };
-  
+
   return (
     <>
       <Stack flexDirection={content5} spacing={0}>
@@ -191,11 +191,7 @@ const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
         </VStack>
       </Stack>
 
-      <HStack
-        mt={10}
-        border={bordes}
-        p={{ base: 1, md: 5 }}
-      >
+      <HStack mt={10} border={bordes} p={{ base: 1, md: 5 }}>
         <Tabs w={"full"}>
           <TabList>
             <Tab>{locale === "en" ? en.details : es.details}</Tab>
@@ -209,7 +205,7 @@ const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
             <TabPanel p={{ base: 2, md: 5 }}>
               <Text overflowX={"hidden"}>{dt}</Text>
             </TabPanel>
-            <TabPanel  p={{ base: 0, md: 10 }}>
+            <TabPanel p={{ base: 0, md: 10 }}>
               <>
                 <Stack mb={10} border={bordes}>
                   <HStack p={{ base: 1, md: 5 }} w={full}>
@@ -245,6 +241,10 @@ const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
 SerchDetails.propTypes = {
   product: PropTypes.object,
   message: PropTypes.array,
+  push: PropTypes.func,
+  locale: PropTypes.string,
+  es: PropTypes.object,
+  en: PropTypes.object,
 };
 
 export default SerchDetails;

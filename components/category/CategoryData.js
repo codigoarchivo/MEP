@@ -134,6 +134,9 @@ const CategoryData = ({ back, category, pid, es, en, locale }) => {
 CategoryData.propTypes = {
   category: PropTypes.object.isRequired,
   pid: PropTypes.string.isRequired,
+  es: PropTypes.object,
+  en: PropTypes.object,
+  locale: PropTypes.string,
 };
 
 export default CategoryData;

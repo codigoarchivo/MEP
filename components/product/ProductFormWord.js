@@ -37,6 +37,9 @@ ProductFormWord.propTypes = {
   word: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  locale: PropTypes.string,
+  es: PropTypes.object,
+  en: PropTypes.object,
 };
 
 export default ProductFormWord;

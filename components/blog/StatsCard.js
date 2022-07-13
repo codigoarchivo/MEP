@@ -1,3 +1,5 @@
+import Proptypes from "prop-types";
+
 import {
   Box,
   Flex,
@@ -7,8 +9,10 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-function StatsCard(props) {
+const StatsCard = (props) => {
+
   const { title, stat, icon } = props;
+  
   return (
     <Stat
       px={{ base: 2, md: 4 }}
@@ -38,6 +42,10 @@ function StatsCard(props) {
       </Flex>
     </Stat>
   );
-}
+};
+
+StatsCard.proptypes = {
+  props: Proptypes.object,
+};
 
 export default StatsCard;

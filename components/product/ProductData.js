@@ -35,8 +35,9 @@ const initialStates = {
 const ProductData = ({
   product = {},
   set = "",
-  push,
   details = "",
+  push,
+  back,
   locale,
   es,
   en,
@@ -76,9 +77,15 @@ const ProductData = ({
 
   // values
   const { na, ds, ct, dt, im, id, ps, pj, cn, pr } = values;
-
+  
+console.log(ErrorRetur);
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!a.uid) {
+      return push("/auth");
+    }
+    
     const err = locale === "en" ? en.error : es.error;
 
     if (ErrorRetur) {
@@ -130,22 +137,12 @@ const ProductData = ({
       );
     }
 
-    push({
-      pathname: `/product/[uid]`,
-      query: {
-        uid: a?.uid,
-      },
-    });
+    back();
   };
 
   // cerrar
   const onClose = () => {
-    push({
-      pathname: `/product/[uid]`,
-      query: {
-        uid: a?.uid,
-      },
-    });
+    back();
   };
 
   let info = "";
@@ -225,6 +222,11 @@ ProductData.propTypes = {
   product: PropTypes.object,
   set: PropTypes.string,
   details: PropTypes.string,
+  push: PropTypes.func,
+  back: PropTypes.func,
+  locale: PropTypes.string,
+  es: PropTypes.object,
+  en: PropTypes.object,
 };
 
 export default ProductData;

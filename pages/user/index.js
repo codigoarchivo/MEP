@@ -40,7 +40,7 @@ const initialStates = {
 
 const User = () => {
   // useRouter
-  const { locale } = useRouter();
+  const { locale, push } = useRouter();
   // selector
   const { activeSelect: data } = useSelector(({ auth }) => auth);
   // dispatch
@@ -49,6 +49,10 @@ const User = () => {
   const { content5, porcent3, porcent4, bordes } = Breakpoints();
 
   const [urlImage, setUrlImage] = useState("");
+
+  if (!data.uid) {
+    push("/");
+  }
 
   const { values, handleInputChange } = useFormAll(initialStates, data);
 

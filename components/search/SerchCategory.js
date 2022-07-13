@@ -2,6 +2,8 @@ import React from "react";
 
 import { useSelector } from "react-redux";
 
+import PropTypes from "prop-types";
+
 import {
   Box,
   Heading,
@@ -17,21 +19,11 @@ import NavLink from "../../utils/Navlink";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import { dbProducts } from "../../data/dbProducts";
-
-const SerchCategory = ({ locale, en, es, setDataAll }) => {
+const SerchCategory = ({ locale, en, es }) => {
   // selector
   const { listData = [] } = useSelector(({ category }) => category);
   // Breakpoints
   const { bordes } = Breakpoints();
-
-  const handleOnclick = async (id) => {
-    const newData = await dbProducts(id, "dbProSeven");
-
-    if (newData.length > 0) {
-      setDataAll(newData);
-    }
-  };
 
   return (
     <Stack w={"full"} spacing={"5"} border={bordes} rounded="md" p={4}>
@@ -42,7 +34,7 @@ const SerchCategory = ({ locale, en, es, setDataAll }) => {
       </Box>
       <List spacing={3}>
         {listData.map((item) => (
-          <ListItem key={item.id} onClick={() => handleOnclick(item.id)}>
+          <ListItem key={item.id}>
             <ListIcon as={CheckCircleIcon} color="brand.700" />
             <NavLink
               href={{
@@ -58,6 +50,12 @@ const SerchCategory = ({ locale, en, es, setDataAll }) => {
       </List>
     </Stack>
   );
+};
+
+SerchCategory.propTypes = {
+  locale: PropTypes.string,
+  es: PropTypes.object,
+  en: PropTypes.object,
 };
 
 export default SerchCategory;

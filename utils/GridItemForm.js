@@ -1,3 +1,5 @@
+import Proptypes from "prop-types";
+
 import { FormLabel, GridItem, Input } from "@chakra-ui/react";
 
 const GridItemForm = ({
@@ -37,6 +39,20 @@ const GridItemForm = ({
       </GridItem>
     </>
   );
+};
+
+GridItemForm.propTypes = {
+  mb: Proptypes.string,
+  points: Proptypes.object,
+  all: Proptypes.string,
+  name: Proptypes.string,
+  na: Proptypes.string,
+  val: Proptypes.string,
+  type: Proptypes.string,
+  place: Proptypes.string,
+  handle: Proptypes.func,
+  maxlength: Proptypes.string,
+  isReadOnly: Proptypes.bool,
 };
 
 export default GridItemForm;

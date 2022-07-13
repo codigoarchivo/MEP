@@ -60,6 +60,10 @@ CategoryForm.propTypes = {
   onClose: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
+  es: PropTypes.object,
+  en: PropTypes.object,
+  locale: PropTypes.string,
+  info: PropTypes.string,
 };
 
 export default CategoryForm;

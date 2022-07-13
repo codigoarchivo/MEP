@@ -1,5 +1,7 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import { useDispatch } from "react-redux";
 
 import { QuestionIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -117,6 +119,12 @@ const ResetPassword = ({ locale, es, en }) => {
       </chakra.form>
     </>
   );
+};
+
+ResetPassword.propTypes = {
+  locale: PropTypes.string,
+  es: PropTypes.object,
+  en: PropTypes.object,
 };
 
 export default ResetPassword;

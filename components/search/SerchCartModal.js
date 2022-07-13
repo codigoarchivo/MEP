@@ -85,7 +85,7 @@ const SerchCartModal = ({
       pj: item.cn * item.pr - (item.pj * (item.cn * item.pr)) / 100,
     },
   }));
-  
+
   const confirmSale = () => {
     // save cart
     dispatch(saveSale(data, del));
@@ -147,6 +147,8 @@ SerchCartModal.propTypes = {
   del: PropTypes.string.isRequired,
   close: PropTypes.string.isRequired,
   toBuy: PropTypes.string.isRequired,
+  del: PropTypes.object,
+  push: PropTypes.func,
 };
 
 export default SerchCartModal;

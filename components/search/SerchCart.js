@@ -2,6 +2,8 @@ import React, { useMemo, useRef } from "react";
 
 import PropTypes from "prop-types";
 
+import { useSelector } from "react-redux";
+
 import { useRouter } from "next/router";
 
 import {
@@ -33,6 +35,8 @@ import es from "../../translations/es";
 import en from "../../translations/en";
 
 const SerchCart = ({ active, save }) => {
+  // selector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useRouter
   const { locale, push } = useRouter();
   // Breakpoints
@@ -47,6 +51,14 @@ const SerchCart = ({ active, save }) => {
     () => active.reduce((total, item) => (total += item.cn * item.pr), 0),
     [active]
   );
+
+  const handlecartActive = () => {
+    if (a.ui) {
+      onOpen();
+    } else {
+      push("/auth");
+    }
+  };
 
   return (
     <>
@@ -110,7 +122,7 @@ const SerchCart = ({ active, save }) => {
                 <Button
                   variant={"primary"}
                   w={full}
-                  onClick={onOpen}
+                  onClick={handlecartActive}
                   size={"md"}
                 >
                   {locale === "en" ? en.cart.cB : es.cart.cB}

@@ -1,5 +1,7 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import { collection, getDocs } from "firebase/firestore";
 
 import ShopLayout from "../../components/layout/ShopLayout";
@@ -22,11 +24,27 @@ const Blog = (data) => {
   );
 };
 
+Blog.propTypes = {
+  categories: PropTypes.string,
+  buys: PropTypes.string,
+  product: PropTypes.string,
+};
+
 export async function getStaticProps() {
   try {
     const categories = await getDocs(collection(db, "categories"));
     const buys = await getDocs(collection(db, "buys"));
     const product = await getDocs(collection(db, "serchs"));
+
+    if (!product || !categories || !buys) {
+      return {
+        // notFound: true, // Devolverá la página 404
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
 
     return {
       props: {

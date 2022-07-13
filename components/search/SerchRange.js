@@ -22,9 +22,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import { dbProducts } from "../../data/dbProducts";
-
-const SerchRange = ({ product, locale, en, es, setDataAll }) => {
+const SerchRange = ({ product, locale, en, es }) => {
   // Breakpoints
   const { bordes } = Breakpoints();
 
@@ -32,24 +30,15 @@ const SerchRange = ({ product, locale, en, es, setDataAll }) => {
 
   const { push } = useRouter();
 
-  const handleChangeEnd = async ([min = 0, max = 0]) => {
+  const handleChangeEnd = ([min = 0, max = 0]) => {
     setResRange({ min, max });
     push({
       pathname: "/search",
       query: { min, max },
     });
-
-    const product = await dbProducts("", "dbProSix", min, max);
-
-    if (product.length > 0) {
-      setDataAll(product);
-    }
   };
 
-  let maxN = 0;
-  let minN = 0;
-
-  maxN = useMemo(
+  const maxN = useMemo(
     () =>
       product.reduce(
         (n, m) => Math.max(Number(n), m.pr),
@@ -58,7 +47,7 @@ const SerchRange = ({ product, locale, en, es, setDataAll }) => {
     [product]
   );
 
-  minN = useMemo(
+  const minN = useMemo(
     () =>
       product.reduce(
         (n, m) => Math.min(Number(n), m.pr),
@@ -67,6 +56,9 @@ const SerchRange = ({ product, locale, en, es, setDataAll }) => {
     [product]
   );
 
+  maxN = maxN === -Infinity ? 100 : maxN;
+  minN = minN === Infinity ? 1 : minN;
+  
   return (
     <Stack w={"full"} spacing={"5"} border={bordes} rounded="md" p={4}>
       <Box borderBottom={bordes} py={5} w={"full"}>
@@ -113,8 +105,10 @@ const SerchRange = ({ product, locale, en, es, setDataAll }) => {
 };
 
 SerchRange.propTypes = {
-  product: PropTypes.array,
-  data: PropTypes.string,
+  product: PropTypes.array.isRequired,
+  locale: PropTypes.string.isRequired,
+  es: PropTypes.object.isRequired,
+  en: PropTypes.object.isRequired,
 };
 
 export default SerchRange;

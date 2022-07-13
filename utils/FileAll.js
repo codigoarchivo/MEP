@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
 
+import PropTypes from "prop-types";
+
 import {
   getDownloadURL,
   ref as storageRef,
@@ -88,6 +90,13 @@ const FileAll = ({ setUrlImage, fileName, save, image }) => {
       </Button>
     </InputGroup>
   );
+};
+
+FileAll.propTypes = {
+  setUrlImage: PropTypes.func,
+  fileName: PropTypes.string,
+  save: PropTypes.string,
+  image: PropTypes.string,
 };
 
 export default FileAll;

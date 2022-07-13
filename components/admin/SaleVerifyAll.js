@@ -228,6 +228,11 @@ SaleVerify.propTypes = {
   referencia: PropTypes.object,
   buy: PropTypes.string,
   sal: PropTypes.string,
+  push: PropTypes.func,
+  locale: PropTypes.string,
+  back: PropTypes.func,
+  es: PropTypes.object,
+  en: PropTypes.object,
 };
 
 export default SaleVerify;

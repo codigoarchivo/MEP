@@ -101,6 +101,7 @@ CategoryScrenn.propTypes = {
   edi: PropTypes.string,
   del: PropTypes.string,
   cC: PropTypes.string,
+  push: PropTypes.func,
 };
 
 export default CategoryScrenn;

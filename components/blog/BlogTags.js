@@ -1,3 +1,5 @@
+import Proptypes from "prop-types";
+
 import { HStack, Tag } from "@chakra-ui/react";
 
 const BlogTags = (props) => {
@@ -20,5 +22,9 @@ const BlogTags = (props) => {
     </HStack>
   );
 };
+
+BlogTags.propTypes = {
+  props: Proptypes.object
+}
 
 export default BlogTags;

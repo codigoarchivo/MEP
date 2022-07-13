@@ -1,5 +1,7 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import { DragHandleIcon } from "@chakra-ui/icons";
 
 import { formatDistanceToNow } from "date-fns";
@@ -114,6 +116,10 @@ const SerchMessage = (item) => {
       <Divider w={"full"} mt={{ base: 0, md: 5 }} borderBottom={bordes} />
     </>
   );
+};
+
+SerchMessage.propTypes = {
+  item: PropTypes.object,
 };
 
 export default SerchMessage;

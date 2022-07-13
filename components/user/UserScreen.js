@@ -177,6 +177,10 @@ const UserScreen = ({ user = {}, locale, back, es, en }) => {
 
 UserScreen.propTypes = {
   user: PropTypes.object,
+  locale: PropTypes.string,
+  back: PropTypes.func,
+  es: PropTypes.object,
+  en: PropTypes.object,
 };
 
 export default UserScreen;

@@ -47,14 +47,14 @@ import NavLink from "../../../utils/Navlink";
 import { BreadcrumbNavbar } from "./BreadcrumbNavbar";
 import DesktopNav from "./DesktopNav";
 
-import en from "../../../translations/en";
-import es from "../../../translations/es";
-
 import MenuNavButton from "./MenuNavButton";
 
 import LogoutAllClear from "./LogoutAllClear";
 
 import NavbarLocal from "./NavbarLocal";
+
+import en from "../../../translations/en";
+import es from "../../../translations/es";
 
 export default function WithSubnavigation() {
   // useSelector
@@ -72,7 +72,7 @@ export default function WithSubnavigation() {
   // Modality
   const { modality, setModality } = useModality();
   // dispatch
-  const { locale, push, pathname, locales, asPath } = useRouter();
+  const { locale, push, pathname} = useRouter();
 
   const { dataRoute } = ListRoute();
 
@@ -306,7 +306,7 @@ export default function WithSubnavigation() {
       <Collapse in={isOpen} animateOpacity>
         <Stack p={4} display={{ md: "none" }}>
           {dataRoute.map(({ icon, ref, as, nam, rol }, key) => (
-            <div key={key} display={rol && rol}>
+            <Box key={key} display={rol && rol}>
               <NavLink
                 leftIcon={icon}
                 fontWeight={"normal"}
@@ -315,7 +315,7 @@ export default function WithSubnavigation() {
                 as={as}
                 name={nam}
               />
-            </div>
+            </Box>
           ))}
           {/* logout Clear */}
           <LogoutAllClear />

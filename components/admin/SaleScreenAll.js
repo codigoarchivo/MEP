@@ -44,7 +44,7 @@ const SaleScreenAll = ({
       alignItems={{ base: "start", sm: "flex-end" }}
       borderBottom={bordes}
     >
-      <VStack w={full} spacing={0} overflow={"auto"} >
+      <VStack w={full} spacing={0} overflow={"auto"}>
         {[
           {
             all: name,
@@ -111,6 +111,8 @@ SaleScreenAll.propTypes = {
   mail: PropTypes.string,
   creation: PropTypes.string,
   verify: PropTypes.string,
+  locale: PropTypes.string,
+  paid: PropTypes.string,
 };
 
 export default SaleScreenAll;

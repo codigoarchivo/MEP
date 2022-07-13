@@ -33,6 +33,7 @@ const ListRoute = () => {
       ref: "/user",
       as: "/user",
       nam: locale === "en" ? en.major.mD : es.major.mD,
+      rol: a.rol === "owner" || a.rol === "user" ? "block" : "none",
     },
     {
       icon: <ListEspera />,
@@ -50,7 +51,7 @@ const ListRoute = () => {
     {
       icon: <Product />,
       ref: `/product/[uid]`,
-      as: `/product/${a?.uid}`,
+      as: `/product/${a.uid ? a.uid : "0"}`,
       nam: locale === "en" ? en.major.mG : es.major.mG,
     },
     {

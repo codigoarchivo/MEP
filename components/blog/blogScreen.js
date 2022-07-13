@@ -1,5 +1,7 @@
 import React, { useMemo } from "react";
 
+import PropTypes from "prop-types";
+
 import { useRouter } from "next/router";
 
 import { useSelector } from "react-redux";
@@ -33,13 +35,15 @@ const BlogScreen = ({ categories, buys, product }) => {
   // Breakpoints
   const { displayOff2, bordes, points25, content7 } = Breakpoints();
   // selector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+  // selector
   const { listData: list = [] } = useSelector(({ category }) => category);
   // selector
   const { listData = [] } = useSelector(({ product }) => product);
   // router
   const { push, locale } = useRouter();
 
-  if ([!!list[0] || !!listData[0]].includes(false)) {
+  if ([!list[0]].includes(true)) {
     push("/");
   }
 
@@ -108,6 +112,7 @@ const BlogScreen = ({ categories, buys, product }) => {
           </SimpleGrid>
         </Box>
         <Stack
+          display={a.rol === "owner" || a.rol === "user" ? "block" : "none"}
           pt={30}
           w={"full"}
           justifyContent={"center"}
@@ -133,22 +138,22 @@ const BlogScreen = ({ categories, buys, product }) => {
           >
             {[
               {
-                title: `${list.find((item) => item.id === one.ct).na}`,
-                name: one.na,
-                price: `${one.pr}$`,
-                date5: `${one.id}`,
+                title: `${list.find((item) => item.id === one.ct)?.na}`,
+                name: one?.na,
+                price: `${one?.pr}$`,
+                date5: `${one?.id}`,
               },
               {
-                title: `${list.find((item) => item.id === two.ct).na}`,
-                name: two.na,
-                price: `${two.pr}$`,
-                date5: `${two.id}`,
+                title: `${list.find((item) => item.id === two.ct)?.na}`,
+                name: two?.na,
+                price: `${two?.pr}$`,
+                date5: `${two?.id}`,
               },
               {
-                title: `${list.find((item) => item.id === three.ct).na}`,
-                name: three.na,
-                price: `${three.pr}$`,
-                date5: `${three.id}`,
+                title: `${list.find((item) => item.id === three.ct)?.na}`,
+                name: three?.na,
+                price: `${three?.pr}$`,
+                date5: `${three?.id}`,
               },
             ].map((item, index) => (
               <BlogOutstanding
@@ -272,6 +277,12 @@ const BlogScreen = ({ categories, buys, product }) => {
       </Stack>
     </Stack>
   );
+};
+
+BlogScreen.propTypes = {
+  categories: PropTypes.string,
+  buys: PropTypes.string,
+  product: PropTypes.string,
 };
 
 export default BlogScreen;

@@ -1,4 +1,7 @@
 import { Box, Heading, Stack, Text } from "@chakra-ui/react";
+
+import PropTypes from "prop-types";
+
 import Breakpoints from "../../helpers/Breakpoints";
 
 import ModeColor from "../../helpers/ModeColor";
@@ -58,6 +61,10 @@ const BlogOutstanding = (item) => {
       </Stack>
     </Box>
   );
+};
+
+BlogOutstanding.propTypes = {
+  item: PropTypes.object,
 };
 
 export default BlogOutstanding;

@@ -91,6 +91,16 @@ export async function getStaticProps({ params }) {
     // product
     const product = await dbProductsById(id, "dbProOneID");
 
+    if (!product) {
+      return {
+        // notFound: true, // Devolverá la página 404
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+
     return { props: { product } };
   } catch (error) {
     Toast("Al parecer hay un error", "error", 5000);

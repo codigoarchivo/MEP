@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 
+import PropTypes from "prop-types";
+
 import { useDispatch } from "react-redux";
 
 import { db } from "../firebase/config";
@@ -197,6 +199,20 @@ const Paginator = ({
       </Button>
     </HStack>
   );
+};
+
+Paginator.propTypes = {
+  list: PropTypes.array,
+  firstVisible: PropTypes.string,
+  lastVisible: PropTypes.string,
+  window: PropTypes.string,
+  word: PropTypes.string,
+  newList: PropTypes.func,
+  nLimit: PropTypes.number,
+  orHome: PropTypes.string,
+  orPrevious: PropTypes.string,
+  orNext: PropTypes.string,
+  uid: PropTypes.string,
 };
 
 export default Paginator;

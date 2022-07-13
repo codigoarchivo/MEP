@@ -393,6 +393,11 @@ CheckVerify.propTypes = {
   product: PropTypes.object,
   idThree: PropTypes.string,
   bordes: PropTypes.string,
+  locale: PropTypes.string,
+  back: PropTypes.func,
+  push: PropTypes.func,
+  en: PropTypes.object,
+  es: PropTypes.object,
 };
 
 export default CheckVerify;

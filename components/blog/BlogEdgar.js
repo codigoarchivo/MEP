@@ -1,5 +1,7 @@
 import { Heading, Stack, Text } from "@chakra-ui/react";
 
+import PropTypes from "prop-types";
+
 const BlogEdgar = ({ data }) => {
   return (
     <Stack pt={20} spacing={10}>
@@ -24,6 +26,10 @@ const BlogEdgar = ({ data }) => {
       </Text>
     </Stack>
   );
+};
+
+BlogEdgar.propTypes = {
+  data: PropTypes.string,
 };
 
 export default BlogEdgar;

@@ -198,6 +198,11 @@ ReviewScreen.propTypes = {
   p: PropTypes.string,
   i: PropTypes.string,
   g: PropTypes.string,
+  locale: PropTypes.string,
+  push: PropTypes.func,
+  back: PropTypes.func,
+  es: PropTypes.object,
+  en: PropTypes.object,
 };
 
 export default ReviewScreen;

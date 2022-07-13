@@ -66,6 +66,16 @@ export async function getStaticProps({ params }) {
   try {
     const category = await dbCategoryById(id);
 
+    if (!category) {
+      return {
+        // notFound: true, // Devolverá la página 404
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+
     return {
       props: {
         category,

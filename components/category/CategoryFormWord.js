@@ -40,6 +40,10 @@ CategoryFormWord.propTypes = {
   onClose: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   VStack: PropTypes.object.isRequired,
+  es: PropTypes.object,
+  en: PropTypes.object,
+  locale: PropTypes.string,
+  info: PropTypes.string,
 };
 
 export default CategoryFormWord;

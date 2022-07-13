@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import PropTypes from "prop-types";
+
 import {
   Box,
   Flex,
@@ -103,10 +105,21 @@ const BlogWork = ({ bA, bB, bC, bD, create, points, displayOff }) => {
           alt="Hero"
           layout="fill"
           objectFit="contain"
+          priority={true}
         />
       </Flex>
     </Stack>
   );
+};
+
+BlogWork.propTypes = {
+  bA: PropTypes.string,
+  bB: PropTypes.string,
+  bC: PropTypes.string,
+  bD: PropTypes.string,
+  create: PropTypes.string,
+  points: PropTypes.object,
+  displayOff: PropTypes.object,
 };
 
 export default BlogWork;

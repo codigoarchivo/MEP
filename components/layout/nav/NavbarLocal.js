@@ -8,6 +8,7 @@ import NavLink from "../../../utils/Navlink";
 
 import en from "../../../translations/en";
 import es from "../../../translations/es";
+
 const NavbarLocal = () => {
   // useRouter
   const { locale, locales, asPath } = useRouter();

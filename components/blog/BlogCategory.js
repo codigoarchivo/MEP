@@ -1,5 +1,7 @@
 import { Box, HStack, Icon, Text, VStack } from "@chakra-ui/react";
 
+import PropTypes from "prop-types";
+
 import { CheckIcon } from "@chakra-ui/icons";
 
 const BlogCategory = (item) => {
@@ -14,6 +16,10 @@ const BlogCategory = (item) => {
       </VStack>
     </HStack>
   );
+};
+
+BlogCategory.propTypes = {
+  item: PropTypes.object,
 };
 
 export default BlogCategory;

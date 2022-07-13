@@ -68,6 +68,16 @@ export async function getStaticProps() {
     const product = await dbProducts("", "dbProOne");
     const category = await dbCategory("", "dbCatTwo");
 
+    if (!product || !category) {
+      return {
+        // notFound: true, // Devolverá la página 404
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+
     return {
       props: {
         product,

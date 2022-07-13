@@ -56,7 +56,7 @@ const CheckoutScreenAll = ({
         alignItems={{ base: "start", sm: "flex-end" }}
         borderBottom={bordes}
       >
-        <VStack w={full} spacing={0} overflow={"auto"} >
+        <VStack w={full} spacing={0} overflow={"auto"}>
           {[
             {
               all: name,
@@ -83,9 +83,7 @@ const CheckoutScreenAll = ({
               <Heading as="h3" size="sm">
                 {all}:
               </Heading>
-              <Text  size={"sm"}>
-                {dat}
-              </Text>
+              <Text size={"sm"}>{dat}</Text>
             </HStack>
           ))}
           <HStack w={full}>
@@ -137,6 +135,8 @@ CheckoutScreenAll.propTypes = {
   sF: PropTypes.string,
   paid: PropTypes.string,
   pro: PropTypes.string,
+  sal: PropTypes.string,
+  push: PropTypes.func,
 };
 
 export default CheckoutScreenAll;

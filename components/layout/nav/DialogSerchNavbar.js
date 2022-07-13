@@ -104,5 +104,5 @@ DialogSerchNavbar.proptypes = {
   InputLeftElement: Proptypes.object.isRequired,
   Input: Proptypes.object.isRequired,
   SearchIcon: Proptypes.object.isRequired,
-  word: Proptypes.string.isRequired,
+  serch: Proptypes.string.isRequired,
 };
