@@ -26,7 +26,7 @@ const Validator = (
   const mPrecio = values?.pr === 0;
   const mPorcentaje = values?.pj === 0;
   const mDetalles = values?.dt === "";
-  const mImage = Number(values?.imgsize) > 50000;
+  const mImage = Number(values?.imgsize) < 5242880;
   const mImageCero = values?.im === "";
   const mDescripcion = values?.ds === "";
   const mCantidad = Number(values?.cn) === 0;

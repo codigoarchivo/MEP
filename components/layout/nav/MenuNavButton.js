@@ -39,7 +39,7 @@ const MenuNavButton = () => {
         cursor={"pointer"}
         minW={0}
       >
-        <Avatar size={"sm"} name={a?.displayName} src={a?.photoURL} />
+        <Avatar loading="lazy" size={"sm"} name={a?.displayName} src={a?.photoURL} />
       </MenuButton>
       <MenuList zIndex={10}>
         <MenuItem as={"div"}>

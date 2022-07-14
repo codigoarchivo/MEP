@@ -35,7 +35,7 @@ const CategoryData = ({ back, category, pid, es, en, locale }) => {
   const { bordes } = Breakpoints();
 
   // useForm
-  const { values, handleInputChange } = useFormAll(
+  const { values, reset, handleInputChange } = useFormAll(
     initialStates,
     pid !== "Add" ? category : {}
   );
@@ -70,12 +70,12 @@ const CategoryData = ({ back, category, pid, es, en, locale }) => {
     pid === "Edit" && dispatch(editCategory(na, id, err));
     pid === "Delete" && dispatch(deleteCategory(id, err));
 
-    back("/admin/category");
+    reset()
   };
 
   // cerrar
   const onClose = () => {
-    back("/admin/category");
+    back();
   };
 
   let info = "";
@@ -93,7 +93,13 @@ const CategoryData = ({ back, category, pid, es, en, locale }) => {
 
   return (
     <>
-      <VStack spacing={5} w={"full"} border={bordes} p={3}>
+      <VStack
+        backgroundColor={"#fff"}
+        spacing={5}
+        w={"full"}
+        border={bordes}
+        p={3}
+      >
         <HStack w={"full"}>
           <CloseButton size="md" onClick={onClose} />
           <Heading as="h1" size={"md"} textTransform={"uppercase"}>

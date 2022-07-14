@@ -13,14 +13,19 @@ import en from "../../translations/en";
 
 const Create = () => {
   // router
-  const { locale } = useRouter();
+  const { locale, back } = useRouter();
   // Breakpoints
   const { calc } = Breakpoints();
 
   return (
     <Container maxW={"container.sm"}>
-      <Flex h={calc} alignItems={["top", "center"]} justifyContent="center"  py={5}>
-        <CreateUser locale={locale} es={es} en={en} />
+      <Flex
+        h={calc}
+        alignItems={["top", "center"]}
+        justifyContent="center"
+        py={5}
+      >
+        <CreateUser locale={locale} es={es} en={en} back={back} />
       </Flex>
     </Container>
   );

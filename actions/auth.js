@@ -18,8 +18,6 @@ import { doc, setDoc } from "firebase/firestore";
 
 import Toast from "../helpers/Toast";
 
-import { closeRevert } from "./checkout";
-
 export const login = (uid, displayName, photoURL, email, rol) => ({
   type: types.login,
   payload: {

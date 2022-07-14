@@ -18,7 +18,7 @@ const Account = () => {
   const { activeSelect } = useSelector(({ auth }) => auth);
 
   // router
-  const { locale, push } = useRouter();
+  const { locale, push, back } = useRouter();
 
   const { uid, displayName, email } = activeSelect;
 
@@ -45,6 +45,7 @@ const Account = () => {
         <LoginUser
           handleReview={handleReview}
           locale={locale}
+          back={back}
           es={es}
           en={en}
         />

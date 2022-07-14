@@ -19,6 +19,8 @@ import {
   chakra,
   Center,
   VStack,
+  HStack,
+  CloseButton,
 } from "@chakra-ui/react";
 
 import Validator from "../../helpers/Validator";
@@ -41,7 +43,7 @@ const data = {
   pass: false,
   rPass: false,
 };
-const CreateUser = ({ locale, es, en }) => {
+const CreateUser = ({ locale, es, en, back }) => {
   // selector
   const { loading } = useSelector(({ ui }) => ui);
 
@@ -103,9 +105,12 @@ const CreateUser = ({ locale, es, en }) => {
         h={"min-content"}
       >
         <VStack spacing={{ base: 3, sm: 5 }}>
-          <Heading w={"full"} as="h1" size={"md"} textTransform={"uppercase"}>
-            {locale === "en" ? en.auth.aH : es.auth.aH}
-          </Heading>
+          <HStack w={"full"} justifyContent="space-between">
+            <Heading size={"md"} textTransform={"uppercase"}>
+              {locale === "en" ? en.auth.aH : es.auth.aH}
+            </Heading>
+            <CloseButton size="sm" onClick={() => back()} />
+          </HStack>
           <FormControl>
             <FormLabel htmlFor="name">
               {locale === "en" ? en.name : es.name}{" "}
@@ -252,6 +257,7 @@ CreateUser.propTypes = {
   locale: PropTypes.string,
   es: PropTypes.object,
   en: PropTypes.object,
+  back: PropTypes.func,
 };
 
 export default CreateUser;

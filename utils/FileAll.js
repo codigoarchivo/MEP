@@ -34,12 +34,18 @@ const FileAll = ({ setUrlImage, fileName, save, image }) => {
 
     const { mImage } = Validator({ imgsize: file.size });
 
-    if (mImage) return Toast(image, "error", 5000);
+    if (!mImage) return Toast(image, "error", 5000);
+
+    const metadata = {
+      cacheControl: "public,max-age=300",
+      contentType: "image/jpeg",
+    };
 
     try {
       const uploadTask = uploadBytesResumable(
         storageRef(storage, `${fileName}/${file.name}`),
-        file
+        file,
+        metadata
       );
 
       uploadTask.on(

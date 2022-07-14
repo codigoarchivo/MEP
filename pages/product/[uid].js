@@ -65,9 +65,13 @@ const List = ({ product = [] }) => {
   };
 
   const handleClient = () => {
+    if (!a.uid) {
+      return push("/auth");
+    }
+
     push({
       pathname: "/info/[uid]",
-      query: { uid: a?.uid.toString() },
+      query: { uid: a.uid ? a.uid : "0" },
     });
   };
 
@@ -82,7 +86,10 @@ const List = ({ product = [] }) => {
               </Heading>
             </Center>
           )}
-          <Text py={5}>
+          <Text
+            py={5}
+            display={a.rol === "owner" || a.rol === "user" ? "block" : "none"}
+          >
             <Button
               textTransform={"capitalize"}
               onClick={handleClient}

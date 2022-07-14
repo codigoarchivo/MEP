@@ -20,6 +20,8 @@ import {
   Flex,
   chakra,
   VStack,
+  HStack,
+  CloseButton,
 } from "@chakra-ui/react";
 
 import useFormAll from "../../hooks/useFormAll";
@@ -41,7 +43,7 @@ const initialStates = {
 const data = {
   pass: false,
 };
-const LoginUser = ({ handleReview, locale, es, en }) => {
+const LoginUser = ({ handleReview, locale, es, en, back }) => {
   // selector
   const { loading } = useSelector(({ ui }) => ui);
   // dispatch
@@ -94,9 +96,12 @@ const LoginUser = ({ handleReview, locale, es, en }) => {
         h={"min-content"}
       >
         <VStack spacing={5}>
-          <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
-            {locale === "en" ? en.auth.aA : es.auth.aA}
-          </Heading>
+          <HStack w={"full"} justifyContent="space-between">
+            <Heading size={"md"} textTransform={"uppercase"}>
+              {locale === "en" ? en.auth.aA : es.auth.aA}
+            </Heading>
+            <CloseButton size="sm" onClick={() => back()} />
+          </HStack>
           <FormControl>
             {!emailE && (
               <FormHelperText>
@@ -204,6 +209,7 @@ const LoginUser = ({ handleReview, locale, es, en }) => {
 LoginUser.propTypes = {
   handleReview: PropTypes.func,
   locale: PropTypes.string,
+  back: PropTypes.func,
   es: PropTypes.object,
   en: PropTypes.object,
 };

@@ -77,20 +77,19 @@ const ProductData = ({
 
   // values
   const { na, ds, ct, dt, im, id, ps, pj, cn, pr } = values;
-  
-console.log(ErrorRetur);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!a.uid) {
       return push("/auth");
     }
-    
-    const err = locale === "en" ? en.error : es.error;
 
-    if (ErrorRetur) {
+    if (!ErrorRetur) {
       return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     }
+
+    const err = locale === "en" ? en.error : es.error;
 
     if (word === "delete") {
       dispatch(deleteProduct(id, err));
@@ -136,8 +135,6 @@ console.log(ErrorRetur);
         )
       );
     }
-
-    back();
   };
 
   // cerrar
@@ -163,7 +160,14 @@ console.log(ErrorRetur);
 
   return (
     <>
-      <VStack spacing={5} w={"full"} border={bordes} p={6} boxShadow={"xl"}>
+      <VStack
+        backgroundColor={"#fff"}
+        spacing={5}
+        w={"full"}
+        border={bordes}
+        p={6}
+        boxShadow={"xl"}
+      >
         <HStack w={"full"}>
           <CloseButton size="md" onClick={onClose} />
           <Heading as="h1" size={"md"} textTransform={"uppercase"}>
