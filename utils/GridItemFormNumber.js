@@ -10,11 +10,21 @@ import {
   NumberInputStepper,
 } from "@chakra-ui/react";
 
-const GridItemFormNumber = ({ points, name, na, handle, val, min, max }) => {
+const GridItemFormNumber = ({
+  points,
+  name,
+  na,
+  handle,
+  val,
+  min,
+  max,
+  isReadOnly = false,
+}) => {
   return (
     <GridItem colSpan={points}>
       <FormLabel htmlFor={na}>{name}</FormLabel>
       <NumberInput
+        isReadOnly={isReadOnly}
         name={na}
         id={na}
         type={"number"}
@@ -36,12 +46,13 @@ const GridItemFormNumber = ({ points, name, na, handle, val, min, max }) => {
 };
 
 GridItemFormNumber.propTypes = {
-points: PropTypes.object,
-name: PropTypes.string,
-na: PropTypes.string,
-handle: PropTypes.func,
-va: PropTypes.string,
-min: PropTypes.number,
-max: PropTypes.number,
-}
+  points: PropTypes.object,
+  name: PropTypes.string,
+  na: PropTypes.string,
+  handle: PropTypes.func,
+  va: PropTypes.string,
+  min: PropTypes.number,
+  max: PropTypes.number,
+  isReadOnly: PropTypes.bool,
+};
 export default GridItemFormNumber;

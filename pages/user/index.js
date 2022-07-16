@@ -42,7 +42,7 @@ const User = () => {
   // useRouter
   const { locale, push } = useRouter();
   // selector
-  const { activeSelect: data } = useSelector(({ auth }) => auth);
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -50,23 +50,24 @@ const User = () => {
 
   const [urlImage, setUrlImage] = useState("");
 
-  if (!data.uid) {
+  if (!a.uid) {
     push("/");
   }
 
-  const { values, handleInputChange } = useFormAll(initialStates, data);
+  const { values, handleInputChange } = useFormAll(initialStates, a);
 
   // agrega imagen
   values.photoURL = urlImage ? urlImage : values.photoURL;
   // values
   const { uid, photoURL, displayName } = values;
   const err = locale === "en" ? en.error : es.error;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
       changeNameImgTel(uid, photoURL, displayName, a?.email, a?.rol, err)
     );
-    Toast("Datos actualizados", "success", 5000);
+    Toast(locale === "en" ? en.updated : es.updated, "success", 5000);
   };
 
   return (
@@ -142,7 +143,7 @@ const User = () => {
                 onChange={handleInputChange}
                 value={displayName}
                 name={"displayName"}
-                placeholder="Escribe tu nombre"
+                placeholder={locale === "en" ? en.user.uC : es.user.uC}
               />
               <Button variant={"primary"} type="submit" ml={3}>
                 {locale === "en" ? en.save : es.save}

@@ -72,7 +72,7 @@ const CheckVerify = ({
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
-  const { repeat1, points3, full, content7, all2 } = Breakpoints();
+  const { repeat1, points3, full, content7 } = Breakpoints();
   // mode Color
   const { bg, brand } = ModeColor();
 
@@ -317,7 +317,6 @@ const CheckVerify = ({
               key={key}
               mb={3}
               points={poin}
-              all={all2}
               na={na}
               name={nombre}
               val={Valor}

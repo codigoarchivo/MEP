@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import PropTypes from "prop-types";
+
+import { useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
 
@@ -20,6 +22,15 @@ import en from "../../translations/en";
 const ConfigDashboard = ({ product = {} }) => {
   // router
   const { push, locale, query, back } = useRouter();
+  // selector
+  const { listData: list = [] } = useSelector(({ category }) => category);
+
+  useEffect(() => {
+    if (!list[0]) {
+      push("/");
+    }
+  }, [list]);
+
   return (
     <ShopLayout title={query.set}>
       <Container maxW={"container.sm"} py={10}>

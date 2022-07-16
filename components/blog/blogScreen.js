@@ -112,7 +112,7 @@ const BlogScreen = ({ categories, buys, product }) => {
           </SimpleGrid>
         </Box>
         <Stack
-          display={a.rol === "owner" || a.rol === "user" ? "block" : "none"}
+          display={!!listData[0] && one !== "" && two !== "" && three !== "" ? "block" : "none"}
           pt={30}
           w={"full"}
           justifyContent={"center"}
@@ -138,19 +138,19 @@ const BlogScreen = ({ categories, buys, product }) => {
           >
             {[
               {
-                title: `${list.find((item) => item.id === one.ct)?.na}`,
+                title: `${list.find((item) => item.id === one?.ct)?.na}`,
                 name: one?.na,
                 price: `${one?.pr}$`,
                 date5: `${one?.id}`,
               },
               {
-                title: `${list.find((item) => item.id === two.ct)?.na}`,
+                title: `${list.find((item) => item.id === two?.ct)?.na}`,
                 name: two?.na,
                 price: `${two?.pr}$`,
                 date5: `${two?.id}`,
               },
               {
-                title: `${list.find((item) => item.id === three.ct)?.na}`,
+                title: `${list.find((item) => item.id === three?.ct)?.na}`,
                 name: three?.na,
                 price: `${three?.pr}$`,
                 date5: `${three?.id}`,

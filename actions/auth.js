@@ -1,9 +1,3 @@
-import { auth, db, provider } from "../firebase/config";
-
-import { types } from "../type";
-
-import { finishLoading, startLoading } from "./ui";
-
 import {
   confirmPasswordReset,
   createUserWithEmailAndPassword,
@@ -14,9 +8,15 @@ import {
   updateProfile,
 } from "firebase/auth";
 
-import { doc, setDoc } from "firebase/firestore";
+import { auth, provider } from "../firebase/config";
+
+import { types } from "../type";
+
+import { finishLoading, startLoading } from "./ui";
 
 import Toast from "../helpers/Toast";
+
+const dA = process.env.NEXT_PUBLIC_ROL_A;
 
 export const login = (uid, displayName, photoURL, email, rol) => ({
   type: types.login,
@@ -33,11 +33,23 @@ export const startLoginEmailPassword = (email, password, err) => {
   return async (dispatch) => {
     try {
       // start
-      dispatch(startLoading());
+      await dispatch(startLoading());
       // login
       await signInWithEmailAndPassword(auth, email, password)
         .then(async ({ user }) => {
-          await dispatch(login(user.uid, user.displayName));
+          
+          if (user) {
+            dispatch(
+              login(
+                user.uid,
+                user.displayName,
+                user.photoURL,
+                user.email,
+                user.uid === dA.toString() ? "owner" : "user"
+              )
+            );
+          }
+
           await dispatch(finishLoading());
         })
         .catch(({ message }) => {
@@ -67,13 +79,19 @@ export const startRegisterWithNameEmailPassword = (
       createUserWithEmailAndPassword(auth, email, password)
         .then(async ({ user }) => {
           await updateProfile(auth.currentUser, { displayName: name });
-          await dispatch(login(user.uid, user.displayName));
-          // rol
-          await setDoc(doc(db, "users", user.uid.toString()), {
-            co: user.email,
-            na: user.displayName,
-            rol: "user",
-          });
+
+          if (user) {
+            dispatch(
+              login(
+                user.uid,
+                user.displayName,
+                user.photoURL,
+                user.email,
+                user.uid === dA.toString() ? "owner" : "user"
+              )
+            );
+          }
+
           // end
           await dispatch(finishLoading());
         })
@@ -95,8 +113,18 @@ export const startGoogleLogin = (err) => {
   return async (dispatch) => {
     try {
       await signInWithPopup(auth, provider)
-        .then(async ({ user }) => {
-          await dispatch(login(user.uid, user.displayName));
+        .then(({ user }) => {
+          if (user) {
+            dispatch(
+              login(
+                user.uid,
+                user.displayName,
+                user.photoURL,
+                user.email,
+                user.uid === dA.toString() ? "owner" : "user"
+              )
+            );
+          }
         })
         .catch(({ message }) => {
           // error

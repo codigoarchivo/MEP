@@ -1,16 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+import { useDispatch } from "react-redux";
 
 import Head from "next/head";
+
+import { auth } from "../../firebase/config";
+
+import { onAuthStateChanged } from "firebase/auth";
+
+import { login } from "../../actions/auth";
 
 import { chakra } from "@chakra-ui/react";
 
 import Footer from "./foo/Footer";
 
-import AuthChange from "../../helpers/AuthChange";
-
 import WithSubnavigation from "./nav/WithSubnavigation";
 
 const ShopLayout = ({ children, title }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      const dA = process.env.NEXT_PUBLIC_ROL_A;
+      if (user) {
+        dispatch(
+          login(
+            user.uid,
+            user.displayName,
+            user.photoURL,
+            user.email,
+            user.uid === dA.toString() ? "owner" : "user"
+          )
+        );
+      }
+    });
+
+    return () => unsubscribe();
+  }, [dispatch]);
+
   return (
     <>
       <Head>
@@ -22,10 +48,7 @@ const ShopLayout = ({ children, title }) => {
         <WithSubnavigation />
       </chakra.header>
 
-      <chakra.main>
-        <AuthChange />
-        {children}
-      </chakra.main>
+      <chakra.main>{children}</chakra.main>
 
       <chakra.footer w={"full"}>
         <Footer />

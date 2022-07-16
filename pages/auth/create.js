@@ -13,7 +13,7 @@ import en from "../../translations/en";
 
 const Create = () => {
   // router
-  const { locale, back } = useRouter();
+  const { locale, back, push } = useRouter();
   // Breakpoints
   const { calc } = Breakpoints();
 
@@ -25,7 +25,7 @@ const Create = () => {
         justifyContent="center"
         py={5}
       >
-        <CreateUser locale={locale} es={es} en={en} back={back} />
+        <CreateUser push={push} locale={locale} es={es} en={en} back={back} />
       </Flex>
     </Container>
   );

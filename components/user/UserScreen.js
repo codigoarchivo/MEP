@@ -13,6 +13,10 @@ import {
 
 import PropTypes from "prop-types";
 
+import { doc, setDoc } from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import Toast from "../../helpers/Toast";
 
 import useFormAll from "../../hooks/useFormAll";
@@ -21,11 +25,7 @@ import ModeColor from "../../helpers/ModeColor";
 
 import Breakpoints from "../../helpers/Breakpoints";
 
-import { useRouter } from "next/router";
-
-import { DataUserAdicional } from "../../actions/user";
-
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import GridItemForm from "../../utils/GridItemForm";
 import GridItemFormTextarea from "../../utils/GridItemFormTextarea";
@@ -37,21 +37,23 @@ const initialStates = {
   dt: "",
 };
 
-const UserScreen = ({ user = {}, locale, back, es, en }) => {
+const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
-  // dispatch
-  const dispatch = useDispatch();
   // Breakpoints
-  const { repeat1, points3, bordes, all2 } = Breakpoints();
+  const { repeat1, points3, bordes } = Breakpoints();
   // mode Color
   const { bg, brand } = ModeColor();
+
+  if (a.uid === undefined) {
+    push("/");
+  }
   // useForm
   const { values, handleInputChange } = useFormAll(initialStates, user);
   // values
   const { na, te, co, dt, id } = values;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if ([na, te, co, dt].includes("")) {
@@ -61,9 +63,8 @@ const UserScreen = ({ user = {}, locale, back, es, en }) => {
     if (a.uid !== id) {
       return Toast(locale === "en" ? en.user.uE : es.user.uE, "error", 5000);
     }
-    const err = locale === "en" ? en.error : es.error;
-    dispatch(DataUserAdicional({ na, te, co, dt }, id, err));
 
+    await setDoc(doc(db, "users", id), { na, te, co, dt, rol: "user" });
     back();
   };
 
@@ -138,7 +139,6 @@ const UserScreen = ({ user = {}, locale, back, es, en }) => {
               val={Valor}
               type={type}
               place={place}
-              all={all2}
               handle={handleInputChange}
             />
           ))}

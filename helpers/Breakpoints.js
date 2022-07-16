@@ -1,3 +1,5 @@
+import { useBreakpoint } from "@chakra-ui/react";
+
 const Breakpoints = () => {
   const displayOn1 = { base: "block", sm: "none" };
   const displayOn2 = { base: "block", md: "none" };

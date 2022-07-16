@@ -16,15 +16,10 @@ import en from "../../translations/en";
 const Account = () => {
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
-
   // router
   const { locale, push, back } = useRouter();
 
-  const { uid, displayName, email } = activeSelect;
-
-  if (uid || displayName || email !== undefined) {
-    push("/");
-  }
+  if (activeSelect.uid !== undefined) push("/");
 
   // handleReview
   const handleReview = () => {
@@ -46,6 +41,7 @@ const Account = () => {
           handleReview={handleReview}
           locale={locale}
           back={back}
+          push={push}
           es={es}
           en={en}
         />

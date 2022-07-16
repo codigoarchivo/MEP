@@ -18,7 +18,7 @@ import es from "../../translations/es";
 import en from "../../translations/en";
 
 const Informacion = ({ user = {} }) => {
-  const { locale, back } = useRouter();
+  const { locale, back, push } = useRouter();
 
   return (
     <ShopLayout title={locale === "en" ? en.personal : es.personal}>
@@ -27,6 +27,7 @@ const Informacion = ({ user = {} }) => {
           user={{ ...user }}
           locale={locale}
           back={back}
+          push={push}
           es={es}
           en={en}
         />

@@ -12,6 +12,7 @@ import {
   Center,
   Container,
   Heading,
+  HStack,
   Table,
   TableCaption,
   TableContainer,
@@ -20,7 +21,13 @@ import {
   Th,
   Thead,
   Tr,
+  chakra,
+  Input,
 } from "@chakra-ui/react";
+
+import { doc, setDoc } from "firebase/firestore";
+
+import { db } from "../../firebase/config";
 
 import ProductScrenn from "../../components/product/ProductScreen";
 
@@ -38,16 +45,21 @@ import { dbProducts } from "../../data/dbProducts";
 
 import en from "../../translations/en";
 import es from "../../translations/es";
+import useFormAll from "../../hooks/useFormAll";
+
+const initialStates = {
+  q: "",
+};
 
 const List = ({ product = [] }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+  // selector
+  const { list = [] } = useSelector(({ product }) => product);
   // router
   const { push, locale } = useRouter();
   // breakpoints
   const { bordes } = Breakpoints();
-  // selector
-  const { list = [] } = useSelector(({ product }) => product);
   // dispatch
   const dispatch = useDispatch();
 
@@ -64,6 +76,8 @@ const List = ({ product = [] }) => {
     });
   };
 
+  const { values, reset, handleInputChange } = useFormAll(initialStates);
+
   const handleClient = () => {
     if (!a.uid) {
       return push("/auth");
@@ -73,6 +87,17 @@ const List = ({ product = [] }) => {
       pathname: "/info/[uid]",
       query: { uid: a.uid ? a.uid : "0" },
     });
+  };
+
+  const handleSerchProduct = async (e) => {
+    e.preventDefault();
+    try {
+      await setDoc(doc(db, "cifras", a.uid), { pr: values.q });
+      Toast(locale === "en" ? en.save : es.save, "success", 5000);
+    } catch (error) {
+      Toast(locale === "en" ? en.error : es.error, "error", 5000);
+    }
+    reset();
   };
 
   return (
@@ -86,19 +111,35 @@ const List = ({ product = [] }) => {
               </Heading>
             </Center>
           )}
-          <Text
-            py={5}
-            display={a.rol === "owner" || a.rol === "user" ? "block" : "none"}
-          >
-            <Button
-              textTransform={"capitalize"}
-              onClick={handleClient}
-              variant={"primary"}
+          <HStack justifyContent={"space-between"}>
+            <Text
+              py={5}
+              display={a.rol === "owner" || a.rol === "user" ? "block" : "none"}
             >
-              {locale === "en" ? en.product.pB : es.product.pB}
-            </Button>{" "}
-            - {locale === "en" ? en.product.pC : es.product.pC}
-          </Text>
+              <Button
+                textTransform={"capitalize"}
+                onClick={handleClient}
+                variant={"primary"}
+              >
+                {locale === "en" ? en.product.pB : es.product.pB}
+              </Button>{" "}
+              - {locale === "en" ? en.product.pC : es.product.pC}
+            </Text>
+            <chakra.form
+              w={"15%"}
+              onSubmit={handleSerchProduct}
+              display={a.rol === "owner" ? "block" : "none"}
+            >
+              <Input
+                type={"search"}
+                placeholder={"%"}
+                value={values.q}
+                name={"q"}
+                onChange={handleInputChange}
+              />
+            </chakra.form>
+          </HStack>
+
           <TableContainer w={"full"} border={bordes}>
             <Table variant="striped" colorScheme="brand">
               <TableCaption>
@@ -175,7 +216,7 @@ export async function getServerSideProps({ params }) {
       },
     };
   } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
+    Toast(locale === "en" ? en.error : es.error, "error", 5000);
     return {
       props: {},
     };

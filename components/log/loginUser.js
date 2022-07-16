@@ -43,7 +43,7 @@ const initialStates = {
 const data = {
   pass: false,
 };
-const LoginUser = ({ handleReview, locale, es, en, back }) => {
+const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
   // selector
   const { loading } = useSelector(({ ui }) => ui);
   // dispatch
@@ -78,11 +78,13 @@ const LoginUser = ({ handleReview, locale, es, en, back }) => {
       return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     } else {
       dispatch(startLoginEmailPassword(email, password, err));
+      push("/");
     }
   };
   // handleGooglelogin
   const handleGooglelogin = () => {
     dispatch(startGoogleLogin(err));
+    push("/");
   };
 
   return (
@@ -210,6 +212,7 @@ LoginUser.propTypes = {
   handleReview: PropTypes.func,
   locale: PropTypes.string,
   back: PropTypes.func,
+  push: PropTypes.func,
   es: PropTypes.object,
   en: PropTypes.object,
 };

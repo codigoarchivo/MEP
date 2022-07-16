@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -19,6 +19,8 @@ import { addProduct, deleteProduct, editProduct } from "../../actions/product";
 import useFormAll from "../../hooks/useFormAll";
 
 import ProductFormDetails from "./ProductFormDetails";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase/config";
 
 const initialStates = {
   pr: 0,
@@ -46,20 +48,36 @@ const ProductData = ({
   const [word, setWord] = useState("");
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+  // useState
+  const [porcent, setporcent] = useState({ pr: "" });
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
-  const { points1, repeat1, points3, bordes } = Breakpoints();
-
+  const { bordes } = Breakpoints();
+  // useState
   const [urlImage, setUrlImage] = useState("");
 
   useMemo(() => {
     setWord(set);
   }, [setWord, set]);
 
+  useEffect(() => {
+    const dataPorcent = async () => {
+      if (a?.rol !== "owner" && word !== "delete" && word !== "details") {
+        const docRef = doc(db, "cifras", a.uid);
+
+        const docSnap = await getDoc(docRef);
+
+        setporcent({ ...docSnap.data() });
+      }
+    };
+    dataPorcent();
+  }, [setporcent]);
+
   // useForm
   const {
     values,
+    reset,
     handleInputChange,
     handleNumberInputCn,
     handleNumberInputPj,
@@ -68,8 +86,7 @@ const ProductData = ({
 
   // agrega imagen
   values.im = urlImage ? urlImage : values.im;
-
-  values.pj = Number(values.pj);
+  values.pj = a?.rol !== "owner" ? Number(porcent.pr) : Number(values.pj);
   values.cn = Number(values.cn);
   values.pr = Number(values.pr);
   // validar
@@ -85,7 +102,7 @@ const ProductData = ({
       return push("/auth");
     }
 
-    if (!ErrorRetur) {
+    if (ErrorRetur) {
       return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     }
 
@@ -135,6 +152,10 @@ const ProductData = ({
         )
       );
     }
+
+    reset();
+    Toast(locale === "en" ? en.save : es.save, "success", 5000);
+    im = "";
   };
 
   // cerrar
@@ -187,10 +208,6 @@ const ProductData = ({
             ct={ct}
             dt={dt}
             word={info}
-            HStack={HStack}
-            repeat1={repeat1}
-            points1={points1}
-            points3={points3}
             onClose={onClose}
             handleInputChange={handleInputChange}
             handleNumberInputCn={handleNumberInputCn}
@@ -198,6 +215,7 @@ const ProductData = ({
             handleNumberInputPr={handleNumberInputPr}
             handleSubmit={handleSubmit}
             setUrlImage={setUrlImage}
+            porcent={porcent.pr}
             locale={locale}
             es={es}
             en={en}
@@ -207,7 +225,6 @@ const ProductData = ({
         {word === "delete" && (
           <ProductFormWord
             handleSubmit={handleSubmit}
-            HStack={HStack}
             word={info}
             onClose={onClose}
             locale={locale}

@@ -57,6 +57,7 @@ const Category = ({ data = [] }) => {
   if (a?.rol === "user") {
     push("/");
   }
+  
   const err = locale === "en" ? en.error : es.error;
   useEffect(() => {
     if (data) {

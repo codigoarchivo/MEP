@@ -40,7 +40,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
   // Breakpoints
   const { full, bordes } = Breakpoints();
   // selector
-  const { list = [] } = useSelector(({ category }) => category);
+  const { listData: list = [] } = useSelector(({ category }) => category);
 
   // edit
   const handleEdit = () => {

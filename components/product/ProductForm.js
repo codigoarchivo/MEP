@@ -14,15 +14,18 @@ import {
   chakra,
   HStack,
   Box,
+  Badge,
 } from "@chakra-ui/react";
-
-import ModeColor from "../../helpers/ModeColor";
 
 import FileAll from "../../utils/FileAll";
 import GridItemForm from "../../utils/GridItemForm";
 import GridItemFormTextarea from "../../utils/GridItemFormTextarea";
 import GridValueClose from "../../utils/GridValueClose";
 import GridItemFormNumber from "../../utils/GridItemFormNumber";
+
+import ModeColor from "../../helpers/ModeColor";
+import { BsPerson, ShopAll } from "../../helpers/IconNew";
+import Breakpoints from "../../helpers/Breakpoints";
 
 const ProductForm = ({
   im,
@@ -35,9 +38,6 @@ const ProductForm = ({
   dt,
   ps,
   word,
-  points3,
-  repeat1,
-  points1,
   onClose,
   setUrlImage,
   handleSubmit,
@@ -45,6 +45,7 @@ const ProductForm = ({
   handleNumberInputCn,
   handleNumberInputPj,
   handleNumberInputPr,
+  porcent,
   locale,
   es,
   en,
@@ -52,10 +53,21 @@ const ProductForm = ({
   // mode Color
   const { bg, brand } = ModeColor();
   // selector
-  const { list = [] } = useSelector(({ category }) => category);
-
+  const { listData: list = [] } = useSelector(({ category }) => category);
+  // Breakpoints
+  const { points1, repeat1, points3 } = Breakpoints();
+  
   return (
     <>
+      <HStack spacing={10}>
+        <Badge variant="outline">
+          <BsPerson w={5} h={5} /> $
+          {(1 * pr - (pj * (1 * pr)) / 100).toFixed(1)}
+        </Badge>
+        <Badge variant="outline">
+          <ShopAll w={5} h={5} /> ${((pj * pr) / 100).toFixed(1)}
+        </Badge>
+      </HStack>
       <chakra.form onSubmit={handleSubmit} w={"full"}>
         <Grid
           templateRows={`repeat(5, 1fr)`}
@@ -114,6 +126,7 @@ const ProductForm = ({
           />
 
           <GridItemFormNumber
+            isReadOnly={porcent ? true : false}
             points={points1}
             name={`${locale === "en" ? en.percentage : es.percentage} %`}
             na={"pj"}
@@ -163,6 +176,7 @@ const ProductForm = ({
               variant="filled"
               value={ct}
               onChange={handleInputChange}
+              defaultValue={locale === "en" ? en.major.mF : es.major.mF}
             >
               {list.map(({ id, na }) => (
                 <option key={id} value={id}>
@@ -211,9 +225,6 @@ ProductForm.propTypes = {
   dt: PropTypes.string.isRequired,
   ps: PropTypes.string.isRequired,
   word: PropTypes.string.isRequired,
-  points3: PropTypes.object.isRequired,
-  repeat1: PropTypes.object.isRequired,
-  points1: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
   setUrlImage: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
@@ -221,6 +232,7 @@ ProductForm.propTypes = {
   handleNumberInputCn: PropTypes.func.isRequired,
   handleNumberInputPj: PropTypes.func.isRequired,
   handleNumberInputPr: PropTypes.func.isRequired,
+  porcent: PropTypes.string,
   locale: PropTypes.string,
   es: PropTypes.object,
   en: PropTypes.object,

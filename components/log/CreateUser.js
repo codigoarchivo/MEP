@@ -43,7 +43,7 @@ const data = {
   pass: false,
   rPass: false,
 };
-const CreateUser = ({ locale, es, en, back }) => {
+const CreateUser = ({ locale, es, en, back, push }) => {
   // selector
   const { loading } = useSelector(({ ui }) => ui);
 
@@ -91,6 +91,7 @@ const CreateUser = ({ locale, es, en, back }) => {
       return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     } else {
       dispatch(startRegisterWithNameEmailPassword(email, password, name, err));
+      push("/")
     }
   };
 
@@ -258,6 +259,7 @@ CreateUser.propTypes = {
   es: PropTypes.object,
   en: PropTypes.object,
   back: PropTypes.func,
+  push: PropTypes.func,
 };
 
 export default CreateUser;

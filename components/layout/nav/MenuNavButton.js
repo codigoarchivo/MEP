@@ -6,6 +6,8 @@ import NavLink from "../../../utils/Navlink";
 
 import {
   Avatar,
+  AvatarBadge,
+  Box,
   Button,
   Heading,
   HStack,
@@ -39,7 +41,19 @@ const MenuNavButton = () => {
         cursor={"pointer"}
         minW={0}
       >
-        <Avatar loading="lazy" size={"sm"} name={a?.displayName} src={a?.photoURL} />
+        <Box>
+          <Avatar size={"sm"} name={a?.displayName} src={a?.photoURL}>
+            {a.uid ? (
+              <AvatarBadge boxSize="1.25em" bg="green.500" />
+            ) : (
+              <AvatarBadge
+                borderColor="papayawhip"
+                bg="tomato"
+                boxSize="1.25em"
+              />
+            )}
+          </Avatar>
+        </Box>
       </MenuButton>
       <MenuList zIndex={10}>
         <MenuItem as={"div"}>

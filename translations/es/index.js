@@ -130,6 +130,7 @@ export default {
     fB: "información",
     fC: "Ubicación New Jersey, USA",
   },
+  updated: "Datos actualizados",
   image: "La imagen no tiene que ser más grande que 5mb",
   password: "Contraseña",
   searchs: "Búsqueda",
