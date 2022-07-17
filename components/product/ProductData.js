@@ -102,7 +102,7 @@ const ProductData = ({
       return push("/auth");
     }
 
-    if (ErrorRetur) {
+    if (ErrorRetur && word !== "delete") {
       return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     }
 
@@ -155,7 +155,7 @@ const ProductData = ({
 
     reset();
     Toast(locale === "en" ? en.save : es.save, "success", 5000);
-    im = "";
+    values.im = "";
   };
 
   // cerrar

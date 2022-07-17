@@ -56,7 +56,7 @@ const ProductForm = ({
   const { listData: list = [] } = useSelector(({ category }) => category);
   // Breakpoints
   const { points1, repeat1, points3 } = Breakpoints();
-  
+
   return (
     <>
       <HStack spacing={10}>
@@ -157,6 +157,7 @@ const ProductForm = ({
               onChange={handleInputChange}
             >
               {[
+                "--select--",
                 locale === "en" ? en.major.mG : es.major.mG,
                 locale === "en" ? en.blog.bG : es.blog.bG,
               ].map((ps, key) => (
@@ -176,8 +177,8 @@ const ProductForm = ({
               variant="filled"
               value={ct}
               onChange={handleInputChange}
-              defaultValue={locale === "en" ? en.major.mF : es.major.mF}
             >
+              <option>--select--</option>
               {list.map(({ id, na }) => (
                 <option key={id} value={id}>
                   {na}
