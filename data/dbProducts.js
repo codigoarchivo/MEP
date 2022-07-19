@@ -16,10 +16,19 @@ export const dbProducts = async (i = "", dbP = "", val1, val2) => {
   let q = "";
   switch (dbP) {
     case "dbProOne":
-      q = query(collection(db, "serchs"), limit(4), orderBy("na", "asc"));
+      q = query(
+        collection(db, "serchs"),
+        orderBy("cre", "desc"),
+        limit(2)
+      );
       break;
     case "dbProTwo":
-      q = query(collection(db, "serchs"), where("uid", "==", i), limit(2));
+      q = query(
+        collection(db, "serchs"),
+        where("uid", "==", i),
+        orderBy("cre", "desc"),
+        limit(2)
+      );
       break;
     case "dbProThree":
       q = query(

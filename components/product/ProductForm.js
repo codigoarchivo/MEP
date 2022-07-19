@@ -208,7 +208,13 @@ const ProductForm = ({
             bg={bg}
             brand={brand}
           />
-          <GridValueClose onClose={onClose} set={word} />
+          <GridValueClose
+            onClose={onClose}
+            set={word}
+            locale={locale}
+            es={es}
+            en={en}
+          />
         </Grid>
       </chakra.form>
     </>

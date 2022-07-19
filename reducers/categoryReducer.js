@@ -23,13 +23,15 @@ export const categoryReducer = (state = initialStates, action) => {
         list: state.list.map((e) =>
           e.id === action.payload.id ? (e = action.payload) : e
         ),
-        activeSelect: {},
+        listData: state.listData.map((e) =>
+          e.id === action.payload.id ? (e = action.payload) : e
+        ),
       };
     case types.categoryDelete:
       return {
         ...state,
         list: state.list.filter((e) => e.id !== action.payload),
-        activeSelect: {},
+        listData: state.listData.filter((e) => e.id !== action.payload),
       };
     case types.categoryList:
       return {

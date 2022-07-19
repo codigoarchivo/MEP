@@ -36,7 +36,7 @@ const ConfigDashboard = ({ product = {} }) => {
       <Container maxW={"container.sm"} py={10}>
         <ProductData
           product={product}
-          set={query.set}
+          word={query.set}
           details={query.dt}
           push={push}
           back={back}

@@ -42,7 +42,6 @@ const GridItemForm = ({
 };
 
 GridItemForm.propTypes = {
-  mb: Proptypes.string,
   name: Proptypes.string,
   na: Proptypes.string,
   val: Proptypes.string,

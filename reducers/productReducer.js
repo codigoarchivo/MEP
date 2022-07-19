@@ -29,11 +29,19 @@ export const productReducer = (state = initialStates, action) => {
         list: state.list.map((e) =>
           e.id === action.payload.id ? (e = action.payload) : e
         ),
+        listData: state.listData.map((e) =>
+          e.id === action.payload.id ? (e = action.payload) : e
+        ),
+        listSerch: state.listSerch.map((e) =>
+          e.id === action.payload.id ? (e = action.payload) : e
+        ),
       };
     case types.productDelete:
       return {
         ...state,
         list: state.list.filter((e) => e.id !== action.payload),
+        listData: state.listData.filter((e) => e.id !== action.payload),
+        listSerch: state.listSerch.filter((e) => e.id !== action.payload),
       };
     case types.productList:
       return {

@@ -21,7 +21,7 @@ export const listDataProduct = (data, err) => {
 
 const productDataList = (data) => ({
   type: types.product,
-  payload: data || [],
+  payload: data,
 });
 
 export const serchProductList = (filtro, err) => {

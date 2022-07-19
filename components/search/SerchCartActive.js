@@ -35,7 +35,7 @@ const SerchCartActive = ({
     ({ process }) => process
   );
   // selector
-  const { list = [] } = useSelector(({ category }) => category);
+  const { listData: list = [] } = useSelector(({ category }) => category);
   // Breakpoints
   const { full, displayOff2 } = Breakpoints();
 

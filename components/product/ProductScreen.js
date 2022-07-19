@@ -184,7 +184,7 @@ const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
 };
 
 ProductScrenn.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   na: PropTypes.string.isRequired,
   cn: PropTypes.number.isRequired,
   ct: PropTypes.string.isRequired,

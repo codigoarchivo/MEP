@@ -213,6 +213,10 @@ const SaleVerify = ({
           <chakra.form onSubmit={handleLiberate} w={full}>
             <GridValueClose
               set={locale === "en" ? en.historySale.sG : es.historySale.sG}
+              onClose={onClose}
+              locale={locale}
+              es={es}
+              en={en}
             />
           </chakra.form>
         </VStack>

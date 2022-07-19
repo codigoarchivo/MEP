@@ -52,7 +52,6 @@ GridItemFormTextarea.propTypes = {
   handle: PropTypes.func,
   bg: PropTypes.string,
   brand: PropTypes.object,
-  mb: PropTypes.string,
   size: PropTypes.string,
   isReadOnly: PropTypes.bool,
 };

@@ -147,7 +147,7 @@ SerchCartModal.propTypes = {
   del: PropTypes.string.isRequired,
   close: PropTypes.string.isRequired,
   toBuy: PropTypes.string.isRequired,
-  del: PropTypes.object,
+  del: PropTypes.string,
   push: PropTypes.func,
 };
 

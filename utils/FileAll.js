@@ -27,8 +27,6 @@ const FileAll = ({ setUrlImage, fileName, save, image }) => {
   // file
   const file = useRef();
 
-  const imp = document.getElementById("imp");
-
   function handleUpload({ target }) {
     const file = target.files[0];
 
@@ -65,9 +63,7 @@ const FileAll = ({ setUrlImage, fileName, save, image }) => {
           });
         }
       );
-      imp.value = "";
     } catch (error) {
-      imp.value = "";
       console.log(error);
     }
   }
@@ -77,7 +73,6 @@ const FileAll = ({ setUrlImage, fileName, save, image }) => {
         onChange={handleUpload}
         name="imp"
         type={"file"}
-        id="imp"
         ref={file}
         display="none"
       />

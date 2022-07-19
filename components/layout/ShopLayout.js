@@ -16,12 +16,12 @@ import Footer from "./foo/Footer";
 
 import WithSubnavigation from "./nav/WithSubnavigation";
 
+const dA = process.env.NEXT_PUBLIC_ROL_A;
 const ShopLayout = ({ children, title }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      const dA = process.env.NEXT_PUBLIC_ROL_A;
-      if (user) {
+      if (user?.uid) {
         dispatch(
           login(
             user.uid,
@@ -35,7 +35,7 @@ const ShopLayout = ({ children, title }) => {
     });
 
     return () => unsubscribe();
-  }, [dispatch]);
+  }, []);
 
   return (
     <>

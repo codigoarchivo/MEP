@@ -141,15 +141,15 @@ const Search = ({ product }) => {
           {listSerch.length > 0 && (
             <Paginator
               window={"serchs"}
-              word={"na"}
+              word={"cre"}
               list={listSerch}
-              firstVisible={listSerch[0].na}
-              lastVisible={listSerch[listSerch.length - 1].na}
+              firstVisible={listSerch[0].cre}
+              lastVisible={listSerch[listSerch.length - 1].cre}
               newList={serchProductList}
               nLimit={2}
-              orHome={"asc"}
-              orPrevious={"asc"}
-              orNext={"asc"}
+              orHome={"desc"}
+              orPrevious={"desc"}
+              orNext={"desc"}
             />
           )}
         </Box>
@@ -183,7 +183,7 @@ export async function getStaticProps() {
       revalidate: 86400, // 60 * 60 * 24 revalidate every 24 hours
     };
   } catch (error) {
-    Toast(locale === "en" ? en.error : es.error, 5000);
+    Toast("Al parecer hay un error", "error", 5000);
     return {
       props: {},
     };

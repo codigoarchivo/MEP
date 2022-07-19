@@ -85,6 +85,9 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
 
   // select
   const handleSelect = () => {
+    if (cn <= 1) {
+      return Toast(locale === "en" ? en.amount : es.amount, "info", 5000);
+    }
     // activeCartSelect
     if (match.current) {
       return Toast(
@@ -95,10 +98,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
     }
     // saveCartSelect
     if (matchValid.current) {
-      push({
-        pathname: "/cart",
-        query: { pid: id },
-      });
+      push("/cart");
       return Toast(locale === "en" ? en.search.sE : es.search.sE, "info", 5000);
     }
 
@@ -115,6 +115,9 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
 
   // save
   const handleSave = () => {
+    if (cn <= 0) {
+      return Toast(locale === "en" ? en.amount : es.amount, "info", 5000);
+    }
     // activeCartSelect
     if (match.current) {
       return Toast(

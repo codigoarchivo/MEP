@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -36,7 +36,7 @@ const initialStates = {
 
 const ProductData = ({
   product = {},
-  set = "",
+  word = "",
   details = "",
   push,
   back,
@@ -44,8 +44,6 @@ const ProductData = ({
   es,
   en,
 }) => {
-  // useState
-  const [word, setWord] = useState("");
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useState
@@ -56,10 +54,6 @@ const ProductData = ({
   const { bordes } = Breakpoints();
   // useState
   const [urlImage, setUrlImage] = useState("");
-
-  useMemo(() => {
-    setWord(set);
-  }, [setWord, set]);
 
   useEffect(() => {
     const dataPorcent = async () => {
@@ -86,12 +80,11 @@ const ProductData = ({
 
   // agrega imagen
   values.im = urlImage ? urlImage : values.im;
-  values.pj = a?.rol !== "owner" ? Number(porcent.pr) : Number(values.pj);
+  values.pj = Number(porcent.pr) ? Number(porcent.pr) : Number(values.pj);
   values.cn = Number(values.cn);
   values.pr = Number(values.pr);
   // validar
   const { ErrorRetur } = Validator(values);
-
   // values
   const { na, ds, ct, dt, im, id, ps, pj, cn, pr } = values;
 
@@ -125,7 +118,8 @@ const ProductData = ({
             im,
             ps,
             pj,
-            uid: a?.uid,
+            uid: a.uid,
+            cre: Date.now(),
           },
           err
         )
@@ -146,16 +140,18 @@ const ProductData = ({
             id,
             ps,
             pj,
-            uid: a?.uid,
+            uid: a.uid,
+            cre: Date.now(),
           },
           err
         )
       );
     }
-
     reset();
+    setUrlImage("");
+    setporcent({ pr: "" });
     Toast(locale === "en" ? en.save : es.save, "success", 5000);
-    values.im = "";
+    back();
   };
 
   // cerrar
@@ -241,7 +237,7 @@ const ProductData = ({
 
 ProductData.propTypes = {
   product: PropTypes.object,
-  set: PropTypes.string,
+  word: PropTypes.string,
   details: PropTypes.string,
   push: PropTypes.func,
   back: PropTypes.func,

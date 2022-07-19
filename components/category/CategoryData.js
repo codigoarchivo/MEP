@@ -26,6 +26,7 @@ import { dbCategoryValid } from "../../data/dbCategory";
 const initialStates = {
   na: "",
   pid: "",
+  cre: "",
 };
 
 const CategoryData = ({ back, category, pid, es, en, locale }) => {
@@ -42,7 +43,9 @@ const CategoryData = ({ back, category, pid, es, en, locale }) => {
   // validar
   const { ErrorCatData } = Validator(values);
   // values
-  const { na, id } = values;
+  const { na, id, cre } = values;
+
+  cre = Date.now();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,13 +67,15 @@ const CategoryData = ({ back, category, pid, es, en, locale }) => {
         );
       }
 
-      dispatch(addCategory(na, err));
+      dispatch(addCategory(na, cre, err));
     }
 
-    pid === "Edit" && dispatch(editCategory(na, id, err));
+    pid === "Edit" && dispatch(editCategory(na, cre, id, err));
     pid === "Delete" && dispatch(deleteCategory(id, err));
-
-    reset()
+    
+    reset();
+    back();
+    Toast(locale === "en" ? en.save : es.save, "success", 5000);
   };
 
   // cerrar

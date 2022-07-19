@@ -32,10 +32,14 @@ export const dbCategory = async (na = "", dbC = "") => {
 
   switch (dbC) {
     case "dbCatOne":
-      q = query(collection(db, "categories"), orderBy("na", "asc"));
+      q = query(collection(db, "categories"), orderBy("cre", "desc"));
       break;
     case "dbCatTwo":
-      q = query(collection(db, "categories"), limit(25), orderBy("na", "asc"));
+      q = query(
+        collection(db, "categories"),
+        limit(2),
+        orderBy("cre", "desc")
+      );
       break;
   }
 

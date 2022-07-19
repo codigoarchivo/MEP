@@ -53,7 +53,7 @@ const SerchCart = ({ active, save }) => {
   );
 
   const handlecartActive = () => {
-    if (a.ui) {
+    if (!a.ui) {
       onOpen();
     } else {
       push("/auth");
@@ -157,7 +157,7 @@ const SerchCart = ({ active, save }) => {
         )}
       </Stack>
       {!save[0] ? (
-        <></>
+        <> </>
       ) : (
         <TableContainer variant="striped" w={full} my={10} border={bordes}>
           <Table variant="simple">
@@ -178,7 +178,7 @@ const SerchCart = ({ active, save }) => {
               {save.map((item) => (
                 <SerchCartSave
                   key={item.id}
-                  {...item}
+                  item={item}
                   name={locale === "en" ? en.name : en.name}
                   price={locale === "en" ? en.price : en.price}
                   available={locale === "en" ? en.available : en.available}
@@ -187,6 +187,8 @@ const SerchCart = ({ active, save }) => {
                   err={locale === "en" ? en.error : es.error}
                   added={locale === "en" ? en.cart.cG : es.cart.cG}
                   already={locale === "en" ? en.cart.cH : es.cart.cH}
+                  removed={locale === "en" ? en.removed : es.removed}
+                  picture={locale === "en" ? en.picture : es.picture}
                 />
               ))}
             </Tbody>

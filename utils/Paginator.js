@@ -51,13 +51,20 @@ const Paginator = ({
   // modality
   const { modality: modality3, setModality: setModality3 } = useModality(true);
 
-  useEffect(() => {
-    if (list.length > 25) {
-      setModality(true);
-      setModality2(true);
-      setModality3(true);
-    }
-  }, [list, setModality, setModality2, setModality3]);
+  // TODO: cuando este todo listo descometar esto 
+  // useEffect(() => {
+  //   if (list.length < 25) {
+  //     setModality(true);
+  //     setModality2(true);
+  //     setModality3(true);
+  //   }
+
+  //   return () => {
+  //     setModality(true);
+  //     setModality2();
+  //     setModality3(true);
+  //   };
+  // }, [list, setModality, setModality2, setModality3]);
 
   const home = useCallback(() => {
     let q = "";
@@ -65,8 +72,7 @@ const Paginator = ({
       q = query(
         collection(db, window),
         where("uid", "==", uid),
-        where(word, "!=", "0"),
-        orderBy(word, "desc"),
+        orderBy(word, orHome),
         endBefore(firstVisible),
         limit(nLimit)
       );
@@ -80,9 +86,7 @@ const Paginator = ({
     }
 
     onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs
-        .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .slice(0, nLimit);
+      const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
       if (data.length === 0) {
         return setModality(true);
@@ -99,8 +103,7 @@ const Paginator = ({
       q = query(
         collection(db, window),
         where("uid", "==", uid),
-        where(word, "!=", "0"),
-        orderBy(word, "desc"),
+        orderBy(word, orPrevious),
         endBefore(firstVisible),
         limitToLast(nLimit)
       );
@@ -114,9 +117,7 @@ const Paginator = ({
     }
 
     onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs
-        .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .slice(0, nLimit);
+      const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
       if (data.length !== 0) {
         dispatch(newList(data));
@@ -130,8 +131,7 @@ const Paginator = ({
       q = query(
         collection(db, window),
         where("uid", "==", uid),
-        where(word, "!=", "0"),
-        orderBy(word, "desc"),
+        orderBy(word, orNext),
         startAfter(lastVisible),
         limit(nLimit)
       );
@@ -145,9 +145,7 @@ const Paginator = ({
     }
 
     onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs
-        .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .slice(0, nLimit);
+      const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
       if (data.length !== 0) {
         handleModality();
@@ -203,8 +201,8 @@ const Paginator = ({
 
 Paginator.propTypes = {
   list: PropTypes.array,
-  firstVisible: PropTypes.string,
-  lastVisible: PropTypes.string,
+  firstVisible: PropTypes.number,
+  lastVisible: PropTypes.number,
   window: PropTypes.string,
   word: PropTypes.string,
   newList: PropTypes.func,

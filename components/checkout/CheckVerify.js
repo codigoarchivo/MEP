@@ -381,6 +381,9 @@ const CheckVerify = ({
             close={locale === "en" ? en.close : es.close}
             onClose={closeVerify}
             set={locale === "en" ? en.send : es.send}
+            locale={locale}
+            es={es}
+            en={en}
           />
         </Grid>
       </chakra.form>

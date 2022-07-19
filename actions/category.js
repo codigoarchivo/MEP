@@ -34,11 +34,12 @@ export const categoryListConfig = (data) => ({
   payload: data,
 });
 
-export const addCategory = (na, err) => {
+export const addCategory = (na, cre, err) => {
   return async (dispatch) => {
     try {
       const { id } = await addDoc(collection(db, "categories"), {
         na,
+        cre,
       });
       const data = { id, na };
       if (data) {
@@ -55,11 +56,12 @@ const categoryAdd = (data) => ({
   payload: data,
 });
 
-export const editCategory = (na, id, err) => {
+export const editCategory = (na, cre, id, err) => {
   return async (dispatch) => {
     try {
       await updateDoc(doc(db, "categories", id), {
         na,
+        cre,
       });
 
       const data = { id, na };
@@ -75,7 +77,7 @@ export const editCategory = (na, id, err) => {
 
 const categoryEdit = (data) => ({
   type: types.categoryEdit,
-  payload: data,
+  payload: { ...data },
 });
 
 export const deleteCategory = (id, err) => {

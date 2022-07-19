@@ -57,7 +57,7 @@ const Category = ({ data = [] }) => {
   if (a?.rol === "user") {
     push("/");
   }
-  
+
   const err = locale === "en" ? en.error : es.error;
   useEffect(() => {
     if (data) {
@@ -114,9 +114,9 @@ const Category = ({ data = [] }) => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {list.map((data) => (
+                  {list.map((data, key) => (
                     <CategoryScrenn
-                      key={data.id}
+                      key={key}
                       {...data}
                       edi={locale === "en" ? en.edit : es.edit}
                       del={locale === "en" ? en.delete : es.delete}
@@ -132,15 +132,15 @@ const Category = ({ data = [] }) => {
             {list.length > 0 && (
               <Paginator
                 window={"categories"}
-                word={"na"}
+                word={"cre"}
                 list={list}
-                firstVisible={list[0].na}
-                lastVisible={list[list.length - 1].na}
-                newList={categoryListConfig}
+                firstVisible={list[0].cre}
+                lastVisible={list[list.length - 1].cre}
+                newList={listDataCategory}
                 nLimit={2}
-                orHome={"asc"}
-                orPrevious={"asc"}
-                orNext={"asc"}
+                orHome={"desc"}
+                orPrevious={"desc"}
+                orNext={"desc"}
               />
             )}
           </Box>

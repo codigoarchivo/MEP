@@ -31,11 +31,7 @@ import Toast from "../../helpers/Toast";
 import { activeProductCart, deleteProductSave } from "../../actions/product";
 
 const SerchCartSave = ({
-  id,
-  na,
-  pr,
-  cn,
-  im,
+  item,
   name,
   price,
   available,
@@ -44,6 +40,8 @@ const SerchCartSave = ({
   err,
   added,
   already,
+  removed,
+  picture,
 }) => {
   // useDispatch
   const dispatch = useDispatch();
@@ -51,8 +49,8 @@ const SerchCartSave = ({
   const { full } = Breakpoints();
   // delete Save
   const handleDeleteSave = () => {
-    dispatch(deleteProductSave(id));
-    Toast("Eliminado con exito", "error", 5000);
+    dispatch(deleteProductSave(item.id));
+    Toast(removed, "error", 5000);
   };
   // Incremen and Decrement
   const {
@@ -63,7 +61,7 @@ const SerchCartSave = ({
     step: 1,
     defaultValue: 1,
     min: 1,
-    max: cn,
+    max: item.cn,
   });
   // inc
   const inc = getIncrementButtonProps();
@@ -74,8 +72,8 @@ const SerchCartSave = ({
 
   const handleSelect = () => {
     const cn = input.value;
-    dispatch(activeProductCart({ id, na, pr, im, cn }, err, added, already));
-    dispatch(deleteProductSave(id));
+    dispatch(activeProductCart({ ...item, cn }, err, added, already));
+    dispatch(deleteProductSave(item.id));
   };
 
   return (
@@ -84,7 +82,10 @@ const SerchCartSave = ({
         <Td>
           <HStack position={"relative"}>
             <Image
-              src={im}
+              src={
+                item.im ||
+                `https://via.placeholder.com/1000.png?text=${picture}`
+              }
               alt="Picture of the author"
               width={100}
               height={100}
@@ -94,19 +95,19 @@ const SerchCartSave = ({
                 <Heading as="h3" size="sm">
                   {name}:
                 </Heading>
-                <Text size={"sm"}>{na}</Text>
+                <Text size={"sm"}>{item.na}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
                   {price}:
                 </Heading>
-                <Text size={"sm"}>{pr}</Text>
+                <Text size={"sm"}>{item.pr}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
                   {available}:
                 </Heading>
-                <Text size={"sm"}>{cn}</Text>
+                <Text size={"sm"}>{item.cn}</Text>
               </HStack>
             </VStack>
           </HStack>
@@ -127,7 +128,7 @@ const SerchCartSave = ({
             </Button>
           </HStack>
         </Td>
-        <Td>${pr * input.value}</Td>
+        <Td>${item.pr * input.value}</Td>
         <Td>
           <Menu>
             <MenuButton variant="outline">
@@ -168,11 +169,7 @@ const SerchCartSave = ({
 };
 
 SerchCartSave.propTypes = {
-  id: PropTypes.string.isRequired,
-  na: PropTypes.string.isRequired,
-  pr: PropTypes.number.isRequired,
-  cn: PropTypes.number.isRequired,
-  im: PropTypes.string.isRequired,
+  item: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
   available: PropTypes.string.isRequired,
@@ -181,6 +178,8 @@ SerchCartSave.propTypes = {
   err: PropTypes.string.isRequired,
   added: PropTypes.string.isRequired,
   already: PropTypes.string.isRequired,
+  removed: PropTypes.string.isRequired,
+  picture: PropTypes.string.isRequired,
 };
 
 export default SerchCartSave;

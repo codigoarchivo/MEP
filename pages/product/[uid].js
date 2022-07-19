@@ -65,7 +65,9 @@ const List = ({ product = [] }) => {
 
   const err = locale === "en" ? en.error : es.error;
   useEffect(() => {
-    dispatch(listDataProduct(product, err));
+    if(product) {
+      dispatch(listDataProduct(product, err));
+    }
   }, [dispatch, product, err]);
 
   // add
@@ -163,8 +165,8 @@ const List = ({ product = [] }) => {
                 </Tr>
               </Thead>
               <Tbody>
-                {list.map((data) => (
-                  <ProductScrenn key={data.id} {...data} />
+                {list.map((data, key) => (
+                  <ProductScrenn key={key} {...data} />
                 ))}
               </Tbody>
             </Table>
@@ -174,16 +176,16 @@ const List = ({ product = [] }) => {
           {list.length > 0 && (
             <Paginator
               window={"serchs"}
-              word={"na"}
+              word={"cre"}
               list={list}
-              firstVisible={list[0].na}
-              lastVisible={list[list.length - 1].na}
+              firstVisible={list[0].cre}
+              lastVisible={list[list.length - 1].cre}
               newList={listDataProduct}
               nLimit={2}
               orHome={"desc"}
               orPrevious={"desc"}
               orNext={"desc"}
-              uid={a?.uid}
+              uid={a.uid}
             />
           )}
         </Box>
@@ -196,7 +198,7 @@ List.propTypes = {
   product: PropTypes.array,
 };
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params, locale }) {
   const uid = await params.uid.toString();
   try {
     const product = await dbProducts(uid, "dbProTwo");
