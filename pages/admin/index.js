@@ -29,7 +29,7 @@ const Sale = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
   // useRouter
-  const { locale } = useRouter();
+  const { locale, query } = useRouter();
   // useSelector
   const { history = [] } = useSelector(({ checkout }) => checkout);
   // Breakpoints
@@ -90,11 +90,12 @@ const Sale = ({ data }) => {
               firstVisible={history[0].cre}
               lastVisible={history[history.length - 1].cre}
               newList={cheListAll}
-              nLimit={2}
+              nLimit={1}
               orHome={"desc"}
               orPrevious={"desc"}
               orNext={"desc"}
-              uid={undefined}
+              uid={query.q}
+              ini={"own"}
             />
           )}
         </Box>

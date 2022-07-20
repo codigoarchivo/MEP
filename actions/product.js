@@ -170,14 +170,23 @@ const LatestSaveCart = (data) => ({
 export const saveSale = (data = [], del) => {
   return async (dispatch) => {
     try {
+      let list = [];
       data.map(async (item) => {
         // resta la cantidad del producto
         await dbProductEdit(item.product.id, "dbProEditOne", item.product.cnr);
+
         // agrega una compra
-        await addDoc(collection(db, "buys"), {
+        const { id } = await addDoc(collection(db, "buys"), {
           ...item,
         });
+
+        list.push({
+          ...item,
+          id: (item.id = id),
+        });
       });
+
+      await dispatch(activeProductList(list));
     } catch (error) {
       Toast(del, "error", 5000);
     }

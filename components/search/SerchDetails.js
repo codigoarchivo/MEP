@@ -42,12 +42,10 @@ const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
   const { list = [] } = useSelector(({ category }) => category);
   // Breakpoints
   const { content5, full, bordes, points25 } = Breakpoints();
-  // values
-  const { id, na, pr, im, ds, ct, cn, dt, uid, ps, pj } = product;
   // list Category
-  const listCt = useMemo(() => list.filter((item) => item.id === ct), [
+  const listCt = useMemo(() => list.filter((item) => item.id === product.ct), [
     list,
-    ct,
+    product.ct,
   ]);
   // Incremen and Decrement
   const {
@@ -58,7 +56,7 @@ const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
     step: 1,
     defaultValue: 1,
     min: 1,
-    max: cn,
+    max: product.cn - 1,
   });
   // inc
   const inc = getIncrementButtonProps();
@@ -73,26 +71,20 @@ const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
     [message]
   );
 
+  const cn = Number(input.value);
+  product.cnr = product.cn - cn;
+
   // select product in cart
   const handleSelect = () => {
+    //? product.pj : es el porcentaje que coloca onwer
     const err = locale === "en" ? en.error : es.error;
     const added = locale === "en" ? en.cart.cG : es.cart.cG;
     const already = locale === "en" ? en.cart.cH : es.cart.cH;
     dispatch(
       activeProductCart(
         {
-          id,
-          na,
-          pr,
-          im,
-          ds,
-          ct,
-          dt,
-          ps,
-          pj,
-          uid,
-          cnr: cn,
-          cn: Number(input.value),
+          ...product,
+          cn,
           rat: message.map((item) => item.rat.toString()),
         },
         err,
@@ -115,8 +107,10 @@ const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
           mb={{ base: 10, md: 0 }}
         >
           <Image
-            src={im || "https://via.placeholder.com/450.png?text=Imagen"}
-            alt={na}
+            src={
+              product.im || "https://via.placeholder.com/450.png?text=Imagen"
+            }
+            alt={product.na}
             width={450}
             height={450}
             objectFit="cover"
@@ -133,7 +127,7 @@ const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
 
         <VStack spacing={{ base: 3, md: 6 }} w={full}>
           <Heading w={full} fontSize={points25} textTransform={"capitalize"}>
-            {na}
+            {product.na}
           </Heading>
           <HStack w={full}>
             <Text color="gray.600" fontSize={"xl"} fontWeight={"bold"}>
@@ -148,19 +142,19 @@ const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
             </Box>
           </HStack>
           <Box w={full}>
-            <Badge colorScheme="green">Stock ({cn})</Badge>
+            <Badge colorScheme="green">Stock ({product.cn - 1})</Badge>
           </Box>
           <HStack w={full}>
             <Heading textTransform={"uppercase"} as="h3" size="sm">
               {locale === "en" ? en.price : es.price}:
             </Heading>
-            <Text>${pr * input.value}</Text>
+            <Text>${product.pr * Number(input.value)}</Text>
           </HStack>
           <HStack w={full}>
             <Heading textTransform={"uppercase"} as="h3" size="sm">
               {locale === "en" ? en.search.sJ : es.search.sJ}:
             </Heading>
-            <Text w={full}>{ds}</Text>
+            <Text w={full}>{product.ds}</Text>
           </HStack>
           <Box w={full}>
             <HStack maxW="180px">
@@ -203,7 +197,7 @@ const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
 
           <TabPanels>
             <TabPanel p={{ base: 2, md: 5 }}>
-              <Text overflowX={"hidden"}>{dt}</Text>
+              <Text overflowX={"hidden"}>{product.dt}</Text>
             </TabPanel>
             <TabPanel p={{ base: 0, md: 10 }}>
               <>

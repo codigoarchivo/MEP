@@ -72,6 +72,7 @@ const Footer = () => {
                 alt="Picture of the author"
                 width={150}
                 height={110}
+                priority={true}
               />
             </Box>
             <Text

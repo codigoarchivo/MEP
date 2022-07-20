@@ -67,9 +67,8 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
     dt,
     ps,
     uid,
-    est: rat?.est,
-    nam: rat?.nam,
     pj,
+    est: rat?.est || [],
   };
 
   // ref
@@ -115,7 +114,7 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
 
   // save
   const handleSave = () => {
-    if (cn <= 0) {
+    if (cn <= 1) {
       return Toast(locale === "en" ? en.amount : es.amount, "info", 5000);
     }
     // activeCartSelect
@@ -240,9 +239,9 @@ const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
 };
 
 SerchScreen.propTypes = {
+  cn: PropTypes.number,
   id: PropTypes.string.isRequired,
   na: PropTypes.string.isRequired,
-  cn: PropTypes.number.isRequired,
   ct: PropTypes.string.isRequired,
   ds: PropTypes.string.isRequired,
   dt: PropTypes.string.isRequired,

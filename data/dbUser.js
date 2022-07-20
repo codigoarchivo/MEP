@@ -46,38 +46,37 @@ export const dbUser = async (id, dbU) => {
 };
 
 export const dbUserData = async (id, dbU) => {
-  let sal = collection(db, "sales");
-  let buy = collection(db, "buys");
   let q = "";
   switch (dbU) {
     case "dbUserData":
-      q = query(sal, where("own", "==", id), limit(2));
-      break;
-    case "dbUserTwo": // lista compras solo los que le falta que enviar comentario y este logueados
       q = query(
-        buy,
+        collection(db, "sales"),
+        where("own", "==", id),
+        orderBy("cre", "desc"),
+        limit(2)
+      );
+      break;
+    case "dbUserTwo":
+      q = query(
+        collection(db, "buys"),
         where("buy", "==", id),
         where("close", "==", false),
         limit(2)
       );
       break;
     case "dbUserThree":
-      q = query(sal, where("sal", "==", id), limit(2));
+      q = query(collection(db, "sales"), where("sal", "==", id), limit(2));
       break;
     case "dbUserFour": // lista compras solo los que este logueados
-      q = query(buy, where("buy", "==", id), limit(2));
+      q = query(collection(db, "buys"), where("buy", "==", id), limit(2));
   }
 
   const { docs } = await getDocs(q);
 
-  const data = docs
-    .map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }))
-    .sort(function (a, b) {
-      return b.cre - a.cre;
-    });
+  const data = docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
 
   return JSON.parse(JSON.stringify(data));
 };

@@ -45,6 +45,7 @@ export const types = {
   checkoutAdd: "[CHECKOUT] Add",
   checkoutList: "[CHECKOUT] List",
   cheListAllHistory: "[CHECKOUT] History",
+  cheListAllHistoryEdit: "[CHECKOUT] History Edit",
   cheListMessage: "[CHECKOUT] Message",
   cheListMessageClear: "[CHECKOUT] Clear",
   cheListAllSa: "[CHECKOUT] Sale",

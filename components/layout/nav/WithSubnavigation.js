@@ -72,7 +72,7 @@ export default function WithSubnavigation() {
   // Modality
   const { modality, setModality } = useModality();
   // dispatch
-  const { locale, push, pathname} = useRouter();
+  const { locale, push, pathname } = useRouter();
 
   const { dataRoute } = ListRoute();
 
@@ -129,6 +129,7 @@ export default function WithSubnavigation() {
               alt="Picture of the author"
               width={130}
               height={100}
+              priority={true}
             />
           </Box>
 

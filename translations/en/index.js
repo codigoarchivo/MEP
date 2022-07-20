@@ -131,6 +131,7 @@ export default {
     fB: "Information",
     fC: "Location New Jersey, USA",
   },
+  seller: "Before sending data do not forget information for the seller",
   amount: "No amount",
   updated: "Updated data",
   image: "Image does not have to be larger than 5mb",

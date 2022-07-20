@@ -9,8 +9,17 @@ import { types } from "../type";
 const dA = process.env.NEXT_PUBLIC_ROL_A;
 
 export const validPago = (referencia = {}, idThree = "", sal = "", err) => {
-  return async () => {
+  return async (dispatch) => {
+    delete referencia.own; // elimina uid owner
     try {
+      // referencia para el vendedor
+      const val = {
+        ...referencia,
+        process: true,
+        sal: sal.toString(), // para que el vendedor sepa cual venta realizo
+        cre: Date.now(),
+      };
+
       if (dA.toString() === sal.toString()) {
         // principal
         await updateDoc(doc(db, "sales", idThree), {
@@ -25,30 +34,32 @@ export const validPago = (referencia = {}, idThree = "", sal = "", err) => {
       }
 
       if (dA.toString() !== sal.toString()) {
-        delete referencia.own; // elimina uid owner
         // sales
-        await setDoc(doc(db, "sales"), {
-          ...referencia,
-          process: true,
-          sal: sal.toString(), // para que el vendedor sepa cual venta realizo
-        });
-
-        // principal
-        await updateDoc(doc(db, "sales", idThree), {
-          process: true,
-        });
+        await setDoc(doc(collection(db, "sales")), val);
 
         // buy
         await updateDoc(doc(db, "buys", idThree), {
           process: true,
           sal: sal.toString(), // solo para la informacion para cliente
         });
+
+        // principal
+        await updateDoc(doc(db, "sales", idThree), {
+          process: true,
+        });
       }
+
+      dispatch(cheListHistoryEdit({ ...referencia, process: true }));
     } catch (error) {
       Toast(err, "error", 5000);
     }
   };
 };
+
+const cheListHistoryEdit = (data) => ({
+  type: types.cheListAllHistoryEdit,
+  payload: data,
+});
 
 export const validShop = (sale, idThree, err) => {
   return async () => {

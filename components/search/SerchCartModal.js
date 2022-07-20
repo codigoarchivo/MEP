@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import PropTypes from "prop-types";
 
@@ -55,36 +55,40 @@ const SerchCartModal = ({
 
   const [overlay, setOverlay] = useState(<OverlayOne />);
 
-  const data = active.map((item) => ({
-    // uid del comprador
-    buy: a.uid,
-    process: false,
-    close: false,
-    lim: addDays(Date.now(), 3),
-    cre: Date.now(),
-    product: {
-      // raiting del producto
-      rat: item.rat,
-      // id del producto
-      id: item.id,
-      // catidad del producto seleccionado
-      cn: item.cn,
-      // catidad restada producto en stock
-      cnr: item.cnr !== 1 ? item.cnr - item.cn : 1,
-      // nombre del producto
-      na: item.na,
-      // uid del  vendedor
-      uid: item.uid,
-      // precio del producto
-      pr: item.pr,
-      //  total del producto a comprar
-      to: item.cn * item.pr,
-      // porcentaje de ganancia para cliente
-      in: (item.pj * (item.cn * item.pr)) / 100,
-      // porcentaje de ganancia para vendedor
-      pj: item.cn * item.pr - (item.pj * (item.cn * item.pr)) / 100,
-    },
-  }));
+  const data = useMemo(
+    () =>
+      active.map((item) => ({
+        // uid del comprador
+        buy: a.uid,
+        process: false,
+        close: false,
+        lim: addDays(Date.now(), 3),
+        cre: Date.now(),
+        product: {
+          // raiting del producto
+          rat: item.rat,
+          // id del producto
+          id: item.id,
+          // catidad del producto seleccionado
+          cn: item.cn,
+          // catidad restada producto en stock
+          cnr: item.cnr !== 0 ? item.cnr : 1,
+          // nombre del producto
+          na: item.na,
+          // uid del  vendedor
+          uid: item.uid,
+          // precio del producto
+          pr: item.pr,
+          //  total del producto a comprar
+          to: item.cn * item.pr,
+          //? porcentaje de ganancia para empresa
+          in: (item.pj * (item.cn * item.pr)) / 100,
+          //? porcentaje de ganancia para vendedor
+          pj: item.cn * item.pr - (item.pj * (item.cn * item.pr)) / 100,
+        },
+      })),
+    [active, a.uid]
+  );
 
   const confirmSale = () => {
     // save cart

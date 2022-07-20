@@ -23,8 +23,9 @@ const Salemodal = ({ imgs, receipt, close, picture }) => {
       <Button
         variant={"primary"}
         size={"sm"}
-        fontSize={"xx-small"}
+        fontSize={"x-small"}
         onClick={onOpen}
+        m={{ base: 1, md: 4 }}
       >
         {receipt}
       </Button>

@@ -26,6 +26,8 @@ import {
   Box,
   CloseButton,
   useBreakpointValue,
+  Tooltip,
+  Flex,
 } from "@chakra-ui/react";
 
 import Breakpoints from "../../helpers/Breakpoints";
@@ -41,7 +43,6 @@ import Toast from "../../helpers/Toast";
 import FileAll from "../../utils/FileAll";
 import GridItemForm from "../../utils/GridItemForm";
 import GridItemFormTextarea from "../../utils/GridItemFormTextarea";
-import GridValueClose from "../../utils/GridValueClose";
 
 const initialStates = {
   nap: "",
@@ -377,14 +378,30 @@ const CheckVerify = ({
             </HStack>
           </GridItem>
 
-          <GridValueClose
-            close={locale === "en" ? en.close : es.close}
-            onClose={closeVerify}
-            set={locale === "en" ? en.send : es.send}
-            locale={locale}
-            es={es}
-            en={en}
-          />
+          <GridItem colSpan={2} mt={5}>
+            <HStack w={"full"} justifyContent="flex-end" spacing={10}>
+              <Button variant={"secondary"} onClick={closeVerify}>
+                {locale === "en" ? en.close : es.close}
+              </Button>
+              <Flex>
+                <Tooltip
+                  hasArrow
+                  label={locale === "en" ? en.seller : es.seller}
+                  bg="brand.900"
+                  w={"min-content"}
+                >
+                  <Button
+                    variant={"primary"}
+                    type="submit"
+                    ml={3}
+                    shadow={"lg"}
+                  >
+                    {locale === "en" ? en.send : es.send}
+                  </Button>
+                </Tooltip>
+              </Flex>
+            </HStack>
+          </GridItem>
         </Grid>
       </chakra.form>
     </>

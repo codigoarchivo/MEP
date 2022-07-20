@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import PropTypes from "prop-types";
 
@@ -25,11 +25,9 @@ const ConfigDashboard = ({ product = {} }) => {
   // selector
   const { listData: list = [] } = useSelector(({ category }) => category);
 
-  useEffect(() => {
-    if (!list[0]) {
-      push("/");
-    }
-  }, [list]);
+  if (!list[0]) {
+    push("/");
+  }
 
   return (
     <ShopLayout title={query.set}>

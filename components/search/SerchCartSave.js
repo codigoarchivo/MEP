@@ -30,6 +30,8 @@ import Toast from "../../helpers/Toast";
 
 import { activeProductCart, deleteProductSave } from "../../actions/product";
 
+import { dbProducts } from "../../data/dbProducts";
+
 const SerchCartSave = ({
   item,
   name,
@@ -61,7 +63,7 @@ const SerchCartSave = ({
     step: 1,
     defaultValue: 1,
     min: 1,
-    max: item.cn,
+    max: item.cn - 1,
   });
   // inc
   const inc = getIncrementButtonProps();
@@ -70,10 +72,27 @@ const SerchCartSave = ({
   // input
   const input = getInputProps({ isReadOnly: true });
 
-  const handleSelect = () => {
-    const cn = input.value;
-    dispatch(activeProductCart({ ...item, cn }, err, added, already));
-    dispatch(deleteProductSave(item.id));
+  const cn = Number(input.value);
+  item.cnr = item.cn - cn;
+
+  const handleSelect = async () => {
+    //? item.pj : es el porcentaje que coloca onwer
+    const message = await dbProducts(item.id, "dbProThree");
+    if (message) {
+      dispatch(
+        activeProductCart(
+          {
+            ...item,
+            cn,
+            rat: message.map((item) => item.rat.toString()),
+          },
+          err,
+          added,
+          already
+        )
+      );
+      dispatch(deleteProductSave(item.id));
+    }
   };
 
   return (
@@ -101,13 +120,13 @@ const SerchCartSave = ({
                 <Heading as="h3" size="sm">
                   {price}:
                 </Heading>
-                <Text size={"sm"}>{item.pr}</Text>
+                <Text size={"sm"}>${item.pr}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
                   {available}:
                 </Heading>
-                <Text size={"sm"}>{item.cn}</Text>
+                <Text size={"sm"}>N°{item.cn - 1}</Text>
               </HStack>
             </VStack>
           </HStack>

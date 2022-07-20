@@ -37,7 +37,7 @@ export const dbCategory = async (na = "", dbC = "") => {
     case "dbCatTwo":
       q = query(
         collection(db, "categories"),
-        limit(2),
+        limit(25),
         orderBy("cre", "desc")
       );
       break;

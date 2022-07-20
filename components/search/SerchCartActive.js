@@ -46,7 +46,7 @@ const SerchCartActive = ({
     active.map((item) => (inc.current -= item.pr));
     Toast(removed, "error", 5000);
   };
-
+  
   return (
     <Tr>
       <Td>

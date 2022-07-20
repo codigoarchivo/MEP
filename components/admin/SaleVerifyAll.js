@@ -61,7 +61,7 @@ const SaleVerify = ({
   // handleLiberate
   const handleLiberate = (e) => {
     e.preventDefault();
-
+  
     if ([idThree, sal, buy].includes("")) {
       return Toast(
         locale === "en" ? en.historySale.sI : es.historySale.sI,
@@ -104,7 +104,7 @@ const SaleVerify = ({
           picture={locale === "en" ? en.picture : es.picture}
         />{" "}
         <Button
-          fontSize={"xx-small"}
+          fontSize={"x-small"}
           size={"sm"}
           variant={"primary"}
           textTransform={"capitalize"}
@@ -140,11 +140,11 @@ const SaleVerify = ({
               },
               {
                 nombre: locale === "en" ? en.price : es.price,
-                Valor: "$" + product?.in,
+                Valor: "$" + product?.pj,
               },
               {
                 nombre: locale === "en" ? en.tax : es.tax,
-                Valor: "$" + product?.pj,
+                Valor: "$" + product?.in,
               },
               {
                 nombre: locale === "en" ? en.unit : es.unit,
@@ -212,7 +212,7 @@ const SaleVerify = ({
           <chakra.form onSubmit={handleLiberate} w={full}>
             <GridValueClose
               set={locale === "en" ? en.historySale.sG : es.historySale.sG}
-              onClose={onClose}
+              onClose={closeVerify}
               locale={locale}
               es={es}
               en={en}

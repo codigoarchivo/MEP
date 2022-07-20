@@ -22,7 +22,7 @@ const SaleScreen = ({
   paid,
 }) => {
   // Breakpoints
-  const { bordes, full } = Breakpoints();
+  const { bordes, full, content3 } = Breakpoints();
 
   const { cre, process, fer, co, nap, id } = item;
 
@@ -31,9 +31,9 @@ const SaleScreen = ({
     <HStack
       w={full}
       justifyContent={"space-between"}
-      alignItems={"flex-end"}
+      flexDirection={content3}
+      alignItems={{ base: "start", sm: "flex-end" }}
       borderBottom={bordes}
-      p={2}
     >
       <VStack w={full} spacing={0} overflow={"auto"}>
         {[

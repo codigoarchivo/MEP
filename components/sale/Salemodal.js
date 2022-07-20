@@ -9,10 +9,8 @@ import {
   Button,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
-  ModalHeader,
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -22,14 +20,19 @@ const Salemodal = ({ imgs, receipt, close, picture }) => {
 
   return (
     <>
-      <Button variant={"primary"} onClick={onOpen} m={4}>
+      <Button
+        variant={"primary"}
+        size={"sm"}
+        fontSize={"x-small"}
+        onClick={onOpen}
+        m={{ base: 1, md: 4 }}
+      >
         {receipt}
       </Button>
 
       <Modal onClose={onClose} size={"xl"} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
-          <ModalCloseButton onClick={onClose} />
           <ModalBody>
             <Box w={"full"} position={"relative"} textAlign="center">
               <Image

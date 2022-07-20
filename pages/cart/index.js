@@ -18,9 +18,10 @@ const Cart = () => {
   const { activeCartSelect = [], saveCartSelect = [] } = useSelector(
     ({ process }) => process
   );
+  // saveCartSelect: guarda a la lista de deseo del path cart/
+  // activeCartSelect: guarda a la lista cart del path cart/
 
   const { locale } = useRouter();
-
   return (
     <ShopLayout title={locale === "en" ? en.cart.cA : es.cart.cA}>
       <Container maxW="container.xl" py={{ base: 0, lg: 10 }}>

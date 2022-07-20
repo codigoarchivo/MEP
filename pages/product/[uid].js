@@ -81,20 +81,20 @@ const List = ({ product = [] }) => {
   const { values, reset, handleInputChange } = useFormAll(initialStates);
 
   const handleClient = () => {
-    if (!a.uid) {
+    if (!a?.uid) {
       return push("/auth");
     }
 
     push({
       pathname: "/info/[uid]",
-      query: { uid: a.uid ? a.uid : "0" },
+      query: { uid: a?.uid ? a?.uid : "0" },
     });
   };
 
   const handleSerchProduct = async (e) => {
     e.preventDefault();
     try {
-      await setDoc(doc(db, "cifras", a.uid), { pr: values.q });
+      await setDoc(doc(db, "cifras", a?.uid), { pr: values.q });
       Toast(locale === "en" ? en.save : es.save, "success", 5000);
     } catch (error) {
       Toast(locale === "en" ? en.error : es.error, "error", 5000);

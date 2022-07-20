@@ -64,6 +64,7 @@ const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
       return Toast(locale === "en" ? en.user.uE : es.user.uE, "error", 5000);
     }
 
+    Toast(locale === "en" ? en.save : es.save, "success", 5000);
     await setDoc(doc(db, "users", id), { na, te, co, dt, rol: "user" });
     back();
   };
@@ -75,19 +76,16 @@ const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
 
   return (
     <VStack
+      backgroundColor={"#fff"}
       alignContent={"center"}
       h={"full"}
       border={bordes}
       spacing={0}
       my={10}
+      p={2}
     >
-      <HStack
-        p={{ base: 2, md: 5 }}
-        w={"full"}
-        alignItems={"center"}
-        justifyContent={"space-between"}
-      >
-        <Heading size={"xs"} textTransform={"uppercase"} fontWeight={"normal"}>
+      <HStack w={"full"} alignItems={"center"} justifyContent={"space-between"}>
+        <Heading ml={{ base: 2, md: 5 }} size={"xs"} textTransform={"uppercase"} fontWeight={"normal"}>
           {locale === "en" ? en.user.uF : es.user.uF}
         </Heading>
         <CloseButton onClick={onCloseSelling} />

@@ -20,6 +20,13 @@ export const checkoutReducer = (state = initialStates, action) => {
         ...state,
         history: [...action.payload],
       };
+    case types.cheListAllHistoryEdit:
+      return {
+        ...state,
+        history: state.history.map((e) =>
+          e.id === action.payload.id ? (e = action.payload) : e
+        ),
+      };
     case types.checkoutAdd:
       return {
         ...state,

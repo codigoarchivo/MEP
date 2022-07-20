@@ -41,6 +41,7 @@ const Paginator = ({
   orPrevious,
   orNext,
   uid,
+  ini = "uid",
 }) => {
   // dispatch
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const Paginator = ({
   // modality
   const { modality: modality3, setModality: setModality3 } = useModality(true);
 
-  // TODO: cuando este todo listo descometar esto 
+  // TODO: cuando este todo listo descometar esto
   // useEffect(() => {
   //   if (list.length < 25) {
   //     setModality(true);
@@ -71,7 +72,7 @@ const Paginator = ({
     if (uid !== undefined) {
       q = query(
         collection(db, window),
-        where("uid", "==", uid),
+        where(ini, "==", uid),
         orderBy(word, orHome),
         endBefore(firstVisible),
         limit(nLimit)
@@ -102,7 +103,7 @@ const Paginator = ({
     if (uid !== undefined) {
       q = query(
         collection(db, window),
-        where("uid", "==", uid),
+        where(ini, "==", uid),
         orderBy(word, orPrevious),
         endBefore(firstVisible),
         limitToLast(nLimit)
@@ -130,7 +131,7 @@ const Paginator = ({
     if (uid !== undefined) {
       q = query(
         collection(db, window),
-        where("uid", "==", uid),
+        where(ini, "==", uid),
         orderBy(word, orNext),
         startAfter(lastVisible),
         limit(nLimit)

@@ -1,15 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
 
 import {
-  Box,
   Button,
   Container,
   Heading,
-  HStack,
   Stack,
   Text,
   VStack,
@@ -50,28 +48,33 @@ const Checkout = ({ product = [] }) => {
   const { bordes, full, content3, points25 } = Breakpoints();
 
   useEffect(() => {
+    // path: /cart
+    dispatch(closeActive());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (product) {
       dispatch(activeProductList(product));
     }
   }, [dispatch, product]);
 
-  useEffect(() => {
-    // path: /cart
-    dispatch(closeActive());
-  }, [dispatch]);
-
+  const data = useMemo(
+    () =>
+      check.map((item) => {
+        return {
+          idP: item.id,
+          process: item.process,
+          cnr: item.product.cnr,
+          cn: item.product.cn,
+          id: item.product.id,
+        };
+      }),
+    [check]
+  );
+  
   const handleRevert = (e) => {
     e.preventDefault();
     // revertir
-    const data = check.map((item) => {
-      return {
-        idP: item.id,
-        process: item.process,
-        cnr: item.product.cnr,
-        cn: item.product.cn,
-        id: item.product.id,
-      };
-    });
     const err = locale === "en" ? en.error : es.error;
     dispatch(saveSaleRevert(data, err));
 

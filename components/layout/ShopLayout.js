@@ -35,7 +35,7 @@ const ShopLayout = ({ children, title }) => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

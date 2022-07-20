@@ -66,7 +66,7 @@ const ProductData = ({
       }
     };
     dataPorcent();
-  }, [setporcent]);
+  }, [setporcent, a?.rol, a.uid, word]);
 
   // useForm
   const {
