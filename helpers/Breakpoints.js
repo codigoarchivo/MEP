@@ -1,6 +1,6 @@
 import { useBreakpoint } from "@chakra-ui/react";
 
-const Breakpoints = () => {
+export const Breakpoints = () => {
   const displayOn1 = { base: "block", sm: "none" };
   const displayOn2 = { base: "block", md: "none" };
   const displayOff1 = { base: "none", sm: "block" };
@@ -132,5 +132,3 @@ const Breakpoints = () => {
     all3,
   };
 };
-
-export default Breakpoints;

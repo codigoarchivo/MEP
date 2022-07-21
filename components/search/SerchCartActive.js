@@ -10,13 +10,13 @@ import { DeleteIcon } from "@chakra-ui/icons";
 
 import { Flex, Heading, HStack, Td, Text, Tr, VStack } from "@chakra-ui/react";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
 import { deleteProductCart } from "../../actions/product";
 
-const SerchCartActive = ({
+export const SerchCartActive = ({
   item,
   inc,
   name,
@@ -46,7 +46,7 @@ const SerchCartActive = ({
     active.map((item) => (inc.current -= item.pr));
     Toast(removed, "error", 5000);
   };
-  
+
   return (
     <Tr>
       <Td>
@@ -132,5 +132,3 @@ SerchCartActive.propTypes = {
   subtotal: PropTypes.string.isRequired,
   removed: PropTypes.string.isRequired,
 };
-
-export default SerchCartActive;

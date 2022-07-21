@@ -21,15 +21,15 @@ import Marquee from "react-fast-marquee";
 
 import Carousel from "nuka-carousel";
 
-import SerchScreen from "../search/SerchScreen";
+import { SerchScreen } from "../search/SerchScreen";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-import NavLink from "../../utils/Navlink";
+import { NavLink } from "../../utils/Navlink";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
-const Home = ({ listData, latestCartSelect, locale, es, en }) => {
+export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
   // Breakpoints
   const { content5, bordes, displayOff1, all1, points25 } = Breakpoints();
   // use Carousel
@@ -193,5 +193,3 @@ PropTypes.Home = {
   es: PropTypes.object,
   en: PropTypes.object,
 };
-
-export default Home;

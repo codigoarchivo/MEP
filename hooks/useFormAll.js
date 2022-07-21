@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useFormAll = (initialStates = {}, data = {}) => {
+export const useFormAll = (initialStates = {}, data = {}) => {
   const [values, setValues] = useState(initialStates);
 
   useEffect(() => {
@@ -54,5 +54,3 @@ const useFormAll = (initialStates = {}, data = {}) => {
     reset,
   };
 };
-
-export default useFormAll;

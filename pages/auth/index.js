@@ -6,12 +6,12 @@ import { useRouter } from "next/router";
 
 import { Container, Flex } from "@chakra-ui/react";
 
-import LoginUser from "../../components/log/loginUser";
+import { LoginUser } from "../../components/log/loginUser";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-import es from "../../translations/es";
-import en from "../../translations/en";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
 const Account = () => {
   // selector

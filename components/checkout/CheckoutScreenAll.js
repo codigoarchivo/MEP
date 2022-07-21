@@ -16,9 +16,9 @@ import {
 
 import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-const CheckoutScreenAll = ({
+export const CheckoutScreenAll = ({
   product = {},
   process,
   name,
@@ -138,5 +138,3 @@ CheckoutScreenAll.propTypes = {
   sal: PropTypes.string,
   push: PropTypes.func,
 };
-
-export default CheckoutScreenAll;

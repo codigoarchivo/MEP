@@ -6,16 +6,16 @@ import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
 import { dbUser, dbUserByUID } from "../../data/dbUser";
 
-import UserScreen from "../../components/user/UserScreen";
+import { UserScreen } from "../../components/user/UserScreen";
 
-import es from "../../translations/es";
-import en from "../../translations/en";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
 const Informacion = ({ user = {} }) => {
   const { locale, back, push } = useRouter();

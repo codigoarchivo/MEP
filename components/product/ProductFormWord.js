@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { Button, Heading, chakra, HStack } from "@chakra-ui/react";
 
-const ProductFormWord = ({
+export const ProductFormWord = ({
   word,
   onClose,
   handleSubmit,
@@ -39,5 +39,3 @@ ProductFormWord.propTypes = {
   es: PropTypes.object,
   en: PropTypes.object,
 };
-
-export default ProductFormWord;

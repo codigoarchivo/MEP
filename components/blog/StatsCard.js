@@ -9,10 +9,9 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-const StatsCard = (props) => {
-
+export const StatsCard = (props) => {
   const { title, stat, icon } = props;
-  
+
   return (
     <Stat
       px={{ base: 2, md: 4 }}
@@ -47,5 +46,3 @@ const StatsCard = (props) => {
 StatsCard.proptypes = {
   props: Proptypes.object,
 };
-
-export default StatsCard;

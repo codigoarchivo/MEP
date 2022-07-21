@@ -19,9 +19,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import Breakpoints from "../../../helpers/Breakpoints";
+import { Breakpoints } from "../../../helpers/Breakpoints";
 
-import NavLink from "../../../utils/Navlink";
+import { NavLink } from "../../../utils/Navlink";
 
 import {
   FacebookIcon,
@@ -29,13 +29,13 @@ import {
   TwitterIcon,
 } from "../../../helpers/IconNew";
 
-import ListRoute from "../nav/ListRoute";
+import { ListRoute } from "../nav/ListRoute";
+import { NavbarLocal } from "../nav/NavbarLocal";
 
-import en from "../../../translations/en";
-import es from "../../../translations/es";
-import NavbarLocal from "../nav/NavbarLocal";
+import { en } from "../../../translations/en";
+import { es } from "../../../translations/es";
 
-const Footer = () => {
+export const Footer = () => {
   // useRouter
   const { locale } = useRouter();
   // Breakpoints
@@ -195,5 +195,3 @@ const Footer = () => {
     </Container>
   );
 };
-
-export default Footer;

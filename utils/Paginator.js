@@ -28,7 +28,7 @@ import {
 
 import { useModality } from "../hooks/useModality";
 
-const Paginator = ({
+export const Paginator = ({
   list,
   firstVisible,
   lastVisible,
@@ -73,6 +73,7 @@ const Paginator = ({
       q = query(
         collection(db, window),
         where(ini, "==", uid),
+        where(word, "!=", false),
         orderBy(word, orHome),
         endBefore(firstVisible),
         limit(nLimit)
@@ -104,6 +105,7 @@ const Paginator = ({
       q = query(
         collection(db, window),
         where(ini, "==", uid),
+        where(word, "!=", false),
         orderBy(word, orPrevious),
         endBefore(firstVisible),
         limitToLast(nLimit)
@@ -132,6 +134,7 @@ const Paginator = ({
       q = query(
         collection(db, window),
         where(ini, "==", uid),
+        where(word, "!=", false),
         orderBy(word, orNext),
         startAfter(lastVisible),
         limit(nLimit)
@@ -213,5 +216,3 @@ Paginator.propTypes = {
   orNext: PropTypes.string,
   uid: PropTypes.string,
 };
-
-export default Paginator;

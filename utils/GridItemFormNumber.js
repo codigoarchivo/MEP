@@ -10,7 +10,7 @@ import {
   NumberInputStepper,
 } from "@chakra-ui/react";
 
-const GridItemFormNumber = ({
+export const GridItemFormNumber = ({
   points,
   name,
   na,
@@ -55,4 +55,3 @@ GridItemFormNumber.propTypes = {
   max: PropTypes.number,
   isReadOnly: PropTypes.bool,
 };
-export default GridItemFormNumber;

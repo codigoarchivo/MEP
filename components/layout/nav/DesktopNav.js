@@ -10,17 +10,17 @@ import {
   InputGroup,
 } from "@chakra-ui/react";
 
-import useFormAll from "../../../hooks/useFormAll";
+import { useFormAll } from "../../../hooks/useFormAll";
 
-import MenuCategoria from "../../../utils/MenuCategoria";
+import { MenuCategoria } from "../../../utils/MenuCategoria";
 
-import en from "../../../translations/en";
-import es from "../../../translations/es";
+import { en } from "../../../translations/en";
+import { es } from "../../../translations/es";
 
 const initialStates = {
   q: "",
 };
-const DesktopNav = () => {
+export const DesktopNav = () => {
   // dispatch
   const { push, locale } = useRouter();
 
@@ -61,5 +61,3 @@ const DesktopNav = () => {
     </Stack>
   );
 };
-
-export default DesktopNav;

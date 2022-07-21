@@ -8,16 +8,16 @@ import { Container, Stack } from "@chakra-ui/react";
 
 import ShopLayout from "../../../components/layout/ShopLayout";
 
-import Breakpoints from "../../../helpers/Breakpoints";
+import { Breakpoints } from "../../../helpers/Breakpoints";
 
-import SaleVerifyAll from "../../../components/admin/SaleVerifyAll";
+import { SaleVerifyAll } from "../../../components/admin/SaleVerifyAll";
 
-import Toast from "../../../helpers/Toast";
+import { Toast } from "../../../helpers/Toast";
 
 import { dbUser, dbUserByUID } from "../../../data/dbUser";
 
-import es from "../../../translations/es";
-import en from "../../../translations/en";
+import { en } from "../../../translations/en";
+import { es } from "../../../translations/es";
 
 const Orders = ({ active }) => {
   // dispatch

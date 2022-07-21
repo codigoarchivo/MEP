@@ -8,16 +8,16 @@ import ShopLayout from "../../components/layout/ShopLayout";
 
 import { Container, Stack } from "@chakra-ui/react";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-import CheckVerify from "../../components/checkout/CheckVerify";
+import { CheckVerify } from "../../components/checkout/CheckVerify";
 
 import { dbUser, dbUserByUID } from "../../data/dbUser";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
-import en from "../../translations/en";
-import es from "../../translations/es";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
 const Verification = ({ data }) => {
   // router

@@ -11,18 +11,18 @@ import {
   Portal,
 } from "@chakra-ui/react";
 
-import NavLink from "../utils/Navlink";
+import { NavLink } from "../utils/Navlink";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Breakpoints from "../helpers/Breakpoints";
+import { Breakpoints } from "../helpers/Breakpoints";
 
 import { CategoryAll } from "../helpers/IconNew";
 
-import en from "../translations/en";
-import es from "../translations/es";
+import { en } from "../translations/en";
+import { es } from "../translations/es";
 
-const MenuCategoria = () => {
+export const MenuCategoria = () => {
   // useRouter
   const { locale } = useRouter();
   // Breakpoints
@@ -49,7 +49,7 @@ const MenuCategoria = () => {
               <NavLink
                 href={{
                   pathname: "/search",
-                  query: { n: id, c: na},
+                  query: { n: id, c: na },
                 }}
                 name={na}
                 variant={"secondary"}
@@ -62,5 +62,3 @@ const MenuCategoria = () => {
     </Menu>
   );
 };
-
-export default MenuCategoria;

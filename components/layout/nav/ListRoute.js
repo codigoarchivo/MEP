@@ -12,10 +12,10 @@ import {
   VentasClient,
 } from "../../../helpers/IconNew";
 
-import en from "../../../translations/en";
-import es from "../../../translations/es";
+import { en } from "../../../translations/en";
+import { es } from "../../../translations/es";
 
-const ListRoute = () => {
+export const ListRoute = () => {
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // dispatch
@@ -43,8 +43,8 @@ const ListRoute = () => {
     },
     {
       icon: <VentasClient />,
-      ref: `/admin?q=${a?.uid}`,
-      as: `/admin?q=${a?.uid}`,
+      ref: `/admin/[uid]`,
+      as: `/admin/${a.uid ? a.uid : "0"}`,
       nam: locale === "en" ? en.major.mH : es.major.mH,
       rol: a.rol === "owner" ? "block" : "none",
     },
@@ -73,5 +73,3 @@ const ListRoute = () => {
     dataRoute,
   };
 };
-
-export default ListRoute;

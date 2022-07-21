@@ -2,7 +2,7 @@ import { collection, doc, setDoc, updateDoc } from "firebase/firestore";
 
 import { db } from "../firebase/config";
 
-import Toast from "../helpers/Toast";
+import { Toast } from "../helpers/Toast";
 
 import { types } from "../type";
 

@@ -30,19 +30,19 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-import ModeColor from "../../helpers/ModeColor";
+import { ModeColor } from "../../helpers/ModeColor";
 
-import useFormAll from "../../hooks/useFormAll";
+import { useFormAll } from "../../hooks/useFormAll";
 
 import { validShop } from "../../actions/checkout";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
-import FileAll from "../../utils/FileAll";
-import GridItemForm from "../../utils/GridItemForm";
-import GridItemFormTextarea from "../../utils/GridItemFormTextarea";
+import { FileAll } from "../../utils/FileAll";
+import { GridItemForm } from "../../utils/GridItemForm";
+import { GridItemFormTextarea } from "../../utils/GridItemFormTextarea";
 
 const initialStates = {
   nap: "",
@@ -53,7 +53,7 @@ const initialStates = {
   ref: "",
 };
 
-const CheckVerify = ({
+export const CheckVerify = ({
   // BORDES
   bordes = "",
   // id del buy del la compra del producto
@@ -418,5 +418,3 @@ CheckVerify.propTypes = {
   en: PropTypes.object,
   es: PropTypes.object,
 };
-
-export default CheckVerify;

@@ -18,6 +18,7 @@ export const dbProducts = async (i = "", dbP = "", val1, val2) => {
     case "dbProOne":
       q = query(
         collection(db, "serchs"),
+        where("cre", "!=", false),
         orderBy("cre", "desc"),
         limit(2)
       );
@@ -26,6 +27,7 @@ export const dbProducts = async (i = "", dbP = "", val1, val2) => {
       q = query(
         collection(db, "serchs"),
         where("uid", "==", i),
+        where("cre", "!=", false),
         orderBy("cre", "desc"),
         limit(2)
       );

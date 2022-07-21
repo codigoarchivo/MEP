@@ -28,15 +28,28 @@ import {
 import { cartSaveLatest, saveProductCart } from "../../actions/product";
 
 import { LoveIcon } from "../../helpers/IconNew";
-import Toast from "../../helpers/Toast";
-import Breakpoints from "../../helpers/Breakpoints";
+import { Toast } from "../../helpers/Toast";
+import { Breakpoints } from "../../helpers/Breakpoints";
 import { ShopAll } from "../../helpers/IconNew";
 import { useRouter } from "next/router";
 
-import en from "../../translations/en";
-import es from "../../translations/es";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
-const SerchScreen = ({ id, na, cn, ct, ds, dt, im, pr, rat, ps, uid, pj }) => {
+export const SerchScreen = ({
+  id,
+  na,
+  cn,
+  ct,
+  ds,
+  dt,
+  im,
+  pr,
+  rat,
+  ps,
+  uid,
+  pj,
+}) => {
   // useRef
   const match = useRef();
   // useRef
@@ -251,5 +264,3 @@ SerchScreen.propTypes = {
   uid: PropTypes.string.isRequired,
   pj: PropTypes.number.isRequired,
 };
-
-export default SerchScreen;

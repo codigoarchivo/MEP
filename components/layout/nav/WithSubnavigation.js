@@ -35,28 +35,24 @@ import {
 
 import { useModality } from "../../../hooks/useModality";
 
-import NavbarCart from "./NavbarCart";
-import ListRoute from "./ListRoute";
+import { Breakpoints } from "../../../helpers/Breakpoints";
+import { Toast } from "../../../helpers/Toast";
+
+import { NavLink } from "../../../utils/Navlink";
+
+import { NavbarCart } from "./NavbarCart";
+import { ListRoute } from "./ListRoute";
 import { DialogSerchNavbar } from "./DialogSerchNavbar";
-
-import Breakpoints from "../../../helpers/Breakpoints";
-import Toast from "../../../helpers/Toast";
-
-import NavLink from "../../../utils/Navlink";
-
 import { BreadcrumbNavbar } from "./BreadcrumbNavbar";
-import DesktopNav from "./DesktopNav";
+import { DesktopNav } from "./DesktopNav";
+import { MenuNavButton } from "./MenuNavButton";
+import { LogoutAllClear } from "./LogoutAllClear";
+import { NavbarLocal } from "./NavbarLocal";
 
-import MenuNavButton from "./MenuNavButton";
+import { en } from "../../../translations/en";
+import { es } from "../../../translations/es";
 
-import LogoutAllClear from "./LogoutAllClear";
-
-import NavbarLocal from "./NavbarLocal";
-
-import en from "../../../translations/en";
-import es from "../../../translations/es";
-
-export default function WithSubnavigation() {
+export function WithSubnavigation() {
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector

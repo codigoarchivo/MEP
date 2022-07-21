@@ -6,12 +6,12 @@ import { useDispatch } from "react-redux";
 
 import { CloseButton, Heading, HStack, VStack } from "@chakra-ui/react";
 
-import Breakpoints from "../../helpers/Breakpoints";
-import Toast from "../../helpers/Toast";
-import Validator from "../../helpers/Validator";
+import { Breakpoints } from "../../helpers/Breakpoints";
+import { Toast } from "../../helpers/Toast";
+import { Validator } from "../../helpers/Validator";
 
-import CategoryForm from "./CategoryForm";
-import CategoryFormWord from "./CategoryFormWord";
+import { CategoryForm } from "./CategoryForm";
+import { CategoryFormWord } from "./CategoryFormWord";
 
 import {
   addCategory,
@@ -19,7 +19,7 @@ import {
   editCategory,
 } from "../../actions/category";
 
-import useFormAll from "../../hooks/useFormAll";
+import { useFormAll } from "../../hooks/useFormAll";
 
 import { dbCategoryValid } from "../../data/dbCategory";
 
@@ -29,7 +29,7 @@ const initialStates = {
   cre: "",
 };
 
-const CategoryData = ({ back, category, pid, es, en, locale }) => {
+export const CategoryData = ({ back, category, pid, es, en, locale }) => {
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -72,7 +72,7 @@ const CategoryData = ({ back, category, pid, es, en, locale }) => {
 
     pid === "Edit" && dispatch(editCategory(na, cre, id, err));
     pid === "Delete" && dispatch(deleteCategory(id, err));
-    
+
     reset();
     back();
     Toast(locale === "en" ? en.save : es.save, "success", 5000);
@@ -149,5 +149,3 @@ CategoryData.propTypes = {
   en: PropTypes.object,
   locale: PropTypes.string,
 };
-
-export default CategoryData;

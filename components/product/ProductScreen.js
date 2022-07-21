@@ -29,12 +29,12 @@ import {
   PlusSquareIcon,
 } from "@chakra-ui/icons";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-import en from "../../translations/en";
-import es from "../../translations/es";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
-const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
+export const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
   // router
   const { push, locale } = useRouter();
   // Breakpoints
@@ -195,5 +195,3 @@ ProductScrenn.propTypes = {
   pj: PropTypes.number.isRequired,
   ps: PropTypes.string.isRequired,
 };
-
-export default ProductScrenn;

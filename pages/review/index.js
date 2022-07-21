@@ -8,14 +8,14 @@ import PropTypes from "prop-types";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import ReviewScreen from "../../components/review/ReviewScreen";
+import { ReviewScreen } from "../../components/review/ReviewScreen";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
 import { useSelector } from "react-redux";
 
-import es from "../../translations/es";
-import en from "../../translations/en";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
 const Review = ({ p = "", i = "", g = "" }) => {
   // useRouter

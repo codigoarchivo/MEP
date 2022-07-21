@@ -14,7 +14,7 @@ import { types } from "../type";
 
 import { finishLoading, startLoading } from "./ui";
 
-import Toast from "../helpers/Toast";
+import { Toast } from "../helpers/Toast";
 
 const dA = process.env.NEXT_PUBLIC_ROL_A;
 
@@ -37,7 +37,6 @@ export const startLoginEmailPassword = (email, password, err) => {
       // login
       await signInWithEmailAndPassword(auth, email, password)
         .then(async ({ user }) => {
-          
           if (user) {
             dispatch(
               login(

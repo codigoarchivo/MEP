@@ -24,15 +24,15 @@ import {
 
 import { DeleteIcon, PlusSquareIcon, SmallAddIcon } from "@chakra-ui/icons";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
 import { activeProductCart, deleteProductSave } from "../../actions/product";
 
 import { dbProducts } from "../../data/dbProducts";
 
-const SerchCartSave = ({
+export const SerchCartSave = ({
   item,
   name,
   price,
@@ -200,5 +200,3 @@ SerchCartSave.propTypes = {
   removed: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
 };
-
-export default SerchCartSave;

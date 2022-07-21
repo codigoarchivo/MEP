@@ -15,11 +15,11 @@ import {
 
 import { CheckCircleIcon } from "@chakra-ui/icons";
 
-import NavLink from "../../utils/Navlink";
+import { NavLink } from "../../utils/Navlink";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-const SerchCategory = ({ locale, en, es }) => {
+export const SerchCategory = ({ locale, en, es }) => {
   // selector
   const { listData = [] } = useSelector(({ category }) => category);
   // Breakpoints
@@ -57,5 +57,3 @@ SerchCategory.propTypes = {
   es: PropTypes.object,
   en: PropTypes.object,
 };
-
-export default SerchCategory;

@@ -2,8 +2,6 @@ import React, { useState } from "react";
 
 import { useRouter } from "next/router";
 
-import Image from "next/image";
-
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -18,19 +16,19 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import Breakpoints from "../../helpers/Breakpoints";
-import Toast from "../../helpers/Toast";
+import { Breakpoints } from "../../helpers/Breakpoints";
+import { Toast } from "../../helpers/Toast";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import useFormAll from "../../hooks/useFormAll";
+import { useFormAll } from "../../hooks/useFormAll";
 
 import { changeNameImgTel } from "../../actions/auth";
 
-import FileAll from "../../utils/FileAll";
+import { FileAll } from "../../utils/FileAll";
 
-import en from "../../translations/en";
-import es from "../../translations/es";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
 const initialStates = {
   uid: "",

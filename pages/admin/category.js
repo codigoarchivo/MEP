@@ -21,26 +21,22 @@ import {
   Tr,
 } from "@chakra-ui/react";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-import CategoryScrenn from "../../components/category/CategoryScreen";
+import { CategoryScrenn } from "../../components/category/CategoryScreen";
 
 import { dbCategory } from "../../data/dbCategory";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import {
-  activeCategory,
-  categoryListConfig,
-  listDataCategory,
-} from "../../actions/category";
+import { activeCategory, listDataCategory } from "../../actions/category";
 
-import Paginator from "../../utils/Paginator";
+import { Paginator } from "../../utils/Paginator";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
-import es from "../../translations/es";
-import en from "../../translations/en";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
 const Category = ({ data = [] }) => {
   // selector
@@ -74,7 +70,7 @@ const Category = ({ data = [] }) => {
     );
 
     push({
-      pathname: "/admin/[id]",
+      pathname: "/admin/set/[id]",
       query: { id: "new", pid: "Add" },
     });
   };

@@ -1,4 +1,4 @@
-const Validator = (
+export const Validator = (
   values,
   aM = "",
   aL = "",
@@ -129,5 +129,3 @@ const Validator = (
     ErrorCatData,
   };
 };
-
-export default Validator;

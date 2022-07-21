@@ -27,14 +27,15 @@ import {
 
 import { deleteProductCart } from "../../../actions/product";
 
-import Breakpoints from "../../../helpers/Breakpoints";
+import { Breakpoints } from "../../../helpers/Breakpoints";
 import { CartIcon } from "../../../helpers/IconNew";
 
-import NavLink from "../../../utils/Navlink";
-import en from "../../../translations/en";
-import es from "../../../translations/es";
+import { NavLink } from "../../../utils/Navlink";
 
-const NavbarCart = () => {
+import { en } from "../../../translations/en";
+import { es } from "../../../translations/es";
+
+export const NavbarCart = () => {
   // router
   const { pathname, locale } = useRouter();
   // Breakpoints
@@ -58,7 +59,7 @@ const NavbarCart = () => {
   };
 
   return (
-    <TableContainer w={"full"} border={bordes} >
+    <TableContainer w={"full"} border={bordes}>
       <Table variant="simple">
         <Thead>
           <Tr>
@@ -138,5 +139,3 @@ const NavbarCart = () => {
     </TableContainer>
   );
 };
-
-export default NavbarCart;

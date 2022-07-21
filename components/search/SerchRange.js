@@ -20,9 +20,9 @@ import {
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-const SerchRange = ({ product, locale, en, es }) => {
+export const SerchRange = ({ product, locale, en, es }) => {
   // Breakpoints
   const { bordes } = Breakpoints();
 
@@ -58,7 +58,7 @@ const SerchRange = ({ product, locale, en, es }) => {
 
   maxN = maxN === -Infinity ? 100 : maxN;
   minN = minN === Infinity ? 1 : minN;
-  
+
   return (
     <Stack w={"full"} spacing={"5"} border={bordes} rounded="md" p={4}>
       <Box borderBottom={bordes} py={5} w={"full"}>
@@ -110,5 +110,3 @@ SerchRange.propTypes = {
   es: PropTypes.object.isRequired,
   en: PropTypes.object.isRequired,
 };
-
-export default SerchRange;

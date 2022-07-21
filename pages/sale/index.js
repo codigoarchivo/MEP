@@ -10,30 +10,36 @@ import { Box, Container, Heading, Stack, VStack } from "@chakra-ui/react";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
 import { cheListAllClear, cheListAllSale } from "../../actions/checkout";
 
 import { dbUserData } from "../../data/dbUser";
 
-import Paginator from "../../utils/Paginator";
+import { Paginator } from "../../utils/Paginator";
 
-import SaleScreen from "../../components/sale/SaleScreen";
+import { SaleScreen } from "../../components/sale/SaleScreen";
 
-import en from "../../translations/en";
-import es from "../../translations/es";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
 const Sale = ({ data }) => {
-  // useRouter
-  const { locale } = useRouter();
-  // dispatch
-  const dispatch = useDispatch();
+  // selector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useSelector
   const { sale = [] } = useSelector(({ checkout }) => checkout);
-  // // Breakponts
-  const { bordes, full, content5 } = Breakpoints();
+  // useRouter
+  const { locale, push, query } = useRouter();
+  // dispatch
+  const dispatch = useDispatch();
+  // Breakponts
+  const { bordes, full } = Breakpoints();
+
+  if (a.rol === "owner") {
+    push("/");
+  }
 
   useEffect(() => {
     if (data) {
@@ -96,7 +102,8 @@ const Sale = ({ data }) => {
               orHome={"desc"}
               orPrevious={"desc"}
               orNext={"desc"}
-              uid={undefined}
+              uid={query.u}
+              ini={"sale"}
             />
           )}
         </Box>

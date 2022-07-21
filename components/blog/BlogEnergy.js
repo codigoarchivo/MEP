@@ -11,9 +11,19 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-import BlogTags from "./BlogTags";
+import { BlogTags } from "./BlogTags";
 
-const BlogEnergy = ({ bAa, bBb, bCc, bDd, bEe, bFf, bHh, bIi, points }) => {
+export const BlogEnergy = ({
+  bAa,
+  bBb,
+  bCc,
+  bDd,
+  bEe,
+  bFf,
+  bHh,
+  bIi,
+  points,
+}) => {
   return (
     <Container maxW={"7xl"} p={{ base: 0, sm: "12" }}>
       <Heading
@@ -106,5 +116,3 @@ BlogEnergy.propTypes = {
   bIi: PropTypes.string,
   points: PropTypes.object,
 };
-
-export default BlogEnergy;

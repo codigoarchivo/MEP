@@ -17,13 +17,13 @@ import {
 
 import { Rating } from "react-simple-star-rating";
 
-import ModeColor from "../../helpers/ModeColor";
-import Breakpoints from "../../helpers/Breakpoints";
-import Calculate from "../../helpers/Calculate";
+import { ModeColor } from "../../helpers/ModeColor";
+import { Breakpoints } from "../../helpers/Breakpoints";
+import { Calculate } from "../../helpers/Calculate";
 
 import { checkoutAdd, checkoutEdit } from "../../actions/checkout";
 
-import useFormAll from "../../hooks/useFormAll";
+import { useFormAll } from "../../hooks/useFormAll";
 
 import { fillColorArray, tooltipArray } from "../../helpers/ToolFill";
 
@@ -32,7 +32,7 @@ const initialStates = {
   com: "",
 };
 
-const ReviewScreen = ({
+export const ReviewScreen = ({
   calculo = [],
   message = {},
   p = "",
@@ -204,5 +204,3 @@ ReviewScreen.propTypes = {
   es: PropTypes.object,
   en: PropTypes.object,
 };
-
-export default ReviewScreen;

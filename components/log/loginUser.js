@@ -24,17 +24,17 @@ import {
   CloseButton,
 } from "@chakra-ui/react";
 
-import useFormAll from "../../hooks/useFormAll";
+import { useFormAll } from "../../hooks/useFormAll";
 
-import Validator from "../../helpers/Validator";
-import ModeColor from "../../helpers/ModeColor";
+import { Validator } from "../../helpers/Validator";
+import { ModeColor } from "../../helpers/ModeColor";
 import { GoogleIcon } from "../../helpers/IconNew";
-import Toast from "../../helpers/Toast";
-import NavLink from "../../utils/Navlink";
+import { Toast } from "../../helpers/Toast";
+import { NavLink } from "../../utils/Navlink";
 
 import { startGoogleLogin, startLoginEmailPassword } from "../../actions/auth";
 
-import DividerWithText from "../../utils/DividerWithText";
+import { DividerWithText } from "../../utils/DividerWithText";
 
 const initialStates = {
   email: "jackson@gmail.com",
@@ -43,7 +43,7 @@ const initialStates = {
 const data = {
   pass: false,
 };
-const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
+export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
   // selector
   const { loading } = useSelector(({ ui }) => ui);
   // dispatch
@@ -216,5 +216,3 @@ LoginUser.propTypes = {
   es: PropTypes.object,
   en: PropTypes.object,
 };
-
-export default LoginUser;

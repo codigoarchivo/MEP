@@ -8,22 +8,22 @@ import { Container, Stack } from "@chakra-ui/react";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
 import { dbUser, dbUserByUID } from "../../data/dbUser";
 
-import SaleVerify from "../../components/sale/SaleVerify";
+import { SaleVerify } from "../../components/sale/SaleVerify";
 
-import es from "../../translations/es";
-import en from "../../translations/en";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
 const Sales = ({ sale }) => {
   // dispatch
   const { push, locale, back } = useRouter();
   // Breakpoints
-  const { content5, bordes } = Breakpoints();
+  const { bordes } = Breakpoints();
 
   return (
     <ShopLayout title={"sales"}>

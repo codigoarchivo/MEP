@@ -17,11 +17,11 @@ import { formatDistanceToNow } from "date-fns";
 import localEs from "date-fns/locale/es";
 import localEn from "date-fns/locale/en-US";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-import NavLink from "../../utils/Navlink";
+import { NavLink } from "../../utils/Navlink";
 
-const SaleScreenAll = ({
+export const SaleScreenAll = ({
   item = {},
   name,
   mail,
@@ -114,5 +114,3 @@ SaleScreenAll.propTypes = {
   locale: PropTypes.string,
   paid: PropTypes.string,
 };
-
-export default SaleScreenAll;

@@ -2,13 +2,13 @@ import { Box, Heading, Stack, Text } from "@chakra-ui/react";
 
 import PropTypes from "prop-types";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-import ModeColor from "../../helpers/ModeColor";
+import { ModeColor } from "../../helpers/ModeColor";
 
-import NavLink from "../../utils/Navlink";
+import { NavLink } from "../../utils/Navlink";
 
-const BlogOutstanding = (item) => {
+export const BlogOutstanding = (item) => {
   const { bg3, bgText, bg4, bg5 } = ModeColor();
 
   const { bordes } = Breakpoints();
@@ -66,5 +66,3 @@ const BlogOutstanding = (item) => {
 BlogOutstanding.propTypes = {
   item: PropTypes.object,
 };
-
-export default BlogOutstanding;

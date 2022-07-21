@@ -8,16 +8,16 @@ import { useRouter } from "next/router";
 
 import { Container } from "@chakra-ui/react";
 
-import ProductData from "../../components/product/ProductData";
+import { ProductData } from "../../components/product/ProductData";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
 import { dbProducts, dbProductsById } from "../../data/dbProducts";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
-import es from "../../translations/es";
-import en from "../../translations/en";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
 const ConfigDashboard = ({ product = {} }) => {
   // router

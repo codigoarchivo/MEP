@@ -38,6 +38,7 @@ export const dbCategory = async (na = "", dbC = "") => {
       q = query(
         collection(db, "categories"),
         limit(25),
+        where("cre", "!=", false),
         orderBy("cre", "desc")
       );
       break;

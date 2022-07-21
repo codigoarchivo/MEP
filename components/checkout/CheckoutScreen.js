@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import {
   Button,
   Flex,
-  HStack,
   Popover,
   PopoverBody,
   PopoverCloseButton,
@@ -22,13 +21,13 @@ import {
 
 import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
 import { CartList } from "../../helpers/IconNew";
 
-import ContadorRegresivo from "../../helpers/ContadorRegresivo";
+import { ContadorRegresivo } from "../../helpers/ContadorRegresivo";
 
-const CheckoutScreen = ({
+export const CheckoutScreen = ({
   product = {},
   process,
   push,
@@ -191,5 +190,3 @@ CheckoutScreen.propTypes = {
   paid: PropTypes.string,
   pro: PropTypes.string,
 };
-
-export default CheckoutScreen;

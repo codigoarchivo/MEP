@@ -15,7 +15,7 @@ import {
 
 import { useRouter } from "next/router";
 
-import useFormAll from "../../../hooks/useFormAll";
+import { useFormAll } from "../../../hooks/useFormAll";
 
 const initialStates = {
   q: "",

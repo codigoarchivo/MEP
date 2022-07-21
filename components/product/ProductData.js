@@ -6,19 +6,18 @@ import PropTypes from "prop-types";
 
 import { CloseButton, Heading, HStack, VStack } from "@chakra-ui/react";
 
-import Breakpoints from "../../helpers/Breakpoints";
-import Toast from "../../helpers/Toast";
-import Validator from "../../helpers/Validator";
+import { Breakpoints } from "../../helpers/Breakpoints";
+import { Toast } from "../../helpers/Toast";
+import { Validator } from "../../helpers/Validator";
 
-import ProductForm from "./ProductForm";
-
-import ProductFormWord from "./ProductFormWord";
+import { ProductForm } from "./ProductForm";
+import { ProductFormWord } from "./ProductFormWord";
+import { ProductFormDetails } from "./ProductFormDetails";
 
 import { addProduct, deleteProduct, editProduct } from "../../actions/product";
 
-import useFormAll from "../../hooks/useFormAll";
+import { useFormAll } from "../../hooks/useFormAll";
 
-import ProductFormDetails from "./ProductFormDetails";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
 
@@ -34,7 +33,7 @@ const initialStates = {
   im: "",
 };
 
-const ProductData = ({
+export const ProductData = ({
   product = {},
   word = "",
   details = "",
@@ -245,5 +244,3 @@ ProductData.propTypes = {
   es: PropTypes.object,
   en: PropTypes.object,
 };
-
-export default ProductData;

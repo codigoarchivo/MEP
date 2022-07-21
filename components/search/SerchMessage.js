@@ -29,9 +29,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-const SerchMessage = (item) => {
+export const SerchMessage = (item) => {
   // router
   const router = useRouter();
   // Breakpoints
@@ -121,5 +121,3 @@ const SerchMessage = (item) => {
 SerchMessage.propTypes = {
   item: PropTypes.object,
 };
-
-export default SerchMessage;

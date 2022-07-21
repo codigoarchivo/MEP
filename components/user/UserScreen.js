@@ -17,18 +17,18 @@ import { doc, setDoc } from "firebase/firestore";
 
 import { db } from "../../firebase/config";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
-import useFormAll from "../../hooks/useFormAll";
+import { useFormAll } from "../../hooks/useFormAll";
 
-import ModeColor from "../../helpers/ModeColor";
+import { ModeColor } from "../../helpers/ModeColor";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
 import { useSelector } from "react-redux";
 
-import GridItemForm from "../../utils/GridItemForm";
-import GridItemFormTextarea from "../../utils/GridItemFormTextarea";
+import { GridItemForm } from "../../utils/GridItemForm";
+import { GridItemFormTextarea } from "../../utils/GridItemFormTextarea";
 
 const initialStates = {
   na: "",
@@ -37,7 +37,7 @@ const initialStates = {
   dt: "",
 };
 
-const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
+export const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // Breakpoints
@@ -85,7 +85,12 @@ const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
       p={2}
     >
       <HStack w={"full"} alignItems={"center"} justifyContent={"space-between"}>
-        <Heading ml={{ base: 2, md: 5 }} size={"xs"} textTransform={"uppercase"} fontWeight={"normal"}>
+        <Heading
+          ml={{ base: 2, md: 5 }}
+          size={"xs"}
+          textTransform={"uppercase"}
+          fontWeight={"normal"}
+        >
           {locale === "en" ? en.user.uF : es.user.uF}
         </Heading>
         <CloseButton onClick={onCloseSelling} />
@@ -180,5 +185,3 @@ UserScreen.propTypes = {
   es: PropTypes.object,
   en: PropTypes.object,
 };
-
-export default UserScreen;

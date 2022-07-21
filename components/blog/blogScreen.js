@@ -17,21 +17,21 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
 import { CategoryAll, Product, ShopAll } from "../../helpers/IconNew";
 
-import StatsCard from "./StatsCard";
-import BlogWork from "./BlogWork";
-import BlogEdgar from "./BlogEdgar";
-import BlogOutstanding from "./BlogOutstanding";
-import BlogCategory from "./BlogCategory";
-import BlogEnergy from "./BlogEnergy";
+import { StatsCard } from "./StatsCard";
+import { BlogWork } from "./BlogWork";
+import { BlogEdgar } from "./BlogEdgar";
+import { BlogOutstanding } from "./BlogOutstanding";
+import { BlogCategory } from "./BlogCategory";
+import { BlogEnergy } from "./BlogEnergy";
 
-import en from "../../translations/en";
-import es from "../../translations/es";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
-const BlogScreen = ({ categories, buys, product }) => {
+export const BlogScreen = ({ categories, buys, product }) => {
   // Breakpoints
   const { displayOff2, bordes, points25, content7 } = Breakpoints();
   // selector
@@ -286,5 +286,3 @@ BlogScreen.propTypes = {
   buys: PropTypes.string,
   product: PropTypes.string,
 };
-
-export default BlogScreen;

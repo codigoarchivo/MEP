@@ -6,14 +6,14 @@ import { useRouter } from "next/router";
 
 import { Container } from "@chakra-ui/react";
 
-import CategoryData from "../../components/category/CategoryData";
+import { CategoryData } from "../../../components/category/CategoryData";
 
-import ShopLayout from "../../components/layout/ShopLayout";
+import ShopLayout from "../../../components/layout/ShopLayout";
 
-import { dbCategory, dbCategoryById } from "../../data/dbCategory";
+import { dbCategory, dbCategoryById } from "../../../data/dbCategory";
 
-import en from "../../translations/en";
-import es from "../../translations/es";
+import { en } from "../../../translations/en";
+import { es } from "../../../translations/es";
 
 const ConfigCategory = ({ category }) => {
   // router

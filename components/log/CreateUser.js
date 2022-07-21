@@ -23,15 +23,15 @@ import {
   CloseButton,
 } from "@chakra-ui/react";
 
-import Validator from "../../helpers/Validator";
-import ModeColor from "../../helpers/ModeColor";
-import NavLink from "../../utils/Navlink";
-import Toast from "../../helpers/Toast";
+import { Validator } from "../../helpers/Validator";
+import { ModeColor } from "../../helpers/ModeColor";
+import { NavLink } from "../../utils/Navlink";
+import { Toast } from "../../helpers/Toast";
 
 import { startRegisterWithNameEmailPassword } from "../../actions/auth";
 
-import DividerWithText from "../../utils/DividerWithText";
-import useFormAll from "../../hooks/useFormAll";
+import { DividerWithText } from "../../utils/DividerWithText";
+import { useFormAll } from "../../hooks/useFormAll";
 
 const initialStates = {
   name: "jackson Quintero",
@@ -43,7 +43,7 @@ const data = {
   pass: false,
   rPass: false,
 };
-const CreateUser = ({ locale, es, en, back, push }) => {
+export const CreateUser = ({ locale, es, en, back, push }) => {
   // selector
   const { loading } = useSelector(({ ui }) => ui);
 
@@ -91,7 +91,7 @@ const CreateUser = ({ locale, es, en, back, push }) => {
       return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     } else {
       dispatch(startRegisterWithNameEmailPassword(email, password, name, err));
-      push("/")
+      push("/");
     }
   };
 
@@ -261,5 +261,3 @@ CreateUser.propTypes = {
   back: PropTypes.func,
   push: PropTypes.func,
 };
-
-export default CreateUser;

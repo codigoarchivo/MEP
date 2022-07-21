@@ -6,11 +6,11 @@ import { Box, Heading, HStack, Icon, Progress, Text } from "@chakra-ui/react";
 
 import { Rating } from "react-simple-star-rating";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
 import { BsPerson } from "../../helpers/IconNew";
 
-const SerchRat = (item) => {
+export const SerchRat = (item) => {
   // Breakpoints
   const { displayOff1 } = Breakpoints();
   return (
@@ -49,5 +49,3 @@ const SerchRat = (item) => {
 SerchRat.propTypes = {
   item: PropTypes.object,
 };
-
-export default SerchRat;

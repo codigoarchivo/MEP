@@ -17,17 +17,17 @@ import {
   Badge,
 } from "@chakra-ui/react";
 
-import FileAll from "../../utils/FileAll";
-import GridItemForm from "../../utils/GridItemForm";
-import GridItemFormTextarea from "../../utils/GridItemFormTextarea";
-import GridValueClose from "../../utils/GridValueClose";
-import GridItemFormNumber from "../../utils/GridItemFormNumber";
+import { FileAll } from "../../utils/FileAll";
+import { GridItemForm } from "../../utils/GridItemForm";
+import { GridItemFormTextarea } from "../../utils/GridItemFormTextarea";
+import { GridValueClose } from "../../utils/GridValueClose";
+import { GridItemFormNumber } from "../../utils/GridItemFormNumber";
 
-import ModeColor from "../../helpers/ModeColor";
+import { ModeColor } from "../../helpers/ModeColor";
 import { BsPerson, ShopAll } from "../../helpers/IconNew";
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-const ProductForm = ({
+export const ProductForm = ({
   im,
   pj,
   na,
@@ -244,5 +244,3 @@ ProductForm.propTypes = {
   es: PropTypes.object,
   en: PropTypes.object,
 };
-
-export default ProductForm;

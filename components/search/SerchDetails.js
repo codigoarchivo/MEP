@@ -26,16 +26,23 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import Calculate from "../../helpers/Calculate";
-import Breakpoints from "../../helpers/Breakpoints";
+import { Calculate } from "../../helpers/Calculate";
+import { Breakpoints } from "../../helpers/Breakpoints";
 import { CartIcon } from "../../helpers/IconNew";
 
 import { activeProductCart } from "../../actions/product";
 
-import SerchRat from "../../components/search/SerchRat";
-import SerchMessage from "../../components/search/SerchMessage";
+import { SerchRat } from "../../components/search/SerchRat";
+import { SerchMessage } from "../../components/search/SerchMessage";
 
-const SerchDetails = ({ message = [], product = {}, push, locale, es, en }) => {
+export const SerchDetails = ({
+  message = [],
+  product = {},
+  push,
+  locale,
+  es,
+  en,
+}) => {
   // dispatch
   const dispatch = useDispatch();
   // selector
@@ -240,5 +247,3 @@ SerchDetails.propTypes = {
   es: PropTypes.object,
   en: PropTypes.object,
 };
-
-export default SerchDetails;

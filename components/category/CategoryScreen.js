@@ -13,13 +13,13 @@ import {
   Tr,
 } from "@chakra-ui/react";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
 import { DeleteIcon, EditIcon, PlusSquareIcon } from "@chakra-ui/icons";
 
 import { dbCategoryValid } from "../../data/dbCategory";
 
-const CategoryScrenn = ({ id, na, edi, del, cC, push }) => {
+export const CategoryScrenn = ({ id, na, edi, del, cC, push }) => {
   // edit
   const handleEdit = async () => {
     // evita que se pueda editar  un producto que posee una categoria
@@ -30,7 +30,7 @@ const CategoryScrenn = ({ id, na, edi, del, cC, push }) => {
     }
 
     push({
-      pathname: "/admin/[id]",
+      pathname: "/admin/set/[id]",
       query: { id, na, pid: "Edit" },
     });
   };
@@ -45,7 +45,7 @@ const CategoryScrenn = ({ id, na, edi, del, cC, push }) => {
     }
 
     push({
-      pathname: "/admin/[id]",
+      pathname: "/admin/set/[id]",
       query: { id, na, pid: "Delete" },
     });
   };
@@ -103,5 +103,3 @@ CategoryScrenn.propTypes = {
   cC: PropTypes.string,
   push: PropTypes.func,
 };
-
-export default CategoryScrenn;

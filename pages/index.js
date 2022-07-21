@@ -10,18 +10,18 @@ import ShopLayout from "../components/layout/ShopLayout";
 
 import { productListIndex } from "../actions/product";
 
-import Home from "../components/home/Home";
+import { Home } from "../components/home/Home";
 
 import { categoryListConfig } from "../actions/category";
 
-import Toast from "../helpers/Toast";
+import { Toast } from "../helpers/Toast";
 
 import { dbProducts } from "../data/dbProducts";
 
 import { dbCategory } from "../data/dbCategory";
 
-import en from "../translations/en";
-import es from "../translations/es";
+import { en } from "../translations/en";
+import { es } from "../translations/es";
 
 const HomeL = ({ product = [], category = [] }) => {
   // useRouter

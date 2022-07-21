@@ -10,9 +10,9 @@ import { db } from "../../firebase/config";
 
 import { Container } from "@chakra-ui/react";
 
-import BlogScreen from "../../components/blog/blogScreen";
+import { BlogScreen } from "../../components/blog/blogScreen";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
 const Blog = (data) => {
   return (

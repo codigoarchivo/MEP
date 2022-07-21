@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { CheckIcon } from "@chakra-ui/icons";
 
-const BlogCategory = (item) => {
+export const BlogCategory = (item) => {
   return (
     <HStack align={"top"}>
       <Box color={"brand.500"} px={2}>
@@ -21,5 +21,3 @@ const BlogCategory = (item) => {
 BlogCategory.propTypes = {
   item: PropTypes.object,
 };
-
-export default BlogCategory;

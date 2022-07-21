@@ -4,12 +4,12 @@ import { HStack, Heading, Box, chakra } from "@chakra-ui/react";
 
 import { Global } from "../../../helpers/IconNew";
 
-import NavLink from "../../../utils/Navlink";
+import { NavLink } from "../../../utils/Navlink";
 
-import en from "../../../translations/en";
-import es from "../../../translations/es";
+import { en } from "../../../translations/en";
+import { es } from "../../../translations/es";
 
-const NavbarLocal = () => {
+export const NavbarLocal = () => {
   // useRouter
   const { locale, locales, asPath } = useRouter();
   return (
@@ -35,5 +35,3 @@ const NavbarLocal = () => {
     </HStack>
   );
 };
-
-export default NavbarLocal;

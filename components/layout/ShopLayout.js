@@ -12,9 +12,9 @@ import { login } from "../../actions/auth";
 
 import { chakra } from "@chakra-ui/react";
 
-import Footer from "./foo/Footer";
+import { WithSubnavigation } from "./nav/WithSubnavigation";
 
-import WithSubnavigation from "./nav/WithSubnavigation";
+import { Footer } from "./foo/Footer";
 
 const dA = process.env.NEXT_PUBLIC_ROL_A;
 const ShopLayout = ({ children, title }) => {

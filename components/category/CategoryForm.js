@@ -10,7 +10,7 @@ import {
   Input,
 } from "@chakra-ui/react";
 
-const CategoryForm = ({
+export const CategoryForm = ({
   na,
   HStack,
   VStack,
@@ -65,5 +65,3 @@ CategoryForm.propTypes = {
   locale: PropTypes.string,
   info: PropTypes.string,
 };
-
-export default CategoryForm;

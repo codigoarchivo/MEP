@@ -33,14 +33,10 @@ export const dbUser = async (id, dbU) => {
 
   const { docs } = await getDocs(q);
 
-  const data = docs
-    .map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }))
-    .sort(function (a, b) {
-      return b.cre - a.cre;
-    });
+  const data = docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
 
   return JSON.parse(JSON.stringify(data));
 };
@@ -52,8 +48,9 @@ export const dbUserData = async (id, dbU) => {
       q = query(
         collection(db, "sales"),
         where("own", "==", id),
+        where("cre", "!=", false),
         orderBy("cre", "desc"),
-        limit(2)
+        limit(1)
       );
       break;
     case "dbUserTwo":
@@ -65,7 +62,13 @@ export const dbUserData = async (id, dbU) => {
       );
       break;
     case "dbUserThree":
-      q = query(collection(db, "sales"), where("sal", "==", id), limit(2));
+      q = query(
+        collection(db, "sales"),
+        where("sal", "==", id),
+        where("cre", "!=", false),
+        orderBy("cre", "desc"),
+        limit(1)
+      );
       break;
     case "dbUserFour": // lista compras solo los que este logueados
       q = query(collection(db, "buys"), where("buy", "==", id), limit(2));

@@ -24,9 +24,9 @@ import {
 
 import { saveSale } from "../../actions/product";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
-const SerchCartModal = ({
+export const SerchCartModal = ({
   isOpen,
   onClose,
   cD,
@@ -154,5 +154,3 @@ SerchCartModal.propTypes = {
   del: PropTypes.string,
   push: PropTypes.func,
 };
-
-export default SerchCartModal;

@@ -14,19 +14,19 @@ import {
 
 import { useDispatch } from "react-redux";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
 import { validPago } from "../../actions/checkout";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
-import GridValueClose from "../../utils/GridValueClose";
+import { GridValueClose } from "../../utils/GridValueClose";
 
-import Salemodal from "./Salemodal";
+import { Salemodal } from "./Salemodal";
 
 import { CloseIcon } from "@chakra-ui/icons";
 
-const SaleVerify = ({
+export const SaleVerifyAll = ({
   bordes,
   // id del referencia product
   idThree = "",
@@ -61,7 +61,7 @@ const SaleVerify = ({
   // handleLiberate
   const handleLiberate = (e) => {
     e.preventDefault();
-  
+
     if ([idThree, sal, buy].includes("")) {
       return Toast(
         locale === "en" ? en.historySale.sI : es.historySale.sI,
@@ -224,7 +224,7 @@ const SaleVerify = ({
   );
 };
 
-SaleVerify.propTypes = {
+SaleVerifyAll.propTypes = {
   bordes: PropTypes.string,
   idThree: PropTypes.string,
   product: PropTypes.object,
@@ -238,5 +238,3 @@ SaleVerify.propTypes = {
   es: PropTypes.object,
   en: PropTypes.object,
 };
-
-export default SaleVerify;

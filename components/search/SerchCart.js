@@ -23,18 +23,18 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import SerchCartSave from "./SerchCartSave";
+import { SerchCartSave } from "./SerchCartSave";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-import SerchCartActive from "./SerchCartActive";
+import { SerchCartActive } from "./SerchCartActive";
 
-import SerchCartModal from "./SerchCartModal";
+import { SerchCartModal } from "./SerchCartModal";
 
-import es from "../../translations/es";
-import en from "../../translations/en";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
-const SerchCart = ({ active, save }) => {
+export const SerchCart = ({ active, save }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useRouter
@@ -203,5 +203,3 @@ SerchCart.propTypes = {
   active: PropTypes.array,
   save: PropTypes.array,
 };
-
-export default SerchCart;

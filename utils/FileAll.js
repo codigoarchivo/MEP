@@ -14,13 +14,13 @@ import { Button, InputGroup, Input } from "@chakra-ui/react";
 
 import { DownloadIcon } from "@chakra-ui/icons";
 
-import Validator from "../helpers/Validator";
+import { Validator } from "../helpers/Validator";
 
-import Toast from "../helpers/Toast";
+import { Toast } from "../helpers/Toast";
 
-import ModeColor from "../helpers/ModeColor";
+import { ModeColor } from "../helpers/ModeColor";
 
-const FileAll = ({ setUrlImage, fileName, save, image }) => {
+export const FileAll = ({ setUrlImage, fileName, save, image }) => {
   const [progress, setProgress] = useState(0);
   // mode Color
   const { bg } = ModeColor();
@@ -99,5 +99,3 @@ FileAll.propTypes = {
   save: PropTypes.string,
   image: PropTypes.string,
 };
-
-export default FileAll;

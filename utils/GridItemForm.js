@@ -2,7 +2,7 @@ import Proptypes from "prop-types";
 
 import { FormLabel, GridItem, Input, useBreakpoint } from "@chakra-ui/react";
 
-const GridItemForm = ({
+export const GridItemForm = ({
   mb,
   points,
   name,
@@ -14,7 +14,6 @@ const GridItemForm = ({
   maxlength,
   isReadOnly = false,
 }) => {
-  const all4 = useBreakpoint();
   return (
     <>
       <GridItem mb={mb} colSpan={points}>
@@ -26,7 +25,7 @@ const GridItemForm = ({
           {name}
         </FormLabel>
         <Input
-          size={all4 === "base" ? "sx" : "md"}
+          size={useBreakpoint() === "base" ? "sx" : "md"}
           isReadOnly={isReadOnly}
           maxLength={maxlength}
           name={na}
@@ -52,4 +51,3 @@ GridItemForm.propTypes = {
   isReadOnly: Proptypes.bool,
 };
 
-export default GridItemForm;

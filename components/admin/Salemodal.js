@@ -15,7 +15,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-const Salemodal = ({ imgs, receipt, close, picture }) => {
+export const Salemodal = ({ imgs, receipt, close, picture }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -62,5 +62,3 @@ Salemodal.propTypes = {
   close: PropTypes.string,
   picture: PropTypes.string,
 };
-
-export default Salemodal;

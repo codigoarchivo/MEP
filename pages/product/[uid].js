@@ -29,23 +29,24 @@ import { doc, setDoc } from "firebase/firestore";
 
 import { db } from "../../firebase/config";
 
-import ProductScrenn from "../../components/product/ProductScreen";
+import { ProductScrenn } from "../../components/product/ProductScreen";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
 import { listDataProduct } from "../../actions/product";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
-import Paginator from "../../utils/Paginator";
+import { Paginator } from "../../utils/Paginator";
 
 import { dbProducts } from "../../data/dbProducts";
 
-import en from "../../translations/en";
-import es from "../../translations/es";
-import useFormAll from "../../hooks/useFormAll";
+import { useFormAll } from "../../hooks/useFormAll";
+
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
 const initialStates = {
   q: "",
@@ -65,7 +66,7 @@ const List = ({ product = [] }) => {
 
   const err = locale === "en" ? en.error : es.error;
   useEffect(() => {
-    if(product) {
+    if (product) {
       dispatch(listDataProduct(product, err));
     }
   }, [dispatch, product, err]);

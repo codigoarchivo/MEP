@@ -19,22 +19,22 @@ import {
   Center,
 } from "@chakra-ui/react";
 
-import useFormAll from "../../hooks/useFormAll";
+import { useFormAll } from "../../hooks/useFormAll";
 
-import Validator from "../../helpers/Validator";
-import ModeColor from "../../helpers/ModeColor";
-import Toast from "../../helpers/Toast";
+import { Validator } from "../../helpers/Validator";
+import { ModeColor } from "../../helpers/ModeColor";
+import { Toast } from "../../helpers/Toast";
 
 import { sendEmail } from "../../actions/auth";
 
-import DividerWithText from "../../utils/DividerWithText";
-import NavLink from "../../utils/Navlink";
+import { DividerWithText } from "../../utils/DividerWithText";
+import { NavLink } from "../../utils/Navlink";
 
 const initialStates = {
   email: "jacksonescuques@gmail.com",
 };
 
-const ReviewUser = ({ locale, es, en }) => {
+export const ReviewUser = ({ locale, es, en }) => {
   // dispatch
   const dispatch = useDispatch();
   // guardar states
@@ -138,5 +138,3 @@ ReviewUser.propTypes = {
   es: PropTypes.object,
   en: PropTypes.object,
 };
-
-export default ReviewUser;

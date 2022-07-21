@@ -1,6 +1,6 @@
 import { useColorModeValue } from "@chakra-ui/react";
 
-const ModeColor = () => {
+export const ModeColor = () => {
   const textError = useColorModeValue("red.600", "red.300");
   const bgText = useColorModeValue("gray.800", "white");
   const bgTextError = useColorModeValue("white", "gray.800");
@@ -24,5 +24,3 @@ const ModeColor = () => {
     brand,
   };
 };
-
-export default ModeColor;

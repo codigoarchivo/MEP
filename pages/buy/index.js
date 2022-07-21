@@ -10,20 +10,20 @@ import { useDispatch, useSelector } from "react-redux";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
 import { cheListAllBuy, cheListAllClearBu } from "../../actions/checkout";
 
-import CheckoutScreenAll from "../../components/checkout/CheckoutScreenAll";
+import { CheckoutScreenAll } from "../../components/checkout/CheckoutScreenAll";
 
 import { dbUserData } from "../../data/dbUser";
 
-import Paginator from "../../utils/Paginator";
+import { Paginator } from "../../utils/Paginator";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
-import en from "../../translations/en";
-import es from "../../translations/es";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
 const Buy = ({ product = [] }) => {
   // useRouter

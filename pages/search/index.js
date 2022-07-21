@@ -17,26 +17,26 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 
-import SerchScreen from "../../components/search/SerchScreen";
+import { SerchScreen } from "../../components/search/SerchScreen";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
 import { serchProductList } from "../../actions/product";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
-import Paginator from "../../utils/Paginator";
+import { Paginator } from "../../utils/Paginator";
 
 import { dbProducts } from "../../data/dbProducts";
 
-import SerchCategory from "../../components/search/SerchCategory";
+import { SerchCategory } from "../../components/search/SerchCategory";
 
-import SerchRange from "../../components/search/SerchRange";
+import { SerchRange } from "../../components/search/SerchRange";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-import en from "../../translations/en";
-import es from "../../translations/es";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
 const Search = ({ product }) => {
   // useDispatch

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { Button, GridItem, HStack } from "@chakra-ui/react";
 
-const GridValueClose = ({ set, onClose, locale, es, en }) => {
+export const GridValueClose = ({ set, onClose, locale, es, en }) => {
   return (
     <>
       <GridItem colSpan={2} mt={5}>
@@ -28,4 +28,3 @@ GridValueClose.propTypes = {
   en: PropTypes.object,
   es: PropTypes.object,
 };
-export default GridValueClose;

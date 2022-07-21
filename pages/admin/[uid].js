@@ -4,26 +4,26 @@ import PropTypes from "prop-types";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { Box, Container, Heading, Stack, Text, VStack } from "@chakra-ui/react";
+import { Box, Container, Heading, Stack, VStack } from "@chakra-ui/react";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
 import { cheListAll } from "../../actions/checkout";
 
 import { dbUserData } from "../../data/dbUser";
 
-import Paginator from "../../utils/Paginator";
+import { Paginator } from "../../utils/Paginator";
 
 import { useRouter } from "next/router";
 
-import SaleScreenAll from "../../components/admin/SaleScreenAll";
+import { SaleScreenAll } from "../../components/admin/SaleScreenAll";
 
-import es from "../../translations/es";
-import en from "../../translations/en";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
 const Sale = ({ data }) => {
   // dispatch
@@ -94,7 +94,7 @@ const Sale = ({ data }) => {
               orHome={"desc"}
               orPrevious={"desc"}
               orNext={"desc"}
-              uid={query.q}
+              uid={query.uid}
               ini={"own"}
             />
           )}
@@ -108,10 +108,11 @@ Sale.propTypes = {
   data: PropTypes.array,
 };
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps(Context) {
   const dA = process.env.NEXT_PUBLIC_ROL_A.toString();
+  const d = Context.query.uid;
   try {
-    const data = query.q === dA && (await dbUserData(query.q, "dbUserData"));
+    const data = d === dA && (await dbUserData(d, "dbUserData"));
 
     if (!data) {
       return {

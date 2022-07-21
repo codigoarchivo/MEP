@@ -15,9 +15,9 @@ import {
 
 import { Arrow } from "../../helpers/IconNew";
 
-import NavLink from "../../utils/Navlink";
+import { NavLink } from "../../utils/Navlink";
 
-const BlogWork = ({ bA, bB, bC, bD, create, points, displayOff }) => {
+export const BlogWork = ({ bA, bB, bC, bD, create, points, displayOff }) => {
   return (
     <Stack
       w={"full"}
@@ -121,5 +121,3 @@ BlogWork.propTypes = {
   points: PropTypes.object,
   displayOff: PropTypes.object,
 };
-
-export default BlogWork;

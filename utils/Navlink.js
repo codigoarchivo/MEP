@@ -6,7 +6,7 @@ import { Button } from "@chakra-ui/react";
 
 import Link from "next/link";
 
-const NavLink = ({
+export const NavLink = ({
   rightIcon,
   leftIcon,
   href,
@@ -73,5 +73,3 @@ NavLink.propTypes = {
   rounded: PropTypes.string,
   locale: PropTypes.string,
 };
-
-export default NavLink;

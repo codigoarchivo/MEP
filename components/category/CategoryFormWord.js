@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { Button, Heading, chakra } from "@chakra-ui/react";
 
-const CategoryFormWord = ({
+export const CategoryFormWord = ({
   HStack,
   onClose,
   handleSubmit,
@@ -45,5 +45,3 @@ CategoryFormWord.propTypes = {
   locale: PropTypes.string,
   info: PropTypes.string,
 };
-
-export default CategoryFormWord;

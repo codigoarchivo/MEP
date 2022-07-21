@@ -4,12 +4,12 @@ import { useRouter } from "next/router";
 
 import { Container, Flex } from "@chakra-ui/react";
 
-import CreateUser from "../../components/log/CreateUser";
+import { CreateUser } from "../../components/log/CreateUser";
 
-import Breakpoints from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
-import es from "../../translations/es";
-import en from "../../translations/en";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
 const Create = () => {
   // router

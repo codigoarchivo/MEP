@@ -8,10 +8,10 @@ import { Button } from "@chakra-ui/react";
 
 import { logout } from "../../../actions/auth";
 
-import en from "../../../translations/en";
-import es from "../../../translations/es";
+import { en } from "../../../translations/en";
+import { es } from "../../../translations/es";
 
-const LogoutAllClear = () => {
+export const LogoutAllClear = () => {
   const dispatch = useDispatch();
 
   const { locale, push } = useRouter();
@@ -33,5 +33,3 @@ const LogoutAllClear = () => {
     </Button>
   );
 };
-
-export default LogoutAllClear;

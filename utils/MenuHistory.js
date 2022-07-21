@@ -13,9 +13,9 @@ import {
   Portal,
 } from "@chakra-ui/react";
 
-import NavLink from "./Navlink";
+import { NavLink } from "./Navlink";
 
-import Breakpoints from "../helpers/Breakpoints";
+import { Breakpoints } from "../helpers/Breakpoints";
 
 const MenuHistory = ({ color, buys, sales, history }) => {
   // selector
@@ -44,7 +44,7 @@ const MenuHistory = ({ color, buys, sales, history }) => {
               fontWeight={"normal"}
             />
           </MenuItem>
-          <MenuItem>
+          <MenuItem display={a.rol !== "owner" ? "block" : "none"}>
             <NavLink
               href={a.uid ? `/sale?u=${a?.uid}` : "/"}
               as={a.uid ? `/sale?u=${a?.uid}` : "/"}

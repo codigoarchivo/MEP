@@ -3,7 +3,7 @@ import { dbProductEdit } from "../data/dbProducts";
 
 import { db } from "../firebase/config";
 
-import Toast from "../helpers/Toast";
+import { Toast } from "../helpers/Toast";
 
 import { types } from "../type";
 

@@ -1,4 +1,4 @@
-export default {
+export const es = {
   auth: {
     aA: "Iniciar sesión",
     aB: "Registrarse",

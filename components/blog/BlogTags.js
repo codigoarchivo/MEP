@@ -2,7 +2,7 @@ import Proptypes from "prop-types";
 
 import { HStack, Tag } from "@chakra-ui/react";
 
-const BlogTags = (props) => {
+export const BlogTags = (props) => {
   return (
     <HStack spacing={2} marginTop={props.marginTop}>
       {props.tags.map((tag, key) => {
@@ -24,7 +24,5 @@ const BlogTags = (props) => {
 };
 
 BlogTags.propTypes = {
-  props: Proptypes.object
-}
-
-export default BlogTags;
+  props: Proptypes.object,
+};

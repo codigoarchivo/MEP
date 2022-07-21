@@ -6,11 +6,11 @@ import { useSelector } from "react-redux";
 
 import { chakra, Stack } from "@chakra-ui/react";
 
-import Breakpoints from "../../../helpers/Breakpoints";
+import { Breakpoints } from "../../../helpers/Breakpoints";
 
 import MenuHistory from "../../../utils/MenuHistory";
 
-import ListRoute from "./ListRoute";
+import { ListRoute } from "./ListRoute";
 
 export const BreadcrumbNavbar = ({ NavLink, Box, locale, es, en }) => {
   // useSelector

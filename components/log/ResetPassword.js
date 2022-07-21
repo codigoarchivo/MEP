@@ -19,10 +19,10 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 
-import useFormAll from "../../hooks/useFormAll";
+import { useFormAll } from "../../hooks/useFormAll";
 
-import Validator from "../../helpers/Validator";
-import ModeColor from "../../helpers/ModeColor";
+import { Validator } from "../../helpers/Validator";
+import { ModeColor } from "../../helpers/ModeColor";
 
 import { resetPassword } from "../../actions/auth";
 
@@ -34,7 +34,7 @@ const data = {
   pass: false,
 };
 
-const ResetPassword = ({ locale, es, en }) => {
+export const ResetPassword = ({ locale, es, en }) => {
   // dispatch
   const dispatch = useDispatch();
   // guardar states
@@ -126,5 +126,3 @@ ResetPassword.propTypes = {
   es: PropTypes.object,
   en: PropTypes.object,
 };
-
-export default ResetPassword;

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { formatDuration, getUnixTime, intervalToDuration } from "date-fns";
 
-const ContadorRegresivo = ({ lim, count }) => {
+export const ContadorRegresivo = ({ lim, count }) => {
   useEffect(() => {
     // cree el intervalo
     const interval = setInterval(() => {
@@ -38,5 +38,3 @@ const ContadorRegresivo = ({ lim, count }) => {
 
   return null;
 };
-
-export default ContadorRegresivo;

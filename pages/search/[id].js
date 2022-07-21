@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Container } from "@chakra-ui/react";
 
-import Toast from "../../helpers/Toast";
+import { Toast } from "../../helpers/Toast";
 
 import { messagesList } from "../../actions/checkout";
 
@@ -16,10 +16,10 @@ import ShopLayout from "../../components/layout/ShopLayout";
 
 import { dbProducts, dbProductsById } from "../../data/dbProducts";
 
-import SerchDetails from "../../components/search/SerchDetails";
+import { SerchDetails } from "../../components/search/SerchDetails";
 
-import en from "../../translations/en";
-import es from "../../translations/es";
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
 
 const Details = ({ product = {} }) => {
   // useDispatch

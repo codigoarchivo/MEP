@@ -1,6 +1,6 @@
 import { createStandaloneToast } from "@chakra-ui/react";
 
-const Toast = (desc, stat, dura) => {
+export const Toast = (desc, stat, dura) => {
   const toast = createStandaloneToast();
 
   if ((desc, stat, dura)) {
@@ -18,5 +18,3 @@ const Toast = (desc, stat, dura) => {
     });
   }
 };
-
-export default Toast;
