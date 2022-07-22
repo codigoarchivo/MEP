@@ -91,7 +91,9 @@ export const SerchCartActive = ({
                 {category}:
               </Heading>
               <Text size={"sm"}>
-                {list.map(({ id, na }) => id === item.ct && na)}
+                {list.map((i) =>
+                  i.id === ct && locale === "en" ? i?.na.en : i?.na.es
+                )}
               </Text>
             </HStack>
             <HStack w={full}>

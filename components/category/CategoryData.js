@@ -2,9 +2,16 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { CloseButton, Heading, HStack, VStack } from "@chakra-ui/react";
+import {
+  CloseButton,
+  Heading,
+  HStack,
+  VStack,
+  Button,
+  Stack,
+} from "@chakra-ui/react";
 
 import { Breakpoints } from "../../helpers/Breakpoints";
 import { Toast } from "../../helpers/Toast";
@@ -23,20 +30,26 @@ import { useFormAll } from "../../hooks/useFormAll";
 
 import { dbCategoryValid } from "../../data/dbCategory";
 
+import { enActive, esActive } from "../../actions/ui";
+
 const initialStates = {
-  na: "",
-  pid: "",
+  na: {
+    en: "",
+    es: "",
+  },
   cre: "",
 };
 
 export const CategoryData = ({ back, category, pid, es, en, locale }) => {
+  // selector
+  const { change } = useSelector(({ ui }) => ui);
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
   const { bordes } = Breakpoints();
 
   // useForm
-  const { values, reset, handleInputChange } = useFormAll(
+  const { values, reset, handleInputChangeEnEs } = useFormAll(
     initialStates,
     pid !== "Add" ? category : {}
   );
@@ -96,6 +109,13 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
       break;
   }
 
+  const enRes = () => {
+    dispatch(enActive());
+  };
+  const esRes = () => {
+    dispatch(esActive());
+  };
+
   return (
     <>
       <VStack
@@ -105,12 +125,40 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
         border={bordes}
         p={3}
       >
-        <HStack w={"full"}>
-          <CloseButton size="md" onClick={onClose} />
-          <Heading as="h1" size={"md"} textTransform={"uppercase"}>
-            {info}
-          </Heading>
-        </HStack>
+        <Stack
+          flexDirection={"row"}
+          w={"full"}
+          justifyContent={"space-between"}
+        >
+          <HStack>
+            <CloseButton display={"inline"} size="md" onClick={onClose} />
+            <Heading
+              display={"inline"}
+              as="h1"
+              size={"md"}
+              textTransform={"uppercase"}
+            >
+              {info}
+            </Heading>
+          </HStack>
+
+          <HStack>
+            <Button
+              color={change === false ? "brand.700" : "brand.900"}
+              variant={"secondary"}
+              onClick={enRes}
+            >
+              en
+            </Button>
+            <Button
+              color={change === true ? "brand.700" : "brand.900"}
+              variant={"secondary"}
+              onClick={esRes}
+            >
+              es
+            </Button>
+          </HStack>
+        </Stack>
 
         {pid === "Delete" ? (
           <CategoryFormWord
@@ -125,13 +173,15 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
           />
         ) : (
           <CategoryForm
-            na={na}
             info={info}
             HStack={HStack}
             VStack={VStack}
             onClose={onClose}
             handleSubmit={handleSubmit}
-            handleInputChange={handleInputChange}
+            handleInputChangeEnEs={handleInputChangeEnEs}
+            change={change}
+            naEn={na.en}
+            naEs={na.es}
             locale={locale}
             es={es}
             en={en}

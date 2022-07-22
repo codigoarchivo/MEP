@@ -2,8 +2,8 @@ export const types = {
   login: "[AUTH]login",
   logout: "[AUTH]logout",
 
-  uiSetError: "[UI] Set Error",
-  uiRemoveError: "[UI] Remove Error",
+  uiEn: "[UI] En",
+  uiEs: "[UI] Es",
   uiStartLoading: "[UI] Start loading",
   uiFinishLoading: "[UI] Finish loading",
 
@@ -36,7 +36,6 @@ export const types = {
   categoryAdd: "[CATEGORY] Add",
   categoryEdit: "[CATEGORY] Edit",
   categoryDelete: "[CATEGORY] Delete",
-  categoryActive: "[CATEGORY] Active",
   categoryActiveOld: "[CATEGORY] Old",
   categoryClose: "[CATEGORY] Close",
 

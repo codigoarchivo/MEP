@@ -7,3 +7,14 @@ export const startLoading = () => ({
 export const finishLoading = () => ({
   type: types.uiFinishLoading,
 });
+
+export const enActive = () => ({
+  type: types.uiEn,
+});
+
+export const esActive = () => ({
+  type: types.uiEs,
+});
+
+
+

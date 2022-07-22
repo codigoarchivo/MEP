@@ -19,7 +19,8 @@ import { DeleteIcon, EditIcon, PlusSquareIcon } from "@chakra-ui/icons";
 
 import { dbCategoryValid } from "../../data/dbCategory";
 
-export const CategoryScrenn = ({ id, na, edi, del, cC, push }) => {
+
+export const CategoryScreen = ({ id, na, cre, edi, del, cC, push, locale }) => {
   // edit
   const handleEdit = async () => {
     // evita que se pueda editar  un producto que posee una categoria
@@ -31,7 +32,7 @@ export const CategoryScrenn = ({ id, na, edi, del, cC, push }) => {
 
     push({
       pathname: "/admin/set/[id]",
-      query: { id, na, pid: "Edit" },
+      query: { id, pid: "Edit" },
     });
   };
 
@@ -46,7 +47,7 @@ export const CategoryScrenn = ({ id, na, edi, del, cC, push }) => {
 
     push({
       pathname: "/admin/set/[id]",
-      query: { id, na, pid: "Delete" },
+      query: { id, pid: "Delete" },
     });
   };
 
@@ -54,7 +55,7 @@ export const CategoryScrenn = ({ id, na, edi, del, cC, push }) => {
     <>
       <Tr>
         <Td>
-          <Text>{na}</Text>
+          <Text>{locale === "en" ? na.en : na.es}</Text>
         </Td>
         <Td isNumeric>
           <Menu>
@@ -95,11 +96,13 @@ export const CategoryScrenn = ({ id, na, edi, del, cC, push }) => {
   );
 };
 
-CategoryScrenn.propTypes = {
+CategoryScreen.propTypes = {
   id: PropTypes.string.isRequired,
-  na: PropTypes.string.isRequired,
+  na: PropTypes.object.isRequired,
   edi: PropTypes.string,
+  cre: PropTypes.number,
   del: PropTypes.string,
   cC: PropTypes.string,
   push: PropTypes.func,
+  locale: PropTypes.string,
 };

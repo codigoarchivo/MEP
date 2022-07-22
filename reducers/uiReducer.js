@@ -2,7 +2,7 @@ import { types } from "../type";
 
 const initialState = {
   loading: false,
-  charge: false,
+  change: false,
 };
 export const uiReducer = (states = initialState, action) => {
   switch (action.type) {
@@ -15,6 +15,16 @@ export const uiReducer = (states = initialState, action) => {
       return {
         ...states,
         loading: false,
+      };
+    case types.uiEn:
+      return {
+        ...states,
+        change: false,
+      };
+    case types.uiEs:
+      return {
+        ...states,
+        change: true,
       };
     default:
       return states;

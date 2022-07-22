@@ -118,7 +118,9 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
                   {locale === "en" ? en.major.mF : es.major.mF}:
                 </Heading>
                 <Text size={"sm"}>
-                  {list.map((item) => item.id === ct && item.na)}
+                  {list.map((i) =>
+                    i.id === ct && locale === "en" ? i?.na.en : i?.na.es
+                  )}
                 </Text>
               </HStack>
               <HStack w={full}>

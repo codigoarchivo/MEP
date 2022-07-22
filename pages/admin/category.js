@@ -23,13 +23,13 @@ import {
 
 import { Breakpoints } from "../../helpers/Breakpoints";
 
-import { CategoryScrenn } from "../../components/category/CategoryScreen";
+import { CategoryScreen } from "../../components/category/CategoryScreen";
 
 import { dbCategory } from "../../data/dbCategory";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import { activeCategory, listDataCategory } from "../../actions/category";
+import { listDataCategory } from "../../actions/category";
 
 import { Paginator } from "../../utils/Paginator";
 
@@ -63,12 +63,6 @@ const Category = ({ data = [] }) => {
 
   // add
   const handleAdd = () => {
-    dispatch(
-      activeCategory({
-        word: "Add",
-      })
-    );
-
     push({
       pathname: "/admin/set/[id]",
       query: { id: "new", pid: "Add" },
@@ -111,13 +105,14 @@ const Category = ({ data = [] }) => {
                 </Thead>
                 <Tbody>
                   {list.map((data, key) => (
-                    <CategoryScrenn
+                    <CategoryScreen
                       key={key}
                       {...data}
                       edi={locale === "en" ? en.edit : es.edit}
                       del={locale === "en" ? en.delete : es.delete}
                       cC={locale === "en" ? en.category.cC : es.category.cC}
                       push={push}
+                      locale={locale}
                     />
                   ))}
                 </Tbody>

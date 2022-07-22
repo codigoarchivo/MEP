@@ -181,7 +181,7 @@ export const ProductForm = ({
               <option>--select--</option>
               {list.map(({ id, na }) => (
                 <option key={id} value={id}>
-                  {na}
+                  {locale === "en" ? na.en : na.es}
                 </option>
               ))}
             </Select>

@@ -10,7 +10,8 @@ export const Validator = (
 ) => {
   // Register
   const nameV = values?.name === "";
-  const naV = values?.na === "";
+  const naEn = values?.na?.en === "";
+  const naEs = values?.na?.es === "";
   const emailV = values?.email === "";
   const emailVa = !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
     values?.email
@@ -103,7 +104,7 @@ export const Validator = (
   // CategoryData
 
   let ErrorCatData;
-  if (naV) {
+  if (naEn || naEs) {
     ErrorCatData = true;
   }
 

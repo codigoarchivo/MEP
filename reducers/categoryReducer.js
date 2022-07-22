@@ -3,7 +3,6 @@ import { types } from "../type";
 const initialStates = {
   list: [],
   listData: [],
-  activeSelect: {},
 };
 export const categoryReducer = (state = initialStates, action) => {
   switch (action.type) {
@@ -38,17 +37,6 @@ export const categoryReducer = (state = initialStates, action) => {
         ...state,
         listData: [...action.payload],
       };
-    case types.categoryActive:
-      return {
-        ...state,
-        activeSelect: action.payload,
-      };
-    case types.closeActive:
-      return {
-        ...state,
-        activeSelect: {},
-      };
-
     default:
       return state;
   }

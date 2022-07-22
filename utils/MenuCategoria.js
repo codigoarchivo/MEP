@@ -13,7 +13,7 @@ import {
 
 import { NavLink } from "../utils/Navlink";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { Breakpoints } from "../helpers/Breakpoints";
 
@@ -49,9 +49,9 @@ export const MenuCategoria = () => {
               <NavLink
                 href={{
                   pathname: "/search",
-                  query: { n: id, c: na },
+                  query: { n: id, c: locale === "en" ? na.en : na.es },
                 }}
-                name={na}
+                name={locale === "en" ? na.en : na.es}
                 variant={"secondary"}
                 fontWeight={"normal"}
               />

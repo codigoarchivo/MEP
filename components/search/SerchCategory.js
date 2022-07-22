@@ -33,15 +33,15 @@ export const SerchCategory = ({ locale, en, es }) => {
         </Heading>
       </Box>
       <List spacing={3}>
-        {listData.map((item) => (
-          <ListItem key={item.id}>
+        {listData.map(({ na, id }) => (
+          <ListItem key={id}>
             <ListIcon as={CheckCircleIcon} color="brand.700" />
             <NavLink
               href={{
                 pathname: "/search",
-                query: { n: item.id, c: item.na },
+                query: { n: id, c: locale === "en" ? na.en : na.es },
               }}
-              name={item.na}
+              name={locale === "en" ? na.en : na.es}
               variant={"secondary"}
               fontWeight={"normal"}
             />

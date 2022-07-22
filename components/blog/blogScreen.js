@@ -50,15 +50,21 @@ export const BlogScreen = ({ categories, buys, product }) => {
     [listData]
   );
 
+  const { na: na1 } = list.find((i) => i.id !== one?.ct);
+
   const two = useMemo(
     () => listData[Math.floor(Math.random() * listData.length)],
     [listData]
   );
 
+  const { na: na2 } = list.find((i) => i.id !== two?.ct);
+
   const three = useMemo(
     () => listData[Math.floor(Math.random() * listData.length)],
     [listData]
   );
+
+  const { na: na3 } = list.find((i) => i.id !== three?.ct);
 
   return (
     <Stack flexDirection={content7} spacing={0}>
@@ -140,19 +146,19 @@ export const BlogScreen = ({ categories, buys, product }) => {
           >
             {[
               {
-                title: `${list.find((item) => item.id !== one?.ct)?.na}`,
+                title: locale === "en" ? na1?.en : na1?.es,
                 name: one?.na,
                 price: `${one?.pr}$`,
                 date5: `${one?.id}`,
               },
               {
-                title: `${list.find((item) => item.id !== two?.ct)?.na}`,
+                title: locale === "en" ? na2?.en : na2?.es,
                 name: two?.na,
                 price: `${two?.pr}$`,
                 date5: `${two?.id}`,
               },
               {
-                title: `${list.find((item) => item.id !== three?.ct)?.na}`,
+                title: locale === "en" ? na3?.en : na3?.es,
                 name: three?.na,
                 price: `${three?.pr}$`,
                 date5: `${three?.id}`,
