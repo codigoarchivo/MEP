@@ -1,5 +1,16 @@
 import React, { useEffect } from "react";
 
+import {
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import PropTypes from "prop-types";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -13,8 +24,6 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 import { Toast } from "../../helpers/Toast";
 
 import { cheListAll } from "../../actions/checkout";
-
-import { dbUserData } from "../../data/dbUser";
 
 import { Paginator } from "../../utils/Paginator";
 
@@ -109,10 +118,22 @@ Sale.propTypes = {
 };
 
 export async function getServerSideProps(Context) {
-  const dA = process.env.NEXT_PUBLIC_ROL_A.toString();
-  const d = Context.query.uid;
+  const d = Context.query.uid.toString();
   try {
-    const data = d === dA && (await dbUserData(d, "dbUserData"));
+    const q = query(
+      collection(db, "sales"),
+      where("own", "==", d),
+      where("cre", "!=", false),
+      orderBy("cre", "desc"),
+      limit(1)
+    );
+
+    const { docs } = await getDocs(q);
+
+    const data = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     if (!data) {
       return {

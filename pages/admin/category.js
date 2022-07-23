@@ -1,5 +1,16 @@
 import React, { useEffect } from "react";
 
+import {
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import PropTypes from "prop-types";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -24,8 +35,6 @@ import {
 import { Breakpoints } from "../../helpers/Breakpoints";
 
 import { CategoryScreen } from "../../components/category/CategoryScreen";
-
-import { dbCategory } from "../../data/dbCategory";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
@@ -149,7 +158,19 @@ Category.propTypes = {
 
 export async function getServerSideProps() {
   try {
-    const data = await dbCategory("", "dbCatTwo");
+    const ca = query(
+      collection(db, "categories"),
+      where("cre", "!=", false),
+      orderBy("cre", "desc"),
+      limit(25)
+    );
+
+    const { docs } = await getDocs(ca);
+
+    const data = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     if (!data) {
       return {

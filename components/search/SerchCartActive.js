@@ -16,18 +16,7 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 
 import { deleteProductCart } from "../../actions/product";
 
-export const SerchCartActive = ({
-  item,
-  inc,
-  name,
-  description,
-  price,
-  quantity,
-  category,
-  guy,
-  subtotal,
-  removed,
-}) => {
+export const SerchCartActive = ({ item, inc, locale, en, es }) => {
   // dispatch
   const dispatch = useDispatch();
   // selector
@@ -44,7 +33,7 @@ export const SerchCartActive = ({
     dispatch(deleteProductCart(id));
     // dcr
     active.map((item) => (inc.current -= item.pr));
-    Toast(removed, "error", 5000);
+    Toast(locale === "en" ? en.removed : es.removed, "error", 5000);
   };
 
   return (
@@ -54,7 +43,7 @@ export const SerchCartActive = ({
           <Flex position={"relative"} display={displayOff2}>
             <Image
               src={item.im || "https://via.placeholder.com/155.png?text=Imagen"}
-              alt={item.na}
+              alt={locale === "en" ? item.na.en : item.na.es}
               width={155}
               height={155}
               objectFit="cover"
@@ -64,47 +53,54 @@ export const SerchCartActive = ({
           <VStack spacing={1}>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                {name}:
+                {locale === "en" ? en.name : es.name}:
               </Heading>
-              <Text size={"sm"}>{item.na}</Text>
+              <Text size={"sm"}>
+                {locale === "en" ? item.na.en : item.na.es}
+              </Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                {description}:
+                {locale === "en" ? en.description : es.description}:
               </Heading>
-              <Text size={"sm"}>{item.ds}</Text>
+              <Text size={"sm"}>
+                {locale === "en" ? item.ds.en : item.ds.es}
+              </Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                {price}:
+                {locale === "en" ? en.price : es.price}:
               </Heading>
               <Text size={"sm"}>${item.pr}</Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                {quantity}:
+                {locale === "en" ? en.quantity : es.quantity}:
               </Heading>
               <Text size={"sm"}>N°{item.cn}</Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                {category}:
+                {locale === "en" ? en.major.mF : es.major.mF}:
               </Heading>
               <Text size={"sm"}>
-                {list.map((i) =>
-                  i.id === ct && locale === "en" ? i?.na.en : i?.na.es
+                {list.map(
+                  (i) =>
+                    i.id === item.ct && (locale === "en" ? i?.na.en : i?.na.es)
                 )}
               </Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                {guy}:
+                {locale === "en" ? en.guy : es.guy}:
               </Heading>
-              <Text size={"sm"}>{item.ps}</Text>
+              <Text size={"sm"}>
+                {locale === "en" ? item.ps.en : item.ps.es}
+              </Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                {subtotal}:
+                {locale === "en" ? en.subtotal : es.subtotal}:
               </Heading>
               <Text size={"sm"}>${item.cn * item.pr}</Text>
             </HStack>
@@ -125,12 +121,7 @@ export const SerchCartActive = ({
 SerchCartActive.propTypes = {
   item: PropTypes.object.isRequired,
   inc: PropTypes.object.isRequired,
-  name: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired,
-  quantity: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  guy: PropTypes.string.isRequired,
-  subtotal: PropTypes.string.isRequired,
-  removed: PropTypes.string.isRequired,
+  locale: PropTypes.string.isRequired,
+  en: PropTypes.object.isRequired,
+  es: PropTypes.object.isRequired,
 };

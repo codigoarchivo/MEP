@@ -1,5 +1,18 @@
 import React, { useEffect } from "react";
 
+import {
+  collection,
+  doc,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
@@ -25,10 +38,6 @@ import {
   Input,
 } from "@chakra-ui/react";
 
-import { doc, setDoc } from "firebase/firestore";
-
-import { db } from "../../firebase/config";
-
 import { ProductScrenn } from "../../components/product/ProductScreen";
 
 import ShopLayout from "../../components/layout/ShopLayout";
@@ -40,8 +49,6 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 import { Toast } from "../../helpers/Toast";
 
 import { Paginator } from "../../utils/Paginator";
-
-import { dbProducts } from "../../data/dbProducts";
 
 import { useFormAll } from "../../hooks/useFormAll";
 
@@ -202,7 +209,20 @@ List.propTypes = {
 export async function getServerSideProps({ params, locale }) {
   const uid = await params.uid.toString();
   try {
-    const product = await dbProducts(uid, "dbProTwo");
+    const q = query(
+      collection(db, "serchs"),
+      where("uid", "==", uid),
+      where("cre", "!=", false),
+      orderBy("cre", "desc"),
+      limit(2)
+    );
+
+    const { docs } = await getDocs(q);
+
+    const product = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     if (!product) {
       return {

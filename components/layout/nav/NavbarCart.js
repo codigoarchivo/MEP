@@ -102,7 +102,7 @@ export const NavbarCart = () => {
                   {[
                     {
                       nombre: locale === "en" ? en.name : es.name,
-                      Valor: item.na,
+                      Valor: locale === "en" ? item.na.en : item.na.es,
                     },
                     {
                       nombre: locale === "en" ? en.quantity : es.quantity,

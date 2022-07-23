@@ -1,5 +1,9 @@
 import React, { useEffect, useMemo } from "react";
 
+import { collection, getDocs, limit, where, query } from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
@@ -27,8 +31,6 @@ import {
 } from "../../actions/product";
 
 import { CheckoutScreen } from "../../components/checkout/CheckoutScreen";
-
-import { dbUserData } from "../../data/dbUser";
 
 import { Toast } from "../../helpers/Toast";
 
@@ -161,10 +163,22 @@ Checkout.propTypes = {
   product: PropTypes.array,
 };
 
-export async function getServerSideProps({ query }) {
-  const q = await query.q.toString();
+export async function getServerSideProps(Context) {
+  const qu = await Context.query.q.toString();
   try {
-    const product = await dbUserData(q, "dbUserTwo");
+    const q = query(
+      collection(db, "buys"),
+      where("buy", "==", qu),
+      where("close", "==", false),
+      limit(2)
+    );
+
+    const { docs } = await getDocs(q);
+
+    const product = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     if (!product) {
       return {

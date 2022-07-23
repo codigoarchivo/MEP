@@ -99,13 +99,13 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
   let info = "";
   switch (pid) {
     case "Add":
-      info = locale === "en" ? en.add : es.add;
+      info = change === false ? en.add : es.add;
       break;
     case "Edit":
-      info = locale === "en" ? en.edit : es.edit;
+      info = change === false ? en.edit : es.edit;
       break;
     case "Delete":
-      info = locale === "en" ? en.delete : es.delete;
+      info = change === false ? en.delete : es.delete;
       break;
   }
 
@@ -173,6 +173,7 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
           />
         ) : (
           <CategoryForm
+            na={change === false ? na.en : na.es}
             info={info}
             HStack={HStack}
             VStack={VStack}
@@ -180,8 +181,6 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
             handleSubmit={handleSubmit}
             handleInputChangeEnEs={handleInputChangeEnEs}
             change={change}
-            naEn={na.en}
-            naEs={na.es}
             locale={locale}
             es={es}
             en={en}

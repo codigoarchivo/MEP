@@ -1,5 +1,9 @@
 import React from "react";
 
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import PropTypes from "prop-types";
 
 import { useSelector } from "react-redux";
@@ -11,8 +15,6 @@ import { Container } from "@chakra-ui/react";
 import { ProductData } from "../../components/product/ProductData";
 
 import ShopLayout from "../../components/layout/ShopLayout";
-
-import { dbProducts, dbProductsById } from "../../data/dbProducts";
 
 import { Toast } from "../../helpers/Toast";
 
@@ -52,7 +54,13 @@ ConfigDashboard.propTypes = {
 };
 
 export async function getStaticPaths() {
-  const producto = await dbProducts("", "dbProFour");
+  const { docs } = await getDocs(collection(db, "serchs"));
+
+  const producto = docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
   return {
     paths: producto.map(
       ({ id }) => (
@@ -77,7 +85,12 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const id = await params.id.toString();
   try {
-    const product = await dbProductsById(id, "dbProOneID");
+    const docSnap = await getDoc(doc(db, "serchs", id));
+
+    const product = {
+      id: docSnap.id,
+      ...docSnap.data(),
+    };
 
     if (!product) {
       return {

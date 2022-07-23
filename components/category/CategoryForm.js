@@ -17,8 +17,7 @@ export const CategoryForm = ({
   handleSubmit,
   handleInputChangeEnEs,
   change,
-  naEn,
-  naEs,
+  na,
   locale,
   es,
   en,
@@ -27,43 +26,29 @@ export const CategoryForm = ({
   return (
     <>
       <chakra.form onSubmit={handleSubmit} w="full" p={3}>
-        <VStack spacing={0} mb={10}>
-          <FormControl display={change === false ? "block" : "none"}>
-            <FormLabel htmlFor="en">
-              {locale === "en" ? en.name : es.name}
+        <VStack spacing={7} mb={10}>
+          <FormControl>
+            <FormLabel htmlFor={change === true ? "en" : "es"}>
+              {change === false ? en.name : es.name}
             </FormLabel>
             <Input
-              name="en"
-              id="na"
-              value={naEn}
+              name={change === false ? "en" : "es"}
+              id={"na"}
+              value={na}
               type={"text"}
-              placeholder={locale === "en" ? en.name : es.name}
+              placeholder={change === false ? en.name : es.name}
               onChange={handleInputChangeEnEs}
             />
           </FormControl>
-
-          <FormControl display={change === true ? "block" : "none"}>
-            <FormLabel htmlFor="es">
-              {locale === "en" ? en.name : es.name}
-            </FormLabel>
-            <Input
-              name="es"
-              id="na"
-              value={naEs}
-              type={"text"}
-              placeholder={locale === "en" ? en.name : es.name}
-              onChange={handleInputChangeEnEs}
-            />
-          </FormControl>
+          <HStack w={"full"} justifyContent="flex-end">
+            <Button variant={"secondary"} onClick={onClose}>
+              {change === false ? en.close : es.close}
+            </Button>
+            <Button variant={"primary"} type="submit" ml={3}>
+              {info}
+            </Button>
+          </HStack>
         </VStack>
-        <HStack w={"full"} justifyContent="flex-end">
-          <Button variant={"secondary"} onClick={onClose}>
-            {locale === "en" ? en.close : es.close}
-          </Button>
-          <Button variant={"primary"} type="submit" ml={3}>
-            {info}
-          </Button>
-        </HStack>
       </chakra.form>
     </>
   );
@@ -76,8 +61,7 @@ CategoryForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleInputChangeEnEs: PropTypes.func.isRequired,
   change: PropTypes.bool.isRequired,
-  naEn: PropTypes.string,
-  naEs: PropTypes.string,
+  na: PropTypes.string,
   es: PropTypes.object,
   en: PropTypes.object,
   locale: PropTypes.string,

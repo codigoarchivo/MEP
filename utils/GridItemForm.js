@@ -7,16 +7,18 @@ export const GridItemForm = ({
   points,
   name,
   na,
+  id,
   val,
   type,
   place,
   handle,
   maxlength,
   isReadOnly = false,
+  display = "block",
 }) => {
   return (
     <>
-      <GridItem mb={mb} colSpan={points}>
+      <GridItem mb={mb} colSpan={points} display={display}>
         <FormLabel
           fontWeight={"bold"}
           textTransform={"capitalize"}
@@ -29,7 +31,7 @@ export const GridItemForm = ({
           isReadOnly={isReadOnly}
           maxLength={maxlength}
           name={na}
-          id={na}
+          id={id}
           onChange={handle}
           value={val}
           type={type}
@@ -43,11 +45,12 @@ export const GridItemForm = ({
 GridItemForm.propTypes = {
   name: Proptypes.string,
   na: Proptypes.string,
+  id: Proptypes.string,
   val: Proptypes.string,
   type: Proptypes.string,
   place: Proptypes.string,
   handle: Proptypes.func,
   maxlength: Proptypes.string,
   isReadOnly: Proptypes.bool,
+  display: Proptypes.string,
 };
-

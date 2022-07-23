@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
 
+import { collection, getDocs, limit, where } from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
@@ -15,8 +19,6 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 import { cheListAllBuy, cheListAllClearBu } from "../../actions/checkout";
 
 import { CheckoutScreenAll } from "../../components/checkout/CheckoutScreenAll";
-
-import { dbUserData } from "../../data/dbUser";
 
 import { Paginator } from "../../utils/Paginator";
 
@@ -82,6 +84,7 @@ const Buy = ({ product = [] }) => {
                   pro={locale === "en" ? en.process : es.process}
                   sF={locale === "en" ? en.historyBuy.sF : es.historyBuy.sF}
                   push={push}
+                  locale={locale}
                 />
               ))}
             </VStack>
@@ -116,7 +119,14 @@ Buy.propTypes = {
 export async function getServerSideProps({ query }) {
   const u = await query.u.toString();
   try {
-    const product = await dbUserData(u, "dbUserFour");
+    const q = query(collection(db, "buys"), where("buy", "==", u), limit(2));
+
+    const { docs } = await getDocs(q);
+
+    const product = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     if (!product) {
       return {

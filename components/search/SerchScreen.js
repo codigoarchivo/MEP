@@ -198,7 +198,7 @@ export const SerchScreen = ({
             <Box position={"relative"}>
               <Image
                 src={im || "https://via.placeholder.com/248.png?text=Imagen"}
-                alt={na}
+                alt={locale === "en" ? na.en : na.es}
                 width={248}
                 height={248}
                 objectFit="cover"
@@ -212,7 +212,7 @@ export const SerchScreen = ({
 
             <Box p={3} w={"full"}>
               <Flex align="baseline" w={"full"}>
-                <Badge colorScheme="green">{ps}</Badge>
+                <Badge colorScheme="green">{locale === "en" ? ps.en : ps.es}</Badge>
               </Flex>
 
               <HStack w={"full"} spacing={0}>
@@ -232,7 +232,7 @@ export const SerchScreen = ({
               </HStack>
 
               <Stat size={"sm"} width={"full"}>
-                <StatLabel textTransform={"capitalize"}>{na}</StatLabel>
+                <StatLabel textTransform={"capitalize"}>{locale === "en" ? na.en : na.es}</StatLabel>
                 <StatNumber>
                   <HStack w={"full"} justifyContent={"space-between"}>
                     <Text>${pr}</Text>
@@ -240,7 +240,9 @@ export const SerchScreen = ({
                   </HStack>
                 </StatNumber>
                 <Collapse in={isOpen} animateOpacity>
-                  <StatHelpText mt={2}>{ds}</StatHelpText>
+                  <StatHelpText mt={2}>
+                    {locale === "en" ? ds.en : ds.es}
+                  </StatHelpText>
                 </Collapse>
               </Stat>
             </Box>
@@ -254,13 +256,13 @@ export const SerchScreen = ({
 SerchScreen.propTypes = {
   cn: PropTypes.number,
   id: PropTypes.string.isRequired,
-  na: PropTypes.string.isRequired,
+  na: PropTypes.object.isRequired,
   ct: PropTypes.string.isRequired,
-  ds: PropTypes.string.isRequired,
-  dt: PropTypes.string.isRequired,
+  ds: PropTypes.object.isRequired,
+  dt: PropTypes.object.isRequired,
   im: PropTypes.string.isRequired,
   pr: PropTypes.number.isRequired,
-  ps: PropTypes.string.isRequired,
+  ps: PropTypes.object.isRequired,
   uid: PropTypes.string.isRequired,
   pj: PropTypes.number.isRequired,
 };

@@ -31,6 +31,7 @@ export const CheckoutScreenAll = ({
   pro,
   sal,
   push,
+  locale,
 }) => {
   // Breakpoints
   const { bordes, full, content3 } = Breakpoints();
@@ -60,7 +61,7 @@ export const CheckoutScreenAll = ({
           {[
             {
               all: name,
-              dat: product.na,
+              dat: locale === "en" ? product.na.en : product.na.es,
             },
             {
               all: quantity,
@@ -136,5 +137,6 @@ CheckoutScreenAll.propTypes = {
   paid: PropTypes.string,
   pro: PropTypes.string,
   sal: PropTypes.string,
+  locale: PropTypes.string,
   push: PropTypes.func,
 };

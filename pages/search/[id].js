@@ -1,5 +1,16 @@
 import React, { useEffect } from "react";
 
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
@@ -14,32 +25,26 @@ import { messagesList } from "../../actions/checkout";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import { dbProducts, dbProductsById } from "../../data/dbProducts";
-
 import { SerchDetails } from "../../components/search/SerchDetails";
 
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
-const Details = ({ product = {} }) => {
+const Details = ({ product = {}, msg = [] }) => {
   // useDispatch
   const dispatch = useDispatch();
   // useRouter
-  const { query, locale, push } = useRouter();
+  const { locale, push } = useRouter();
   // useSelector
   const { message: m } = useSelector(({ checkout }) => checkout);
 
   useEffect(() => {
-    async function fetchData() {
-      const message = await dbProducts(query.id, "dbProThree");
-      if (message) {
-        dispatch(messagesList(message));
-      } else {
-        dispatch(messagesList([]));
-      }
+    if (msg) {
+      dispatch(messagesList(msg));
+    } else {
+      dispatch(messagesList([]));
     }
-    fetchData();
-  }, [dispatch, query.id]);
+  }, [dispatch, msg]);
 
   return (
     <ShopLayout title={locale === "en" ? en.details : es.details}>
@@ -59,10 +64,17 @@ const Details = ({ product = {} }) => {
 
 Details.propType = {
   product: PropTypes.object,
+  msg: PropTypes.object,
 };
 
 export async function getStaticPaths() {
-  const producto = await dbProducts("", "dbProFour");
+  const { docs } = await getDocs(collection(db, "serchs"));
+
+  const producto = docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
   return {
     paths: producto.map(
       ({ id }) => (
@@ -85,11 +97,27 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
+  // message
+  const id = params.id.toString();
   try {
-    // message
-    const id = params.id;
-    // product
-    const product = await dbProductsById(id, "dbProOneID");
+    const docSnap = await getDoc(doc(db, "serchs", id));
+
+    const product = {
+      id: docSnap.id,
+      ...docSnap.data(),
+    };
+
+    const q = query(
+      collection(db, "serchs", id, "messages"),
+      orderBy("cre", "desc")
+    );
+
+    const { docs } = await getDocs(q);
+
+    const msg = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     if (!product) {
       return {
@@ -101,7 +129,7 @@ export async function getStaticProps({ params }) {
       };
     }
 
-    return { props: { product } };
+    return { props: { product, msg } };
   } catch (error) {
     Toast("Al parecer hay un error", "error", 5000);
     return { props: { message: [], product: {} } };

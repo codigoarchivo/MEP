@@ -12,12 +12,14 @@ export const GridItemFormTextarea = ({
   bg,
   brand,
   mb,
+  id,
   size = "xs",
   isReadOnly = false,
+  display = "block",
 }) => {
   return (
     <>
-      <GridItem colSpan={points} mb={mb}>
+      <GridItem colSpan={points} mb={mb} display={display}>
         <FormLabel
           fontWeight={"bold"}
           textTransform={"capitalize"}
@@ -32,7 +34,7 @@ export const GridItemFormTextarea = ({
           _focus={brand}
           variant="filled"
           name={na}
-          id={na}
+          id={id}
           value={val}
           onChange={handle}
           placeholder={place}
@@ -49,6 +51,7 @@ GridItemFormTextarea.propTypes = {
   na: PropTypes.string,
   val: PropTypes.string,
   place: PropTypes.string,
+  display: PropTypes.string,
   handle: PropTypes.func,
   bg: PropTypes.string,
   brand: PropTypes.object,

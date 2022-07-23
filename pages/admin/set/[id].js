@@ -1,5 +1,9 @@
 import React from "react";
 
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+
+import { db } from "../../../firebase/config";
+
 import PropTypes from "prop-types";
 
 import { useRouter } from "next/router";
@@ -9,8 +13,6 @@ import { Container } from "@chakra-ui/react";
 import { CategoryData } from "../../../components/category/CategoryData";
 
 import ShopLayout from "../../../components/layout/ShopLayout";
-
-import { dbCategory, dbCategoryById } from "../../../data/dbCategory";
 
 import { en } from "../../../translations/en";
 import { es } from "../../../translations/es";
@@ -39,7 +41,13 @@ ConfigCategory.propTypes = {
 };
 
 export async function getStaticPaths() {
-  const category = await dbCategory("", "dbCatOne");
+  const { docs } = await getDocs(collection(db, "categories"));
+
+  const category = docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
   return {
     paths: category.map(
       ({ id }) => (
@@ -64,8 +72,13 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const id = await params.id.toString();
   try {
-    const category = await dbCategoryById(id);
-
+    const docSnap = await getDoc(doc(db, "categories", id));
+  
+    const category = {
+      id: docSnap.id,
+      ...docSnap.data(),
+    };
+  
     if (!category) {
       return {
         // notFound: true, // Devolverá la página 404

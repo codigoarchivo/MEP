@@ -34,16 +34,14 @@ import { dbProducts } from "../../data/dbProducts";
 
 export const SerchCartSave = ({
   item,
-  name,
-  price,
-  available,
-  add,
-  del,
+  locale,
   err,
   added,
   already,
   removed,
   picture,
+  en,
+  es,
 }) => {
   // useDispatch
   const dispatch = useDispatch();
@@ -105,26 +103,28 @@ export const SerchCartSave = ({
                 item.im ||
                 `https://via.placeholder.com/1000.png?text=${picture}`
               }
-              alt="Picture of the author"
+              alt={locale === "en" ? item.na.en : item.na.es}
               width={100}
               height={100}
             />
             <VStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {name}:
+                  {locale === "en" ? en.name : es.name}:
                 </Heading>
-                <Text size={"sm"}>{item.na}</Text>
+                <Text size={"sm"}>
+                  {locale === "en" ? item.na.en : item.na.es}
+                </Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {price}:
+                  {locale === "en" ? en.price : es.price}:
                 </Heading>
                 <Text size={"sm"}>${item.pr}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {available}:
+                  {locale === "en" ? en.available : es.available}:
                 </Heading>
                 <Text size={"sm"}>N°{item.cn - 1}</Text>
               </HStack>
@@ -163,7 +163,7 @@ export const SerchCartSave = ({
                   onClick={handleSelect}
                 >
                   <SmallAddIcon w={3} h={3} />
-                  <Text>{add}</Text>
+                  <Text>{locale === "en" ? en.add : es.add}</Text>
                 </HStack>
               </MenuItem>
 
@@ -176,7 +176,7 @@ export const SerchCartSave = ({
                   onClick={handleDeleteSave}
                 >
                   <DeleteIcon w={3} h={3} />
-                  <Text>{del}</Text>
+                  <Text>{locale === "en" ? en.delete : es.delete}</Text>
                 </HStack>
               </MenuItem>
             </MenuList>
@@ -189,14 +189,12 @@ export const SerchCartSave = ({
 
 SerchCartSave.propTypes = {
   item: PropTypes.object.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired,
-  available: PropTypes.string.isRequired,
-  add: PropTypes.string.isRequired,
-  del: PropTypes.string.isRequired,
+  locale: PropTypes.string.isRequired,
   err: PropTypes.string.isRequired,
   added: PropTypes.string.isRequired,
   already: PropTypes.string.isRequired,
   removed: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
+  en: PropTypes.object.isRequired,
+  es: PropTypes.object.isRequired,
 };

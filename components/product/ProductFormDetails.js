@@ -4,16 +4,17 @@ import PropTypes from "prop-types";
 
 import { Text } from "@chakra-ui/react";
 
-export const ProductFormDetails = ({ dt }) => {
+export const ProductFormDetails = ({ dt, change }) => {
   return (
     <>
       <Text lineHeight={2} p={5}>
-        {dt}
+        {change === false ? dt.en : dt.es}
       </Text>
     </>
   );
 };
 
 ProductFormDetails.propTypes = {
-  dt: PropTypes.string.isRequired,
+  dt: PropTypes.object.isRequired,
+  change: PropTypes.bool.isRequired,
 };

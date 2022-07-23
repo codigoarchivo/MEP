@@ -1,5 +1,9 @@
 import React from "react";
 
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+
+import { db } from "../../../firebase/config";
+
 import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
@@ -13,8 +17,6 @@ import { Breakpoints } from "../../../helpers/Breakpoints";
 import { SaleVerifyAll } from "../../../components/admin/SaleVerifyAll";
 
 import { Toast } from "../../../helpers/Toast";
-
-import { dbUser, dbUserByUID } from "../../../data/dbUser";
 
 import { en } from "../../../translations/en";
 import { es } from "../../../translations/es";
@@ -58,7 +60,13 @@ Orders.propTypes = {
 };
 
 export async function getStaticPaths() {
-  const sales = await dbUser("", "dbUserThree");
+  const { docs } = await getDocs(collection(db, "sales"));
+
+  const sales = docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
   return {
     paths: sales.map(
       ({ id }) => (
@@ -83,8 +91,12 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const id = await params.id.toString();
   try {
-    // compra del producto path: /buys
-    const active = await dbUserByUID(id, "dbuserThreeID");
+    const docSnap = await getDoc(doc(db, "sales", id));
+
+    const active = {
+      id: docSnap.id,
+      ...docSnap.data(),
+    };
 
     if (!active) {
       return {

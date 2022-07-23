@@ -97,16 +97,9 @@ export const SerchCart = ({ active, save }) => {
                       item={item}
                       inc={inc}
                       key={key}
-                      name={locale === "en" ? en.name : es.name}
-                      description={
-                        locale === "en" ? en.description : es.description
-                      }
-                      price={locale === "en" ? en.price : es.price}
-                      quantity={locale === "en" ? en.quantity : es.quantity}
-                      category={locale === "en" ? en.major.mF : es.major.mF}
-                      guy={locale === "en" ? en.guy : es.guy}
-                      subtotal={locale === "en" ? en.subtotal : es.subtotal}
-                      removed={locale === "en" ? en.removed : es.removed}
+                      locale={locale}
+                      en={en}
+                      es={es}
                     />
                   ))}
                 </Tbody>
@@ -145,9 +138,9 @@ export const SerchCart = ({ active, save }) => {
             <SerchCartModal
               isOpen={isOpen}
               onClose={onClose}
-              cD={locale === "en" ? en.cart.cD : es.cart.cD}
-              cE={locale === "en" ? en.cart.cE : es.cart.cE}
-              cF={locale === "en" ? en.cart.cF : en.cart.cF}
+              locale={locale}
+              en={en}
+              es={es}
               close={locale === "en" ? en.close : es.close}
               toBuy={locale === "en" ? en.toBuy : es.toBuy}
               del={locale === "en" ? en.delete : en.delete}
@@ -179,11 +172,9 @@ export const SerchCart = ({ active, save }) => {
                 <SerchCartSave
                   key={item.id}
                   item={item}
-                  name={locale === "en" ? en.name : en.name}
-                  price={locale === "en" ? en.price : en.price}
-                  available={locale === "en" ? en.available : en.available}
-                  add={locale === "en" ? en.add : en.add}
-                  del={locale === "en" ? en.delete : en.delete}
+                  locale={locale}
+                  en={en}
+                  es={es}
                   err={locale === "en" ? en.error : es.error}
                   added={locale === "en" ? en.cart.cG : es.cart.cG}
                   already={locale === "en" ? en.cart.cH : es.cart.cH}

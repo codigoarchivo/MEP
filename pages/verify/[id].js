@@ -1,5 +1,9 @@
 import React from "react";
 
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
@@ -12,8 +16,6 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 
 import { CheckVerify } from "../../components/checkout/CheckVerify";
 
-import { dbUser, dbUserByUID } from "../../data/dbUser";
-
 import { Toast } from "../../helpers/Toast";
 
 import { en } from "../../translations/en";
@@ -23,7 +25,7 @@ const Verification = ({ data }) => {
   // router
   const { push, locale, back } = useRouter();
   // Breakpoints
-  const { content5, bordes, full } = Breakpoints();
+  const { bordes } = Breakpoints();
 
   return (
     <ShopLayout title={locale === "en" ? en.verify.vG : es.verify.vG}>
@@ -53,7 +55,13 @@ Verification.propTypes = {
 };
 
 export async function getStaticPaths() {
-  const product = await dbUser("", "dbUserOne");
+  const { docs } = await getDocs(collection(db, "buys"));
+
+  const product = docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
   return {
     paths: product.map(
       ({ id }) => (
@@ -79,7 +87,12 @@ export async function getStaticProps({ params }) {
   const id = await params.id.toString();
 
   try {
-    const data = await dbUserByUID(id, "dbuserTwoID");
+    const docSnap = await getDoc(doc(db, "buys", id));
+
+    const data = {
+      id: docSnap.id,
+      ...docSnap.data(),
+    };
 
     if (!data) {
       return {
@@ -92,7 +105,7 @@ export async function getStaticProps({ params }) {
 
     return {
       props: {
-        data,
+        data: JSON.parse(JSON.stringify(data)),
       },
     };
   } catch (error) {

@@ -29,13 +29,13 @@ import { Toast } from "../../helpers/Toast";
 export const SerchCartModal = ({
   isOpen,
   onClose,
-  cD,
-  cE,
-  cF,
+  locale,
   close,
   toBuy,
   del,
   push,
+  en,
+  es,
 }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
@@ -94,7 +94,7 @@ export const SerchCartModal = ({
     // save cart
     dispatch(saveSale(data, del));
 
-    Toast(cF, "success", 5000);
+    Toast(locale === "en" ? en.cart.cF : es.cart.cF, "success", 5000);
 
     push(`/checkout?q=${a.uid}`);
   };
@@ -118,9 +118,9 @@ export const SerchCartModal = ({
             </Box>
 
             <Heading size={"md"} mb={3}>
-              {cD},
+              {locale === "en" ? en.cart.cD : es.cart.cD},
             </Heading>
-            <Text>{cE}</Text>
+            <Text>{locale === "en" ? en.cart.cE : es.cart.cE}</Text>
           </ModalBody>
           <ModalFooter>
             <Button variant={"secondary"} mr={3} onClick={onClose}>
@@ -145,12 +145,12 @@ export const SerchCartModal = ({
 SerchCartModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  cD: PropTypes.string.isRequired,
-  cE: PropTypes.string.isRequired,
-  cF: PropTypes.string.isRequired,
+  locale: PropTypes.string.isRequired,
   del: PropTypes.string.isRequired,
   close: PropTypes.string.isRequired,
   toBuy: PropTypes.string.isRequired,
   del: PropTypes.string,
+  en: PropTypes.object,
+  es: PropTypes.object,
   push: PropTypes.func,
 };

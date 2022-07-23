@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
 
+import { collection, getDocs, limit, orderBy, where } from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
@@ -15,8 +19,6 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 import { Toast } from "../../helpers/Toast";
 
 import { cheListAllClear, cheListAllSale } from "../../actions/checkout";
-
-import { dbUserData } from "../../data/dbUser";
 
 import { Paginator } from "../../utils/Paginator";
 
@@ -119,7 +121,20 @@ Sale.propTypes = {
 export async function getServerSideProps({ query }) {
   const dA = query.u.toString();
   try {
-    const data = await dbUserData(dA, "dbUserThree");
+    const q = query(
+      collection(db, "sales"),
+      where("sal", "==", dA),
+      where("cre", "!=", false),
+      orderBy("cre", "desc"),
+      limit(1)
+    );
+
+    const { docs } = await getDocs(q);
+
+    const data = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     if (!data) {
       return {

@@ -15,12 +15,12 @@ import {
   HStack,
   Box,
   Badge,
+  Button,
 } from "@chakra-ui/react";
 
 import { FileAll } from "../../utils/FileAll";
 import { GridItemForm } from "../../utils/GridItemForm";
 import { GridItemFormTextarea } from "../../utils/GridItemFormTextarea";
-import { GridValueClose } from "../../utils/GridValueClose";
 import { GridItemFormNumber } from "../../utils/GridItemFormNumber";
 
 import { ModeColor } from "../../helpers/ModeColor";
@@ -37,11 +37,13 @@ export const ProductForm = ({
   cn,
   dt,
   ps,
+  change,
   word,
   onClose,
   setUrlImage,
   handleSubmit,
   handleInputChange,
+  handleInputChangeEnEs,
   handleNumberInputCn,
   handleNumberInputPj,
   handleNumberInputPr,
@@ -82,8 +84,8 @@ export const ProductForm = ({
                 <FileAll
                   setUrlImage={setUrlImage}
                   fileName={"fotosTienda"}
-                  save={locale === "en" ? en.goup : es.goup}
-                  image={locale === "en" ? en.image : es.image}
+                  save={change === false ? en.goup : es.goup}
+                  image={change === false ? en.image : es.image}
                 />
               </Box>
               <Box w="full" h={"full"} position={"relative"}>
@@ -106,18 +108,18 @@ export const ProductForm = ({
           {/* nombre del producto */}
           <GridItemForm
             points={points1}
-            name={locale === "en" ? en.name : es.name}
+            name={change === false ? en.name : es.name}
             maxlength="50"
-            na={"na"}
+            na={change === false ? "en" : "es"}
+            id={"na"}
             val={na}
             type={"text"}
-            place={locale === "en" ? en.name : es.name}
-            handle={handleInputChange}
+            place={change === false ? en.name : es.name}
+            handle={handleInputChangeEnEs}
           />
-
           <GridItemFormNumber
             points={points1}
-            name={`${locale === "en" ? en.price : es.price} $`}
+            name={`${change === false ? en.price : es.price} $`}
             na={"pr"}
             handle={handleNumberInputPr}
             val={pr}
@@ -128,7 +130,7 @@ export const ProductForm = ({
           <GridItemFormNumber
             isReadOnly={porcent ? true : false}
             points={points1}
-            name={`${locale === "en" ? en.percentage : es.percentage} %`}
+            name={`${change === false ? en.percentage : es.percentage} %`}
             na={"pj"}
             handle={handleNumberInputPj}
             val={pj}
@@ -138,7 +140,7 @@ export const ProductForm = ({
 
           <GridItemFormNumber
             points={points1}
-            name={locale === "en" ? en.quantity : es.quantity}
+            name={change === false ? en.quantity : es.quantity}
             na={"cn"}
             handle={handleNumberInputCn}
             val={cn}
@@ -147,19 +149,20 @@ export const ProductForm = ({
           />
 
           <GridItem colSpan={points1}>
-            <FormLabel htmlFor="ps">
-              {locale === "en" ? en.pOrS : es.pOrS}
+            <FormLabel htmlFor={change === false ? "en" : "es"}>
+              {change === false ? en.pOrS : es.pOrS}
             </FormLabel>
             <Select
-              name="ps"
+              name={change === false ? "en" : "es"}
+              id={"ps"}
               variant="filled"
               value={ps}
-              onChange={handleInputChange}
+              onChange={handleInputChangeEnEs}
             >
               {[
                 "--select--",
-                locale === "en" ? en.major.mG : es.major.mG,
-                locale === "en" ? en.blog.bG : es.blog.bG,
+                change === false ? en.major.mG : es.major.mG,
+                change === false ? en.blog.bG : es.blog.bG,
               ].map((ps, key) => (
                 <option key={key} value={ps}>
                   {ps}
@@ -169,11 +172,11 @@ export const ProductForm = ({
           </GridItem>
 
           <GridItem colSpan={points1}>
-            <FormLabel htmlFor="ct">
-              {locale === "en" ? en.major.mF : es.major.mF}
+            <FormLabel htmlFor={"ct"}>
+              {change === false ? en.major.mF : es.major.mF}
             </FormLabel>
             <Select
-              name="ct"
+              name={"ct"}
               variant="filled"
               value={ct}
               onChange={handleInputChange}
@@ -181,7 +184,7 @@ export const ProductForm = ({
               <option>--select--</option>
               {list.map(({ id, na }) => (
                 <option key={id} value={id}>
-                  {locale === "en" ? na.en : na.es}
+                  {change === false ? na.en : na.es}
                 </option>
               ))}
             </Select>
@@ -191,30 +194,36 @@ export const ProductForm = ({
           <GridItemForm
             maxlength="20"
             points={points1}
-            name={locale === "en" ? en.description : es.description}
-            na={"ds"}
+            name={change === false ? en.description : es.description}
+            na={change === false ? "en" : "es"}
+            id={"ds"}
             val={ds}
             type={"text"}
-            place={locale === "en" ? en.description : es.description}
-            handle={handleInputChange}
+            place={change === false ? en.description : es.description}
+            handle={handleInputChangeEnEs}
           />
+
           <GridItemFormTextarea
             points={2}
-            name={locale === "en" ? en.details : es.details}
-            na={"dt"}
+            name={change === false ? en.details : es.details}
+            na={change === false ? "en" : "es"}
+            id={"dt"}
             val={dt}
-            place={locale === "en" ? en.details : es.details}
-            handle={handleInputChange}
+            place={change === false ? en.details : es.details}
+            handle={handleInputChangeEnEs}
             bg={bg}
             brand={brand}
           />
-          <GridValueClose
-            onClose={onClose}
-            set={word}
-            locale={locale}
-            es={es}
-            en={en}
-          />
+          <GridItem colSpan={2} mt={5}>
+            <HStack w={"full"} justifyContent="flex-end" spacing={10}>
+              <Button variant={"secondary"} onClick={onClose}>
+                {change === false ? en.close : es.close}
+              </Button>
+              <Button variant={"primary"} type="submit" ml={3} shadow={"lg"}>
+                {word}
+              </Button>
+            </HStack>
+          </GridItem>
         </Grid>
       </chakra.form>
     </>
@@ -231,12 +240,14 @@ ProductForm.propTypes = {
   cn: PropTypes.number.isRequired,
   dt: PropTypes.string.isRequired,
   ps: PropTypes.string.isRequired,
+  change: PropTypes.bool.isRequired,
   word: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   setUrlImage: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  handleInputChange: PropTypes.func.isRequired,
+  handleInputChangeEnEs: PropTypes.func.isRequired,
   handleNumberInputCn: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
   handleNumberInputPj: PropTypes.func.isRequired,
   handleNumberInputPr: PropTypes.func.isRequired,
   porcent: PropTypes.string,

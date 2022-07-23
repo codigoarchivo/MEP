@@ -8,7 +8,7 @@ export const ProductFormWord = ({
   word,
   onClose,
   handleSubmit,
-  locale,
+  change,
   es,
   en,
 }) => {
@@ -16,11 +16,11 @@ export const ProductFormWord = ({
     <>
       <chakra.form onSubmit={handleSubmit} w={"full"} p={3}>
         <Heading mb={6} size={"lg"}>
-          {locale === "en" ? en.sure : es.sure}
+          {change === false ? en.sure : es.sure}
         </Heading>
         <HStack justifyContent="end" w={"full"}>
           <Button variant={"secondary"} onClick={onClose}>
-            {locale === "en" ? en.close : es.close}
+            {change === false ? en.close : es.close}
           </Button>
           <Button variant={"primary"} type="submit" ml={3}>
             {word}
@@ -35,7 +35,7 @@ ProductFormWord.propTypes = {
   word: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  locale: PropTypes.string,
+  change: PropTypes.bool,
   es: PropTypes.object,
   en: PropTypes.object,
 };

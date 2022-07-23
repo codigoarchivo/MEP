@@ -1,5 +1,16 @@
 import React, { useEffect } from "react";
 
+import {
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
+
+import { db } from "../firebase/config";
+
 import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
@@ -15,10 +26,6 @@ import { Home } from "../components/home/Home";
 import { categoryListConfig } from "../actions/category";
 
 import { Toast } from "../helpers/Toast";
-
-import { dbProducts } from "../data/dbProducts";
-
-import { dbCategory } from "../data/dbCategory";
 
 import { en } from "../translations/en";
 import { es } from "../translations/es";
@@ -65,8 +72,33 @@ HomeL.propTypes = {
 
 export async function getStaticProps() {
   try {
-    const product = await dbProducts("", "dbProOne");
-    const category = await dbCategory("", "dbCatTwo");
+    const ca = query(
+      collection(db, "categories"),
+      where("cre", "!=", false),
+      orderBy("cre", "desc"),
+      limit(25)
+    );
+
+    const d = await getDocs(ca);
+
+    const category = d.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    const q = query(
+      collection(db, "serchs"),
+      where("cre", "!=", false),
+      orderBy("cre", "desc"),
+      limit(2)
+    );
+
+    const { docs } = await getDocs(q);
+
+    const product = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     if (!product || !category) {
       return {

@@ -62,7 +62,7 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
   const handleDetails = () => {
     push({
       pathname: "/set/[id]",
-      query: { id: "1", set: "details", dt },
+      query: { id, set: "details" },
     });
   };
 
@@ -74,7 +74,7 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
             <Flex position={"relative"}>
               <Image
                 src={im || "https://via.placeholder.com/155.png?text=Imagen"}
-                alt={na}
+                alt={locale === "en" ? na.en : na.es}
                 width={155}
                 height={155}
                 objectFit="cover"
@@ -87,13 +87,13 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
                 <Heading as="h3" size="sm">
                   {locale === "en" ? en.name : es.name}:
                 </Heading>
-                <Text size={"sm"}>{na}</Text>
+                <Text size={"sm"}>{locale === "en" ? na.en : na.es}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
                   {locale === "en" ? en.description : es.description}:
                 </Heading>
-                <Text size={"sm"}>{ds}</Text>
+                <Text size={"sm"}> {locale === "en" ? ds.en : ds.es}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
@@ -127,7 +127,7 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
                 <Heading as="h3" size="sm">
                   {locale === "en" ? en.guy : es.guy}:
                 </Heading>
-                <Text size={"sm"}>{ps}</Text>
+                <Text size={"sm"}>{locale === "en" ? ps.en : ps.es}</Text>
               </HStack>
             </VStack>
           </HStack>
@@ -187,13 +187,13 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
 
 ProductScrenn.propTypes = {
   id: PropTypes.string,
-  na: PropTypes.string.isRequired,
+  na: PropTypes.object.isRequired,
   cn: PropTypes.number.isRequired,
   ct: PropTypes.string.isRequired,
-  ds: PropTypes.string.isRequired,
-  dt: PropTypes.string.isRequired,
+  ds: PropTypes.object.isRequired,
+  dt: PropTypes.object.isRequired,
   im: PropTypes.string.isRequired,
   pr: PropTypes.number.isRequired,
   pj: PropTypes.number.isRequired,
-  ps: PropTypes.string.isRequired,
+  ps: PropTypes.object.isRequired,
 };

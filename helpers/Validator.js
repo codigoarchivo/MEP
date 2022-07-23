@@ -22,14 +22,18 @@ export const Validator = (
   const minRePasswordV = values?.rePassword?.length < 6;
   const samePasswordV = values?.password !== values?.rePassword;
 
-  const mNombre = values?.na === "";
-  const mTipo = values?.ps === "";
+  const mNombreEn = values?.na?.en === "";
+  const mNombreEs = values?.na?.es === "";
+  const mTipoEn = values?.ps?.en === "";
+  const mTipoEs = values?.ps?.es === "";
+  const mDescripcionEn = values?.ds?.en === "";
+  const mDescripcionEs = values?.ds?.es === "";
+  const mDetallesEn = values?.dt?.en === "";
+  const mDetallesEs = values?.dt?.es === "";
   const mPrecio = values?.pr === 0;
   const mPorcentaje = values?.pj === 0;
-  const mDetalles = values?.dt === "";
   const mImage = Number(values?.imgsize) < 5242880;
   const mImageCero = values?.im === "";
-  const mDescripcion = values?.ds === "";
   const mCantidad = Number(values?.cn) === 0;
   const mCategory = values?.ct === "";
   const mTipos = values?.ti === "";
@@ -88,15 +92,19 @@ export const Validator = (
 
   let ErrorRetur;
   if (
-    mNombre ||
+    mNombreEn ||
+    mNombreEs ||
     mPrecio ||
-    mDetalles ||
-    mDescripcion ||
+    mDetallesEn ||
+    mDetallesEs ||
+    mDescripcionEn ||
+    mDescripcionEs ||
     mCantidad ||
     mCategory ||
     mTipos ||
     mImageCero ||
-    mTipo ||
+    mTipoEn ||
+    mTipoEs ||
     mPorcentaje
   ) {
     ErrorRetur = true;
@@ -116,10 +124,7 @@ export const Validator = (
     passwordL,
     field,
     mImage,
-    mNombre,
     mPrecio,
-    mDetalles,
-    mDescripcion,
     mCantidad,
     mCategory,
     mTipos,

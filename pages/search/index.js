@@ -1,5 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 
+import { collection, getDocs, limit, orderBy, query, where } from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
@@ -164,7 +168,19 @@ Search.propTypes = {
 
 export async function getStaticProps() {
   try {
-    const product = await dbProducts("", "dbProOne");
+    const q = query(
+      collection(db, "serchs"),
+      where("cre", "!=", false),
+      orderBy("cre", "desc"),
+      limit(2)
+    );
+
+    const { docs } = await getDocs(q);
+
+    const product = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     if (!product) {
       return {

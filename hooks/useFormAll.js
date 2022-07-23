@@ -20,11 +20,11 @@ export const useFormAll = (initialStates = {}, data = {}) => {
   const handleInputChange = ({ target }) => {
     setValues({ ...values, [target.name]: target.value });
   };
-  // handleInputChange
+  // handleInputChangeEnEs
   const handleInputChangeEnEs = ({ target }) => {
     setValues({
       ...values,
-      [target.id]: { ...values.na, [target.name]: target.value },
+      [target.id]: { ...values[target.id], [target.name]: target.value },
     });
   };
   // handlePassword

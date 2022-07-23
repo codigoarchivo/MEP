@@ -1,5 +1,9 @@
 import React from "react";
 
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import { Container } from "@chakra-ui/react";
 
 import { useRouter } from "next/router";
@@ -9,8 +13,6 @@ import PropTypes from "prop-types";
 import { Toast } from "../../helpers/Toast";
 
 import ShopLayout from "../../components/layout/ShopLayout";
-
-import { dbUser, dbUserByUID } from "../../data/dbUser";
 
 import { UserScreen } from "../../components/user/UserScreen";
 
@@ -41,7 +43,13 @@ Informacion.propTypes = {
 };
 
 export async function getStaticPaths() {
-  const user = await dbUser("", "dbUserTwo");
+  const { docs } = await getDocs(collection(db, "users"));
+
+  const user = docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
   return {
     paths: user.map(
       ({ id }) => (
@@ -66,7 +74,12 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const uid = await params.uid.toString();
   try {
-    const user = await dbUserByUID(uid, "dbUserOneID");
+    const docSnap = await getDoc(doc(db, "users", uid));
+
+    const user = {
+      id: docSnap.id,
+      ...docSnap.data(),
+    };
 
     if (!user) {
       return {

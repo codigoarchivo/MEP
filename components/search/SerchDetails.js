@@ -46,11 +46,11 @@ export const SerchDetails = ({
   // dispatch
   const dispatch = useDispatch();
   // selector
-  const { list = [] } = useSelector(({ category }) => category);
+  const { listData: list = [] } = useSelector(({ category }) => category);
   // Breakpoints
   const { content5, full, bordes, points25 } = Breakpoints();
   // list Category
-  const listCt = useMemo(() => list.filter((item) => item.id === product.ct), [
+  const listCt = useMemo(() => list.filter((i) => i.id === product.ct), [
     list,
     product.ct,
   ]);
@@ -117,7 +117,7 @@ export const SerchDetails = ({
             src={
               product.im || "https://via.placeholder.com/450.png?text=Imagen"
             }
-            alt={product.na}
+            alt={locale === "en" ? product.na.en : product.na.es}
             width={450}
             height={450}
             objectFit="cover"
@@ -134,7 +134,7 @@ export const SerchDetails = ({
 
         <VStack spacing={{ base: 3, md: 6 }} w={full}>
           <Heading w={full} fontSize={points25} textTransform={"capitalize"}>
-            {product.na}
+            {locale === "en" ? product.na.en : product.na.es}
           </Heading>
           <HStack w={full}>
             <Text color="gray.600" fontSize={"xl"} fontWeight={"bold"}>
@@ -161,7 +161,9 @@ export const SerchDetails = ({
             <Heading textTransform={"uppercase"} as="h3" size="sm">
               {locale === "en" ? en.search.sJ : es.search.sJ}:
             </Heading>
-            <Text w={full}>{product.ds}</Text>
+            <Text w={full}>
+              {locale === "en" ? product.ds.en : product.ds.es}
+            </Text>
           </HStack>
           <Box w={full}>
             <HStack maxW="180px">
@@ -178,7 +180,7 @@ export const SerchDetails = ({
             <Heading textTransform={"uppercase"} as="h3" size="sm">
               {locale === "en" ? en.major.mF : es.major.mF}:
             </Heading>
-            <Text>{listCt[0]?.na}</Text>
+            <Text>{locale === "en" ? listCt[0]?.na.en : listCt[0]?.na.es}</Text>
           </HStack>
           <Box w={full}>
             <Button
@@ -204,7 +206,9 @@ export const SerchDetails = ({
 
           <TabPanels>
             <TabPanel p={{ base: 2, md: 5 }}>
-              <Text overflowX={"hidden"}>{product.dt}</Text>
+              <Text overflowX={"hidden"}>
+                {locale === "en" ? product.dt.en : product.dt.es}
+              </Text>
             </TabPanel>
             <TabPanel p={{ base: 0, md: 10 }}>
               <>

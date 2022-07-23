@@ -4,7 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
 
-import { CloseButton, Heading, HStack, VStack } from "@chakra-ui/react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase/config";
+
+import {
+  Button,
+  CloseButton,
+  Heading,
+  HStack,
+  Stack,
+  VStack,
+} from "@chakra-ui/react";
 
 import { Breakpoints } from "../../helpers/Breakpoints";
 import { Toast } from "../../helpers/Toast";
@@ -18,25 +28,35 @@ import { addProduct, deleteProduct, editProduct } from "../../actions/product";
 
 import { useFormAll } from "../../hooks/useFormAll";
 
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../firebase/config";
+import { enActive, esActive } from "../../actions/ui";
 
 const initialStates = {
   pr: 0,
   cn: 0,
   pj: 0,
-  ps: "",
-  na: "",
-  ds: "",
+  ps: {
+    en: "",
+    es: "",
+  },
+  na: {
+    en: "",
+    es: "",
+  },
+  ds: {
+    en: "",
+    es: "",
+  },
+  dt: {
+    en: "",
+    es: "",
+  },
   ct: "",
-  dt: "",
   im: "",
 };
 
 export const ProductData = ({
   product = {},
   word = "",
-  details = "",
   push,
   back,
   locale,
@@ -45,6 +65,8 @@ export const ProductData = ({
 }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+  // selector
+  const { change } = useSelector(({ ui }) => ui);
   // useState
   const [porcent, setporcent] = useState({ pr: "" });
   // dispatch
@@ -72,6 +94,7 @@ export const ProductData = ({
     values,
     reset,
     handleInputChange,
+    handleInputChangeEnEs,
     handleNumberInputCn,
     handleNumberInputPj,
     handleNumberInputPr,
@@ -161,18 +184,25 @@ export const ProductData = ({
   let info = "";
   switch (word) {
     case "add":
-      info = locale === "en" ? en.add : es.add;
+      info = change === false ? en.add : es.add;
       break;
     case "edit":
-      info = locale === "en" ? en.edit : es.edit;
+      info = change === false ? en.edit : es.edit;
       break;
     case "delete":
-      info = locale === "en" ? en.delete : es.delete;
+      info = change === false ? en.delete : es.delete;
       break;
     case "details":
-      info = locale === "en" ? en.details : es.details;
+      info = change === false ? en.details : es.details;
       break;
   }
+
+  const enRes = () => {
+    dispatch(enActive());
+  };
+  const esRes = () => {
+    dispatch(esActive());
+  };
 
   return (
     <>
@@ -184,12 +214,40 @@ export const ProductData = ({
         p={6}
         boxShadow={"xl"}
       >
-        <HStack w={"full"}>
-          <CloseButton size="md" onClick={onClose} />
-          <Heading as="h1" size={"md"} textTransform={"uppercase"}>
-            {info}
-          </Heading>
-        </HStack>
+        <Stack
+          flexDirection={"row"}
+          w={"full"}
+          justifyContent={"space-between"}
+        >
+          <HStack>
+            <CloseButton display={"inline"} size="md" onClick={onClose} />
+            <Heading
+              display={"inline"}
+              as="h1"
+              size={"md"}
+              textTransform={"uppercase"}
+            >
+              {info}
+            </Heading>
+          </HStack>
+
+          <HStack>
+            <Button
+              color={change === false ? "brand.700" : "brand.900"}
+              variant={"secondary"}
+              onClick={enRes}
+            >
+              en
+            </Button>
+            <Button
+              color={change === true ? "brand.700" : "brand.900"}
+              variant={"secondary"}
+              onClick={esRes}
+            >
+              es
+            </Button>
+          </HStack>
+        </Stack>
 
         {(word === "add" || word === "edit") && (
           <ProductForm
@@ -197,14 +255,18 @@ export const ProductData = ({
             pj={pj}
             cn={cn}
             pr={pr}
-            ps={ps}
-            na={na}
-            ds={ds}
             ct={ct}
-            dt={dt}
+            na={change === false ? na.en : na.es}
+            ps={change === false ? ps.en : ps.es}
+            ds={change === false ? ds.en : ds.es}
+            dt={change === false ? dt.en : dt.es}
+            change={change}
+            naEn={na.en}
+            naEs={na.es}
             word={info}
             onClose={onClose}
             handleInputChange={handleInputChange}
+            handleInputChangeEnEs={handleInputChangeEnEs}
             handleNumberInputCn={handleNumberInputCn}
             handleNumberInputPj={handleNumberInputPj}
             handleNumberInputPr={handleNumberInputPr}
@@ -222,13 +284,13 @@ export const ProductData = ({
             handleSubmit={handleSubmit}
             word={info}
             onClose={onClose}
-            locale={locale}
+            change={change}
             es={es}
             en={en}
           />
         )}
 
-        {word === "details" && <ProductFormDetails dt={details} />}
+        {word === "details" && <ProductFormDetails dt={dt} change={change} />}
       </VStack>
     </>
   );
@@ -237,7 +299,6 @@ export const ProductData = ({
 ProductData.propTypes = {
   product: PropTypes.object,
   word: PropTypes.string,
-  details: PropTypes.string,
   push: PropTypes.func,
   back: PropTypes.func,
   locale: PropTypes.string,
