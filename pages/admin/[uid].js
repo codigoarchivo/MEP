@@ -103,7 +103,7 @@ const Sale = ({ data }) => {
               orHome={"desc"}
               orPrevious={"desc"}
               orNext={"desc"}
-              uid={query.uid}
+              uid={query.uid.toString()}
               ini={"own"}
             />
           )}

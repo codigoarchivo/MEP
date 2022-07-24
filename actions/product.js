@@ -52,7 +52,7 @@ export const addProduct = (resData = {}, err) => {
         ...resData,
       });
 
-      const data = { ...id, ...resData };
+      const data = { ...resData, id };
 
       if (data) {
         dispatch(productAdd(data));

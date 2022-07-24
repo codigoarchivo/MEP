@@ -34,7 +34,7 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
-export const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
+export const ProductScrenn = ({ id, na, cn, ct, ds, im, pr, pj, ps }) => {
   // router
   const { push, locale } = useRouter();
   // Breakpoints
@@ -118,9 +118,10 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, dt, im, pr, pj, ps }) => {
                   {locale === "en" ? en.major.mF : es.major.mF}:
                 </Heading>
                 <Text size={"sm"}>
-                  {list.map((i) =>
-                    i.id === ct && locale === "en" ? i?.na.en : i?.na.es
-                  )}
+                  {list.map((i) => {
+                    if (i.id === ct)
+                      return locale === "en" ? i?.na.en : i?.na.es;
+                  })}
                 </Text>
               </HStack>
               <HStack w={full}>
@@ -191,7 +192,6 @@ ProductScrenn.propTypes = {
   cn: PropTypes.number.isRequired,
   ct: PropTypes.string.isRequired,
   ds: PropTypes.object.isRequired,
-  dt: PropTypes.object.isRequired,
   im: PropTypes.string.isRequired,
   pr: PropTypes.number.isRequired,
   pj: PropTypes.number.isRequired,

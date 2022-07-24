@@ -72,11 +72,11 @@ export const CheckoutScreenAll = ({
               dat: `$${product.pr}`,
             },
             {
-              all: tax,
+              all: price,
               dat: `$${product.pj}`,
             },
             {
-              all: price,
+              all: tax,
               dat: `$${product.in}`,
             },
           ].map(({ all, dat }, key) => (

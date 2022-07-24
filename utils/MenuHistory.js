@@ -17,7 +17,7 @@ import { NavLink } from "./Navlink";
 
 import { Breakpoints } from "../helpers/Breakpoints";
 
-const MenuHistory = ({ color, buys, sales, history }) => {
+export const MenuHistory = ({ color, buys, sales, history }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // Breakpoints
@@ -37,8 +37,8 @@ const MenuHistory = ({ color, buys, sales, history }) => {
         <MenuList display={displayOff2} minWidth={0} border={bordes}>
           <MenuItem>
             <NavLink
-              href={a.uid ? `/buy?u=${a?.uid}` : "/"}
-              as={a.uid ? `/buy?u=${a?.uid}` : "/"}
+              href={a.uid ? `/purchases/[uid]` : "/"}
+              as={a.uid ? `/purchases/${a?.uid}` : "/"}
               name={buys}
               variant={"secondary"}
               fontWeight={"normal"}
@@ -46,8 +46,8 @@ const MenuHistory = ({ color, buys, sales, history }) => {
           </MenuItem>
           <MenuItem display={a.rol !== "owner" ? "block" : "none"}>
             <NavLink
-              href={a.uid ? `/sale?u=${a?.uid}` : "/"}
-              as={a.uid ? `/sale?u=${a?.uid}` : "/"}
+              href={a.uid ? `/sale/[uid]` : "/"}
+              as={a.uid ? `/sale/${a?.uid}` : "/"}
               name={sales}
               variant={"secondary"}
               fontWeight={"normal"}
@@ -65,5 +65,3 @@ MenuHistory.propTypes = {
   sales: PropTypes.string,
   history: PropTypes.string,
 };
-
-export default MenuHistory;

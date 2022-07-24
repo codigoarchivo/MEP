@@ -314,6 +314,28 @@ export function WithSubnavigation() {
               />
             </Box>
           ))}
+          <Box
+            display={a.rol === "owner" || a.rol === "user" ? "block" : "none"}
+          >
+            <NavLink
+              href={a.uid ? `/purchases/[uid]` : "/"}
+              as={a.uid ? `/purchases/${a?.uid}` : "/"}
+              name={"buys"}
+              variant={"secondary"}
+              fontWeight={"normal"}
+            />
+          </Box>
+          <Box
+            display={a.rol === "owner" || a.rol === "user" ? "block" : "none"}
+          >
+            <NavLink
+              href={a.uid ? `/sale/[uid]` : "/"}
+              as={a.uid ? `/sale/${a?.uid}` : "/"}
+              name={"sales"}
+              variant={"secondary"}
+              fontWeight={"normal"}
+            />
+          </Box>
           {/* logout Clear */}
           <LogoutAllClear />
           {/* locales */}

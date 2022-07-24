@@ -32,39 +32,38 @@ import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
 export const BlogScreen = ({ categories, buys, product }) => {
-  // Breakpoints
-  const { displayOff2, bordes, points25, content7 } = Breakpoints();
+  // useSelector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector
   const { listData: list = [] } = useSelector(({ category }) => category);
   // selector
-  const { listData = [] } = useSelector(({ product }) => product);
+  const { listData: listp = [] } = useSelector(({ product }) => product);
+  // Breakpoints
+  const { displayOff2, bordes, points25, content7 } = Breakpoints();
   // router
   const { push, locale } = useRouter();
 
-  if ([!list[0]].includes(true)) {
+  if ([!list[0]].includes(true) && !!a.uid) {
     push("/");
   }
 
-  const one = useMemo(
-    () => listData[Math.floor(Math.random() * listData.length)],
-    [listData]
-  );
+  const one = useMemo(() => listp[Math.floor(Math.random() * listp.length)], [
+    listp,
+  ]);
 
-  const { na: na1 } = list.find((i) => i.id !== one?.ct);
+  const dOne = list.find((i) => i.id !== one?.ct);
 
-  const two = useMemo(
-    () => listData[Math.floor(Math.random() * listData.length)],
-    [listData]
-  );
+  const two = useMemo(() => listp[Math.floor(Math.random() * listp.length)], [
+    listp,
+  ]);
 
-  const { na: na2 } = list.find((i) => i.id !== two?.ct);
+  const dTwo = list.find((i) => i.id !== two?.ct);
 
-  const three = useMemo(
-    () => listData[Math.floor(Math.random() * listData.length)],
-    [listData]
-  );
+  const three = useMemo(() => listp[Math.floor(Math.random() * listp.length)], [
+    listp,
+  ]);
 
-  const { na: na3 } = list.find((i) => i.id !== three?.ct);
+  const dThree = list.find((i) => i.id !== three?.ct);
 
   return (
     <Stack flexDirection={content7} spacing={0}>
@@ -117,7 +116,7 @@ export const BlogScreen = ({ categories, buys, product }) => {
         </Box>
         <Stack
           display={
-            !!listData[0] && one !== "" && two !== "" && three !== ""
+            !!listp[0] && one !== "" && two !== "" && three !== ""
               ? "block"
               : "none"
           }
@@ -146,20 +145,21 @@ export const BlogScreen = ({ categories, buys, product }) => {
           >
             {[
               {
-                title: locale === "en" ? na1?.en : na1?.es,
-                name: one?.na,
+                title: dOne && locale === "en" ? dOne?.na?.en : dOne?.na?.es,
+                name: locale === "en" ? one?.na?.en : one?.na?.es,
                 price: `${one?.pr}$`,
                 date5: `${one?.id}`,
               },
               {
-                title: locale === "en" ? na2?.en : na2?.es,
-                name: two?.na,
+                title: dTwo && locale === "en" ? dTwo?.na?.en : dTwo?.na?.es,
+                name: locale === "en" ? two?.na?.en : two?.na?.es,
                 price: `${two?.pr}$`,
                 date5: `${two?.id}`,
               },
               {
-                title: locale === "en" ? na3?.en : na3?.es,
-                name: three?.na,
+                title:
+                  dThree && locale === "en" ? dThree?.na?.en : dThree?.na?.es,
+                name: locale === "en" ? three?.na?.en : three?.na?.es,
                 price: `${three?.pr}$`,
                 date5: `${three?.id}`,
               },

@@ -79,15 +79,13 @@ export const ProductData = ({
   useEffect(() => {
     const dataPorcent = async () => {
       if (a?.rol !== "owner" && word !== "delete" && word !== "details") {
-        const docRef = doc(db, "cifras", a.uid);
-
-        const docSnap = await getDoc(docRef);
+        const docSnap = await getDoc(doc(db, "cifras", "onwer"));
 
         setporcent({ ...docSnap.data() });
       }
     };
     dataPorcent();
-  }, [setporcent, a?.rol, a.uid, word]);
+  }, [setporcent, a?.rol, word]);
 
   // useForm
   const {
@@ -172,12 +170,14 @@ export const ProductData = ({
     reset();
     setUrlImage("");
     setporcent({ pr: "" });
+    dispatch(enActive());
     Toast(locale === "en" ? en.save : es.save, "success", 5000);
     back();
   };
 
   // cerrar
   const onClose = () => {
+    dispatch(enActive());
     back();
   };
 
@@ -261,8 +261,6 @@ export const ProductData = ({
             ds={change === false ? ds.en : ds.es}
             dt={change === false ? dt.en : dt.es}
             change={change}
-            naEn={na.en}
-            naEs={na.es}
             word={info}
             onClose={onClose}
             handleInputChange={handleInputChange}

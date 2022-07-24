@@ -1,10 +1,15 @@
 import React, { useEffect } from "react";
 
-import { collection, getDocs, limit, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  limit,
+  where,
+  query,
+  orderBy,
+} from "firebase/firestore";
 
 import { db } from "../../firebase/config";
-
-import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
 
@@ -12,11 +17,13 @@ import { Box, Container, Heading, Stack, VStack } from "@chakra-ui/react";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import { useRouter } from "next/router";
+
 import ShopLayout from "../../components/layout/ShopLayout";
 
 import { Breakpoints } from "../../helpers/Breakpoints";
 
-import { cheListAllBuy, cheListAllClearBu } from "../../actions/checkout";
+import { cheListAllBuy } from "../../actions/checkout";
 
 import { CheckoutScreenAll } from "../../components/checkout/CheckoutScreenAll";
 
@@ -27,21 +34,19 @@ import { Toast } from "../../helpers/Toast";
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
-const Buy = ({ product = [] }) => {
+const BuyData = ({ product = [] }) => {
   // useRouter
-  const { locale, push } = useRouter();
+  const { locale, push, query: que } = useRouter();
   // useSelector
   const { buy = [] } = useSelector(({ checkout }) => checkout);
   // useDispatch
   const dispatch = useDispatch();
   // Breakpoints
-  const { bordes, full, content5 } = Breakpoints();
+  const { bordes, full } = Breakpoints();
 
   useEffect(() => {
-    if (product) {
+    if (!!product[0]) {
       dispatch(cheListAllBuy(product));
-    } else {
-      dispatch(cheListAllClearBu());
     }
   }, [dispatch, product]);
 
@@ -103,7 +108,8 @@ const Buy = ({ product = [] }) => {
               orHome={"desc"}
               orPrevious={"desc"}
               orNext={"desc"}
-              uid={undefined}
+              uid={que.uid.toString()}
+              ini={"buy"}
             />
           )}
         </Box>
@@ -112,16 +118,22 @@ const Buy = ({ product = [] }) => {
   );
 };
 
-Buy.propTypes = {
+BuyData.propTypes = {
   product: PropTypes.array,
 };
 
-export async function getServerSideProps({ query }) {
-  const u = await query.u.toString();
+export async function getServerSideProps(Context) {
+  const u = await Context.query.uid.toString();
   try {
-    const q = query(collection(db, "buys"), where("buy", "==", u), limit(2));
-
-    const { docs } = await getDocs(q);
+    const { docs } = await getDocs(
+      query(
+        collection(db, "buys"),
+        where("buy", "==", u),
+        where("cre", "!=", false),
+        orderBy("cre", "desc"),
+        limit(1)
+      )
+    );
 
     const product = docs.map((doc) => ({
       id: doc.id,
@@ -139,10 +151,11 @@ export async function getServerSideProps({ query }) {
 
     return {
       props: {
-        product,
+        product: JSON.parse(JSON.stringify(product)),
       },
     };
   } catch (error) {
+    console.log(error);
     Toast("Al parecer hay un error", "error", 5000);
     return {
       props: {},
@@ -150,4 +163,4 @@ export async function getServerSideProps({ query }) {
   }
 }
 
-export default Buy;
+export default BuyData;

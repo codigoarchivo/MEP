@@ -1,5 +1,9 @@
 import React from "react";
 
+import { collection, getDocs } from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import Image from "next/image";
 
 import { useDispatch } from "react-redux";
@@ -29,8 +33,6 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 import { Toast } from "../../helpers/Toast";
 
 import { activeProductCart, deleteProductSave } from "../../actions/product";
-
-import { dbProducts } from "../../data/dbProducts";
 
 export const SerchCartSave = ({
   item,
@@ -75,22 +77,25 @@ export const SerchCartSave = ({
 
   const handleSelect = async () => {
     //? item.pj : es el porcentaje que coloca onwer
-    const message = await dbProducts(item.id, "dbProThree");
-    if (message) {
-      dispatch(
-        activeProductCart(
-          {
-            ...item,
-            cn,
-            rat: message.map((item) => item.rat.toString()),
-          },
-          err,
-          added,
-          already
-        )
-      );
-      dispatch(deleteProductSave(item.id));
-    }
+    const q = collection(db, "serchs", item.id, "messages");
+
+    const { docs } = await getDocs(q);
+
+    dispatch(
+      activeProductCart(
+        {
+          ...item,
+          cn,
+          rat: docs.map((doc) => ({
+            ...doc.data().rat,
+          })),
+        },
+        err,
+        added,
+        already
+      )
+    );
+    dispatch(deleteProductSave(item.id));
   };
 
   return (

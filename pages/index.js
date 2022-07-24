@@ -72,29 +72,19 @@ HomeL.propTypes = {
 
 export async function getStaticProps() {
   try {
-    const ca = query(
-      collection(db, "categories"),
-      where("cre", "!=", false),
-      orderBy("cre", "desc"),
-      limit(25)
+    const d = await getDocs(
+      query(collection(db, "categories"), orderBy("cre", "desc"), limit(25))
     );
-
-    const d = await getDocs(ca);
 
     const category = d.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
 
-    const q = query(
-      collection(db, "serchs"),
-      where("cre", "!=", false),
-      orderBy("cre", "desc"),
-      limit(2)
+    const { docs } = await getDocs(
+      query(collection(db, "serchs"), orderBy("cre", "desc"), limit(25))
     );
-
-    const { docs } = await getDocs(q);
-
+    
     const product = docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),

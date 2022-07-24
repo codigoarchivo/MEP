@@ -2,7 +2,7 @@ import React from "react";
 
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 
-import { db } from "../../firebase/config";
+import { db } from "../../../firebase/config";
 
 import { useRouter } from "next/router";
 
@@ -10,16 +10,16 @@ import PropTypes from "prop-types";
 
 import { Container, Stack } from "@chakra-ui/react";
 
-import ShopLayout from "../../components/layout/ShopLayout";
+import ShopLayout from "../../../components/layout/ShopLayout";
 
-import { Breakpoints } from "../../helpers/Breakpoints";
+import { Breakpoints } from "../../../helpers/Breakpoints";
 
-import { Toast } from "../../helpers/Toast";
+import { Toast } from "../../../helpers/Toast";
 
-import { SaleVerify } from "../../components/sale/SaleVerify";
+import { SaleVerify } from "../../../components/sale/SaleVerify";
 
-import { en } from "../../translations/en";
-import { es } from "../../translations/es";
+import { en } from "../../../translations/en";
+import { es } from "../../../translations/es";
 
 const Sales = ({ sale }) => {
   // dispatch

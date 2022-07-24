@@ -31,7 +31,8 @@ export const es = {
     mE: "Blog",
     mF: "Categoría",
     mG: "Producto",
-    mH: "Toda la tienda",
+    mH: "Ventas",
+    mI: "Toda la tienda",
   },
   home: {
     hA: "Visita Nuestra Tienda",

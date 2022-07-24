@@ -1,6 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-import { collection, getDocs, limit, orderBy, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 
 import { db } from "../../firebase/config";
 
@@ -150,7 +157,7 @@ const Search = ({ product }) => {
               firstVisible={listSerch[0].cre}
               lastVisible={listSerch[listSerch.length - 1].cre}
               newList={serchProductList}
-              nLimit={2}
+              nLimit={4}
               orHome={"desc"}
               orPrevious={"desc"}
               orNext={"desc"}
@@ -168,12 +175,7 @@ Search.propTypes = {
 
 export async function getStaticProps() {
   try {
-    const q = query(
-      collection(db, "serchs"),
-      where("cre", "!=", false),
-      orderBy("cre", "desc"),
-      limit(2)
-    );
+    const q = query(collection(db, "serchs"), orderBy("cre", "desc"), limit(4));
 
     const { docs } = await getDocs(q);
 

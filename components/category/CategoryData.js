@@ -89,11 +89,13 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
     reset();
     back();
     Toast(locale === "en" ? en.save : es.save, "success", 5000);
+    dispatch(enActive());
   };
 
   // cerrar
   const onClose = () => {
     back();
+    dispatch(enActive());
   };
 
   let info = "";
@@ -162,12 +164,12 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
 
         {pid === "Delete" ? (
           <CategoryFormWord
+            change={change}
             info={info}
             HStack={HStack}
             VStack={VStack}
             onClose={onClose}
             handleSubmit={handleSubmit}
-            locale={locale}
             es={es}
             en={en}
           />
@@ -181,7 +183,6 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
             handleSubmit={handleSubmit}
             handleInputChangeEnEs={handleInputChangeEnEs}
             change={change}
-            locale={locale}
             es={es}
             en={en}
           />

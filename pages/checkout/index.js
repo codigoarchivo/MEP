@@ -170,7 +170,7 @@ export async function getServerSideProps(Context) {
       collection(db, "buys"),
       where("buy", "==", qu),
       where("close", "==", false),
-      limit(2)
+      limit(4)
     );
 
     const { docs } = await getDocs(q);
@@ -191,7 +191,7 @@ export async function getServerSideProps(Context) {
 
     return {
       props: {
-        product,
+        product: JSON.parse(JSON.stringify(product)),
       },
     };
   } catch (error) {

@@ -1,13 +1,6 @@
 import React, { useEffect } from "react";
 
-import {
-  collection,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 
 import { db } from "../../firebase/config";
 
@@ -160,9 +153,8 @@ export async function getServerSideProps() {
   try {
     const ca = query(
       collection(db, "categories"),
-      where("cre", "!=", false),
       orderBy("cre", "desc"),
-      limit(25)
+      limit(2)
     );
 
     const { docs } = await getDocs(ca);

@@ -18,7 +18,6 @@ export const CategoryForm = ({
   handleInputChangeEnEs,
   change,
   na,
-  locale,
   es,
   en,
   info,
@@ -64,6 +63,5 @@ CategoryForm.propTypes = {
   na: PropTypes.string,
   es: PropTypes.object,
   en: PropTypes.object,
-  locale: PropTypes.string,
   info: PropTypes.string,
 };

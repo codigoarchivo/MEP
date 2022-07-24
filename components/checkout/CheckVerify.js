@@ -167,11 +167,11 @@ export const CheckVerify = ({
               },
               {
                 nombre: locale === "en" ? en.price : es.price,
-                Valor: "$" + product?.in,
+                Valor: "$" + product?.pj,
               },
               {
                 nombre: locale === "en" ? en.tax : es.tax,
-                Valor: "$" + product?.pj,
+                Valor: "$" + product?.in,
               },
               {
                 nombre: locale === "en" ? en.unit : es.unit,

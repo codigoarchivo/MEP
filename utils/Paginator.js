@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 
 import PropTypes from "prop-types";
 
@@ -68,7 +68,7 @@ export const Paginator = ({
   // }, [list, setModality, setModality2, setModality3]);
 
   const home = useCallback(() => {
-    let q = "";
+    let q;
     if (uid !== undefined) {
       q = query(
         collection(db, window),
@@ -100,7 +100,7 @@ export const Paginator = ({
   }, [dispatch, firstVisible, lastVisible, window, word]);
 
   const previous = useCallback(() => {
-    let q = "";
+    let q;
     if (uid !== undefined) {
       q = query(
         collection(db, window),
@@ -129,7 +129,7 @@ export const Paginator = ({
   }, [dispatch, firstVisible, lastVisible, window, word]);
 
   const next = useCallback(() => {
-    let q = "";
+    let q;
     if (uid !== undefined) {
       q = query(
         collection(db, window),

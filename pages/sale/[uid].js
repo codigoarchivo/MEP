@@ -1,6 +1,13 @@
 import React, { useEffect } from "react";
 
-import { collection, getDocs, limit, orderBy, where } from "firebase/firestore";
+import {
+  query,
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  where,
+} from "firebase/firestore";
 
 import { db } from "../../firebase/config";
 
@@ -27,13 +34,13 @@ import { SaleScreen } from "../../components/sale/SaleScreen";
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
-const Sale = ({ data }) => {
+const SaleData = ({ data }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useSelector
   const { sale = [] } = useSelector(({ checkout }) => checkout);
   // useRouter
-  const { locale, push, query } = useRouter();
+  const { locale, push, query: que } = useRouter();
   // dispatch
   const dispatch = useDispatch();
   // Breakponts
@@ -100,12 +107,12 @@ const Sale = ({ data }) => {
               firstVisible={sale[0].cre}
               lastVisible={sale[sale.length - 1].cre}
               newList={cheListAllSale}
-              nLimit={2}
+              nLimit={1}
               orHome={"desc"}
               orPrevious={"desc"}
               orNext={"desc"}
-              uid={query.u}
-              ini={"sale"}
+              uid={que.uid.toString()}
+              ini={"sal"}
             />
           )}
         </Box>
@@ -114,28 +121,29 @@ const Sale = ({ data }) => {
   );
 };
 
-Sale.propTypes = {
+SaleData.propTypes = {
   data: PropTypes.array,
 };
 
-export async function getServerSideProps({ query }) {
-  const dA = query.u.toString();
+export async function getServerSideProps(Context) {
+  const d = await Context.query.uid.toString();
   try {
-    const q = query(
-      collection(db, "sales"),
-      where("sal", "==", dA),
-      where("cre", "!=", false),
-      orderBy("cre", "desc"),
-      limit(1)
+    const { docs } = await getDocs(
+      query(
+        collection(db, "sales"),
+        where("sal", "==", d),
+        where("cre", "!=", false),
+        orderBy("cre", "desc"),
+        limit(1)
+      )
     );
-
-    const { docs } = await getDocs(q);
 
     const data = docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
 
+    console.log(data);
     if (!data) {
       return {
         redirect: {
@@ -157,4 +165,4 @@ export async function getServerSideProps({ query }) {
     };
   }
 }
-export default Sale;
+export default SaleData;

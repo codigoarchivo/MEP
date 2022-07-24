@@ -8,7 +8,7 @@ import { chakra, Stack } from "@chakra-ui/react";
 
 import { Breakpoints } from "../../../helpers/Breakpoints";
 
-import MenuHistory from "../../../utils/MenuHistory";
+import { MenuHistory } from "../../../utils/MenuHistory";
 
 import { ListRoute } from "./ListRoute";
 
