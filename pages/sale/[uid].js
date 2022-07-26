@@ -27,12 +27,50 @@ import { Toast } from "../../helpers/Toast";
 
 import { cheListAllClear, cheListAllSale } from "../../actions/checkout";
 
-import { Paginator } from "../../utils/Paginator";
+import { PaginatorProcess } from "../../utils/PaginatorProcess";
 
 import { SaleScreen } from "../../components/sale/SaleScreen";
 
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
+
+export async function getServerSideProps(Context) {
+  const d = await Context.query.uid.toString();
+  try {
+    const { docs } = await getDocs(
+      query(
+        collection(db, "users", d, "sales"),
+        orderBy("cre", "desc"),
+        limit(1)
+      )
+    );
+
+    const data = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    if (!data) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+
+    return {
+      props: {
+        data,
+      },
+    };
+  } catch (error) {
+    Toast("Al parecer hay un error", "error", 5000);
+    return {
+      props: {},
+    };
+  }
+}
 
 const SaleData = ({ data }) => {
   // selector
@@ -51,7 +89,7 @@ const SaleData = ({ data }) => {
   }
 
   useEffect(() => {
-    if (data) {
+    if (!!data[0]) {
       dispatch(cheListAllSale(data));
     } else {
       dispatch(cheListAllClear());
@@ -85,6 +123,7 @@ const SaleData = ({ data }) => {
 
             {sale.map((item, key) => (
               <SaleScreen
+                que={que.uid.toString()}
                 item={item}
                 key={key}
                 name={locale === "en" ? en.name : es.name}
@@ -100,8 +139,10 @@ const SaleData = ({ data }) => {
 
         <Box>
           {sale.length > 0 && (
-            <Paginator
-              window={"sales"}
+            <PaginatorProcess
+              win={"users"}
+              direct={"sales"}
+              u={que.uid.toString()}
               word={"cre"}
               list={sale}
               firstVisible={sale[0].cre}
@@ -111,8 +152,6 @@ const SaleData = ({ data }) => {
               orHome={"desc"}
               orPrevious={"desc"}
               orNext={"desc"}
-              uid={que.uid.toString()}
-              ini={"sal"}
             />
           )}
         </Box>
@@ -125,44 +164,4 @@ SaleData.propTypes = {
   data: PropTypes.array,
 };
 
-export async function getServerSideProps(Context) {
-  const d = await Context.query.uid.toString();
-  try {
-    const { docs } = await getDocs(
-      query(
-        collection(db, "sales"),
-        where("sal", "==", d),
-        where("cre", "!=", false),
-        orderBy("cre", "desc"),
-        limit(1)
-      )
-    );
-
-    const data = docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    console.log(data);
-    if (!data) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
-    return {
-      props: {
-        data,
-      },
-    };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return {
-      props: {},
-    };
-  }
-}
 export default SaleData;

@@ -49,6 +49,42 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
+export async function getStaticProps() {
+  try {
+    const q = query(collection(db, "serchs"), orderBy("cre", "desc"), limit(4));
+
+    const { docs } = await getDocs(q);
+
+    const product = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    if (!product) {
+      return {
+        // notFound: true, // Devolverá la página 404
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+
+    return {
+      props: {
+        product,
+      },
+      revalidate: 86400, // 60 * 60 * 24 revalidate every 24 hours
+    };
+  } catch (error) {
+    Toast("Al parecer hay un error", "error", 5000);
+    return {
+      props: {},
+    };
+  }
+}
+
+
 const Search = ({ product }) => {
   // useDispatch
   const dispatch = useDispatch();
@@ -172,40 +208,5 @@ const Search = ({ product }) => {
 Search.propTypes = {
   product: PropTypes.array,
 };
-
-export async function getStaticProps() {
-  try {
-    const q = query(collection(db, "serchs"), orderBy("cre", "desc"), limit(4));
-
-    const { docs } = await getDocs(q);
-
-    const product = docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    if (!product) {
-      return {
-        // notFound: true, // Devolverá la página 404
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
-    return {
-      props: {
-        product,
-      },
-      revalidate: 86400, // 60 * 60 * 24 revalidate every 24 hours
-    };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return {
-      props: {},
-    };
-  }
-}
 
 export default Search;

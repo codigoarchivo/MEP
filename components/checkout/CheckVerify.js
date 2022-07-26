@@ -159,7 +159,7 @@ export const CheckVerify = ({
             {[
               {
                 nombre: locale === "en" ? en.name : es.name,
-                Valor: locale === "en" ? product.na.en : product.na.es,
+                Valor: locale === "en" ? product?.na?.en : product?.na?.es,
               },
               {
                 nombre: locale === "en" ? en.quantity : es.quantity,

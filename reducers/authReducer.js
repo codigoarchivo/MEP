@@ -16,17 +16,6 @@ export const authReducer = (states = initialStates, action) => {
         ...states,
         activeSelect: {},
       };
-    case types.active:
-      return {
-        ...states,
-        activeSelect: action.payload,
-      };
-    case types.closeActive:
-      return {
-        ...states,
-        activeSelect: {},
-      };
-
     default:
       return states;
   }

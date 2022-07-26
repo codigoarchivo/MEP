@@ -21,38 +21,6 @@ import { Toast } from "../../helpers/Toast";
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
-const ConfigDashboard = ({ product = {} }) => {
-  // router
-  const { push, locale, query, back } = useRouter();
-  // selector
-  const { listData: list = [] } = useSelector(({ category }) => category);
-
-  if (!list[0]) {
-    push("/");
-  }
-
-  return (
-    <ShopLayout title={query.set}>
-      <Container maxW={"container.sm"} py={10}>
-        <ProductData
-          product={product}
-          word={query.set}
-          details={query.dt}
-          push={push}
-          back={back}
-          locale={locale}
-          es={es}
-          en={en}
-        />
-      </Container>
-    </ShopLayout>
-  );
-};
-
-ConfigDashboard.propTypes = {
-  product: PropTypes.object,
-};
-
 export async function getStaticPaths() {
   const { docs } = await getDocs(collection(db, "serchs"));
 
@@ -114,5 +82,38 @@ export async function getStaticProps({ params }) {
     };
   }
 }
+
+
+const ConfigDashboard = ({ product = {} }) => {
+  // router
+  const { push, locale, query, back } = useRouter();
+  // selector
+  const { listData: list = [] } = useSelector(({ category }) => category);
+
+  if (!list[0]) {
+    push("/");
+  }
+
+  return (
+    <ShopLayout title={query.set}>
+      <Container maxW={"container.sm"} py={10}>
+        <ProductData
+          product={product}
+          word={query.set}
+          details={query.dt}
+          push={push}
+          back={back}
+          locale={locale}
+          es={es}
+          en={en}
+        />
+      </Container>
+    </ShopLayout>
+  );
+};
+
+ConfigDashboard.propTypes = {
+  product: PropTypes.object,
+};
 
 export default ConfigDashboard;

@@ -15,7 +15,6 @@ import {
   orderBy,
   query,
   startAfter,
-  where,
 } from "firebase/firestore";
 
 import { Button, HStack } from "@chakra-ui/react";
@@ -28,11 +27,13 @@ import {
 
 import { useModality } from "../hooks/useModality";
 
-export const Paginator = ({
+export const PaginatorProcess = ({
   list,
   firstVisible,
   lastVisible,
-  window,
+  win,
+  u,
+  direct,
   word,
   newList,
   nLimit,
@@ -40,8 +41,6 @@ export const Paginator = ({
   orHome,
   orPrevious,
   orNext,
-  uid,
-  ini = "uid",
 }) => {
   // dispatch
   const dispatch = useDispatch();
@@ -68,24 +67,12 @@ export const Paginator = ({
   // }, [list, setModality, setModality2, setModality3]);
 
   const home = () => {
-    let q;
-    if (uid !== undefined) {
-      q = query(
-        collection(db, window),
-        where(ini, "==", uid),
-        where(word, "!=", false),
-        orderBy(word, orHome),
-        endBefore(firstVisible),
-        limit(nLimit)
-      );
-    } else {
-      q = query(
-        collection(db, window),
-        orderBy(word, orHome),
-        endBefore(firstVisible),
-        limit(nLimit)
-      );
-    }
+    let q = query(
+      collection(db, win, u, direct),
+      orderBy(word, orHome),
+      endBefore(firstVisible),
+      limit(nLimit)
+    );
 
     onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -100,24 +87,12 @@ export const Paginator = ({
   };
 
   const previous = () => {
-    let q;
-    if (uid !== undefined) {
-      q = query(
-        collection(db, window),
-        where(ini, "==", uid),
-        where(word, "!=", false),
-        orderBy(word, orPrevious),
-        endBefore(firstVisible),
-        limitToLast(nLimit)
-      );
-    } else {
-      q = query(
-        collection(db, window),
-        orderBy(word, orPrevious),
-        endBefore(firstVisible),
-        limitToLast(nLimit)
-      );
-    }
+    let q = query(
+      collection(db, win, u, direct),
+      orderBy(word, orPrevious),
+      endBefore(firstVisible),
+      limitToLast(nLimit)
+    );
 
     onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -129,24 +104,12 @@ export const Paginator = ({
   };
 
   const next = () => {
-    let q;
-    if (uid !== undefined) {
-      q = query(
-        collection(db, window),
-        where(ini, "==", uid),
-        where(word, "!=", false),
-        orderBy(word, orNext),
-        startAfter(lastVisible),
-        limit(nLimit)
-      );
-    } else {
-      q = query(
-        collection(db, window),
-        orderBy(word, orNext),
-        startAfter(lastVisible),
-        limit(nLimit)
-      );
-    }
+    let q = query(
+      collection(db, win, u, direct),
+      orderBy(word, orNext),
+      startAfter(lastVisible),
+      limit(nLimit)
+    );
 
     onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -189,7 +152,7 @@ export const Paginator = ({
         <ChevronLeftIcon w={6} h={6} />
       </Button>
       <Button
-        onClick={next}
+        onClick={() => next()}
         disabled={modality2}
         variant={"primary"}
         cursor="pointer"
@@ -203,11 +166,11 @@ export const Paginator = ({
   );
 };
 
-Paginator.propTypes = {
+PaginatorProcess.propTypes = {
   list: PropTypes.array,
   firstVisible: PropTypes.number,
   lastVisible: PropTypes.number,
-  window: PropTypes.string,
+  win: PropTypes.string,
   word: PropTypes.string,
   newList: PropTypes.func,
   nLimit: PropTypes.number,

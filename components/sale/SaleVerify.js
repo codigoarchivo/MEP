@@ -8,19 +8,13 @@ import {
   Stack,
   Text,
   VStack,
-  chakra,
   Button,
+  useBreakpointValue,
+  Box,
 } from "@chakra-ui/react";
 
-import { useDispatch } from "react-redux";
 
 import { Breakpoints } from "../../helpers/Breakpoints";
-
-import { validPago } from "../../actions/checkout";
-
-import { Toast } from "../../helpers/Toast";
-
-import { GridValueClose } from "../../utils/GridValueClose";
 
 import { Salemodal } from "./Salemodal";
 
@@ -28,24 +22,18 @@ import { CloseIcon } from "@chakra-ui/icons";
 
 export const SaleVerify = ({
   bordes,
-  // id del referencia product
-  idThree = "",
   // product
   product = {},
   // información del pago del producto
   referencia = {},
   // uid del comprador
   buy = "",
-  // uid del vendedor
-  sal = "",
   push,
   locale,
   back,
   es,
   en,
 }) => {
-  // dispatch
-  const dispatch = useDispatch();
   // Breakpoints
   const { full, content7 } = Breakpoints();
 
@@ -58,43 +46,23 @@ export const SaleVerify = ({
     });
   };
 
-  // handleLiberate
-  const handleLiberate = (e) => {
-    e.preventDefault();
-
-    if ([idThree, sal, buy].includes("")) {
-      return Toast(
-        locale === "en" ? en.historySale.sI : es.historySale.sI,
-        "error",
-        5000
-      );
-    }
-    const err = locale === "en" ? en.error : es.error;
-
-    dispatch(validPago(referencia, idThree, sal, err));
-
-    Toast(
-      locale === "en" ? en.historySale.sH : es.historySale.sH,
-      "success",
-      5000
-    );
-
-    back();
-  };
-
   const closeVerify = () => {
     back();
   };
 
+  const poin = useBreakpointValue({ base: "0", md: "15px" });
+  const poinB = useBreakpointValue({ base: "15px", md: "0" });
+
   return (
     <>
-      <HStack
-        spacing={{ base: 0, sm: 5 }}
+      <Stack
+        flexDirection={{ base: "column-reverse", md: "row" }}
+        justifyContent={{ base: "space-between", sm: "flex-end" }}
         w={full}
+        spacing={0}
         border={bordes}
         px={{ base: 1, sm: 5 }}
         py={{ base: 3, sm: 5 }}
-        justifyContent={{ base: "space-between", sm: "flex-end" }}
         mb={5}
       >
         <Salemodal
@@ -104,7 +72,9 @@ export const SaleVerify = ({
           picture={locale === "en" ? en.picture : es.picture}
         />{" "}
         <Button
-          fontSize={"x-small"}
+          w={{ base: "full", md: "min-content" }}
+          style={{ marginLeft: poin, marginBottom: poinB }}
+          fontSize={"small"}
           size={"sm"}
           variant={"primary"}
           textTransform={"capitalize"}
@@ -112,8 +82,14 @@ export const SaleVerify = ({
         >
           {locale === "en" ? en.buyer : es.buyer}
         </Button>
-        <CloseIcon onClick={() => closeVerify()} cursor="pointer" />
-      </HStack>
+        <Box
+          textAlign={"right"}
+          w={{ base: "full", md: "min-content" }}
+          style={{ marginLeft: poin, marginBottom: poinB }}
+        >
+          <CloseIcon onClick={() => closeVerify()} cursor="pointer" />
+        </Box>
+      </Stack>
       <Stack flexDirection={content7} w={full} spacing={0} mb={20}>
         <VStack
           backgroundColor={"#fff"}
@@ -209,15 +185,6 @@ export const SaleVerify = ({
               </HStack>
             ))}
           </Stack>{" "}
-          <chakra.form onSubmit={handleLiberate} w={full}>
-            <GridValueClose
-              set={locale === "en" ? en.historySale.sG : es.historySale.sG}
-              onClose={closeVerify}
-              locale={locale}
-              es={es}
-              en={en}
-            />
-          </chakra.form>
         </VStack>
       </Stack>
     </>
@@ -226,12 +193,10 @@ export const SaleVerify = ({
 
 SaleVerify.propTypes = {
   bordes: PropTypes.string,
-  idThree: PropTypes.string,
   product: PropTypes.object,
   sale: PropTypes.object,
   referencia: PropTypes.object,
   buy: PropTypes.string,
-  sal: PropTypes.string,
   push: PropTypes.func,
   locale: PropTypes.string,
   back: PropTypes.func,

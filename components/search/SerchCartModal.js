@@ -54,16 +54,12 @@ export const SerchCartModal = ({
   );
 
   const [overlay, setOverlay] = useState(<OverlayOne />);
-
   const data = useMemo(
     () =>
       active.map((item) => ({
-        // uid del comprador
-        buy: a.uid,
         process: false,
         close: false,
         lim: addDays(Date.now(), 3),
-        cre: Date.now(),
         product: {
           // raiting del producto
           rat: item.rat,
@@ -87,12 +83,13 @@ export const SerchCartModal = ({
           pj: item.cn * item.pr - (item.pj * (item.cn * item.pr)) / 100,
         },
       })),
-    [active, a.uid]
+    [active]
   );
 
   const confirmSale = () => {
+    const u = a.uid;
     // save cart
-    dispatch(saveSale(data, del));
+    dispatch(saveSale(data, del, u));
 
     Toast(locale === "en" ? en.cart.cF : es.cart.cF, "success", 5000);
 

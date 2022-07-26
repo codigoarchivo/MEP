@@ -14,22 +14,6 @@ import { BlogScreen } from "../../components/blog/blogScreen";
 
 import { Toast } from "../../helpers/Toast";
 
-const Blog = (data) => {
-  return (
-    <ShopLayout title={"Blog"}>
-      <Container maxW={"container.xs"}>
-        <BlogScreen {...data} />
-      </Container>
-    </ShopLayout>
-  );
-};
-
-Blog.propTypes = {
-  categories: PropTypes.string,
-  buys: PropTypes.string,
-  product: PropTypes.string,
-};
-
 export async function getStaticProps() {
   try {
     const categories = await getDocs(collection(db, "categories"));
@@ -61,5 +45,21 @@ export async function getStaticProps() {
     };
   }
 }
+
+const Blog = (data) => {
+  return (
+    <ShopLayout title={"Blog"}>
+      <Container maxW={"container.xs"}>
+        <BlogScreen {...data} />
+      </Container>
+    </ShopLayout>
+  );
+};
+
+Blog.propTypes = {
+  categories: PropTypes.string,
+  buys: PropTypes.string,
+  product: PropTypes.string,
+};
 
 export default Blog;

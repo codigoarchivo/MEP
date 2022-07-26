@@ -1,13 +1,6 @@
 import React, { useEffect } from "react";
 
-import {
-  collection,
-  getDocs,
-  limit,
-  where,
-  query,
-  orderBy,
-} from "firebase/firestore";
+import { collection, getDocs, limit, query, orderBy } from "firebase/firestore";
 
 import { db } from "../../firebase/config";
 
@@ -27,109 +20,19 @@ import { cheListAllBuy } from "../../actions/checkout";
 
 import { CheckoutScreenAll } from "../../components/checkout/CheckoutScreenAll";
 
-import { Paginator } from "../../utils/Paginator";
+import { PaginatorProcess } from "../../utils/PaginatorProcess";
 
 import { Toast } from "../../helpers/Toast";
 
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
-const BuyData = ({ product = [] }) => {
-  // useRouter
-  const { locale, push, query: que } = useRouter();
-  // useSelector
-  const { buy = [] } = useSelector(({ checkout }) => checkout);
-  // useDispatch
-  const dispatch = useDispatch();
-  // Breakpoints
-  const { bordes, full } = Breakpoints();
-
-  useEffect(() => {
-    if (!!product[0]) {
-      dispatch(cheListAllBuy(product));
-    }
-  }, [dispatch, product]);
-
-  return (
-    <ShopLayout title={"buys"}>
-      <Container maxW={"container.lg"}>
-        <Stack flexDirection={"row"} my={20} w={full}>
-          <VStack w={full} spacing={5}>
-            <Heading w={full} as="h2" size="lg" fontWeight="semibold">
-              {locale === "en" ? en.historyBuy.sA : es.historyBuy.sA}
-            </Heading>
-            <VStack w={full} p={{ base: 1, md: 5 }} border={bordes}>
-              <Heading
-                w={full}
-                size={"md"}
-                textTransform={"uppercase"}
-                px={2}
-                fontWeight={"black"}
-                mb={10}
-              >
-                {!!buy[0]
-                  ? locale === "en"
-                    ? en.historyBuy.sB
-                    : es.historyBuy.sB
-                  : locale === "en"
-                  ? en.historyBuy.sC
-                  : es.historyBuy.sC}
-              </Heading>
-              {buy.map((item, key) => (
-                <CheckoutScreenAll
-                  key={key}
-                  {...item}
-                  count={(key += 1)}
-                  name={locale === "en" ? en.name : es.name}
-                  quantity={locale === "en" ? en.quantity : es.quantity}
-                  tax={locale === "en" ? en.tax : es.tax}
-                  unit={locale === "en" ? en.unit : es.unit}
-                  price={locale === "en" ? en.price : es.price}
-                  paid={locale === "en" ? en.paid : es.paid}
-                  pro={locale === "en" ? en.process : es.process}
-                  sF={locale === "en" ? en.historyBuy.sF : es.historyBuy.sF}
-                  push={push}
-                  locale={locale}
-                />
-              ))}
-            </VStack>
-          </VStack>
-        </Stack>
-        <Box>
-          {buy.length > 0 && (
-            <Paginator
-              window={"buys"}
-              word={"cre"}
-              list={buy}
-              firstVisible={buy[0].cre}
-              lastVisible={buy[buy.length - 1].cre}
-              newList={cheListAllBuy}
-              nLimit={2}
-              orHome={"desc"}
-              orPrevious={"desc"}
-              orNext={"desc"}
-              uid={que.uid.toString()}
-              ini={"buy"}
-            />
-          )}
-        </Box>
-      </Container>
-    </ShopLayout>
-  );
-};
-
-BuyData.propTypes = {
-  product: PropTypes.array,
-};
-
 export async function getServerSideProps(Context) {
   const u = await Context.query.uid.toString();
   try {
     const { docs } = await getDocs(
       query(
-        collection(db, "buys"),
-        where("buy", "==", u),
-        where("cre", "!=", false),
+        collection(db, "users", u, "buys"),
         orderBy("cre", "desc"),
         limit(1)
       )
@@ -162,5 +65,93 @@ export async function getServerSideProps(Context) {
     };
   }
 }
+
+const BuyData = ({ product = [] }) => {
+  // useRouter
+  const { locale, push, query: que } = useRouter();
+  // useSelector
+  const { buy: databuy = [] } = useSelector(({ checkout }) => checkout);
+  // useDispatch
+  const dispatch = useDispatch();
+  // Breakpoints
+  const { bordes, full } = Breakpoints();
+
+  useEffect(() => {
+    if (!!product[0]) {
+      dispatch(cheListAllBuy(product));
+    }
+  }, [dispatch, product]);
+console.log(databuy);
+  return (
+    <ShopLayout title={"buys"}>
+      <Container maxW={"container.lg"}>
+        <Stack flexDirection={"row"} my={20} w={full}>
+          <VStack w={full} spacing={5}>
+            <Heading w={full} as="h2" size="lg" fontWeight="semibold">
+              {locale === "en" ? en.historyBuy.sA : es.historyBuy.sA}
+            </Heading>
+            <VStack w={full} p={{ base: 1, md: 5 }} border={bordes}>
+              <Heading
+                w={full}
+                size={"md"}
+                textTransform={"uppercase"}
+                px={2}
+                fontWeight={"black"}
+                mb={10}
+              >
+                {!!databuy[0]
+                  ? locale === "en"
+                    ? en.historyBuy.sB
+                    : es.historyBuy.sB
+                  : locale === "en"
+                  ? en.historyBuy.sC
+                  : es.historyBuy.sC}
+              </Heading>
+              {databuy.map((item, key) => (
+                <CheckoutScreenAll
+                  key={key}
+                  {...item}
+                  count={(key += 1)}
+                  name={locale === "en" ? en.name : es.name}
+                  quantity={locale === "en" ? en.quantity : es.quantity}
+                  tax={locale === "en" ? en.tax : es.tax}
+                  unit={locale === "en" ? en.unit : es.unit}
+                  price={locale === "en" ? en.price : es.price}
+                  paid={locale === "en" ? en.paid : es.paid}
+                  pro={locale === "en" ? en.process : es.process}
+                  sF={locale === "en" ? en.historyBuy.sF : es.historyBuy.sF}
+                  push={push}
+                  locale={locale}
+                />
+              ))}
+            </VStack>
+          </VStack>
+        </Stack>
+        <Box>
+          {databuy.length > 0 && (
+            <PaginatorProcess
+              win={"users"}
+              direct={"buys"}
+              u={que.uid.toString()}
+              word={"cre"}
+              list={databuy}
+              firstVisible={databuy[0].cre}
+              lastVisible={databuy[databuy.length - 1].cre}
+              newList={cheListAllBuy}
+              nLimit={1}
+              orHome={"desc"}
+              orPrevious={"desc"}
+              orNext={"desc"}
+            />
+          )}
+        </Box>
+      </Container>
+    </ShopLayout>
+  );
+};
+
+BuyData.propTypes = {
+  product: PropTypes.array,
+};
 
 export default BuyData;

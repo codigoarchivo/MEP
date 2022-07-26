@@ -21,44 +21,6 @@ import { Toast } from "../../../helpers/Toast";
 import { en } from "../../../translations/en";
 import { es } from "../../../translations/es";
 
-const Orders = ({ active }) => {
-  // dispatch
-  const { push, locale, back } = useRouter();
-  // Breakpoints
-  const { bordes } = Breakpoints();
-
-  return (
-    <ShopLayout title={locale === "en" ? en.historySale.sD : es.historySale.sD}>
-      <Container maxW={"container.xl"} py={{ base: 0, md: 10 }}>
-        <Stack flexDirection={"column"} spacing={0}>
-          <SaleVerifyAll
-            bordes={bordes}
-            // toda la informacion del producto
-            product={active.product}
-            // toda la imformación en general
-            referencia={active}
-            // id del proceso
-            idThree={active.id}
-            // uid del comprador
-            buy={active.buy}
-            // uid que esta producto se utiliza para comparar con el uid owner
-            sal={active.product.uid}
-            push={push}
-            locale={locale}
-            back={back}
-            es={es}
-            en={en}
-          />
-        </Stack>
-      </Container>
-    </ShopLayout>
-  );
-};
-
-Orders.propTypes = {
-  active: PropTypes.object,
-};
-
 export async function getStaticPaths() {
   const { docs } = await getDocs(collection(db, "sales"));
 
@@ -119,5 +81,43 @@ export async function getStaticProps({ params }) {
     };
   }
 }
+
+const Orders = ({ active }) => {
+  // dispatch
+  const { push, locale, back } = useRouter();
+  // Breakpoints
+  const { bordes } = Breakpoints();
+
+  return (
+    <ShopLayout title={locale === "en" ? en.historySale.sD : es.historySale.sD}>
+      <Container maxW={"container.xl"} py={{ base: 0, md: 10 }}>
+        <Stack flexDirection={"column"} spacing={0}>
+          <SaleVerifyAll
+            bordes={bordes}
+            // toda la informacion del producto
+            product={active.product}
+            // toda la imformación en general
+            referencia={active}
+            // id del proceso
+            idThree={active.id}
+            // uid del comprador
+            buy={active.buy}
+            // uid que esta producto se utiliza para comparar con el uid owner
+            sal={active.product.uid}
+            push={push}
+            locale={locale}
+            back={back}
+            es={es}
+            en={en}
+          />
+        </Stack>
+      </Container>
+    </ShopLayout>
+  );
+};
+
+Orders.propTypes = {
+  active: PropTypes.object,
+};
 
 export default Orders;

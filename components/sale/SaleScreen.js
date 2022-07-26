@@ -13,6 +13,7 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 import { NavLink } from "../../utils/Navlink";
 
 export const SaleScreen = ({
+  que,
   item = {},
   name,
   mail,
@@ -84,8 +85,8 @@ export const SaleScreen = ({
         )}
 
         <NavLink
-          href={`/sale/[id]`}
-          as={`/sale/${id}`}
+          href={`/sale/set/[id]?uid=${que}`}
+          as={`/sale/set/${id}?uid=${que}`}
           name={`${verify} $${to}`}
           variant={"primary"}
           size={"xs"}

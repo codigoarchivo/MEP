@@ -10,7 +10,7 @@ import { types } from "../type";
 export const listDataProduct = (data, err) => {
   return async (dispatch) => {
     try {
-      if (data) {
+      if (!!data[0]) {
         await dispatch(productDataList(data));
       }
     } catch (error) {
@@ -167,16 +167,17 @@ const LatestSaveCart = (data) => ({
   payload: data,
 });
 
-export const saveSale = (data = [], del) => {
+export const saveSale = (data = [], del, u) => {
   return async (dispatch) => {
     try {
       let list = [];
       data.map(async (item) => {
+        item.cre = Date.now();
         // resta la cantidad del producto
         await dbProductEdit(item.product.id, "dbProEditOne", item.product.cnr);
 
         // agrega una compra
-        const { id } = await addDoc(collection(db, "buys"), {
+        const { id } = await addDoc(collection(db, "users", u, "buys"), {
           ...item,
         });
 
@@ -193,23 +194,25 @@ export const saveSale = (data = [], del) => {
   };
 };
 
-export const saveSaleRevert = (data, err) => {
-  return (dispatch) => {
+export const saveSaleRevert = (data, err, u) => {
+  return async (dispatch) => {
     try {
-      data.map(async (item) => {
+      await data.map(async (item) => {
         if (item.process === false) {
           const cnr = item.cnr + item.cn;
           await dbProductEdit(item.id, "dbProEditOne", cnr);
-          await deleteDoc(doc(db, "buys", item.idP));
+          await deleteDoc(doc(db, "users", u, "buys", item.idP));
         }
       });
+
+      await dispatch(closeR());
     } catch (error) {
       Toast(err, "error", 5000);
     }
   };
 };
-
-export const closeRevert = () => ({
+// processReducer
+export const closeR = () => ({
   type: types.productRevert,
 });
 

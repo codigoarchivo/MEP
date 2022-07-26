@@ -30,43 +30,6 @@ import { SerchDetails } from "../../components/search/SerchDetails";
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
-const Details = ({ product = {}, msg = [] }) => {
-  // useDispatch
-  const dispatch = useDispatch();
-  // useRouter
-  const { locale, push } = useRouter();
-  // useSelector
-  const { message: m } = useSelector(({ checkout }) => checkout);
-
-  useEffect(() => {
-    if (msg) {
-      dispatch(messagesList(msg));
-    } else {
-      dispatch(messagesList([]));
-    }
-  }, [dispatch, msg]);
-
-  return (
-    <ShopLayout title={locale === "en" ? en.details : es.details}>
-      <Container maxW="container.lg" py={{ base: 0, md: 10 }}>
-        <SerchDetails
-          message={m}
-          product={product}
-          push={push}
-          locale={locale}
-          es={es}
-          en={en}
-        />
-      </Container>
-    </ShopLayout>
-  );
-};
-
-Details.propType = {
-  product: PropTypes.object,
-  msg: PropTypes.object,
-};
-
 export async function getStaticPaths() {
   const { docs } = await getDocs(collection(db, "serchs"));
 
@@ -135,5 +98,42 @@ export async function getStaticProps({ params }) {
     return { props: { message: [], product: {} } };
   }
 }
+
+const Details = ({ product = {}, msg = [] }) => {
+  // useDispatch
+  const dispatch = useDispatch();
+  // useRouter
+  const { locale, push } = useRouter();
+  // useSelector
+  const { message: m } = useSelector(({ checkout }) => checkout);
+
+  useEffect(() => {
+    if (!!msg[0]) {
+      dispatch(messagesList(msg));
+    } else {
+      dispatch(messagesList([]));
+    }
+  }, [dispatch, msg]);
+
+  return (
+    <ShopLayout title={locale === "en" ? en.details : es.details}>
+      <Container maxW="container.lg" py={{ base: 0, md: 10 }}>
+        <SerchDetails
+          message={m}
+          product={product}
+          push={push}
+          locale={locale}
+          es={es}
+          en={en}
+        />
+      </Container>
+    </ShopLayout>
+  );
+};
+
+Details.propType = {
+  product: PropTypes.object,
+  msg: PropTypes.object,
+};
 
 export default Details;

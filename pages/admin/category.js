@@ -40,6 +40,41 @@ import { Toast } from "../../helpers/Toast";
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
+export async function getServerSideProps() {
+  try {
+    const ca = query(
+      collection(db, "categories"),
+      orderBy("cre", "desc"),
+      limit(2)
+    );
+
+    const { docs } = await getDocs(ca);
+
+    const data = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    if (!data) {
+      return {
+        // notFound: true, // Devolverá la página 404
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+
+    return {
+      props: {
+        data,
+      },
+    };
+  } catch (error) {
+    Toast("Al parecer hay un error", "error", 5000);
+  }
+}
+
 const Category = ({ data = [] }) => {
   // selector
   const { list = [] } = useSelector(({ category }) => category);
@@ -58,7 +93,7 @@ const Category = ({ data = [] }) => {
 
   const err = locale === "en" ? en.error : es.error;
   useEffect(() => {
-    if (data) {
+    if (!!data[0]) {
       dispatch(listDataCategory(data, err));
     }
   }, [dispatch, data, err]);
@@ -148,40 +183,5 @@ const Category = ({ data = [] }) => {
 Category.propTypes = {
   data: PropTypes.array,
 };
-
-export async function getServerSideProps() {
-  try {
-    const ca = query(
-      collection(db, "categories"),
-      orderBy("cre", "desc"),
-      limit(2)
-    );
-
-    const { docs } = await getDocs(ca);
-
-    const data = docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    if (!data) {
-      return {
-        // notFound: true, // Devolverá la página 404
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
-    return {
-      props: {
-        data,
-      },
-    };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-  }
-}
 
 export default Category;

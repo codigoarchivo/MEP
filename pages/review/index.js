@@ -17,6 +17,21 @@ import { useSelector } from "react-redux";
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
+export async function getServerSideProps({ query }) {
+  // id three
+  const g = query.g.toString();
+  // id del producto que esta dentro id three
+  const p = query.p.toString();
+  // id del mensaje o es new
+  const i = query.i.toString();
+  try {
+    return { props: { p, i, g } };
+  } catch (error) {
+    Toast("Al parecer hay un error", "error", 5000);
+    return { props: {} };
+  }
+}
+
 const Review = ({ p = "", i = "", g = "" }) => {
   // useRouter
   const { locale, push, back } = useRouter();
@@ -63,20 +78,5 @@ Review.propTypes = {
   i: PropTypes.string,
   g: PropTypes.string,
 };
-
-export async function getServerSideProps({ query }) {
-  // id three
-  const g = query.g.toString();
-  // id del producto que esta dentro id three
-  const p = query.p.toString();
-  // id del mensaje o es new
-  const i = query.i.toString();
-  try {
-    return { props: { p, i, g } };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return { props: {} };
-  }
-}
 
 export default Review;

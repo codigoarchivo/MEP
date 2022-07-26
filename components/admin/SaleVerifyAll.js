@@ -10,6 +10,8 @@ import {
   VStack,
   chakra,
   Button,
+  useBreakpointValue,
+  Box,
 } from "@chakra-ui/react";
 
 import { useDispatch } from "react-redux";
@@ -70,8 +72,9 @@ export const SaleVerifyAll = ({
       );
     }
     const err = locale === "en" ? en.error : es.error;
+    const own = referencia.own;
 
-    dispatch(validPago(referencia, idThree, sal, err));
+    dispatch(validPago(referencia, idThree, sal, err, buy, own));
 
     Toast(
       locale === "en" ? en.historySale.sH : es.historySale.sH,
@@ -85,16 +88,21 @@ export const SaleVerifyAll = ({
   const closeVerify = () => {
     back();
   };
+  
+  const poin = useBreakpointValue({ base: "0", md: "15px" });
+  const poinB = useBreakpointValue({ base: "15px", md: "0" });
 
   return (
     <>
-      <HStack
-        spacing={{ base: 0, sm: 5 }}
+      <Stack
+        flexDirection={{ base: "column-reverse", md: "row" }}
+        justifyContent={{ base: "space-between", sm: "flex-end" }}
+        alignItems={"center"}
         w={full}
+        spacing={0}
         border={bordes}
         px={{ base: 1, sm: 5 }}
         py={{ base: 3, sm: 5 }}
-        justifyContent={{ base: "space-between", sm: "flex-end" }}
         mb={5}
       >
         <Salemodal
@@ -104,16 +112,35 @@ export const SaleVerifyAll = ({
           picture={locale === "en" ? en.picture : es.picture}
         />{" "}
         <Button
-          fontSize={"x-small"}
+          w={{ base: "full", md: "min-content" }}
+          fontSize={"small"}
+          size={"sm"}
+          variant={"primary"}
+          textTransform={"capitalize"}
+          onClick={() => handleUser(sal)}
+          style={{ marginLeft: poin, marginBottom: poinB }}
+        >
+          {locale === "en" ? en.sell : es.sell}
+        </Button>
+        <Button
+          w={{ base: "full", md: "min-content" }}
+          fontSize={"small"}
           size={"sm"}
           variant={"primary"}
           textTransform={"capitalize"}
           onClick={() => handleUser(buy)}
+          style={{ marginLeft: poin, marginBottom: poinB }}
         >
           {locale === "en" ? en.buyer : es.buyer}
         </Button>
-        <CloseIcon onClick={() => closeVerify()} cursor="pointer" />
-      </HStack>
+        <Box
+          textAlign={"right"}
+          w={{ base: "full", md: "min-content" }}
+          style={{ marginLeft: poin, marginBottom: poinB }}
+        >
+          <CloseIcon onClick={() => closeVerify()} cursor="pointer" />
+        </Box>
+      </Stack>
       <Stack flexDirection={content7} w={full} spacing={0} mb={20}>
         <VStack
           backgroundColor={"#fff"}

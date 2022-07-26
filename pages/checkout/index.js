@@ -26,7 +26,6 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 import {
   activeProductList,
   closeActive,
-  closeRevert,
   saveSaleRevert,
 } from "../../actions/product";
 
@@ -37,7 +36,47 @@ import { Toast } from "../../helpers/Toast";
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
+export async function getServerSideProps(Context) {
+  const qu = await Context.query.q.toString();
+  try {
+    const q = query(
+      collection(db, "users", qu, "buys"),
+      where("close", "==", false),
+      limit(4)
+    );
+
+    const { docs } = await getDocs(q);
+
+    const product = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    if (!product) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+
+    return {
+      props: {
+        product: JSON.parse(JSON.stringify(product)),
+      },
+    };
+  } catch (error) {
+    Toast("Al parecer hay un error", "error", 5000);
+    return {
+      props: {},
+    };
+  }
+}
+
 const Checkout = ({ product = [] }) => {
+  // selector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useSelector
   const { activeSelectCheck: check = [] } = useSelector(
     ({ process }) => process
@@ -55,7 +94,7 @@ const Checkout = ({ product = [] }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (product) {
+    if (!!product[0]) {
       dispatch(activeProductList(product));
     }
   }, [dispatch, product]);
@@ -78,9 +117,8 @@ const Checkout = ({ product = [] }) => {
     e.preventDefault();
     // revertir
     const err = locale === "en" ? en.error : es.error;
-    dispatch(saveSaleRevert(data, err));
-
-    dispatch(closeRevert());
+    const u = a.uid;
+    dispatch(saveSaleRevert(data, err, u));
   };
 
   return (
@@ -162,44 +200,5 @@ const Checkout = ({ product = [] }) => {
 Checkout.propTypes = {
   product: PropTypes.array,
 };
-
-export async function getServerSideProps(Context) {
-  const qu = await Context.query.q.toString();
-  try {
-    const q = query(
-      collection(db, "buys"),
-      where("buy", "==", qu),
-      where("close", "==", false),
-      limit(4)
-    );
-
-    const { docs } = await getDocs(q);
-
-    const product = docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    if (!product) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
-    return {
-      props: {
-        product: JSON.parse(JSON.stringify(product)),
-      },
-    };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return {
-      props: {},
-    };
-  }
-}
 
 export default Checkout;

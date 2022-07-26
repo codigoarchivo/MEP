@@ -21,11 +21,11 @@ export const Salemodal = ({ imgs, receipt, close, picture }) => {
   return (
     <>
       <Button
+        w={{ base: "full", md: "min-content" }}
         variant={"primary"}
         size={"sm"}
-        fontSize={"x-small"}
+        fontSize={"small"}
         onClick={onOpen}
-        m={{ base: 1, md: 4 }}
       >
         {receipt}
       </Button>

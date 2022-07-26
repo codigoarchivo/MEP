@@ -143,6 +143,7 @@ export const en = {
   process: "Process",
   paid: "Paid out",
   buyer: "Buyer information",
+  sell: "Seller information",
   creation: "Creation date",
   reference: "reference",
   fields: "All fields are required",

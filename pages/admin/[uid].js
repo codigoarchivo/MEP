@@ -34,6 +34,46 @@ import { SaleScreenAll } from "../../components/admin/SaleScreenAll";
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
+export async function getServerSideProps(Context) {
+  const d = Context.query.uid.toString();
+  try {
+    const q = query(
+      collection(db, "sales"),
+      where("own", "==", d),
+      where("cre", "!=", false),
+      orderBy("cre", "desc"),
+      limit(1)
+    );
+
+    const { docs } = await getDocs(q);
+
+    const data = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    if (!data) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+
+    return {
+      props: {
+        data,
+      },
+    };
+  } catch (error) {
+    Toast("Al parecer hay un error", "error", 5000);
+    return {
+      props: {},
+    };
+  }
+}
+
 const Sale = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
@@ -45,7 +85,7 @@ const Sale = ({ data }) => {
   const { bordes, full } = Breakpoints();
 
   useEffect(() => {
-    if (data) {
+    if (!!data[0]) {
       dispatch(cheListAll(data));
     }
   }, [dispatch, data]);
@@ -117,43 +157,4 @@ Sale.propTypes = {
   data: PropTypes.array,
 };
 
-export async function getServerSideProps(Context) {
-  const d = Context.query.uid.toString();
-  try {
-    const q = query(
-      collection(db, "sales"),
-      where("own", "==", d),
-      where("cre", "!=", false),
-      orderBy("cre", "desc"),
-      limit(1)
-    );
-
-    const { docs } = await getDocs(q);
-
-    const data = docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    if (!data) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
-    return {
-      props: {
-        data,
-      },
-    };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return {
-      props: {},
-    };
-  }
-}
 export default Sale;

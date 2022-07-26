@@ -59,6 +59,46 @@ const initialStates = {
   q: "",
 };
 
+export async function getServerSideProps({ params, locale }) {
+  const uid = await params.uid.toString();
+  try {
+    const q = query(
+      collection(db, "serchs"),
+      where("uid", "==", uid),
+      where("cre", "!=", false),
+      orderBy("cre", "desc"),
+      limit(2)
+    );
+
+    const { docs } = await getDocs(q);
+
+    const product = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    if (!product) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+
+    return {
+      props: {
+        product,
+      },
+    };
+  } catch (error) {
+    Toast(locale === "en" ? en.error : es.error, "error", 5000);
+    return {
+      props: {},
+    };
+  }
+}
+
 const List = ({ product = [] }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
@@ -73,7 +113,7 @@ const List = ({ product = [] }) => {
 
   const err = locale === "en" ? en.error : es.error;
   useEffect(() => {
-    if (product) {
+    if (!!product[0]) {
       dispatch(listDataProduct(product, err));
     }
   }, [dispatch, product, err]);
@@ -205,45 +245,5 @@ const List = ({ product = [] }) => {
 List.propTypes = {
   product: PropTypes.array,
 };
-
-export async function getServerSideProps({ params, locale }) {
-  const uid = await params.uid.toString();
-  try {
-    const q = query(
-      collection(db, "serchs"),
-      where("uid", "==", uid),
-      where("cre", "!=", false),
-      orderBy("cre", "desc"),
-      limit(2)
-    );
-
-    const { docs } = await getDocs(q);
-
-    const product = docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    if (!product) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
-    return {
-      props: {
-        product,
-      },
-    };
-  } catch (error) {
-    Toast(locale === "en" ? en.error : es.error, "error", 5000);
-    return {
-      props: {},
-    };
-  }
-}
 
 export default List;

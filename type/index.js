@@ -29,8 +29,6 @@ export const types = {
   closeActive: "[PROCESS] Close",
   productRevert: "[PROCESS] Inactive",
 
-  active: "[DATA] Active",
-
   category: "[CATEGORY] List",
   categoryList: "[CATEGORY] List Config",
   categoryAdd: "[CATEGORY] Add",

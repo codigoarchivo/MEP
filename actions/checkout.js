@@ -1,4 +1,4 @@
-import { collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 
 import { db } from "../firebase/config";
 
@@ -8,18 +8,16 @@ import { types } from "../type";
 
 const dA = process.env.NEXT_PUBLIC_ROL_A;
 
-export const validPago = (referencia = {}, idThree = "", sal = "", err) => {
+export const validPago = (
+  referencia = {},
+  idThree = "",
+  sal = "",
+  err,
+  buy,
+  own
+) => {
   return async (dispatch) => {
-    delete referencia.own; // elimina uid owner
     try {
-      // referencia para el vendedor
-      const val = {
-        ...referencia,
-        process: true,
-        sal: sal.toString(), // para que el vendedor sepa cual venta realizo
-        cre: Date.now(),
-      };
-
       if (dA.toString() === sal.toString()) {
         // principal
         await updateDoc(doc(db, "sales", idThree), {
@@ -27,18 +25,25 @@ export const validPago = (referencia = {}, idThree = "", sal = "", err) => {
         });
 
         // buy
-        await updateDoc(doc(db, "buys", idThree), {
+        await updateDoc(doc(db, "users", buy, "buys", idThree), {
           process: true,
           sal: sal.toString(), // solo para la informacion para cliente
         });
       }
 
       if (dA.toString() !== sal.toString()) {
+        delete referencia.own; // elimina uid owner
+        delete referencia.id; // elimina id
+
         // sales
-        await setDoc(doc(collection(db, "sales")), val);
+        await addDoc(collection(db, "users", sal, "sales"), {
+          ...referencia,
+          process: true,
+          cre: Date.now(),
+        });
 
         // buy
-        await updateDoc(doc(db, "buys", idThree), {
+        await updateDoc(doc(db, "users", buy, "buys", idThree), {
           process: true,
           sal: sal.toString(), // solo para la informacion para cliente
         });
@@ -48,8 +53,9 @@ export const validPago = (referencia = {}, idThree = "", sal = "", err) => {
           process: true,
         });
       }
-
-      dispatch(cheListHistoryEdit({ ...referencia, process: true }));
+      await dispatch(
+        cheListHistoryEdit({ ...referencia, process: true, own, id: idThree })
+      );
     } catch (error) {
       Toast(err, "error", 5000);
     }

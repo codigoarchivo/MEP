@@ -1,13 +1,6 @@
 import React, { useEffect } from "react";
 
-import {
-  collection,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 
 import { db } from "../firebase/config";
 
@@ -30,46 +23,6 @@ import { Toast } from "../helpers/Toast";
 import { en } from "../translations/en";
 import { es } from "../translations/es";
 
-const HomeL = ({ product = [], category = [] }) => {
-  // useRouter
-  const { locale } = useRouter();
-  // selector
-  const { listData = [], latestCartSelect = [] } = useSelector(
-    ({ product }) => product
-  );
-  // dispatch
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (product) {
-      dispatch(productListIndex(product));
-    }
-  }, [dispatch, product]);
-
-  useEffect(() => {
-    if (category) {
-      dispatch(categoryListConfig(category));
-    }
-  }, [dispatch, category]);
-
-  return (
-    <ShopLayout title={locale === "en" ? en.major.mA : es.major.mA}>
-      <Home
-        listData={listData}
-        latestCartSelect={latestCartSelect}
-        locale={locale}
-        en={en}
-        es={es}
-      />
-    </ShopLayout>
-  );
-};
-
-HomeL.propTypes = {
-  product: PropTypes.array.isRequired,
-  category: PropTypes.array.isRequired,
-};
-
 export async function getStaticProps() {
   try {
     const d = await getDocs(
@@ -84,7 +37,7 @@ export async function getStaticProps() {
     const { docs } = await getDocs(
       query(collection(db, "serchs"), orderBy("cre", "desc"), limit(25))
     );
-    
+
     const product = docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
@@ -114,5 +67,45 @@ export async function getStaticProps() {
     };
   }
 }
+
+const HomeL = ({ product = [], category = [] }) => {
+  // useRouter
+  const { locale } = useRouter();
+  // selector
+  const { listData = [], latestCartSelect = [] } = useSelector(
+    ({ product }) => product
+  );
+  // dispatch
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!!product[0]) {
+      dispatch(productListIndex(product));
+    }
+  }, [dispatch, product]);
+
+  useEffect(() => {
+    if (!!category[0]) {
+      dispatch(categoryListConfig(category));
+    }
+  }, [dispatch, category]);
+
+  return (
+    <ShopLayout title={locale === "en" ? en.major.mA : es.major.mA}>
+      <Home
+        listData={listData}
+        latestCartSelect={latestCartSelect}
+        locale={locale}
+        en={en}
+        es={es}
+      />
+    </ShopLayout>
+  );
+};
+
+HomeL.propTypes = {
+  product: PropTypes.array.isRequired,
+  category: PropTypes.array.isRequired,
+};
 
 export default HomeL;

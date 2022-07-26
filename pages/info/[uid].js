@@ -19,29 +19,6 @@ import { UserScreen } from "../../components/user/UserScreen";
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
-const Informacion = ({ user = {} }) => {
-  const { locale, back, push } = useRouter();
-
-  return (
-    <ShopLayout title={locale === "en" ? en.personal : es.personal}>
-      <Container maxW="lg">
-        <UserScreen
-          user={{ ...user }}
-          locale={locale}
-          back={back}
-          push={push}
-          es={es}
-          en={en}
-        />
-      </Container>
-    </ShopLayout>
-  );
-};
-
-Informacion.propTypes = {
-  user: PropTypes.object,
-};
-
 export async function getStaticPaths() {
   const { docs } = await getDocs(collection(db, "users"));
 
@@ -100,5 +77,28 @@ export async function getStaticProps({ params }) {
     return { props: {} };
   }
 }
+
+const Informacion = ({ user = {} }) => {
+  const { locale, back, push } = useRouter();
+
+  return (
+    <ShopLayout title={locale === "en" ? en.personal : es.personal}>
+      <Container maxW="lg">
+        <UserScreen
+          user={{ ...user }}
+          locale={locale}
+          back={back}
+          push={push}
+          es={es}
+          en={en}
+        />
+      </Container>
+    </ShopLayout>
+  );
+};
+
+Informacion.propTypes = {
+  user: PropTypes.object,
+};
 
 export default Informacion;

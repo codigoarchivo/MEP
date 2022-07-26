@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 
 import PropTypes from "prop-types";
 
+import { useSelector } from "react-redux";
+
 import {
   Button,
   Flex,
@@ -46,6 +48,8 @@ export const CheckoutScreen = ({
   const initRef = useRef();
   // Breakpoints
   const { bordes, full, content5 } = Breakpoints();
+  // selector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
 
   // envia el recibo del pago a la base de datos
   const handleVerify = () => {
@@ -53,6 +57,7 @@ export const CheckoutScreen = ({
       pathname: "/verify/[id]",
       query: {
         id,
+        uid: a.uid,
       },
     });
   };
@@ -93,11 +98,10 @@ export const CheckoutScreen = ({
         p={2}
       >
         <Button
+          variant={"primary"}
           leftIcon={<CartList h={5} w={5} />}
-          backgroundColor={"grey.100"}
           size={"xs"}
           fontWeight={"normal"}
-          variant={"secondary"}
           w={"min-content"}
           disabled={process ? true : false}
           border={bordes}
@@ -109,7 +113,7 @@ export const CheckoutScreen = ({
         <Button
           size={"xs"}
           fontWeight={"normal"}
-          variant={"secondary"}
+          variant={"primary"}
           w={"min-content"}
           disabled={process ? false : true}
           border={bordes}
@@ -128,7 +132,6 @@ export const CheckoutScreen = ({
           border={bordes}
           onClick={handleReview}
           textTransform={"uppercase"}
-          rounded={"lg"}
         >
           {sH}
         </Button>

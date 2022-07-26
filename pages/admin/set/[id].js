@@ -17,29 +17,6 @@ import ShopLayout from "../../../components/layout/ShopLayout";
 import { en } from "../../../translations/en";
 import { es } from "../../../translations/es";
 
-const ConfigCategory = ({ category }) => {
-  // router
-  const { locale, back, query } = useRouter();
-  return (
-    <ShopLayout title={locale === "en" ? en.major.mF : es.major.mF}>
-      <Container maxW={"container.sm"} py={20}>
-        <CategoryData
-          category={category}
-          pid={query.pid}
-          back={back}
-          locale={locale}
-          es={es}
-          en={en}
-        />
-      </Container>
-    </ShopLayout>
-  );
-};
-
-ConfigCategory.propTypes = {
-  category: PropTypes.object,
-};
-
 export async function getStaticPaths() {
   const { docs } = await getDocs(collection(db, "categories"));
 
@@ -73,12 +50,12 @@ export async function getStaticProps({ params }) {
   const id = await params.id.toString();
   try {
     const docSnap = await getDoc(doc(db, "categories", id));
-  
+
     const category = {
       id: docSnap.id,
       ...docSnap.data(),
     };
-  
+
     if (!category) {
       return {
         // notFound: true, // Devolverá la página 404
@@ -101,5 +78,28 @@ export async function getStaticProps({ params }) {
     };
   }
 }
+
+const ConfigCategory = ({ category }) => {
+  // router
+  const { locale, back, query } = useRouter();
+  return (
+    <ShopLayout title={locale === "en" ? en.major.mF : es.major.mF}>
+      <Container maxW={"container.sm"} py={20}>
+        <CategoryData
+          category={category}
+          pid={query.pid}
+          back={back}
+          locale={locale}
+          es={es}
+          en={en}
+        />
+      </Container>
+    </ShopLayout>
+  );
+};
+
+ConfigCategory.propTypes = {
+  category: PropTypes.object,
+};
 
 export default ConfigCategory;
