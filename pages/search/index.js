@@ -1,13 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-import {
-  collection,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 
 import { db } from "../../firebase/config";
 
@@ -84,12 +77,11 @@ export async function getStaticProps() {
   }
 }
 
-
 const Search = ({ product }) => {
   // useDispatch
   const dispatch = useDispatch();
   // selector
-  const { listSerch } = useSelector(({ product }) => product);
+  const { listSerch } = useSelector(({ serch }) => serch);
   // useRouter
   const { locale, query } = useRouter();
   // data

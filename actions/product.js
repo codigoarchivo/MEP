@@ -1,7 +1,8 @@
 import { addDoc, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
-import { dbProductEdit } from "../data/dbProducts";
 
 import { db } from "../firebase/config";
+
+import { dbProductEdit } from "../data/dbProducts";
 
 import { Toast } from "../helpers/Toast";
 
@@ -102,7 +103,7 @@ const productDelete = (id) => ({
 
 export const activeProductCart = (data, err, added, already) => {
   return async (dispatch, getState) => {
-    const { activeCartSelect } = await getState().process;
+    const { activeCartSelect } = await getState().cart;
     try {
       const match = await activeCartSelect.find((obj) => obj.id === data.id);
       if (match) {
@@ -124,7 +125,7 @@ export const cartProductActive = (data) => ({
 
 export const saveProductCart = (data, err) => {
   return async (dispatch, getState) => {
-    const { saveCartSelect } = await getState().process;
+    const { saveCartSelect } = await getState().save;
     try {
       const match = await saveCartSelect.find((obj) => obj?.id === data.id);
       if (match) {
@@ -150,7 +151,7 @@ export const deleteProductSave = (id) => ({
 
 export const cartSaveLatest = (data, err) => {
   return async (dispatch, getState) => {
-    const { latestCartSelect } = await getState().product;
+    const { latestCartSelect } = await getState().latest;
     try {
       const match = await latestCartSelect.find((obj) => obj.id === data.id);
       if (!match) {
@@ -221,11 +222,6 @@ export const deleteProductCart = (id) => ({
   payload: id,
 });
 
-const activeProduct = (data) => ({
-  type: types.productActive,
-  payload: data,
-});
-
 export const activeProductList = (data) => ({
   type: types.productActive,
   payload: data,
@@ -233,4 +229,8 @@ export const activeProductList = (data) => ({
 
 export const closeActive = () => ({
   type: types.closeActive,
+});
+
+export const closeCartActive = () => ({
+  type: types.closeCart,
 });

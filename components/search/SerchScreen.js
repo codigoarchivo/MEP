@@ -59,9 +59,9 @@ export const SerchScreen = ({
   // Breakpoints
   const { push, locale } = useRouter();
   // selector
-  const { activeCartSelect = [], saveCartSelect = [] } = useSelector(
-    ({ process }) => process
-  );
+  const { activeCartSelect = [] } = useSelector(({ cart }) => cart);
+  // selector
+  const { saveCartSelect = [] } = useSelector(({ save }) => save);
 
   // dispatch
   const dispatch = useDispatch();
@@ -212,7 +212,9 @@ export const SerchScreen = ({
 
             <Box p={3} w={"full"}>
               <Flex align="baseline" w={"full"}>
-                <Badge colorScheme="green">{locale === "en" ? ps.en : ps.es}</Badge>
+                <Badge colorScheme="green">
+                  {locale === "en" ? ps.en : ps.es}
+                </Badge>
               </Flex>
 
               <HStack w={"full"} spacing={0}>
@@ -232,7 +234,9 @@ export const SerchScreen = ({
               </HStack>
 
               <Stat size={"sm"} width={"full"}>
-                <StatLabel textTransform={"capitalize"}>{locale === "en" ? na.en : na.es}</StatLabel>
+                <StatLabel textTransform={"capitalize"}>
+                  {locale === "en" ? na.en : na.es}
+                </StatLabel>
                 <StatNumber>
                   <HStack w={"full"} justifyContent={"space-between"}>
                     <Text>${pr}</Text>

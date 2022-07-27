@@ -46,7 +46,7 @@ export const SerchDetails = ({
   // dispatch
   const dispatch = useDispatch();
   // selector
-  const { listData: list = [] } = useSelector(({ category }) => category);
+  const { listData: list = [] } = useSelector(({ listca }) => listca);
   // Breakpoints
   const { content5, full, bordes, points25 } = Breakpoints();
   // list Category
@@ -231,7 +231,7 @@ export const SerchDetails = ({
                 <Box>
                   {/* SerchMessage */}
                   {message.map((item) => (
-                    <SerchMessage key={item.id} {...item} p={id} />
+                    <SerchMessage key={item.id} {...item} />
                   ))}
                 </Box>
               </>

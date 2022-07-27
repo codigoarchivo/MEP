@@ -76,7 +76,7 @@ const SaleData = ({ data }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useSelector
-  const { sale = [] } = useSelector(({ checkout }) => checkout);
+  const { sale = [] } = useSelector(({ sale }) => sale);
   // useRouter
   const { locale, push, query: que } = useRouter();
   // dispatch

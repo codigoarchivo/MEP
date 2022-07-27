@@ -105,7 +105,7 @@ const Details = ({ product = {}, msg = [] }) => {
   // useRouter
   const { locale, push } = useRouter();
   // useSelector
-  const { message: m } = useSelector(({ checkout }) => checkout);
+  const { message: m } = useSelector(({ message }) => message);
 
   useEffect(() => {
     if (!!msg[0]) {

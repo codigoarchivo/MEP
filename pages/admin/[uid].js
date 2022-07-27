@@ -80,7 +80,7 @@ const Sale = ({ data }) => {
   // useRouter
   const { locale, query } = useRouter();
   // useSelector
-  const { history = [] } = useSelector(({ checkout }) => checkout);
+  const { history = [] } = useSelector(({ history }) => history);
   // Breakpoints
   const { bordes, full } = Breakpoints();
 

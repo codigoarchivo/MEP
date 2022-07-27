@@ -72,12 +72,12 @@ const HomeL = ({ product = [], category = [] }) => {
   // useRouter
   const { locale } = useRouter();
   // selector
-  const { listData = [], latestCartSelect = [] } = useSelector(
-    ({ product }) => product
-  );
+  const { latestCartSelect = [] } = useSelector(({ latest }) => latest);
+  // selector
+  const { listData = [] } = useSelector(({ list }) => list);
   // dispatch
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     if (!!product[0]) {
       dispatch(productListIndex(product));

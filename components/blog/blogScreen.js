@@ -35,9 +35,9 @@ export const BlogScreen = ({ categories, buys, product }) => {
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector
-  const { listData: list = [] } = useSelector(({ category }) => category);
+  const { listData: list = [] } = useSelector(({ listca }) => listca);
   // selector
-  const { listData: listp = [] } = useSelector(({ product }) => product);
+  const { listData: listp = [] } = useSelector(({ list }) => list);
   // Breakpoints
   const { displayOff2, bordes, points25, content7 } = Breakpoints();
   // router

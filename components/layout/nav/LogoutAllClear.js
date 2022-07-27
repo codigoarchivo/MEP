@@ -14,12 +14,11 @@ import { es } from "../../../translations/es";
 export const LogoutAllClear = () => {
   const dispatch = useDispatch();
 
-  const { locale, push } = useRouter();
+  const { locale } = useRouter();
 
   const handleLogout = () => {
     const err = locale === "en" ? en.error : es.error;
     dispatch(logout(err));
-    push("/");
   };
 
   return (

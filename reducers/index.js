@@ -7,9 +7,17 @@ import { categoryReducer } from "./categoryReducer";
 import { productReducer } from "./productReducer";
 import { authReducer } from "./authReducer";
 import { uiReducer } from "./uiReducer";
-import { checkoutReducer } from "./checkoutReducer";
-import { userReducer } from "./userReducer";
+import { buyReducer } from "./buyReducer";
+import { saleReducer } from "./saleReducer";
 import { processReducer } from "./processReducer";
+import { historyReducer } from "./historyReducer";
+import { messageReducer } from "./messageReducer";
+import { serchReducer } from "./serchReducer";
+import { listReducer } from "./listReducer";
+import { latestReducer } from "./latestReducer";
+import { listcaReducer } from "./listcaReducer";
+import { saveReducer } from "./saveReducer";
+import { cartReducer } from "./cartReducer";
 
 import { types } from "../type";
 
@@ -39,13 +47,21 @@ const persistConfig = {
 };
 
 const appReducer = combineReducers({
-  auth: authReducer,
-  category: categoryReducer,
-  product: productReducer,
-  process: processReducer,
-  checkout: checkoutReducer,
-  user: userReducer,
   ui: uiReducer,
+  list: listReducer,
+  listca: listcaReducer,
+  latest: latestReducer,
+  auth: authReducer,
+  process: processReducer,
+  save: saveReducer,
+  cart: cartReducer,
+  product: productReducer,
+  category: categoryReducer,
+  serch: serchReducer,
+  history: historyReducer,
+  buy: buyReducer,
+  message: messageReducer,
+  sale: saleReducer,
 });
 
 const rootReducer = (state, action) => {

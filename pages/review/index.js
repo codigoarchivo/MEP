@@ -36,7 +36,7 @@ const Review = ({ p = "", i = "", g = "" }) => {
   // useRouter
   const { locale, push, back } = useRouter();
   // useSelector
-  const { message } = useSelector(({ checkout }) => checkout);
+  const { message } = useSelector(({ message }) => message);
 
   // guardamos solamente el mensaje que necesitamos editar
 

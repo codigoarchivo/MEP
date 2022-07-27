@@ -15,9 +15,9 @@ import { es } from "../../translations/es";
 
 const Cart = () => {
   // selector
-  const { activeCartSelect = [], saveCartSelect = [] } = useSelector(
-    ({ process }) => process
-  );
+  const { activeCartSelect = [] } = useSelector(({ cart }) => cart);
+  // selector
+  const { saveCartSelect = [] } = useSelector(({ save }) => save);
   // saveCartSelect: guarda a la lista de deseo del path cart/
   // activeCartSelect: guarda a la lista cart del path cart/
 

@@ -88,7 +88,7 @@ const ConfigDashboard = ({ product = {} }) => {
   // router
   const { push, locale, query, back } = useRouter();
   // selector
-  const { listData: list = [] } = useSelector(({ category }) => category);
+  const { listData: list = [] } = useSelector(({ listca }) => listca);
 
   if (!list[0]) {
     push("/");

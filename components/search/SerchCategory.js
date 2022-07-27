@@ -21,7 +21,7 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 
 export const SerchCategory = ({ locale, en, es }) => {
   // selector
-  const { listData = [] } = useSelector(({ category }) => category);
+  const { listData = [] } = useSelector(({ listca }) => listca);
   // Breakpoints
   const { bordes } = Breakpoints();
 

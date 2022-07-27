@@ -25,7 +25,7 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 
 import {
   activeProductList,
-  closeActive,
+  closeCartActive,
   saveSaleRevert,
 } from "../../actions/product";
 
@@ -90,7 +90,7 @@ const Checkout = ({ product = [] }) => {
 
   useEffect(() => {
     // path: /cart
-    dispatch(closeActive());
+    dispatch(closeCartActive());
   }, [dispatch]);
 
   useEffect(() => {

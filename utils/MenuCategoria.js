@@ -24,12 +24,16 @@ import { es } from "../translations/es";
 
 export const MenuCategoria = () => {
   // useRouter
-  const { locale } = useRouter();
+  const { locale, push } = useRouter();
   // Breakpoints
   const { displayOff2, bordes } = Breakpoints();
   // selector
-  const { listData = [] } = useSelector(({ category }) => category);
+  const { listData = [] } = useSelector(({ listca }) => listca);
 
+  if(!listData[0]) {
+    push("/")
+  }
+  
   return (
     <Menu>
       <MenuButton

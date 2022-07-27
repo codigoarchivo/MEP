@@ -58,7 +58,6 @@ export async function getServerSideProps(Context) {
       },
     };
   } catch (error) {
-    console.log(error);
     Toast("Al parecer hay un error", "error", 5000);
     return {
       props: {},
@@ -70,7 +69,7 @@ const BuyData = ({ product = [] }) => {
   // useRouter
   const { locale, push, query: que } = useRouter();
   // useSelector
-  const { buy: databuy = [] } = useSelector(({ checkout }) => checkout);
+  const { buy: databuy = [] } = useSelector(({ buy }) => buy);
   // useDispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -81,7 +80,7 @@ const BuyData = ({ product = [] }) => {
       dispatch(cheListAllBuy(product));
     }
   }, [dispatch, product]);
-console.log(databuy);
+  
   return (
     <ShopLayout title={"buys"}>
       <Container maxW={"container.lg"}>

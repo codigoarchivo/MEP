@@ -27,6 +27,8 @@ import { useFormAll } from "../../hooks/useFormAll";
 
 import { fillColorArray, tooltipArray } from "../../helpers/ToolFill";
 
+import { Toast } from "../../helpers/Toast";
+
 const initialStates = {
   rat: null,
   com: "",
@@ -100,7 +102,14 @@ export const ReviewScreen = ({
           },
           g,
           p,
-          err
+          err,
+          {
+            id: i,
+            // photo
+            pho: photoURL,
+            // nombre del usuario
+            nam: displayName,
+          }
         )
       );
       back();
@@ -130,12 +139,14 @@ export const ReviewScreen = ({
           },
           g,
           p,
-          err
+          err,
+          uid
         )
       );
 
       back();
     }
+    Toast(locale === "en" ? en.save : es.save, "success", 5000);
   };
 
   return (

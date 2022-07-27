@@ -103,21 +103,21 @@ export const cheListAllClearBu = () => ({
   type: types.cheListAllCleBu,
 });
 
-export const checkoutAdd = (data, rat, g, p, err) => {
+export const checkoutAdd = (data, rat, g, p, err, uid) => {
   return async (dispatch, getState) => {
-    const { activeCartSelect: check = [] } = await getState().checkout;
+    const { activeSelectCheck: check = [] } = await getState().process;
     try {
       // p es el id del producto
-      await setDoc(doc(collection(db, "serchs", p, "messages")), data);
+      await addDoc(collection(db, "serchs", p, "messages"), data);
 
       // g es el id del buys
-      await updateDoc(doc(db, "buys", g), {
+      await updateDoc(doc(db, "users", uid, "buys", g), {
         close: true,
       });
       // rat es el rating se agrega al producto
       await updateDoc(doc(db, "serchs", p), rat);
 
-      if (check.length === 1) {
+      if (check.length <= 1) {
         await dispatch(closeRevert());
       } else {
         await dispatch(deletecheckout(g));
@@ -138,26 +138,27 @@ const deletecheckout = (id) => ({
 });
 
 // checkoutEdit comentario
-export const checkoutEdit = (data, rat, g, p, err) => {
-  return async () => {
+export const checkoutEdit = (data, rat, g, p, err, dataF) => {
+  return async (dispatch) => {
     try {
       await updateDoc(doc(db, "serchs", p, "messages", g), data);
 
       await updateDoc(doc(db, "serchs", p), rat);
+
+      const newdata = {
+        ...data,
+        ...dataF,
+      };
+
+      dispatch(messageEdit(newdata));
     } catch (error) {
       Toast(err, "error", 5000);
     }
   };
 };
 
-export const checkoutList = (data) => {
-  return async (dispatch) => {
-    dispatch(listcheckout(data));
-  };
-};
-
-const listcheckout = (data) => ({
-  type: types.checkoutList,
+const messageEdit = (data) => ({
+  type: types.cheListMessageEdit,
   payload: data,
 });
 

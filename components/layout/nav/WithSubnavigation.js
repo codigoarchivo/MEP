@@ -56,11 +56,13 @@ export function WithSubnavigation() {
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector
-  const {
-    activeCartSelect = [],
-    activeSelectCheck: check = [],
-    saveCartSelect = [],
-  } = useSelector(({ process }) => process);
+  const { activeSelectCheck: check = [] } = useSelector(
+    ({ process }) => process
+  );
+  // selector
+  const { saveCartSelect = [] } = useSelector(({ save }) => save);
+  // selector
+  const { activeCartSelect = [] } = useSelector(({ cart }) => cart);
   // useDisclosure
   const { isOpen, onToggle } = useDisclosure();
   // Breakpoints
@@ -76,13 +78,12 @@ export function WithSubnavigation() {
     <Box>
       <Flex
         color={useColorModeValue("gray.600", "white")}
+        borderColor={useColorModeValue("gray.200", "gray.900")}
         mb={{ base: 5, md: 0 }}
         minH={"60px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}
-        borderStyle={"solid"}
-        borderColor={useColorModeValue("gray.200", "gray.900")}
         align={"center"}
       >
         <Flex

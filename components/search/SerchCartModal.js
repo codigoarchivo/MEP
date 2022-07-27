@@ -41,7 +41,7 @@ export const SerchCartModal = ({
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector
   const { activeCartSelect: active = [] } = useSelector(
-    ({ process }) => process
+    ({ cart }) => cart
   );
   // useDispatch
   const dispatch = useDispatch();

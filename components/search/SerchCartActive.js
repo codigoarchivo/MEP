@@ -20,11 +20,9 @@ export const SerchCartActive = ({ item, inc, locale, en, es }) => {
   // dispatch
   const dispatch = useDispatch();
   // selector
-  const { activeCartSelect: active = [] } = useSelector(
-    ({ process }) => process
-  );
+  const { activeCartSelect: active = [] } = useSelector(({ cart }) => cart);
   // selector
-  const { listData: list = [] } = useSelector(({ category }) => category);
+  const { listData: list = [] } = useSelector(({ listca }) => listca);
   // Breakpoints
   const { full, displayOff2 } = Breakpoints();
 

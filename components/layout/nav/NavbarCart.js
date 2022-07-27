@@ -11,7 +11,6 @@ import { Search2Icon } from "@chakra-ui/icons";
 import {
   AspectRatio,
   CloseButton,
-  Heading,
   HStack,
   Table,
   TableContainer,
@@ -45,7 +44,7 @@ export const NavbarCart = () => {
   // useRef
   const inc = useRef(0);
   // selector
-  const { activeCartSelect = [] } = useSelector(({ process }) => process);
+  const { activeCartSelect = [] } = useSelector(({ cart }) => cart);
   // incrementa y encapsula información para evitar que se actualice
   inc.current = activeCartSelect.reduce(
     (total, item) => (total += Number(item.cn) * Number(item.pr)),
