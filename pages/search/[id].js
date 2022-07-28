@@ -105,7 +105,7 @@ const Details = ({ product = {}, msg = [] }) => {
   // useRouter
   const { locale, push } = useRouter();
   // useSelector
-  const { message: m } = useSelector(({ message }) => message);
+  const { message } = useSelector(({ message }) => message);
 
   useEffect(() => {
     if (!!msg[0]) {
@@ -119,7 +119,7 @@ const Details = ({ product = {}, msg = [] }) => {
     <ShopLayout title={locale === "en" ? en.details : es.details}>
       <Container maxW="container.lg" py={{ base: 0, md: 10 }}>
         <SerchDetails
-          message={m}
+          message={message}
           product={product}
           push={push}
           locale={locale}

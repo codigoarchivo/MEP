@@ -12,7 +12,7 @@ import Image from "next/image";
 
 import { Rating } from "react-simple-star-rating";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
 
@@ -30,21 +30,34 @@ import {
 } from "@chakra-ui/react";
 
 import { Breakpoints } from "../../helpers/Breakpoints";
+import { messagesCant } from "../../actions/checkout";
 
 export const SerchMessage = (item) => {
+  // selector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+  // dispatch
+  const dispatch = useDispatch();
   // router
   const router = useRouter();
   // Breakpoints
   const { bordes } = Breakpoints();
-  // selector
-  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
 
   const handleReview = () => {
+    let el = [];
+
+    item.message.map((i) => {
+      if (String(i.id) !== item.id) {
+        el.push(i.rat);
+      }
+    });
+
+    dispatch(messagesCant(el));
+
     router.push({
       pathname: "/review",
       query: {
         // id producto
-        p: item.p,
+        p: item.pid,
         // id mensaje
         g: item.id,
         i: "edit",

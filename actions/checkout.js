@@ -104,6 +104,7 @@ export const cheListAllClearBu = () => ({
 });
 
 export const checkoutAdd = (data, rat, g, p, err, uid) => {
+  // id producto
   return async (dispatch, getState) => {
     const { activeSelectCheck: check = [] } = await getState().process;
     try {
@@ -156,14 +157,18 @@ export const checkoutEdit = (data, rat, g, p, err, dataF) => {
     }
   };
 };
+export const messagesList = (data) => ({
+  type: types.cheListMessage,
+  payload: data,
+});
 
 const messageEdit = (data) => ({
   type: types.cheListMessageEdit,
   payload: data,
 });
 
-export const messagesList = (data) => ({
-  type: types.cheListMessage,
+export const messagesCant = (data) => ({
+  type: types.cheListMessageCant,
   payload: data,
 });
 

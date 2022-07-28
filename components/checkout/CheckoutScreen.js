@@ -1,8 +1,12 @@
 import React, { useRef } from "react";
 
+import { collection, getDocs } from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import PropTypes from "prop-types";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Button,
@@ -29,6 +33,8 @@ import { CartList } from "../../helpers/IconNew";
 
 import { ContadorRegresivo } from "../../helpers/ContadorRegresivo";
 
+import { messagesCant } from "../../actions/checkout";
+
 export const CheckoutScreen = ({
   product = {},
   process,
@@ -44,12 +50,14 @@ export const CheckoutScreen = ({
   sH,
   sJ,
 }) => {
+  // selector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+  // dispatch
+  const dispatch = useDispatch();
   // useRef
   const initRef = useRef();
   // Breakpoints
   const { bordes, full, content5 } = Breakpoints();
-  // selector
-  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
 
   // envia el recibo del pago a la base de datos
   const handleVerify = () => {
@@ -75,7 +83,15 @@ export const CheckoutScreen = ({
   };
 
   //  puede enviarle un comentario al vendedor
-  const handleReview = () => {
+  const handleReview = async () => {
+    const { docs } = await getDocs(
+      collection(db, "serchs", product.id, "messages")
+    );
+    let el = [];
+    docs.map((doc) => el.push(doc.data().rat));
+
+    dispatch(messagesCant(el));
+
     push({
       pathname: "/review",
       query: {

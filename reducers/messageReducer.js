@@ -2,6 +2,7 @@ import { types } from "../type";
 
 const initialStates = {
   message: [],
+  cant: [],
 };
 
 export const messageReducer = (state = initialStates, action) => {
@@ -22,6 +23,11 @@ export const messageReducer = (state = initialStates, action) => {
       return {
         ...state,
         message: [],
+      };
+    case types.cheListMessageCant:
+      return {
+        ...state,
+        cant: [...action.payload],
       };
     default:
       return state;

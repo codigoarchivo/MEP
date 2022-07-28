@@ -1,33 +1,40 @@
 import React from "react";
 
-import { Box, Heading, HStack, Tag, Text, VStack } from "@chakra-ui/react";
+import {
+  Heading,
+  HStack,
+  Stack,
+  Text,
+  useBreakpointValue,
+  VStack,
+} from "@chakra-ui/react";
 
 import PropTypes from "prop-types";
 
 import { formatDistanceToNow } from "date-fns";
 
 import localEs from "date-fns/locale/es";
+import localEn from "date-fns/locale/en-US";
 
 import { Breakpoints } from "../../helpers/Breakpoints";
 
 import { NavLink } from "../../utils/Navlink";
 
-export const SaleScreen = ({
-  que,
-  item = {},
-  name,
-  mail,
-  creation,
-  verify,
-  locale,
-  paid,
-}) => {
+import { Salemodal } from "./Salemodal";
+
+import { SalemodalReciewe } from "./SalemodalReciewe";
+
+import { en } from "../../translations/en";
+import { es } from "../../translations/es";
+
+export const SaleScreen = ({ item = {}, locale, paid }) => {
   // Breakpoints
   const { bordes, full, content3 } = Breakpoints();
 
-  const { cre, process, fer, co, nap, id } = item;
+  const { pj, cn, pr, to, in: inc, na } = item.product;
 
-  const { to } = item.product;
+  const poin = useBreakpointValue({ base: "0", md: "15px" });
+  const poinB = useBreakpointValue({ base: "15px", md: "0" });
   return (
     <HStack
       w={full}
@@ -35,23 +42,42 @@ export const SaleScreen = ({
       flexDirection={content3}
       alignItems={{ base: "start", sm: "flex-end" }}
       borderBottom={bordes}
+      spacing={0}
     >
       <VStack w={full} spacing={0} overflow={"auto"}>
         {[
           {
-            all: name,
-            dat: nap,
+            all: locale === "en" ? en.name : es.name,
+            dat: locale === "en" ? na.en : na.es,
           },
           {
-            all: mail,
-            dat: co,
+            all: locale === "en" ? en.quantity : es.quantity,
+            dat: "N°" + cn,
           },
           {
-            all: creation,
-            dat: fer,
+            all: locale === "en" ? en.price : es.price,
+            dat: "$" + pj,
+          },
+          {
+            all: locale === "en" ? en.tax : es.tax,
+            dat: "$" + inc,
+          },
+          {
+            all: locale === "en" ? en.unit : es.unit,
+            dat: "$" + pr,
+          },
+          {
+            all: "Total",
+            dat: "$" + to,
+          },
+          {
+            all: paid,
+            dat: formatDistanceToNow(item.cre, {
+              locale: locale === "en" ? localEn : localEs,
+            }),
           },
         ].map(({ all, dat }, key) => (
-          <HStack w={full} key={key}>
+          <HStack w={"full"} key={key}>
             <Heading as="h3" size="sm">
               {all}:
             </Heading>
@@ -60,49 +86,49 @@ export const SaleScreen = ({
         ))}
       </VStack>
 
-      <HStack
-        spacing={{ base: 1, md: 5 }}
+      <Stack
+        spacing={0}
         w={full}
-        py={1}
+        py={2}
         justifyContent={"flex-end"}
+        flexDirection={{ base: "column-reverse", md: "row" }}
       >
-        {process === true ? (
-          <Tag
-            textTransform={"uppercase"}
-            size={"sm"}
-            variant="solid"
-            colorScheme="teal"
-          >
-            {paid}
-          </Tag>
-        ) : (
-          <Box as="span" color="gray.600" fontSize="sm">
-            {locale === "es" && "hace"}{" "}
-            {formatDistanceToNow(cre, {
-              locale: locale === "en" ? localEn : localEs,
-            })}
-          </Box>
-        )}
-
-        <NavLink
-          href={`/sale/set/[id]?uid=${que}`}
-          as={`/sale/set/${id}?uid=${que}`}
-          name={`${verify} $${to}`}
-          variant={"primary"}
-          size={"xs"}
+        <Salemodal
+          imgs={item.imp}
+          receipt={locale === "en" ? en.receipt : es.receipt}
+          close={locale === "en" ? en.close : es.close}
+          picture={locale === "en" ? en.picture : es.picture}
           textTransform={"uppercase"}
         />
-      </HStack>
+        <SalemodalReciewe
+          styles={{ marginLeft: poin, marginBottom: poinB }}
+          bordes={bordes}
+          es={es}
+          en={en}
+          locale={locale}
+          item={item}
+          receipt={locale === "en" ? en.receiptOne : es.receiptOne}
+          close={locale === "en" ? en.close : es.close}
+          textTransform={"uppercase"}
+        />
+        <NavLink
+          styles={{ marginLeft: poin, marginBottom: poinB }}
+          w={{ base: "full", md: "min-content" }}
+          href={`/info/[uid]`}
+          as={`/info/${item.buy}`}
+          name={locale === "en" ? en.buyer : es.buyer}
+          variant={"primary"}
+          size={"xs"}
+          fontSize={"small"}
+          textTransform={"uppercase"}
+        />
+      </Stack>
     </HStack>
   );
 };
 
 SaleScreen.propTypes = {
   item: PropTypes.object,
-  name: PropTypes.string,
-  mail: PropTypes.string,
-  creation: PropTypes.string,
-  verify: PropTypes.string,
   locale: PropTypes.string,
   paid: PropTypes.string,
 };

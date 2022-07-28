@@ -1,5 +1,9 @@
 import React, { useMemo } from "react";
 
+import { doc, getDoc } from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import { useRouter } from "next/router";
 
 import { Container } from "@chakra-ui/react";
@@ -14,51 +18,49 @@ import { Toast } from "../../helpers/Toast";
 
 import { useSelector } from "react-redux";
 
-import { en } from "../../translations/en";
 import { es } from "../../translations/es";
+import { en } from "../../translations/en";
 
-export async function getServerSideProps({ query }) {
-  // id three
-  const g = query.g.toString();
-  // id del producto que esta dentro id three
-  const p = query.p.toString();
-  // id del mensaje o es new
-  const i = query.i.toString();
+export async function getServerSideProps(context) {
+  // id message
+  const g = context.query.g.toString();
+  // id del producto
+  const p = context.query.p.toString();
+
   try {
-    return { props: { p, i, g } };
+    const docSnap = await getDoc(doc(db, "serchs", p, "messages", g));
+
+    const msg = {
+      id: docSnap.id,
+      ...docSnap.data(),
+    };
+
+    return { props: { msg } };
   } catch (error) {
     Toast("Al parecer hay un error", "error", 5000);
     return { props: {} };
   }
 }
 
-const Review = ({ p = "", i = "", g = "" }) => {
+const Review = ({ msg }) => {
   // useRouter
-  const { locale, push, back } = useRouter();
+  const { locale, push, back, query } = useRouter();
   // useSelector
-  const { message } = useSelector(({ message }) => message);
+  const { cant } = useSelector(({ message }) => message);
 
-  // guardamos solamente el mensaje que necesitamos editar
-
-  const match = useMemo(() => message.find((i) => String(i.id) === g), [
-    message,
-    g,
-  ]);
-
-  // creamos  una nueva instancia con todos los valores rat menos el que vamos a modificar
-  let el = [];
-  message.map((i) => {
-    if (String(i.id) !== g) {
-      el.push(i.rat);
-    }
-  });
+  // id message
+  const g = query.g.toString();
+  // id del producto
+  const p = query.p.toString();
+  // message
+  const i = query.i.toString();
 
   return (
     <ShopLayout title={locale === "en" ? en.review.rC : es.review.rC}>
       <Container maxW={"container.sm"}>
         <ReviewScreen
-          calculo={el}
-          message={match}
+          calculo={cant}
+          message={msg}
           p={p}
           i={i}
           g={g}
@@ -74,9 +76,7 @@ const Review = ({ p = "", i = "", g = "" }) => {
 };
 
 Review.propTypes = {
-  p: PropTypes.string,
-  i: PropTypes.string,
-  g: PropTypes.string,
+  msg: PropTypes.object,
 };
 
 export default Review;

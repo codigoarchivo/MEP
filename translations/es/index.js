@@ -131,6 +131,7 @@ export const es = {
     fB: "información",
     fC: "Ubicación New Jersey, USA",
   },
+  receiptOne: "recibo",
   seller: "Antes de enviar datos no olvide información para el vendedor",
   amount: "Sin cantidad",
   updated: "Datos actualizados",

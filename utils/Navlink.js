@@ -27,10 +27,14 @@ export const NavLink = ({
   boxShadow,
   rounded,
   locale,
+  fontSize,
+  styles,
 }) => {
   return (
     <Link href={href} as={as} locale={locale} passHref>
       <Button
+        style={{ ...styles }}
+        fontSize={fontSize}
         rightIcon={rightIcon}
         leftIcon={leftIcon}
         onClick={click}
@@ -57,6 +61,7 @@ export const NavLink = ({
 };
 
 NavLink.propTypes = {
+  styles: PropTypes.object,
   rightIcon: PropTypes.string,
   leftIcon: PropTypes.object,
   variant: PropTypes.string,
@@ -72,4 +77,5 @@ NavLink.propTypes = {
   boxShadow: PropTypes.string,
   rounded: PropTypes.string,
   locale: PropTypes.string,
+  fontSize: PropTypes.string,
 };

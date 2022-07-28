@@ -231,7 +231,7 @@ export const SerchDetails = ({
                 <Box>
                   {/* SerchMessage */}
                   {message.map((item) => (
-                    <SerchMessage key={item.id} {...item} />
+                    <SerchMessage key={item.id} {...item} message={message} pid={product.id} />
                   ))}
                 </Box>
               </>

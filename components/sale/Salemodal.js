@@ -15,7 +15,13 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-export const Salemodal = ({ imgs, receipt, close, picture }) => {
+export const Salemodal = ({
+  imgs,
+  receipt,
+  close,
+  picture,
+  textTransform = "lowercase",
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -23,9 +29,10 @@ export const Salemodal = ({ imgs, receipt, close, picture }) => {
       <Button
         w={{ base: "full", md: "min-content" }}
         variant={"primary"}
-        size={"sm"}
+        size={"xs"}
         fontSize={"small"}
         onClick={onOpen}
+        textTransform={textTransform}
       >
         {receipt}
       </Button>
@@ -61,4 +68,5 @@ Salemodal.propTypes = {
   receipt: PropTypes.string,
   close: PropTypes.string,
   picture: PropTypes.string,
+  textTransform: PropTypes.string,
 };

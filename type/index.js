@@ -50,6 +50,7 @@ export const types = {
   cheListMessage: "[MESSAGE] List",
   cheListMessageEdit: "[MESSAGE] Edit",
   cheListMessageClear: "[MESSAGE] Clear",
+  cheListMessageCant: "[MESSAGE] Cant",
 
   cheListAllSa: "[SALE] Sale",
   cheListAllCle: "[SALE] Clear",
