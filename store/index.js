@@ -20,3 +20,4 @@ export const store = createStore(
 
   composeEnhancers(applyMiddleware(thunk))
 );
+
