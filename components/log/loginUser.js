@@ -36,6 +36,8 @@ import { startGoogleLogin, startLoginEmailPassword } from "../../actions/auth";
 
 import { DividerWithText } from "../../utils/DividerWithText";
 
+import { Breakpoints } from "../../helpers/Breakpoints";
+
 const initialStates = {
   email: "jackson@gmail.com",
   password: "123456",
@@ -66,7 +68,7 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
     aN
   );
   // mode Color
-  const { textError, bgTextError } = ModeColor();
+  const { textError, bgTextError, modelC } = ModeColor();
   // valores
   const { email, password, pass } = values;
 
@@ -87,6 +89,7 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
     push("/");
   };
 
+  const { bordes } = Breakpoints();
   return (
     <>
       <chakra.form
@@ -94,8 +97,8 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
         boxShadow="2xl"
         p={{ base: 2, sm: 5 }}
         w={{ base: "100%", sm: "70%", md: "60%", lg: "70%" }}
-        backgroundColor={"#fff"}
         h={"min-content"}
+        border={bordes}
       >
         <VStack spacing={5}>
           <HStack w={"full"} justifyContent="space-between">
@@ -106,11 +109,11 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
           </HStack>
           <FormControl>
             {!emailE && (
-              <FormHelperText>
+              <FormHelperText color={modelC}>
                 {locale === "en" ? en.auth.aI : es.auth.aI}
               </FormHelperText>
             )}
-            <FormLabel htmlFor="email">
+            <FormLabel htmlFor="email" color={modelC}>
               {locale === "en" ? en.mail : es.mail}{" "}
               <Tooltip
                 color={textError}
@@ -132,7 +135,7 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
             />
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor="password">
+            <FormLabel htmlFor="password" color={modelC}>
               {locale === "en" ? en.password : es.password}{" "}
               <Tooltip
                 color={textError}
@@ -156,7 +159,7 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
               />
               <InputRightElement width="4.5rem">
                 <Button
-                  variant={"secondary"}
+                  variant={"tertiary"}
                   h="1.75rem"
                   onClick={handlePassword}
                 >
@@ -189,7 +192,7 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
             <Text>{locale === "en" ? en.auth.aF : es.auth.aF}</Text>
             <NavLink
               href={"/auth/create"}
-              variant={"secondary"}
+              variant={"tertiary"}
               name={locale === "en" ? en.auth.aH : es.auth.aH}
             />
           </Flex>
@@ -198,7 +201,7 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
           </DividerWithText>
           <Flex w={"full"} alignItems={"center"} justifyContent={"center"}>
             <Text>{locale === "en" ? en.auth.aG : es.auth.aG}</Text>
-            <Button variant={"secondary"} onClick={handleReview}>
+            <Button variant={"tertiary"} onClick={handleReview}>
               {locale === "en" ? en.auth.aD : es.auth.aD}
             </Button>
           </Flex>

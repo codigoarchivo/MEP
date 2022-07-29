@@ -13,7 +13,6 @@ import {
   Button,
   Stack,
   Collapse,
-  useColorModeValue,
   useBreakpointValue,
   useDisclosure,
   Menu,
@@ -23,9 +22,18 @@ import {
   InputLeftElement,
   Input,
   Text,
+  HStack,
+  Heading,
+  useColorMode,
 } from "@chakra-ui/react";
 
-import { HamburgerIcon, CloseIcon, SearchIcon } from "@chakra-ui/icons";
+import {
+  HamburgerIcon,
+  CloseIcon,
+  SearchIcon,
+  SunIcon,
+  MoonIcon,
+} from "@chakra-ui/icons";
 
 import {
   CartIcon,
@@ -76,7 +84,10 @@ export function WithSubnavigation() {
 
   const { dataRoute } = ListRoute();
 
-  const { modelA, modelB } = ModeColor();
+  const { modelC, modelD } = ModeColor();
+
+  // toogle color
+  const { toggleColorMode, colorMode } = useColorMode();
 
   return (
     <Box>
@@ -133,6 +144,7 @@ export function WithSubnavigation() {
           </Box>
 
           <Flex display={{ base: "none", md: "flex" }} ml={{ base: 0, lg: 10 }}>
+            {/* Category */}
             <DesktopNav />
           </Flex>
         </Flex>
@@ -167,13 +179,14 @@ export function WithSubnavigation() {
                 }
               />
               <Flex
+                backgroundColor={modelC}
+                color={modelD}
                 right={{ base: 0, sm: -2 }}
                 top={0}
                 zIndex={-10}
                 border={bordes}
                 alignItems={"center"}
                 justifyContent="center"
-                backgroundColor={"brand.800"}
                 borderRadius={"full"}
                 position={"absolute"}
                 w={{ base: 4, sm: 5 }}
@@ -202,8 +215,8 @@ export function WithSubnavigation() {
               >
                 <CartIcon boxSize={points11} />
                 <Flex
-                  backgroundColor={modelA}
-                  color={modelB}
+                  backgroundColor={modelC}
+                  color={modelD}
                   right={{ base: -3, sm: -4 }}
                   top={0}
                   zIndex={-10}
@@ -248,8 +261,8 @@ export function WithSubnavigation() {
             />
 
             <Text
-              backgroundColor={modelA}
-              color={modelB}
+              backgroundColor={modelC}
+              color={modelD}
               display={a.uid ? "block" : "none"}
               right={{ base: -1, sm: -2 }}
               zIndex={-10}
@@ -283,8 +296,8 @@ export function WithSubnavigation() {
               }
             />
             <Text
-              backgroundColor={modelA}
-              color={modelB}
+              backgroundColor={modelC}
+              color={modelD}
               display={a.uid ? "block" : "none"}
               right={{ base: -1, sm: -3 }}
               zIndex={-10}
@@ -309,13 +322,28 @@ export function WithSubnavigation() {
       </Flex>
       {/* Collapse */}
       <Collapse in={isOpen} animateOpacity>
-        <Stack p={4} display={{ md: "none" }}>
+        <HStack justifyContent={"space-between"} w={"full"} p={4}>
+          <Heading size={"md"}>{a?.displayName}</Heading>
+          <Button
+            onClick={toggleColorMode}
+            size="xs"
+            px={0}
+            variant={"tertiary"}
+          >
+            {colorMode === "light" ? (
+              <MoonIcon boxSize={6} />
+            ) : (
+              <SunIcon boxSize={6} />
+            )}
+          </Button>
+        </HStack>
+        <Stack p={4} m={1} display={{ md: "none" }} border={bordes}>
           {dataRoute.map(({ icon, ref, as, nam, rol }, key) => (
             <Box key={key} display={rol && rol}>
               <NavLink
                 leftIcon={icon}
                 fontWeight={"normal"}
-                variant={"secondary"}
+                variant={"tertiary"}
                 href={ref}
                 as={as}
                 name={nam}
@@ -329,7 +357,7 @@ export function WithSubnavigation() {
               href={a.uid ? `/purchases/[uid]` : "/"}
               as={a.uid ? `/purchases/${a?.uid}` : "/"}
               name={"buys"}
-              variant={"secondary"}
+              variant={"tertiary"}
               fontWeight={"normal"}
             />
           </Box>
@@ -340,7 +368,7 @@ export function WithSubnavigation() {
               href={a.uid ? `/sale/[uid]` : "/"}
               as={a.uid ? `/sale/${a?.uid}` : "/"}
               name={"sales"}
-              variant={"secondary"}
+              variant={"tertiary"}
               fontWeight={"normal"}
             />
           </Box>

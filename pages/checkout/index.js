@@ -186,7 +186,7 @@ const Checkout = ({ product = [] }) => {
                 </Text>
                 <Button
                   textTransform={"uppercase"}
-                  variant={"secondary"}
+                  variant={"primary"}
                   type="submit"
                 >
                   {locale === "en" ? en.clickHere : es.clickHere}

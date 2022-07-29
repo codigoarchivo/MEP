@@ -34,13 +34,13 @@ export const MenuHistory = ({ color, buys, sales, history }) => {
         {history}
       </MenuButton>
       <Portal>
-        <MenuList display={displayOff2} minWidth={0} border={bordes}>
+        <MenuList zIndex={"1000"} display={displayOff2} minWidth={0} border={bordes}>
           <MenuItem>
             <NavLink
               href={a.uid ? `/purchases/[uid]` : "/"}
               as={a.uid ? `/purchases/${a?.uid}` : "/"}
               name={buys}
-              variant={"secondary"}
+              variant={"tertiary"}
               fontWeight={"normal"}
             />
           </MenuItem>
@@ -49,7 +49,7 @@ export const MenuHistory = ({ color, buys, sales, history }) => {
               href={a.uid ? `/sale/[uid]` : "/"}
               as={a.uid ? `/sale/${a?.uid}` : "/"}
               name={sales}
-              variant={"secondary"}
+              variant={"tertiary"}
               fontWeight={"normal"}
             />
           </MenuItem>

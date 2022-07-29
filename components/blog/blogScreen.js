@@ -18,8 +18,8 @@ import {
 } from "@chakra-ui/react";
 
 import { Breakpoints } from "../../helpers/Breakpoints";
-
 import { CategoryAll, Product, ShopAll } from "../../helpers/IconNew";
+import { ModeColor } from "../../helpers/ModeColor";
 
 import { StatsCard } from "./StatsCard";
 import { BlogWork } from "./BlogWork";
@@ -65,6 +65,7 @@ export const BlogScreen = ({ categories, buys, product }) => {
 
   const dThree = list.find((i) => i.id !== three?.ct);
 
+  const { modelF } = ModeColor();
   return (
     <Stack flexDirection={content7} spacing={0}>
       <VStack
@@ -96,7 +97,10 @@ export const BlogScreen = ({ categories, buys, product }) => {
           >
             {locale === "en" ? en.blog.bF : es.blog.bF}
           </chakra.h1>
-          <SimpleGrid columns={{ base: 1, lg: 3 }} spacing={{ base: 5, lg: 8 }}>
+          <SimpleGrid
+            columns={{ base: 1, lg: 3 }}
+            spacing={{ base: 5, lg: 12 }}
+          >
             <StatsCard
               title={locale === "en" ? en.products : es.products}
               stat={product || 0}
@@ -120,20 +124,19 @@ export const BlogScreen = ({ categories, buys, product }) => {
               ? "block"
               : "none"
           }
-          pt={30}
           w={"full"}
           justifyContent={"center"}
           textAlign={"center"}
+          style={{ marginBottom: "60px" }}
         >
           <Heading
             fontWeight={600}
             lineHeight={"110%"}
-            color={"brand.900"}
             fontSize={points25}
-            my={10}
+            py={20}
           >
             {locale === "en" ? en.blog.bG : es.blog.bG}{" "}
-            <Text as={"span"} color={"brand.500"}>
+            <Text as={"span"} color={modelF}>
               {locale === "en" ? en.blog.bH : es.blog.bH}
             </Text>
           </Heading>
@@ -173,16 +176,11 @@ export const BlogScreen = ({ categories, buys, product }) => {
           </SimpleGrid>
         </Stack>
         {/* trabajo */}
-        <Box p={{ base: 0, sm: 4 }} pt={20}>
+        <Box>
           <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
-            <Heading
-              fontWeight={600}
-              lineHeight={"110%"}
-              color={"brand.900"}
-              fontSize={points25}
-            >
+            <Heading fontWeight={600} lineHeight={"110%"} fontSize={points25}>
               {locale === "en" ? en.blog.bJ : es.blog.bJ}{" "}
-              <Text as={"span"} color={"brand.500"}>
+              <Text as={"span"} color={modelF}>
                 {locale === "en" ? en.blog.bK : es.blog.bK}
               </Text>
             </Heading>

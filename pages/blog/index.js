@@ -17,7 +17,7 @@ import { Toast } from "../../helpers/Toast";
 export async function getStaticProps() {
   try {
     const categories = await getDocs(collection(db, "categories"));
-    const buys = await getDocs(collection(db, "buys"));
+    const buys = await getDocs(collection(db, "sales"));
     const product = await getDocs(collection(db, "serchs"));
 
     if (!product || !categories || !buys) {
@@ -29,7 +29,7 @@ export async function getStaticProps() {
         },
       };
     }
-
+console.log(product);
     return {
       props: {
         product: product.size.toString(),

@@ -56,7 +56,6 @@ export const SalemodalReciewe = ({
               w={"full"}
               spacing={5}
               p={{ base: 3, sm: 5 }}
-              backgroundColor={"#fff"}
             >
               <Heading
                 textTransform={"uppercase"}

@@ -70,7 +70,7 @@ export const Breakpoints = () => {
 
   const center = "center";
   const full = "full";
-  const bordes = "1px solid #d0d0d0";
+  const bordes = "1px solid #D4AF37";
 
   const calc = "calc(100vh - 50px)";
 

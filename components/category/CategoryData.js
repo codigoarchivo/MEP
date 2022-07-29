@@ -32,6 +32,8 @@ import { dbCategoryValid } from "../../data/dbCategory";
 
 import { enActive, esActive } from "../../actions/ui";
 
+import { ModeColor } from "../../helpers/ModeColor";
+
 const initialStates = {
   na: {
     en: "",
@@ -118,10 +120,11 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
     dispatch(esActive());
   };
 
+  const { modelC } = ModeColor();
+
   return (
     <>
       <VStack
-        backgroundColor={"#fff"}
         spacing={5}
         w={"full"}
         border={bordes}
@@ -133,7 +136,12 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
           justifyContent={"space-between"}
         >
           <HStack>
-            <CloseButton display={"inline"} size="md" onClick={onClose} />
+            <CloseButton
+              color={modelC}
+              display={"inline"}
+              size="md"
+              onClick={onClose}
+            />
             <Heading
               display={"inline"}
               as="h1"

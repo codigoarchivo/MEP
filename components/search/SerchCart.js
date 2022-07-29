@@ -31,6 +31,8 @@ import { SerchCartActive } from "./SerchCartActive";
 
 import { SerchCartModal } from "./SerchCartModal";
 
+import { ModeColor } from "../../helpers/ModeColor";
+
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
@@ -60,6 +62,8 @@ export const SerchCart = ({ active, save }) => {
     }
   };
 
+  const { modelC } = ModeColor();
+
   return (
     <>
       {/* carrito */}
@@ -81,14 +85,16 @@ export const SerchCart = ({ active, save }) => {
               w={{ base: "100%", lg: "70%" }}
               border={bordes}
             >
-              <Table variant="striped" colorScheme="brand">
-                <TableCaption>
+              <Table colorScheme="brand">
+                <TableCaption color={modelC}>
                   {locale === "en" ? en.cart.cA : es.cart.cA}
                 </TableCaption>
                 <Thead>
                   <Tr>
                     <Th></Th>
-                    <Th isNumeric>{locale === "en" ? en.action : es.action}</Th>
+                    <Th color={modelC} isNumeric>
+                      {locale === "en" ? en.action : es.action}
+                    </Th>
                   </Tr>
                 </Thead>
                 <Tbody>
@@ -125,8 +131,7 @@ export const SerchCart = ({ active, save }) => {
                   <Button
                     onClick={() => push("/search")}
                     textTransform={"uppercase"}
-                    variant={"secondary"}
-                    px={0}
+                    variant={"primary"}
                     size={"sm"}
                   >
                     {locale === "en" ? en.clickHere : es.clickHere}
@@ -153,17 +158,17 @@ export const SerchCart = ({ active, save }) => {
         <> </>
       ) : (
         <TableContainer variant="striped" w={full} my={10} border={bordes}>
-          <Table variant="simple">
-            <TableCaption>
+          <Table variant="simple" colorScheme="brand">
+            <TableCaption color={modelC}>
               {locale === "en" ? en.cart.cI : en.cart.cI}
             </TableCaption>
             <Thead>
               <Tr>
                 <Th></Th>
-                <Th textAlign={"center"}>
+                <Th color={modelC} >
                   {locale === "en" ? en.quantity : en.quantity}
                 </Th>
-                <Th>Total</Th>
+                <Th color={modelC}>Total</Th>
                 <Th></Th>
               </Tr>
             </Thead>

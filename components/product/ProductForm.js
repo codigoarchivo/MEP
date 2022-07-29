@@ -53,20 +53,20 @@ export const ProductForm = ({
   en,
 }) => {
   // mode Color
-  const { bg, brand } = ModeColor();
+  const { modelC } = ModeColor();
   // selector
   const { listData: list = [] } = useSelector(({ listca }) => listca);
   // Breakpoints
-  const { points1, repeat1, points3 } = Breakpoints();
+  const { points1, repeat1, points3, bordes } = Breakpoints();
 
   return (
     <>
       <HStack spacing={10}>
-        <Badge variant="outline">
+        <Badge color={modelC} border={bordes}>
           <BsPerson w={5} h={5} /> $
           {(1 * pr - (pj * (1 * pr)) / 100).toFixed(1)}
         </Badge>
-        <Badge variant="outline">
+        <Badge color={modelC} border={bordes}>
           <ShopAll w={5} h={5} /> ${((pj * pr) / 100).toFixed(1)}
         </Badge>
       </HStack>
@@ -78,7 +78,9 @@ export const ProductForm = ({
           columnGap={points3}
         >
           <GridItem colSpan={points1}>
-            <FormLabel htmlFor="im">Image</FormLabel>
+            <FormLabel color={modelC} htmlFor="im">
+              Image
+            </FormLabel>
             <HStack justifyContent="space-between" w="full">
               <Box w="full">
                 <FileAll
@@ -149,7 +151,7 @@ export const ProductForm = ({
           />
 
           <GridItem colSpan={points1}>
-            <FormLabel htmlFor={change === false ? "en" : "es"}>
+            <FormLabel color={modelC} htmlFor={change === false ? "en" : "es"}>
               {change === false ? en.pOrS : es.pOrS}
             </FormLabel>
             <Select
@@ -172,7 +174,7 @@ export const ProductForm = ({
           </GridItem>
 
           <GridItem colSpan={points1}>
-            <FormLabel htmlFor={"ct"}>
+            <FormLabel color={modelC} htmlFor={"ct"}>
               {change === false ? en.major.mF : es.major.mF}
             </FormLabel>
             <Select
@@ -211,12 +213,10 @@ export const ProductForm = ({
             val={dt}
             place={change === false ? en.details : es.details}
             handle={handleInputChangeEnEs}
-            bg={bg}
-            brand={brand}
           />
           <GridItem colSpan={2} mt={5}>
             <HStack w={"full"} justifyContent="flex-end" spacing={10}>
-              <Button variant={"secondary"} onClick={onClose}>
+              <Button variant={"tertiary"} onClick={onClose}>
                 {change === false ? en.close : es.close}
               </Button>
               <Button variant={"primary"} type="submit" ml={3} shadow={"lg"}>

@@ -11,7 +11,6 @@ import {
   useBreakpointValue,
   VStack,
   chakra,
-  useColorModeValue,
 } from "@chakra-ui/react";
 
 import Image from "next/image";
@@ -30,12 +29,15 @@ import { NavLink } from "../../utils/Navlink";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
+import { ModeColor } from "../../helpers/ModeColor";
+
 export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
   // Breakpoints
   const { content5, bordes, displayOff1, all1, points25 } = Breakpoints();
   // use Carousel
   const variant = useBreakpointValue({ base: 1, sm: 2, md: 2, lg: 3, xl: 4 });
 
+  const { modelE } = ModeColor();
   return (
     <Container
       maxW={"container.xs"}
@@ -53,7 +55,7 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
           border={bordes}
           p={5}
           boxShadow={"lg"}
-          backgroundColor={useColorModeValue("brand.800", "brand.900")}
+          backgroundColor={modelE}
         >
           <Heading w={"full"} fontSize={points25} wordBreak={"break-word"}>
             {locale === "en" ? en.home.hA : es.home.hA}

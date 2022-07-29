@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 import {
+  Box,
   Button,
   Heading,
   HStack,
@@ -29,6 +30,8 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 import { Toast } from "../../helpers/Toast";
 
 import { activeProductCart, deleteProductSave } from "../../actions/product";
+
+import { ModeColor } from "../../helpers/ModeColor";
 
 export const SerchCartSave = ({
   item,
@@ -86,20 +89,26 @@ export const SerchCartSave = ({
     dispatch(deleteProductSave(item.id));
   };
 
+  const { modelC } = ModeColor();
+
   return (
     <>
       <Tr>
         <Td>
-          <HStack position={"relative"}>
-            <Image
-              src={
-                item.im ||
-                `https://via.placeholder.com/1000.png?text=${picture}`
-              }
-              alt={locale === "en" ? item.na.en : item.na.es}
-              width={100}
-              height={100}
-            />
+          <HStack>
+            <Box w={100} h={100} position={"relative"}>
+              <Image
+                src={
+                  item.im ||
+                  `https://via.placeholder.com/100.png?text=${picture}`
+                }
+                alt={locale === "en" ? item.na.en : item.na.es}
+                layout="fill"
+                objectFit="contain"
+                quality={100}
+              />
+            </Box>
+
             <VStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
@@ -124,13 +133,8 @@ export const SerchCartSave = ({
             </VStack>
           </HStack>
         </Td>
-        <Td
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          h={"130px"}
-        >
-          <HStack maxW="160px">
+        <Td>
+          <HStack maxW="160px" minWidth="160px">
             <Button fontSize={20} variant={"primary"} {...dec}>
               -
             </Button>
@@ -140,11 +144,11 @@ export const SerchCartSave = ({
             </Button>
           </HStack>
         </Td>
-        <Td>${item.pr * input.value}</Td>
+        <Td color={modelC}>${item.pr * input.value}</Td>
         <Td>
           <Menu>
             <MenuButton variant="outline">
-              <PlusSquareIcon w={6} h={6} />
+              <PlusSquareIcon color={modelC} w={6} h={6} />
             </MenuButton>
             <MenuList minWidth={0}>
               <MenuItem>
@@ -155,7 +159,7 @@ export const SerchCartSave = ({
                   width="full"
                   onClick={handleSelect}
                 >
-                  <SmallAddIcon w={3} h={3} />
+                  <SmallAddIcon color={modelC} w={3} h={3} />
                   <Text>{locale === "en" ? en.add : es.add}</Text>
                 </HStack>
               </MenuItem>
@@ -168,7 +172,7 @@ export const SerchCartSave = ({
                   width="full"
                   onClick={handleDeleteSave}
                 >
-                  <DeleteIcon w={3} h={3} />
+                  <DeleteIcon color={modelC} w={3} h={3} />
                   <Text>{locale === "en" ? en.delete : es.delete}</Text>
                 </HStack>
               </MenuItem>

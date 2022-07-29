@@ -87,7 +87,7 @@ export const Footer = () => {
                   rel="noreferrer"
                   isExternal
                 >
-                  <Button as={"span"} size="xs" px={0} variant={"secondary"}>
+                  <Button as={"span"} size="xs" px={0} variant={"tertiary"}>
                     <FacebookIcon boxSize={points11} />
                   </Button>
                 </Link>
@@ -99,7 +99,7 @@ export const Footer = () => {
                   rel="noreferrer"
                   isExternal
                 >
-                  <Button as={"span"} size="xs" px={0} variant={"secondary"}>
+                  <Button as={"span"} size="xs" px={0} variant={"tertiary"}>
                     <InstagramIcon boxSize={points11} />
                   </Button>
                 </Link>
@@ -111,7 +111,7 @@ export const Footer = () => {
                   rel="noreferrer"
                   isExternal
                 >
-                  <Button as={"span"} size="xs" px={0} variant={"secondary"}>
+                  <Button as={"span"} size="xs" px={0} variant={"tertiary"}>
                     <TwitterIcon boxSize={points11} />
                   </Button>
                 </Link>
@@ -146,7 +146,7 @@ export const Footer = () => {
                     display={"inline"}
                     leftIcon={icon}
                     fontWeight={"normal"}
-                    variant={"secondary"}
+                    variant={"tertiary"}
                     size="sm"
                     href={ref}
                     as={as}
@@ -158,7 +158,7 @@ export const Footer = () => {
           </Stack>
         </GridItem>
       </Grid>
-      <Box px={{ base: 3, sm: 10 }} backgroundColor={"brand.800"}>
+      <Box px={{ base: 3, sm: 10 }}>
         <NavbarLocal />
       </Box>
     </Container>

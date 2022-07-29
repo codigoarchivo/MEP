@@ -18,12 +18,8 @@ import { Validator } from "../helpers/Validator";
 
 import { Toast } from "../helpers/Toast";
 
-import { ModeColor } from "../helpers/ModeColor";
-
 export const FileAll = ({ setUrlImage, fileName, save, image }) => {
   const [progress, setProgress] = useState(0);
-  // mode Color
-  const { bg } = ModeColor();
   // file
   const file = useRef();
 
@@ -79,12 +75,11 @@ export const FileAll = ({ setUrlImage, fileName, save, image }) => {
       <Button
         w={"full"}
         rightIcon={<DownloadIcon w={6} h={6} />}
-        variant={"outline"}
+        variant={"primary"}
         textTransform={"uppercase"}
         onClick={() => file.current.click()}
         size="md"
         fontWeight={"normal"}
-        _hover={{ border: bg }}
         p={1}
       >
         {save}: {progress}%

@@ -51,7 +51,7 @@ export const NavLink = ({
         backgroundColor={backgroundColor}
         color={color}
         display={display}
-        boxShadow={boxShadow}
+        shadow={boxShadow}
         rounded={rounded}
       >
         {name}

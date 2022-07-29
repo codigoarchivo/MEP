@@ -137,7 +137,7 @@ export const SerchDetails = ({
             {locale === "en" ? product.na.en : product.na.es}
           </Heading>
           <HStack w={full}>
-            <Text color="gray.600" fontSize={"xl"} fontWeight={"bold"}>
+            <Text fontSize={"xl"} fontWeight={"bold"}>
               {globalRanking || "0.0"}
             </Text>{" "}
             <Box p={0.5}>

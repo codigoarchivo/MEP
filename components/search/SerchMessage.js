@@ -99,7 +99,7 @@ export const SerchMessage = (item) => {
               <Box>
                 <Rating size={data} ratingValue={item.rat} readonly={true} />
               </Box>
-              <Box as="span" color="gray.600" fontSize="sm">
+              <Box as="span" fontSize="sm">
                 hace{" "}
                 {formatDistanceToNow(item.cre, {
                   locale: localEs,

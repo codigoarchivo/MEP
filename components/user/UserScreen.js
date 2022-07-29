@@ -43,7 +43,7 @@ export const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
   // Breakpoints
   const { repeat1, points3, bordes } = Breakpoints();
   // mode Color
-  const { bg, brand } = ModeColor();
+  const { modelC } = ModeColor();
 
   if (a.uid === undefined) {
     push("/");
@@ -76,7 +76,6 @@ export const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
 
   return (
     <VStack
-      backgroundColor={"#fff"}
       alignContent={"center"}
       h={"full"}
       border={bordes}
@@ -93,7 +92,7 @@ export const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
         >
           {locale === "en" ? en.user.uF : es.user.uF}
         </Heading>
-        <CloseButton onClick={onCloseSelling} />
+        <CloseButton color={modelC} onClick={onCloseSelling} />
       </HStack>
       <chakra.form
         onSubmit={handleSubmit}
@@ -154,15 +153,13 @@ export const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
             val={dt}
             place={locale === "en" ? en.additional : es.additional}
             handle={handleInputChange}
-            bg={bg}
-            brand={brand}
             size={"md"}
           />
           {a.uid === id && (
             <GridItem colSpan={2} mt={5}>
               <HStack w={"full"} justifyContent="flex-end" spacing={10}>
                 <>
-                  <Button variant={"secondary"} onClick={onCloseSelling}>
+                  <Button variant={"tertiary"} onClick={onCloseSelling}>
                     {locale === "en" ? en.close : es.close}
                   </Button>
                   <Button variant={"primary"} type="submit" ml={3}>

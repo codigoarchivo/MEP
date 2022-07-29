@@ -19,7 +19,7 @@ export const ProductFormWord = ({
           {change === false ? en.sure : es.sure}
         </Heading>
         <HStack justifyContent="end" w={"full"}>
-          <Button variant={"secondary"} onClick={onClose}>
+          <Button variant={"tertiary"} onClick={onClose}>
             {change === false ? en.close : es.close}
           </Button>
           <Button variant={"primary"} type="submit" ml={3}>

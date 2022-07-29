@@ -7,12 +7,12 @@ import { CheckIcon } from "@chakra-ui/icons";
 export const BlogCategory = (item) => {
   return (
     <HStack align={"top"}>
-      <Box color={"brand.500"} px={2}>
+      <Box px={1}>
         <Icon as={CheckIcon} />
       </Box>
       <VStack align={"start"}>
         <Text fontWeight={600}>{item.title}</Text>
-        <Text color={"gray.600"}>{item.text}</Text>
+        <Text>{item.text}</Text>
       </VStack>
     </HStack>
   );

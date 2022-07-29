@@ -47,6 +47,7 @@ import { listDataProduct } from "../../actions/product";
 import { Breakpoints } from "../../helpers/Breakpoints";
 
 import { Toast } from "../../helpers/Toast";
+import { ModeColor } from "../../helpers/ModeColor";
 
 import { Paginator } from "../../utils/Paginator";
 
@@ -108,6 +109,8 @@ const List = ({ product = [] }) => {
   const { push, locale } = useRouter();
   // breakpoints
   const { bordes } = Breakpoints();
+  // breakpoints
+  const { modelC } = ModeColor();
   // dispatch
   const dispatch = useDispatch();
 
@@ -191,8 +194,8 @@ const List = ({ product = [] }) => {
           </HStack>
 
           <TableContainer w={"full"} border={bordes}>
-            <Table variant="striped" colorScheme="brand">
-              <TableCaption>
+            <Table colorScheme="brand">
+              <TableCaption color={modelC}>
                 {locale === "en" ? en.public : es.public}
               </TableCaption>
               <Thead>

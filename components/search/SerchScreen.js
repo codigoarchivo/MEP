@@ -186,7 +186,6 @@ export const SerchScreen = ({
             cursor={"pointer"}
             w="250px"
             position={"absolute"}
-            backgroundColor={"#fff"}
             border={bordes}
             rounded="md"
             _hover={{
@@ -225,7 +224,6 @@ export const SerchScreen = ({
                 />
                 <Text
                   h={"full"}
-                  color="gray.600"
                   fontSize={"lg"}
                   fontWeight={"bold"}
                 >

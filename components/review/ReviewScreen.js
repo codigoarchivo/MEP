@@ -51,7 +51,7 @@ export const ReviewScreen = ({
   // dispatch
   const dispatch = useDispatch();
   // mode Color
-  const { bg, brand } = ModeColor();
+  const { bg, modelC } = ModeColor();
   // Breakpoints
   const { full, bordes, points26 } = Breakpoints();
 
@@ -150,7 +150,6 @@ export const ReviewScreen = ({
       back();
       Toast(locale === "en" ? en.save : es.save, "success", 5000);
     }
-    
   };
 
   return (
@@ -196,7 +195,9 @@ export const ReviewScreen = ({
             size="sm"
             variant="filled"
             bg={bg}
-            _focus={brand}
+            _focus={bordes}
+            borderColor={bordes}
+            border={bordes}
           />
           <Button w={full} type={"submit"} variant={"primary"}>
             {locale === "en" ? en.send : es.send}

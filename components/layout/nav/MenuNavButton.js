@@ -23,6 +23,7 @@ import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 import { LogoutAllClear } from "./LogoutAllClear";
 import { NavbarLocal } from "./NavbarLocal";
+import { ModeColor } from "../../../helpers/ModeColor";
 
 export const MenuNavButton = () => {
   // useSelector
@@ -32,6 +33,7 @@ export const MenuNavButton = () => {
   // toogle color
   const { toggleColorMode, colorMode } = useColorMode();
 
+  const { modelE } = ModeColor();
   return (
     <Menu>
       <MenuButton
@@ -42,7 +44,12 @@ export const MenuNavButton = () => {
         minW={0}
       >
         <Box>
-          <Avatar size={"sm"} name={a?.displayName} src={a?.photoURL}>
+          <Avatar
+            loading={"eager" | "lazy"}
+            size={"sm"}
+            name={a?.displayName}
+            src={`${a?.photoURL}`}
+          >
             {a.uid ? (
               <AvatarBadge boxSize="1.25em" bg="green.500" />
             ) : (
@@ -55,7 +62,7 @@ export const MenuNavButton = () => {
           </Avatar>
         </Box>
       </MenuButton>
-      <MenuList zIndex={10}>
+      <MenuList zIndex={10} bg={modelE}>
         <MenuItem as={"div"}>
           <HStack spacing={6}>
             <Heading size={"md"}>{a?.displayName}</Heading>

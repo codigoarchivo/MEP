@@ -88,7 +88,7 @@ export const SaleVerifyAll = ({
   const closeVerify = () => {
     back();
   };
-  
+
   const poin = useBreakpointValue({ base: "0", md: "15px" });
   const poinB = useBreakpointValue({ base: "15px", md: "0" });
 
@@ -143,7 +143,6 @@ export const SaleVerifyAll = ({
       </Stack>
       <Stack flexDirection={content7} w={full} spacing={0} mb={20}>
         <VStack
-          backgroundColor={"#fff"}
           shadow={"lg"}
           w={full}
           mr={{ base: 0, lg: 5 }}
@@ -201,7 +200,6 @@ export const SaleVerifyAll = ({
           spacing={5}
           p={{ base: 3, sm: 5 }}
           border={bordes}
-          backgroundColor={"#fff"}
         >
           <Heading textTransform={"uppercase"} w={full} mb={5} size={"sm"}>
             {locale === "en" ? en.historySale.sF : es.historySale.sF}

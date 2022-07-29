@@ -29,6 +29,7 @@ import { sendEmail } from "../../actions/auth";
 
 import { DividerWithText } from "../../utils/DividerWithText";
 import { NavLink } from "../../utils/Navlink";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
 const initialStates = {
   email: "jacksonescuques@gmail.com",
@@ -46,7 +47,7 @@ export const ReviewUser = ({ locale, es, en }) => {
   const { emailE, field, ErrorLorR } = Validator(values, "", aL, aK);
 
   // mode Color
-  const { textError, bgTextError } = ModeColor();
+  const { textError, bgTextError, modelC } = ModeColor();
 
   // valores
   const { email } = values;
@@ -68,6 +69,7 @@ export const ReviewUser = ({ locale, es, en }) => {
     }
   };
 
+  const { bordes } = Breakpoints();
   return (
     <>
       <chakra.form
@@ -75,8 +77,8 @@ export const ReviewUser = ({ locale, es, en }) => {
         boxShadow="2xl"
         p={{ base: 2, sm: 5 }}
         w={{ base: "100%", sm: "70%", md: "60%", lg: "70%" }}
-        backgroundColor={"#fff"}
         h={"min-content"}
+        border={bordes}
       >
         <VStack spacing={5}>
           <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
@@ -84,11 +86,11 @@ export const ReviewUser = ({ locale, es, en }) => {
           </Heading>
           <FormControl>
             {!emailE && (
-              <FormHelperText>
+              <FormHelperText color={modelC}>
                 {locale === "en" ? en.auth.aI : es.auth.aI}
               </FormHelperText>
             )}
-            <FormLabel htmlFor="email">
+            <FormLabel htmlFor="email" color={modelC}>
               {locale === "en" ? en.mail : es.mail}{" "}
               <Tooltip
                 color={textError}
@@ -123,7 +125,7 @@ export const ReviewUser = ({ locale, es, en }) => {
           <Center>
             <NavLink
               href={"/auth"}
-              variant={"secondary"}
+              variant={"tertiary"}
               name={locale === "en" ? en.auth.aA : es.auth.aA}
             />
           </Center>

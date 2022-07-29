@@ -99,7 +99,7 @@ export const CheckoutScreenAll = ({
           <Button
             size={"xs"}
             fontWeight={"normal"}
-            variant={"secondary"}
+            variant={"primary"}
             w={"min-content"}
             disabled={process ? false : true}
             border={bordes}

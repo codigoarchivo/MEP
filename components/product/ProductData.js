@@ -19,6 +19,7 @@ import {
 import { Breakpoints } from "../../helpers/Breakpoints";
 import { Toast } from "../../helpers/Toast";
 import { Validator } from "../../helpers/Validator";
+import { ModeColor } from "../../helpers/ModeColor";
 
 import { ProductForm } from "./ProductForm";
 import { ProductFormWord } from "./ProductFormWord";
@@ -204,23 +205,24 @@ export const ProductData = ({
     dispatch(esActive());
   };
 
+  // mode Color
+  const { modelC } = ModeColor();
+
   return (
     <>
-      <VStack
-        backgroundColor={"#fff"}
-        spacing={5}
-        w={"full"}
-        border={bordes}
-        p={6}
-        boxShadow={"xl"}
-      >
+      <VStack spacing={5} w={"full"} border={bordes} p={6} boxShadow={"xl"}>
         <Stack
           flexDirection={"row"}
           w={"full"}
           justifyContent={"space-between"}
         >
           <HStack>
-            <CloseButton display={"inline"} size="md" onClick={onClose} />
+            <CloseButton
+              color={modelC}
+              display={"inline"}
+              size="md"
+              onClick={onClose}
+            />
             <Heading
               display={"inline"}
               as="h1"

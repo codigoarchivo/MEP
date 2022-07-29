@@ -5,14 +5,11 @@ import {
   Heading,
   Box,
   chakra,
-  useColorModeValue,
 } from "@chakra-ui/react";
 
 import { Global } from "../../../helpers/IconNew";
 
 import { NavLink } from "../../../utils/Navlink";
-
-import { ModeColor } from "../../../helpers/ModeColor";
 
 import { en } from "../../../translations/en";
 import { es } from "../../../translations/es";
@@ -21,13 +18,11 @@ export const NavbarLocal = () => {
   // useRouter
   const { locale, locales, asPath } = useRouter();
 
-  const { modelA } = ModeColor();
   return (
     <HStack w={"full"} alignItems={"center"} py={5}>
       <Heading
         textTransform={"uppercase"}
         size="sm"
-        color={modelA}
       >
         <Box w={6} h={6} as={Global} />{" "}
         {locale === "en" ? en.language : es.language}

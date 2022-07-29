@@ -75,7 +75,7 @@ export const CheckVerify = ({
   // Breakpoints
   const { repeat1, points3, full, content7 } = Breakpoints();
   // mode Color
-  const { bg, brand } = ModeColor();
+  const { modelC } = ModeColor();
 
   // useForm
   const { values, reset, handleInputChange } = useFormAll(initialStates);
@@ -143,7 +143,6 @@ export const CheckVerify = ({
       </Text>
       <Stack flexDirection={content7} w={full} spacing={0}>
         <VStack
-          backgroundColor={"#fff"}
           shadow={"lg"}
           w={full}
           mr={{ base: 0, lg: 5 }}
@@ -202,15 +201,14 @@ export const CheckVerify = ({
           spacing={5}
           p={{ base: 3, sm: 5 }}
           border={bordes}
-          backgroundColor={"#fff"}
         >
           <Heading textTransform={"uppercase"} w={full} mb={5} size={"sm"}>
             {locale === "en" ? en.verify.vH : es.verify.vH}
           </Heading>
           <Stack w={full} spacing={5}>
             <List spacing={3}>
-              <ListItem>
-                <ListIcon as={CheckCircleIcon} color="brand.700" />
+              <ListItem color={modelC}>
+                <ListIcon as={CheckCircleIcon} />
                 {locale === "en" ? en.verify.vE : es.verify.vE}
               </ListItem>
             </List>
@@ -222,7 +220,7 @@ export const CheckVerify = ({
                 href="https://www.bankofamerica.com/online-banking/mobile-and-online-banking-features/money-transfer/es/#:~:text=Seleccione%20Transferir%20%7C%20Enviar%20y%20despu%C3%A9s,transferencia%20y%20luego%20toque%20Continuar."
                 isExternal
               >
-                <ExternalLinkIcon mx="2px" />
+                <ExternalLinkIcon color={modelC} mx="2px" />
               </Link>
             </HStack>
             {[
@@ -261,7 +259,6 @@ export const CheckVerify = ({
         onSubmit={handleSubmit}
         w={full}
         p={{ base: 3, lg: 10 }}
-        backgroundColor={"#fff"}
         border={bordes}
         shadow={"lg"}
       >
@@ -276,7 +273,7 @@ export const CheckVerify = ({
               <Heading textTransform={"uppercase"} w={full} mb={5} size={"sm"}>
                 {locale === "en" ? en.verify.vF : es.verify.vF}
               </Heading>
-              <CloseButton onClick={closeVerify} />
+              <CloseButton color={modelC} onClick={closeVerify} />
             </HStack>
           </GridItem>
 
@@ -332,8 +329,6 @@ export const CheckVerify = ({
             val={dt}
             place={locale === "en" ? en.additional : es.additional}
             handle={handleInputChange}
-            bg={bg}
-            brand={brand}
             mb={10}
           />
           <GridItem colSpan={1}>
@@ -341,6 +336,7 @@ export const CheckVerify = ({
               htmlFor="imp"
               fontWeight={"bold"}
               textTransform={"uppercase"}
+              color={modelC}
             >
               {locale === "en" ? en.receipt : es.receipt}
             </FormLabel>
@@ -379,7 +375,7 @@ export const CheckVerify = ({
 
           <GridItem colSpan={2} mt={5}>
             <HStack w={"full"} justifyContent="flex-end" spacing={10}>
-              <Button variant={"secondary"} onClick={closeVerify}>
+              <Button variant={"tertiary"} onClick={closeVerify}>
                 {locale === "en" ? en.close : es.close}
               </Button>
               <Flex>

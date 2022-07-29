@@ -53,7 +53,7 @@ export const DialogSerchNavbar = ({
     onSerch();
   };
 
-  const { modelA, modelB } = ModeColor();
+  const { modelC } = ModeColor();
 
   return (
     <>
@@ -62,7 +62,7 @@ export const DialogSerchNavbar = ({
         boxSize={4}
         display={displayOn2}
         cursor={"pointer"}
-        color={modelA}
+        color={modelC}
       >
         <SearchIcon mx={0} />
       </Icon>
@@ -75,14 +75,14 @@ export const DialogSerchNavbar = ({
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <CloseButton size="md" onClick={onSerch} />
+              <CloseButton size="md" color={modelC} onClick={onSerch} />
             </AlertDialogHeader>
 
             <AlertDialogBody>
               <chakra.form onSubmit={handleSerchProduct}>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
-                    <SearchIcon color={modelA} />
+                    <SearchIcon color={modelC} />
                   </InputLeftElement>
                   <Input
                     type={"search"}

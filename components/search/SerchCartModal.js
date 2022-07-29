@@ -26,6 +26,8 @@ import { saveSale } from "../../actions/product";
 
 import { Toast } from "../../helpers/Toast";
 
+import { ModeColor } from "../../helpers/ModeColor";
+
 export const SerchCartModal = ({
   isOpen,
   onClose,
@@ -40,9 +42,7 @@ export const SerchCartModal = ({
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // selector
-  const { activeCartSelect: active = [] } = useSelector(
-    ({ cart }) => cart
-  );
+  const { activeCartSelect: active = [] } = useSelector(({ cart }) => cart);
   // useDispatch
   const dispatch = useDispatch();
 
@@ -54,6 +54,7 @@ export const SerchCartModal = ({
   );
 
   const [overlay, setOverlay] = useState(<OverlayOne />);
+
   const data = useMemo(
     () =>
       active.map((item) => ({
@@ -94,6 +95,7 @@ export const SerchCartModal = ({
     push(`/checkout?q=${a.uid}`);
   };
 
+  const { modelC } = ModeColor();
   return (
     <>
       <Modal
@@ -105,8 +107,8 @@ export const SerchCartModal = ({
         {overlay}
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{a.displayName}</ModalHeader>
-          <ModalCloseButton />
+          <ModalHeader color={modelC}>{a.displayName}</ModalHeader>
+          <ModalCloseButton color={modelC} />
           <ModalBody textAlign={"center"}>
             <Box textAlign={"center"} mb={10} w={"full"}>
               <QuestionOutlineIcon w={20} h={20} color="red.500" />
@@ -118,7 +120,7 @@ export const SerchCartModal = ({
             <Text>{locale === "en" ? en.cart.cE : es.cart.cE}</Text>
           </ModalBody>
           <ModalFooter>
-            <Button variant={"secondary"} mr={3} onClick={onClose}>
+            <Button variant={"tertiary"} mr={3} onClick={onClose}>
               {close}
             </Button>
             <Button

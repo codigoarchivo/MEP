@@ -56,7 +56,7 @@ export const MenuCategoria = () => {
                   query: { n: id, c: locale === "en" ? na.en : na.es },
                 }}
                 name={locale === "en" ? na.en : na.es}
-                variant={"secondary"}
+                variant={"tertiary"}
                 fontWeight={"normal"}
               />
             </MenuItem>

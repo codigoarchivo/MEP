@@ -25,6 +25,7 @@ import { Validator } from "../../helpers/Validator";
 import { ModeColor } from "../../helpers/ModeColor";
 
 import { resetPassword } from "../../actions/auth";
+import { Breakpoints } from "../../helpers/Breakpoints";
 
 const initialStates = {
   password: "",
@@ -49,7 +50,7 @@ export const ResetPassword = ({ locale, es, en }) => {
   // validar
   const { field, passwordV } = Validator(values, aM, "", aK);
   // mode Color
-  const { textError, bgTextError } = ModeColor();
+  const { textError, bgTextError, modelC } = ModeColor();
   // valores
   const { password, pass } = values;
 
@@ -66,15 +67,23 @@ export const ResetPassword = ({ locale, es, en }) => {
     }
   };
 
+  // Breakpoints
+  const { bordes } = Breakpoints();
+
   return (
     <>
-      <chakra.form onSubmit={handleSubmit} boxShadow="2xl" p={5}>
+      <chakra.form
+        onSubmit={handleSubmit}
+        boxShadow="2xl"
+        p={5}
+        border={bordes}
+      >
         <VStack spacing={10}>
           <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
             {locale === "en" ? en.auth.aV : es.auth.aV}
           </Heading>
-          <FormControl isInvalid>
-            <FormLabel htmlFor="password">
+          <FormControl>
+            <FormLabel color={modelC} htmlFor="password">
               {locale === "en" ? en.password : es.password}{" "}
               <Tooltip
                 color={textError}
@@ -98,7 +107,7 @@ export const ResetPassword = ({ locale, es, en }) => {
               />
               <InputRightElement width="4.5rem">
                 <Button
-                  variant={"secondary"}
+                  variant={"tertiary"}
                   h="1.75rem"
                   onClick={handlePassword}
                 >

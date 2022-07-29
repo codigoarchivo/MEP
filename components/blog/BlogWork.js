@@ -17,7 +17,10 @@ import { Arrow } from "../../helpers/IconNew";
 
 import { NavLink } from "../../utils/Navlink";
 
+import { ModeColor } from "../../helpers/ModeColor";
+
 export const BlogWork = ({ bA, bB, bC, bD, create, points, displayOff }) => {
+  const { modelF } = ModeColor();
   return (
     <Stack
       w={"full"}
@@ -34,7 +37,6 @@ export const BlogWork = ({ bA, bB, bC, bD, create, points, displayOff }) => {
       >
         <Heading fontSize={points} w={"full"}>
           <Text
-            color={"brand.900"}
             as={"span"}
             position={"relative"}
             _after={{
@@ -44,20 +46,15 @@ export const BlogWork = ({ bA, bB, bC, bD, create, points, displayOff }) => {
               position: "absolute",
               bottom: 1,
               left: 0,
-              bg: "brand.500",
+              bg: modelF,
               zIndex: -1,
             }}
           >
             {bA}
           </Text>
-          <br />{" "}
-          <Text color={"brand.500"} as={"span"}>
-            {bB}
-          </Text>{" "}
+          <br /> <Text color={modelF}>{bB}</Text>{" "}
         </Heading>
-        <Text fontSize={{ base: "md", lg: "lg" }} color={"gray.500"}>
-          {bC}
-        </Text>
+        <Text fontSize={{ base: "md", lg: "lg" }}>{bC}</Text>
         <Stack
           direction={{ base: "column", md: "row" }}
           spacing={4}

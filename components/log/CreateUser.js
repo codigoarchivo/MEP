@@ -33,6 +33,8 @@ import { startRegisterWithNameEmailPassword } from "../../actions/auth";
 import { DividerWithText } from "../../utils/DividerWithText";
 import { useFormAll } from "../../hooks/useFormAll";
 
+import { Breakpoints } from "../../helpers/Breakpoints";
+
 const initialStates = {
   name: "jackson Quintero",
   email: "jackson@gmail.com",
@@ -77,7 +79,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
   } = Validator(values, aM, aL, aK, aN, aO, aP, aQ);
 
   // mode Color
-  const { textError, bgTextError } = ModeColor();
+  const { textError, bgTextError, modelC } = ModeColor();
 
   // valores
   const { name, email, password, rePassword, pass, rPass } = values;
@@ -95,6 +97,8 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
     }
   };
 
+  const { bordes } = Breakpoints();
+
   return (
     <>
       <chakra.form
@@ -102,8 +106,8 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
         boxShadow="2xl"
         p={{ base: 2, sm: 5 }}
         w={{ base: "100%", sm: "70%", md: "60%", lg: "70%" }}
-        backgroundColor={"#fff"}
         h={"min-content"}
+        border={bordes}
       >
         <VStack spacing={{ base: 3, sm: 5 }}>
           <HStack w={"full"} justifyContent="space-between">
@@ -113,7 +117,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
             <CloseButton size="sm" onClick={() => back()} />
           </HStack>
           <FormControl>
-            <FormLabel htmlFor="name">
+            <FormLabel htmlFor="name" color={modelC}>
               {locale === "en" ? en.name : es.name}{" "}
               <Tooltip
                 color={textError}
@@ -136,11 +140,11 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
           </FormControl>
           <FormControl>
             {!emailE && (
-              <FormHelperText mt={0}>
+              <FormHelperText mt={0} color={modelC}>
                 {locale === "en" ? en.auth.aI : es.auth.aI}
               </FormHelperText>
             )}
-            <FormLabel htmlFor="email">
+            <FormLabel htmlFor="email" color={modelC}>
               {locale === "en" ? en.mail : es.mail}{" "}
               <Tooltip
                 color={textError}
@@ -162,7 +166,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
             />
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor="password">
+            <FormLabel htmlFor="password" color={modelC}>
               {locale === "en" ? en.password : es.password}{" "}
               <Tooltip
                 color={textError}
@@ -186,7 +190,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
               />
               <InputRightElement width="4.5rem">
                 <Button
-                  variant={"secondary"}
+                  variant={"tertiary"}
                   h="1.75rem"
                   onClick={handlePassword}
                 >
@@ -196,7 +200,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
             </InputGroup>
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor="rePassword">
+            <FormLabel htmlFor="rePassword" color={modelC}>
               {locale === "en" ? en.auth.aR : es.auth.aR}{" "}
               <Tooltip
                 color={textError}
@@ -220,7 +224,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
               />
               <InputRightElement width="4.5rem">
                 <Button
-                  variant={"secondary"}
+                  variant={"tertiary"}
                   h="1.75rem"
                   onClick={handleRePassword}
                 >
@@ -244,7 +248,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
           <Center>
             <NavLink
               href={"/auth"}
-              variant={"secondary"}
+              variant={"tertiary"}
               name={locale === "en" ? en.auth.aA : es.auth.aA}
             />
           </Center>

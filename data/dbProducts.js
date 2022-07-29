@@ -14,7 +14,12 @@ export const dbProducts = async (i = "", dbP = "", val1, val2) => {
   let q = "";
   switch (dbP) {
     case "dbProFive":
-      q = query(collection(db, "serchs"), where("na", "==", i), limit(25));
+      q = query(
+        collection(db, "serchs"),
+        where("na", "==", i),
+        where("ct", "==", i),
+        limit(25)
+      );
       break;
     case "dbProSix":
       q = query(
@@ -38,7 +43,6 @@ export const dbProducts = async (i = "", dbP = "", val1, val2) => {
 
   return JSON.parse(JSON.stringify(data));
 };
-
 
 export const dbProductEdit = async (id, dbE, val) => {
   switch (dbE) {

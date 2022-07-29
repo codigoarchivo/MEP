@@ -10,6 +10,8 @@ import {
   Input,
 } from "@chakra-ui/react";
 
+import { ModeColor } from "../../helpers/ModeColor";
+
 export const CategoryForm = ({
   HStack,
   VStack,
@@ -22,12 +24,13 @@ export const CategoryForm = ({
   en,
   info,
 }) => {
+  const { modelC } = ModeColor();
   return (
     <>
       <chakra.form onSubmit={handleSubmit} w="full" p={3}>
         <VStack spacing={7} mb={10}>
           <FormControl>
-            <FormLabel htmlFor={change === true ? "en" : "es"}>
+            <FormLabel color={modelC} htmlFor={change === true ? "en" : "es"}>
               {change === false ? en.name : es.name}
             </FormLabel>
             <Input
@@ -40,7 +43,7 @@ export const CategoryForm = ({
             />
           </FormControl>
           <HStack w={"full"} justifyContent="flex-end">
-            <Button variant={"secondary"} onClick={onClose}>
+            <Button variant={"tertiary"} onClick={onClose}>
               {change === false ? en.close : es.close}
             </Button>
             <Button variant={"primary"} type="submit" ml={3}>

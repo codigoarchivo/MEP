@@ -22,11 +22,11 @@ const colors = {
   brand: {
     50: "#5965",
     100: "#ffc301",
-    200: "#8AC",
-    300: "#112",
-    400: "#676",
+    200: "#c1c2c343",
+    300: "#94979e43",
+    400: "#1b22320d",
     500: "#fff",
-    600: "#1b2232",
+    600: "#1b223234",
     700: "#ffc301",
     800: "#D4AF37",
     900: "#1b2232",
@@ -36,10 +36,17 @@ const inputStyles = {
   variants: {
     filled: (props) => ({
       field: {
-        backgroundColor: mode("brand.900", "brand.800")(props),
+        backgroundColor: mode("brand.400", "brand.300")(props),
+        borderColor: mode("brand.800", "brand.800")(props),
+        border: "1px solid #D4AF37",
+        boxShadow: "inset 0 2px 4px 0 rgba(0,0,0,0.06)",
+        _hover: {
+          backgroundColor: mode("brand.600", "brand.200")(props),
+          borderColor: mode("brand.700", "brand.700")(props),
+        },
         _focus: {
-          borderColor: "brand.800",
-          boxShadow: "inset 0 2px 4px 0 rgba(0,0,0,0.06)",
+          backgroundColor: mode("brand.600", "brand.200")(props),
+          borderColor: mode("brand.700", "brand.700")(props),
         },
       },
     }),
@@ -57,16 +64,15 @@ const buttonStyles = {
     primary: (props) => ({
       rounded: "none",
       textDecoration: "none",
-      _focus: {
-        ring: 2,
-        ringColor: mode("brand.800", "brand.800")(props),
-      },
-      backgroundColor: mode("brand.800", "transparent")(props),
-      borderColor: mode("brand.800", "brand.800")(props),
-      color: mode("brand.900", "brand.800")(props),
+      backgroundColor: mode("brand.800", "brand.800")(props),
+      color: mode("brand.900", "brand.900")(props),
       _hover: {
         backgroundColor: mode("brand.700", "brand.700")(props),
         color: "brand.900",
+      },
+      _focus: {
+        ring: 2,
+        ringColor: mode("brand.800", "brand.800")(props),
       },
       _active: {
         backgroundColor: mode("brand.800", "brand.900")(props),
@@ -77,7 +83,7 @@ const buttonStyles = {
       backgroundColor: "transparent",
       color: mode("brand.900", "brand.900")(props),
       _hover: {
-        color: "brand.700",
+        color: "brand.600",
       },
       _focus: {
         ring: 2,
@@ -97,7 +103,7 @@ const buttonStyles = {
     }),
     outline: (props) => ({
       backgroundColor: "transparent",
-      color: mode("brand.800", "brand.600")(props),
+      color: mode("brand.900", "brand.800")(props),
       _hover: {
         backgroundColor: "brand.800",
         color: "brand.900",
@@ -127,6 +133,18 @@ const globalStyles = {
         _hover: {
           textDecoration: "none",
         },
+      },
+      h1: {
+        color: "brand.800",
+      },
+      h2: {
+        color: "brand.800",
+      },
+      h3: {
+        color: "brand.800",
+      },
+      p: {
+        color: "brand.800",
       },
       "*::placeholder": {
         color: mode("brand.800", "brand.800")(props),
@@ -171,6 +189,9 @@ export const theme = extendTheme(
         ...inputStyles,
       },
       Select: {
+        ...inputStyles,
+      },
+      Textarea: {
         ...inputStyles,
       },
       Checkbox: {

@@ -28,7 +28,7 @@ export const DesktopNav = () => {
 
   const { values, reset, handleInputChange } = useFormAll(initialStates);
 
-  const { modelA } = ModeColor();
+  const { modelC } = ModeColor();
 
   const handleSerchProduct = (e) => {
     e.preventDefault();
@@ -47,11 +47,12 @@ export const DesktopNav = () => {
       alignItems={"center"}
       justifyContent={"space-around"}
     >
+      {/* Category */}
       <MenuCategoria />
       <chakra.form onSubmit={handleSerchProduct} pl={{ base: 0, lg: 20 }}>
         <InputGroup>
           <InputLeftElement pointerEvents="none">
-            <SearchIcon color={modelA} display={"block"} />
+            <SearchIcon color={modelC} display={"block"} />
           </InputLeftElement>
           <Input
             type={"search"}

@@ -2,6 +2,9 @@ import PropTypes from "prop-types";
 
 import { FormLabel, GridItem, Textarea } from "@chakra-ui/react";
 
+import { Breakpoints } from "../helpers/Breakpoints";
+import { ModeColor } from "../helpers/ModeColor";
+
 export const GridItemFormTextarea = ({
   points,
   name,
@@ -9,14 +12,15 @@ export const GridItemFormTextarea = ({
   val,
   place,
   handle,
-  bg,
-  brand,
   mb,
   id,
   size = "xs",
   isReadOnly = false,
   display = "block",
 }) => {
+  const { bordes } = Breakpoints();
+
+  const { bg, modelC } = ModeColor();
   return (
     <>
       <GridItem colSpan={points} mb={mb} display={display}>
@@ -24,6 +28,7 @@ export const GridItemFormTextarea = ({
           fontWeight={"bold"}
           textTransform={"capitalize"}
           htmlFor={na}
+          color={modelC}
         >
           {name}
         </FormLabel>
@@ -31,8 +36,10 @@ export const GridItemFormTextarea = ({
           p={{ base: 1, md: 3 }}
           isReadOnly={isReadOnly}
           bg={bg}
-          _focus={brand}
-          variant="filled"
+          variant={"filled"}
+          _focus={bordes}
+          borderColor={bordes}
+          border={bordes}
           name={na}
           id={id}
           value={val}
@@ -53,8 +60,6 @@ GridItemFormTextarea.propTypes = {
   place: PropTypes.string,
   display: PropTypes.string,
   handle: PropTypes.func,
-  bg: PropTypes.string,
-  brand: PropTypes.object,
   size: PropTypes.string,
   isReadOnly: PropTypes.bool,
 };

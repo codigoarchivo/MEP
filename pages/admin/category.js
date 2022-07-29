@@ -37,6 +37,8 @@ import { Paginator } from "../../utils/Paginator";
 
 import { Toast } from "../../helpers/Toast";
 
+import { ModeColor } from "../../helpers/ModeColor";
+
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
@@ -106,6 +108,7 @@ const Category = ({ data = [] }) => {
     });
   };
 
+  const { modelC } = ModeColor();
   return (
     <ShopLayout title={locale === "en" ? en.categories : es.categories}>
       {a?.rol === "owner" ? (
@@ -119,13 +122,15 @@ const Category = ({ data = [] }) => {
               </Center>
             )}
             <TableContainer w={"full"} border={bordes}>
-              <Table variant="striped" colorScheme="brand">
-                <TableCaption>
+              <Table colorScheme="brand">
+                <TableCaption color={modelC}>
                   {locale === "en" ? en.category.cB : es.category.cB}
                 </TableCaption>
                 <Thead>
                   <Tr>
-                    <Th>{locale === "en" ? en.categories : es.categories}</Th>
+                    <Th color={modelC}>
+                      {locale === "en" ? en.categories : es.categories}
+                    </Th>
                     <Th isNumeric textAlign={center}>
                       <Button
                         onClick={handleAdd}

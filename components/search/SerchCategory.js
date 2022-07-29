@@ -18,6 +18,7 @@ import { CheckCircleIcon } from "@chakra-ui/icons";
 import { NavLink } from "../../utils/Navlink";
 
 import { Breakpoints } from "../../helpers/Breakpoints";
+import { ModeColor } from "../../helpers/ModeColor";
 
 export const SerchCategory = ({ locale, en, es }) => {
   // selector
@@ -25,6 +26,7 @@ export const SerchCategory = ({ locale, en, es }) => {
   // Breakpoints
   const { bordes } = Breakpoints();
 
+  const { modelC } = ModeColor();
   return (
     <Stack w={"full"} spacing={"5"} border={bordes} rounded="md" p={4}>
       <Box borderBottom={bordes} py={5} w={"full"}>
@@ -35,14 +37,14 @@ export const SerchCategory = ({ locale, en, es }) => {
       <List spacing={3}>
         {listData.map(({ na, id }) => (
           <ListItem key={id}>
-            <ListIcon as={CheckCircleIcon} color="brand.700" />
+            <ListIcon as={CheckCircleIcon} color={modelC} />
             <NavLink
               href={{
                 pathname: "/search",
                 query: { n: id, c: locale === "en" ? na.en : na.es },
               }}
               name={locale === "en" ? na.en : na.es}
-              variant={"secondary"}
+              variant={"tertiary"}
               fontWeight={"normal"}
             />
           </ListItem>

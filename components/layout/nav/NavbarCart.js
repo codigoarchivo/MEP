@@ -59,7 +59,7 @@ export const NavbarCart = () => {
 
   return (
     <TableContainer w={"full"} border={bordes}>
-      <Table variant="simple">
+      <Table>
         <Thead>
           <Tr>
             <Th></Th>

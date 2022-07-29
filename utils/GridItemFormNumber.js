@@ -10,6 +10,8 @@ import {
   NumberInputStepper,
 } from "@chakra-ui/react";
 
+import { ModeColor } from "../helpers/ModeColor";
+
 export const GridItemFormNumber = ({
   points,
   name,
@@ -20,9 +22,12 @@ export const GridItemFormNumber = ({
   max,
   isReadOnly = false,
 }) => {
+  const { modelC } = ModeColor();
   return (
     <GridItem colSpan={points}>
-      <FormLabel htmlFor={na}>{name}</FormLabel>
+      <FormLabel color={modelC} htmlFor={na}>
+        {name}
+      </FormLabel>
       <NumberInput
         isReadOnly={isReadOnly}
         name={na}

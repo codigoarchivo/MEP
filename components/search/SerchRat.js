@@ -2,7 +2,15 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
-import { Box, Heading, HStack, Icon, Progress, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  HStack,
+  Icon,
+  Progress,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 import { Rating } from "react-simple-star-rating";
 
@@ -13,6 +21,7 @@ import { BsPerson } from "../../helpers/IconNew";
 export const SerchRat = (item) => {
   // Breakpoints
   const { displayOff1 } = Breakpoints();
+
   return (
     <HStack
       p={0.5}
@@ -28,7 +37,7 @@ export const SerchRat = (item) => {
       <Progress
         w={"full"}
         display={displayOff1}
-        colorScheme="yellow"
+        colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
         size="sm"
         value={item.est}
       />

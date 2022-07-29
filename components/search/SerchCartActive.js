@@ -14,6 +14,8 @@ import { Toast } from "../../helpers/Toast";
 
 import { Breakpoints } from "../../helpers/Breakpoints";
 
+import { ModeColor } from "../../helpers/ModeColor";
+
 import { deleteProductCart } from "../../actions/product";
 
 export const SerchCartActive = ({ item, inc, locale, en, es }) => {
@@ -33,6 +35,8 @@ export const SerchCartActive = ({ item, inc, locale, en, es }) => {
     active.map((item) => (inc.current -= item.pr));
     Toast(locale === "en" ? en.removed : es.removed, "error", 5000);
   };
+
+  const { modelC } = ModeColor();
 
   return (
     <Tr>
@@ -110,6 +114,7 @@ export const SerchCartActive = ({ item, inc, locale, en, es }) => {
           onClick={() => handleDeleteCart(item.id)}
           mx={{ base: 0, md: 5 }}
           cursor={"pointer"}
+          color={modelC}
         />
       </Td>
     </Tr>
