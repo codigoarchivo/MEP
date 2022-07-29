@@ -1,9 +1,5 @@
 import React from "react";
 
-import { collection, getDocs } from "firebase/firestore";
-
-import { db } from "../../firebase/config";
-
 import Image from "next/image";
 
 import { useDispatch } from "react-redux";
@@ -75,20 +71,12 @@ export const SerchCartSave = ({
   const cn = Number(input.value);
   item.cnr = item.cn - cn;
 
-  const handleSelect = async () => {
-    //? item.pj : es el porcentaje que coloca onwer
-    const q = collection(db, "serchs", item.id, "messages");
-
-    const { docs } = await getDocs(q);
-
+  const handleSelect = () => {
     dispatch(
       activeProductCart(
         {
           ...item,
           cn,
-          rat: docs.map((doc) => ({
-            ...doc.data().rat,
-          })),
         },
         err,
         added,

@@ -23,7 +23,7 @@ export const LogoutAllClear = () => {
 
   return (
     <Button
-      variant={"secondary"}
+      variant={"tertiary"}
       fontWeight={"normal"}
       leftIcon={<Logout />}
       onClick={handleLogout}

@@ -112,8 +112,7 @@ export const SerchMessage = (item) => {
             </Text>
           </VStack>
         </Stack>
-
-        {item.uid !== a?.uid && (
+        <Stack display={item.uid === a?.uid ? "block" : "none"}>
           <Tooltip
             hasArrow
             label="Editar Reseñas"
@@ -124,7 +123,7 @@ export const SerchMessage = (item) => {
               <DragHandleIcon />
             </Button>
           </Tooltip>
-        )}
+        </Stack>
       </HStack>
       <Divider w={"full"} mt={{ base: 0, md: 5 }} borderBottom={bordes} />
     </>

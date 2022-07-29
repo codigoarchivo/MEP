@@ -11,6 +11,7 @@ import {
   useBreakpointValue,
   VStack,
   chakra,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 import Image from "next/image";
@@ -52,7 +53,7 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
           border={bordes}
           p={5}
           boxShadow={"lg"}
-          backgroundColor={"brand.800"}
+          backgroundColor={useColorModeValue("brand.800", "brand.900")}
         >
           <Heading w={"full"} fontSize={points25} wordBreak={"break-word"}>
             {locale === "en" ? en.home.hA : es.home.hA}

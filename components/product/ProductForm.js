@@ -55,7 +55,7 @@ export const ProductForm = ({
   // mode Color
   const { bg, brand } = ModeColor();
   // selector
-  const { listData: list = [] } = useSelector(({ category }) => category);
+  const { listData: list = [] } = useSelector(({ listca }) => listca);
   // Breakpoints
   const { points1, repeat1, points3 } = Breakpoints();
 

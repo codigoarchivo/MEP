@@ -37,6 +37,7 @@ import { SerchMessage } from "../../components/search/SerchMessage";
 
 export const SerchDetails = ({
   message = [],
+  msg = [],
   product = {},
   push,
   locale,
@@ -92,7 +93,6 @@ export const SerchDetails = ({
         {
           ...product,
           cn,
-          rat: message.map((item) => item.rat.toString()),
         },
         err,
         added,
@@ -231,7 +231,12 @@ export const SerchDetails = ({
                 <Box>
                   {/* SerchMessage */}
                   {message.map((item) => (
-                    <SerchMessage key={item.id} {...item} message={message} pid={product.id} />
+                    <SerchMessage
+                      key={item.id}
+                      {...item}
+                      message={msg}
+                      pid={product.id}
+                    />
                   ))}
                 </Box>
               </>
@@ -246,6 +251,7 @@ export const SerchDetails = ({
 SerchDetails.propTypes = {
   product: PropTypes.object,
   message: PropTypes.array,
+  msg: PropTypes.array,
   push: PropTypes.func,
   locale: PropTypes.string,
   es: PropTypes.object,

@@ -61,8 +61,6 @@ export const SerchCartModal = ({
         close: false,
         lim: addDays(Date.now(), 3),
         product: {
-          // raiting del producto
-          rat: item.rat,
           // id del producto
           id: item.id,
           // catidad del producto seleccionado

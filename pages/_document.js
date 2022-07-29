@@ -5,12 +5,6 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 import { theme } from "../theme";
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx) {
-    const initalProps = await Document.getInitialProps(ctx);
-
-    return initalProps;
-  }
-
   render() {
     return (
       <Html>

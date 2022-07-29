@@ -120,6 +120,7 @@ const Details = ({ product = {}, msg = [] }) => {
       <Container maxW="container.lg" py={{ base: 0, md: 10 }}>
         <SerchDetails
           message={message}
+          msg={msg}
           product={product}
           push={push}
           locale={locale}

@@ -2,6 +2,8 @@ import React from "react";
 
 import { Provider } from "react-redux";
 
+import { Chakra } from "../src/Chakra";
+
 import { persistStore } from "redux-persist";
 
 import { store } from "../store";
@@ -18,20 +20,22 @@ const App = ({ Component, pageProps }) => {
   const { points25 } = Breakpoints();
   return (
     <>
-      <Provider store={store}>
-        <PersistGate
-          loading={
-            <Center h={"calc(100vh - 50px)"} fontSize={points25}>
-              loading
-            </Center>
-          }
-          persistor={persistStore(store)}
-        >
-          <ChakraProvider theme={theme}>
-            <Component {...pageProps} />
-          </ChakraProvider>
-        </PersistGate>
-      </Provider>
+      <Chakra cookies={pageProps.cookies}>
+        <ChakraProvider theme={theme}>
+          <Provider store={store}>
+            <PersistGate
+              loading={
+                <Center h={"calc(100vh - 50px)"} fontSize={points25}>
+                  loading
+                </Center>
+              }
+              persistor={persistStore(store)}
+            >
+              <Component {...pageProps} />
+            </PersistGate>
+          </Provider>
+        </ChakraProvider>
+      </Chakra>
     </>
   );
 };

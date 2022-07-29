@@ -63,7 +63,7 @@ export const MenuNavButton = () => {
               onClick={toggleColorMode}
               size="xs"
               px={0}
-              variant={"secondary"}
+              variant={"tertiary"}
             >
               {colorMode === "light" ? (
                 <MoonIcon boxSize={6} />
@@ -79,7 +79,7 @@ export const MenuNavButton = () => {
             <NavLink
               leftIcon={icon}
               fontWeight={"normal"}
-              variant={"secondary"}
+              variant={"tertiary"}
               href={ref}
               as={as}
               name={nam}

@@ -22,6 +22,7 @@ import {
   InputGroup,
   InputLeftElement,
   Input,
+  Text,
 } from "@chakra-ui/react";
 
 import { HamburgerIcon, CloseIcon, SearchIcon } from "@chakra-ui/icons";
@@ -37,6 +38,7 @@ import { useModality } from "../../../hooks/useModality";
 
 import { Breakpoints } from "../../../helpers/Breakpoints";
 import { Toast } from "../../../helpers/Toast";
+import { ModeColor } from "../../../helpers/ModeColor";
 
 import { NavLink } from "../../../utils/Navlink";
 
@@ -74,11 +76,11 @@ export function WithSubnavigation() {
 
   const { dataRoute } = ListRoute();
 
+  const { modelA, modelB } = ModeColor();
+
   return (
     <Box>
       <Flex
-        color={useColorModeValue("gray.600", "white")}
-        borderColor={useColorModeValue("gray.200", "gray.900")}
         mb={{ base: 5, md: 0 }}
         minH={"60px"}
         py={{ base: 2 }}
@@ -96,7 +98,7 @@ export function WithSubnavigation() {
             icon={
               isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
             }
-            variant={"ghost"}
+            variant={"tertiary"}
             aria-label={"Toggle Navigation"}
           />
         </Flex>
@@ -188,26 +190,26 @@ export function WithSubnavigation() {
               <MenuButton
                 as={Button}
                 rounded={"full"}
-                variant={"secondary"}
+                variant={"tertiary"}
                 position={"relative"}
                 px={0}
                 cursor={"pointer"}
                 minW={0}
                 onClick={() =>
                   check.length > 0 &&
-                  (Toast(locale === "en" ? en.you : es.you, "info", 5000),
-                  push("/"))
+                  Toast(locale === "en" ? en.you : es.you, "info", 5000)
                 }
               >
                 <CartIcon boxSize={points11} />
                 <Flex
+                  backgroundColor={modelA}
+                  color={modelB}
                   right={{ base: -3, sm: -4 }}
                   top={0}
                   zIndex={-10}
                   border={bordes}
                   alignItems={"center"}
                   justifyContent="center"
-                  backgroundColor={"brand.800"}
                   borderRadius={"full"}
                   position={"absolute"}
                   w={{ base: 4, sm: 5 }}
@@ -219,7 +221,10 @@ export function WithSubnavigation() {
                 </Flex>
               </MenuButton>
 
-              <MenuList zIndex={10}>
+              <MenuList
+                zIndex={1000}
+                display={check.length > 0 ? "none" : "block"}
+              >
                 <NavbarCart />
               </MenuList>
             </Menu>
@@ -229,7 +234,7 @@ export function WithSubnavigation() {
             <NavLink
               px={0}
               fontWeight={400}
-              variant={"secondary"}
+              variant={"tertiary"}
               href={a.uid ? `/checkout?q=${a.uid}` : "/auth"}
               name={
                 a.uid ? (
@@ -242,14 +247,15 @@ export function WithSubnavigation() {
               }
             />
 
-            <Box
+            <Text
+              backgroundColor={modelA}
+              color={modelB}
               display={a.uid ? "block" : "none"}
               right={{ base: -1, sm: -2 }}
               zIndex={-10}
               top={0}
               border={bordes}
               textAlign={"center"}
-              backgroundColor={"brand.800"}
               borderRadius={"full"}
               position={"absolute"}
               w={{ base: 4, sm: 5 }}
@@ -258,13 +264,13 @@ export function WithSubnavigation() {
               fontSize={{ base: "x-small", sm: "smaller" }}
             >
               {check.length > 0 ? check.length : 0}
-            </Box>
+            </Text>
           </Box>
 
           <Box position={"relative"}>
             <NavLink
               px={0}
-              variant={"secondary"}
+              variant={"tertiary"}
               href={a.uid ? "/cart" : "/auth/create"}
               name={
                 a.uid ? (
@@ -276,14 +282,15 @@ export function WithSubnavigation() {
                 )
               }
             />
-            <Box
+            <Text
+              backgroundColor={modelA}
+              color={modelB}
               display={a.uid ? "block" : "none"}
               right={{ base: -1, sm: -3 }}
               zIndex={-10}
               top={0}
               border={bordes}
               textAlign={"center"}
-              backgroundColor={"brand.800"}
               borderRadius={"full"}
               position={"absolute"}
               w={{ base: 4, sm: 5 }}
@@ -292,7 +299,7 @@ export function WithSubnavigation() {
               fontSize={{ base: "x-small", sm: "smaller" }}
             >
               {!saveCartSelect[0] ? 0 : saveCartSelect.length}
-            </Box>
+            </Text>
           </Box>
 
           <Flex alignItems={"center"} display={displayOff2}>

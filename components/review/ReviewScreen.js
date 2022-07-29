@@ -113,6 +113,7 @@ export const ReviewScreen = ({
         )
       );
       back();
+      Toast(locale === "en" ? en.save : es.save, "success", 5000);
     } else {
       // add review
       dispatch(
@@ -128,6 +129,8 @@ export const ReviewScreen = ({
             rat: rat[0],
             // comentario
             com,
+            // uid del comprador
+            uid,
           },
           {
             rat: {
@@ -145,8 +148,9 @@ export const ReviewScreen = ({
       );
 
       back();
+      Toast(locale === "en" ? en.save : es.save, "success", 5000);
     }
-    Toast(locale === "en" ? en.save : es.save, "success", 5000);
+    
   };
 
   return (

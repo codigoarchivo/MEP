@@ -75,11 +75,7 @@ export const Footer = () => {
                 priority={true}
               />
             </Box>
-            <Text
-              fontSize={"sm"}
-              color={"brand.900"}
-              textTransform={"capitalize"}
-            >
+            <Text fontSize={"sm"} textTransform={"capitalize"}>
               © {new Date().getFullYear()}{" "}
               {locale === "en" ? en.footer.fA : es.footer.fA}
             </Text>
@@ -91,13 +87,7 @@ export const Footer = () => {
                   rel="noreferrer"
                   isExternal
                 >
-                  <Button
-                    color={"brand.900"}
-                    as={"span"}
-                    size="xs"
-                    px={0}
-                    variant={"secondary"}
-                  >
+                  <Button as={"span"} size="xs" px={0} variant={"secondary"}>
                     <FacebookIcon boxSize={points11} />
                   </Button>
                 </Link>
@@ -109,13 +99,7 @@ export const Footer = () => {
                   rel="noreferrer"
                   isExternal
                 >
-                  <Button
-                    color={"brand.900"}
-                    as={"span"}
-                    size="xs"
-                    px={0}
-                    variant={"secondary"}
-                  >
+                  <Button as={"span"} size="xs" px={0} variant={"secondary"}>
                     <InstagramIcon boxSize={points11} />
                   </Button>
                 </Link>
@@ -127,13 +111,7 @@ export const Footer = () => {
                   rel="noreferrer"
                   isExternal
                 >
-                  <Button
-                    color={"brand.900"}
-                    as={"span"}
-                    size="xs"
-                    px={0}
-                    variant={"secondary"}
-                  >
+                  <Button as={"span"} size="xs" px={0} variant={"secondary"}>
                     <TwitterIcon boxSize={points11} />
                   </Button>
                 </Link>
@@ -150,22 +128,14 @@ export const Footer = () => {
           >
             <List px={points14} py={5} w="full" spacing={1}>
               <VStack spacing={5}>
-                <Heading
-                  w="full"
-                  color={"brand.900"}
-                  size={"sm"}
-                  textTransform={"uppercase"}
-                >
+                <Heading w="full" size={"sm"} textTransform={"uppercase"}>
                   {locale === "en" ? en.footer.fB : es.footer.fB}
                 </Heading>
                 <ListItem w="full">
-                  <Text color={"brand.900"}>Tel +1 9735108452</Text>
+                  <Text>Tel +1 9735108452</Text>
                 </ListItem>
                 <ListItem w="full">
-                  <Text color={"brand.900"}>
-                    {" "}
-                    {locale === "en" ? en.footer.fC : es.footer.fC}
-                  </Text>
+                  <Text> {locale === "en" ? en.footer.fC : es.footer.fC}</Text>
                 </ListItem>
               </VStack>
             </List>
@@ -173,7 +143,6 @@ export const Footer = () => {
               {dataRoute.map(({ icon, ref, as, nam, rol }, key) => (
                 <ListItem key={key} display={rol && rol}>
                   <NavLink
-                    color={"brand.900"}
                     display={"inline"}
                     leftIcon={icon}
                     fontWeight={"normal"}

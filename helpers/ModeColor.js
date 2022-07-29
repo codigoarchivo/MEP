@@ -9,6 +9,8 @@ export const ModeColor = () => {
   const bg3 = useColorModeValue("white", "gray.800");
   const bg4 = useColorModeValue("yellow.100", "brand.600");
   const bg5 = useColorModeValue("gray.50", "gray.900");
+  const modelA = useColorModeValue("brand.900", "brand.800");
+  const modelB = useColorModeValue("brand.800", "brand.900");
 
   const brand = { borderColor: "brand.800" };
 
@@ -22,5 +24,7 @@ export const ModeColor = () => {
     bgTextError,
     bgText,
     brand,
+    modelA,
+    modelB,
   };
 };
