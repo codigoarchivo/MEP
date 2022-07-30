@@ -32,7 +32,6 @@ export const GridItemForm = ({
           {name}
         </FormLabel>
         <Input
-          size={useBreakpoint() === "base" ? "sx" : "md"}
           isReadOnly={isReadOnly}
           maxLength={maxlength}
           name={na}

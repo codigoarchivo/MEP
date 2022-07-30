@@ -10,18 +10,18 @@ import { onAuthStateChanged } from "firebase/auth";
 
 import { login } from "../../actions/auth";
 
-import { chakra } from "@chakra-ui/react";
-
 import { WithSubnavigation } from "./nav/WithSubnavigation";
 
 import { Footer } from "./foo/Footer";
 
 const dA = process.env.NEXT_PUBLIC_ROL_A;
+
 const ShopLayout = ({ children, title }) => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user?.uid) {
+      if (!!user?.uid) {
         dispatch(
           login(
             user.uid,
@@ -37,22 +37,35 @@ const ShopLayout = ({ children, title }) => {
     return () => unsubscribe();
   }, [dispatch]);
 
+  const origin =
+    (typeof window !== "undefined" && window.location.origin) || "";
+
   return (
     <>
       <Head>
         <title>{title || "Market | Edgars Pendulum"}</title>
+        <meta name="author" content="Edgar Marcano" />
+        <meta name="description" content={`energy for you brand ${title}`} />
+        <meta name="keywords" content={`${title}, energy for you brand`} />
+
+        <meta property="og:title" content={`energy for you brand ${title}`} />
+        <meta
+          property="og:description"
+          content={`energy for you brand ${title}`}
+        />
+        <meta property="og:image" content={`${origin}/img/logo.png`} />
       </Head>
 
       {/* <AuthChange /> */}
-      <chakra.header>
+      <header>
         <WithSubnavigation />
-      </chakra.header>
+      </header>
 
-      <chakra.main>{children}</chakra.main>
+      <main>{children}</main>
 
-      <chakra.footer w={"full"}>
+      <footer w={"full"}>
         <Footer />
-      </chakra.footer>
+      </footer>
     </>
   );
 };

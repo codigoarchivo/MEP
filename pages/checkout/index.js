@@ -126,8 +126,8 @@ const Checkout = ({ product = [] }) => {
 
   return (
     <ShopLayout title={locale === "en" ? en.historyBuy.sL : es.historyBuy.sL}>
-      <Container maxW={"container.lg"}>
-        <Stack flexDirection={"column"} my={{ base: 10, md: 20 }} w={full}>
+      <Container maxW={"container.lg"} px={{ base: 2, md: 4 }}>
+        <Stack flexDirection={"column"} my={{ base: 0, md: 20 }} w={full}>
           <Heading
             overflowY={"hidden"}
             w={full}
@@ -139,7 +139,7 @@ const Checkout = ({ product = [] }) => {
           >
             {locale === "en" ? en.historyBuy.sD : es.historyBuy.sD}
           </Heading>
-          <VStack w={full} p={{ base: 2, md: 5 }} border={bordes}>
+          <VStack w={full} p={{ base: 0, md: 5 }} border={bordes}>
             <Heading
               w={full}
               size={"md"}
@@ -176,7 +176,7 @@ const Checkout = ({ product = [] }) => {
                 as={"form"}
                 onSubmit={handleRevert}
                 w={"full"}
-                py={5}
+                p={{ base: 2, md: 5 }}
                 flexDirection={content3}
                 alignItems={"center"}
                 justifyContent={"space-between"}

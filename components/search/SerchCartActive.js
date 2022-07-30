@@ -8,7 +8,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { DeleteIcon } from "@chakra-ui/icons";
 
-import { Flex, Heading, HStack, Td, Text, Tr, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  HStack,
+  Td,
+  Text,
+  Tr,
+  VStack,
+} from "@chakra-ui/react";
 
 import { Toast } from "../../helpers/Toast";
 
@@ -42,16 +51,16 @@ export const SerchCartActive = ({ item, inc, locale, en, es }) => {
     <Tr>
       <Td>
         <HStack>
-          <Flex position={"relative"} display={displayOff2}>
+          <Box w={155} h={155} position={"relative"}>
             <Image
               src={item.im || "https://via.placeholder.com/155.png?text=Imagen"}
               alt={locale === "en" ? item.na.en : item.na.es}
-              width={155}
-              height={155}
+              layout="fill"
               objectFit="cover"
               objectPosition="center"
+              quality={100}
             />
-          </Flex>
+          </Box>
           <VStack spacing={1}>
             <HStack w={full}>
               <Heading as="h3" size="sm">

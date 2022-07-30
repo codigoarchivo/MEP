@@ -82,8 +82,8 @@ const Informacion = ({ user = {} }) => {
   const { locale, back, push } = useRouter();
 
   return (
-    <ShopLayout title={locale === "en" ? en.personal : es.personal}>
-      <Container maxW="lg">
+    <ShopLayout title={locale === "en" ? en.user.uF : es.user.uF}>
+      <Container maxW="lg" px={{ base: 2, md: 4 }}>
         <UserScreen
           user={{ ...user }}
           locale={locale}

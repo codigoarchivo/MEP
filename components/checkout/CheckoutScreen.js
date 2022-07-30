@@ -112,6 +112,7 @@ export const CheckoutScreen = ({
         justifyContent={"space-between"}
         borderBottom={bordes}
         p={2}
+        spacing={6}
       >
         <Button
           variant={"primary"}

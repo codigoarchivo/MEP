@@ -13,14 +13,6 @@ import { db } from "../firebase/config";
 export const dbProducts = async (i = "", dbP = "", val1, val2) => {
   let q = "";
   switch (dbP) {
-    case "dbProFive":
-      q = query(
-        collection(db, "serchs"),
-        where("na", "==", i),
-        where("ct", "==", i),
-        limit(25)
-      );
-      break;
     case "dbProSix":
       q = query(
         collection(db, "serchs"),

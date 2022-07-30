@@ -25,7 +25,6 @@ import {
   Center,
   Container,
   Heading,
-  HStack,
   Table,
   TableCaption,
   TableContainer,
@@ -36,6 +35,8 @@ import {
   Tr,
   chakra,
   Input,
+  Stack,
+  useBreakpoint,
 } from "@chakra-ui/react";
 
 import { ProductScrenn } from "../../components/product/ProductScreen";
@@ -155,8 +156,8 @@ const List = ({ product = [] }) => {
 
   return (
     <ShopLayout title={locale === "en" ? en.major.mG : es.major.mG}>
-      <Container maxW={"container.lg"} my={10}>
-        <Box p={5}>
+      <Container maxW={"container.lg"} px={{ base: 2, md: 4 }} my={10}>
+        <Box p={{ base: 0, md: 5 }}>
           {!list[0] && (
             <Center border={bordes} py={30}>
               <Heading size={"sm"} textTransform={"uppercase"}>
@@ -164,7 +165,11 @@ const List = ({ product = [] }) => {
               </Heading>
             </Center>
           )}
-          <HStack justifyContent={"space-between"}>
+          <Stack
+            flexDirection={{ base: "column-reverse", md: "row" }}
+            justifyContent={{ base: "center", md: "space-between" }}
+            alignItems={"center"}
+          >
             <Text
               py={5}
               display={a.rol === "owner" || a.rol === "user" ? "block" : "none"}
@@ -173,13 +178,15 @@ const List = ({ product = [] }) => {
                 textTransform={"capitalize"}
                 onClick={handleClient}
                 variant={"primary"}
+                size={useBreakpoint()}
+                p={2}
               >
                 {locale === "en" ? en.product.pB : es.product.pB}
               </Button>{" "}
               - {locale === "en" ? en.product.pC : es.product.pC}
             </Text>
             <chakra.form
-              w={"15%"}
+              w={{ base: "100%", sm: "50%", md: "15%" }}
               onSubmit={handleSerchProduct}
               display={a.rol === "owner" ? "block" : "none"}
             >
@@ -191,7 +198,7 @@ const List = ({ product = [] }) => {
                 onChange={handleInputChange}
               />
             </chakra.form>
-          </HStack>
+          </Stack>
 
           <TableContainer w={"full"} border={bordes}>
             <Table colorScheme="brand">

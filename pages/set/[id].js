@@ -83,7 +83,6 @@ export async function getStaticProps({ params }) {
   }
 }
 
-
 const ConfigDashboard = ({ product = {} }) => {
   // router
   const { push, locale, query, back } = useRouter();
@@ -96,7 +95,11 @@ const ConfigDashboard = ({ product = {} }) => {
 
   return (
     <ShopLayout title={query.set}>
-      <Container maxW={"container.sm"} py={10}>
+      <Container
+        maxW={"container.sm"}
+        px={{ base: 2, md: 4 }}
+        py={{ base: 0, md: 10 }}
+      >
         <ProductData
           product={product}
           word={query.set}

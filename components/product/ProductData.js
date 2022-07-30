@@ -206,11 +206,17 @@ export const ProductData = ({
   };
 
   // mode Color
-  const { modelC } = ModeColor();
+  const { modelC, modelF } = ModeColor();
 
   return (
     <>
-      <VStack spacing={5} w={"full"} border={bordes} p={6} boxShadow={"xl"}>
+      <VStack
+        spacing={5}
+        w={"full"}
+        border={bordes}
+        p={{ base: 3, md: 6 }}
+        boxShadow={"xl"}
+      >
         <Stack
           flexDirection={"row"}
           w={"full"}
@@ -235,15 +241,15 @@ export const ProductData = ({
 
           <HStack>
             <Button
-              color={change === false ? "brand.700" : "brand.900"}
-              variant={"secondary"}
+              color={change === false ? "brand.700" : modelF}
+              variant={"tertiary"}
               onClick={enRes}
             >
               en
             </Button>
             <Button
-              color={change === true ? "brand.700" : "brand.900"}
-              variant={"secondary"}
+              color={change === true ? "brand.700" : modelF}
+              variant={"tertiary"}
               onClick={esRes}
             >
               es

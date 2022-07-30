@@ -19,6 +19,8 @@ import { Breakpoints } from "../helpers/Breakpoints";
 
 import { CategoryAll } from "../helpers/IconNew";
 
+import { ModeColor } from "../helpers/ModeColor";
+
 import { en } from "../translations/en";
 import { es } from "../translations/es";
 
@@ -30,10 +32,11 @@ export const MenuCategoria = () => {
   // selector
   const { listData = [] } = useSelector(({ listca }) => listca);
 
-  if(!listData[0]) {
-    push("/")
+  if (!listData[0]) {
+    push("/");
   }
-  
+
+  const { modelE } = ModeColor();
   return (
     <Menu>
       <MenuButton
@@ -47,7 +50,12 @@ export const MenuCategoria = () => {
         {locale === "en" ? en.categories : es.categories}
       </MenuButton>
       <Portal>
-        <MenuList display={displayOff2} minWidth={0} border={bordes}>
+        <MenuList
+          bg={modelE}
+          display={displayOff2}
+          minWidth={0}
+          border={bordes}
+        >
           {listData.map(({ na, id }) => (
             <MenuItem key={id}>
               <NavLink

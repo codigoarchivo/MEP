@@ -162,6 +162,11 @@ export const messagesList = (data) => ({
   payload: data,
 });
 
+export const messagesAccumulate = (data) => ({
+  type: types.accumulateMessage,
+  payload: data,
+});
+
 const messageEdit = (data) => ({
   type: types.cheListMessageEdit,
   payload: data,

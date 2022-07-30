@@ -53,7 +53,7 @@ export const Footer = () => {
   const { dataRoute } = ListRoute();
 
   return (
-    <Container maxW={"full"} px={{ base: 0, sm: 4 }} mt={20} pb={4}>
+    <Container maxW={"full"} px={{ base: 1, sm: 4 }} mt={20} pb={4}>
       <Grid
         templateColumns={repeat2}
         columnGap={points3}

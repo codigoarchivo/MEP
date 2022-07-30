@@ -104,7 +104,8 @@ export const SerchCartSave = ({
                 }
                 alt={locale === "en" ? item.na.en : item.na.es}
                 layout="fill"
-                objectFit="contain"
+                objectFit="cover"
+                objectPosition="center"
                 quality={100}
               />
             </Box>

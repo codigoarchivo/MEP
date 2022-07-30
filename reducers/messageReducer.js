@@ -12,6 +12,11 @@ export const messageReducer = (state = initialStates, action) => {
         ...state,
         message: [...action.payload],
       };
+    case types.accumulateMessage:
+      return {
+        ...state,
+        message: [...state.message, ...action.payload],
+      };
     case types.cheListMessageEdit:
       return {
         ...state,

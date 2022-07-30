@@ -164,6 +164,7 @@ export function WithSubnavigation() {
                 px={0}
                 fontWeight={400}
                 variant={"secodary"}
+                color={modelC}
                 onClick={() =>
                   check.length > 0 &&
                   (Toast(locale === "en" ? en.you : es.you, "info", 5000),
@@ -245,8 +246,8 @@ export function WithSubnavigation() {
 
           <Box position={"relative"}>
             <NavLink
+              fontSize={{ base: "xs", md: "1rem" }}
               px={0}
-              fontWeight={400}
               variant={"tertiary"}
               href={a.uid ? `/checkout?q=${a.uid}` : "/auth"}
               name={
@@ -283,6 +284,7 @@ export function WithSubnavigation() {
           <Box position={"relative"}>
             <NavLink
               px={0}
+              fontSize={{ base: "xs", md: "1rem" }}
               variant={"tertiary"}
               href={a.uid ? "/cart" : "/auth/create"}
               name={

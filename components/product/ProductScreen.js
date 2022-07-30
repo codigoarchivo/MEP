@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
 import {
+  Box,
   Flex,
   Heading,
   HStack,
@@ -74,16 +75,16 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, im, pr, pj, ps }) => {
       <Tr>
         <Td>
           <HStack>
-            <Flex position={"relative"}>
+            <Box w={155} h={155} position={"relative"}>
               <Image
                 src={im || "https://via.placeholder.com/155.png?text=Imagen"}
                 alt={locale === "en" ? na.en : na.es}
-                width={155}
-                height={155}
+                layout="fill"
                 objectFit="cover"
                 objectPosition="center"
+                quality={100}
               />
-            </Flex>
+            </Box>
 
             <VStack spacing={1}>
               <HStack w={full}>

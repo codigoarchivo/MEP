@@ -51,7 +51,7 @@ export const ReviewScreen = ({
   // dispatch
   const dispatch = useDispatch();
   // mode Color
-  const { bg, modelC } = ModeColor();
+  const { bg } = ModeColor();
   // Breakpoints
   const { full, bordes, points26 } = Breakpoints();
 
@@ -153,8 +153,13 @@ export const ReviewScreen = ({
   };
 
   return (
-    <HStack my={20}>
-      <chakra.form onSubmit={handleSubmit} w={full} border={bordes} p={5}>
+    <HStack my={{ base: 0, md: 20 }}>
+      <chakra.form
+        onSubmit={handleSubmit}
+        w={full}
+        border={bordes}
+        p={{ base: 2, md: 5 }}
+      >
         <VStack spacing={10}>
           <Heading
             w={full}

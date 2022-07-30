@@ -92,7 +92,7 @@ const Sale = ({ data }) => {
 
   return (
     <ShopLayout title={locale === "en" ? en.historySale.sB : es.historySale.sB}>
-      <Container maxW={"container.lg"}>
+      <Container maxW={"container.lg"} px={{ base: 2, md: 4 }}>
         <Stack flexDirection={"column"} my={{ base: 10, md: 20 }} w={full}>
           <Heading w={full} as="h2" size="lg" fontWeight="semibold">
             {locale === "en" ? en.historySale.sA : es.historySale.sA}

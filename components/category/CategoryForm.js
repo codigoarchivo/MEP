@@ -27,8 +27,8 @@ export const CategoryForm = ({
   const { modelC } = ModeColor();
   return (
     <>
-      <chakra.form onSubmit={handleSubmit} w="full" p={3}>
-        <VStack spacing={7} mb={10}>
+      <chakra.form onSubmit={handleSubmit} w="full" p={{ base: 2, md: 3 }}>
+        <VStack spacing={7}>
           <FormControl>
             <FormLabel color={modelC} htmlFor={change === true ? "en" : "es"}>
               {change === false ? en.name : es.name}

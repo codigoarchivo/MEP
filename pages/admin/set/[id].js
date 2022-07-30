@@ -84,7 +84,7 @@ const ConfigCategory = ({ category }) => {
   const { locale, back, query } = useRouter();
   return (
     <ShopLayout title={locale === "en" ? en.major.mF : es.major.mF}>
-      <Container maxW={"container.sm"} py={20}>
+      <Container maxW={"container.sm"} px={{ base: 2, md: 4 }} py={{ base: 0, md: 20 }}>
         <CategoryData
           category={category}
           pid={query.pid}

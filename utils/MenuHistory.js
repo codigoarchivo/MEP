@@ -16,12 +16,15 @@ import {
 import { NavLink } from "./Navlink";
 
 import { Breakpoints } from "../helpers/Breakpoints";
+import { ModeColor } from "../helpers/ModeColor";
 
 export const MenuHistory = ({ color, buys, sales, history }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // Breakpoints
   const { displayOff2, bordes } = Breakpoints();
+
+  const { modelE } = ModeColor();
   return (
     <Menu>
       <MenuButton
@@ -34,7 +37,13 @@ export const MenuHistory = ({ color, buys, sales, history }) => {
         {history}
       </MenuButton>
       <Portal>
-        <MenuList zIndex={"1000"} display={displayOff2} minWidth={0} border={bordes}>
+        <MenuList
+          bg={modelE}
+          zIndex={"1000"}
+          display={displayOff2}
+          minWidth={0}
+          border={bordes}
+        >
           <MenuItem>
             <NavLink
               href={a.uid ? `/purchases/[uid]` : "/"}

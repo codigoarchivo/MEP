@@ -18,7 +18,7 @@ const Create = () => {
   const { calc } = Breakpoints();
 
   return (
-    <Container maxW={"container.sm"}>
+    <Container maxW={"container.sm"} px={{ base: 2, md: 4 }}>
       <Flex
         h={calc}
         alignItems={["top", "center"]}

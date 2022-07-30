@@ -80,16 +80,16 @@ const BuyData = ({ product = [] }) => {
       dispatch(cheListAllBuy(product));
     }
   }, [dispatch, product]);
-  
+
   return (
     <ShopLayout title={"buys"}>
-      <Container maxW={"container.lg"}>
-        <Stack flexDirection={"row"} my={20} w={full}>
+      <Container maxW={"container.lg"} px={{ base: 2, md: 4 }}>
+        <Stack flexDirection={"row"} my={{ base: 0, md: 20 }} w={full}>
           <VStack w={full} spacing={5}>
             <Heading w={full} as="h2" size="lg" fontWeight="semibold">
               {locale === "en" ? en.historyBuy.sA : es.historyBuy.sA}
             </Heading>
-            <VStack w={full} p={{ base: 1, md: 5 }} border={bordes}>
+            <VStack w={full} p={{ base: 2, md: 5 }} border={bordes}>
               <Heading
                 w={full}
                 size={"md"}

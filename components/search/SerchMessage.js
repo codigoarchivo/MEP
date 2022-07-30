@@ -1,5 +1,9 @@
 import React from "react";
 
+import { collection, getDocs } from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import PropTypes from "prop-types";
 
 import { DragHandleIcon } from "@chakra-ui/icons";
@@ -30,6 +34,7 @@ import {
 } from "@chakra-ui/react";
 
 import { Breakpoints } from "../../helpers/Breakpoints";
+
 import { messagesCant } from "../../actions/checkout";
 
 export const SerchMessage = (item) => {
@@ -42,10 +47,14 @@ export const SerchMessage = (item) => {
   // Breakpoints
   const { bordes } = Breakpoints();
 
-  const handleReview = () => {
+  const handleReview = async () => {
     let el = [];
+    
+    const { docs } = await getDocs(
+      collection(db, "serchs", item.id, "messages")
+    );
 
-    item.message.map((i) => {
+    docs.map((i) => {
       if (String(i.id) !== item.id) {
         el.push(i.rat);
       }

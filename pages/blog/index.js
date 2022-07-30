@@ -29,7 +29,7 @@ export async function getStaticProps() {
         },
       };
     }
-console.log(product);
+
     return {
       props: {
         product: product.size.toString(),
@@ -49,7 +49,7 @@ console.log(product);
 const Blog = (data) => {
   return (
     <ShopLayout title={"Blog"}>
-      <Container maxW={"container.xs"}>
+      <Container maxW={"container.xs"} px={{ base: 2, md: 4 }}>
         <BlogScreen {...data} />
       </Container>
     </ShopLayout>

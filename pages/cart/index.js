@@ -24,7 +24,11 @@ const Cart = () => {
   const { locale } = useRouter();
   return (
     <ShopLayout title={locale === "en" ? en.cart.cA : es.cart.cA}>
-      <Container maxW="container.xl" py={{ base: 0, lg: 10 }}>
+      <Container
+        maxW="container.xl"
+        px={{ base: 2, md: 4 }}
+        py={{ base: 0, lg: 10 }}
+      >
         <SerchCart active={activeCartSelect} save={saveCartSelect} />
       </Container>
     </ShopLayout>

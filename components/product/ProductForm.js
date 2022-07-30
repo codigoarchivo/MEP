@@ -72,7 +72,7 @@ export const ProductForm = ({
       </HStack>
       <chakra.form onSubmit={handleSubmit} w={"full"}>
         <Grid
-          templateRows={`repeat(5, 1fr)`}
+          templateRows={{ base: "none", md: "repeat(5, 1fr)" }}
           templateColumns={repeat1}
           alignItems={"center"}
           columnGap={points3}

@@ -5,6 +5,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  limit,
   orderBy,
   query,
 } from "firebase/firestore";
@@ -72,7 +73,8 @@ export async function getStaticProps({ params }) {
 
     const q = query(
       collection(db, "serchs", id, "messages"),
-      orderBy("cre", "desc")
+      orderBy("cre", "desc"),
+      limit(5)
     );
 
     const { docs } = await getDocs(q);
@@ -117,7 +119,11 @@ const Details = ({ product = {}, msg = [] }) => {
 
   return (
     <ShopLayout title={locale === "en" ? en.details : es.details}>
-      <Container maxW="container.lg" py={{ base: 0, md: 10 }}>
+      <Container
+        maxW="container.lg"
+        px={{ base: 2, md: 4 }}
+        py={{ base: 0, md: 10 }}
+      >
         <SerchDetails
           message={message}
           msg={msg}

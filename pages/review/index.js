@@ -57,7 +57,7 @@ const Review = ({ msg }) => {
 
   return (
     <ShopLayout title={locale === "en" ? en.review.rC : es.review.rC}>
-      <Container maxW={"container.sm"}>
+      <Container maxW={"container.sm"} px={{ base: 2, md: 4 }}>
         <ReviewScreen
           calculo={cant}
           message={msg}

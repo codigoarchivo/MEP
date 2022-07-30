@@ -50,12 +50,12 @@ export const SalemodalReciewe = ({
       <Modal onClose={onClose} size={"xl"} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
-          <ModalBody>
+          <ModalBody p={{ base: 3, sm: 5 }}>
             <VStack
               h={"min-content"}
               w={"full"}
               spacing={5}
-              p={{ base: 3, sm: 5 }}
+              p={{ base: 0, sm: 5 }}
             >
               <Heading
                 textTransform={"uppercase"}

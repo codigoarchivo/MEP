@@ -120,16 +120,11 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
     dispatch(esActive());
   };
 
-  const { modelC } = ModeColor();
+  const { modelC, modelF } = ModeColor();
 
   return (
     <>
-      <VStack
-        spacing={5}
-        w={"full"}
-        border={bordes}
-        p={3}
-      >
+      <VStack spacing={5} w={"full"} border={bordes} p={{ base: 0, md: 3 }}>
         <Stack
           flexDirection={"row"}
           w={"full"}
@@ -154,15 +149,15 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
 
           <HStack>
             <Button
-              color={change === false ? "brand.700" : "brand.900"}
-              variant={"secondary"}
+              color={change === false ? "brand.700" : modelF}
+              variant={"tertiary"}
               onClick={enRes}
             >
               en
             </Button>
             <Button
-              color={change === true ? "brand.700" : "brand.900"}
-              variant={"secondary"}
+              color={change === true ? "brand.700" : modelF}
+              variant={"tertiary"}
               onClick={esRes}
             >
               es

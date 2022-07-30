@@ -48,6 +48,7 @@ export const types = {
   cheListAllHistoryEdit: "[HISTORY] History Edit",
 
   cheListMessage: "[MESSAGE] List",
+  accumulateMessage: "[MESSAGE] Accumulate",
   cheListMessageEdit: "[MESSAGE] Edit",
   cheListMessageClear: "[MESSAGE] Clear",
   cheListMessageCant: "[MESSAGE] Cant",

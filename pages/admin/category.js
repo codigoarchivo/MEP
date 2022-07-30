@@ -112,8 +112,8 @@ const Category = ({ data = [] }) => {
   return (
     <ShopLayout title={locale === "en" ? en.categories : es.categories}>
       {a?.rol === "owner" ? (
-        <Container maxW={"container.sm"} my={10}>
-          <Box p={5}>
+        <Container maxW={"container.sm"} my={10} px={{ base: 2, md: 4 }}>
+          <Box p={{ base: 0, md: 5 }}>
             {!list[0] && (
               <Center border={bordes} py={30}>
                 <Heading size={"sm"} textTransform={"uppercase"}>

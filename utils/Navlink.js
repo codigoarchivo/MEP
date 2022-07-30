@@ -77,5 +77,4 @@ NavLink.propTypes = {
   boxShadow: PropTypes.string,
   rounded: PropTypes.string,
   locale: PropTypes.string,
-  fontSize: PropTypes.string,
 };

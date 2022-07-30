@@ -82,6 +82,8 @@ const Search = ({ product }) => {
   const dispatch = useDispatch();
   // selector
   const { listSerch } = useSelector(({ serch }) => serch);
+  // selector
+  const { listData } = useSelector(({ list }) => list);
   // useRouter
   const { locale, query } = useRouter();
   // data
@@ -100,9 +102,10 @@ const Search = ({ product }) => {
   useMemo(() => {
     const serchProductSelector = async () => {
       let newData = [];
-
       if (!!query.q) {
-        newData = await dbProducts(query.q, "dbProFive");
+        newData = listData.filter(
+          ({ na }) => na.es === query.q || na.en === query.q
+        );
       }
 
       if (!!query.n) {

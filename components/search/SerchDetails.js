@@ -1,5 +1,16 @@
 import React, { useMemo } from "react";
 
+import {
+  collection,
+  limit,
+  onSnapshot,
+  orderBy,
+  query,
+  startAfter,
+} from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import PropTypes from "prop-types";
 
 import { Rating } from "react-simple-star-rating";
@@ -34,6 +45,8 @@ import { activeProductCart } from "../../actions/product";
 
 import { SerchRat } from "../../components/search/SerchRat";
 import { SerchMessage } from "../../components/search/SerchMessage";
+import { ArrowDownIcon } from "@chakra-ui/icons";
+import { messagesAccumulate } from "../../actions/checkout";
 
 export const SerchDetails = ({
   message = [],
@@ -101,6 +114,23 @@ export const SerchDetails = ({
     );
 
     push("/cart");
+  };
+
+  const next = () => {
+    const q = query(
+      collection(db, "serchs", product.id, "messages"),
+      orderBy("cre", "desc"),
+      startAfter(message[message.length - 1].cre),
+      limit(5)
+    );
+
+    onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+      if (data.length !== 0) {
+        dispatch(messagesAccumulate(data));
+      }
+    });
   };
 
   return (
@@ -228,7 +258,7 @@ export const SerchDetails = ({
                     </Stack>
                   </HStack>
                 </Stack>
-                <Box>
+                <Stack>
                   {/* SerchMessage */}
                   {message.map((item) => (
                     <SerchMessage
@@ -238,7 +268,10 @@ export const SerchDetails = ({
                       pid={product.id}
                     />
                   ))}
-                </Box>
+                  <Button variant={"primary"} onClick={next}>
+                    <ArrowDownIcon />
+                  </Button>
+                </Stack>
               </>
             </TabPanel>
           </TabPanels>
