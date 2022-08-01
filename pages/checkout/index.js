@@ -121,7 +121,7 @@ const Checkout = ({ product = [] }) => {
     const err = locale === "en" ? en.error : es.error;
     const u = a.uid;
     dispatch(saveSaleRevert(data, err, u));
-    dispatch(cheListAllClearBu());
+    // dispatch(cheListAllClearBu());
   };
 
   return (

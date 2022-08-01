@@ -95,7 +95,7 @@ export const cheListAllClear = () => ({
 });
 
 export const cheListAllBuy = (data) => ({
-  type: types.cheListAllBu,
+  type: types.productActive,
   payload: data,
 });
 

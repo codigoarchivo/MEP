@@ -187,9 +187,7 @@ export const saveSale = (data = [], del, u) => {
           id: (item.id = id),
         });
 
-        if (list.length > 0) {
-          await dispatch(activeProductList(list));
-        }
+        await dispatch(activeProductList(list));
       });
     } catch (error) {
       Toast(del, "error", 5000);
@@ -197,23 +195,36 @@ export const saveSale = (data = [], del, u) => {
   };
 };
 
+export const activeProductList = (data) => ({
+  type: types.productActive,
+  payload: data,
+});
+
 export const saveSaleRevert = (data, err, u) => {
   return async (dispatch) => {
     try {
       await data.map(async (item) => {
         if (item.process === false) {
-          const cnr = item.cnr + item.cn;
+          const cnr = (await item.cnr) + item.cn;
+
           await dbProductEdit(item.id, "dbProEditOne", cnr);
+
           await deleteDoc(doc(db, "users", u, "buys", item.idP));
+
+          await dispatch(deletecheckout(item.idP));
         }
       });
-
-      await dispatch(closeR());
     } catch (error) {
       Toast(err, "error", 5000);
     }
   };
 };
+
+const deletecheckout = (id) => ({
+  type: types.checkoutDelete,
+  payload: id,
+});
+
 // processReducer
 export const closeR = () => ({
   type: types.productRevert,
@@ -222,11 +233,6 @@ export const closeR = () => ({
 export const deleteProductCart = (id) => ({
   type: types.productDeleteCart,
   payload: id,
-});
-
-export const activeProductList = (data) => ({
-  type: types.productActive,
-  payload: data,
 });
 
 export const closeActive = () => ({

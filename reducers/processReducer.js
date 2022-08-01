@@ -9,7 +9,7 @@ export const processReducer = (state = initialStates, action) => {
     case types.productActive:
       return {
         ...state,
-        activeSelectCheck: action.payload,
+        activeSelectCheck: [...action.payload],
       };
     case types.checkoutDelete:
       return {

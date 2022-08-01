@@ -68,6 +68,7 @@ export const ReviewScreen = ({
     initialStates,
     { ...message, rat: [message.rat] }
   );
+  
   //   valores
   const { rat, com } = values;
 
