@@ -66,12 +66,18 @@ export const Footer = () => {
       >
         <GridItem colSpan={points8} px={5}>
           <VStack spacing={5}>
-            <Box position={"relative"} display={"flex"} alignItems={"center"}>
+            <Box
+              position={"relative"}
+              w={150}
+              h={110}
+              display={"flex"}
+              alignItems={"center"}
+            >
               <Image
                 src={"/img/logo.png"}
                 alt="Picture of the author"
-                width={150}
-                height={110}
+                layout="fill"
+                objectFit="contain"
                 priority={true}
               />
             </Box>

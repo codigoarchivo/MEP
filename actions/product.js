@@ -186,9 +186,11 @@ export const saveSale = (data = [], del, u) => {
           ...item,
           id: (item.id = id),
         });
-      });
 
-      await dispatch(activeProductList(list));
+        if (list.length > 0) {
+          await dispatch(activeProductList(list));
+        }
+      });
     } catch (error) {
       Toast(del, "error", 5000);
     }

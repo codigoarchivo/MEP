@@ -139,7 +139,6 @@ export function WithSubnavigation() {
               alt="Picture of the author"
               width={130}
               height={100}
-              priority={true}
             />
           </Box>
 
@@ -159,18 +158,25 @@ export function WithSubnavigation() {
           ml={{ base: 0, sm: 3 }}
         >
           <Flex alignItems={"center"} display={displayOn2}>
-            <Box position={"relative"}>
+            <Box
+              position={"relative"}
+              onClick={() =>
+                check.length > 0 &&
+                Toast(locale === "en" ? en.you : es.you, "info", 5000)
+              }
+            >
               <NavLink
                 px={0}
                 fontWeight={400}
                 variant={"secodary"}
                 color={modelC}
-                onClick={() =>
-                  check.length > 0 &&
-                  (Toast(locale === "en" ? en.you : es.you, "info", 5000),
-                  push("/"))
+                href={
+                  pathname !== "/cart"
+                    ? check.length > 0
+                      ? "/search"
+                      : "/cart"
+                    : "/search"
                 }
-                href={pathname !== "/cart" ? "/cart" : "/search"}
                 name={
                   pathname !== "/cart" ? (
                     <CartIcon boxSize={{ base: 6, sm: 7 }} />

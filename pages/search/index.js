@@ -124,7 +124,7 @@ const Search = ({ product }) => {
       setDataAll(newData);
     };
     serchProductSelector();
-  }, [query]);
+  }, [query, listData]);
 
   return (
     <ShopLayout title={locale === "en" ? en.search.sI : es.search.sI}>

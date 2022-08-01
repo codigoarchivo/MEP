@@ -37,13 +37,12 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
   // use Carousel
   const variant = useBreakpointValue({ base: 1, sm: 2, md: 2, lg: 3, xl: 4 });
 
+  const valImgW = useBreakpointValue({ base: 250, md: 400, lg: 500 });
+  const valImgH = useBreakpointValue({ base: 300, md: 450, lg: 600 });
+
   const { modelE } = ModeColor();
   return (
-    <Container
-      maxW={"container.xs"}
-      p={{ base: 1, sm: 4 }}
-      py={{ base: 10, sm: 20, md: 0 }}
-    >
+    <Container maxW={"container.xs"} px={{ base: 1, sm: 4 }}>
       <Stack
         flexDirection={content5}
         justifyContent={"center"}
@@ -56,6 +55,7 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
           p={5}
           boxShadow={"lg"}
           backgroundColor={modelE}
+          mb={{ base: 5, md: 0 }}
         >
           <Heading w={"full"} fontSize={points25} wordBreak={"break-word"}>
             {locale === "en" ? en.home.hA : es.home.hA}
@@ -64,20 +64,14 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
             {locale === "en" ? en.home.hB : es.home.hB}
           </Text>
         </VStack>
-        <Box
-          w={{ base: 300, md: 400, lg: 500 }}
-          h={{ base: 300, md: 400, lg: 500 }}
-          position={"relative"}
-          alignSelf={"self-end"}
-        >
-          <Image
-            src={"/img/primary.png"}
-            alt="Picture of the author"
-            layout="fill"
-            objectFit="contain"
-            priority={true}
-          />
-        </Box>
+        <Image
+          src={"/img/primary.png"}
+          alt="Picture of the author"
+          layout="fixed"
+          width={valImgW}
+          height={valImgH}
+          priority={true}
+        />
       </Stack>
       <Stack
         p={5}

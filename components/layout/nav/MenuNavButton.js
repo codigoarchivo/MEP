@@ -16,6 +16,7 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  Stack,
   useColorMode,
 } from "@chakra-ui/react";
 
@@ -43,24 +44,21 @@ export const MenuNavButton = () => {
         cursor={"pointer"}
         minW={0}
       >
-        <Box>
-          <Avatar
-            loading={"eager" | "lazy"}
-            size={"sm"}
-            name={a?.displayName}
-            src={`${a?.photoURL}`}
-          >
-            {a.uid ? (
+        <Stack direction="row" spacing={4}>
+          {a.uid ? (
+            <Avatar size={"sm"} name={a?.displayName} src={`${a?.photoURL}`}>
               <AvatarBadge boxSize="1.25em" bg="green.500" />
-            ) : (
+            </Avatar>
+          ) : (
+            <Avatar size={"sm"}>
               <AvatarBadge
                 borderColor="papayawhip"
                 bg="tomato"
                 boxSize="1.25em"
               />
-            )}
-          </Avatar>
-        </Box>
+            </Avatar>
+          )}
+        </Stack>
       </MenuButton>
       <MenuList zIndex={10} bg={modelE}>
         <MenuItem as={"div"}>

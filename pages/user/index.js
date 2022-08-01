@@ -70,7 +70,11 @@ const User = () => {
 
   return (
     <ShopLayout title={locale === "en" ? en.user.uA : es.user.uA}>
-      <Container maxW={"container.lg"} py={{ base: 0, md: 20 }}>
+      <Container
+        maxW={"container.lg"}
+        px={{ base: 2, md: 4 }}
+        py={{ base: 0, md: 20 }}
+      >
         <VStack mb={{ base: 5, md: 10 }}>
           <Heading textTransform={"capitalize"} size={"lg"} textAlign="center">
             {locale === "en" ? en.user.uA : es.user.uA}
@@ -90,17 +94,12 @@ const User = () => {
           spacing={0}
         >
           <VStack spacing={12} h={"full"} mb={{ base: 5, md: 0 }} w={porcent4}>
-            <Box p={{ base: 0, md: 5 }} rounded={5}>
-              <Avatar
-                size="2xl"
-                name={displayName}
-                src={
-                  photoURL ||
-                  `https://via.placeholder.com/90.png?text=${
-                    locale === "en" ? en.picture : es.picture
-                  }`
-                }
-              />
+            <Box p={{ base: 0, md: 5 }}>
+              {displayName !== undefined || photoURL !== undefined ? (
+                <Avatar size="2xl" name={displayName} src={photoURL} />
+              ) : (
+                <Avatar size="2xl" />
+              )}
             </Box>
             <VStack>
               <Heading size={"md"}>

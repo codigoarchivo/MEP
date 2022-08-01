@@ -80,13 +80,11 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
       return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     } else {
       dispatch(startLoginEmailPassword(email, password, err));
-      push("/");
     }
   };
   // handleGooglelogin
   const handleGooglelogin = () => {
     dispatch(startGoogleLogin(err));
-    push("/");
   };
 
   const { bordes } = Breakpoints();
