@@ -131,6 +131,7 @@ export const CheckVerify = ({
     });
   };
 
+  const point = useBreakpointValue({ base: 2, lg: 1 });
   return (
     <>
       <Text py={5} overflowX={"hidden"}>
@@ -307,7 +308,7 @@ export const CheckVerify = ({
             <GridItemForm
               key={key}
               mb={3}
-              points={useBreakpointValue({ base: 2, lg: 1 })}
+              points={point}
               na={na}
               name={nombre}
               val={Valor}
