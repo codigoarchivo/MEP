@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { QuestionOutlineIcon } from "@chakra-ui/icons";
 
-import { addDays } from "date-fns";
+import { addDays, getUnixTime } from "date-fns";
 
 import {
   Box,
@@ -60,7 +60,7 @@ export const SerchCartModal = ({
       active.map((item) => ({
         process: false,
         close: false,
-        lim: addDays(Date.now(), 3),
+        lim: getUnixTime(addDays(new Date(), 3)),
         product: {
           // id del producto
           id: item.id,

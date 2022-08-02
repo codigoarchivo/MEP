@@ -37,7 +37,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import { Calculate } from "../../helpers/Calculate";
 import { Breakpoints } from "../../helpers/Breakpoints";
 import { CartIcon } from "../../helpers/IconNew";
 
@@ -85,12 +84,6 @@ export const SerchDetails = ({
   const dec = getDecrementButtonProps();
   // input
   const input = getInputProps({ isReadOnly: true });
-
-  // Calculate product price individual y global
-  const { global, globalRanking, globalPorcentaje } = useMemo(
-    () => Calculate(message.map((item) => ({ rat: item.rat || 0 }))),
-    [message]
-  );
 
   const cn = Number(input.value);
   product.cnr = product.cn - cn;
@@ -168,12 +161,12 @@ export const SerchDetails = ({
           </Heading>
           <HStack w={full}>
             <Text fontSize={"xl"} fontWeight={"bold"}>
-              {globalRanking || "0.0"}
+              {product?.rat?.nam || "0.0"}
             </Text>{" "}
             <Box p={0.5}>
               <Rating
                 size={25}
-                ratingValue={globalPorcentaje || 0}
+                ratingValue={product?.rat?.est || 0}
                 readonly={true}
               />
             </Box>
@@ -245,14 +238,14 @@ export const SerchDetails = ({
                 <Stack mb={10} border={bordes}>
                   <HStack p={{ base: 1, md: 5 }} w={full}>
                     <Box p={{ base: 0, md: 5 }} textAlign={"center"}>
-                      <Heading>{globalRanking || "0.0"}</Heading>
+                      <Heading>{product?.rat?.nam || "0.0"}</Heading>
                       <Text>
                         {locale === "en" ? en.search.sK : es.search.sK}
                       </Text>
                     </Box>
                     <Stack w={full}>
                       {/* SerchRat */}
-                      {global.map((item, key) => (
+                      {product?.rat?.glo.map((item, key) => (
                         <SerchRat key={key} {...item} />
                       ))}
                     </Stack>

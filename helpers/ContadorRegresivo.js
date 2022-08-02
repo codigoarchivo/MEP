@@ -7,7 +7,7 @@ export const ContadorRegresivo = ({ lim, count }) => {
     // cree el intervalo
     const interval = setInterval(() => {
       //  Tiempo Agotado
-      if (getUnixTime(new Date()) >= lim.seconds) {
+      if (getUnixTime(new Date()) >= lim) {
         // muestro el mensaje
         document.getElementById(`resLimit_${count}`).innerHTML =
           "Tiempo agotado";
@@ -18,7 +18,7 @@ export const ContadorRegresivo = ({ lim, count }) => {
         // creo intervalo  de duración regresivo
         const duration = intervalToDuration({
           start: new Date(),
-          end: new Date(lim.seconds * 1000),
+          end: new Date(lim * 1000),
         });
 
         // formato la duracion del tiempo separado por comas
@@ -34,7 +34,7 @@ export const ContadorRegresivo = ({ lim, count }) => {
     return () => {
       clearInterval(interval);
     };
-  }, [lim, count]);
+  });
 
   return null;
 };

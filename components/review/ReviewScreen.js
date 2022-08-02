@@ -13,6 +13,7 @@ import {
   Textarea,
   Button,
   useBreakpointValue,
+  CloseButton,
 } from "@chakra-ui/react";
 
 import { Rating } from "react-simple-star-rating";
@@ -68,12 +69,12 @@ export const ReviewScreen = ({
     initialStates,
     { ...message, rat: [message.rat] }
   );
-  
+
   //   valores
   const { rat, com } = values;
 
   // Calculate product price individual y global
-  const { globalRanking, globalPorcentaje } = useMemo(
+  const { global, globalRanking, globalPorcentaje } = useMemo(
     () =>
       rat !== null &&
       Calculate([...calculo, ...rat].map((item) => ({ rat: item || 0 }))),
@@ -97,8 +98,12 @@ export const ReviewScreen = ({
           },
           {
             rat: {
+              // porcentaje global  example: 68
               est: globalPorcentaje,
+              // ranking global examnple: 3.4
               nam: globalRanking,
+              // mapeo de toda la información
+              glo: global,
             },
           },
           g,
@@ -113,7 +118,6 @@ export const ReviewScreen = ({
           }
         )
       );
-      back();
       Toast(locale === "en" ? en.save : es.save, "success", 5000);
     } else {
       // add review
@@ -139,6 +143,8 @@ export const ReviewScreen = ({
               est: globalPorcentaje,
               // ranking global examnple: 3.4
               nam: globalRanking,
+              // mapeo de toda la información
+              glo: global,
             },
           },
           g,
@@ -148,7 +154,6 @@ export const ReviewScreen = ({
         )
       );
 
-      back();
       Toast(locale === "en" ? en.save : es.save, "success", 5000);
     }
   };
@@ -161,7 +166,7 @@ export const ReviewScreen = ({
         border={bordes}
         p={{ base: 2, md: 5 }}
       >
-        <VStack spacing={10}>
+        <HStack justifyContent={"space-between"} mb={5}>
           <Heading
             w={full}
             size={"md"}
@@ -171,6 +176,9 @@ export const ReviewScreen = ({
           >
             {locale === "en" ? en.review.rA : es.review.rA}
           </Heading>
+          <CloseButton variant={"tertiary"} onClick={() => back()} />
+        </HStack>
+        <VStack spacing={10}>
           <Box w={full}>
             <Rating
               emptyColor="gray"
@@ -201,7 +209,7 @@ export const ReviewScreen = ({
             size="sm"
             variant="filled"
             bg={bg}
-            _focus={bordes}
+            _focus={{ border: bordes }}
             borderColor={bordes}
             border={bordes}
           />

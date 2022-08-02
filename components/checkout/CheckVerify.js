@@ -131,8 +131,6 @@ export const CheckVerify = ({
     });
   };
 
-  const poin = useBreakpointValue({ base: 2, lg: 1 });
-
   return (
     <>
       <Text py={5} overflowX={"hidden"}>
@@ -141,7 +139,7 @@ export const CheckVerify = ({
         </Button>{" "}
         - {locale === "en" ? en.verify.vB : es.verify.vB}
       </Text>
-      <Stack flexDirection={content7} w={full} spacing={0}>
+      <Stack flexDirection={content7} w={full} spacing={0} color={modelC}>
         <VStack
           shadow={"lg"}
           w={full}
@@ -284,7 +282,6 @@ export const CheckVerify = ({
               na: "nap",
               place: locale === "en" ? en.name : es.name,
               type: "text",
-              poi: poin,
             },
             {
               nombre: locale === "en" ? en.reference : es.reference,
@@ -292,7 +289,6 @@ export const CheckVerify = ({
               na: "ref",
               place: `N° ${locale === "en" ? en.reference : es.reference}`,
               type: "text",
-              poi: poin,
             },
             {
               nombre: locale === "en" ? en.mail : es.mail,
@@ -300,20 +296,18 @@ export const CheckVerify = ({
               na: "co",
               place: locale === "en" ? en.mail : es.mail,
               type: "email",
-              poi: poin,
             },
             {
               nombre: locale === "en" ? en.payment : es.payment,
               Valor: fer,
               na: "fer",
-              type: "date",
-              poi: poin,
+              type: "datetime-local",
             },
-          ].map(({ nombre, Valor, na, place, type, poi }, key) => (
+          ].map(({ nombre, Valor, na, place, type }, key) => (
             <GridItemForm
               key={key}
               mb={3}
-              points={poin}
+              points={useBreakpointValue({ base: 2, lg: 1 })}
               na={na}
               name={nombre}
               val={Valor}
@@ -382,7 +376,6 @@ export const CheckVerify = ({
                 <Tooltip
                   hasArrow
                   label={locale === "en" ? en.seller : es.seller}
-                  bg="brand.900"
                   w={"min-content"}
                 >
                   <Button

@@ -6,7 +6,7 @@ const initialStates = {
 
 export const buyReducer = (state = initialStates, action) => {
   switch (action.type) {
-    case types.productActive:
+    case types.cheListAllBu:
       return {
         ...state,
         buy: [...action.payload],

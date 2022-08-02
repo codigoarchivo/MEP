@@ -14,10 +14,11 @@ export const validPago = (
   sal = "",
   err,
   buy,
-  own
 ) => {
   return async (dispatch) => {
     try {
+      dispatch(cheListHistory({ ...referencia, process: true }));
+
       if (dA.toString() === sal.toString()) {
         // principal
         await updateDoc(doc(db, "sales", idThree), {
@@ -53,16 +54,13 @@ export const validPago = (
           process: true,
         });
       }
-      await dispatch(
-        cheListHistoryEdit({ ...referencia, process: true, own, id: idThree })
-      );
     } catch (error) {
       Toast(err, "error", 5000);
     }
   };
 };
 
-const cheListHistoryEdit = (data) => ({
+const cheListHistory = (data) => ({
   type: types.cheListAllHistoryEdit,
   payload: data,
 });
@@ -95,7 +93,7 @@ export const cheListAllClear = () => ({
 });
 
 export const cheListAllBuy = (data) => ({
-  type: types.productActive,
+  type: types.cheListAllBu,
   payload: data,
 });
 

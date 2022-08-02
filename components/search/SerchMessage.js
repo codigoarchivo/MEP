@@ -48,16 +48,13 @@ export const SerchMessage = (item) => {
   const { bordes } = Breakpoints();
 
   const handleReview = async () => {
-    let el = [];
-    
     const { docs } = await getDocs(
-      collection(db, "serchs", item.id, "messages")
+      collection(db, "serchs", item.pid, "messages")
     );
 
-    docs.map((i) => {
-      if (String(i.id) !== item.id) {
-        el.push(i.rat);
-      }
+    let el = [];
+    docs.map((doc) => {
+      if (doc.id.toString() !== item.id.toString()) el.push(doc.data().rat);
     });
 
     dispatch(messagesCant(el));
@@ -126,9 +123,9 @@ export const SerchMessage = (item) => {
             hasArrow
             label="Editar Reseñas"
             bg="brand.700"
-            color={"Background.900"}
+            color={"brand.900"}
           >
-            <Button variant={"secondary"} onClick={handleReview}>
+            <Button variant={"tertiary"} onClick={handleReview}>
               <DragHandleIcon />
             </Button>
           </Tooltip>

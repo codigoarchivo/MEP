@@ -28,6 +28,8 @@ import {
 
 import { useModality } from "../hooks/useModality";
 
+import { ModeColor } from "../helpers/ModeColor";
+
 export const Paginator = ({
   list,
   firstVisible,
@@ -51,6 +53,8 @@ export const Paginator = ({
   const { modality: modality2, setModality: setModality2 } = useModality();
   // modality
   const { modality: modality3, setModality: setModality3 } = useModality(true);
+
+  const { modelF } = ModeColor();
 
   // TODO: cuando este todo listo descometar esto
   // useEffect(() => {
@@ -172,6 +176,7 @@ export const Paginator = ({
         variant={"primary"}
         cursor="pointer"
         rounded="3xl"
+        color={modelF}
         background={"transparent"}
         p={1}
       >
@@ -183,6 +188,7 @@ export const Paginator = ({
         variant={"primary"}
         cursor="pointer"
         rounded="3xl"
+        color={modelF}
         background={"transparent"}
         p={1}
       >
@@ -194,6 +200,7 @@ export const Paginator = ({
         variant={"primary"}
         cursor="pointer"
         rounded="3xl"
+        color={modelF}
         background={"transparent"}
         p={1}
       >

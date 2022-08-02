@@ -87,7 +87,9 @@ export const CheckoutScreen = ({
     const { docs } = await getDocs(
       collection(db, "serchs", product.id, "messages")
     );
+
     let el = [];
+
     docs.map((doc) => el.push(doc.data().rat));
 
     dispatch(messagesCant(el));
@@ -104,7 +106,11 @@ export const CheckoutScreen = ({
 
   return (
     <>
-      <ContadorRegresivo lim={lim} count={count} />
+      {lim !== undefined && count !== undefined ? (
+        <ContadorRegresivo lim={lim} count={count} />
+      ) : (
+        "No information"
+      )}
       <Stack
         w={full}
         flexDirection={content5}
@@ -200,7 +206,7 @@ CheckoutScreen.propTypes = {
   product: PropTypes.object,
   process: PropTypes.bool,
   id: PropTypes.string,
-  lim: PropTypes.object,
+  lim: PropTypes.number,
   count: PropTypes.number,
   sal: PropTypes.string,
   sE: PropTypes.string,

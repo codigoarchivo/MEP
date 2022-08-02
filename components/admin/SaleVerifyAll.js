@@ -63,7 +63,6 @@ export const SaleVerifyAll = ({
   // handleLiberate
   const handleLiberate = (e) => {
     e.preventDefault();
-
     if ([idThree, sal, buy].includes("")) {
       return Toast(
         locale === "en" ? en.historySale.sI : es.historySale.sI,
@@ -71,18 +70,16 @@ export const SaleVerifyAll = ({
         5000
       );
     }
-    const err = locale === "en" ? en.error : es.error;
-    const own = referencia.own;
 
-    dispatch(validPago(referencia, idThree, sal, err, buy, own));
+    const err = locale === "en" ? en.error : es.error;
+
+    dispatch(validPago(referencia, idThree, sal, err, buy));
 
     Toast(
       locale === "en" ? en.historySale.sH : es.historySale.sH,
       "success",
       5000
     );
-
-    back();
   };
 
   const closeVerify = () => {
