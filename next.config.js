@@ -1,21 +1,9 @@
 module.exports = {
   reactStrictMode: true,
-  future: {
-    webpack5: true,
-  },
-  webpack: function (config, options) {
-    config.experiments = {};
-    return config;
-  },
   i18n: {
     locales: ["en", "es"],
     defaultLocale: "en",
     localeDetection: false,
-  },
-  extends: "next",
-  rules: {
-    "react/no-unescaped-entities": "off",
-    "@next/next/no-page-custom-font": "off",
   },
   images: {
     domains: [

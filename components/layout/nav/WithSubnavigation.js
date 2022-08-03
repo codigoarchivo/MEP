@@ -80,7 +80,7 @@ export function WithSubnavigation() {
   // Modality
   const { modality, setModality } = useModality();
   // dispatch
-  const { locale, push, pathname } = useRouter();
+  const { locale, pathname } = useRouter();
 
   const { dataRoute } = ListRoute();
 

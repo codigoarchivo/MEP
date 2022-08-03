@@ -17,20 +17,20 @@ import { Breakpoints } from "../helpers/Breakpoints";
 const App = ({ Component, pageProps }) => {
   const { points25 } = Breakpoints();
   return (
-    <ChakraProvider theme={theme}>
-      <Provider store={store}>
-        <PersistGate
-          loading={
-            <Center h={"calc(100vh - 50px)"} fontSize={points25}>
-              loading
-            </Center>
-          }
-          persistor={persistStore(store)}
-        >
-          <Component {...pageProps} />
-        </PersistGate>
-      </Provider>
-    </ChakraProvider>
+      <ChakraProvider theme={theme}>
+        <Provider store={store}>
+          <PersistGate
+            loading={
+              <Center h={"calc(100vh - 50px)"} fontSize={points25}>
+                loading
+              </Center>
+            }
+            persistor={persistStore(store)}
+          >
+            <Component {...pageProps} />
+          </PersistGate>
+        </Provider>
+      </ChakraProvider>
   );
 };
 

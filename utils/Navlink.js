@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { Button } from "@chakra-ui/react";
 
-import Link from "next/link";
+import NextLink from "next/link";
 
 export const NavLink = ({
   rightIcon,
@@ -31,7 +31,7 @@ export const NavLink = ({
   styles,
 }) => {
   return (
-    <Link href={href} as={as} locale={locale} passHref>
+    <NextLink href={href} as={as} locale={locale} passHref>
       <Button
         style={{ ...styles }}
         fontSize={fontSize}
@@ -56,7 +56,7 @@ export const NavLink = ({
       >
         {name}
       </Button>
-    </Link>
+    </NextLink>
   );
 };
 

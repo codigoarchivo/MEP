@@ -1,16 +1,17 @@
 import React from "react";
 
+import { AuthStateChange } from "../../helpers/AuthStateChange";
+
 import Head from "next/head";
 
 import { WithSubnavigation } from "./nav/WithSubnavigation";
 
 import { Footer } from "./foo/Footer";
-import { AuthStateChange } from "../../helpers/AuthStateChange";
 
 const ShopLayout = ({ children, title }) => {
   const origin =
     (typeof window !== "undefined" && window.location.origin) || "";
-
+    
   return (
     <>
       <Head>
@@ -28,10 +29,10 @@ const ShopLayout = ({ children, title }) => {
       </Head>
 
       {/* <AuthChange /> */}
+      <AuthStateChange />
       <header>
         <WithSubnavigation />
       </header>
-      <AuthStateChange />
       <main>{children}</main>
 
       <footer w={"full"}>
