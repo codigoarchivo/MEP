@@ -138,7 +138,7 @@ export const startGoogleLogin = (err) => {
 
 export const sendEmail = (email, err) => {
   const actionCodeSettings = {
-    url: "http://localhost:3000/auth/reset?mode=action&oobCode=code",
+    url: "https://mep-six.vercel.app/auth/reset?mode=action&oobCode=code",
     handleCodeInApp: true,
   };
   return async (dispatch) => {
