@@ -1,42 +1,13 @@
-import React, { useEffect } from "react";
-
-import { useDispatch } from "react-redux";
+import React from "react";
 
 import Head from "next/head";
-
-import { auth } from "../../firebase/config";
-
-import { onAuthStateChanged } from "firebase/auth";
-
-import { login } from "../../actions/auth";
 
 import { WithSubnavigation } from "./nav/WithSubnavigation";
 
 import { Footer } from "./foo/Footer";
-
-const dA = process.env.NEXT_PUBLIC_ROL_A;
+import { AuthStateChange } from "../../helpers/AuthStateChange";
 
 const ShopLayout = ({ children, title }) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!!user?.uid) {
-        dispatch(
-          login(
-            user.uid,
-            user.displayName,
-            user.photoURL,
-            user.email,
-            user.uid === dA.toString() ? "owner" : "user"
-          )
-        );
-      }
-    });
-
-    return () => unsubscribe();
-  }, [dispatch]);
-
   const origin =
     (typeof window !== "undefined" && window.location.origin) || "";
 
@@ -60,7 +31,7 @@ const ShopLayout = ({ children, title }) => {
       <header>
         <WithSubnavigation />
       </header>
-
+      <AuthStateChange />
       <main>{children}</main>
 
       <footer w={"full"}>
