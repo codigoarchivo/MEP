@@ -158,12 +158,12 @@ export const sendEmail = (email, err) => {
   };
 };
 
-export const resetPassword = (newPassword, oobCode, err) => {
-  return async (dispatch) => {
+export const resetPassword = (newPassword, oobCode, err, success) => {
+  return async () => {
     try {
       await confirmPasswordReset(auth, oobCode, newPassword)
         .then(() => {
-          dispatch(passwordReset());
+          Toast(success, "success", 5000);
         })
         .catch(({ message }) => {
           // error
@@ -175,10 +175,6 @@ export const resetPassword = (newPassword, oobCode, err) => {
     }
   };
 };
-
-const passwordReset = () => ({
-  type: types.closeActive,
-});
 
 export const logout = (err) => {
   return async (dispatch) => {

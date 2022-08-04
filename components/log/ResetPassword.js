@@ -63,11 +63,11 @@ export const ResetPassword = ({ locale, es, en }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const err = locale === "en" ? en.error : es.error;
+    const success = locale === "en" ? en.auth.aU : es.auth.aU;
     if (passwordV) {
       return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     } else {
-      dispatch(resetPassword(password, query.oobCode, err));
-      Toast(locale === "en" ? en.auth.aU : es.auth.aU, "success", 5000);
+      dispatch(resetPassword(password, query.oobCode.toString(), err, success));
       reset();
     }
   };
