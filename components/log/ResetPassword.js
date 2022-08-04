@@ -26,6 +26,7 @@ import { ModeColor } from "../../helpers/ModeColor";
 
 import { resetPassword } from "../../actions/auth";
 import { Breakpoints } from "../../helpers/Breakpoints";
+import { Toast } from "../../helpers/Toast";
 
 const initialStates = {
   password: "",
