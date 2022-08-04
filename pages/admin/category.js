@@ -89,9 +89,12 @@ const Category = ({ data = [] }) => {
   // breakpoints
   const { center, bordes } = Breakpoints();
 
-  if (a?.rol === "user") {
-    push("/");
-  }
+  useEffect(() => {
+    if (a?.rol === "user") {
+      push("/");
+    }
+  })
+  
 
   const err = locale === "en" ? en.error : es.error;
   useEffect(() => {

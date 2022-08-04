@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useRouter } from "next/router";
 
@@ -32,9 +32,11 @@ export const MenuCategoria = () => {
   // selector
   const { listData = [] } = useSelector(({ listca }) => listca);
 
-  if (!listData[0]) {
-    push("/");
-  }
+  useEffect(() => {
+    if (!listData[0]) {
+      push("/");
+    }
+  }, [listData]);
 
   const { modelE } = ModeColor();
   return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
   Grid,
@@ -45,9 +45,12 @@ export const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
   // mode Color
   const { modelC } = ModeColor();
 
-  if (a.uid === undefined) {
-    push("/");
-  }
+  useEffect(() => {
+    if (a.uid === undefined) {
+      push("/");
+    }
+  });
+
   // useForm
   const { values, handleInputChange } = useFormAll(initialStates, user);
   // values

@@ -2,6 +2,8 @@ import { useSelector } from "react-redux";
 
 import { ListRoute } from "./ListRoute";
 
+import Image from "next/image";
+
 import { NavLink } from "../../../utils/Navlink";
 
 import {
@@ -46,9 +48,28 @@ export const MenuNavButton = () => {
       >
         <Stack direction="row" spacing={4}>
           {a.uid ? (
-            <Avatar size={"sm"} name={a?.displayName} src={`${a?.photoURL}`}>
-              <AvatarBadge boxSize="1.25em" bg="green.500" />
-            </Avatar>
+            <>
+              <Box w={35} h={35} position={"relative"}>
+                <Image
+                  src={
+                    a?.photoURL ||
+                    "https://via.placeholder.com/35.png?text=Imagen"
+                  }
+                  style={{
+                    borderRadius: "50%",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    flexShrink: 0,
+                    width: "2rem",
+                    height: "2rem",
+                  }}
+                  alt={"hola"}
+                  layout="fill"
+                  objectPosition="center"
+                />
+                <AvatarBadge rounded={"full"} boxSize={"3"} bg="green.500" />
+              </Box>
+            </>
           ) : (
             <Avatar size={"sm"}>
               <AvatarBadge

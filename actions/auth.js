@@ -137,19 +137,19 @@ export const startGoogleLogin = (err) => {
 };
 
 export const sendEmail = (email, err) => {
-  const actionCodeSettings = {
-    url: "https://mep-six.vercel.app/auth/reset?mode=action&oobCode=code",
-    handleCodeInApp: true,
-  };
-  return async (dispatch) => {
+  // const actionCodeSettings = {
+  //   url: "https://mep-six.vercel.app/__/auth/action?mode=action&oobCode=code",
+  //   handleCodeInApp: true,
+  // };
+  // noreply@epmp-199ff.firebaseapp.com
+  return async () => {
     try {
-      await sendPasswordResetEmail(auth, email, actionCodeSettings)
-        .then(() => {
-          dispatch(emailSend(email));
-        })
-        .catch(({ message }) => {
+      await sendPasswordResetEmail(auth, email)
+        .then(() => {})
+        .catch(({ message, code }) => {
           // error
           Toast(message, "error", 5000);
+          Toast(code, "error", 5000);
         });
     } catch (error) {
       // error
@@ -157,11 +157,6 @@ export const sendEmail = (email, err) => {
     }
   };
 };
-
-const emailSend = (data) => ({
-  type: types.active,
-  payload: data,
-});
 
 export const resetPassword = (newPassword, actionCode, err) => {
   return async (dispatch) => {

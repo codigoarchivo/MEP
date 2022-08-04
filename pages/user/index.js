@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 
@@ -48,9 +48,11 @@ const User = () => {
 
   const [urlImage, setUrlImage] = useState("");
 
-  if (!a.uid) {
-    push("/");
-  }
+  useEffect(() => {
+    if (!a.uid) {
+      push("/");
+    }
+  });
 
   const { values, handleInputChange } = useFormAll(initialStates, a);
 

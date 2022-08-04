@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 
@@ -89,9 +89,11 @@ const ConfigDashboard = ({ product = {} }) => {
   // selector
   const { listData: list = [] } = useSelector(({ listca }) => listca);
 
-  if (!list[0]) {
-    push("/");
-  }
+  useEffect(() => {
+    if (!list[0]) {
+      push("/");
+    }
+  });
 
   return (
     <ShopLayout title={query.set}>

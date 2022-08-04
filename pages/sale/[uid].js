@@ -84,9 +84,11 @@ const SaleData = ({ data }) => {
   // Breakponts
   const { bordes, full } = Breakpoints();
 
-  if (a.rol === "owner") {
-    push("/");
-  }
+  useEffect(() => {
+    if (a.rol === "owner") {
+      push("/");
+    }
+  });
 
   useEffect(() => {
     if (!!data[0]) {

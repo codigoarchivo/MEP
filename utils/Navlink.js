@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
 import PropTypes from "prop-types";
 
@@ -17,7 +17,6 @@ export const NavLink = ({
   w,
   px,
   fontWeight,
-  click,
   as,
   disabled,
   textTransform,
@@ -30,16 +29,19 @@ export const NavLink = ({
   fontSize,
   styles,
 }) => {
-  return (
-    <NextLink href={href} as={as} locale={locale} passHref>
+
+  const MyButton = forwardRef(({ onClick, href }, ref) => {
+    return (
       <Button
+        href={href}
+        onClick={onClick}
+        ref={ref}
+        as={"a"}
         style={{ ...styles }}
         fontSize={fontSize}
         rightIcon={rightIcon}
         leftIcon={leftIcon}
-        onClick={click}
         cursor={"pointer"}
-        as={"a"}
         size={size}
         border={border}
         variant={variant}
@@ -56,6 +58,12 @@ export const NavLink = ({
       >
         {name}
       </Button>
+    );
+  });
+  
+  return (
+    <NextLink href={href} as={as} locale={locale} passHref>
+      <MyButton />
     </NextLink>
   );
 };
