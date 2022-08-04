@@ -24,7 +24,9 @@ const ShopLayout = ({ children, title }) => {
 
   useEffect(() => {
     if (a?.emailVerified === false) {
+
       Toast("Tienes 60 segundos para revisar tu correo", "info", 5000)
+      
       setTimeout(() => dispatch(logout(err)), 1000 * 60);
     }
   });
