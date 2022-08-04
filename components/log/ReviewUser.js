@@ -55,17 +55,13 @@ export const ReviewUser = ({ locale, es, en }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const err = locale === "en" ? en.error : es.error;
+    const data1 = locale === "en" ? en.auth.aS : es.auth.aS;
+    const data2 = locale === "en" ? en.auth.aT : es.auth.aT;
+    
     if (ErrorLorR) {
       return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     } else {
-      dispatch(sendEmail(email, err));
-      Toast(
-        `${locale === "en" ? en.auth.aS : es.auth.aS} ${email} ${
-          locale === "en" ? en.auth.aT : es.auth.aT
-        }`,
-        "success",
-        5000
-      );
+      dispatch(sendEmail(email, data1, data2, err));
     }
   };
 

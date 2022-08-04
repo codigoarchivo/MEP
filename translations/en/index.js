@@ -23,6 +23,7 @@ export const en = {
     aU: "Password has been changed, you can login now.",
     aV: "New password",
     aW: "Please check spam",
+    aX: "Email validated correctly",
   },
   major: {
     mA: "Home",

@@ -1,6 +1,7 @@
 import {
   confirmPasswordReset,
   createUserWithEmailAndPassword,
+  sendEmailVerification,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -18,7 +19,14 @@ import { Toast } from "../helpers/Toast";
 
 const dA = process.env.NEXT_PUBLIC_ROL_A;
 
-export const login = (uid, displayName, photoURL, email, rol) => ({
+export const login = (
+  uid,
+  displayName,
+  photoURL,
+  email,
+  rol,
+  emailVerified
+) => ({
   type: types.login,
   payload: {
     uid,
@@ -26,6 +34,7 @@ export const login = (uid, displayName, photoURL, email, rol) => ({
     photoURL,
     email,
     rol,
+    emailVerified,
   },
 });
 
@@ -44,7 +53,8 @@ export const startLoginEmailPassword = (email, password, err) => {
                 user.displayName,
                 user.photoURL,
                 user.email,
-                user.uid === dA.toString() ? "owner" : "user"
+                user.uid === dA.toString() ? "owner" : "user",
+                user.emailVerified
               )
             );
           }
@@ -68,7 +78,8 @@ export const startRegisterWithNameEmailPassword = (
   email,
   password,
   name,
-  err
+  err,
+  data,
 ) => {
   return (dispatch) => {
     try {
@@ -86,11 +97,12 @@ export const startRegisterWithNameEmailPassword = (
                 user.displayName,
                 user.photoURL,
                 user.email,
-                user.uid === dA.toString() ? "owner" : "user"
+                user.uid === dA.toString() ? "owner" : "user",
+                user.emailVerified
               )
             );
           }
-
+          verifyEmail(data);
           // end
           await dispatch(finishLoading());
         })
@@ -107,7 +119,7 @@ export const startRegisterWithNameEmailPassword = (
   };
 };
 
-export const startGoogleLogin = (err) => {
+export const startGoogleLogin = (err, data) => {
   // google
   return async (dispatch) => {
     try {
@@ -120,9 +132,11 @@ export const startGoogleLogin = (err) => {
                 user.displayName,
                 user.photoURL,
                 user.email,
-                user.uid === dA.toString() ? "owner" : "user"
+                user.uid === dA.toString() ? "owner" : "user",
+                user.emailVerified
               )
             );
+            verifyEmail(data);
           }
         })
         .catch(({ message }) => {
@@ -136,16 +150,19 @@ export const startGoogleLogin = (err) => {
   };
 };
 
-export const sendEmail = (email, err) => {
-  // const actionCodeSettings = {
-  //   url: "https://mep-six.vercel.app/__/auth/action?mode=action&oobCode=code",
-  //   handleCodeInApp: true,
-  // };
-  // noreply@epmp-199ff.firebaseapp.com
+const verifyEmail = (data) => {
+  sendEmailVerification(auth.currentUser).then(() => {
+    Toast(data, "success", 5000);
+  });
+};
+
+export const sendEmail = (email, data1, data2, err) => {
   return async () => {
     try {
       await sendPasswordResetEmail(auth, email)
-        .then(() => {})
+        .then(() => {
+          Toast(`${data1} ${email} ${data2}`, "success", 5000);
+        })
         .catch(({ message, code }) => {
           // error
           Toast(message, "error", 5000);

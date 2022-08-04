@@ -26,17 +26,11 @@ import { es } from "../translations/es";
 
 export const MenuCategoria = () => {
   // useRouter
-  const { locale, push } = useRouter();
+  const { locale } = useRouter();
   // Breakpoints
   const { displayOff2, bordes } = Breakpoints();
   // selector
   const { listData = [] } = useSelector(({ listca }) => listca);
-
-  useEffect(() => {
-    if (!listData[0]) {
-      push("/");
-    }
-  }, [listData]);
 
   const { modelE } = ModeColor();
   return (

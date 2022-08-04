@@ -23,6 +23,7 @@ export const es = {
     aU: "Se ha cambiado la contraseña, ya puede iniciar sesión.",
     aV: "Nueva contraseña",
     aW: "Por favor revise el correo no deseado",
+    aX: "Email validado correctamente",
   },
   major: {
     mA: "Hogar",

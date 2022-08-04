@@ -92,8 +92,10 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
     if (ErrorLorR) {
       return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     } else {
-      dispatch(startRegisterWithNameEmailPassword(email, password, name, err));
-      push("/");
+      const data = locale === "en" ? en.verify.vI : es.verify.vI;
+      dispatch(
+        startRegisterWithNameEmailPassword(email, password, name, err, data)
+      );
     }
   };
 

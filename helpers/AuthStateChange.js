@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -13,7 +13,7 @@ export const AuthStateChange = () => {
 
   const dA = process.env.NEXT_PUBLIC_ROL_A;
 
-  memo(() => {
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!!user?.uid) {
         dispatch(
@@ -22,14 +22,15 @@ export const AuthStateChange = () => {
             user.displayName,
             user.photoURL,
             user.email,
-            user.uid === dA.toString() ? "owner" : "user"
+            user.uid === dA.toString() ? "owner" : "user",
+            user.emailVerified
           )
         );
       }
     });
 
     return () => unsubscribe();
-  });
+  }, [dispatch]);
 
   return null;
 };

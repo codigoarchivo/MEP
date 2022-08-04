@@ -1,5 +1,9 @@
 import React from "react";
 
+import { useRouter } from "next/router";
+
+import { useSelector } from "react-redux";
+
 import { AuthStateChange } from "../../helpers/AuthStateChange";
 
 import Head from "next/head";
@@ -9,9 +13,18 @@ import { WithSubnavigation } from "./nav/WithSubnavigation";
 import { Footer } from "./foo/Footer";
 
 const ShopLayout = ({ children, title }) => {
+  // useSelector
+  const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
+
+  // const { push } = useRouter();
+
+  // if (a?.emailVerified === false) {
+  //   alert("No esta Verificador");
+  // }
+
   const origin =
     (typeof window !== "undefined" && window.location.origin) || "";
-    
+
   return (
     <>
       <Head>

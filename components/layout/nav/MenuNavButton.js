@@ -57,11 +57,8 @@ export const MenuNavButton = () => {
                   }
                   style={{
                     borderRadius: "50%",
-                    display: "inline-flex",
                     alignItems: "center",
                     flexShrink: 0,
-                    width: "2rem",
-                    height: "2rem",
                   }}
                   alt={"hola"}
                   layout="fill"
