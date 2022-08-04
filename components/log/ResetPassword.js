@@ -92,6 +92,16 @@ export const ResetPassword = ({ locale, es, en }) => {
             <Heading size={"md"} textTransform={"uppercase"}>
               {locale === "en" ? en.auth.aX : es.auth.aX}
             </Heading>
+            <DividerWithText>
+              {locale === "en" ? en.auth.aE : es.auth.aE}
+            </DividerWithText>
+            <Center>
+              <NavLink
+                href={"/"}
+                variant={"tertiary"}
+                name={locale === "en" ? en.major.mA : es.major.mA}
+              />
+            </Center>
           </HStack>
         ) : (
           <VStack spacing={10}>
