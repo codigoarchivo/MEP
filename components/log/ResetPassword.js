@@ -91,9 +91,7 @@ export const ResetPassword = ({ locale, es, en }) => {
             <Heading size={"md"} textTransform={"uppercase"}>
               {locale === "en" ? en.auth.aX : es.auth.aX}
             </Heading>
-            <DividerWithText>
-              {locale === "en" ? en.auth.aE : es.auth.aE}
-            </DividerWithText>
+            <DividerWithText/>
             <Center>
               <NavLink
                 href={"/"}
