@@ -22,6 +22,7 @@ export const en = {
     aT: "for password reset instructions.",
     aU: "Password has been changed, you can login now.",
     aV: "New password",
+    aW: "Please check spam",
   },
   major: {
     mA: "Home",

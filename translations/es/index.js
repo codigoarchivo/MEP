@@ -22,6 +22,7 @@ export const es = {
     aT: "Para obtener instrucciones para restablecer la contraseña.",
     aU: "Se ha cambiado la contraseña, ya puede iniciar sesión.",
     aV: "Nueva contraseña",
+    aW: "Por favor revise el correo no deseado",
   },
   major: {
     mA: "Hogar",

@@ -103,7 +103,7 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
             <Heading size={"md"} textTransform={"uppercase"}>
               {locale === "en" ? en.auth.aA : es.auth.aA}
             </Heading>
-            <CloseButton size="sm" onClick={() => back()} />
+            <CloseButton size="sm" onClick={() => push("/")} />
           </HStack>
           <FormControl>
             {!emailE && (

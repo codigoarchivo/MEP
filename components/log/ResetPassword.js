@@ -19,6 +19,7 @@ import {
   VStack,
   InputGroup,
   InputRightElement,
+  Center,
 } from "@chakra-ui/react";
 
 import { useFormAll } from "../../hooks/useFormAll";
@@ -29,6 +30,8 @@ import { ModeColor } from "../../helpers/ModeColor";
 import { resetPassword } from "../../actions/auth";
 import { Breakpoints } from "../../helpers/Breakpoints";
 import { Toast } from "../../helpers/Toast";
+import { DividerWithText } from "../../utils/DividerWithText";
+import { NavLink } from "../../utils/Navlink";
 
 const initialStates = {
   password: "",
@@ -129,6 +132,16 @@ export const ResetPassword = ({ locale, es, en }) => {
           >
             {locale === "en" ? en.auth.aJ : es.auth.aJ}
           </Button>
+          <DividerWithText>
+            {locale === "en" ? en.auth.aE : es.auth.aE}
+          </DividerWithText>
+          <Center>
+            <NavLink
+              href={"/auth"}
+              variant={"tertiary"}
+              name={locale === "en" ? en.auth.aA : es.auth.aA}
+            />
+          </Center>
         </VStack>
       </chakra.form>
     </>

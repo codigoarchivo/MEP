@@ -87,7 +87,7 @@ export const ReviewUser = ({ locale, es, en }) => {
           <FormControl>
             {!emailE && (
               <FormHelperText color={modelC}>
-                {locale === "en" ? en.auth.aI : es.auth.aI}
+                {locale === "en" ? en.auth.aW : es.auth.aW}
               </FormHelperText>
             )}
             <FormLabel htmlFor="email" color={modelC}>
