@@ -61,7 +61,7 @@ export const ResetPassword = ({ locale, es, en }) => {
     if (passwordV) {
       return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     } else {
-      dispatch(resetPassword(password, getParameterByName("oobCode"), err));
+      dispatch(resetPassword(password, err));
       Toast(locale === "en" ? en.auth.aU : es.auth.aU, "success", 5000);
       reset();
     }
