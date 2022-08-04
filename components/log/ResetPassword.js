@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useRouter } from "next/router";
+
 import PropTypes from "prop-types";
 
 import { useDispatch } from "react-redux";
@@ -39,6 +41,8 @@ const data = {
 export const ResetPassword = ({ locale, es, en }) => {
   // dispatch
   const dispatch = useDispatch();
+  // useRouter
+  const { query } = useRouter();
   // guardar states
   const { values, handlePassword, handleInputChange, reset } = useFormAll(
     initialStates,
@@ -62,7 +66,7 @@ export const ResetPassword = ({ locale, es, en }) => {
     if (passwordV) {
       return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     } else {
-      dispatch(resetPassword(password, err));
+      dispatch(resetPassword(password, query.oobCode, err));
       Toast(locale === "en" ? en.auth.aU : es.auth.aU, "success", 5000);
       reset();
     }

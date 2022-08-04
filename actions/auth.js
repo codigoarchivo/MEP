@@ -158,10 +158,10 @@ export const sendEmail = (email, err) => {
   };
 };
 
-export const resetPassword = (newPassword, err) => {
+export const resetPassword = (newPassword, oobCode, err) => {
   return async (dispatch) => {
     try {
-      await confirmPasswordReset(auth, newPassword)
+      await confirmPasswordReset(auth, oobCode, newPassword)
         .then(() => {
           dispatch(passwordReset());
         })
