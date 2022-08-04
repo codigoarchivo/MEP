@@ -20,7 +20,6 @@ import {
   InputGroup,
   InputRightElement,
   Center,
-  HStack,
 } from "@chakra-ui/react";
 
 import { useFormAll } from "../../hooks/useFormAll";
@@ -88,7 +87,7 @@ export const ResetPassword = ({ locale, es, en }) => {
         border={bordes}
       >
         {query.mode === "verifyEmail" ? (
-          <HStack w={"full"} py={5}>
+          <VStack w={"full"} py={5}>
             <Heading size={"md"} textTransform={"uppercase"}>
               {locale === "en" ? en.auth.aX : es.auth.aX}
             </Heading>
@@ -102,7 +101,7 @@ export const ResetPassword = ({ locale, es, en }) => {
                 name={locale === "en" ? en.major.mA : es.major.mA}
               />
             </Center>
-          </HStack>
+          </VStack>
         ) : (
           <VStack spacing={10}>
             <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
