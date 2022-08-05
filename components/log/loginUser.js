@@ -84,8 +84,7 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
   };
   // handleGooglelogin
   const handleGooglelogin = () => {
-    const data = locale === "en" ? en.verify.vI : es.verify.vI;
-    dispatch(startGoogleLogin(err, data));
+    dispatch(startGoogleLogin(err));
   };
 
   const { bordes } = Breakpoints();

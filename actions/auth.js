@@ -79,7 +79,7 @@ export const startRegisterWithNameEmailPassword = (
   password,
   name,
   err,
-  data,
+  data
 ) => {
   return (dispatch) => {
     try {
@@ -101,8 +101,11 @@ export const startRegisterWithNameEmailPassword = (
                 user.emailVerified
               )
             );
+
+            sendEmailVerification(auth.currentUser).then(() => {
+              Toast(data, "success", 5000);
+            });
           }
-          verifyEmail(data);
           // end
           await dispatch(finishLoading());
         })
@@ -119,7 +122,7 @@ export const startRegisterWithNameEmailPassword = (
   };
 };
 
-export const startGoogleLogin = (err, data) => {
+export const startGoogleLogin = (err) => {
   // google
   return async (dispatch) => {
     try {
@@ -136,7 +139,6 @@ export const startGoogleLogin = (err, data) => {
                 user.emailVerified
               )
             );
-            verifyEmail(data);
           }
         })
         .catch(({ message }) => {
@@ -148,12 +150,6 @@ export const startGoogleLogin = (err, data) => {
       Toast(err, "error", 5000);
     }
   };
-};
-
-const verifyEmail = (data) => {
-  sendEmailVerification(auth.currentUser).then(() => {
-    Toast(data, "success", 5000);
-  });
 };
 
 export const sendEmail = (email, data1, data2, err) => {
