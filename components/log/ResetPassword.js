@@ -27,7 +27,7 @@ import { useFormAll } from "../../hooks/useFormAll";
 import { Validator } from "../../helpers/Validator";
 import { ModeColor } from "../../helpers/ModeColor";
 
-import { resetPassword } from "../../actions/auth";
+import { handleVerifyEmail, resetPassword } from "../../actions/auth";
 import { Breakpoints } from "../../helpers/Breakpoints";
 import { Toast } from "../../helpers/Toast";
 import { DividerWithText } from "../../utils/DividerWithText";
@@ -75,90 +75,106 @@ export const ResetPassword = ({ locale, es, en }) => {
     }
   };
 
+  // handleVerify
+  const handleVerify = (e) => {
+    e.preventDefault();
+    const err = locale === "en" ? en.error : es.error;
+    const success = locale === "en" ? en.auth.aX : es.auth.aX;
+    dispatch(handleVerifyEmail(query.oobCode.toString(), err, success));
+  };
+
   // Breakpoints
   const { bordes } = Breakpoints();
 
   return (
     <>
       <chakra.form
-        onSubmit={handleSubmit}
+        onSubmit={query.mode === "verifyEmail" ? handleVerify : handleSubmit}
         boxShadow="2xl"
         p={5}
         border={bordes}
       >
-        {query.mode === "verifyEmail" ? (
-          <VStack w={"full"} py={5}>
-            <Heading size={"md"} textTransform={"uppercase"}>
-              {locale === "en" ? en.auth.aX : es.auth.aX}
-            </Heading>
-            <DividerWithText/>
-            <Center>
-              <NavLink
-                href={"/"}
-                variant={"tertiary"}
-                name={locale === "en" ? en.major.mA : es.major.mA}
+        <VStack
+          w={"full"}
+          py={5}
+          display={query.mode === "verifyEmail" ? "block" : "none"}
+        >
+          <Heading size={"md"} textTransform={"uppercase"}>
+            {locale === "en" ? en.verify.vG : es.verify.vG}
+          </Heading>
+          <Button type="submit" variant={"primary"} h="1.75rem">
+            verifyEmail
+          </Button>
+          <DividerWithText />
+          <Center>
+            <NavLink
+              href={"/"}
+              variant={"tertiary"}
+              name={locale === "en" ? en.major.mA : es.major.mA}
+            />
+          </Center>
+        </VStack>
+
+        <VStack
+          spacing={10}
+          display={query.mode === "verifyEmail" ? "none" : "block"}
+        >
+          <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
+            {locale === "en" ? en.auth.aV : es.auth.aV}
+          </Heading>
+          <FormControl>
+            <FormLabel color={modelC} htmlFor="password">
+              {locale === "en" ? en.password : es.password}{" "}
+              <Tooltip
+                color={textError}
+                bg={bgTextError}
+                label={passwordV ? passwordV : field}
+                aria-label="A tooltip"
+              >
+                <QuestionIcon />
+              </Tooltip>
+            </FormLabel>
+            <InputGroup size="md">
+              <Input
+                name="password"
+                id="password"
+                onChange={handleInputChange}
+                value={password}
+                pr="4.5rem"
+                type={pass ? "text" : "password"}
+                placeholder={locale === "en" ? en.password : es.password}
+                autoComplete="new-password"
               />
-            </Center>
-          </VStack>
-        ) : (
-          <VStack spacing={10}>
-            <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
-              {locale === "en" ? en.auth.aV : es.auth.aV}
-            </Heading>
-            <FormControl>
-              <FormLabel color={modelC} htmlFor="password">
-                {locale === "en" ? en.password : es.password}{" "}
-                <Tooltip
-                  color={textError}
-                  bg={bgTextError}
-                  label={passwordV ? passwordV : field}
-                  aria-label="A tooltip"
+              <InputRightElement width="4.5rem">
+                <Button
+                  onClick={handlePassword}
+                  variant={"tertiary"}
+                  h="1.75rem"
                 >
-                  <QuestionIcon />
-                </Tooltip>
-              </FormLabel>
-              <InputGroup size="md">
-                <Input
-                  name="password"
-                  id="password"
-                  onChange={handleInputChange}
-                  value={password}
-                  pr="4.5rem"
-                  type={pass ? "text" : "password"}
-                  placeholder={locale === "en" ? en.password : es.password}
-                  autoComplete="new-password"
-                />
-                <InputRightElement width="4.5rem">
-                  <Button
-                    variant={"tertiary"}
-                    h="1.75rem"
-                    onClick={handlePassword}
-                  >
-                    {pass ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-            <Button
-              w={"100%"}
-              type="submit"
-              variant={"primary"}
-              textTransform={"uppercase"}
-            >
-              {locale === "en" ? en.auth.aJ : es.auth.aJ}
-            </Button>
-            <DividerWithText>
-              {locale === "en" ? en.auth.aE : es.auth.aE}
-            </DividerWithText>
-            <Center>
-              <NavLink
-                href={"/auth"}
-                variant={"tertiary"}
-                name={locale === "en" ? en.auth.aA : es.auth.aA}
-              />
-            </Center>
-          </VStack>
-        )}
+                  {pass ? <ViewIcon /> : <ViewOffIcon />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          </FormControl>
+          <Button
+            w={"100%"}
+            type="submit"
+            variant={"primary"}
+            textTransform={"uppercase"}
+          >
+            {locale === "en" ? en.auth.aJ : es.auth.aJ}
+          </Button>
+          <DividerWithText>
+            {locale === "en" ? en.auth.aE : es.auth.aE}
+          </DividerWithText>
+          <Center>
+            <NavLink
+              href={"/auth"}
+              variant={"tertiary"}
+              name={locale === "en" ? en.auth.aA : es.auth.aA}
+            />
+          </Center>
+        </VStack>
       </chakra.form>
     </>
   );

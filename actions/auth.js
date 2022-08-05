@@ -1,4 +1,5 @@
 import {
+  applyActionCode,
   confirmPasswordReset,
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -181,6 +182,24 @@ export const resetPassword = (newPassword, oobCode, err, success) => {
         .catch(({ message }) => {
           // error
           Toast(message, "error", 5000);
+        });
+    } catch (error) {
+      // error
+      Toast(err, "error", 5000);
+    }
+  };
+};
+
+export const handleVerifyEmail = (actionCode, err, message) => {
+  return async () => {
+    try {
+      await applyActionCode(auth, actionCode)
+        .then((resp) => {
+          Toast(message, "success", 5000);
+        })
+        .catch((error) => {
+          // error
+          Toast(error, "error", 5000);
         });
     } catch (error) {
       // error
