@@ -93,9 +93,8 @@ export function WithSubnavigation() {
     <Box>
       <Flex
         mb={{ base: 5, md: 0 }}
-        minH={"60px"}
-        py={{ base: 2 }}
-        px={{ base: 4 }}
+        py={{ base: 3 }}
+        px={{ base: 3, md: 5, lg: 10 }}
         borderBottom={1}
         align={"center"}
       >
@@ -128,21 +127,16 @@ export function WithSubnavigation() {
             />
           </Box>
 
-          <Box
-            display={displayOff2}
-            position={"relative"}
-            alignItems={"center"}
-            textAlign={useBreakpointValue({ base: "center", md: "left" })}
-          >
+          <Box display={displayOff2} w={100} h={100} position={"relative"}>
             <Image
               src={"/img/logo.png"}
               alt="Picture of the author"
-              width={130}
-              height={100}
+              layout="fill"
+              objectFit="contain"
             />
           </Box>
 
-          <Flex display={{ base: "none", md: "flex" }} ml={{ base: 0, lg: 10 }}>
+          <Flex display={{ base: "none", md: "flex" }} ml={{ base: 0, md: 5 }}>
             {/* Category */}
             <DesktopNav />
           </Flex>

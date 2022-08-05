@@ -24,6 +24,9 @@ export const es = {
     aV: "Nueva contraseña",
     aW: "Por favor revise el correo no deseado",
     aX: "Email validado correctamente",
+    aY: "Revisa en tu correo",
+    aZ: "en el buzón o correo no deseado, para verificar sus datos haga clic en el enlace",
+    aAa: "si te equivocaste con el correo",
   },
   major: {
     mA: "Hogar",

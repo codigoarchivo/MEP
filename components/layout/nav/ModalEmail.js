@@ -37,12 +37,14 @@ export const ModalEmail = () => {
       <ModalContent>
         <ModalHeader>{a?.displayName}</ModalHeader>
         <ModalBody>
-          <Text>{`Revisa en tu correo ${a?.email} en el buzon o spam, para verificar tus datos haz click en el link`}</Text>
+          <Text>{`${locale === "en" ? en.auth.aY : es.auth.aY} ${a?.email} ${
+            locale === "en" ? en.auth.aZ : es.auth.aZ
+          }`}</Text>
         </ModalBody>
         <ModalFooter>
-          <Text>Si te equivocaste con el correo haz</Text>{" "}
-          <Button ml={3} onClick={handleLogout}>
-            click aqui
+          <Text>{locale === "en" ? en.auth.aAa : es.auth.aAa}</Text>{" "}
+          <Button ml={3} size={["sx", "sm", "md"]} p={2} onClick={handleLogout}>
+            {locale === "en" ? en.clickHere : es.clickHere}
           </Button>
         </ModalFooter>
       </ModalContent>

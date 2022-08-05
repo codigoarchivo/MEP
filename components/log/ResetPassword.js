@@ -93,11 +93,14 @@ export const ResetPassword = ({ locale, es, en }) => {
         boxShadow="2xl"
         p={5}
         border={bordes}
+        w={{ base: "100%", sm: "70%", md: "60%", lg: "70%" }}
+        h={"min-content"}
+        mt={3}
       >
         <VStack
-          w={"full"}
           py={5}
           display={query.mode === "verifyEmail" ? "block" : "none"}
+          spacing={5}
         >
           <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
             {locale === "en" ? en.verify.vG : es.verify.vG}

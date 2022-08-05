@@ -64,7 +64,20 @@ export const MenuNavButton = () => {
                   layout="fill"
                   objectPosition="center"
                 />
-                <AvatarBadge rounded={"full"} boxSize={"3"} bg="green.500" />
+                <AvatarBadge
+                  rounded={"full"}
+                  border={"0.15em solid"}
+                  borderColor={"papayawhip"}
+                  bg="green.500"
+                  w={"1em"}
+                  h={"1em"}
+                  transform={"translate(25%, 25%)"}
+                  right={0}
+                  bottom={"0px"}
+                  justify={"center"}
+                  position={"absolute"}
+                  display={"flex"}
+                />
               </Box>
             </>
           ) : (

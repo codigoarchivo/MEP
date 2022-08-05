@@ -16,15 +16,15 @@ const ShopLayout = ({ children, title }) => {
   return (
     <>
       <Head>
-        <title>{title || "Market | Edgars Pendulum"}</title>
+        <title>{title || "Energía para tu marca"}</title>
         <meta name="author" content="Edgar Marcano" />
-        <meta name="description" content={`energy for you brand ${title}`} />
-        <meta name="keywords" content={`${title}, energy for you brand`} />
+        <meta name="description" content={`energía para tu marca ${title}`} />
+        <meta name="keywords" content={`${title}, energía para tu marca`} />
 
-        <meta property="og:title" content={`energy for you brand ${title}`} />
+        <meta property="og:title" content={`energía para tu marca ${title}`} />
         <meta
           property="og:description"
-          content={`energy for you brand ${title}`}
+          content={`energía para tu marca ${title}`}
         />
         <meta property="og:image" content={`${origin}/img/logo.png`} />
       </Head>

@@ -24,6 +24,9 @@ export const en = {
     aV: "New password",
     aW: "Please check spam",
     aX: "Email validated correctly",
+    aY: "Check in your mail",
+    aZ: "in the mailbox or spam, to verify your data click on the link",
+    aAa: "if you made a mistake with the mail",
   },
   major: {
     mA: "Home",

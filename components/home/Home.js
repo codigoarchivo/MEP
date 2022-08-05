@@ -37,8 +37,8 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
   // use Carousel
   const variant = useBreakpointValue({ base: 1, sm: 2, md: 2, lg: 3, xl: 4 });
 
-  const valImgW = useBreakpointValue({ base: 250, md: 400, lg: 500 });
-  const valImgH = useBreakpointValue({ base: 300, md: 450, lg: 600 });
+  const valImgW = useBreakpointValue({ base: 250, md: 400, lg: 450 });
+  const valImgH = useBreakpointValue({ base: 300, md: 450, lg: 550 });
 
   const { modelE } = ModeColor();
   return (
