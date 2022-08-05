@@ -15,12 +15,6 @@ export const AuthStateChange = () => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user.emailVerified) {
-        console.log("Email is verified");
-      } else {
-        console.log("Email is not verified");
-      }
-
       if (!!user?.uid) {
         dispatch(
           login(

@@ -99,13 +99,13 @@ export const ResetPassword = ({ locale, es, en }) => {
           py={5}
           display={query.mode === "verifyEmail" ? "block" : "none"}
         >
-          <Heading size={"md"} textTransform={"uppercase"}>
+          <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
             {locale === "en" ? en.verify.vG : es.verify.vG}
           </Heading>
-          <Button type="submit" variant={"primary"} h="1.75rem">
+          <Button w={"full"} type="submit" variant={"primary"} h="1.75rem">
             verifyEmail
           </Button>
-          <DividerWithText />
+          <DividerWithText w={"full"} />
           <Center>
             <NavLink
               href={"/"}
