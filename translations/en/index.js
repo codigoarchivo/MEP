@@ -8,7 +8,7 @@ export const en = {
     aF: "You do not have an account?",
     aG: "Did you forget your password?",
     aH: "Sign up",
-    aI: "Check your mail in the spam tray click on the link",
+    aI: "When you sign up check your mail in the spam tray click on the link",
     aJ: "Retrieve",
     aK: "Correct field",
     aL: "Email is required.",

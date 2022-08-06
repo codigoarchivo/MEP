@@ -8,7 +8,7 @@ export const es = {
     aF: "¿No tienes una cuenta?",
     aG: "¿Olvidaste tu contraseña?",
     aH: "Inscribirse",
-    aI: "Revise su correo en la bandeja de spam haga clic en el enlace",
+    aI: "Cuando te registres revisa tu correo en la bandeja de spam haz clic en el enlace",
     aJ: "Recuperar",
     aK: "Campo correcto",
     aL: "Correo electronico es requerido.",
