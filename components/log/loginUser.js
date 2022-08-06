@@ -11,7 +11,6 @@ import {
   FormLabel,
   Input,
   Heading,
-  FormHelperText,
   InputGroup,
   InputRightElement,
   Button,

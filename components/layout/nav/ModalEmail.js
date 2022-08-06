@@ -35,9 +35,11 @@ export const ModalEmail = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setCarga(a?.emailVerified === false ? true : false);
     }, 60000);
+
+    return () => clearTimeout(timer);
   }, [setCarga, a?.emailVerified]);
 
   return (
