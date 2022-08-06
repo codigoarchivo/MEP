@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import { useRouter } from "next/router";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +21,7 @@ import { en } from "../../../translations/en";
 import { es } from "../../../translations/es";
 
 export const ModalEmail = () => {
+  const [carga, setCarga] = useState(false);
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useDispatch
@@ -31,8 +34,14 @@ export const ModalEmail = () => {
     dispatch(logout(err));
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setCarga(a?.emailVerified === false ? true : false);
+    }, 90000);
+  }, [setCarga, a?.emailVerified]);
+
   return (
-    <Modal isCentered isOpen={a?.emailVerified === false ? true : false}>
+    <Modal isCentered isOpen={carga}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{a?.displayName}</ModalHeader>
