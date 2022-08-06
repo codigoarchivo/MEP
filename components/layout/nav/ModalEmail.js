@@ -21,7 +21,7 @@ import { en } from "../../../translations/en";
 import { es } from "../../../translations/es";
 
 export const ModalEmail = () => {
-  const [carga, setCarga] = useState(true);
+  const [carga, setCarga] = useState(false);
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useDispatch
