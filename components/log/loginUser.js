@@ -106,11 +106,6 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
             <CloseButton size="sm" onClick={() => push("/")} />
           </HStack>
           <FormControl>
-            {!emailE && (
-              <FormHelperText color={modelC}>
-                {locale === "en" ? en.auth.aI : es.auth.aI}
-              </FormHelperText>
-            )}
             <FormLabel htmlFor="email" color={modelC}>
               {locale === "en" ? en.mail : es.mail}{" "}
               <Tooltip
