@@ -133,6 +133,7 @@ export function WithSubnavigation() {
               alt="Picture of the author"
               layout="fill"
               objectFit="contain"
+              priority={true}
             />
           </Box>
 

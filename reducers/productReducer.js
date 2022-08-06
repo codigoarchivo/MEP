@@ -15,7 +15,7 @@ export const productReducer = (state = initialStates, action) => {
     case types.productAdd:
       return {
         ...state,
-        list: [...state.list, action.payload],
+        list: [action.payload, ...state.list],
       };
     case types.productEdit:
       return {

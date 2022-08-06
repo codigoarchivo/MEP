@@ -9,7 +9,7 @@ export const cartReducer = (state = initialStates, action) => {
     case types.productActiveCart:
       return {
         ...state,
-        activeCartSelect: [...state.activeCartSelect, action.payload],
+        activeCartSelect: [action.payload, ...state.activeCartSelect],
       };
     case types.productDeleteCart:
       return {

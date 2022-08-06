@@ -9,7 +9,7 @@ export const saveReducer = (state = initialStates, action) => {
     case types.productSaveCart:
       return {
         ...state,
-        saveCartSelect: [...state.saveCartSelect, action.payload],
+        saveCartSelect: [action.payload, ...state.saveCartSelect],
       };
     case types.productDeleteSave:
       return {
