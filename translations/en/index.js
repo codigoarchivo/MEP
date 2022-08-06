@@ -8,7 +8,7 @@ export const en = {
     aF: "You do not have an account?",
     aG: "Did you forget your password?",
     aH: "Sign up",
-    aI: "Enter the email you'd like to receive the newsletter on.",
+    aI: "Check your mail in the spam tray click on the link",
     aJ: "Retrieve",
     aK: "Correct field",
     aL: "Email is required.",
@@ -130,6 +130,7 @@ export const en = {
     vG: "Verify",
     vH: "data to transfer",
     vI: "Submitted Verification",
+    vJ: "Verification to authenticate your account was sent to your email",
   },
   footer: {
     fA: "All rights reserved",

@@ -143,7 +143,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
           <FormControl>
             {!emailE && (
               <FormHelperText mt={0} color={modelC}>
-                {locale === "en" ? en.auth.aI : es.auth.aI}
+                {locale === "en" ? en.auth.aJ : es.auth.aJ}
               </FormHelperText>
             )}
             <FormLabel htmlFor="email" color={modelC}>

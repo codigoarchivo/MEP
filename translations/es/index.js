@@ -8,7 +8,7 @@ export const es = {
     aF: "¿No tienes una cuenta?",
     aG: "¿Olvidaste tu contraseña?",
     aH: "Inscribirse",
-    aI: "Ingrese el correo electrónico en el que desea recibir el boletín.",
+    aI: "Revise su correo en la bandeja de spam haga clic en el enlace",
     aJ: "Recuperar",
     aK: "Campo correcto",
     aL: "Correo electronico es requerido.",
@@ -130,6 +130,7 @@ export const es = {
     vG: "Verificar",
     vH: "datos a transferir",
     vI: "Verificación enviada",
+    vJ: "La verificación para autenticar su cuenta fue enviada a su correo electrónico",
   },
   footer: {
     fA: "Reservados todos los derechos",
