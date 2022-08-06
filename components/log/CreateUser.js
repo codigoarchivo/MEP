@@ -92,7 +92,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
     if (ErrorLorR) {
       return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     } else {
-      const data = locale === "en" ? en.verify.vI : es.verify.vI;
+      const data = locale === "en" ? en.verify.vJ : es.verify.vJ;
       dispatch(
         startRegisterWithNameEmailPassword(email, password, name, err, data)
       );
@@ -143,7 +143,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
           <FormControl>
             {!emailE && (
               <FormHelperText mt={0} color={modelC}>
-                {locale === "en" ? en.auth.aJ : es.auth.aJ}
+                {locale === "en" ? en.auth.aI : es.auth.aI}
               </FormHelperText>
             )}
             <FormLabel htmlFor="email" color={modelC}>
