@@ -37,11 +37,11 @@ export const ModalEmail = () => {
   useEffect(() => {
     setTimeout(() => {
       setCarga(a?.emailVerified === false ? true : false);
-    }, 90000);
+    }, 60000);
   }, [setCarga, a?.emailVerified]);
 
   return (
-    <Modal isCentered isOpen={carga}>
+    <Modal isCentered isOpen={a?.emailVerified !== undefined ? carga : false}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{a?.displayName}</ModalHeader>
