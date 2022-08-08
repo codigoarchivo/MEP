@@ -45,8 +45,10 @@ const User = () => {
   const dispatch = useDispatch();
   // Breakpoints
   const { content5, porcent3, porcent4, bordes } = Breakpoints();
-
+  // useState
   const [urlImage, setUrlImage] = useState("");
+  // useState
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     if (!a.uid) {
@@ -79,6 +81,7 @@ const User = () => {
       )
     );
     Toast(locale === "en" ? en.updated : es.updated, "success", 5000);
+    setProgress(0);
   };
 
   return (
@@ -143,6 +146,8 @@ const User = () => {
                 {locale === "en" ? en.user.uB : es.user.uB}
               </Heading>
               <FileAll
+                progress={progress}
+                setProgress={setProgress}
                 setUrlImage={setUrlImage}
                 fileName={"fotosPerfil"}
                 save={locale === "en" ? en.goup : es.goup}

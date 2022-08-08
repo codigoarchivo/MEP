@@ -47,6 +47,8 @@ export const ProductForm = ({
   handleNumberInputCn,
   handleNumberInputPj,
   handleNumberInputPr,
+  setProgress,
+  progress,
   porcent,
   locale,
   es,
@@ -84,6 +86,8 @@ export const ProductForm = ({
             <HStack justifyContent="space-between" w="full">
               <Box w="full">
                 <FileAll
+                  progress={progress}
+                  setProgress={setProgress}
                   setUrlImage={setUrlImage}
                   fileName={"fotosTienda"}
                   save={change === false ? en.goup : es.goup}
@@ -250,6 +254,8 @@ ProductForm.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   handleNumberInputPj: PropTypes.func.isRequired,
   handleNumberInputPr: PropTypes.func.isRequired,
+  progresslocale: PropTypes.number,
+  setProgresslocale: PropTypes.func,
   porcent: PropTypes.string,
   locale: PropTypes.string,
   es: PropTypes.object,

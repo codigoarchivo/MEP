@@ -47,5 +47,10 @@ export const dbProductEdit = async (id, dbE, val) => {
 
 export const dbUser = async (id) => {
   const docSnap = await getDoc(doc(db, "users", id));
-  return docSnap.id;
+
+  const active = {
+    ...docSnap.data(),
+  };
+  
+  return JSON.parse(JSON.stringify(active));
 };

@@ -72,6 +72,8 @@ export const CheckVerify = ({
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useState
   const [urlImage, setUrlImage] = useState("");
+  // useState
+  const [progress, setProgress] = useState(0);
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
@@ -93,7 +95,7 @@ export const CheckVerify = ({
 
     const d = await dbUser(a.uid);
 
-    if (d === "" || d === undefined) {
+    if (d.na === "" || d.na === undefined) {
       return Toast(locale === "en" ? en.verify.vA : es.verify.vA, "info", 5000);
     } else {
       const err = locale === "en" ? en.error : es.error;
@@ -123,7 +125,8 @@ export const CheckVerify = ({
 
       dispatch(validShop(shop, idThree, err));
       reset();
-      values.imp = "";
+      setUrlImage("");
+      setProgress(0);
     }
   };
 
@@ -350,6 +353,8 @@ export const CheckVerify = ({
               {/* save file */}
               <Box w={"full"} shadow={"lg"} border={bordes} rounded={"sm"}>
                 <FileAll
+                  progress={progress}
+                  setProgress={setProgress}
                   setUrlImage={setUrlImage}
                   fileName={"fotosRecibo"}
                   save={locale === "en" ? en.goup : es.goup}

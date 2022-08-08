@@ -76,6 +76,8 @@ export const ProductData = ({
   const { bordes } = Breakpoints();
   // useState
   const [urlImage, setUrlImage] = useState("");
+  // useState
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const dataPorcent = async () => {
@@ -170,10 +172,10 @@ export const ProductData = ({
     }
     reset();
     setUrlImage("");
+    setProgress(0);
     setporcent({ pr: "" });
     dispatch(enActive());
     Toast(locale === "en" ? en.save : es.save, "success", 5000);
-    back();
   };
 
   // cerrar
@@ -271,6 +273,8 @@ export const ProductData = ({
             change={change}
             word={info}
             onClose={onClose}
+            progress={progress}
+            setProgress={setProgress}
             handleInputChange={handleInputChange}
             handleInputChangeEnEs={handleInputChangeEnEs}
             handleNumberInputCn={handleNumberInputCn}

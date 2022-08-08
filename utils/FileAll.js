@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 
 import PropTypes from "prop-types";
 
@@ -18,8 +18,14 @@ import { Validator } from "../helpers/Validator";
 
 import { Toast } from "../helpers/Toast";
 
-export const FileAll = ({ setUrlImage, fileName, save, image }) => {
-  const [progress, setProgress] = useState(0);
+export const FileAll = ({
+  setUrlImage,
+  setProgress,
+  progress,
+  fileName,
+  save,
+  image,
+}) => {
   // file
   const file = useRef();
 
@@ -90,6 +96,8 @@ export const FileAll = ({ setUrlImage, fileName, save, image }) => {
 
 FileAll.propTypes = {
   setUrlImage: PropTypes.func,
+  setProgress: PropTypes.func,
+  progress: PropTypes.number,
   fileName: PropTypes.string,
   save: PropTypes.string,
   image: PropTypes.string,
