@@ -111,7 +111,7 @@ export const ResetPassword = ({ locale, es, en }) => {
           <DividerWithText w={"full"} />
           <Center>
             <NavLink
-              href={"/"}
+              href={"/auth"}
               variant={"tertiary"}
               name={locale === "en" ? en.major.mA : es.major.mA}
             />
