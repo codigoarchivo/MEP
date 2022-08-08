@@ -93,7 +93,7 @@ export const CheckVerify = ({
 
     const d = await dbUser(a.uid);
 
-    if (d === "" && d === undefined) {
+    if (d === "" || d === undefined) {
       return Toast(locale === "en" ? en.verify.vA : es.verify.vA, "info", 5000);
     } else {
       const err = locale === "en" ? en.error : es.error;
