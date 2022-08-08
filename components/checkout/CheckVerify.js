@@ -1,9 +1,5 @@
 import React, { useState } from "react";
 
-import { doc, getDoc } from "firebase/firestore";
-
-import { db } from "../../firebase/config";
-
 import PropTypes from "prop-types";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -47,6 +43,8 @@ import { Toast } from "../../helpers/Toast";
 import { FileAll } from "../../utils/FileAll";
 import { GridItemForm } from "../../utils/GridItemForm";
 import { GridItemFormTextarea } from "../../utils/GridItemFormTextarea";
+
+import { dbUser } from "../../data/dbProducts";
 
 const initialStates = {
   nap: "",
@@ -93,43 +91,40 @@ export const CheckVerify = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const docSnap = await getDoc(doc(db, "users", a.uid));
+    const d = await dbUser(a.uid);
 
-    if (!!docSnap.id)
-      return Toast(
-        locale === "en" ? en.verify.vA : es.verify.vA,
-        "info",
-        5000
-      );
+    if (d.size.toString() === "0") {
+      return Toast(locale === "en" ? en.verify.vA : es.verify.vA, "info", 5000);
+    } else {
+      const err = locale === "en" ? en.error : es.error;
 
-    const err = locale === "en" ? en.error : es.error;
+      if ([nap, co, imp, fer, dt, ref].includes("") || !urlImage) {
+        return Toast(locale === "en" ? en.fields : es.fields, "error", 5000);
+      }
 
-    if ([nap, co, imp, fer, dt, ref].includes("") || !urlImage) {
-      return Toast(locale === "en" ? en.fields : es.fields, "error", 5000);
+      Toast(locale === "en" ? en.verify.vI : es.verify.vI, "success", 5000);
+
+      const shop = {
+        nap,
+        co,
+        imp,
+        fer,
+        dt,
+        ref,
+        // información del producto
+        product,
+        // uid del principal
+        own: process.env.NEXT_PUBLIC_ROL_A,
+        // uid del comprador que se encuentra logeado
+        buy: a.uid,
+        // tiempo del recibo de la compra
+        cre: Date.now(),
+      };
+
+      dispatch(validShop(shop, idThree, err));
+      reset();
+      values.imp = "";
     }
-
-    Toast(locale === "en" ? en.verify.vI : es.verify.vI, "success", 5000);
-
-    const shop = {
-      nap,
-      co,
-      imp,
-      fer,
-      dt,
-      ref,
-      // información del producto
-      product,
-      // uid del principal
-      own: process.env.NEXT_PUBLIC_ROL_A,
-      // uid del comprador que se encuentra logeado
-      buy: a.uid,
-      // tiempo del recibo de la compra
-      cre: Date.now(),
-    };
-
-    dispatch(validShop(shop, idThree, err));
-    reset();
-    values.imp = "";
   };
 
   const closeVerify = () => {

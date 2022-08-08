@@ -1,6 +1,7 @@
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
   limit,
   query,
@@ -42,4 +43,9 @@ export const dbProductEdit = async (id, dbE, val) => {
       await updateDoc(doc(db, "serchs", id), { cn: val });
       break;
   }
+};
+
+export const dbUser = async (id) => {
+  const docSnap = await getDoc(doc(db, "users", id));
+  return JSON.parse(JSON.stringify(docSnap));
 };
