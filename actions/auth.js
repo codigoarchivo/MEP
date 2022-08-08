@@ -60,7 +60,7 @@ export const startLoginEmailPassword = (email, password, err, data) => {
             );
           } else {
             Toast(data, "success", 5000);
-            logout();
+            dispatch(logout());
           }
 
           await dispatch(finishLoading());
@@ -110,7 +110,7 @@ export const startRegisterWithNameEmailPassword = (
               Toast(data, "success", 5000);
             });
 
-            logout();
+            dispatch(logout());
           }
           // end
           await dispatch(finishLoading());
@@ -258,7 +258,7 @@ export const changeNameImgTel = (
             );
           } else {
             Toast(data, "success", 5000);
-            logout();
+            dispatch(logout());
           }
         })
         .catch(({ message }) => {
