@@ -31,8 +31,6 @@ import {
 
 import { CheckoutScreen } from "../../components/checkout/CheckoutScreen";
 
-import { cheListAllClearBu } from "../../actions/checkout";
-
 import { Toast } from "../../helpers/Toast";
 
 import { en } from "../../translations/en";
@@ -121,7 +119,6 @@ const Checkout = ({ product = [] }) => {
     const err = locale === "en" ? en.error : es.error;
     const u = a.uid;
     dispatch(saveSaleRevert(data, err, u));
-    // dispatch(cheListAllClearBu());
   };
 
   return (
