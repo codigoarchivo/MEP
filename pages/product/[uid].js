@@ -146,8 +146,13 @@ const List = ({ product = [] }) => {
   const handleSerchProduct = async (e) => {
     e.preventDefault();
     try {
-      await setDoc(doc(db, "cifras", "onwer"), { pr: values.q });
-      Toast(locale === "en" ? en.save : es.save, "success", 5000);
+      const dA = process.env.NEXT_PUBLIC_ROL_A;
+
+      if (dA === a.uid) {
+        await setDoc(doc(db, "cifras", "onwer"), { pr: values.q });
+        Toast(locale === "en" ? en.save : es.save, "success", 5000);
+      }
+      
     } catch (error) {
       Toast(locale === "en" ? en.error : es.error, "error", 5000);
     }

@@ -89,6 +89,8 @@ export const SaleVerifyAll = ({
   const poin = useBreakpointValue({ base: "0", md: "15px" });
   const poinB = useBreakpointValue({ base: "15px", md: "0" });
 
+  const dA = process.env.NEXT_PUBLIC_ROL_A;
+
   return (
     <>
       <Stack
@@ -109,6 +111,7 @@ export const SaleVerifyAll = ({
           picture={locale === "en" ? en.picture : es.picture}
         />{" "}
         <Button
+          display={dA !== sal ? "block" : "none"}
           w={{ base: "full", md: "min-content" }}
           fontSize={"small"}
           size={"sm"}

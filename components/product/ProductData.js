@@ -31,6 +31,8 @@ import { useFormAll } from "../../hooks/useFormAll";
 
 import { enActive, esActive } from "../../actions/ui";
 
+import { dbUser } from "../../data/dbProducts";
+
 const initialStates = {
   pr: 0,
   cn: 0,
@@ -111,8 +113,20 @@ export const ProductData = ({
   // values
   const { na, ds, ct, dt, im, id, ps, pj, cn, pr } = values;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (word === "add") {
+      
+      const d = await dbUser(a.uid);
+
+      if (d.na === "" || d.na === undefined)
+        return Toast(
+          locale === "en" ? en.verify.vA : es.verify.vA,
+          "info",
+          5000
+        );
+    }
 
     if (!a.uid) {
       return push("/auth");
