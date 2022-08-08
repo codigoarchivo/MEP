@@ -75,10 +75,11 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
   // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data = locale === "en" ? en.verify.vJ : es.verify.vJ;
     if (ErrorRorL) {
       return Toast(locale === "en" ? en.check : es.check, "error", 5000);
     } else {
-      dispatch(startLoginEmailPassword(email, password, err));
+      dispatch(startLoginEmailPassword(email, password, err, data));
     }
   };
   // handleGooglelogin

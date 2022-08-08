@@ -39,7 +39,7 @@ export const login = (
   },
 });
 
-export const startLoginEmailPassword = (email, password, err) => {
+export const startLoginEmailPassword = (email, password, err, data) => {
   return async (dispatch) => {
     try {
       // start
@@ -47,7 +47,7 @@ export const startLoginEmailPassword = (email, password, err) => {
       // login
       await signInWithEmailAndPassword(auth, email, password)
         .then(async ({ user }) => {
-          if (user) {
+          if (user.emailVerified === true) {
             dispatch(
               login(
                 user.uid,
@@ -58,6 +58,9 @@ export const startLoginEmailPassword = (email, password, err) => {
                 user.emailVerified
               )
             );
+          } else {
+            Toast(data, "success", 5000);
+            logout();
           }
 
           await dispatch(finishLoading());
@@ -91,7 +94,7 @@ export const startRegisterWithNameEmailPassword = (
         .then(async ({ user }) => {
           await updateProfile(auth.currentUser, { displayName: name });
 
-          if (user) {
+          if (user.emailVerified === true) {
             dispatch(
               login(
                 user.uid,
@@ -102,10 +105,12 @@ export const startRegisterWithNameEmailPassword = (
                 user.emailVerified
               )
             );
-
+          } else {
             sendEmailVerification(auth.currentUser).then(() => {
               Toast(data, "success", 5000);
             });
+
+            logout();
           }
           // end
           await dispatch(finishLoading());
@@ -236,7 +241,9 @@ export const changeNameImgTel = (
   displayName,
   email,
   rol,
-  err
+  emailVerified,
+  err,
+  data
 ) => {
   return async (dispatch) => {
     try {
@@ -245,7 +252,14 @@ export const changeNameImgTel = (
         photoURL,
       })
         .then(() => {
-          dispatch(login(uid, displayName, photoURL, email, rol));
+          if (emailVerified === true) {
+            dispatch(
+              login(uid, displayName, photoURL, email, rol, emailVerified)
+            );
+          } else {
+            Toast(data, "success", 5000);
+            logout();
+          }
         })
         .catch(({ message }) => {
           // error

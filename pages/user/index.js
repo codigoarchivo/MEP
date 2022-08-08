@@ -59,13 +59,24 @@ const User = () => {
   // agrega imagen
   values.photoURL = urlImage ? urlImage : values.photoURL;
   // values
-  const { uid, photoURL, displayName } = values;
+  const { uid, photoURL, displayName, emailVerified } = values;
   const err = locale === "en" ? en.error : es.error;
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data = locale === "en" ? en.verify.vJ : es.verify.vJ;
+
     dispatch(
-      changeNameImgTel(uid, photoURL, displayName, a?.email, a?.rol, err)
+      changeNameImgTel(
+        uid,
+        photoURL,
+        displayName,
+        a?.email,
+        a?.rol,
+        a?.emailVerified,
+        err,
+        data
+      )
     );
     Toast(locale === "en" ? en.updated : es.updated, "success", 5000);
   };
