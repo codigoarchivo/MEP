@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 
+import { doc, getDoc } from "firebase/firestore";
+
+import { db } from "../../firebase/config";
+
 import PropTypes from "prop-types";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -86,8 +90,18 @@ export const CheckVerify = ({
   const { nap, co, imp, fer, dt, ref } = values;
 
   // handleSubmit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const docSnap = await getDoc(doc(db, "users", a.uid));
+
+    if (!docSnap.id)
+      return Toast(
+        locale === "en" ? en.verify.vA : es.verify.vA,
+        "info",
+        5000
+      );
+
     const err = locale === "en" ? en.error : es.error;
 
     if ([nap, co, imp, fer, dt, ref].includes("") || !urlImage) {
