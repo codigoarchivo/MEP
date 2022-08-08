@@ -199,7 +199,7 @@ export const handleVerifyEmail = (actionCode, err, message) => {
   return async () => {
     try {
       await applyActionCode(auth, actionCode)
-        .then((resp) => {
+        .then(() => {
           Toast(message, "success", 5000);
         })
         .catch((error) => {

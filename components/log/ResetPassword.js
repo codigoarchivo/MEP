@@ -113,7 +113,7 @@ export const ResetPassword = ({ locale, es, en }) => {
             <NavLink
               href={"/auth"}
               variant={"tertiary"}
-              name={locale === "en" ? en.major.mA : es.major.mA}
+              name={locale === "en" ? en.auth.aA : es.auth.aA}
             />
           </Center>
         </VStack>
