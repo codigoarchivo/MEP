@@ -95,7 +95,7 @@ export const CheckVerify = ({
 
     const docSnap = await getDoc(doc(db, "users", a.uid));
 
-    if (!docSnap.id)
+    if (!!docSnap.id)
       return Toast(
         locale === "en" ? en.verify.vA : es.verify.vA,
         "info",
@@ -129,8 +129,6 @@ export const CheckVerify = ({
 
     dispatch(validShop(shop, idThree, err));
     reset();
-    back();
-
     values.imp = "";
   };
 
