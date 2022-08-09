@@ -184,12 +184,12 @@ export const ProductData = ({
         )
       );
     }
-    reset();
-    setUrlImage("");
     setProgress(0);
-    setporcent({ pr: "" });
+    setUrlImage("");
+    reset();
     dispatch(enActive());
     Toast(locale === "en" ? en.save : es.save, "success", 5000);
+    setporcent({ pr: "" });
   };
 
   // cerrar
