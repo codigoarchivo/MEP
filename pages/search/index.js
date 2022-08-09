@@ -145,7 +145,7 @@ const Search = ({ product }) => {
             {/* Todas las categorias */}
             <SerchCategory locale={locale} en={en} es={es} />
           </VStack>
-          {!listSerch[0] ? (
+          {!product[0] ? (
             <VStack spacing={0}>
               <Center py={"10"} w={"full"}>
                 <Heading size={"sm"} textTransform={"uppercase"}>
@@ -173,20 +173,20 @@ const Search = ({ product }) => {
                   </Heading>
                 </Center>
               )}
-              {listSerch.map((data) => (
+              {product.map((data) => (
                 <SerchScreen key={data.id} {...data} />
               ))}
             </Wrap>
           )}
         </Stack>
         <Box>
-          {listSerch.length > 0 && (
+          {product.length > 0 && (
             <Paginator
               window={"serchs"}
               word={"cre"}
-              list={listSerch}
-              firstVisible={listSerch[0].cre}
-              lastVisible={listSerch[listSerch.length - 1].cre}
+              list={product}
+              firstVisible={product[0].cre}
+              lastVisible={product[product.length - 1].cre}
               newList={serchProductList}
               nLimit={4}
               orHome={"desc"}
