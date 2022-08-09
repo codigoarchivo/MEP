@@ -18,7 +18,7 @@ import { NavLink } from "./Navlink";
 import { Breakpoints } from "../helpers/Breakpoints";
 import { ModeColor } from "../helpers/ModeColor";
 
-export const MenuHistory = ({ color, buys, sales, history }) => {
+export const MenuHistory = ({ color, buys, sales, history, valSpace }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // Breakpoints
@@ -29,10 +29,11 @@ export const MenuHistory = ({ color, buys, sales, history }) => {
     <Menu>
       <MenuButton
         fontSize={["sm"]}
-        variant={"secondary"}
+        variant={"tertiary"}
         as={Button}
         fontWeight={"normal"}
-        color={color}
+        backgroundColor={"brand.900"}
+        px={`${valSpace}`}
       >
         {history}
       </MenuButton>

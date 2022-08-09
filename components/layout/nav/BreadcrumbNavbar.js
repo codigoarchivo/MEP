@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { useSelector } from "react-redux";
 
-import { chakra, Stack } from "@chakra-ui/react";
+import { chakra, Stack, useBreakpointValue } from "@chakra-ui/react";
 
 import { Breakpoints } from "../../../helpers/Breakpoints";
 
@@ -17,8 +17,11 @@ export const BreadcrumbNavbar = ({ NavLink, Box, locale, es, en }) => {
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // Breakpoints
   const { displayOff2, bordes, content5 } = Breakpoints();
-
+  // ListRoute
   const { dataRoute } = ListRoute();
+  // useBreakpointValue
+  const valSpace = useBreakpointValue({ base: "6px", lg: "16px" });
+
   return (
     <Box display={displayOff2} mb={5} borderTop={bordes}>
       <chakra.nav boxShadow="md" backgroundColor={"brand.800"}>
@@ -39,19 +42,19 @@ export const BreadcrumbNavbar = ({ NavLink, Box, locale, es, en }) => {
                 href={ref}
                 as={as}
                 name={nam}
-                px={"10px"}
+                px={`${valSpace}`}
               />
             </chakra.li>
           ))}
 
           <chakra.li
-            mx={"3"}
             display={a.rol === "owner" || a.rol === "user" ? "block" : "none"}
           >
             <MenuHistory
               buys={locale === "en" ? en.major.mB : es.major.mB}
               sales={locale === "en" ? en.major.mC : es.major.mC}
               history={locale === "en" ? en.history : es.history}
+              valSpace={valSpace}
             />
           </chakra.li>
         </Stack>
