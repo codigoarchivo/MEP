@@ -51,9 +51,7 @@ const User = () => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    if (!a.uid) {
-      push("/");
-    }
+    if (!a.uid) push("/");
   });
 
   const { values, handleInputChange } = useFormAll(initialStates, a);
