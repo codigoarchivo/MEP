@@ -99,7 +99,7 @@ export async function getStaticProps({ params }) {
         product,
         msg,
       },
-      revalidate: 86400, // 60 * 60 * 24 revalidate every 24 hours
+      revalidate: 120, //86400 60 * 60 * 24 revalidate every 24 hours
     };
   } catch (error) {
     Toast("Al parecer hay un error", "error", 5000);
