@@ -70,6 +70,7 @@ export async function getStaticProps({ params }) {
       props: {
         category,
       },
+      revalidate: 60 * 60 * 24,
     };
   } catch (error) {
     Toast("Al parecer hay un error", "error", 5000);
@@ -84,7 +85,11 @@ const ConfigCategory = ({ category }) => {
   const { locale, back, query } = useRouter();
   return (
     <ShopLayout title={locale === "en" ? en.major.mF : es.major.mF}>
-      <Container maxW={"container.sm"} px={{ base: 2, md: 4 }} py={{ base: 0, md: 20 }}>
+      <Container
+        maxW={"container.sm"}
+        px={{ base: 2, md: 4 }}
+        py={{ base: 0, md: 20 }}
+      >
         <CategoryData
           category={category}
           pid={query.pid}

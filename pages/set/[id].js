@@ -74,6 +74,7 @@ export async function getStaticProps({ params }) {
       props: {
         product,
       },
+      revalidate: 60 * 60 * 24,
     };
   } catch (error) {
     Toast("Al parecer hay un error", "error", 5000);
