@@ -43,7 +43,7 @@ const storage =
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["ui"],
+  blacklist: ["ui", "list", "serch"],
 };
 
 const appReducer = combineReducers({

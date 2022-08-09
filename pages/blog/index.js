@@ -14,8 +14,13 @@ import { BlogScreen } from "../../components/blog/blogScreen";
 
 import { Toast } from "../../helpers/Toast";
 
-export async function getStaticProps() {
+export async function getServerSideProps(context) {
   try {
+    context.res.setHeader(
+      "Cache-Control",
+      "public, max-age=86400, must-revalidate"
+    );
+
     const categories = await getDocs(collection(db, "categories"));
     const buys = await getDocs(collection(db, "sales"));
     const product = await getDocs(collection(db, "serchs"));
@@ -36,7 +41,6 @@ export async function getStaticProps() {
         buys: buys.size.toString(),
         categories: categories.size.toString(),
       },
-      revalidate: 120, //86400 60 * 60 * 24 revalidate every 24 hours
     };
   } catch (error) {
     Toast("Al parecer hay un error", "error", 5000);
