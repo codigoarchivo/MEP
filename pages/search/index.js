@@ -42,8 +42,13 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
-export async function getStaticProps() {
+export async function getServerSideProps(context) {
   try {
+    context.res.setHeader(
+      "Cache-Control",
+      "public, max-age=120, must-revalidate"
+    );
+
     const q = query(collection(db, "serchs"), orderBy("cre", "desc"), limit(4));
 
     const { docs } = await getDocs(q);

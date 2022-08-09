@@ -23,8 +23,13 @@ import { Toast } from "../helpers/Toast";
 import { en } from "../translations/en";
 import { es } from "../translations/es";
 
-export async function getStaticProps() {
+export async function getServerSideProps(context) {
   try {
+    context.res.setHeader(
+      "Cache-Control",
+      "public, max-age=120, must-revalidate"
+    );
+
     const d = await getDocs(
       query(collection(db, "categories"), orderBy("cre", "desc"), limit(25))
     );
@@ -58,7 +63,6 @@ export async function getStaticProps() {
         product,
         category,
       },
-      revalidate: 120, //86400 60 * 60 * 24 revalidate every 24 hours
     };
   } catch (error) {
     Toast("Al parecer hay un error", "error", 5000);
@@ -77,7 +81,7 @@ const HomeL = ({ product = [], category = [] }) => {
   const { listData = [] } = useSelector(({ list }) => list);
   // dispatch
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     if (!!product[0]) {
       dispatch(productListIndex(product));
