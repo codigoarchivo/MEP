@@ -53,11 +53,8 @@ export const addProduct = (resData = {}, err) => {
         ...resData,
       });
 
-      const data = { ...resData, id };
+      if (id) dispatch(productAdd({ ...resData, id }));
 
-      if (data) {
-        dispatch(productAdd(data));
-      }
     } catch (error) {
       Toast(err, "error", 5000);
     }
@@ -73,7 +70,9 @@ export const editProduct = (data, err) => {
   return async (dispatch) => {
     try {
       await setDoc(doc(db, "serchs", data.id), data);
+
       dispatch(productEdit(data));
+
     } catch (error) {
       Toast(err, "error", 5000);
     }
@@ -89,7 +88,9 @@ export const deleteProduct = (id, err) => {
   return async (dispatch) => {
     try {
       await deleteDoc(doc(db, "serchs", id));
+
       dispatch(productDelete(id));
+
     } catch (error) {
       Toast(err, "error", 5000);
     }
@@ -111,6 +112,7 @@ export const activeProductCart = (data, err, added, already) => {
       }
 
       Toast(added, "success", 5000);
+      
       dispatch(cartProductActive(data));
     } catch (error) {
       Toast(err, "error", 5000);

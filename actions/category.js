@@ -41,10 +41,9 @@ export const addCategory = (na, cre, err) => {
         na,
         cre,
       });
-      const data = { id, na };
-      if (data) {
-        dispatch(categoryAdd(data));
-      }
+
+      if (id) dispatch(categoryAdd({ id, na, cre }));
+      
     } catch (error) {
       Toast(err, "error", 5000);
     }
@@ -64,11 +63,7 @@ export const editCategory = (na, cre, id, err) => {
         cre,
       });
 
-      const data = { id, na };
-
-      if (data) {
-        dispatch(categoryEdit(data));
-      }
+      dispatch(categoryEdit({ id, na, cre }));
     } catch (error) {
       Toast(err, "error", 5000);
     }
@@ -77,13 +72,14 @@ export const editCategory = (na, cre, id, err) => {
 
 const categoryEdit = (data) => ({
   type: types.categoryEdit,
-  payload: { ...data },
+  payload: data,
 });
 
 export const deleteCategory = (id, err) => {
   return async (dispatch) => {
     try {
       await deleteDoc(doc(db, "categories", id));
+
       dispatch(categoryDelete(id));
     } catch (error) {
       Toast(err, "error", 5000);

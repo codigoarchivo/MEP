@@ -1,6 +1,6 @@
 import React from "react";
 
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
 import { db } from "../../firebase/config";
 
@@ -19,37 +19,8 @@ import { UserScreen } from "../../components/user/UserScreen";
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
-export async function getStaticPaths() {
-  const { docs } = await getDocs(collection(db, "users"));
-
-  const user = docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-
-  return {
-    paths: user.map(
-      ({ id }) => (
-        {
-          params: {
-            uid: id,
-          },
-          locale: "en",
-        },
-        {
-          params: {
-            uid: id,
-          },
-          locale: "es",
-        }
-      )
-    ),
-    fallback: "blocking",
-  };
-}
-
-export async function getStaticProps({ params }) {
-  const uid = await params.uid.toString();
+export async function getServerSideProps({ query }) {
+  const uid = await query.uid.toString();
   try {
     const docSnap = await getDoc(doc(db, "users", uid));
 
