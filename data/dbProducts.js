@@ -37,6 +37,17 @@ export const dbProducts = async (i = "", dbP = "", val1, val2) => {
   return JSON.parse(JSON.stringify(data));
 };
 
+export const dbProductsById = async (id) => {
+  const docSnap = await getDoc(doc(db, "serchs", id));
+
+  const product = {
+    id: docSnap.id,
+    ...docSnap.data(),
+  };
+
+  return JSON.parse(JSON.stringify(product));
+};
+
 export const dbProductEdit = async (id, dbE, val) => {
   switch (dbE) {
     case "dbProEditOne":
@@ -51,6 +62,6 @@ export const dbUser = async (id) => {
   const active = {
     ...docSnap.data(),
   };
-  
+
   return JSON.parse(JSON.stringify(active));
 };

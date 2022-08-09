@@ -126,12 +126,15 @@ export const saveProductCart = (data, err) => {
   return async (dispatch, getState) => {
     const { saveCartSelect } = await getState().save;
     try {
+
       const match = await saveCartSelect.find((obj) => obj?.id === data.id);
+
       if (match) {
         dispatch(deleteProductSave(data.id));
       } else {
         dispatch(cartProductSave(data));
       }
+      
     } catch (error) {
       Toast(err, "error", 5000);
     }

@@ -27,6 +27,8 @@ import {
 
 import { cartSaveLatest, saveProductCart } from "../../actions/product";
 
+import { dbProductsById } from "../../data/dbProducts";
+
 import { LoveIcon } from "../../helpers/IconNew";
 import { Toast } from "../../helpers/Toast";
 import { Breakpoints } from "../../helpers/Breakpoints";
@@ -50,6 +52,10 @@ export const SerchScreen = ({
   uid,
   pj,
 }) => {
+  // selector
+  const { activeCartSelect = [] } = useSelector(({ cart }) => cart);
+  // selector
+  const { saveCartSelect = [] } = useSelector(({ save }) => save);
   // useRef
   const match = useRef();
   // useRef
@@ -58,11 +64,6 @@ export const SerchScreen = ({
   const { bordes } = Breakpoints();
   // Breakpoints
   const { push, locale } = useRouter();
-  // selector
-  const { activeCartSelect = [] } = useSelector(({ cart }) => cart);
-  // selector
-  const { saveCartSelect = [] } = useSelector(({ save }) => save);
-
   // dispatch
   const dispatch = useDispatch();
   // disclosure
@@ -81,25 +82,26 @@ export const SerchScreen = ({
     ps,
     uid,
     pj,
-    est: rat?.est || [],
   };
 
-  // ref
+  // cart activo
   match.current = useMemo(
     () => activeCartSelect.map((item) => item.id).includes(id),
     [activeCartSelect, id]
   );
-  // ref
+  
+  // guardado para mas tarde
   matchValid.current = useMemo(
     () => saveCartSelect.map((item) => item.id).includes(id),
     [saveCartSelect, id]
   );
 
-  // select
+  // cart activo
   const handleSelect = () => {
     if (cn <= 1) {
       return Toast(locale === "en" ? en.amount : es.amount, "info", 5000);
     }
+
     // activeCartSelect
     if (match.current) {
       return Toast(
@@ -108,6 +110,7 @@ export const SerchScreen = ({
         5000
       );
     }
+
     // saveCartSelect
     if (matchValid.current) {
       push("/cart");
@@ -121,23 +124,38 @@ export const SerchScreen = ({
         id,
       },
     });
+
     const err = locale === "en" ? en.error : es.error;
     dispatch(cartSaveLatest(data, err));
   };
 
-  // save
-  const handleSave = () => {
-    if (cn <= 1) {
+  // guardado para mas tarde
+  const handleSave = async () => {
+    const product = await dbProductsById(id);
+
+    if (product.na === undefined || product.na === "") {
+      return Toast(
+        locale === "en" ? en.search.sG : es.search.sG,
+        "error",
+        5000
+      );
+    }
+
+    if (product.cn <= 1) {
       return Toast(locale === "en" ? en.amount : es.amount, "info", 5000);
     }
+
     // activeCartSelect
     if (match.current) {
+
       return Toast(
         locale === "en" ? en.search.sF : es.search.sF,
         "error",
         5000
       );
+
     } else {
+
       Toast(
         matchValid.current
           ? locale === "en"
@@ -149,8 +167,12 @@ export const SerchScreen = ({
         matchValid.current ? "error" : "success",
         5000
       );
+
       const err = locale === "en" ? en.error : es.error;
-      dispatch(saveProductCart(data, err));
+
+      dispatch(saveProductCart(product, err));
+
+      dispatch(cartSaveLatest(product, err));
     }
   };
 
@@ -222,11 +244,7 @@ export const SerchScreen = ({
                   ratingValue={rat !== undefined ? rat.est : 0}
                   readonly={true}
                 />
-                <Text
-                  h={"full"}
-                  fontSize={"lg"}
-                  fontWeight={"bold"}
-                >
+                <Text h={"full"} fontSize={"lg"} fontWeight={"bold"}>
                   {rat !== undefined ? rat.nam : "0.0"}
                 </Text>{" "}
               </HStack>
