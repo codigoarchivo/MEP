@@ -85,7 +85,7 @@ const Informacion = ({ user = {} }) => {
     <ShopLayout title={locale === "en" ? en.user.uF : es.user.uF}>
       <Container maxW="lg" px={{ base: 2, md: 4 }}>
         <UserScreen
-          user={{ ...user }}
+          user={user}
           locale={locale}
           back={back}
           push={push}

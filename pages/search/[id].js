@@ -94,7 +94,12 @@ export async function getStaticProps({ params }) {
       };
     }
 
-    return { props: { product, msg } };
+    return {
+      props: {
+        product,
+        msg,
+      },
+    };
   } catch (error) {
     Toast("Al parecer hay un error", "error", 5000);
     return { props: { message: [], product: {} } };
