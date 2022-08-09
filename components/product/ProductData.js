@@ -189,7 +189,6 @@ export const ProductData = ({
     reset();
     dispatch(enActive());
     Toast(locale === "en" ? en.save : es.save, "success", 5000);
-    setporcent({ pr: "" });
   };
 
   // cerrar
