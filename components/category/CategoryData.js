@@ -89,7 +89,6 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
     pid === "Delete" && dispatch(deleteCategory(id, err));
 
     reset();
-    back();
     Toast(locale === "en" ? en.save : es.save, "success", 5000);
     dispatch(enActive());
   };
