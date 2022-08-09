@@ -19,4 +19,13 @@ module.exports = {
       "image/webp",
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/search/:uid",
+        destination: "/",
+        permanent: false,
+      },
+    ];
+  },
 };
