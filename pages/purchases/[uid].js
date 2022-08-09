@@ -27,8 +27,8 @@ import { Toast } from "../../helpers/Toast";
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
-export async function getServerSideProps(Context) {
-  const u = await Context.query.uid.toString();
+export async function getServerSideProps(context) {
+  const u = await context.query.uid.toString();
   try {
     const { docs } = await getDocs(
       query(

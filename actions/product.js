@@ -54,7 +54,6 @@ export const addProduct = (resData = {}, err) => {
       });
 
       if (id) dispatch(productAdd({ ...resData, id }));
-
     } catch (error) {
       Toast(err, "error", 5000);
     }
@@ -72,7 +71,6 @@ export const editProduct = (data, err) => {
       await setDoc(doc(db, "serchs", data.id), data);
 
       dispatch(productEdit(data));
-
     } catch (error) {
       Toast(err, "error", 5000);
     }
@@ -90,7 +88,6 @@ export const deleteProduct = (id, err) => {
       await deleteDoc(doc(db, "serchs", id));
 
       dispatch(productDelete(id));
-
     } catch (error) {
       Toast(err, "error", 5000);
     }
@@ -112,7 +109,7 @@ export const activeProductCart = (data, err, added, already) => {
       }
 
       Toast(added, "success", 5000);
-      
+
       dispatch(cartProductActive(data));
     } catch (error) {
       Toast(err, "error", 5000);
@@ -176,6 +173,7 @@ export const saveSale = (data = [], del, u) => {
       let list = [];
       data.map(async (item) => {
         item.cre = Date.now();
+        
         // resta la cantidad del producto
         await dbProductEdit(item.product.id, "dbProEditOne", item.product.cnr);
 

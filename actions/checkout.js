@@ -13,22 +13,26 @@ export const validPago = (
   idThree = "",
   sal = "",
   err,
-  buy,
+  buy
 ) => {
   return async (dispatch) => {
     try {
-      dispatch(cheListHistory({ ...referencia, process: true }));
+      dispatch(
+        cheListHistory({ ...referencia, process: true, cre: Date.now() })
+      );
 
       if (dA.toString() === sal.toString()) {
         // principal
         await updateDoc(doc(db, "sales", idThree), {
           process: true,
+          cre: Date.now(),
         });
 
         // buy
         await updateDoc(doc(db, "users", buy, "buys", idThree), {
           process: true,
           sal: sal.toString(), // solo para la informacion para cliente
+          cre: Date.now(),
         });
       }
 
@@ -47,11 +51,13 @@ export const validPago = (
         await updateDoc(doc(db, "users", buy, "buys", idThree), {
           process: true,
           sal: sal.toString(), // solo para la informacion para cliente
+          cre: Date.now(),
         });
 
         // principal
         await updateDoc(doc(db, "sales", idThree), {
           process: true,
+          cre: Date.now(),
         });
       }
     } catch (error) {
