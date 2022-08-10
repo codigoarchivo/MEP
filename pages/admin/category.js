@@ -93,10 +93,9 @@ const Category = ({ data = [] }) => {
     if (a?.rol === "user") {
       push("/");
     }
-  })
-  
+  });
 
-  const err = locale === "en" ? en.error : es.error;
+  const err = locale === "en-US" ? en.error : es.error;
   useEffect(() => {
     if (!!data[0]) {
       dispatch(listDataCategory(data, err));
@@ -113,26 +112,26 @@ const Category = ({ data = [] }) => {
 
   const { modelC } = ModeColor();
   return (
-    <ShopLayout title={locale === "en" ? en.categories : es.categories}>
+    <ShopLayout title={locale === "en-US" ? en.categories : es.categories}>
       {a?.rol === "owner" ? (
         <Container maxW={"container.sm"} my={10} px={{ base: 2, md: 4 }}>
           <Box p={{ base: 0, md: 5 }}>
             {!list[0] && (
               <Center border={bordes} py={30}>
                 <Heading size={"sm"} textTransform={"uppercase"}>
-                  {locale === "en" ? en.category.cA : es.category.cA}
+                  {locale === "en-US" ? en.category.cA : es.category.cA}
                 </Heading>
               </Center>
             )}
             <TableContainer w={"full"} border={bordes}>
               <Table colorScheme="brand">
                 <TableCaption color={modelC}>
-                  {locale === "en" ? en.category.cB : es.category.cB}
+                  {locale === "en-US" ? en.category.cB : es.category.cB}
                 </TableCaption>
                 <Thead>
                   <Tr>
                     <Th color={modelC}>
-                      {locale === "en" ? en.categories : es.categories}
+                      {locale === "en-US" ? en.categories : es.categories}
                     </Th>
                     <Th isNumeric textAlign={center}>
                       <Button
@@ -143,7 +142,7 @@ const Category = ({ data = [] }) => {
                         textTransform="uppercase"
                         fontSize={"x-small"}
                       >
-                        {locale === "en" ? en.add : es.add}
+                        {locale === "en-US" ? en.add : es.add}
                       </Button>
                     </Th>
                   </Tr>
@@ -153,9 +152,9 @@ const Category = ({ data = [] }) => {
                     <CategoryScreen
                       key={key}
                       {...data}
-                      edi={locale === "en" ? en.edit : es.edit}
-                      del={locale === "en" ? en.delete : es.delete}
-                      cC={locale === "en" ? en.category.cC : es.category.cC}
+                      edi={locale === "en-US" ? en.edit : es.edit}
+                      del={locale === "en-US" ? en.delete : es.delete}
+                      cC={locale === "en-US" ? en.category.cC : es.category.cC}
                       push={push}
                       locale={locale}
                     />

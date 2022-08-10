@@ -87,7 +87,7 @@ const BuyData = ({ product = [] }) => {
         <Stack flexDirection={"row"} my={{ base: 0, md: 20 }} w={full}>
           <VStack w={full} spacing={5}>
             <Heading w={full} as="h2" size="lg" fontWeight="semibold">
-              {locale === "en" ? en.historyBuy.sA : es.historyBuy.sA}
+              {locale === "en-US" ? en.historyBuy.sA : es.historyBuy.sA}
             </Heading>
             <VStack w={full} p={{ base: 2, md: 5 }} border={bordes}>
               <Heading
@@ -99,10 +99,10 @@ const BuyData = ({ product = [] }) => {
                 mb={10}
               >
                 {!!databuy[0]
-                  ? locale === "en"
+                  ? locale === "en-US"
                     ? en.historyBuy.sB
                     : es.historyBuy.sB
-                  : locale === "en"
+                  : locale === "en-US"
                   ? en.historyBuy.sC
                   : es.historyBuy.sC}
               </Heading>
@@ -111,14 +111,14 @@ const BuyData = ({ product = [] }) => {
                   key={key}
                   {...item}
                   count={(key += 1)}
-                  name={locale === "en" ? en.name : es.name}
-                  quantity={locale === "en" ? en.quantity : es.quantity}
-                  tax={locale === "en" ? en.tax : es.tax}
-                  unit={locale === "en" ? en.unit : es.unit}
-                  price={locale === "en" ? en.price : es.price}
-                  paid={locale === "en" ? en.paid : es.paid}
-                  pro={locale === "en" ? en.process : es.process}
-                  sF={locale === "en" ? en.historyBuy.sF : es.historyBuy.sF}
+                  name={locale === "en-US" ? en.name : es.name}
+                  quantity={locale === "en-US" ? en.quantity : es.quantity}
+                  tax={locale === "en-US" ? en.tax : es.tax}
+                  unit={locale === "en-US" ? en.unit : es.unit}
+                  price={locale === "en-US" ? en.price : es.price}
+                  paid={locale === "en-US" ? en.paid : es.paid}
+                  pro={locale === "en-US" ? en.process : es.process}
+                  sF={locale === "en-US" ? en.historyBuy.sF : es.historyBuy.sF}
                   push={push}
                   locale={locale}
                 />

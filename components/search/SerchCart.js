@@ -75,7 +75,7 @@ export const SerchCart = ({ active, save }) => {
       >
         {!active[0] ? (
           <Heading my={20} w={full} textAlign={"center"}>
-            {locale === "en" ? en.empty : es.empty}
+            {locale === "en-US" ? en.empty : es.empty}
           </Heading>
         ) : (
           <>
@@ -87,13 +87,13 @@ export const SerchCart = ({ active, save }) => {
             >
               <Table colorScheme="brand">
                 <TableCaption color={modelC}>
-                  {locale === "en" ? en.cart.cA : es.cart.cA}
+                  {locale === "en-US" ? en.cart.cA : es.cart.cA}
                 </TableCaption>
                 <Thead>
                   <Tr>
                     <Th></Th>
                     <Th color={modelC} isNumeric>
-                      {locale === "en" ? en.action : es.action}
+                      {locale === "en-US" ? en.action : es.action}
                     </Th>
                   </Tr>
                 </Thead>
@@ -124,17 +124,17 @@ export const SerchCart = ({ active, save }) => {
                   onClick={handlecartActive}
                   size={"md"}
                 >
-                  {locale === "en" ? en.cart.cB : es.cart.cB}
+                  {locale === "en-US" ? en.cart.cB : es.cart.cB}
                 </Button>
                 <Text w={full}>
-                  {locale === "en" ? en.cart.cC : es.cart.cC}{" "}
+                  {locale === "en-US" ? en.cart.cC : es.cart.cC}{" "}
                   <Button
                     onClick={() => push("/search")}
                     textTransform={"uppercase"}
                     variant={"primary"}
                     size={"sm"}
                   >
-                    {locale === "en" ? en.clickHere : es.clickHere}
+                    {locale === "en-US" ? en.clickHere : es.clickHere}
                   </Button>{" "}
                 </Text>
               </Stack>
@@ -146,9 +146,9 @@ export const SerchCart = ({ active, save }) => {
               locale={locale}
               en={en}
               es={es}
-              close={locale === "en" ? en.close : es.close}
-              toBuy={locale === "en" ? en.toBuy : es.toBuy}
-              del={locale === "en" ? en.delete : en.delete}
+              close={locale === "en-US" ? en.close : es.close}
+              toBuy={locale === "en-US" ? en.toBuy : es.toBuy}
+              del={locale === "en-US" ? en.delete : en.delete}
               push={push}
             />
           </>
@@ -160,13 +160,13 @@ export const SerchCart = ({ active, save }) => {
         <TableContainer variant="striped" w={full} my={10} border={bordes}>
           <Table variant="simple" colorScheme="brand">
             <TableCaption color={modelC}>
-              {locale === "en" ? en.cart.cI : en.cart.cI}
+              {locale === "en-US" ? en.cart.cI : en.cart.cI}
             </TableCaption>
             <Thead>
               <Tr>
                 <Th></Th>
-                <Th color={modelC} >
-                  {locale === "en" ? en.quantity : en.quantity}
+                <Th color={modelC}>
+                  {locale === "en-US" ? en.quantity : en.quantity}
                 </Th>
                 <Th color={modelC}>Total</Th>
                 <Th></Th>
@@ -180,11 +180,11 @@ export const SerchCart = ({ active, save }) => {
                   locale={locale}
                   en={en}
                   es={es}
-                  err={locale === "en" ? en.error : es.error}
-                  added={locale === "en" ? en.cart.cG : es.cart.cG}
-                  already={locale === "en" ? en.cart.cH : es.cart.cH}
-                  removed={locale === "en" ? en.removed : es.removed}
-                  picture={locale === "en" ? en.picture : es.picture}
+                  err={locale === "en-US" ? en.error : es.error}
+                  added={locale === "en-US" ? en.cart.cG : es.cart.cG}
+                  already={locale === "en-US" ? en.cart.cH : es.cart.cH}
+                  removed={locale === "en-US" ? en.removed : es.removed}
+                  picture={locale === "en-US" ? en.picture : es.picture}
                 />
               ))}
             </Tbody>

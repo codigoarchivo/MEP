@@ -36,7 +36,7 @@ export async function getStaticPaths() {
           params: {
             id,
           },
-          locale: "en",
+          locale: "en-US",
         },
         {
           params: {
@@ -89,7 +89,9 @@ const Orders = ({ active }) => {
   const { bordes } = Breakpoints();
 
   return (
-    <ShopLayout title={locale === "en" ? en.historySale.sD : es.historySale.sD}>
+    <ShopLayout
+      title={locale === "en-US" ? en.historySale.sD : es.historySale.sD}
+    >
       <Container
         maxW={"container.xl"}
         px={{ base: 2, md: 4 }}

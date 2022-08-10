@@ -102,7 +102,7 @@ export const SerchCartSave = ({
                   item.im ||
                   `https://via.placeholder.com/100.png?text=${picture}`
                 }
-                alt={locale === "en" ? item.na.en : item.na.es}
+                alt={locale === "en-US" ? item.na.en : item.na.es}
                 layout="fill"
                 objectFit="cover"
                 objectPosition="center"
@@ -113,21 +113,21 @@ export const SerchCartSave = ({
             <VStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {locale === "en" ? en.name : es.name}:
+                  {locale === "en-US" ? en.name : es.name}:
                 </Heading>
                 <Text size={"sm"}>
-                  {locale === "en" ? item.na.en : item.na.es}
+                  {locale === "en-US" ? item.na.en : item.na.es}
                 </Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {locale === "en" ? en.price : es.price}:
+                  {locale === "en-US" ? en.price : es.price}:
                 </Heading>
                 <Text size={"sm"}>${item.pr}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {locale === "en" ? en.available : es.available}:
+                  {locale === "en-US" ? en.available : es.available}:
                 </Heading>
                 <Text size={"sm"}>N°{item.cn - 1}</Text>
               </HStack>
@@ -161,7 +161,7 @@ export const SerchCartSave = ({
                   onClick={handleSelect}
                 >
                   <SmallAddIcon color={modelC} w={3} h={3} />
-                  <Text>{locale === "en" ? en.add : es.add}</Text>
+                  <Text>{locale === "en-US" ? en.add : es.add}</Text>
                 </HStack>
               </MenuItem>
 
@@ -174,7 +174,7 @@ export const SerchCartSave = ({
                   onClick={handleDeleteSave}
                 >
                   <DeleteIcon color={modelC} w={3} h={3} />
-                  <Text>{locale === "en" ? en.delete : es.delete}</Text>
+                  <Text>{locale === "en-US" ? en.delete : es.delete}</Text>
                 </HStack>
               </MenuItem>
             </MenuList>

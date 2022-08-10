@@ -78,7 +78,7 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, im, pr, pj, ps }) => {
             <Box w={155} h={155} position={"relative"}>
               <Image
                 src={im || "https://via.placeholder.com/155.png?text=Imagen"}
-                alt={locale === "en" ? na.en : na.es}
+                alt={locale === "en-US" ? na.en : na.es}
                 layout="fill"
                 objectFit="cover"
                 objectPosition="center"
@@ -89,50 +89,50 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, im, pr, pj, ps }) => {
             <VStack spacing={1}>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {locale === "en" ? en.name : es.name}:
+                  {locale === "en-US" ? en.name : es.name}:
                 </Heading>
-                <Text size={"sm"}>{locale === "en" ? na.en : na.es}</Text>
+                <Text size={"sm"}>{locale === "en-US" ? na.en : na.es}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {locale === "en" ? en.description : es.description}:
+                  {locale === "en-US" ? en.description : es.description}:
                 </Heading>
-                <Text size={"sm"}> {locale === "en" ? ds.en : ds.es}</Text>
+                <Text size={"sm"}> {locale === "en-US" ? ds.en : ds.es}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {locale === "en" ? en.price : es.price}:
+                  {locale === "en-US" ? en.price : es.price}:
                 </Heading>
                 <Text size={"sm"}>${pr}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {locale === "en" ? en.quantity : es.quantity}:
+                  {locale === "en-US" ? en.quantity : es.quantity}:
                 </Heading>
                 <Text size={"sm"}>N°{cn}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {locale === "en" ? en.percentage : es.percentage}:
+                  {locale === "en-US" ? en.percentage : es.percentage}:
                 </Heading>
                 <Text size={"sm"}>%{pj}</Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {locale === "en" ? en.major.mF : es.major.mF}:
+                  {locale === "en-US" ? en.major.mF : es.major.mF}:
                 </Heading>
                 <Text size={"sm"}>
                   {list.map((i) => {
                     if (i.id === ct)
-                      return locale === "en" ? i?.na.en : i?.na.es;
+                      return locale === "en-US" ? i?.na.en : i?.na.es;
                   })}
                 </Text>
               </HStack>
               <HStack w={full}>
                 <Heading as="h3" size="sm">
-                  {locale === "en" ? en.guy : es.guy}:
+                  {locale === "en-US" ? en.guy : es.guy}:
                 </Heading>
-                <Text size={"sm"}>{locale === "en" ? ps.en : ps.es}</Text>
+                <Text size={"sm"}>{locale === "en-US" ? ps.en : ps.es}</Text>
               </HStack>
             </VStack>
           </HStack>
@@ -153,7 +153,7 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, im, pr, pj, ps }) => {
                   onClick={handleDetails}
                 >
                   <ExternalLinkIcon color={modelC} w={3} h={3} />
-                  <Text>{locale === "en" ? en.details : es.details}</Text>
+                  <Text>{locale === "en-US" ? en.details : es.details}</Text>
                 </HStack>
               </MenuItem>
 
@@ -166,7 +166,7 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, im, pr, pj, ps }) => {
                   onClick={handleEdit}
                 >
                   <EditIcon color={modelC} w={3} h={3} />
-                  <Text>{locale === "en" ? en.edit : es.edit}</Text>
+                  <Text>{locale === "en-US" ? en.edit : es.edit}</Text>
                 </HStack>
               </MenuItem>
 
@@ -179,7 +179,7 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, im, pr, pj, ps }) => {
                   onClick={handleDelete}
                 >
                   <DeleteIcon color={modelC} w={3} h={3} />
-                  <Text>{locale === "en" ? en.delete : es.delete}</Text>
+                  <Text>{locale === "en-US" ? en.delete : es.delete}</Text>
                 </HStack>
               </MenuItem>
             </MenuList>

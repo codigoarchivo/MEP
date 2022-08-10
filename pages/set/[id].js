@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 
 import { db } from "../../firebase/config";
 
@@ -16,7 +16,7 @@ import { ProductData } from "../../components/product/ProductData";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
-import { Toast } from "../../helpers/Toast";
+import { dbSerch } from "../../data/dbSerch";
 
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
@@ -24,19 +24,19 @@ import { es } from "../../translations/es";
 export async function getStaticPaths() {
   const { docs } = await getDocs(collection(db, "serchs"));
 
-  const producto = docs.map((doc) => ({
+  const product = docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }));
 
   return {
-    paths: producto.map(
+    paths: product.map(
       ({ id }) => (
         {
           params: {
             id,
           },
-          locale: "en",
+          locale: "en-US",
         },
         {
           params: {
@@ -52,36 +52,24 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const id = await params.id.toString();
-  try {
-    const docSnap = await getDoc(doc(db, "serchs", id));
 
-    const product = {
-      id: docSnap.id,
-      ...docSnap.data(),
-    };
+  const product = await dbSerch(id);
 
-    if (!product) {
-      return {
-        // notFound: true, // Devolverá la página 404
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
+  if (!product) {
     return {
-      props: {
-        product,
+      redirect: {
+        destination: "/",
+        permanent: false,
       },
-      revalidate: 60 * 60 * 24,
-    };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return {
-      props: {},
     };
   }
+
+  return {
+    props: {
+      product,
+    },
+    revalidate: 86400, // 60 * 60 * 24,
+  };
 }
 
 const ConfigDashboard = ({ product = {} }) => {

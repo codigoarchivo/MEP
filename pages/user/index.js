@@ -60,11 +60,11 @@ const User = () => {
   values.photoURL = urlImage ? urlImage : values.photoURL;
   // values
   const { uid, photoURL, displayName, emailVerified } = values;
-  const err = locale === "en" ? en.error : es.error;
+  const err = locale === "en-US" ? en.error : es.error;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = locale === "en" ? en.verify.vJ : es.verify.vJ;
+    const data = locale === "en-US" ? en.verify.vJ : es.verify.vJ;
 
     dispatch(
       changeNameImgTel(
@@ -78,12 +78,12 @@ const User = () => {
         data
       )
     );
-    Toast(locale === "en" ? en.updated : es.updated, "success", 5000);
+    Toast(locale === "en-US" ? en.updated : es.updated, "success", 5000);
     setProgress(0);
   };
 
   return (
-    <ShopLayout title={locale === "en" ? en.user.uA : es.user.uA}>
+    <ShopLayout title={locale === "en-US" ? en.user.uA : es.user.uA}>
       <Container
         maxW={"container.lg"}
         px={{ base: 2, md: 4 }}
@@ -91,14 +91,14 @@ const User = () => {
       >
         <VStack mb={{ base: 5, md: 10 }}>
           <Heading textTransform={"capitalize"} size={"lg"} textAlign="center">
-            {locale === "en" ? en.user.uA : es.user.uA}
+            {locale === "en-US" ? en.user.uA : es.user.uA}
           </Heading>
           <Heading
             size={"sm"}
             textTransform={"capitalize"}
             fontWeight={"normal"}
           >
-            {locale === "en" ? en.user.uB : es.user.uB}
+            {locale === "en-US" ? en.user.uB : es.user.uB}
           </Heading>
         </VStack>
         <Stack
@@ -117,7 +117,7 @@ const User = () => {
             </Box>
             <VStack>
               <Heading size={"md"}>
-                {locale === "en" ? en.user.uC : es.user.uC}
+                {locale === "en-US" ? en.user.uC : es.user.uC}
               </Heading>
               <Heading
                 textTransform={"capitalize"}
@@ -141,25 +141,25 @@ const User = () => {
                 w={"full"}
                 fontWeight={"normal"}
               >
-                {locale === "en" ? en.user.uB : es.user.uB}
+                {locale === "en-US" ? en.user.uB : es.user.uB}
               </Heading>
               <FileAll
                 progress={progress}
                 setProgress={setProgress}
                 setUrlImage={setUrlImage}
                 fileName={"fotosPerfil"}
-                save={locale === "en" ? en.goup : es.goup}
-                image={locale === "en" ? en.image : es.image}
+                save={locale === "en-US" ? en.goup : es.goup}
+                image={locale === "en-US" ? en.image : es.image}
               />
 
               <Input
                 onChange={handleInputChange}
                 value={displayName}
                 name={"displayName"}
-                placeholder={locale === "en" ? en.user.uC : es.user.uC}
+                placeholder={locale === "en-US" ? en.user.uC : es.user.uC}
               />
               <Button variant={"primary"} type="submit" ml={3}>
-                {locale === "en" ? en.save : es.save}
+                {locale === "en-US" ? en.save : es.save}
               </Button>
             </VStack>
           </chakra.form>

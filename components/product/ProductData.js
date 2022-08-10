@@ -121,7 +121,7 @@ export const ProductData = ({
 
       if (d.na === "" || d.na === undefined)
         return Toast(
-          locale === "en" ? en.verify.vA : es.verify.vA,
+          locale === "en-US" ? en.verify.vA : es.verify.vA,
           "info",
           5000
         );
@@ -132,10 +132,10 @@ export const ProductData = ({
     }
 
     if (ErrorRetur && word !== "delete") {
-      return Toast(locale === "en" ? en.check : es.check, "error", 5000);
+      return Toast(locale === "en-US" ? en.check : es.check, "error", 5000);
     }
 
-    const err = locale === "en" ? en.error : es.error;
+    const err = locale === "en-US" ? en.error : es.error;
 
     if (word === "delete") {
       dispatch(deleteProduct(id, err));
@@ -192,7 +192,7 @@ export const ProductData = ({
     setUrlImage("");
     reset();
     dispatch(enActive());
-    Toast(locale === "en" ? en.save : es.save, "success", 5000);
+    Toast(locale === "en-US" ? en.save : es.save, "success", 5000);
   };
 
   // cerrar

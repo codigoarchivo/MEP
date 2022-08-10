@@ -17,7 +17,7 @@ export const LogoutAllClear = () => {
   const { locale } = useRouter();
 
   const handleLogout = () => {
-    const err = locale === "en" ? en.error : es.error;
+    const err = locale === "en-US" ? en.error : es.error;
     dispatch(logout(err));
   };
 
@@ -28,7 +28,7 @@ export const LogoutAllClear = () => {
       leftIcon={<Logout />}
       onClick={handleLogout}
     >
-      {locale === "en" ? en.logout : es.logout}
+      {locale === "en-US" ? en.logout : es.logout}
     </Button>
   );
 };

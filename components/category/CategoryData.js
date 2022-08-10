@@ -65,10 +65,10 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let err = locale === "en" ? en.error : es.error;
+    let err = locale === "en-US" ? en.error : es.error;
 
     if (ErrorCatData) {
-      return Toast(locale === "en" ? en.check : es.check, "error", 5000);
+      return Toast(locale === "en-US" ? en.check : es.check, "error", 5000);
     }
 
     if (pid === "Add") {
@@ -76,7 +76,7 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
 
       if (r > 0) {
         return Toast(
-          locale === "en" ? en.category.cD : es.category.cD,
+          locale === "en-US" ? en.category.cD : es.category.cD,
           "error",
           5000
         );
@@ -89,7 +89,7 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
     pid === "Delete" && dispatch(deleteCategory(id, err));
 
     reset();
-    Toast(locale === "en" ? en.save : es.save, "success", 5000);
+    Toast(locale === "en-US" ? en.save : es.save, "success", 5000);
     dispatch(enActive());
   };
 

@@ -58,10 +58,10 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
           mb={{ base: 5, md: 0 }}
         >
           <Heading w={"full"} fontSize={points25} wordBreak={"break-word"}>
-            {locale === "en" ? en.home.hA : es.home.hA}
+            {locale === "en-US" ? en.home.hA : es.home.hA}
           </Heading>
           <Text size={["sx", "sm", "md", "lg", "xl"]} wordBreak={"break-word"}>
-            {locale === "en" ? en.home.hB : es.home.hB}
+            {locale === "en-US" ? en.home.hB : es.home.hB}
           </Text>
         </VStack>
         <Image
@@ -89,7 +89,7 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
           size={"sm"}
           color={"brand.900"}
         >
-          {locale === "en" ? en.home.hC : es.home.hC}
+          {locale === "en-US" ? en.home.hC : es.home.hC}
         </Heading>
         <Box>
           <NavLink
@@ -97,7 +97,7 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
             color={"brand.700"}
             size={"sm"}
             variant={"primary"}
-            name={locale === "en" ? en.create : es.create}
+            name={locale === "en-US" ? en.create : es.create}
             href={"/auth/create"}
           />
         </Box>
@@ -106,7 +106,7 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
         {listData[0] ? (
           <Stack w={"full"} spacing={10}>
             <Heading w={"full"} fontSize={points25}>
-              {locale === "en" ? en.home.hD : es.home.hD}
+              {locale === "en-US" ? en.home.hD : es.home.hD}
             </Heading>
             <HStack>
               <Marquee gradient={false} style={{ height: "420px" }}>
@@ -123,7 +123,7 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
         {!!latestCartSelect[2] ? (
           <Stack w={"full"} spacing={0} justifyContent={"center"}>
             <Heading w={"full"} size={"lg"} fontSize={points25} mb={10}>
-              {locale === "en" ? en.home.hE : es.home.hE}
+              {locale === "en-US" ? en.home.hE : es.home.hE}
             </Heading>
 
             <Carousel

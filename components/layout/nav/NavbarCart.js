@@ -100,19 +100,19 @@ export const NavbarCart = () => {
                 <VStack spacing={0}>
                   {[
                     {
-                      nombre: locale === "en" ? en.name : es.name,
-                      Valor: locale === "en" ? item.na.en : item.na.es,
+                      nombre: locale === "en-US" ? en.name : es.name,
+                      Valor: locale === "en-US" ? item.na.en : item.na.es,
                     },
                     {
-                      nombre: locale === "en" ? en.quantity : es.quantity,
+                      nombre: locale === "en-US" ? en.quantity : es.quantity,
                       Valor: "N°" + item.cn,
                     },
                     {
-                      nombre: locale === "en" ? en.price : es.price,
+                      nombre: locale === "en-US" ? en.price : es.price,
                       Valor: "$" + item.pr,
                     },
                     {
-                      nombre: locale === "en" ? en.subtotal : es.subtotal,
+                      nombre: locale === "en-US" ? en.subtotal : es.subtotal,
                       Valor: "$" + item.pr * item.cn,
                     },
                   ].map(({ nombre, Valor }, key) => (

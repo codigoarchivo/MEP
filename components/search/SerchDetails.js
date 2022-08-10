@@ -91,9 +91,9 @@ export const SerchDetails = ({
   // select product in cart
   const handleSelect = () => {
     //? product.pj : es el porcentaje que coloca onwer
-    const err = locale === "en" ? en.error : es.error;
-    const added = locale === "en" ? en.cart.cG : es.cart.cG;
-    const already = locale === "en" ? en.cart.cH : es.cart.cH;
+    const err = locale === "en-US" ? en.error : es.error;
+    const added = locale === "en-US" ? en.cart.cG : es.cart.cG;
+    const already = locale === "en-US" ? en.cart.cH : es.cart.cH;
     dispatch(
       activeProductCart(
         {
@@ -140,7 +140,7 @@ export const SerchDetails = ({
             src={
               product.im || "https://via.placeholder.com/450.png?text=Imagen"
             }
-            alt={locale === "en" ? product.na.en : product.na.es}
+            alt={locale === "en-US" ? product.na.en : product.na.es}
             width={450}
             height={450}
             objectFit="cover"
@@ -157,7 +157,7 @@ export const SerchDetails = ({
 
         <VStack spacing={{ base: 3, md: 6 }} w={full}>
           <Heading w={full} fontSize={points25} textTransform={"capitalize"}>
-            {locale === "en" ? product.na.en : product.na.es}
+            {locale === "en-US" ? product.na.en : product.na.es}
           </Heading>
           <HStack w={full}>
             <Text fontSize={"xl"} fontWeight={"bold"}>
@@ -176,16 +176,16 @@ export const SerchDetails = ({
           </Box>
           <HStack w={full}>
             <Heading textTransform={"uppercase"} as="h3" size="sm">
-              {locale === "en" ? en.price : es.price}:
+              {locale === "en-US" ? en.price : es.price}:
             </Heading>
             <Text>${product.pr * Number(input.value)}</Text>
           </HStack>
           <HStack w={full}>
             <Heading textTransform={"uppercase"} as="h3" size="sm">
-              {locale === "en" ? en.search.sJ : es.search.sJ}:
+              {locale === "en-US" ? en.search.sJ : es.search.sJ}:
             </Heading>
             <Text w={full}>
-              {locale === "en" ? product.ds.en : product.ds.es}
+              {locale === "en-US" ? product.ds.en : product.ds.es}
             </Text>
           </HStack>
           <Box w={full}>
@@ -201,9 +201,11 @@ export const SerchDetails = ({
           </Box>
           <HStack w={full}>
             <Heading textTransform={"uppercase"} as="h3" size="sm">
-              {locale === "en" ? en.major.mF : es.major.mF}:
+              {locale === "en-US" ? en.major.mF : es.major.mF}:
             </Heading>
-            <Text>{locale === "en" ? listCt[0]?.na.en : listCt[0]?.na.es}</Text>
+            <Text>
+              {locale === "en-US" ? listCt[0]?.na.en : listCt[0]?.na.es}
+            </Text>
           </HStack>
           <Box w={full}>
             <Button
@@ -211,7 +213,7 @@ export const SerchDetails = ({
               variant={"primary"}
               onClick={handleSelect}
             >
-              {locale === "en" ? en.add : es.add}
+              {locale === "en-US" ? en.add : es.add}
             </Button>
           </Box>
         </VStack>
@@ -220,17 +222,17 @@ export const SerchDetails = ({
       <HStack mt={10} border={bordes} p={{ base: 1, md: 5 }}>
         <Tabs w={"full"}>
           <TabList>
-            <Tab>{locale === "en" ? en.details : es.details}</Tab>
+            <Tab>{locale === "en-US" ? en.details : es.details}</Tab>
             <Tab>
               ({message.length || 0}){" "}
-              {locale === "en" ? en.reviews : es.reviews}
+              {locale === "en-US" ? en.reviews : es.reviews}
             </Tab>
           </TabList>
 
           <TabPanels>
             <TabPanel p={{ base: 2, md: 5 }}>
               <Text overflowX={"hidden"}>
-                {locale === "en" ? product.dt.en : product.dt.es}
+                {locale === "en-US" ? product.dt.en : product.dt.es}
               </Text>
             </TabPanel>
             <TabPanel p={{ base: 0, md: 10 }}>
@@ -240,7 +242,7 @@ export const SerchDetails = ({
                     <Box p={{ base: 0, md: 5 }} textAlign={"center"}>
                       <Heading>{product?.rat?.nam || "0.0"}</Heading>
                       <Text>
-                        {locale === "en" ? en.search.sK : es.search.sK}
+                        {locale === "en-US" ? en.search.sK : es.search.sK}
                       </Text>
                     </Box>
                     <Stack w={full}>

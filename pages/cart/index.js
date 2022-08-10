@@ -23,7 +23,7 @@ const Cart = () => {
 
   const { locale } = useRouter();
   return (
-    <ShopLayout title={locale === "en" ? en.cart.cA : es.cart.cA}>
+    <ShopLayout title={locale === "en-US" ? en.cart.cA : es.cart.cA}>
       <Container
         maxW="container.xl"
         px={{ base: 2, md: 4 }}

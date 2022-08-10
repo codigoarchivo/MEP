@@ -27,7 +27,7 @@ export async function getServerSideProps(context) {
   try {
     context.res.setHeader(
       "Cache-Control",
-      "public, max-age=120, must-revalidate"
+      "public, max-age=86400, must-revalidate"
     );
 
     const d = await getDocs(
@@ -95,7 +95,7 @@ const HomeL = ({ product = [], category = [] }) => {
   }, [dispatch, category]);
 
   return (
-    <ShopLayout title={locale === "en" ? en.major.mA : es.major.mA}>
+    <ShopLayout title={locale === "en-US" ? en.major.mA : es.major.mA}>
       <Home
         listData={listData}
         latestCartSelect={latestCartSelect}

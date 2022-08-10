@@ -56,7 +56,7 @@ const Review = ({ msg }) => {
   const i = query.i.toString();
 
   return (
-    <ShopLayout title={locale === "en" ? en.review.rC : es.review.rC}>
+    <ShopLayout title={locale === "en-US" ? en.review.rC : es.review.rC}>
       <Container maxW={"container.sm"} px={{ base: 2, md: 4 }}>
         <ReviewScreen
           calculo={cant}

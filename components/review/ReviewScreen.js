@@ -83,7 +83,7 @@ export const ReviewScreen = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let err = locale === "en" ? en.error : es.error;
+    let err = locale === "en-US" ? en.error : es.error;
     if (i !== "new") {
       // edit review
       dispatch(
@@ -118,7 +118,7 @@ export const ReviewScreen = ({
           }
         )
       );
-      Toast(locale === "en" ? en.save : es.save, "success", 5000);
+      Toast(locale === "en-US" ? en.save : es.save, "success", 5000);
     } else {
       // add review
       dispatch(
@@ -154,7 +154,7 @@ export const ReviewScreen = ({
         )
       );
 
-      Toast(locale === "en" ? en.save : es.save, "success", 5000);
+      Toast(locale === "en-US" ? en.save : es.save, "success", 5000);
     }
   };
 
@@ -174,7 +174,7 @@ export const ReviewScreen = ({
             fontWeight={"normal"}
             fontSize={points26}
           >
-            {locale === "en" ? en.review.rA : es.review.rA}
+            {locale === "en-US" ? en.review.rA : es.review.rA}
           </Heading>
           <CloseButton variant={"tertiary"} onClick={() => back()} />
         </HStack>
@@ -199,13 +199,13 @@ export const ReviewScreen = ({
             fontWeight={"normal"}
             fontSize={points26}
           >
-            {locale === "en" ? en.review.rB : es.review.rB}
+            {locale === "en-US" ? en.review.rB : es.review.rB}
           </Heading>
           <Textarea
             name="com"
             value={com}
             onChange={handleInputChange}
-            placeholder={locale === "en" ? en.review.rB : es.review.rB}
+            placeholder={locale === "en-US" ? en.review.rB : es.review.rB}
             size="sm"
             variant="filled"
             bg={bg}
@@ -214,7 +214,7 @@ export const ReviewScreen = ({
             border={bordes}
           />
           <Button w={full} type={"submit"} variant={"primary"}>
-            {locale === "en" ? en.send : es.send}
+            {locale === "en-US" ? en.send : es.send}
           </Button>
         </VStack>
       </chakra.form>

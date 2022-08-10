@@ -90,7 +90,7 @@ export const SerchCartModal = ({
     // save cart
     dispatch(saveSale(data, del, u));
 
-    Toast(locale === "en" ? en.cart.cF : es.cart.cF, "success", 5000);
+    Toast(locale === "en-US" ? en.cart.cF : es.cart.cF, "success", 5000);
 
     push(`/checkout?q=${a.uid}`);
   };
@@ -115,9 +115,9 @@ export const SerchCartModal = ({
             </Box>
 
             <Heading size={"md"} mb={3}>
-              {locale === "en" ? en.cart.cD : es.cart.cD},
+              {locale === "en-US" ? en.cart.cD : es.cart.cD},
             </Heading>
-            <Text>{locale === "en" ? en.cart.cE : es.cart.cE}</Text>
+            <Text>{locale === "en-US" ? en.cart.cE : es.cart.cE}</Text>
           </ModalBody>
           <ModalFooter>
             <Button variant={"tertiary"} mr={3} onClick={onClose}>

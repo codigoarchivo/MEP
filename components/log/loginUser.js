@@ -54,10 +54,10 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
     initialStates,
     data
   );
-  const aM = locale === "en" ? en.auth.aM : es.auth.aM;
-  const aL = locale === "en" ? en.auth.aL : es.auth.aL;
-  const aK = locale === "en" ? en.auth.aK : es.auth.aK;
-  const aN = locale === "en" ? en.auth.aN : es.auth.aN;
+  const aM = locale === "en-US" ? en.auth.aM : es.auth.aM;
+  const aL = locale === "en-US" ? en.auth.aL : es.auth.aL;
+  const aK = locale === "en-US" ? en.auth.aK : es.auth.aK;
+  const aN = locale === "en-US" ? en.auth.aN : es.auth.aN;
   // validar
   const { emailE, passwordL, field, ErrorRorL } = Validator(
     values,
@@ -71,13 +71,13 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
   // valores
   const { email, password, pass } = values;
 
-  let err = locale === "en" ? en.error : es.error;
+  let err = locale === "en-US" ? en.error : es.error;
   // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = locale === "en" ? en.verify.vJ : es.verify.vJ;
+    const data = locale === "en-US" ? en.verify.vJ : es.verify.vJ;
     if (ErrorRorL) {
-      return Toast(locale === "en" ? en.check : es.check, "error", 5000);
+      return Toast(locale === "en-US" ? en.check : es.check, "error", 5000);
     } else {
       dispatch(startLoginEmailPassword(email, password, err, data));
     }
@@ -101,13 +101,13 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
         <VStack spacing={5}>
           <HStack w={"full"} justifyContent="space-between">
             <Heading size={"md"} textTransform={"uppercase"}>
-              {locale === "en" ? en.auth.aA : es.auth.aA}
+              {locale === "en-US" ? en.auth.aA : es.auth.aA}
             </Heading>
             <CloseButton size="sm" onClick={() => push("/")} />
           </HStack>
           <FormControl>
             <FormLabel htmlFor="email" color={modelC}>
-              {locale === "en" ? en.mail : es.mail}{" "}
+              {locale === "en-US" ? en.mail : es.mail}{" "}
               <Tooltip
                 color={textError}
                 bg={bgTextError}
@@ -123,13 +123,13 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
               onChange={handleInputChange}
               value={email}
               type={"email"}
-              placeholder={locale === "en" ? en.mail : es.mail}
+              placeholder={locale === "en-US" ? en.mail : es.mail}
               autoComplete="new-email"
             />
           </FormControl>
           <FormControl>
             <FormLabel htmlFor="password" color={modelC}>
-              {locale === "en" ? en.password : es.password}{" "}
+              {locale === "en-US" ? en.password : es.password}{" "}
               <Tooltip
                 color={textError}
                 bg={bgTextError}
@@ -147,7 +147,7 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
                 value={password}
                 pr="4.5rem"
                 type={pass ? "text" : "password"}
-                placeholder={locale === "en" ? en.password : es.password}
+                placeholder={locale === "en-US" ? en.password : es.password}
                 autoComplete="new-password"
               />
               <InputRightElement width="4.5rem">
@@ -170,7 +170,7 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
             size={"sm"}
             fontSize={{ base: 10, sm: 14 }}
           >
-            {locale === "en" ? en.auth.aC : es.auth.aC}
+            {locale === "en-US" ? en.auth.aC : es.auth.aC}
           </Button>
           <Button
             isLoading={loading}
@@ -179,23 +179,23 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
             variant={"primary"}
             textTransform={"uppercase"}
           >
-            {locale === "en" ? en.auth.aD : es.auth.aD}
+            {locale === "en-US" ? en.auth.aD : es.auth.aD}
           </Button>
           <Flex w={"full"} alignItems={"center"} justifyContent={"center"}>
-            <Text>{locale === "en" ? en.auth.aF : es.auth.aF}</Text>
+            <Text>{locale === "en-US" ? en.auth.aF : es.auth.aF}</Text>
             <NavLink
               href={"/auth/create"}
               variant={"tertiary"}
-              name={locale === "en" ? en.auth.aH : es.auth.aH}
+              name={locale === "en-US" ? en.auth.aH : es.auth.aH}
             />
           </Flex>
           <DividerWithText>
-            {locale === "en" ? en.auth.aE : es.auth.aE}
+            {locale === "en-US" ? en.auth.aE : es.auth.aE}
           </DividerWithText>
           <Flex w={"full"} alignItems={"center"} justifyContent={"center"}>
-            <Text>{locale === "en" ? en.auth.aG : es.auth.aG}</Text>
+            <Text>{locale === "en-US" ? en.auth.aG : es.auth.aG}</Text>
             <Button variant={"tertiary"} onClick={handleReview}>
-              {locale === "en" ? en.auth.aD : es.auth.aD}
+              {locale === "en-US" ? en.auth.aD : es.auth.aD}
             </Button>
           </Flex>
         </VStack>

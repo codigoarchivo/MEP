@@ -47,23 +47,23 @@ export const SaleScreen = ({ item = {}, locale, paid }) => {
       <VStack w={full} spacing={0} overflow={"auto"}>
         {[
           {
-            all: locale === "en" ? en.name : es.name,
-            dat: locale === "en" ? na.en : na.es,
+            all: locale === "en-US" ? en.name : es.name,
+            dat: locale === "en-US" ? na.en : na.es,
           },
           {
-            all: locale === "en" ? en.quantity : es.quantity,
+            all: locale === "en-US" ? en.quantity : es.quantity,
             dat: "N°" + cn,
           },
           {
-            all: locale === "en" ? en.price : es.price,
+            all: locale === "en-US" ? en.price : es.price,
             dat: "$" + pj,
           },
           {
-            all: locale === "en" ? en.tax : es.tax,
+            all: locale === "en-US" ? en.tax : es.tax,
             dat: "$" + inc,
           },
           {
-            all: locale === "en" ? en.unit : es.unit,
+            all: locale === "en-US" ? en.unit : es.unit,
             dat: "$" + pr,
           },
           {
@@ -73,7 +73,7 @@ export const SaleScreen = ({ item = {}, locale, paid }) => {
           {
             all: paid,
             dat: formatDistanceToNow(item.cre, {
-              locale: locale === "en" ? localEn : localEs,
+              locale: locale === "en-US" ? localEn : localEs,
             }),
           },
         ].map(({ all, dat }, key) => (
@@ -95,9 +95,9 @@ export const SaleScreen = ({ item = {}, locale, paid }) => {
       >
         <Salemodal
           imgs={item.imp}
-          receipt={locale === "en" ? en.receipt : es.receipt}
-          close={locale === "en" ? en.close : es.close}
-          picture={locale === "en" ? en.picture : es.picture}
+          receipt={locale === "en-US" ? en.receipt : es.receipt}
+          close={locale === "en-US" ? en.close : es.close}
+          picture={locale === "en-US" ? en.picture : es.picture}
           textTransform={"uppercase"}
         />
         <SalemodalReciewe
@@ -107,8 +107,8 @@ export const SaleScreen = ({ item = {}, locale, paid }) => {
           en={en}
           locale={locale}
           item={item}
-          receipt={locale === "en" ? en.receiptOne : es.receiptOne}
-          close={locale === "en" ? en.close : es.close}
+          receipt={locale === "en-US" ? en.receiptOne : es.receiptOne}
+          close={locale === "en-US" ? en.close : es.close}
           textTransform={"uppercase"}
         />
         <NavLink
@@ -116,7 +116,7 @@ export const SaleScreen = ({ item = {}, locale, paid }) => {
           w={{ base: "full", md: "min-content" }}
           href={`/info/[uid]`}
           as={`/info/${item.buy}`}
-          name={locale === "en" ? en.buyer : es.buyer}
+          name={locale === "en-US" ? en.buyer : es.buyer}
           variant={"primary"}
           size={"xs"}
           fontSize={"small"}

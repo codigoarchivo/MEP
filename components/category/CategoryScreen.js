@@ -57,7 +57,7 @@ export const CategoryScreen = ({ id, na, cre, edi, del, cC, push, locale }) => {
     <>
       <Tr>
         <Td>
-          <Text>{locale === "en" ? na.en : na.es}</Text>
+          <Text>{locale === "en-US" ? na.en : na.es}</Text>
         </Td>
         <Td isNumeric>
           <Menu>

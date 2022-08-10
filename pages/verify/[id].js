@@ -59,7 +59,7 @@ const Verification = ({ data }) => {
   // Breakpoints
   const { bordes } = Breakpoints();
   return (
-    <ShopLayout title={locale === "en" ? en.verify.vG : es.verify.vG}>
+    <ShopLayout title={locale === "en-US" ? en.verify.vG : es.verify.vG}>
       <Container maxW={"container.xl"} py={{ base: 0, md: 10 }}>
         <Stack flexDirection={"column"} spacing={10}>
           <CheckVerify

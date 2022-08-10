@@ -52,8 +52,8 @@ export const ResetPassword = ({ locale, es, en }) => {
     data
   );
 
-  const aM = locale === "en" ? en.auth.aM : es.auth.aM;
-  const aK = locale === "en" ? en.auth.aK : es.auth.aK;
+  const aM = locale === "en-US" ? en.auth.aM : es.auth.aM;
+  const aK = locale === "en-US" ? en.auth.aK : es.auth.aK;
 
   // validar
   const { field, passwordV } = Validator(values, aM, "", aK);
@@ -65,10 +65,10 @@ export const ResetPassword = ({ locale, es, en }) => {
   // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
-    const err = locale === "en" ? en.error : es.error;
-    const success = locale === "en" ? en.auth.aU : es.auth.aU;
+    const err = locale === "en-US" ? en.error : es.error;
+    const success = locale === "en-US" ? en.auth.aU : es.auth.aU;
     if (passwordV) {
-      return Toast(locale === "en" ? en.check : es.check, "error", 5000);
+      return Toast(locale === "en-US" ? en.check : es.check, "error", 5000);
     } else {
       dispatch(resetPassword(password, query.oobCode.toString(), err, success));
       reset();
@@ -78,8 +78,8 @@ export const ResetPassword = ({ locale, es, en }) => {
   // handleVerify
   const handleVerify = (e) => {
     e.preventDefault();
-    const err = locale === "en" ? en.error : es.error;
-    const success = locale === "en" ? en.auth.aX : es.auth.aX;
+    const err = locale === "en-US" ? en.error : es.error;
+    const success = locale === "en-US" ? en.auth.aX : es.auth.aX;
     dispatch(handleVerifyEmail(query.oobCode.toString(), err, success));
   };
 
@@ -103,7 +103,7 @@ export const ResetPassword = ({ locale, es, en }) => {
           spacing={5}
         >
           <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
-            {locale === "en" ? en.verify.vG : es.verify.vG}
+            {locale === "en-US" ? en.verify.vG : es.verify.vG}
           </Heading>
           <Button w={"full"} type="submit" variant={"primary"} h="1.75rem">
             verifyEmail
@@ -113,7 +113,7 @@ export const ResetPassword = ({ locale, es, en }) => {
             <NavLink
               href={"/auth"}
               variant={"tertiary"}
-              name={locale === "en" ? en.auth.aA : es.auth.aA}
+              name={locale === "en-US" ? en.auth.aA : es.auth.aA}
             />
           </Center>
         </VStack>
@@ -123,11 +123,11 @@ export const ResetPassword = ({ locale, es, en }) => {
           display={query.mode === "verifyEmail" ? "none" : "block"}
         >
           <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
-            {locale === "en" ? en.auth.aV : es.auth.aV}
+            {locale === "en-US" ? en.auth.aV : es.auth.aV}
           </Heading>
           <FormControl>
             <FormLabel color={modelC} htmlFor="password">
-              {locale === "en" ? en.password : es.password}{" "}
+              {locale === "en-US" ? en.password : es.password}{" "}
               <Tooltip
                 color={textError}
                 bg={bgTextError}
@@ -145,7 +145,7 @@ export const ResetPassword = ({ locale, es, en }) => {
                 value={password}
                 pr="4.5rem"
                 type={pass ? "text" : "password"}
-                placeholder={locale === "en" ? en.password : es.password}
+                placeholder={locale === "en-US" ? en.password : es.password}
                 autoComplete="new-password"
               />
               <InputRightElement width="4.5rem">
@@ -165,16 +165,16 @@ export const ResetPassword = ({ locale, es, en }) => {
             variant={"primary"}
             textTransform={"uppercase"}
           >
-            {locale === "en" ? en.auth.aJ : es.auth.aJ}
+            {locale === "en-US" ? en.auth.aJ : es.auth.aJ}
           </Button>
           <DividerWithText>
-            {locale === "en" ? en.auth.aE : es.auth.aE}
+            {locale === "en-US" ? en.auth.aE : es.auth.aE}
           </DividerWithText>
           <Center>
             <NavLink
               href={"/auth"}
               variant={"tertiary"}
-              name={locale === "en" ? en.auth.aA : es.auth.aA}
+              name={locale === "en-US" ? en.auth.aA : es.auth.aA}
             />
           </Center>
         </VStack>

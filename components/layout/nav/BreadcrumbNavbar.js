@@ -51,9 +51,9 @@ export const BreadcrumbNavbar = ({ NavLink, Box, locale, es, en }) => {
             display={a.rol === "owner" || a.rol === "user" ? "block" : "none"}
           >
             <MenuHistory
-              buys={locale === "en" ? en.major.mB : es.major.mB}
-              sales={locale === "en" ? en.major.mC : es.major.mC}
-              history={locale === "en" ? en.history : es.history}
+              buys={locale === "en-US" ? en.major.mB : es.major.mB}
+              sales={locale === "en-US" ? en.major.mC : es.major.mC}
+              history={locale === "en-US" ? en.history : es.history}
               valSpace={valSpace}
             />
           </chakra.li>

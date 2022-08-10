@@ -96,15 +96,19 @@ export const CheckVerify = ({
     const d = await dbUser(a.uid);
 
     if (d.na === "" || d.na === undefined) {
-      return Toast(locale === "en" ? en.verify.vA : es.verify.vA, "info", 5000);
+      return Toast(
+        locale === "en-US" ? en.verify.vA : es.verify.vA,
+        "info",
+        5000
+      );
     } else {
-      const err = locale === "en" ? en.error : es.error;
+      const err = locale === "en-US" ? en.error : es.error;
 
       if ([nap, co, imp, fer, dt, ref].includes("") || !urlImage) {
-        return Toast(locale === "en" ? en.fields : es.fields, "error", 5000);
+        return Toast(locale === "en-US" ? en.fields : es.fields, "error", 5000);
       }
 
-      Toast(locale === "en" ? en.verify.vI : es.verify.vI, "success", 5000);
+      Toast(locale === "en-US" ? en.verify.vI : es.verify.vI, "success", 5000);
 
       const shop = {
         nap,
@@ -146,9 +150,9 @@ export const CheckVerify = ({
     <>
       <Text py={5} overflowX={"hidden"}>
         <Button onClick={handleClient} variant={"primary"} size={"sm"}>
-          {locale === "en" ? en.verify.vA : es.verify.vA}
+          {locale === "en-US" ? en.verify.vA : es.verify.vA}
         </Button>{" "}
-        - {locale === "en" ? en.verify.vB : es.verify.vB}
+        - {locale === "en-US" ? en.verify.vB : es.verify.vB}
       </Text>
       <Stack flexDirection={content7} w={full} spacing={0} color={modelC}>
         <VStack
@@ -161,28 +165,28 @@ export const CheckVerify = ({
           border={bordes}
         >
           <Heading textTransform={"uppercase"} w={full} mb={5} size={"sm"}>
-            {locale === "en" ? en.verify.vC : es.verify.vC}
+            {locale === "en-US" ? en.verify.vC : es.verify.vC}
           </Heading>
           <Stack w={full} spacing={5}>
             {[
               {
-                nombre: locale === "en" ? en.name : es.name,
-                Valor: locale === "en" ? product?.na?.en : product?.na?.es,
+                nombre: locale === "en-US" ? en.name : es.name,
+                Valor: locale === "en-US" ? product?.na?.en : product?.na?.es,
               },
               {
-                nombre: locale === "en" ? en.quantity : es.quantity,
+                nombre: locale === "en-US" ? en.quantity : es.quantity,
                 Valor: "N°" + product?.cn,
               },
               {
-                nombre: locale === "en" ? en.price : es.price,
+                nombre: locale === "en-US" ? en.price : es.price,
                 Valor: "$" + product?.pj,
               },
               {
-                nombre: locale === "en" ? en.tax : es.tax,
+                nombre: locale === "en-US" ? en.tax : es.tax,
                 Valor: "$" + product?.in,
               },
               {
-                nombre: locale === "en" ? en.unit : es.unit,
+                nombre: locale === "en-US" ? en.unit : es.unit,
                 Valor: "$" + product?.pr,
               },
               {
@@ -212,18 +216,18 @@ export const CheckVerify = ({
           border={bordes}
         >
           <Heading textTransform={"uppercase"} w={full} mb={5} size={"sm"}>
-            {locale === "en" ? en.verify.vH : es.verify.vH}
+            {locale === "en-US" ? en.verify.vH : es.verify.vH}
           </Heading>
           <Stack w={full} spacing={5}>
             <List spacing={3}>
               <ListItem color={modelC}>
                 <ListIcon as={CheckCircleIcon} />
-                {locale === "en" ? en.verify.vE : es.verify.vE}
+                {locale === "en-US" ? en.verify.vE : es.verify.vE}
               </ListItem>
             </List>
             <HStack justifyContent={"space-between"} borderBottom={bordes}>
               <Heading size={"sm"}>
-                {locale === "en" ? en.Information : es.Information}:
+                {locale === "en-US" ? en.Information : es.Information}:
               </Heading>
               <Link
                 href="https://www.bankofamerica.com/online-banking/mobile-and-online-banking-features/money-transfer/es/#:~:text=Seleccione%20Transferir%20%7C%20Enviar%20y%20despu%C3%A9s,transferencia%20y%20luego%20toque%20Continuar."
@@ -234,19 +238,19 @@ export const CheckVerify = ({
             </HStack>
             {[
               {
-                nombre: locale === "en" ? en.name : es.name,
+                nombre: locale === "en-US" ? en.name : es.name,
                 Valor: "Edgar Marcano",
               },
               {
-                nombre: locale === "en" ? en.mail : es.mail,
+                nombre: locale === "en-US" ? en.mail : es.mail,
                 Valor: "ehms1975@gmail.com",
               },
               {
-                nombre: locale === "en" ? en.phone : es.phone,
+                nombre: locale === "en-US" ? en.phone : es.phone,
                 Valor: "+1 973 510 8452",
               },
               {
-                nombre: locale === "en" ? en.accountNo : es.accountNo,
+                nombre: locale === "en-US" ? en.accountNo : es.accountNo,
                 Valor: "381053465609",
               },
             ].map(({ nombre, Valor }, key) => (
@@ -280,7 +284,7 @@ export const CheckVerify = ({
           <GridItem mb={3} colSpan={2}>
             <HStack w={full} justifyContent={"space-between"}>
               <Heading textTransform={"uppercase"} w={full} mb={5} size={"sm"}>
-                {locale === "en" ? en.verify.vF : es.verify.vF}
+                {locale === "en-US" ? en.verify.vF : es.verify.vF}
               </Heading>
               <CloseButton color={modelC} onClick={closeVerify} />
             </HStack>
@@ -288,28 +292,28 @@ export const CheckVerify = ({
 
           {[
             {
-              nombre: locale === "en" ? en.person : es.person,
+              nombre: locale === "en-US" ? en.person : es.person,
               Valor: nap,
               na: "nap",
-              place: locale === "en" ? en.name : es.name,
+              place: locale === "en-US" ? en.name : es.name,
               type: "text",
             },
             {
-              nombre: locale === "en" ? en.reference : es.reference,
+              nombre: locale === "en-US" ? en.reference : es.reference,
               Valor: ref,
               na: "ref",
-              place: `N° ${locale === "en" ? en.reference : es.reference}`,
+              place: `N° ${locale === "en-US" ? en.reference : es.reference}`,
               type: "text",
             },
             {
-              nombre: locale === "en" ? en.mail : es.mail,
+              nombre: locale === "en-US" ? en.mail : es.mail,
               Valor: co,
               na: "co",
-              place: locale === "en" ? en.mail : es.mail,
+              place: locale === "en-US" ? en.mail : es.mail,
               type: "email",
             },
             {
-              nombre: locale === "en" ? en.payment : es.payment,
+              nombre: locale === "en-US" ? en.payment : es.payment,
               Valor: fer,
               na: "fer",
               type: "datetime-local",
@@ -329,10 +333,10 @@ export const CheckVerify = ({
           ))}
           <GridItemFormTextarea
             points={2}
-            name={locale === "en" ? en.additional : es.additional}
+            name={locale === "en-US" ? en.additional : es.additional}
             na={"dt"}
             val={dt}
-            place={locale === "en" ? en.additional : es.additional}
+            place={locale === "en-US" ? en.additional : es.additional}
             handle={handleInputChange}
             mb={10}
           />
@@ -343,7 +347,7 @@ export const CheckVerify = ({
               textTransform={"uppercase"}
               color={modelC}
             >
-              {locale === "en" ? en.receipt : es.receipt}
+              {locale === "en-US" ? en.receipt : es.receipt}
             </FormLabel>
             <HStack
               justifyContent={"space-between"}
@@ -357,8 +361,8 @@ export const CheckVerify = ({
                   setProgress={setProgress}
                   setUrlImage={setUrlImage}
                   fileName={"fotosRecibo"}
-                  save={locale === "en" ? en.goup : es.goup}
-                  image={locale === "en" ? en.image : es.image}
+                  save={locale === "en-US" ? en.goup : es.goup}
+                  image={locale === "en-US" ? en.image : es.image}
                 />
               </Box>
 
@@ -367,7 +371,7 @@ export const CheckVerify = ({
                   src={
                     urlImage ||
                     `https://via.placeholder.com/100.png?text=${
-                      locale === "en" ? en.picture : es.picture
+                      locale === "en-US" ? en.picture : es.picture
                     }`
                   }
                   alt="Recibo pago"
@@ -383,12 +387,12 @@ export const CheckVerify = ({
           <GridItem colSpan={2} mt={5}>
             <HStack w={"full"} justifyContent="flex-end" spacing={10}>
               <Button variant={"tertiary"} onClick={closeVerify}>
-                {locale === "en" ? en.close : es.close}
+                {locale === "en-US" ? en.close : es.close}
               </Button>
               <Flex>
                 <Tooltip
                   hasArrow
-                  label={locale === "en" ? en.seller : es.seller}
+                  label={locale === "en-US" ? en.seller : es.seller}
                   w={"min-content"}
                 >
                   <Button
@@ -397,7 +401,7 @@ export const CheckVerify = ({
                     ml={3}
                     shadow={"lg"}
                   >
-                    {locale === "en" ? en.send : es.send}
+                    {locale === "en-US" ? en.send : es.send}
                   </Button>
                 </Tooltip>
               </Flex>

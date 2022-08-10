@@ -99,11 +99,13 @@ const SaleData = ({ data }) => {
   }, [dispatch, data]);
 
   return (
-    <ShopLayout title={locale === "en" ? en.historySale.sA : es.historySale.sA}>
+    <ShopLayout
+      title={locale === "en-US" ? en.historySale.sA : es.historySale.sA}
+    >
       <Container maxW={"container.lg"} px={{ base: 2, md: 4 }}>
         <Stack flexDirection={"column"} my={{ base: 10, md: 20 }} w={full}>
           <Heading w={full} as="h2" size="lg" fontWeight="semibold">
-            {locale === "en" ? en.historySale.sA : es.historySale.sA}
+            {locale === "en-US" ? en.historySale.sA : es.historySale.sA}
           </Heading>
           <VStack w={full} p={{ base: 2, md: 5 }} border={bordes}>
             <Heading
@@ -115,10 +117,10 @@ const SaleData = ({ data }) => {
               mb={{ base: 0, md: 10 }}
             >
               {!!sale[0]
-                ? locale === "en"
+                ? locale === "en-US"
                   ? en.historySale.sB
                   : es.historySale.sB
-                : locale === "en"
+                : locale === "en-US"
                 ? en.historySale.sC
                 : es.historySale.sC}
             </Heading>
@@ -128,7 +130,7 @@ const SaleData = ({ data }) => {
                 item={item}
                 key={key}
                 locale={locale}
-                paid={locale === "en" ? en.paid : es.paid}
+                paid={locale === "en-US" ? en.paid : es.paid}
               />
             ))}
           </VStack>

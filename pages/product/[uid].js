@@ -94,7 +94,7 @@ export async function getServerSideProps({ params, locale }) {
       },
     };
   } catch (error) {
-    Toast(locale === "en" ? en.error : es.error, "error", 5000);
+    Toast(locale === "en-US" ? en.error : es.error, "error", 5000);
     return {
       props: {},
     };
@@ -115,7 +115,7 @@ const List = ({ product = [] }) => {
   // dispatch
   const dispatch = useDispatch();
 
-  const err = locale === "en" ? en.error : es.error;
+  const err = locale === "en-US" ? en.error : es.error;
   useEffect(() => {
     if (!!product[0]) {
       dispatch(listDataProduct(product, err));
@@ -150,23 +150,22 @@ const List = ({ product = [] }) => {
 
       if (dA === a.uid) {
         await setDoc(doc(db, "cifras", "onwer"), { pr: values.q });
-        Toast(locale === "en" ? en.save : es.save, "success", 5000);
+        Toast(locale === "en-US" ? en.save : es.save, "success", 5000);
       }
-      
     } catch (error) {
-      Toast(locale === "en" ? en.error : es.error, "error", 5000);
+      Toast(locale === "en-US" ? en.error : es.error, "error", 5000);
     }
     reset();
   };
 
   return (
-    <ShopLayout title={locale === "en" ? en.major.mG : es.major.mG}>
+    <ShopLayout title={locale === "en-US" ? en.major.mG : es.major.mG}>
       <Container maxW={"container.lg"} px={{ base: 2, md: 4 }} my={10}>
         <Box p={{ base: 0, md: 5 }}>
           {!list[0] && (
             <Center border={bordes} py={30}>
               <Heading size={"sm"} textTransform={"uppercase"}>
-                {locale === "en" ? en.product.pA : es.product.pA}
+                {locale === "en-US" ? en.product.pA : es.product.pA}
               </Heading>
             </Center>
           )}
@@ -186,9 +185,9 @@ const List = ({ product = [] }) => {
                 size={useBreakpoint()}
                 p={2}
               >
-                {locale === "en" ? en.product.pB : es.product.pB}
+                {locale === "en-US" ? en.product.pB : es.product.pB}
               </Button>{" "}
-              - {locale === "en" ? en.product.pC : es.product.pC}
+              - {locale === "en-US" ? en.product.pC : es.product.pC}
             </Text>
             <chakra.form
               w={{ base: "100%", sm: "50%", md: "15%" }}
@@ -208,7 +207,7 @@ const List = ({ product = [] }) => {
           <TableContainer w={"full"} border={bordes}>
             <Table colorScheme="brand">
               <TableCaption color={modelC}>
-                {locale === "en" ? en.public : es.public}
+                {locale === "en-US" ? en.public : es.public}
               </TableCaption>
               <Thead>
                 <Tr>
@@ -222,7 +221,7 @@ const List = ({ product = [] }) => {
                       textTransform="uppercase"
                       fontSize={"x-small"}
                     >
-                      {locale === "en" ? en.add : es.add}
+                      {locale === "en-US" ? en.add : es.add}
                     </Button>
                   </Th>
                 </Tr>

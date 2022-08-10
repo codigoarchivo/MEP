@@ -43,7 +43,7 @@ export const MenuCategoria = () => {
         textTransform={"uppercase"}
         minWidth={"fit-content"}
       >
-        {locale === "en" ? en.categories : es.categories}
+        {locale === "en-US" ? en.categories : es.categories}
       </MenuButton>
       <Portal>
         <MenuList
@@ -57,9 +57,9 @@ export const MenuCategoria = () => {
               <NavLink
                 href={{
                   pathname: "/search",
-                  query: { n: id, c: locale === "en" ? na.en : na.es },
+                  query: { n: id, c: locale === "en-US" ? na.en : na.es },
                 }}
-                name={locale === "en" ? na.en : na.es}
+                name={locale === "en-US" ? na.en : na.es}
                 variant={"tertiary"}
                 fontWeight={"normal"}
               />

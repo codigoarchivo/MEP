@@ -123,7 +123,7 @@ export function WithSubnavigation() {
               InputLeftElement={InputLeftElement}
               Input={Input}
               SearchIcon={SearchIcon}
-              serch={locale === "en" ? en.searchs : es.searchs}
+              serch={locale === "en-US" ? en.searchs : es.searchs}
             />
           </Box>
 
@@ -157,7 +157,7 @@ export function WithSubnavigation() {
               position={"relative"}
               onClick={() =>
                 check.length > 0 &&
-                Toast(locale === "en" ? en.you : es.you, "info", 5000)
+                Toast(locale === "en-US" ? en.you : es.you, "info", 5000)
               }
             >
               <NavLink
@@ -212,7 +212,7 @@ export function WithSubnavigation() {
                 minW={0}
                 onClick={() =>
                   check.length > 0 &&
-                  Toast(locale === "en" ? en.you : es.you, "info", 5000)
+                  Toast(locale === "en-US" ? en.you : es.you, "info", 5000)
                 }
               >
                 <CartIcon boxSize={points11} />
@@ -254,7 +254,7 @@ export function WithSubnavigation() {
               name={
                 a.uid ? (
                   <OrdenpagoIcon boxSize={{ base: 6, sm: 7 }} />
-                ) : locale === "en" ? (
+                ) : locale === "en-US" ? (
                   en.auth.aB
                 ) : (
                   es.auth.aB
@@ -291,7 +291,7 @@ export function WithSubnavigation() {
               name={
                 a.uid ? (
                   <LoveIcon boxSize={{ base: 6, sm: 7 }} />
-                ) : locale === "en" ? (
+                ) : locale === "en-US" ? (
                   en.auth.aH
                 ) : (
                   es.auth.aH

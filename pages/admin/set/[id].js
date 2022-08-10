@@ -32,7 +32,7 @@ export async function getStaticPaths() {
           params: {
             id,
           },
-          locale: "en",
+          locale: "en-US",
         },
         {
           params: {
@@ -84,7 +84,7 @@ const ConfigCategory = ({ category }) => {
   // router
   const { locale, back, query } = useRouter();
   return (
-    <ShopLayout title={locale === "en" ? en.major.mF : es.major.mF}>
+    <ShopLayout title={locale === "en-US" ? en.major.mF : es.major.mF}>
       <Container
         maxW={"container.sm"}
         px={{ base: 2, md: 4 }}

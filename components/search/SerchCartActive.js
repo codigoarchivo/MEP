@@ -42,7 +42,7 @@ export const SerchCartActive = ({ item, inc, locale, en, es }) => {
     dispatch(deleteProductCart(id));
     // dcr
     active.map((item) => (inc.current -= item.pr));
-    Toast(locale === "en" ? en.removed : es.removed, "error", 5000);
+    Toast(locale === "en-US" ? en.removed : es.removed, "error", 5000);
   };
 
   const { modelC } = ModeColor();
@@ -54,7 +54,7 @@ export const SerchCartActive = ({ item, inc, locale, en, es }) => {
           <Box w={155} h={155} position={"relative"}>
             <Image
               src={item.im || "https://via.placeholder.com/155.png?text=Imagen"}
-              alt={locale === "en" ? item.na.en : item.na.es}
+              alt={locale === "en-US" ? item.na.en : item.na.es}
               layout="fill"
               objectFit="cover"
               objectPosition="center"
@@ -64,54 +64,55 @@ export const SerchCartActive = ({ item, inc, locale, en, es }) => {
           <VStack spacing={1}>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                {locale === "en" ? en.name : es.name}:
+                {locale === "en-US" ? en.name : es.name}:
               </Heading>
               <Text size={"sm"}>
-                {locale === "en" ? item.na.en : item.na.es}
+                {locale === "en-US" ? item.na.en : item.na.es}
               </Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                {locale === "en" ? en.description : es.description}:
+                {locale === "en-US" ? en.description : es.description}:
               </Heading>
               <Text size={"sm"}>
-                {locale === "en" ? item.ds.en : item.ds.es}
+                {locale === "en-US" ? item.ds.en : item.ds.es}
               </Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                {locale === "en" ? en.price : es.price}:
+                {locale === "en-US" ? en.price : es.price}:
               </Heading>
               <Text size={"sm"}>${item.pr}</Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                {locale === "en" ? en.quantity : es.quantity}:
+                {locale === "en-US" ? en.quantity : es.quantity}:
               </Heading>
               <Text size={"sm"}>N°{item.cn}</Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                {locale === "en" ? en.major.mF : es.major.mF}:
+                {locale === "en-US" ? en.major.mF : es.major.mF}:
               </Heading>
               <Text size={"sm"}>
                 {list.map(
                   (i) =>
-                    i.id === item.ct && (locale === "en" ? i?.na.en : i?.na.es)
+                    i.id === item.ct &&
+                    (locale === "en-US" ? i?.na.en : i?.na.es)
                 )}
               </Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                {locale === "en" ? en.guy : es.guy}:
+                {locale === "en-US" ? en.guy : es.guy}:
               </Heading>
               <Text size={"sm"}>
-                {locale === "en" ? item.ps.en : item.ps.es}
+                {locale === "en-US" ? item.ps.en : item.ps.es}
               </Text>
             </HStack>
             <HStack w={full}>
               <Heading as="h3" size="sm">
-                {locale === "en" ? en.subtotal : es.subtotal}:
+                {locale === "en-US" ? en.subtotal : es.subtotal}:
               </Heading>
               <Text size={"sm"}>${item.cn * item.pr}</Text>
             </HStack>

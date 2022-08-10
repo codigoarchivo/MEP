@@ -99,7 +99,7 @@ export const ProductForm = ({
                   src={
                     im ||
                     `https://via.placeholder.com/100.png?text=${
-                      locale === "en" ? en.picture : es.picture
+                      locale === "en-US" ? en.picture : es.picture
                     }`
                   }
                   alt="Imagen"
@@ -116,7 +116,7 @@ export const ProductForm = ({
             points={points1}
             name={change === false ? en.name : es.name}
             maxlength="50"
-            na={change === false ? "en" : "es"}
+            na={change === false ? "en-US" : "es"}
             id={"na"}
             val={na}
             type={"text"}
@@ -155,11 +155,14 @@ export const ProductForm = ({
           />
 
           <GridItem colSpan={points1}>
-            <FormLabel color={modelC} htmlFor={change === false ? "en" : "es"}>
+            <FormLabel
+              color={modelC}
+              htmlFor={change === false ? "en-US" : "es"}
+            >
               {change === false ? en.pOrS : es.pOrS}
             </FormLabel>
             <Select
-              name={change === false ? "en" : "es"}
+              name={change === false ? "en-US" : "es"}
               id={"ps"}
               variant="filled"
               value={ps}
@@ -201,7 +204,7 @@ export const ProductForm = ({
             maxlength="20"
             points={points1}
             name={change === false ? en.description : es.description}
-            na={change === false ? "en" : "es"}
+            na={change === false ? "en-US" : "es"}
             id={"ds"}
             val={ds}
             type={"text"}
@@ -212,7 +215,7 @@ export const ProductForm = ({
           <GridItemFormTextarea
             points={2}
             name={change === false ? en.details : es.details}
-            na={change === false ? "en" : "es"}
+            na={change === false ? "en-US" : "es"}
             id={"dt"}
             val={dt}
             place={change === false ? en.details : es.details}

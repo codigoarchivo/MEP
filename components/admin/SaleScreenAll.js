@@ -87,7 +87,7 @@ export const SaleScreenAll = ({
           <Box as="span" fontSize="sm">
             {locale === "es" && "hace"}{" "}
             {formatDistanceToNow(cre, {
-              locale: locale === "en" ? localEn : localEs,
+              locale: locale === "en-US" ? localEn : localEs,
             })}
           </Box>
         )}

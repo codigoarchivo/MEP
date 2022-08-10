@@ -66,7 +66,7 @@ export const SerchRange = ({ product, locale, en, es }) => {
     <Stack w={"full"} spacing={5} border={bordes} rounded="md" p={3}>
       <Box borderBottom={bordes} py={5} w={"full"}>
         <Heading size={"sm"} textTransform={"uppercase"} fontWeight={"normal"}>
-          {locale === "en" ? en.search.sA : es.search.sA}
+          {locale === "en-US" ? en.search.sA : es.search.sA}
         </Heading>
       </Box>
 

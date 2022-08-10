@@ -1,8 +1,8 @@
 module.exports = {
   reactStrictMode: true,
   i18n: {
-    locales: ["en", "es"],
-    defaultLocale: "en",
+    locales: ["en-US", "es"],
+    defaultLocale: "en-US",
     localeDetection: false,
   },
   images: {
@@ -18,14 +18,5 @@ module.exports = {
       "via.placeholder.com",
       "image/webp",
     ],
-  },
-  async redirects() {
-    return [
-      {
-        source: "/search/:uid",
-        destination: "/",
-        permanent: false,
-      },
-    ];
   },
 };

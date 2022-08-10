@@ -31,7 +31,7 @@ export const SerchCategory = ({ locale, en, es }) => {
     <Stack w={"full"} spacing={"5"} border={bordes} rounded="md" p={4}>
       <Box borderBottom={bordes} py={5} w={"full"}>
         <Heading size={"sm"} textTransform={"uppercase"} fontWeight={"normal"}>
-          {locale === "en" ? en.search.sB : es.search.sB}
+          {locale === "en-US" ? en.search.sB : es.search.sB}
         </Heading>
       </Box>
       <List spacing={3}>
@@ -41,9 +41,9 @@ export const SerchCategory = ({ locale, en, es }) => {
             <NavLink
               href={{
                 pathname: "/search",
-                query: { n: id, c: locale === "en" ? na.en : na.es },
+                query: { n: id, c: locale === "en-US" ? na.en : na.es },
               }}
-              name={locale === "en" ? na.en : na.es}
+              name={locale === "en-US" ? na.en : na.es}
               variant={"tertiary"}
               fontWeight={"normal"}
             />

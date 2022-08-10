@@ -116,13 +116,15 @@ const Checkout = ({ product = [] }) => {
   const handleRevert = (e) => {
     e.preventDefault();
     // revertir
-    const err = locale === "en" ? en.error : es.error;
+    const err = locale === "en-US" ? en.error : es.error;
     const u = a.uid;
     dispatch(saveSaleRevert(data, err, u));
   };
 
   return (
-    <ShopLayout title={locale === "en" ? en.historyBuy.sL : es.historyBuy.sL}>
+    <ShopLayout
+      title={locale === "en-US" ? en.historyBuy.sL : es.historyBuy.sL}
+    >
       <Container maxW={"container.lg"} px={{ base: 2, md: 4 }}>
         <Stack flexDirection={"column"} my={{ base: 0, md: 20 }} w={full}>
           <Heading
@@ -134,7 +136,7 @@ const Checkout = ({ product = [] }) => {
             fontSize={points25}
             mb={5}
           >
-            {locale === "en" ? en.historyBuy.sD : es.historyBuy.sD}
+            {locale === "en-US" ? en.historyBuy.sD : es.historyBuy.sD}
           </Heading>
           <VStack w={full} p={{ base: 0, md: 5 }} border={bordes}>
             <Heading
@@ -146,10 +148,10 @@ const Checkout = ({ product = [] }) => {
               mb={{ base: 0, md: 10 }}
             >
               {!!check[0]
-                ? locale === "en"
+                ? locale === "en-US"
                   ? en.historyBuy.sB
                   : es.historyBuy.sB
-                : locale === "en"
+                : locale === "en-US"
                 ? en.historyBuy.sC
                 : es.historyBuy.sC}
             </Heading>
@@ -158,12 +160,12 @@ const Checkout = ({ product = [] }) => {
                 key={key}
                 {...item}
                 count={(key += 1)}
-                sE={locale === "en" ? en.historyBuy.sE : es.historyBuy.sE}
-                sF={locale === "en" ? en.historyBuy.sF : es.historyBuy.sF}
-                sH={locale === "en" ? en.historyBuy.sH : es.historyBuy.sH}
-                sJ={locale === "en" ? en.historyBuy.sJ : es.historyBuy.sJ}
-                paid={locale === "en" ? en.paid : es.paid}
-                pro={locale === "en" ? en.process : es.process}
+                sE={locale === "en-US" ? en.historyBuy.sE : es.historyBuy.sE}
+                sF={locale === "en-US" ? en.historyBuy.sF : es.historyBuy.sF}
+                sH={locale === "en-US" ? en.historyBuy.sH : es.historyBuy.sH}
+                sJ={locale === "en-US" ? en.historyBuy.sJ : es.historyBuy.sJ}
+                paid={locale === "en-US" ? en.paid : es.paid}
+                pro={locale === "en-US" ? en.process : es.process}
                 locale={locale}
                 push={push}
               />
@@ -179,14 +181,14 @@ const Checkout = ({ product = [] }) => {
                 justifyContent={"space-between"}
               >
                 <Text overflowY={"hidden"}>
-                  {locale === "en" ? en.historyBuy.sK : es.historyBuy.sK}{" "}
+                  {locale === "en-US" ? en.historyBuy.sK : es.historyBuy.sK}{" "}
                 </Text>
                 <Button
                   textTransform={"uppercase"}
                   variant={"primary"}
                   type="submit"
                 >
-                  {locale === "en" ? en.clickHere : es.clickHere}
+                  {locale === "en-US" ? en.clickHere : es.clickHere}
                 </Button>{" "}
               </Stack>
             )}

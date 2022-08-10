@@ -1,11 +1,6 @@
 import { useRouter } from "next/router";
 
-import {
-  HStack,
-  Heading,
-  Box,
-  chakra,
-} from "@chakra-ui/react";
+import { HStack, Heading, Box, chakra } from "@chakra-ui/react";
 
 import { Global } from "../../../helpers/IconNew";
 
@@ -20,12 +15,9 @@ export const NavbarLocal = () => {
 
   return (
     <HStack w={"full"} alignItems={"center"} py={5}>
-      <Heading
-        textTransform={"uppercase"}
-        size="sm"
-      >
+      <Heading textTransform={"uppercase"} size="sm">
         <Box w={6} h={6} as={Global} />{" "}
-        {locale === "en" ? en.language : es.language}
+        {locale === "en-US" ? en.language : es.language}
       </Heading>
 
       {locales.map((lo, i) => (
@@ -35,7 +27,7 @@ export const NavbarLocal = () => {
             variant={"tertiary"}
             href={asPath}
             locale={lo}
-            name={lo}
+            name={lo === "en-US" ? "en" : lo}
             px={0}
             w={0}
           />

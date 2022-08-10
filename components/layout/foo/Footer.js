@@ -83,7 +83,7 @@ export const Footer = () => {
             </Box>
             <Text fontSize={"sm"} textTransform={"capitalize"}>
               © {new Date().getFullYear()}{" "}
-              {locale === "en" ? en.footer.fA : es.footer.fA}
+              {locale === "en-US" ? en.footer.fA : es.footer.fA}
             </Text>
             <List display="flex" alignItems={"center"}>
               <ListItem mr={3}>
@@ -135,13 +135,16 @@ export const Footer = () => {
             <List px={points14} py={5} w="full" spacing={1}>
               <VStack spacing={5}>
                 <Heading w="full" size={"sm"} textTransform={"uppercase"}>
-                  {locale === "en" ? en.footer.fB : es.footer.fB}
+                  {locale === "en-US" ? en.footer.fB : es.footer.fB}
                 </Heading>
                 <ListItem w="full">
                   <Text>Tel +1 9735108452</Text>
                 </ListItem>
                 <ListItem w="full">
-                  <Text> {locale === "en" ? en.footer.fC : es.footer.fC}</Text>
+                  <Text>
+                    {" "}
+                    {locale === "en-US" ? en.footer.fC : es.footer.fC}
+                  </Text>
                 </ListItem>
               </VStack>
             </List>

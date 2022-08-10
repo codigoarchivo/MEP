@@ -41,8 +41,8 @@ export const ReviewUser = ({ locale, es, en }) => {
   // guardar states
   const { values, handleInputChange } = useFormAll(initialStates);
 
-  const aL = locale === "en" ? en.auth.aL : es.auth.aL;
-  const aK = locale === "en" ? en.auth.aK : es.auth.aK;
+  const aL = locale === "en-US" ? en.auth.aL : es.auth.aL;
+  const aK = locale === "en-US" ? en.auth.aK : es.auth.aK;
   // validar
   const { emailE, field, ErrorLorR } = Validator(values, "", aL, aK);
 
@@ -54,12 +54,12 @@ export const ReviewUser = ({ locale, es, en }) => {
   // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
-    const err = locale === "en" ? en.error : es.error;
-    const data1 = locale === "en" ? en.auth.aS : es.auth.aS;
-    const data2 = locale === "en" ? en.auth.aT : es.auth.aT;
-    
+    const err = locale === "en-US" ? en.error : es.error;
+    const data1 = locale === "en-US" ? en.auth.aS : es.auth.aS;
+    const data2 = locale === "en-US" ? en.auth.aT : es.auth.aT;
+
     if (ErrorLorR) {
-      return Toast(locale === "en" ? en.check : es.check, "error", 5000);
+      return Toast(locale === "en-US" ? en.check : es.check, "error", 5000);
     } else {
       dispatch(sendEmail(email, data1, data2, err));
     }
@@ -78,16 +78,16 @@ export const ReviewUser = ({ locale, es, en }) => {
       >
         <VStack spacing={5}>
           <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
-            {locale === "en" ? en.auth.aH : es.auth.aH}
+            {locale === "en-US" ? en.auth.aH : es.auth.aH}
           </Heading>
           <FormControl>
             {!emailE && (
               <FormHelperText color={modelC}>
-                {locale === "en" ? en.auth.aW : es.auth.aW}
+                {locale === "en-US" ? en.auth.aW : es.auth.aW}
               </FormHelperText>
             )}
             <FormLabel htmlFor="email" color={modelC}>
-              {locale === "en" ? en.mail : es.mail}{" "}
+              {locale === "en-US" ? en.mail : es.mail}{" "}
               <Tooltip
                 color={textError}
                 bg={bgTextError}
@@ -103,7 +103,7 @@ export const ReviewUser = ({ locale, es, en }) => {
               onChange={handleInputChange}
               value={email}
               type={"email"}
-              placeholder={locale === "en" ? en.mail : es.mail}
+              placeholder={locale === "en-US" ? en.mail : es.mail}
               autoComplete="new-email"
             />
           </FormControl>
@@ -113,16 +113,16 @@ export const ReviewUser = ({ locale, es, en }) => {
             variant={"primary"}
             textTransform={"uppercase"}
           >
-            {locale === "en" ? en.auth.aJ : es.auth.aJ}
+            {locale === "en-US" ? en.auth.aJ : es.auth.aJ}
           </Button>
           <DividerWithText>
-            {locale === "en" ? en.auth.aE : es.auth.aE}
+            {locale === "en-US" ? en.auth.aE : es.auth.aE}
           </DividerWithText>
           <Center>
             <NavLink
               href={"/auth"}
               variant={"tertiary"}
-              name={locale === "en" ? en.auth.aA : es.auth.aA}
+              name={locale === "en-US" ? en.auth.aA : es.auth.aA}
             />
           </Center>
         </VStack>

@@ -46,7 +46,7 @@ export async function getServerSideProps(context) {
   try {
     context.res.setHeader(
       "Cache-Control",
-      "public, max-age=120, must-revalidate"
+      "public, max-age=86400, must-revalidate"
     );
 
     const q = query(collection(db, "serchs"), orderBy("cre", "desc"), limit(4));
@@ -131,7 +131,7 @@ const Search = ({ product }) => {
   }, [query, listData]);
 
   return (
-    <ShopLayout title={locale === "en" ? en.search.sI : es.search.sI}>
+    <ShopLayout title={locale === "en-US" ? en.search.sI : es.search.sI}>
       <Container maxW="container.xs">
         <Stack flexDirection={"row"} p={{ base: 0, sm: 5 }}>
           <VStack
@@ -153,7 +153,7 @@ const Search = ({ product }) => {
             <VStack spacing={0}>
               <Center py={"10"} w={"full"}>
                 <Heading size={"sm"} textTransform={"uppercase"}>
-                  {locale === "en" ? en.search.sC : es.search.sC}
+                  {locale === "en-US" ? en.search.sC : es.search.sC}
                 </Heading>
               </Center>
               <Spinner
@@ -173,7 +173,7 @@ const Search = ({ product }) => {
               {!product[0] && (
                 <Center py={"48"} w={"full"}>
                   <Heading size={"sm"} textTransform={"uppercase"}>
-                    {locale === "en" ? en.search.sC : es.search.sC}
+                    {locale === "en-US" ? en.search.sC : es.search.sC}
                   </Heading>
                 </Center>
               )}

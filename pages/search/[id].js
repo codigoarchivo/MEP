@@ -1,14 +1,6 @@
 import React, { useEffect } from "react";
 
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 
 import { db } from "../../firebase/config";
 
@@ -20,13 +12,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Container } from "@chakra-ui/react";
 
-import { Toast } from "../../helpers/Toast";
-
 import { messagesList } from "../../actions/checkout";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
 import { SerchDetails } from "../../components/search/SerchDetails";
+
+import { dbSerch } from "../../data/dbSerch";
+import { dbMessage } from "../../data/dbMessage";
 
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
@@ -46,7 +39,7 @@ export async function getStaticPaths() {
           params: {
             id,
           },
-          locale: "en",
+          locale: "en-US",
         },
         {
           params: {
@@ -61,50 +54,28 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  // message
-  const id = params.id.toString();
-  try {
-    const docSnap = await getDoc(doc(db, "serchs", id));
+  const id = await params.id.toString();
 
-    const product = {
-      id: docSnap.id,
-      ...docSnap.data(),
-    };
+  const product = await dbSerch(id);
 
-    const q = query(
-      collection(db, "serchs", id, "messages"),
-      orderBy("cre", "desc"),
-      limit(5)
-    );
+  const msg = await dbMessage(id);
 
-    const { docs } = await getDocs(q);
-
-    const msg = docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    if (!product) {
-      return {
-        // notFound: true, // Devolverá la página 404
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
+  if (!product) {
     return {
-      props: {
-        product,
-        msg,
+      redirect: {
+        destination: "/",
+        permanent: false,
       },
-      revalidate: 120, //86400 60 * 60 * 24 revalidate every 24 hours
     };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return { props: { message: [], product: {} } };
   }
+
+  return {
+    props: {
+      product,
+      msg,
+    },
+    revalidate: 86400, // 60 * 60 * 24,
+  };
 }
 
 const Details = ({ product = {}, msg = [] }) => {
@@ -116,7 +87,7 @@ const Details = ({ product = {}, msg = [] }) => {
   const { message } = useSelector(({ message }) => message);
 
   useEffect(() => {
-    if (!!msg[0]) {
+    if (msg) {
       dispatch(messagesList(msg));
     } else {
       dispatch(messagesList([]));
@@ -124,7 +95,7 @@ const Details = ({ product = {}, msg = [] }) => {
   }, [dispatch, msg]);
 
   return (
-    <ShopLayout title={locale === "en" ? en.details : es.details}>
+    <ShopLayout title={locale === "en-US" ? en.details : es.details}>
       <Container
         maxW="container.lg"
         px={{ base: 2, md: 4 }}

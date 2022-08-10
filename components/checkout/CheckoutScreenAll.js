@@ -61,7 +61,7 @@ export const CheckoutScreenAll = ({
           {[
             {
               all: name,
-              dat: locale === "en" ? product.na.en : product.na.es,
+              dat: locale === "en-US" ? product.na.en : product.na.es,
             },
             {
               all: quantity,

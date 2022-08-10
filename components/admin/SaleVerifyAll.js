@@ -66,18 +66,18 @@ export const SaleVerifyAll = ({
     e.preventDefault();
     if ([idThree, sal, buy].includes("")) {
       return Toast(
-        locale === "en" ? en.historySale.sI : es.historySale.sI,
+        locale === "en-US" ? en.historySale.sI : es.historySale.sI,
         "error",
         5000
       );
     }
 
-    const err = locale === "en" ? en.error : es.error;
+    const err = locale === "en-US" ? en.error : es.error;
 
     dispatch(validPago(referencia, idThree, sal, err, buy, dataDispatch));
 
     Toast(
-      locale === "en" ? en.historySale.sH : es.historySale.sH,
+      locale === "en-US" ? en.historySale.sH : es.historySale.sH,
       "success",
       5000
     );
@@ -107,9 +107,9 @@ export const SaleVerifyAll = ({
       >
         <Salemodal
           imgs={referencia?.imp}
-          receipt={locale === "en" ? en.receipt : es.receipt}
-          close={locale === "en" ? en.close : es.close}
-          picture={locale === "en" ? en.picture : es.picture}
+          receipt={locale === "en-US" ? en.receipt : es.receipt}
+          close={locale === "en-US" ? en.close : es.close}
+          picture={locale === "en-US" ? en.picture : es.picture}
         />{" "}
         <Button
           display={dA !== sal ? "block" : "none"}
@@ -121,7 +121,7 @@ export const SaleVerifyAll = ({
           onClick={() => handleUser(sal)}
           style={{ marginLeft: poin, marginBottom: poinB }}
         >
-          {locale === "en" ? en.sell : es.sell}
+          {locale === "en-US" ? en.sell : es.sell}
         </Button>
         <Button
           w={{ base: "full", md: "min-content" }}
@@ -132,7 +132,7 @@ export const SaleVerifyAll = ({
           onClick={() => handleUser(buy)}
           style={{ marginLeft: poin, marginBottom: poinB }}
         >
-          {locale === "en" ? en.buyer : es.buyer}
+          {locale === "en-US" ? en.buyer : es.buyer}
         </Button>
         <Box
           textAlign={"right"}
@@ -153,28 +153,28 @@ export const SaleVerifyAll = ({
           border={bordes}
         >
           <Heading textTransform={"uppercase"} w={full} mb={5} size={"sm"}>
-            {locale === "en" ? en.historySale.sE : es.historySale.sE}
+            {locale === "en-US" ? en.historySale.sE : es.historySale.sE}
           </Heading>
           <Stack w={full} spacing={5} overflow={"auto"}>
             {[
               {
-                nombre: locale === "en" ? en.name : es.name,
-                Valor: locale === "en" ? product.na.en : product.na.es,
+                nombre: locale === "en-US" ? en.name : es.name,
+                Valor: locale === "en-US" ? product.na.en : product.na.es,
               },
               {
-                nombre: locale === "en" ? en.quantity : es.quantity,
+                nombre: locale === "en-US" ? en.quantity : es.quantity,
                 Valor: "N°" + product?.cn,
               },
               {
-                nombre: locale === "en" ? en.price : es.price,
+                nombre: locale === "en-US" ? en.price : es.price,
                 Valor: "$" + product?.pj,
               },
               {
-                nombre: locale === "en" ? en.tax : es.tax,
+                nombre: locale === "en-US" ? en.tax : es.tax,
                 Valor: "$" + product?.in,
               },
               {
-                nombre: locale === "en" ? en.unit : es.unit,
+                nombre: locale === "en-US" ? en.unit : es.unit,
                 Valor: "$" + product?.pr,
               },
               {
@@ -203,24 +203,24 @@ export const SaleVerifyAll = ({
           border={bordes}
         >
           <Heading textTransform={"uppercase"} w={full} mb={5} size={"sm"}>
-            {locale === "en" ? en.historySale.sF : es.historySale.sF}
+            {locale === "en-US" ? en.historySale.sF : es.historySale.sF}
           </Heading>
           <Stack w={full} spacing={5} overflow={"auto"}>
             {[
               {
-                nombre: locale === "en" ? en.name : es.name,
+                nombre: locale === "en-US" ? en.name : es.name,
                 Valor: referencia?.nap,
               },
               {
-                nombre: locale === "en" ? en.reference : es.reference,
+                nombre: locale === "en-US" ? en.reference : es.reference,
                 Valor: referencia?.ref,
               },
               {
-                nombre: locale === "en" ? en.payment : es.payment,
+                nombre: locale === "en-US" ? en.payment : es.payment,
                 Valor: referencia?.fer,
               },
               {
-                nombre: locale === "en" ? en.mail : es.mail,
+                nombre: locale === "en-US" ? en.mail : es.mail,
                 Valor: referencia?.co,
               },
             ].map(({ nombre, Valor }, key) => (
@@ -237,7 +237,7 @@ export const SaleVerifyAll = ({
           </Stack>{" "}
           <chakra.form onSubmit={handleLiberate} w={full}>
             <GridValueClose
-              set={locale === "en" ? en.historySale.sG : es.historySale.sG}
+              set={locale === "en-US" ? en.historySale.sG : es.historySale.sG}
               onClose={closeVerify}
               locale={locale}
               es={es}

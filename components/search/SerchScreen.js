@@ -89,7 +89,7 @@ export const SerchScreen = ({
     () => activeCartSelect.map((item) => item.id).includes(id),
     [activeCartSelect, id]
   );
-  
+
   // guardado para mas tarde
   matchValid.current = useMemo(
     () => saveCartSelect.map((item) => item.id).includes(id),
@@ -99,13 +99,13 @@ export const SerchScreen = ({
   // cart activo
   const handleSelect = () => {
     if (cn <= 1) {
-      return Toast(locale === "en" ? en.amount : es.amount, "info", 5000);
+      return Toast(locale === "en-US" ? en.amount : es.amount, "info", 5000);
     }
 
     // activeCartSelect
     if (match.current) {
       return Toast(
-        locale === "en" ? en.search.sD : es.search.sD,
+        locale === "en-US" ? en.search.sD : es.search.sD,
         "error",
         5000
       );
@@ -114,7 +114,11 @@ export const SerchScreen = ({
     // saveCartSelect
     if (matchValid.current) {
       push("/cart");
-      return Toast(locale === "en" ? en.search.sE : es.search.sE, "info", 5000);
+      return Toast(
+        locale === "en-US" ? en.search.sE : es.search.sE,
+        "info",
+        5000
+      );
     }
 
     // dispatch
@@ -125,7 +129,7 @@ export const SerchScreen = ({
       },
     });
 
-    const err = locale === "en" ? en.error : es.error;
+    const err = locale === "en-US" ? en.error : es.error;
     dispatch(cartSaveLatest(data, err));
   };
 
@@ -135,40 +139,37 @@ export const SerchScreen = ({
 
     if (product.na === undefined || product.na === "") {
       return Toast(
-        locale === "en" ? en.search.sG : es.search.sG,
+        locale === "en-US" ? en.search.sG : es.search.sG,
         "error",
         5000
       );
     }
 
     if (product.cn <= 1) {
-      return Toast(locale === "en" ? en.amount : es.amount, "info", 5000);
+      return Toast(locale === "en-US" ? en.amount : es.amount, "info", 5000);
     }
 
     // activeCartSelect
     if (match.current) {
-
       return Toast(
-        locale === "en" ? en.search.sF : es.search.sF,
+        locale === "en-US" ? en.search.sF : es.search.sF,
         "error",
         5000
       );
-
     } else {
-
       Toast(
         matchValid.current
-          ? locale === "en"
+          ? locale === "en-US"
             ? en.search.sG
             : es.search.sG
-          : locale === "en"
+          : locale === "en-US"
           ? en.search.sH
           : es.search.sH,
         matchValid.current ? "error" : "success",
         5000
       );
 
-      const err = locale === "en" ? en.error : es.error;
+      const err = locale === "en-US" ? en.error : es.error;
 
       dispatch(saveProductCart(product, err));
 
@@ -219,7 +220,7 @@ export const SerchScreen = ({
             <Box position={"relative"}>
               <Image
                 src={im || "https://via.placeholder.com/248.png?text=Imagen"}
-                alt={locale === "en" ? na.en : na.es}
+                alt={locale === "en-US" ? na.en : na.es}
                 width={248}
                 height={248}
                 objectFit="cover"
@@ -234,7 +235,7 @@ export const SerchScreen = ({
             <Box p={3} w={"full"}>
               <Flex align="baseline" w={"full"}>
                 <Badge colorScheme="green">
-                  {locale === "en" ? ps.en : ps.es}
+                  {locale === "en-US" ? ps.en : ps.es}
                 </Badge>
               </Flex>
 
@@ -251,7 +252,7 @@ export const SerchScreen = ({
 
               <Stat size={"sm"} width={"full"}>
                 <StatLabel textTransform={"capitalize"}>
-                  {locale === "en" ? na.en : na.es}
+                  {locale === "en-US" ? na.en : na.es}
                 </StatLabel>
                 <StatNumber>
                   <HStack w={"full"} justifyContent={"space-between"}>
@@ -261,7 +262,7 @@ export const SerchScreen = ({
                 </StatNumber>
                 <Collapse in={isOpen} animateOpacity>
                   <StatHelpText mt={2}>
-                    {locale === "en" ? ds.en : ds.es}
+                    {locale === "en-US" ? ds.en : ds.es}
                   </StatHelpText>
                 </Collapse>
               </Stat>

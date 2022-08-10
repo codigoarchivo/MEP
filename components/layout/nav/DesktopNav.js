@@ -56,7 +56,7 @@ export const DesktopNav = () => {
           </InputLeftElement>
           <Input
             type={"search"}
-            placeholder={locale === "en" ? en.searchs : es.searchs}
+            placeholder={locale === "en-US" ? en.searchs : es.searchs}
             value={values.q}
             name={"q"}
             onChange={handleInputChange}

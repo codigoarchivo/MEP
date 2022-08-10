@@ -91,11 +91,13 @@ const Sale = ({ data }) => {
   }, [dispatch, data]);
 
   return (
-    <ShopLayout title={locale === "en" ? en.historySale.sB : es.historySale.sB}>
+    <ShopLayout
+      title={locale === "en-US" ? en.historySale.sB : es.historySale.sB}
+    >
       <Container maxW={"container.lg"} px={{ base: 2, md: 4 }}>
         <Stack flexDirection={"column"} my={{ base: 10, md: 20 }} w={full}>
           <Heading w={full} as="h2" size="lg" fontWeight="semibold">
-            {locale === "en" ? en.historySale.sA : es.historySale.sA}
+            {locale === "en-US" ? en.historySale.sA : es.historySale.sA}
           </Heading>
           <VStack w={full} p={{ base: 2, md: 5 }} border={bordes}>
             <Heading
@@ -107,10 +109,10 @@ const Sale = ({ data }) => {
               mb={{ base: 0, md: 10 }}
             >
               {!!history[0]
-                ? locale === "en"
+                ? locale === "en-US"
                   ? en.historySale.sB
                   : es.historySale.sB
-                : locale === "en"
+                : locale === "en-US"
                 ? en.historySale.sC
                 : es.historySale.sC}
             </Heading>
@@ -119,12 +121,14 @@ const Sale = ({ data }) => {
               <SaleScreenAll
                 item={item}
                 key={key}
-                name={locale === "en" ? en.name : es.name}
-                mail={locale === "en" ? en.mail : es.mail}
-                creation={locale === "en" ? en.creation : es.creation}
-                verify={locale === "en" ? en.historyBuy.sE : es.historyBuy.sE}
+                name={locale === "en-US" ? en.name : es.name}
+                mail={locale === "en-US" ? en.mail : es.mail}
+                creation={locale === "en-US" ? en.creation : es.creation}
+                verify={
+                  locale === "en-US" ? en.historyBuy.sE : es.historyBuy.sE
+                }
                 locale={locale}
-                paid={locale === "en" ? en.paid : es.paid}
+                paid={locale === "en-US" ? en.paid : es.paid}
               />
             ))}
           </VStack>

@@ -60,14 +60,14 @@ export const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
     e.preventDefault();
 
     if ([na, te, co, dt].includes("")) {
-      return Toast(locale === "en" ? en.user.uD : es.user.uD, "error", 5000);
+      return Toast(locale === "en-US" ? en.user.uD : es.user.uD, "error", 5000);
     }
 
     if (a.uid !== id) {
-      return Toast(locale === "en" ? en.user.uE : es.user.uE, "error", 5000);
+      return Toast(locale === "en-US" ? en.user.uE : es.user.uE, "error", 5000);
     }
 
-    Toast(locale === "en" ? en.save : es.save, "success", 5000);
+    Toast(locale === "en-US" ? en.save : es.save, "success", 5000);
     await setDoc(doc(db, "users", id), { na, te, co, dt, rol: "user" });
     back();
   };
@@ -93,7 +93,7 @@ export const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
           textTransform={"uppercase"}
           fontWeight={"normal"}
         >
-          {locale === "en" ? en.user.uF : es.user.uF}
+          {locale === "en-US" ? en.user.uF : es.user.uF}
         </Heading>
         <CloseButton color={modelC} onClick={onCloseSelling} />
       </HStack>
@@ -114,21 +114,21 @@ export const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
         >
           {[
             {
-              nombre: locale === "en" ? en.name : es.name,
+              nombre: locale === "en-US" ? en.name : es.name,
               Valor: na,
               na: "na",
-              place: locale === "en" ? en.name : es.name,
+              place: locale === "en-US" ? en.name : es.name,
               type: "text",
             },
             {
-              nombre: locale === "en" ? en.mail : es.mail,
+              nombre: locale === "en-US" ? en.mail : es.mail,
               Valor: co,
               na: "co",
-              place: locale === "en" ? en.mail : es.mail,
+              place: locale === "en-US" ? en.mail : es.mail,
               type: "email",
             },
             {
-              nombre: locale === "en" ? en.phone : es.phone,
+              nombre: locale === "en-US" ? en.phone : es.phone,
               Valor: te,
               na: "te",
               place: "000-000-0000",
@@ -151,10 +151,10 @@ export const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
           <GridItemFormTextarea
             isReadOnly={a.uid !== id ? true : false}
             points={2}
-            name={locale === "en" ? en.additional : es.additional}
+            name={locale === "en-US" ? en.additional : es.additional}
             na={"dt"}
             val={dt}
-            place={locale === "en" ? en.additional : es.additional}
+            place={locale === "en-US" ? en.additional : es.additional}
             handle={handleInputChange}
             size={"md"}
           />
@@ -163,10 +163,10 @@ export const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
               <HStack w={"full"} justifyContent="flex-end" spacing={10}>
                 <>
                   <Button variant={"tertiary"} onClick={onCloseSelling}>
-                    {locale === "en" ? en.close : es.close}
+                    {locale === "en-US" ? en.close : es.close}
                   </Button>
                   <Button variant={"primary"} type="submit" ml={3}>
-                    {locale === "en" ? en.save : es.save}
+                    {locale === "en-US" ? en.save : es.save}
                   </Button>
                 </>
               </HStack>

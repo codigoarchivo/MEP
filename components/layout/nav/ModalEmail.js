@@ -30,7 +30,7 @@ export const ModalEmail = () => {
   const { locale } = useRouter();
 
   const handleLogout = () => {
-    const err = locale === "en" ? en.error : es.error;
+    const err = locale === "en-US" ? en.error : es.error;
     dispatch(logout(err));
   };
 
@@ -48,14 +48,14 @@ export const ModalEmail = () => {
       <ModalContent>
         <ModalHeader>{a?.displayName}</ModalHeader>
         <ModalBody>
-          <Text>{`${locale === "en" ? en.auth.aY : es.auth.aY} ${a?.email} ${
-            locale === "en" ? en.auth.aZ : es.auth.aZ
+          <Text>{`${locale === "en-US" ? en.auth.aY : es.auth.aY} ${a?.email} ${
+            locale === "en-US" ? en.auth.aZ : es.auth.aZ
           }`}</Text>
         </ModalBody>
         <ModalFooter>
-          <Text>{locale === "en" ? en.auth.aAa : es.auth.aAa}</Text>{" "}
+          <Text>{locale === "en-US" ? en.auth.aAa : es.auth.aAa}</Text>{" "}
           <Button ml={3} size={["sx", "sm", "md"]} p={2} onClick={handleLogout}>
-            {locale === "en" ? en.clickHere : es.clickHere}
+            {locale === "en-US" ? en.clickHere : es.clickHere}
           </Button>
         </ModalFooter>
       </ModalContent>

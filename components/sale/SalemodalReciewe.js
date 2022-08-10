@@ -63,24 +63,24 @@ export const SalemodalReciewe = ({
                 mb={5}
                 size={"sm"}
               >
-                {locale === "en" ? en.historySale.sF : es.historySale.sF}
+                {locale === "en-US" ? en.historySale.sF : es.historySale.sF}
               </Heading>
               <Stack w={"full"} spacing={5} overflow={"auto"}>
                 {[
                   {
-                    nombre: locale === "en" ? en.name : es.name,
+                    nombre: locale === "en-US" ? en.name : es.name,
                     Valor: item.nap,
                   },
                   {
-                    nombre: locale === "en" ? en.reference : es.reference,
+                    nombre: locale === "en-US" ? en.reference : es.reference,
                     Valor: item.ref,
                   },
                   {
-                    nombre: locale === "en" ? en.payment : es.payment,
+                    nombre: locale === "en-US" ? en.payment : es.payment,
                     Valor: item.fer,
                   },
                   {
-                    nombre: locale === "en" ? en.mail : es.mail,
+                    nombre: locale === "en-US" ? en.mail : es.mail,
                     Valor: item.co,
                   },
                 ].map(({ nombre, Valor }, key) => (
