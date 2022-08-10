@@ -117,7 +117,6 @@ export const ProductData = ({
     e.preventDefault();
 
     if (word === "add") {
-      
       const d = await dbUser(a.uid);
 
       if (d.na === "" || d.na === undefined)
@@ -161,6 +160,7 @@ export const ProductData = ({
           err
         )
       );
+      valid();
     }
 
     if (word === "edit") {
@@ -183,7 +183,11 @@ export const ProductData = ({
           err
         )
       );
+      valid();
     }
+  };
+
+  const valid = () => {
     setProgress(0);
     setUrlImage("");
     reset();

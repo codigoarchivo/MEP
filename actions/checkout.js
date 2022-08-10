@@ -13,27 +13,27 @@ export const validPago = (
   idThree = "",
   sal = "",
   err,
-  buy
+  buy,
+  dataDispatch
 ) => {
   return async (dispatch) => {
+    const cre = Date.now();
     try {
-      dispatch(
-        cheListHistory({ ...referencia, process: true, cre: Date.now() })
-      );
-
       if (dA.toString() === sal.toString()) {
         // principal
         await updateDoc(doc(db, "sales", idThree), {
           process: true,
-          cre: Date.now(),
+          cre,
         });
 
         // buy
         await updateDoc(doc(db, "users", buy, "buys", idThree), {
           process: true,
           sal: sal.toString(), // solo para la informacion para cliente
-          cre: Date.now(),
+          cre,
         });
+
+        await dispatch(cheListHistory(dataDispatch));
       }
 
       if (dA.toString() !== sal.toString()) {
@@ -44,21 +44,23 @@ export const validPago = (
         await addDoc(collection(db, "users", sal, "sales"), {
           ...referencia,
           process: true,
-          cre: Date.now(),
+          cre,
         });
 
         // buy
         await updateDoc(doc(db, "users", buy, "buys", idThree), {
           process: true,
           sal: sal.toString(), // solo para la informacion para cliente
-          cre: Date.now(),
+          cre,
         });
 
         // principal
         await updateDoc(doc(db, "sales", idThree), {
           process: true,
-          cre: Date.now(),
+          cre,
         });
+
+        await dispatch(cheListHistory(dataDispatch));
       }
     } catch (error) {
       Toast(err, "error", 5000);

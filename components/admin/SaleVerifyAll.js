@@ -60,6 +60,7 @@ export const SaleVerifyAll = ({
     });
   };
 
+  const dataDispatch = { ...referencia, process: true, cre: Date.now() };
   // handleLiberate
   const handleLiberate = (e) => {
     e.preventDefault();
@@ -73,7 +74,7 @@ export const SaleVerifyAll = ({
 
     const err = locale === "en" ? en.error : es.error;
 
-    dispatch(validPago(referencia, idThree, sal, err, buy));
+    dispatch(validPago(referencia, idThree, sal, err, buy, dataDispatch));
 
     Toast(
       locale === "en" ? en.historySale.sH : es.historySale.sH,
