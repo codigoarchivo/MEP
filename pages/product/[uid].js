@@ -1,15 +1,6 @@
 import React, { useEffect } from "react";
 
-import {
-  collection,
-  doc,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  setDoc,
-  where,
-} from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
 import { db } from "../../firebase/config";
 
@@ -54,6 +45,8 @@ import { Paginator } from "../../utils/Paginator";
 
 import { useFormAll } from "../../hooks/useFormAll";
 
+import { dbProductAll } from "../../data/dbProducts";
+
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
@@ -61,44 +54,16 @@ const initialStates = {
   q: "",
 };
 
-export async function getServerSideProps({ params, locale }) {
+export async function getServerSideProps({ params }) {
   const uid = await params.uid.toString();
-  try {
-    const q = query(
-      collection(db, "serchs"),
-      where("uid", "==", uid),
-      where("cre", "!=", false),
-      orderBy("cre", "desc"),
-      limit(2)
-    );
 
-    const { docs } = await getDocs(q);
+  const product = await dbProductAll(uid, 25);
 
-    const product = docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    if (!product) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
-    return {
-      props: {
-        product,
-      },
-    };
-  } catch (error) {
-    Toast(locale === "en-US" ? en.error : es.error, "error", 5000);
-    return {
-      props: {},
-    };
-  }
+  return {
+    props: {
+      product,
+    },
+  };
 }
 
 const List = ({ product = [] }) => {

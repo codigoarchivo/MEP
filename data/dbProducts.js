@@ -4,6 +4,7 @@ import {
   getDoc,
   getDocs,
   limit,
+  orderBy,
   query,
   updateDoc,
   where,
@@ -56,12 +57,25 @@ export const dbProductEdit = async (id, dbE, val) => {
   }
 };
 
-export const dbUser = async (id) => {
-  const docSnap = await getDoc(doc(db, "users", id));
+export const dbProductAll = async (uid, li) => {
+  try {
+    const q = query(
+      collection(db, "serchs"),
+      where("uid", "==", uid),
+      where("cre", "!=", false),
+      orderBy("cre", "desc"),
+      limit(li)
+    );
 
-  const active = {
-    ...docSnap.data(),
-  };
+    const { docs } = await getDocs(q);
 
-  return JSON.parse(JSON.stringify(active));
+    const product = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return JSON.parse(JSON.stringify(product));
+  } catch (error) {
+    return null;
+  }
 };

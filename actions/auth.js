@@ -108,9 +108,8 @@ export const startRegisterWithNameEmailPassword = (
           } else {
             sendEmailVerification(auth.currentUser).then(() => {
               Toast(data, "success", 5000);
+              dispatch(logout());
             });
-
-            dispatch(logout());
           }
           // end
           await dispatch(finishLoading());

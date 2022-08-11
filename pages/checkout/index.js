@@ -1,9 +1,5 @@
 import React, { useEffect, useMemo } from "react";
 
-import { collection, getDocs, limit, where, query } from "firebase/firestore";
-
-import { db } from "../../firebase/config";
-
 import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
@@ -31,47 +27,21 @@ import {
 
 import { CheckoutScreen } from "../../components/checkout/CheckoutScreen";
 
-import { Toast } from "../../helpers/Toast";
+import { dbbuyCheck } from "../../data/dbCheck";
 
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
 export async function getServerSideProps(Context) {
-  const qu = await Context.query.q.toString();
-  try {
-    const q = query(
-      collection(db, "users", qu, "buys"),
-      where("close", "==", false),
-      limit(4)
-    );
+  const uid = await Context.query.q.toString();
 
-    const { docs } = await getDocs(q);
+  const product = await dbbuyCheck(uid);
 
-    const product = docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    if (!product) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
-    return {
-      props: {
-        product: JSON.parse(JSON.stringify(product)),
-      },
-    };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return {
-      props: {},
-    };
-  }
+  return {
+    props: {
+      product,
+    },
+  };
 }
 
 const Checkout = ({ product = [] }) => {

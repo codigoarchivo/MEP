@@ -1,9 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
-
-import { db } from "../../firebase/config";
-
 import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
@@ -27,8 +23,6 @@ import ShopLayout from "../../components/layout/ShopLayout";
 
 import { serchProductList } from "../../actions/product";
 
-import { Toast } from "../../helpers/Toast";
-
 import { Paginator } from "../../utils/Paginator";
 
 import { dbProducts } from "../../data/dbProducts";
@@ -39,46 +33,33 @@ import { SerchRange } from "../../components/search/SerchRange";
 
 import { Breakpoints } from "../../helpers/Breakpoints";
 
+import { dbSerchAll } from "../../data/dbSerch";
+
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
 export async function getServerSideProps(context) {
-  try {
-    context.res.setHeader(
-      "Cache-Control",
-      "public, max-age=86400, must-revalidate"
-    );
+  context.res.setHeader(
+    "Cache-Control",
+    "public, max-age=86400, must-revalidate"
+  );
 
-    const q = query(collection(db, "serchs"), orderBy("cre", "desc"), limit(4));
+  const product = await dbSerchAll(25);
 
-    const { docs } = await getDocs(q);
-
-    const product = docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    if (!product) {
-      return {
-        // notFound: true, // Devolverá la página 404
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
+  if (!product) {
     return {
-      props: {
-        product,
+      redirect: {
+        destination: "/",
+        permanent: false,
       },
     };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return {
-      props: {},
-    };
   }
+
+  return {
+    props: {
+      product,
+    },
+  };
 }
 
 const Search = ({ product }) => {

@@ -1,16 +1,5 @@
 import React, { useEffect } from "react";
 
-import {
-  query,
-  collection,
-  getDocs,
-  limit,
-  orderBy,
-  where,
-} from "firebase/firestore";
-
-import { db } from "../../firebase/config";
-
 import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
@@ -23,53 +12,27 @@ import ShopLayout from "../../components/layout/ShopLayout";
 
 import { Breakpoints } from "../../helpers/Breakpoints";
 
-import { Toast } from "../../helpers/Toast";
-
 import { cheListAllClear, cheListAllSale } from "../../actions/checkout";
 
 import { PaginatorProcess } from "../../utils/PaginatorProcess";
 
 import { SaleScreen } from "../../components/sale/SaleScreen";
 
+import { dbsale } from "../../data/dbCheck";
+
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
 export async function getServerSideProps(Context) {
-  const d = await Context.query.uid.toString();
-  try {
-    const { docs } = await getDocs(
-      query(
-        collection(db, "users", d, "sales"),
-        orderBy("cre", "desc"),
-        limit(1)
-      )
-    );
+  const q = await Context.query.uid.toString();
 
-    const data = docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+  const data = await dbsale(q, 5);
 
-    if (!data) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
-    return {
-      props: {
-        data,
-      },
-    };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return {
-      props: {},
-    };
-  }
+  return {
+    props: {
+      data,
+    },
+  };
 }
 
 const SaleData = ({ data }) => {

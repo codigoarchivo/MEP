@@ -1,6 +1,6 @@
 import React from "react";
 
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 
 import { db } from "../../../firebase/config";
 
@@ -16,7 +16,7 @@ import { Breakpoints } from "../../../helpers/Breakpoints";
 
 import { SaleVerifyAll } from "../../../components/admin/SaleVerifyAll";
 
-import { Toast } from "../../../helpers/Toast";
+import { dbAdminById } from "../../../data/dbAdmin";
 
 import { en } from "../../../translations/en";
 import { es } from "../../../translations/es";
@@ -45,34 +45,23 @@ export async function getStaticPaths({ locales }) {
 
 export async function getStaticProps({ params }) {
   const id = await params.id.toString();
-  try {
-    const docSnap = await getDoc(doc(db, "sales", id));
 
-    const active = {
-      id: docSnap.id,
-      ...docSnap.data(),
-    };
+  const active = await dbAdminById(id);
 
-    if (!active) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
+  if (!active) {
     return {
-      props: {
-        active,
+      redirect: {
+        destination: "/",
+        permanent: false,
       },
     };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return {
-      props: {},
-    };
   }
+
+  return {
+    props: {
+      active,
+    },
+  };
 }
 
 const Orders = ({ active }) => {

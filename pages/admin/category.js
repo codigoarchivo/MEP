@@ -1,9 +1,5 @@
 import React, { useEffect } from "react";
 
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
-
-import { db } from "../../firebase/config";
-
 import PropTypes from "prop-types";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -35,46 +31,21 @@ import { listDataCategory } from "../../actions/category";
 
 import { Paginator } from "../../utils/Paginator";
 
-import { Toast } from "../../helpers/Toast";
-
 import { ModeColor } from "../../helpers/ModeColor";
+
+import { dbcategoryAll } from "../../data/dbCategory";
 
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
 export async function getServerSideProps() {
-  try {
-    const ca = query(
-      collection(db, "categories"),
-      orderBy("cre", "desc"),
-      limit(2)
-    );
+  const data = await dbcategoryAll(25);
 
-    const { docs } = await getDocs(ca);
-
-    const data = docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    if (!data) {
-      return {
-        // notFound: true, // Devolverá la página 404
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
-    return {
-      props: {
-        data,
-      },
-    };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-  }
+  return {
+    props: {
+      data,
+    },
+  };
 }
 
 const Category = ({ data = [] }) => {

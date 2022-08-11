@@ -1,9 +1,5 @@
 import React from "react";
 
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
-
-import { db } from "../../firebase/config";
-
 import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
@@ -16,41 +12,30 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 
 import { CheckVerify } from "../../components/checkout/CheckVerify";
 
-import { Toast } from "../../helpers/Toast";
+import { dbcheckById } from "../../data/dbCheck";
 
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
-export async function getServerSideProps({ query }) {
-  const id = await query.id.toString();
-  const uid = await query.uid.toString();
-  try {
-    const docSnap = await getDoc(doc(db, "users", uid, "buys", id));
+export async function getServerSideProps(context) {
+  const uid = await context.query.uid.toString();
+  const id = await context.query.id.toString();
 
-    const data = {
-      id: docSnap.id,
-      ...docSnap.data(),
-    };
-    if (!data) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
+  const data = await dbcheckById(uid, id);
 
+  if (!data) {
     return {
-      props: {
-        data: JSON.parse(JSON.stringify(data)),
+      redirect: {
+        notFound: true,
       },
     };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return {
-      props: {},
-    };
   }
+
+  return {
+    props: {
+      data,
+    },
+  };
 }
 
 const Verification = ({ data }) => {

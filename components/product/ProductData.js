@@ -31,7 +31,7 @@ import { useFormAll } from "../../hooks/useFormAll";
 
 import { enActive, esActive } from "../../actions/ui";
 
-import { dbUser } from "../../data/dbProducts";
+import { userById } from "../../data/dbUser";
 
 const initialStates = {
   pr: 0,
@@ -117,7 +117,7 @@ export const ProductData = ({
     e.preventDefault();
 
     if (word === "add") {
-      const d = await dbUser(a.uid);
+      const d = await userById(a.uid);
 
       if (d.na === "" || d.na === undefined)
         return Toast(

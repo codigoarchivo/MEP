@@ -44,7 +44,7 @@ import { FileAll } from "../../utils/FileAll";
 import { GridItemForm } from "../../utils/GridItemForm";
 import { GridItemFormTextarea } from "../../utils/GridItemFormTextarea";
 
-import { dbUser } from "../../data/dbProducts";
+import { userById } from "../../data/dbUser";
 
 const initialStates = {
   nap: "",
@@ -93,7 +93,7 @@ export const CheckVerify = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const d = await dbUser(a.uid);
+    const d = await userById(a.uid);
 
     if (d.na === "" || d.na === undefined) {
       return Toast(

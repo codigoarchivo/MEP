@@ -1,52 +1,38 @@
 import React from "react";
 
-import { doc, getDoc } from "firebase/firestore";
-
-import { db } from "../../firebase/config";
-
 import { Container } from "@chakra-ui/react";
 
 import { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
 
-import { Toast } from "../../helpers/Toast";
-
 import ShopLayout from "../../components/layout/ShopLayout";
 
 import { UserScreen } from "../../components/user/UserScreen";
 
+import { userById } from "../../data/dbUser";
+
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
-export async function getServerSideProps({ query }) {
-  const uid = await query.uid.toString();
-  try {
-    const docSnap = await getDoc(doc(db, "users", uid));
+export async function getServerSideProps(context) {
+  const uid = await context.query.uid.toString();
 
-    const user = {
-      id: docSnap.id,
-      ...docSnap.data(),
-    };
+  const user = await userById(uid);
 
-    if (!user) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
+  if (!user) {
     return {
-      props: {
-        user,
+      redirect: {
+        notFound: true,
       },
     };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return { props: {} };
   }
+
+  return {
+    props: {
+      user,
+    },
+  };
 }
 
 const Informacion = ({ user = {} }) => {

@@ -31,47 +31,21 @@ import { useRouter } from "next/router";
 
 import { SaleScreenAll } from "../../components/admin/SaleScreenAll";
 
+import { dbAdminAll } from "../../data/dbAdmin";
+
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
-export async function getServerSideProps(Context) {
-  const d = Context.query.uid.toString();
-  try {
-    const q = query(
-      collection(db, "sales"),
-      where("own", "==", d),
-      where("cre", "!=", false),
-      orderBy("cre", "desc"),
-      limit(1)
-    );
+export async function getServerSideProps(context) {
+  const uid = await context.query.uid.toString();
 
-    const { docs } = await getDocs(q);
+  const data = await dbAdminAll(uid, 5);
 
-    const data = docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    if (!data) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
-    return {
-      props: {
-        data,
-      },
-    };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return {
-      props: {},
-    };
-  }
+  return {
+    props: {
+      data,
+    },
+  };
 }
 
 const Sale = ({ data }) => {

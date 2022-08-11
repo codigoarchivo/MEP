@@ -18,6 +18,8 @@ import { Toast } from "../../helpers/Toast";
 
 import { useSelector } from "react-redux";
 
+import { dbMessageById } from "../../data/dbMessage";
+
 import { es } from "../../translations/es";
 import { en } from "../../translations/en";
 
@@ -27,19 +29,9 @@ export async function getServerSideProps(context) {
   // id del producto
   const p = context.query.p.toString();
 
-  try {
-    const docSnap = await getDoc(doc(db, "serchs", p, "messages", g));
+  const msg = await dbMessageById(p, g);
 
-    const msg = {
-      id: docSnap.id,
-      ...docSnap.data(),
-    };
-
-    return { props: { msg } };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return { props: {} };
-  }
+  return { props: { msg } };
 }
 
 const Review = ({ msg }) => {

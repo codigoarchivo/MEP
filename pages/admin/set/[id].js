@@ -1,6 +1,6 @@
 import React from "react";
 
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 
 import { db } from "../../../firebase/config";
 
@@ -13,6 +13,8 @@ import { Container } from "@chakra-ui/react";
 import { CategoryData } from "../../../components/category/CategoryData";
 
 import ShopLayout from "../../../components/layout/ShopLayout";
+
+import { dbcategoryById } from "../../../data/dbCategory";
 
 import { en } from "../../../translations/en";
 import { es } from "../../../translations/es";
@@ -41,36 +43,24 @@ export async function getStaticPaths({ locales }) {
 
 export async function getStaticProps({ params }) {
   const id = await params.id.toString();
-  try {
-    const docSnap = await getDoc(doc(db, "categories", id));
 
-    const category = {
-      id: docSnap.id,
-      ...docSnap.data(),
-    };
+  const category = await dbcategoryById(id);
 
-    if (!category) {
-      return {
-        // notFound: true, // Devolverá la página 404
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
+  if (!category) {
     return {
-      props: {
-        category,
+      redirect: {
+        destination: "/",
+        permanent: false,
       },
-      revalidate: 60 * 60 * 24,
-    };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return {
-      props: {},
     };
   }
+
+  return {
+    props: {
+      category,
+    },
+    revalidate: 86400,
+  };
 }
 
 const ConfigCategory = ({ category }) => {

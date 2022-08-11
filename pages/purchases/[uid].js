@@ -1,9 +1,5 @@
 import React, { useEffect } from "react";
 
-import { collection, getDocs, limit, query, orderBy } from "firebase/firestore";
-
-import { db } from "../../firebase/config";
-
 import PropTypes from "prop-types";
 
 import { Box, Container, Heading, Stack, VStack } from "@chakra-ui/react";
@@ -22,47 +18,21 @@ import { CheckoutScreenAll } from "../../components/checkout/CheckoutScreenAll";
 
 import { PaginatorProcess } from "../../utils/PaginatorProcess";
 
-import { Toast } from "../../helpers/Toast";
+import { dbbuy } from "../../data/dbCheck";
 
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
 export async function getServerSideProps(context) {
-  const u = await context.query.uid.toString();
-  try {
-    const { docs } = await getDocs(
-      query(
-        collection(db, "users", u, "buys"),
-        orderBy("cre", "desc"),
-        limit(1)
-      )
-    );
+  const uid = await context.query.uid.toString();
 
-    const product = docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+  const product = await dbbuy(uid, 5);
 
-    if (!product) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
-    return {
-      props: {
-        product: JSON.parse(JSON.stringify(product)),
-      },
-    };
-  } catch (error) {
-    Toast("Al parecer hay un error", "error", 5000);
-    return {
-      props: {},
-    };
-  }
+  return {
+    props: {
+      product,
+    },
+  };
 }
 
 const BuyData = ({ product = [] }) => {

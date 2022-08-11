@@ -1,6 +1,29 @@
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+} from "firebase/firestore";
 
 import { db } from "../firebase/config";
+
+export const dbMessageById = async (p, g) => {
+  try {
+    const docSnap = await getDoc(doc(db, "serchs", p, "messages", g));
+
+    const msg = {
+      id: docSnap.id,
+      ...docSnap.data(),
+    };
+
+    return msg;
+  } catch (error) {
+    return null;
+  }
+};
 
 export const dbMessage = async (id) => {
   try {
