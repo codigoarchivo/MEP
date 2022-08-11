@@ -17,7 +17,7 @@ import ShopLayout from "../../../components/layout/ShopLayout";
 import { en } from "../../../translations/en";
 import { es } from "../../../translations/es";
 
-export async function getStaticPaths() {
+export async function getStaticPaths({ locales }) {
   const { docs } = await getDocs(collection(db, "categories"));
 
   const category = docs.map((doc) => ({
@@ -25,23 +25,16 @@ export async function getStaticPaths() {
     ...doc.data(),
   }));
 
+  const paths = [];
+
+  for (const locale of locales) {
+    category.map((item) => {
+      paths.push({ params: { id: item.id }, locale });
+    });
+  }
+
   return {
-    paths: category.map(
-      ({ id }) => (
-        {
-          params: {
-            id,
-          },
-          locale: "en-US",
-        },
-        {
-          params: {
-            id,
-          },
-          locale: "es",
-        }
-      )
-    ),
+    paths,
     fallback: "blocking",
   };
 }

@@ -24,31 +24,24 @@ import { dbMessage } from "../../data/dbMessage";
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
-export async function getStaticPaths() {
+export async function getStaticPaths({ locales }) {
   const { docs } = await getDocs(collection(db, "serchs"));
 
-  const producto = docs.map((doc) => ({
+  const product = docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }));
 
+  const paths = [];
+
+  for (const locale of locales) {
+    product.map((item) => {
+      paths.push({ params: { id: item.id }, locale });
+    });
+  }
+
   return {
-    paths: producto.map(
-      ({ id }) => (
-        {
-          params: {
-            id,
-          },
-          locale: "en-US",
-        },
-        {
-          params: {
-            id,
-          },
-          locale: "es",
-        }
-      )
-    ),
+    paths,
     fallback: "blocking",
   };
 }
