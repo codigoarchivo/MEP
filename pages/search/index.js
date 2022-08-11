@@ -44,7 +44,7 @@ export async function getServerSideProps(context) {
     "public, max-age=86400, must-revalidate"
   );
 
-  const product = await dbSerchAll(25);
+  const product = await dbSerchAll(15);
 
   if (!product) {
     return {

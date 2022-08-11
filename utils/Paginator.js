@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import PropTypes from "prop-types";
 
@@ -56,20 +56,19 @@ export const Paginator = ({
 
   const { modelF } = ModeColor();
 
-  // TODO: cuando este todo listo descometar esto
-  // useEffect(() => {
-  //   if (list.length < 25) {
-  //     setModality(true);
-  //     setModality2(true);
-  //     setModality3(true);
-  //   }
+  useEffect(() => {
+    if (list.length < 5) {
+      setModality(true);
+      setModality2(true);
+      setModality3(true);
+    }
 
-  //   return () => {
-  //     setModality(true);
-  //     setModality2();
-  //     setModality3(true);
-  //   };
-  // }, [list, setModality, setModality2, setModality3]);
+    return () => {
+      setModality(true);
+      setModality2();
+      setModality3(true);
+    };
+  }, [list, setModality, setModality2, setModality3]);
 
   const home = () => {
     let q;

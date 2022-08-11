@@ -57,7 +57,7 @@ const initialStates = {
 export async function getServerSideProps({ params }) {
   const uid = await params.uid.toString();
 
-  const product = await dbProductAll(uid, 25);
+  const product = await dbProductAll(uid, 10);
 
   return {
     props: {

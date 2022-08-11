@@ -29,7 +29,7 @@ export async function getServerSideProps(context) {
 
   const product = await dbSerchAll(50);
 
-  const category = await dbcategoryAll(25);
+  const category = await dbcategoryAll(15);
 
   if (!product || !category) {
     return {
