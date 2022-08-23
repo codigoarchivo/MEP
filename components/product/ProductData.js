@@ -260,14 +260,14 @@ export const ProductData = ({
 
           <HStack>
             <Button
-              color={change === false ? "brand.700" : modelF}
+              color={change === false ? "brand.300" : modelF}
               variant={"tertiary"}
               onClick={enRes}
             >
               en
             </Button>
             <Button
-              color={change === true ? "brand.700" : modelF}
+              color={change === true ? "brand.300" : modelF}
               variant={"tertiary"}
               onClick={esRes}
             >

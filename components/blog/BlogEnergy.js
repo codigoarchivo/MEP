@@ -27,13 +27,13 @@ export const BlogEnergy = ({
   bIi,
   points,
 }) => {
-  const { modelF } = ModeColor();
+  const { bg7 } = ModeColor();
 
   return (
     <Container maxW={"7xl"} p={{ base: 0, sm: "12" }}>
       <Heading fontWeight={600} lineHeight={"110%"} fontSize={points}>
         {bAa}{" "}
-        <Text as={"span"} color={modelF}>
+        <Text as={"span"} color={bg7}>
           {bBb}
         </Text>
       </Heading>

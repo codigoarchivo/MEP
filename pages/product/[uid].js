@@ -39,7 +39,6 @@ import { listDataProduct } from "../../actions/product";
 import { Breakpoints } from "../../helpers/Breakpoints";
 
 import { Toast } from "../../helpers/Toast";
-import { ModeColor } from "../../helpers/ModeColor";
 
 import { Paginator } from "../../utils/Paginator";
 
@@ -75,8 +74,6 @@ const List = ({ product = [] }) => {
   const { push, locale } = useRouter();
   // breakpoints
   const { bordes } = Breakpoints();
-  // breakpoints
-  const { modelC } = ModeColor();
   // dispatch
   const dispatch = useDispatch();
 
@@ -130,7 +127,7 @@ const List = ({ product = [] }) => {
           {!list[0] && (
             <Center border={bordes} py={30}>
               <Heading size={"sm"} textTransform={"uppercase"}>
-                {locale === "en-US" ? en.product.pA : es.product.pA}
+                {locale === "en-US" ? en.product.pA : es.product.pA}wewew
               </Heading>
             </Center>
           )}
@@ -160,6 +157,7 @@ const List = ({ product = [] }) => {
               display={a.rol === "owner" ? "block" : "none"}
             >
               <Input
+                _placeholder={{ color: "inherit" }}
                 type={"search"}
                 placeholder={"%"}
                 value={values.q}
@@ -171,7 +169,7 @@ const List = ({ product = [] }) => {
 
           <TableContainer w={"full"} border={bordes}>
             <Table colorScheme="brand">
-              <TableCaption color={modelC}>
+              <TableCaption>
                 {locale === "en-US" ? en.public : es.public}
               </TableCaption>
               <Thead>

@@ -72,6 +72,7 @@ export const FileAll = ({
   return (
     <InputGroup>
       <Input
+        _placeholder={{ color: "inherit" }}
         onChange={handleUpload}
         name="imp"
         type={"file"}

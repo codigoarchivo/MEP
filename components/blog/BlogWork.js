@@ -20,7 +20,8 @@ import { NavLink } from "../../utils/Navlink";
 import { ModeColor } from "../../helpers/ModeColor";
 
 export const BlogWork = ({ bA, bB, bC, bD, create, points, displayOff }) => {
-  const { modelF } = ModeColor();
+  const { bg6, bg7 } = ModeColor();
+
   return (
     <Stack
       w={"full"}
@@ -46,13 +47,13 @@ export const BlogWork = ({ bA, bB, bC, bD, create, points, displayOff }) => {
               position: "absolute",
               bottom: 1,
               left: 0,
-              bg: modelF,
+              bg: bg7,
               zIndex: -1,
             }}
           >
             {bA}
           </Text>
-          <br /> <Text color={modelF}>{bB}</Text>{" "}
+          <br /> <Text>{bB}</Text>{" "}
         </Heading>
         <Text fontSize={{ base: "md", lg: "lg" }}>{bC}</Text>
         <Stack

@@ -12,6 +12,8 @@ import { MenuHistory } from "../../../utils/MenuHistory";
 
 import { ListRoute } from "./ListRoute";
 
+import { ModeColor } from "../../../helpers/ModeColor";
+
 export const BreadcrumbNavbar = ({ NavLink, Box, locale, es, en }) => {
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
@@ -22,9 +24,11 @@ export const BreadcrumbNavbar = ({ NavLink, Box, locale, es, en }) => {
   // useBreakpointValue
   const valSpace = useBreakpointValue({ base: "6px", lg: "16px" });
 
+  const { modelA } = ModeColor()
+
   return (
     <Box display={displayOff2} mb={5} borderTop={bordes}>
-      <chakra.nav boxShadow="md" backgroundColor={"brand.800"}>
+      <chakra.nav boxShadow="md" backgroundColor={modelA}>
         <Stack
           spacing={0}
           as={"ul"}

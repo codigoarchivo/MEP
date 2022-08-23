@@ -132,6 +132,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
             </FormLabel>
 
             <Input
+              _placeholder={{ color: "inherit" }}
               name="name"
               id="name"
               onChange={handleInputChange}
@@ -158,6 +159,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
               </Tooltip>
             </FormLabel>
             <Input
+              _placeholder={{ color: "inherit" }}
               name="email"
               id="email"
               onChange={handleInputChange}
@@ -215,6 +217,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
             </FormLabel>
             <InputGroup size="md">
               <Input
+                _placeholder={{ color: "inherit" }}
                 name="rePassword"
                 id="rePassword"
                 onChange={handleInputChange}

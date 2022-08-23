@@ -21,14 +21,14 @@ const config = {
 const colors = {
   brand: {
     50: "#5965",
-    100: "#ffc301",
+    100: "#1b2232",
     200: "#c1c2c343",
     300: "#94979e43",
     400: "#1b22320d",
     500: "#fff",
     600: "#1b223234",
-    700: "#ffc301",
-    800: "#D4AF37",
+    700: "#E5E4E2",
+    800: "#E5E4E2",
     900: "#1b2232",
   },
 };
@@ -37,16 +37,19 @@ const inputStyles = {
     filled: (props) => ({
       field: {
         backgroundColor: mode("brand.400", "brand.300")(props),
-        borderColor: mode("brand.800", "brand.800")(props),
-        border: "1px solid #D4AF37",
+        borderColor: mode("brand.900", "brand.800")(props),
         boxShadow: "inset 0 2px 4px 0 rgba(0,0,0,0.06)",
+        _placeholder: {
+          opacity: 1,
+          color: mode("brand.800", "brand.900")(props),
+        },
         _hover: {
           backgroundColor: mode("brand.600", "brand.200")(props),
-          borderColor: mode("brand.700", "brand.700")(props),
+          borderColor: mode("brand.600", "brand.200")(props),
         },
         _focus: {
           backgroundColor: mode("brand.600", "brand.200")(props),
-          borderColor: mode("brand.700", "brand.700")(props),
+          borderColor: mode("brand.600", "brand.200")(props),
         },
       },
     }),
@@ -64,15 +67,15 @@ const buttonStyles = {
     primary: (props) => ({
       rounded: "none",
       textDecoration: "none",
-      backgroundColor: mode("brand.800", "brand.800")(props),
-      color: mode("brand.900", "brand.900")(props),
+      backgroundColor: mode("brand.900", "brand.800")(props),
+      color: mode("brand.800", "brand.900")(props),
       _hover: {
-        backgroundColor: mode("brand.700", "brand.700")(props),
-        color: "brand.900",
+        backgroundColor: mode("brand.600", "brand.200")(props),
+        color: mode("brand.900", "brand.800")(props),
       },
       _focus: {
         ring: 2,
-        ringColor: mode("brand.800", "brand.800")(props),
+        ringColor: mode("brand.600", "brand.200")(props),
       },
       _active: {
         backgroundColor: mode("brand.800", "brand.900")(props),
@@ -80,10 +83,11 @@ const buttonStyles = {
       },
     }),
     secondary: (props) => ({
+      rounded: "none",
       backgroundColor: "transparent",
-      color: mode("brand.900", "brand.900")(props),
+      color: mode("brand.800", "brand.900")(props),
       _hover: {
-        color: "brand.600",
+        color: mode("brand.500", "brand.300")(props),
       },
       _focus: {
         ring: 2,
@@ -92,9 +96,9 @@ const buttonStyles = {
     }),
     tertiary: (props) => ({
       backgroundColor: "transparent",
-      color: mode("brand.800", "brand.800")(props),
+      color: mode("brand.900", "brand.800")(props),
       _hover: {
-        color: "brand.700",
+        color: mode("brand.300", "brand.500")(props),
       },
       _focus: {
         ring: 2,
@@ -121,7 +125,7 @@ const globalStyles = {
     global: (props) => ({
       body: {
         color: mode("brand.900", "brand.800")(props),
-        bg: mode("brand.500", "brand.900")(props),
+        bg: mode("brand.800", "brand.900")(props), // TODO cambiar de
       },
       html: {},
       svg: { display: "inline" },
@@ -133,25 +137,6 @@ const globalStyles = {
         _hover: {
           textDecoration: "none",
         },
-      },
-      h1: {
-        color: "brand.800",
-      },
-      h2: {
-        color: "brand.800",
-      },
-      h3: {
-        color: "brand.800",
-      },
-      p: {
-        color: "brand.800",
-      },
-      "*::placeholder": {
-        color: mode("brand.800", "brand.800")(props),
-      },
-      "*, *::before, &::after": {
-        borderColor: mode("brand.800", "brand.800")(props),
-        wordWrap: "break-word",
       },
     }),
   },

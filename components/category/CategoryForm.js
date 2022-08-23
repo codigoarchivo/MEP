@@ -34,6 +34,7 @@ export const CategoryForm = ({
               {change === false ? en.name : es.name}
             </FormLabel>
             <Input
+              _placeholder={{ color: 'inherit' }}
               name={change === false ? "en" : "es"}
               id={"na"}
               value={na}

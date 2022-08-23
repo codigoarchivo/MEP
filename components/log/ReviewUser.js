@@ -98,6 +98,7 @@ export const ReviewUser = ({ locale, es, en }) => {
               </Tooltip>
             </FormLabel>
             <Input
+              _placeholder={{ color: "inherit" }}
               name="email"
               id="email"
               onChange={handleInputChange}

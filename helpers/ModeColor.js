@@ -8,6 +8,8 @@ export const ModeColor = () => {
   const bg3 = useColorModeValue("white", "gray.800");
   const bg4 = useColorModeValue("yellow.100", "brand.600");
   const bg5 = useColorModeValue("brand.600", "brand.200");
+  const bg6 = useColorModeValue("brand.200", "brand.600");
+  const bg7 = useColorModeValue("brand.200", "brand.300");
   const bg = useColorModeValue("brand.400", "brand.300");
   const modelA = useColorModeValue("brand.900", "brand.800");
   const modelB = useColorModeValue("brand.800", "brand.900");
@@ -22,6 +24,8 @@ export const ModeColor = () => {
     bg3,
     bg4,
     bg5,
+    bg6,
+    bg7,
     textError,
     bgTextError,
     bgText,

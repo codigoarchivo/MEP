@@ -16,7 +16,6 @@ import {
 import { useRouter } from "next/router";
 
 import { useFormAll } from "../../../hooks/useFormAll";
-import { ModeColor } from "../../../helpers/ModeColor";
 
 const initialStates = {
   q: "",
@@ -53,8 +52,6 @@ export const DialogSerchNavbar = ({
     onSerch();
   };
 
-  const { modelC } = ModeColor();
-
   return (
     <>
       <Icon
@@ -62,7 +59,6 @@ export const DialogSerchNavbar = ({
         boxSize={4}
         display={displayOn2}
         cursor={"pointer"}
-        color={modelC}
       >
         <SearchIcon mx={0} />
       </Icon>
@@ -75,18 +71,19 @@ export const DialogSerchNavbar = ({
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <CloseButton size="md" color={modelC} onClick={onSerch} />
+              <CloseButton size="md" onClick={onSerch} />
             </AlertDialogHeader>
 
             <AlertDialogBody>
               <chakra.form onSubmit={handleSerchProduct}>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
-                    <SearchIcon color={modelC} />
+                    <SearchIcon />
                   </InputLeftElement>
                   <Input
                     type={"search"}
                     placeholder={serch}
+                    _placeholder={{ color: 'inherit' }}
                     value={values.q}
                     name={"q"}
                     onChange={handleInputChange}

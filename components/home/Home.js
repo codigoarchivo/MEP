@@ -38,9 +38,11 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
   const variant = useBreakpointValue({ base: 1, sm: 2, md: 2, lg: 3, xl: 4 });
 
   const valImgW = useBreakpointValue({ base: 250, md: 400, lg: 450 });
+
   const valImgH = useBreakpointValue({ base: 300, md: 450, lg: 550 });
 
-  const { modelE } = ModeColor();
+  const { modelA, modelB } = ModeColor();
+
   return (
     <Container maxW={"container.xs"} px={{ base: 1, sm: 4 }}>
       <Stack
@@ -54,7 +56,6 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
           border={bordes}
           p={5}
           boxShadow={"lg"}
-          backgroundColor={modelE}
           mb={{ base: 5, md: 0 }}
         >
           <Heading w={"full"} fontSize={points25} wordBreak={"break-word"}>
@@ -77,26 +78,25 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
         p={5}
         w={"full"}
         flexDirection={"row"}
-        backgroundColor={"brand.800"}
+        backgroundColor={modelA}
         alignItems={"center"}
         spacing={0}
       >
         <Heading
+          color={modelB}
           display={displayOff1}
           textTransform={"capitalize"}
           w={"full"}
           mr={5}
           size={"sm"}
-          color={"brand.900"}
         >
           {locale === "en-US" ? en.home.hC : es.home.hC}
         </Heading>
         <Box>
           <NavLink
-            backgroundColor={"brand.900"}
-            color={"brand.700"}
+            backgroundColor={modelB}
             size={"sm"}
-            variant={"primary"}
+            variant={"tertiary"}
             name={locale === "en-US" ? en.create : es.create}
             href={"/auth/create"}
           />

@@ -34,7 +34,6 @@ import { Breakpoints } from "../../helpers/Breakpoints";
 
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
-import { ModeColor } from "../../helpers/ModeColor";
 
 export const ProductScrenn = ({ id, na, cn, ct, ds, im, pr, pj, ps }) => {
   // router
@@ -67,8 +66,6 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, im, pr, pj, ps }) => {
       query: { id, set: "details" },
     });
   };
-
-  const { modelC } = ModeColor();
 
   return (
     <>
@@ -141,7 +138,7 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, im, pr, pj, ps }) => {
         <Td isNumeric>
           <Menu>
             <MenuButton variant="outline">
-              <PlusSquareIcon color={modelC} w={8} h={8} />
+              <PlusSquareIcon w={8} h={8} />
             </MenuButton>
             <MenuList minWidth={0} border={bordes}>
               <MenuItem>
@@ -152,7 +149,7 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, im, pr, pj, ps }) => {
                   width="full"
                   onClick={handleDetails}
                 >
-                  <ExternalLinkIcon color={modelC} w={3} h={3} />
+                  <ExternalLinkIcon w={3} h={3} />
                   <Text>{locale === "en-US" ? en.details : es.details}</Text>
                 </HStack>
               </MenuItem>
@@ -165,7 +162,7 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, im, pr, pj, ps }) => {
                   width="full"
                   onClick={handleEdit}
                 >
-                  <EditIcon color={modelC} w={3} h={3} />
+                  <EditIcon w={3} h={3} />
                   <Text>{locale === "en-US" ? en.edit : es.edit}</Text>
                 </HStack>
               </MenuItem>
@@ -178,7 +175,7 @@ export const ProductScrenn = ({ id, na, cn, ct, ds, im, pr, pj, ps }) => {
                   width="full"
                   onClick={handleDelete}
                 >
-                  <DeleteIcon color={modelC} w={3} h={3} />
+                  <DeleteIcon  w={3} h={3} />
                   <Text>{locale === "en-US" ? en.delete : es.delete}</Text>
                 </HStack>
               </MenuItem>

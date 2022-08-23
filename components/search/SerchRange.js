@@ -60,7 +60,7 @@ export const SerchRange = ({ product, locale, en, es }) => {
   maxN = maxN === -Infinity ? 100 : maxN;
   minN = minN === Infinity ? 1 : minN;
 
-  const { modelC, modelD } = ModeColor();
+  const { modelC, modelD, modelA } = ModeColor();
 
   return (
     <Stack w={"full"} spacing={5} border={bordes} rounded="md" p={3}>
@@ -78,7 +78,7 @@ export const SerchRange = ({ product, locale, en, es }) => {
         onChangeEnd={(val) => handleChangeEnd(val)}
       >
         <RangeSliderTrack>
-          <RangeSliderFilledTrack bg={modelC} />
+          <RangeSliderFilledTrack bg={modelA} />
         </RangeSliderTrack>
         <RangeSliderThumb bg={modelC} boxSize={5} index={0}>
           <Box color={modelD} as={ChevronLeftIcon} />
@@ -89,14 +89,14 @@ export const SerchRange = ({ product, locale, en, es }) => {
       </RangeSlider>
 
       <StatGroup w={"full"}>
-        <Stat color={modelC}>
+        <Stat>
           <StatLabel>Min</StatLabel>
           <StatNumber fontWeight={"normal"}>
             $ {!resRange.min ? minN : resRange.min}
           </StatNumber>
         </Stat>
 
-        <Stat color={modelC}>
+        <Stat>
           <StatLabel>Max</StatLabel>
           <StatNumber fontWeight={"normal"}>
             $ {!resRange.max ? maxN : resRange.max}

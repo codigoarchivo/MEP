@@ -153,6 +153,7 @@ const User = () => {
               />
 
               <Input
+                _placeholder={{ color: "inherit" }}
                 onChange={handleInputChange}
                 value={displayName}
                 name={"displayName"}

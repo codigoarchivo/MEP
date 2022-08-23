@@ -65,7 +65,7 @@ export const BlogScreen = ({ categories, buys, product }) => {
 
   const dThree = list.find((i) => i.id !== three?.ct);
 
-  const { modelF } = ModeColor();
+  const { bg7 } = ModeColor();
   return (
     <Stack flexDirection={content7} spacing={0}>
       <VStack
@@ -136,7 +136,7 @@ export const BlogScreen = ({ categories, buys, product }) => {
             py={20}
           >
             {locale === "en-US" ? en.blog.bG : es.blog.bG}{" "}
-            <Text as={"span"} color={modelF}>
+            <Text as={"span"} color={bg7}>
               {locale === "en-US" ? en.blog.bH : es.blog.bH}
             </Text>
           </Heading>
@@ -180,7 +180,7 @@ export const BlogScreen = ({ categories, buys, product }) => {
           <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
             <Heading fontWeight={600} lineHeight={"110%"} fontSize={points25}>
               {locale === "en-US" ? en.blog.bJ : es.blog.bJ}{" "}
-              <Text as={"span"} color={modelF}>
+              <Text as={"span"} color={bg7}>
                 {locale === "en-US" ? en.blog.bK : es.blog.bK}
               </Text>
             </Heading>

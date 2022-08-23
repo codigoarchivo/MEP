@@ -13,7 +13,6 @@ import {
   Button,
   Stack,
   Collapse,
-  useBreakpointValue,
   useDisclosure,
   Menu,
   MenuButton,
@@ -163,8 +162,7 @@ export function WithSubnavigation() {
               <NavLink
                 px={0}
                 fontWeight={400}
-                variant={"secodary"}
-                color={modelC}
+                variant={"tertiary"}
                 href={
                   pathname !== "/cart"
                     ? check.length > 0

@@ -139,7 +139,7 @@ export const SerchCartSave = ({
             <Button fontSize={20} variant={"primary"} {...dec}>
               -
             </Button>
-            <Input {...input} />
+            <Input  _placeholder={{ color: 'inherit' }} {...input} />
             <Button fontSize={20} variant={"primary"} {...inc}>
               +
             </Button>

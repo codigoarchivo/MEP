@@ -31,8 +31,6 @@ import { listDataCategory } from "../../actions/category";
 
 import { Paginator } from "../../utils/Paginator";
 
-import { ModeColor } from "../../helpers/ModeColor";
-
 import { dbcategoryAll } from "../../data/dbCategory";
 
 import { en } from "../../translations/en";
@@ -81,7 +79,6 @@ const Category = ({ data = [] }) => {
     });
   };
 
-  const { modelC } = ModeColor();
   return (
     <ShopLayout title={locale === "en-US" ? en.categories : es.categories}>
       {a?.rol === "owner" ? (
@@ -96,12 +93,12 @@ const Category = ({ data = [] }) => {
             )}
             <TableContainer w={"full"} border={bordes}>
               <Table colorScheme="brand">
-                <TableCaption color={modelC}>
+                <TableCaption>
                   {locale === "en-US" ? en.category.cB : es.category.cB}
                 </TableCaption>
                 <Thead>
                   <Tr>
-                    <Th color={modelC}>
+                    <Th>
                       {locale === "en-US" ? en.categories : es.categories}
                     </Th>
                     <Th isNumeric textAlign={center}>

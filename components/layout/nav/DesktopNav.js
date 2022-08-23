@@ -14,8 +14,6 @@ import { useFormAll } from "../../../hooks/useFormAll";
 
 import { MenuCategoria } from "../../../utils/MenuCategoria";
 
-import { ModeColor } from "../../../helpers/ModeColor";
-
 import { en } from "../../../translations/en";
 import { es } from "../../../translations/es";
 
@@ -27,8 +25,6 @@ export const DesktopNav = () => {
   const { push, locale } = useRouter();
 
   const { values, reset, handleInputChange } = useFormAll(initialStates);
-
-  const { modelC } = ModeColor();
 
   const handleSerchProduct = (e) => {
     e.preventDefault();
@@ -52,9 +48,10 @@ export const DesktopNav = () => {
       <chakra.form onSubmit={handleSerchProduct} pl={{ base: 0, lg: 20 }}>
         <InputGroup>
           <InputLeftElement pointerEvents="none">
-            <SearchIcon color={modelC} display={"block"} />
+            <SearchIcon display={"block"} />
           </InputLeftElement>
           <Input
+            _placeholder={{ color: "inherit" }}
             type={"search"}
             placeholder={locale === "en-US" ? en.searchs : es.searchs}
             value={values.q}

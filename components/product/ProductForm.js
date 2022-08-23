@@ -23,7 +23,6 @@ import { GridItemForm } from "../../utils/GridItemForm";
 import { GridItemFormTextarea } from "../../utils/GridItemFormTextarea";
 import { GridItemFormNumber } from "../../utils/GridItemFormNumber";
 
-import { ModeColor } from "../../helpers/ModeColor";
 import { BsPerson, ShopAll } from "../../helpers/IconNew";
 import { Breakpoints } from "../../helpers/Breakpoints";
 
@@ -54,8 +53,6 @@ export const ProductForm = ({
   es,
   en,
 }) => {
-  // mode Color
-  const { modelC } = ModeColor();
   // selector
   const { listData: list = [] } = useSelector(({ listca }) => listca);
   // Breakpoints
@@ -64,11 +61,11 @@ export const ProductForm = ({
   return (
     <>
       <HStack spacing={10}>
-        <Badge color={modelC} border={bordes}>
+        <Badge border={bordes}>
           <BsPerson w={5} h={5} /> $
           {(1 * pr - (pj * (1 * pr)) / 100).toFixed(1)}
         </Badge>
-        <Badge color={modelC} border={bordes}>
+        <Badge border={bordes}>
           <ShopAll w={5} h={5} /> ${((pj * pr) / 100).toFixed(1)}
         </Badge>
       </HStack>
@@ -80,9 +77,7 @@ export const ProductForm = ({
           columnGap={points3}
         >
           <GridItem colSpan={points1}>
-            <FormLabel color={modelC} htmlFor="im">
-              Image
-            </FormLabel>
+            <FormLabel htmlFor="im">Image</FormLabel>
             <HStack justifyContent="space-between" w="full">
               <Box w="full">
                 <FileAll
@@ -155,10 +150,7 @@ export const ProductForm = ({
           />
 
           <GridItem colSpan={points1}>
-            <FormLabel
-              color={modelC}
-              htmlFor={change === false ? "en-US" : "es"}
-            >
+            <FormLabel htmlFor={change === false ? "en-US" : "es"}>
               {change === false ? en.pOrS : es.pOrS}
             </FormLabel>
             <Select
@@ -181,7 +173,7 @@ export const ProductForm = ({
           </GridItem>
 
           <GridItem colSpan={points1}>
-            <FormLabel color={modelC} htmlFor={"ct"}>
+            <FormLabel htmlFor={"ct"}>
               {change === false ? en.major.mF : es.major.mF}
             </FormLabel>
             <Select

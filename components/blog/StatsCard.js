@@ -3,12 +3,9 @@ import Proptypes from "prop-types";
 import { Box, Flex, Stat, StatLabel, StatNumber } from "@chakra-ui/react";
 
 import { Breakpoints } from "../../helpers/Breakpoints";
-import { ModeColor } from "../../helpers/ModeColor";
 
 export const StatsCard = (props) => {
   const { bordes } = Breakpoints();
-
-  const { modelC } = ModeColor();
 
   const { title, stat, icon } = props;
 
@@ -20,7 +17,7 @@ export const StatsCard = (props) => {
       border={bordes}
       rounded={"lg"}
     >
-      <Flex color={modelC} w={"full"} justifyContent={"space-between"}>
+      <Flex w={"full"} justifyContent={"space-between"}>
         <Box pl={{ base: 2, md: 4 }}>
           <StatLabel fontWeight={"medium"} isTruncated>
             {title}

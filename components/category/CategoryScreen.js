@@ -19,8 +19,6 @@ import { DeleteIcon, EditIcon, PlusSquareIcon } from "@chakra-ui/icons";
 
 import { dbCategoryValid } from "../../data/dbCategory";
 
-import { ModeColor } from "../../helpers/ModeColor";
-
 export const CategoryScreen = ({ id, na, cre, edi, del, cC, push, locale }) => {
   // edit
   const handleEdit = async () => {
@@ -52,7 +50,6 @@ export const CategoryScreen = ({ id, na, cre, edi, del, cC, push, locale }) => {
     });
   };
 
-  const { modelC } = ModeColor();
   return (
     <>
       <Tr>
@@ -62,7 +59,7 @@ export const CategoryScreen = ({ id, na, cre, edi, del, cC, push, locale }) => {
         <Td isNumeric>
           <Menu>
             <MenuButton variant="outline">
-              <PlusSquareIcon color={modelC} w={6} h={6} />
+              <PlusSquareIcon  w={6} h={6} />
             </MenuButton>
             <MenuList minWidth={0}>
               <MenuItem>
@@ -73,7 +70,7 @@ export const CategoryScreen = ({ id, na, cre, edi, del, cC, push, locale }) => {
                   width="full"
                   onClick={handleEdit}
                 >
-                  <EditIcon color={modelC} w={3} h={3} />
+                  <EditIcon w={3} h={3} />
                   <Text>{edi}</Text>
                 </HStack>
               </MenuItem>
@@ -86,7 +83,7 @@ export const CategoryScreen = ({ id, na, cre, edi, del, cC, push, locale }) => {
                   width="full"
                   onClick={handleDelete}
                 >
-                  <DeleteIcon color={modelC} w={3} h={3} />
+                  <DeleteIcon w={3} h={3} />
                   <Text>{del}</Text>
                 </HStack>
               </MenuItem>

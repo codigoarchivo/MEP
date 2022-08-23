@@ -24,7 +24,7 @@ export const MenuHistory = ({ color, buys, sales, history, valSpace }) => {
   // Breakpoints
   const { displayOff2, bordes } = Breakpoints();
 
-  const { modelE } = ModeColor();
+  const { modelE, modelB } = ModeColor();
   return (
     <Menu>
       <MenuButton
@@ -32,7 +32,7 @@ export const MenuHistory = ({ color, buys, sales, history, valSpace }) => {
         variant={"tertiary"}
         as={Button}
         fontWeight={"normal"}
-        backgroundColor={"brand.900"}
+        backgroundColor={modelB}
         px={`${valSpace}`}
       >
         {history}

@@ -1,8 +1,6 @@
 import Proptypes from "prop-types";
 
-import { FormLabel, GridItem, Input, useBreakpoint } from "@chakra-ui/react";
-
-import { ModeColor } from "../helpers/ModeColor";
+import { FormLabel, GridItem, Input } from "@chakra-ui/react";
 
 export const GridItemForm = ({
   mb,
@@ -18,8 +16,6 @@ export const GridItemForm = ({
   isReadOnly = false,
   display = "block",
 }) => {
-  // mode Color
-  const { modelC } = ModeColor();
   return (
     <>
       <GridItem mb={mb} colSpan={points} display={display}>
@@ -27,11 +23,11 @@ export const GridItemForm = ({
           fontWeight={"bold"}
           textTransform={"capitalize"}
           htmlFor={na}
-          color={modelC}
         >
           {name}
         </FormLabel>
         <Input
+          _placeholder={{ color: "inherit" }}
           isReadOnly={isReadOnly}
           maxLength={maxlength}
           name={na}
