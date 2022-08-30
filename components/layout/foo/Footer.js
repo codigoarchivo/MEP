@@ -16,6 +16,7 @@ import {
   ListItem,
   Stack,
   Text,
+  useColorMode,
   VStack,
 } from "@chakra-ui/react";
 
@@ -52,6 +53,9 @@ export const Footer = () => {
 
   const { dataRoute } = ListRoute();
 
+  // toogle color
+  const { colorMode } = useColorMode();
+
   return (
     <Container maxW={"full"} px={{ base: 1, sm: 4 }} mt={20} pb={4}>
       <Grid
@@ -74,7 +78,11 @@ export const Footer = () => {
               alignItems={"center"}
             >
               <Image
-                src={"/img/logo.png"}
+                src={
+                  colorMode === "dark"
+                    ? "/img/logo-dark.png"
+                    : "/img/logo-light.png"
+                }
                 alt="Picture of the author"
                 layout="fill"
                 objectFit="contain"
