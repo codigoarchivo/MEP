@@ -205,10 +205,10 @@ export const BlogScreen = ({ categories, buys, product }) => {
                   title: locale === "en-US" ? en.blog.bP : es.blog.bP,
                   text: locale === "en-US" ? en.blog.bR : es.blog.bR,
                 },
-                {
-                  title: locale === "en-US" ? en.blog.bS : es.blog.bS,
-                  text: locale === "en-US" ? en.blog.bT : es.blog.bT,
-                },
+                // {
+                //   title: locale === "en-US" ? en.blog.bS : es.blog.bS,
+                //   text: locale === "en-US" ? en.blog.bT : es.blog.bT,
+                // },
                 {
                   title: locale === "en-US" ? en.blog.bU : es.blog.bU,
                   text: locale === "en-US" ? en.blog.bV : es.blog.bV,
@@ -217,10 +217,10 @@ export const BlogScreen = ({ categories, buys, product }) => {
                   title: locale === "en-US" ? en.blog.bW : es.blog.bW,
                   text: locale === "en-US" ? en.blog.bX : es.blog.bX,
                 },
-                {
-                  title: locale === "en-US" ? en.blog.bY : es.blog.bY,
-                  text: locale === "en-US" ? en.blog.bZ : es.blog.bZ,
-                },
+                // {
+                //   title: locale === "en-US" ? en.blog.bY : es.blog.bY,
+                //   text: locale === "en-US" ? en.blog.bZ : es.blog.bZ,
+                // },
               ].map((item, index) => (
                 <BlogCategory key={index} {...item} />
               ))}
@@ -262,18 +262,18 @@ export const BlogScreen = ({ categories, buys, product }) => {
             title: locale === "en-US" ? en.blog.bNn : es.blog.bNn,
             text: locale === "en-US" ? en.blog.bOo : es.blog.bOo,
           },
-          {
-            title: locale === "en-US" ? en.blog.bPp : es.blog.bPp,
-            text: locale === "en-US" ? en.blog.bQq : es.blog.bQq,
-          },
-          {
-            title: locale === "en-US" ? en.blog.bRr : es.blog.bRr,
-            text: locale === "en-US" ? en.blog.bSs : es.blog.bSs,
-          },
-          {
-            title: locale === "en-US" ? en.blog.bTt : es.blog.bTt,
-            text: locale === "en-US" ? en.blog.bUu : es.blog.bUu,
-          },
+          // {
+          //   title: locale === "en-US" ? en.blog.bPp : es.blog.bPp,
+          //   text: locale === "en-US" ? en.blog.bQq : es.blog.bQq,
+          // },
+          // {
+          //   title: locale === "en-US" ? en.blog.bRr : es.blog.bRr,
+          //   text: locale === "en-US" ? en.blog.bSs : es.blog.bSs,
+          // },
+          // {
+          //   title: locale === "en-US" ? en.blog.bTt : es.blog.bTt,
+          //   text: locale === "en-US" ? en.blog.bUu : es.blog.bUu,
+          // },
         ].map((item, key) => (
           <VStack key={key} w={"full"} p={1} display={"inline-block"}>
             <Heading size={"md"}>{item.title}</Heading>
