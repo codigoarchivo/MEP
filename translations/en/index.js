@@ -42,7 +42,7 @@ export const en = {
   home: {
     hA: "Visit Our Store",
     hB:
-      "Our purpose will always be to provide you with the best service and quality in our products, achieving the satisfaction of our customers.",
+      "Visit our energetic dropshipping store offering our quantum reprogramming service for your brand, boosting your sales.",
     hC: "Create an account to start shopping",
     hD: "Tour Of All Our Products",
     hE: "Your last visits to our store",
