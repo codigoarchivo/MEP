@@ -127,7 +127,7 @@ const List = ({ product = [] }) => {
           {!list[0] && (
             <Center border={bordes} py={30}>
               <Heading size={"sm"} textTransform={"uppercase"}>
-                {locale === "en-US" ? en.product.pA : es.product.pA}wewew
+                {locale === "en-US" ? en.product.pA : es.product.pA}
               </Heading>
             </Center>
           )}

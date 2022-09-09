@@ -54,14 +54,17 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
         <VStack
           w={all1}
           border={bordes}
-          p={5}
+          p={{ base: 6, md: 8 }}
           boxShadow={"lg"}
           mb={{ base: 5, md: 0 }}
         >
           <Heading w={"full"} fontSize={points25} wordBreak={"break-word"}>
             {locale === "en-US" ? en.home.hA : es.home.hA}
           </Heading>
-          <Text size={["sx", "sm", "md", "lg", "xl"]} wordBreak={"break-word"}>
+          <Text
+            fontSize={["sx", "sm", "md", "lg", "xl"]}
+            wordBreak={"break-word"}
+          >
             {locale === "en-US" ? en.home.hB : es.home.hB}
           </Text>
         </VStack>
