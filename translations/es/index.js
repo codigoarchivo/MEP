@@ -41,8 +41,7 @@ export const es = {
   },
   home: {
     hA: "Visita Nuestra Tienda",
-    hB:
-      "Te ofrecemos nuestro servicio de reprogramación cuántica para tu marca, sin duda un Dropshipping energético potenciando tus ventas.",
+    hB: "Dropshipping cuántico ofreciendo nuestro servicio de reprogramación energética de tu marca impulsando tus ventas.",
     hC: "Crea Una Cuenta Para Comenzar A Comprar",
     hD: "Recorrido De Todos Nuestros Productos",
     hE: "Tus Ultimas Visitas A Nuestra Tienda",
