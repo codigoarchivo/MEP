@@ -31,8 +31,6 @@ import { Toast } from "../../helpers/Toast";
 
 import { activeProductCart, deleteProductSave } from "../../actions/product";
 
-import { ModeColor } from "../../helpers/ModeColor";
-
 export const SerchCartSave = ({
   item,
   locale,
@@ -89,8 +87,6 @@ export const SerchCartSave = ({
     dispatch(deleteProductSave(item.id));
   };
 
-  const { modelC } = ModeColor();
-
   return (
     <>
       <Tr>
@@ -139,17 +135,17 @@ export const SerchCartSave = ({
             <Button fontSize={20} variant={"primary"} {...dec}>
               -
             </Button>
-            <Input  _placeholder={{ color: 'inherit' }} {...input} />
+            <Input _placeholder={{ color: "inherit" }} {...input} />
             <Button fontSize={20} variant={"primary"} {...inc}>
               +
             </Button>
           </HStack>
         </Td>
-        <Td color={modelC}>${item.pr * input.value}</Td>
+        <Td>${item.pr * input.value}</Td>
         <Td>
           <Menu>
             <MenuButton variant="outline">
-              <PlusSquareIcon color={modelC} w={6} h={6} />
+              <PlusSquareIcon w={6} h={6} />
             </MenuButton>
             <MenuList minWidth={0}>
               <MenuItem>
@@ -160,7 +156,7 @@ export const SerchCartSave = ({
                   width="full"
                   onClick={handleSelect}
                 >
-                  <SmallAddIcon color={modelC} w={3} h={3} />
+                  <SmallAddIcon w={3} h={3} />
                   <Text>{locale === "en-US" ? en.add : es.add}</Text>
                 </HStack>
               </MenuItem>
@@ -173,7 +169,7 @@ export const SerchCartSave = ({
                   width="full"
                   onClick={handleDeleteSave}
                 >
-                  <DeleteIcon color={modelC} w={3} h={3} />
+                  <DeleteIcon w={3} h={3} />
                   <Text>{locale === "en-US" ? en.delete : es.delete}</Text>
                 </HStack>
               </MenuItem>
