@@ -42,7 +42,7 @@ export const en = {
   home: {
     hA: "Visit Our Store",
     hB:
-      "Energy dropshipping offered by our quantum reprogramming service for your brand, boosting your sales.",
+      "Quantum dropshipping offering our energy reprogramming service for your brand, boosting your sales.",
     hC: "Create an account to start shopping",
     hD: "Tour Of All Our Products",
     hE: "Your last visits to our store",
