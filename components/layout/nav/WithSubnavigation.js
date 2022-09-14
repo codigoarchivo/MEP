@@ -18,7 +18,7 @@ import {
   MenuButton,
   MenuList,
   InputGroup,
-  InputLeftElement,
+  InputRightElement,
   Input,
   Text,
   HStack,
@@ -119,7 +119,7 @@ export function WithSubnavigation() {
               isSerch={modality}
               setIsSerch={setModality}
               InputGroup={InputGroup}
-              InputLeftElement={InputLeftElement}
+              InputRightElement={InputRightElement}
               Input={Input}
               SearchIcon={SearchIcon}
               serch={locale === "en-US" ? en.searchs : es.searchs}

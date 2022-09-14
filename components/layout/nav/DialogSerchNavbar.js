@@ -27,7 +27,7 @@ export const DialogSerchNavbar = ({
   isSerch,
   setIsSerch,
   InputGroup,
-  InputLeftElement,
+  InputRightElement,
   Input,
   SearchIcon,
   serch,
@@ -69,7 +69,7 @@ export const DialogSerchNavbar = ({
         onClose={onSerch}
       >
         <AlertDialogOverlay>
-          <AlertDialogContent>
+          <AlertDialogContent backgroundColor={"#E5E4E2"} p={2}>
             <AlertDialogHeader>
               <CloseButton size="md" onClick={onSerch} />
             </AlertDialogHeader>
@@ -77,13 +77,16 @@ export const DialogSerchNavbar = ({
             <AlertDialogBody>
               <chakra.form onSubmit={handleSerchProduct}>
                 <InputGroup>
-                  <InputLeftElement pointerEvents="none">
+                  <InputRightElement pointerEvents="none">
                     <SearchIcon />
-                  </InputLeftElement>
+                  </InputRightElement>
                   <Input
                     type={"search"}
-                    placeholder={serch}
-                    _placeholder={{ color: 'inherit' }}
+                    rounded={"full"}
+                    border={"none"}
+                    boxShadow="lg"
+                    // placeholder={serch}
+                    _placeholder={{ color: "inherit" }}
                     value={values.q}
                     name={"q"}
                     onChange={handleInputChange}
@@ -102,7 +105,7 @@ DialogSerchNavbar.proptypes = {
   isSerch: Proptypes.func.isRequired,
   setIsSerch: Proptypes.func.isRequired,
   InputGroup: Proptypes.object.isRequired,
-  InputLeftElement: Proptypes.object.isRequired,
+  InputRightElement: Proptypes.object.isRequired,
   Input: Proptypes.object.isRequired,
   SearchIcon: Proptypes.object.isRequired,
   serch: Proptypes.string.isRequired,

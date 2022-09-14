@@ -5,7 +5,7 @@ import { SearchIcon } from "@chakra-ui/icons";
 import {
   Stack,
   chakra,
-  InputLeftElement,
+  InputRightElement,
   Input,
   InputGroup,
 } from "@chakra-ui/react";
@@ -14,15 +14,12 @@ import { useFormAll } from "../../../hooks/useFormAll";
 
 import { MenuCategoria } from "../../../utils/MenuCategoria";
 
-import { en } from "../../../translations/en";
-import { es } from "../../../translations/es";
-
 const initialStates = {
   q: "",
 };
 export const DesktopNav = () => {
   // dispatch
-  const { push, locale } = useRouter();
+  const { push } = useRouter();
 
   const { values, reset, handleInputChange } = useFormAll(initialStates);
 
@@ -47,13 +44,16 @@ export const DesktopNav = () => {
       <MenuCategoria />
       <chakra.form onSubmit={handleSerchProduct} pl={{ base: 0, lg: 20 }}>
         <InputGroup>
-          <InputLeftElement pointerEvents="none">
+          <InputRightElement pointerEvents="none">
             <SearchIcon display={"block"} />
-          </InputLeftElement>
+          </InputRightElement>
           <Input
             _placeholder={{ color: "inherit" }}
+            rounded={"full"}
+            border={"none"}
+            boxShadow="lg"
             type={"search"}
-            placeholder={locale === "en-US" ? en.searchs : es.searchs}
+            // placeholder={locale === "en-US" ? en.searchs : es.searchs}
             value={values.q}
             name={"q"}
             onChange={handleInputChange}
