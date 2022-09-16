@@ -128,11 +128,7 @@ export function WithSubnavigation() {
 
           <Box display={displayOff2} w={100} h={100} position={"relative"}>
             <Image
-              src={
-                colorMode === "dark"
-                  ? "/img/logo-dark.png"
-                  : "/img/logo-light.png"
-              }
+              src={"/img/logo.png"}
               alt="Picture of the author"
               layout="fill"
               objectFit="contain"
