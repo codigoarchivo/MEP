@@ -16,6 +16,7 @@ import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
 export async function getServerSideProps(context) {
+  
   const uid = await context.query.uid.toString();
 
   const user = await userById(uid);
