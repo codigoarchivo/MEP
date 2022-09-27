@@ -45,7 +45,7 @@ export const SerchCartActive = ({ item, inc, locale, en, es }) => {
     Toast(locale === "en-US" ? en.removed : es.removed, "error", 5000);
   };
 
-  const { modelC } = ModeColor();
+  const { modelE } = ModeColor();
 
   return (
     <Tr>
@@ -124,7 +124,7 @@ export const SerchCartActive = ({ item, inc, locale, en, es }) => {
           onClick={() => handleDeleteCart(item.id)}
           mx={{ base: 0, md: 5 }}
           cursor={"pointer"}
-          color={modelC}
+          color={modelE}
         />
       </Td>
     </Tr>

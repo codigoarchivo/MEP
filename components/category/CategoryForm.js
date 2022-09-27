@@ -24,17 +24,17 @@ export const CategoryForm = ({
   en,
   info,
 }) => {
-  const { modelC } = ModeColor();
+  const { modelE } = ModeColor();
   return (
     <>
       <chakra.form onSubmit={handleSubmit} w="full" p={{ base: 2, md: 3 }}>
         <VStack spacing={7}>
           <FormControl>
-            <FormLabel color={modelC} htmlFor={change === true ? "en" : "es"}>
+            <FormLabel color={modelE} htmlFor={change === true ? "en" : "es"}>
               {change === false ? en.name : es.name}
             </FormLabel>
             <Input
-              _placeholder={{ color: 'inherit' }}
+              _placeholder={{ color: "inherit" }}
               name={change === false ? "en" : "es"}
               id={"na"}
               value={na}

@@ -9,7 +9,7 @@ import { ModeColor } from "../../helpers/ModeColor";
 import { NavLink } from "../../utils/Navlink";
 
 export const BlogOutstanding = (item) => {
-  const { modelC, modelD } = ModeColor();
+  const { modelC, modelE } = ModeColor();
 
   const { bordes } = Breakpoints();
   return (
@@ -30,7 +30,7 @@ export const BlogOutstanding = (item) => {
       >
         <Text
           bg={modelC}
-          color={modelD}
+          color={modelE}
           fontSize={"sm"}
           fontWeight={500}
           w={"full"}

@@ -79,7 +79,7 @@ export const CheckVerify = ({
   // Breakpoints
   const { repeat1, points3, full, content7 } = Breakpoints();
   // mode Color
-  const { modelC } = ModeColor();
+  const { modelE } = ModeColor();
 
   // useForm
   const { values, reset, handleInputChange } = useFormAll(initialStates);
@@ -154,7 +154,7 @@ export const CheckVerify = ({
         </Button>{" "}
         - {locale === "en-US" ? en.verify.vB : es.verify.vB}
       </Text>
-      <Stack flexDirection={content7} w={full} spacing={0} color={modelC}>
+      <Stack flexDirection={content7} w={full} spacing={0} color={modelE}>
         <VStack
           shadow={"lg"}
           w={full}
@@ -220,7 +220,7 @@ export const CheckVerify = ({
           </Heading>
           <Stack w={full} spacing={5}>
             <List spacing={3}>
-              <ListItem color={modelC}>
+              <ListItem color={modelE}>
                 <ListIcon as={CheckCircleIcon} />
                 {locale === "en-US" ? en.verify.vE : es.verify.vE}
               </ListItem>
@@ -233,7 +233,7 @@ export const CheckVerify = ({
                 href="https://www.bankofamerica.com/online-banking/mobile-and-online-banking-features/money-transfer/es/#:~:text=Seleccione%20Transferir%20%7C%20Enviar%20y%20despu%C3%A9s,transferencia%20y%20luego%20toque%20Continuar."
                 isExternal
               >
-                <ExternalLinkIcon color={modelC} mx="2px" />
+                <ExternalLinkIcon color={modelE} mx="2px" />
               </Link>
             </HStack>
             {[
@@ -286,7 +286,7 @@ export const CheckVerify = ({
               <Heading textTransform={"uppercase"} w={full} mb={5} size={"sm"}>
                 {locale === "en-US" ? en.verify.vF : es.verify.vF}
               </Heading>
-              <CloseButton color={modelC} onClick={closeVerify} />
+              <CloseButton color={modelE} onClick={closeVerify} />
             </HStack>
           </GridItem>
 
@@ -345,7 +345,7 @@ export const CheckVerify = ({
               htmlFor="imp"
               fontWeight={"bold"}
               textTransform={"uppercase"}
-              color={modelC}
+              color={modelE}
             >
               {locale === "en-US" ? en.receipt : es.receipt}
             </FormLabel>

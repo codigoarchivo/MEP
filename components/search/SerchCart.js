@@ -62,7 +62,7 @@ export const SerchCart = ({ active, save }) => {
     }
   };
 
-  const { modelC } = ModeColor();
+  const { modelE } = ModeColor();
 
   return (
     <>
@@ -86,13 +86,13 @@ export const SerchCart = ({ active, save }) => {
               border={bordes}
             >
               <Table colorScheme="brand">
-                <TableCaption color={modelC}>
+                <TableCaption color={modelE}>
                   {locale === "en-US" ? en.cart.cA : es.cart.cA}
                 </TableCaption>
                 <Thead>
                   <Tr>
                     <Th></Th>
-                    <Th color={modelC} isNumeric>
+                    <Th color={modelE} isNumeric>
                       {locale === "en-US" ? en.action : es.action}
                     </Th>
                   </Tr>
@@ -159,16 +159,16 @@ export const SerchCart = ({ active, save }) => {
       ) : (
         <TableContainer variant="striped" w={full} my={10} border={bordes}>
           <Table variant="simple" colorScheme="brand">
-            <TableCaption color={modelC}>
+            <TableCaption color={modelE}>
               {locale === "en-US" ? en.cart.cI : en.cart.cI}
             </TableCaption>
             <Thead>
               <Tr>
                 <Th></Th>
-                <Th color={modelC}>
+                <Th color={modelE}>
                   {locale === "en-US" ? en.quantity : en.quantity}
                 </Th>
-                <Th color={modelC}>Total</Th>
+                <Th color={modelE}>Total</Th>
                 <Th></Th>
               </Tr>
             </Thead>

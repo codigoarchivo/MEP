@@ -47,7 +47,7 @@ export const ReviewUser = ({ locale, es, en }) => {
   const { emailE, field, ErrorLorR } = Validator(values, "", aL, aK);
 
   // mode Color
-  const { textError, bgTextError, modelC } = ModeColor();
+  const { textError, bgTextError, modelE } = ModeColor();
 
   // valores
   const { email } = values;
@@ -82,11 +82,11 @@ export const ReviewUser = ({ locale, es, en }) => {
           </Heading>
           <FormControl>
             {!emailE && (
-              <FormHelperText color={modelC}>
+              <FormHelperText color={modelE}>
                 {locale === "en-US" ? en.auth.aW : es.auth.aW}
               </FormHelperText>
             )}
-            <FormLabel htmlFor="email" color={modelC}>
+            <FormLabel htmlFor="email" color={modelE}>
               {locale === "en-US" ? en.mail : es.mail}{" "}
               <Tooltip
                 color={textError}

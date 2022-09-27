@@ -43,7 +43,7 @@ export const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
   // Breakpoints
   const { repeat1, points3, bordes } = Breakpoints();
   // mode Color
-  const { modelC } = ModeColor();
+  const { modelE } = ModeColor();
 
   useEffect(() => {
     if (a.uid === undefined) {
@@ -95,7 +95,7 @@ export const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
         >
           {locale === "en-US" ? en.user.uF : es.user.uF}
         </Heading>
-        <CloseButton color={modelC} onClick={onCloseSelling} />
+        <CloseButton color={modelE} onClick={onCloseSelling} />
       </HStack>
       <chakra.form
         onSubmit={handleSubmit}

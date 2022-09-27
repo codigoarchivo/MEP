@@ -41,7 +41,7 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
 
   const valImgH = useBreakpointValue({ base: 300, md: 450, lg: 550 });
 
-  const { modelA, modelB } = ModeColor();
+  const { modelA, modelB, modelE } = ModeColor();
 
   return (
     <Container maxW={"container.xs"} px={{ base: 1, sm: 4 }}>
@@ -86,7 +86,7 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
         spacing={0}
       >
         <Heading
-          color={modelB}
+          color={modelE}
           display={displayOff1}
           textTransform={"capitalize"}
           w={"full"}

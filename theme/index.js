@@ -15,7 +15,7 @@ const stylesFonts = {
 };
 // 2. Add your color mode config
 const config = {
-  initialColorMode: "light",
+  initialColorMode: "dark",
   useSystemColorMode: false,
 };
 const colors = {
@@ -68,7 +68,7 @@ const buttonStyles = {
       rounded: "none",
       textDecoration: "none",
       backgroundColor: mode("brand.900", "brand.800")(props),
-      color: mode("brand.800", "brand.900")(props),
+      color: mode("brand.500", "brand.900")(props),
       _hover: {
         backgroundColor: mode("brand.600", "brand.200")(props),
         color: mode("brand.900", "brand.800")(props),
@@ -79,13 +79,13 @@ const buttonStyles = {
       },
       _active: {
         backgroundColor: mode("brand.800", "brand.900")(props),
-        color: mode("brand.900", "brand.800")(props),
+        color: mode("brand.900", "brand.500")(props),
       },
     }),
     secondary: (props) => ({
       rounded: "none",
       backgroundColor: "transparent",
-      color: mode("brand.800", "brand.900")(props),
+      color: mode("brand.500", "brand.900")(props),
       _hover: {
         color: mode("brand.500", "brand.300")(props),
       },
@@ -96,9 +96,9 @@ const buttonStyles = {
     }),
     tertiary: (props) => ({
       backgroundColor: "transparent",
-      color: mode("brand.900", "brand.800")(props),
+      color: mode("brand.900", "brand.500")(props),
       _hover: {
-        color: mode("brand.300", "brand.500")(props),
+        color: mode("brand.300", "brand.800")(props),
       },
       _focus: {
         ring: 2,
@@ -107,7 +107,7 @@ const buttonStyles = {
     }),
     outline: (props) => ({
       backgroundColor: "transparent",
-      color: mode("brand.900", "brand.800")(props),
+      color: mode("brand.900", "brand.500")(props),
       _hover: {
         backgroundColor: "brand.800",
         color: "brand.900",
@@ -124,7 +124,7 @@ const globalStyles = {
   styles: {
     global: (props) => ({
       body: {
-        color: mode("brand.900", "brand.800")(props),
+        color: mode("brand.900", "brand.500")(props),
         bg: mode("brand.800", "brand.900")(props), // TODO cambiar de
       },
       html: {},

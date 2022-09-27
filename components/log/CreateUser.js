@@ -79,7 +79,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
   } = Validator(values, aM, aL, aK, aN, aO, aP, aQ);
 
   // mode Color
-  const { textError, bgTextError, modelC } = ModeColor();
+  const { textError, bgTextError, modelE } = ModeColor();
 
   // valores
   const { name, email, password, rePassword, pass, rPass } = values;
@@ -119,7 +119,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
             <CloseButton size="sm" onClick={() => back()} />
           </HStack>
           <FormControl>
-            <FormLabel htmlFor="name" color={modelC}>
+            <FormLabel htmlFor="name" color={modelE}>
               {locale === "en-US" ? en.name : es.name}{" "}
               <Tooltip
                 color={textError}
@@ -143,11 +143,11 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
           </FormControl>
           <FormControl>
             {!emailE && (
-              <FormHelperText mt={0} color={modelC}>
+              <FormHelperText mt={0} color={modelE}>
                 {locale === "en-US" ? en.auth.aI : es.auth.aI}
               </FormHelperText>
             )}
-            <FormLabel htmlFor="email" color={modelC}>
+            <FormLabel htmlFor="email" color={modelE}>
               {locale === "en-US" ? en.mail : es.mail}{" "}
               <Tooltip
                 color={textError}
@@ -170,7 +170,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
             />
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor="password" color={modelC}>
+            <FormLabel htmlFor="password" color={modelE}>
               {locale === "en-US" ? en.password : es.password}{" "}
               <Tooltip
                 color={textError}
@@ -204,7 +204,7 @@ export const CreateUser = ({ locale, es, en, back, push }) => {
             </InputGroup>
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor="rePassword" color={modelC}>
+            <FormLabel htmlFor="rePassword" color={modelE}>
               {locale === "en-US" ? en.auth.aR : es.auth.aR}{" "}
               <Tooltip
                 color={textError}

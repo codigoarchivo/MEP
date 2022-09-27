@@ -71,7 +71,7 @@ export const BlogWork = ({ bA, bB, bC, bD, create, points, displayOff }) => {
           <Box right={20} display={displayOff}>
             <Icon
               as={Arrow}
-              color={useColorModeValue("gray.800", "gray.300")}
+              color={useColorModeValue("gray.500", "gray.300")}
               w={"100px"}
               position={"absolute"}
               left={"150px"}
