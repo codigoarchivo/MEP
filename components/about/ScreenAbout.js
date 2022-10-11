@@ -1,4 +1,3 @@
-import { DownloadIcon } from "@chakra-ui/icons";
 import {
   Box,
   chakra,
@@ -7,6 +6,8 @@ import {
   SimpleGrid,
   useColorModeValue,
 } from "@chakra-ui/react";
+
+import { DownloadIcon } from "@chakra-ui/icons";
 
 import { testimonials } from "../../data/dbSeed";
 
@@ -39,7 +40,7 @@ export const ScreenAbout = () => {
             fontWeight={"bold"}
             color={useColorModeValue("gray.700", "gray.50")}
           >
-            You're in good company
+            {"You're in good company"}
           </chakra.h1>
           <chakra.h2
             margin={"auto"}
@@ -62,7 +63,7 @@ export const ScreenAbout = () => {
           mx={"auto"}
         >
           {testimonials.map((cardInfo, index) => (
-            <TestimonialCard {...cardInfo} index={index} />
+            <TestimonialCard {...cardInfo} index={index} key={index} />
           ))}
         </SimpleGrid>
         <Box>
