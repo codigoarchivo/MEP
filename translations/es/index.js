@@ -38,6 +38,7 @@ export const es = {
     mG: "Producto",
     mH: "Ventas",
     mI: "Toda la tienda",
+    mJ: "Sobre",
   },
   home: {
     hA: "Visita Nuestra Tienda",

@@ -38,6 +38,7 @@ export const en = {
     mG: "Product",
     mH: "Sales",
     mI: "All store",
+    mJ: "About",
   },
   home: {
     hA: "Visit Our Store",
