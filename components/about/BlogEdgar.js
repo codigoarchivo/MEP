@@ -29,7 +29,7 @@ export const BlogEdgar = () => {
           textTransform={"uppercase"}
           color={"purple.400"}
         >
-          I'm ready
+          {"I'm ready"}
         </chakra.h3>
         <chakra.h1
           py={5}
