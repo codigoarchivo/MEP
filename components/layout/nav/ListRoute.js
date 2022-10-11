@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
 
+import { StarIcon } from "@chakra-ui/icons";
+
 import { useSelector } from "react-redux";
 
 import {
@@ -27,6 +29,12 @@ export const ListRoute = () => {
       ref: "/",
       as: "/",
       nam: locale === "en-US" ? en.major.mA : es.major.mA,
+    },
+    {
+      icon: <StarIcon />,
+      ref: "/about/me",
+      as: "/about/me",
+      nam: locale === "en-US" ? en.major.mJ : es.major.mJ,
     },
     {
       icon: <Perfil />,
