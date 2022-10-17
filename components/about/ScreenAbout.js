@@ -12,6 +12,7 @@ import { DownloadIcon } from "@chakra-ui/icons";
 import { testimonials } from "../../data/dbSeed";
 
 import { TestimonialCard } from "./TestimonialCard";
+import { AddTestimonials } from "./AddTestimonials";
 
 export const ScreenAbout = () => {
   return (
@@ -55,6 +56,7 @@ export const ScreenAbout = () => {
             </chakra.strong>{" "}
             influencers use BrandChackras to manage their content!
           </chakra.h2>
+          <AddTestimonials />
         </Box>
         <SimpleGrid
           columns={{ base: 1, xl: 2 }}
