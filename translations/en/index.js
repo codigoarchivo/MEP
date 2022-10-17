@@ -1,4 +1,8 @@
 export const en = {
+  about: {
+    aA: "Added Testimonials successfully",
+    aB: "You are not validated correctly",
+  },
   auth: {
     aA: "Login",
     aB: "Sing in",

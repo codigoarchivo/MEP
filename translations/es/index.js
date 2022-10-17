@@ -1,4 +1,8 @@
 export const es = {
+  about: {
+    aA: "Testimonios añadidos con éxito",
+    aB: "No estás validado correctamente",
+  },
   auth: {
     aA: "Iniciar sesión",
     aB: "Registrarse",
@@ -8,7 +12,8 @@ export const es = {
     aF: "¿No tienes una cuenta?",
     aG: "¿Olvidaste tu contraseña?",
     aH: "Inscribirse",
-    aI: "Cuando te registres revisa tu correo en la bandeja de spam haz clic en el enlace",
+    aI:
+      "Cuando te registres revisa tu correo en la bandeja de spam haz clic en el enlace",
     aJ: "Recuperar",
     aK: "Campo correcto",
     aL: "Correo electronico es requerido.",
@@ -25,7 +30,8 @@ export const es = {
     aW: "Por favor revise el correo no deseado",
     aX: "Email validado correctamente",
     aY: "Revisa en tu correo",
-    aZ: "en el buzón o correo no deseado, para verificar sus datos haga clic en el enlace",
+    aZ:
+      "en el buzón o correo no deseado, para verificar sus datos haga clic en el enlace",
     aAa: "si te equivocaste con el correo",
   },
   major: {
@@ -42,7 +48,8 @@ export const es = {
   },
   home: {
     hA: "Visita Nuestra Tienda",
-    hB: "Dropshipping cuántico ofreciendo nuestro servicio de reprogramación energética de tu marca impulsando tus ventas.",
+    hB:
+      "Dropshipping cuántico ofreciendo nuestro servicio de reprogramación energética de tu marca impulsando tus ventas.",
     hC: "Crea Una Cuenta Para Comenzar A Comprar",
     hD: "Recorrido De Todos Nuestros Productos",
     hE: "Tus Ultimas Visitas A Nuestra Tienda",
@@ -130,7 +137,8 @@ export const es = {
     vG: "Verificar",
     vH: "datos a transferir",
     vI: "Verificación enviada",
-    vJ: "La verificación para autenticar su cuenta fue enviada a su correo electrónico",
+    vJ:
+      "La verificación para autenticar su cuenta fue enviada a su correo electrónico",
   },
   footer: {
     fA: "Reservados todos los derechos",
