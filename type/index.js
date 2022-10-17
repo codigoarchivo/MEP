@@ -63,6 +63,8 @@ export const types = {
   userAdd: "[USER] Add",
   userEdit: "[USER] Edit",
   userDelete: "[USER] Delete",
+  userTestimonials: "[USER] Testimonials",
+  userTestimonialsAdd: "[USER] Testimonials - Add",
 
   userActive: "[ACTIVE] User",
   userClose: "[ACTIVE] Close",
