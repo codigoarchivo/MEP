@@ -1,8 +1,6 @@
 export const Calculate = (data) => {
   // ordenar de mayor a menor y obtener el promedio de las calificaciones de los productos de la lista
-  data.sort(function (a, b) {
-    return b.rat - a.rat;
-  });
+  data.sort((a, b) => b.rat - a.rat);
 
   // calculo ranking de los productos de la lista de productos
   let b = [];
