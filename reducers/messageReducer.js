@@ -2,6 +2,7 @@ import { types } from "../type";
 
 const initialStates = {
   message: [],
+  testimonials: [],
   cant: [],
 };
 
@@ -16,6 +17,16 @@ export const messageReducer = (state = initialStates, action) => {
       return {
         ...state,
         message: [...state.message, ...action.payload],
+      };
+    case types.userTestimonials:
+      return {
+        ...state,
+        testimonials: action.payload,
+      };
+    case types.userTestimonialsAdd:
+      return {
+        ...state,
+        testimonials: [action.payload, ...state.testimonials],
       };
     case types.cheListMessageEdit:
       return {
