@@ -1,14 +1,9 @@
-import {
-  Avatar,
-  chakra,
-  Flex,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Avatar, chakra, Flex, useColorModeValue } from "@chakra-ui/react";
 
 import { backgrounds } from "../../data/dbSeed";
 
 export const TestimonialCard = (props) => {
-  const { name, role, content, avatar, index } = props;
+  const { name, role, coment, index, photo } = props;
   return (
     <Flex
       boxShadow={"lg"}
@@ -57,7 +52,7 @@ export const TestimonialCard = (props) => {
           fontSize={"15px"}
           pb={4}
         >
-          {content}
+          {coment}
         </chakra.p>
         <chakra.p fontFamily={"Work Sans"} fontWeight={"bold"} fontSize={14}>
           {name}
@@ -72,7 +67,7 @@ export const TestimonialCard = (props) => {
         </chakra.p>
       </Flex>
       <Avatar
-        src={avatar}
+        src={photo}
         height={"80px"}
         width={"80px"}
         alignSelf={"center"}
