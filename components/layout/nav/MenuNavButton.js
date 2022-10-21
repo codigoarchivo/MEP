@@ -60,7 +60,7 @@ export const MenuNavButton = () => {
                     alignItems: "center",
                     flexShrink: 0,
                   }}
-                  alt={"hola"}
+                  alt={a?.displayName}
                   layout="fill"
                   objectPosition="center"
                 />
