@@ -2,6 +2,18 @@ export const en = {
   about: {
     aA: "Added Testimonials successfully",
     aB: "You are not validated correctly",
+    aC: "I'm ready",
+    aD: "To face any challenge",
+    aE: "People love us",
+    aF: "You're in good company",
+    aG: "See why over",
+    aH: "150,000+",
+    aI: "influencers use BrandChackras to manage",
+    aJ: "Their content!",
+    aK: "Add Testimonials",
+    aL: "Profession or Company",
+    aLL: "Comment",
+    aM: "Testimonials",
   },
   auth: {
     aA: "Login",

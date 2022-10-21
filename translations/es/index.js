@@ -2,6 +2,18 @@ export const es = {
   about: {
     aA: "Testimonios añadidos con éxito",
     aB: "No estás validado correctamente",
+    aC: "Estoy listo",
+    aD: "Para afrontar cualquier reto",
+    aE: "La gente nos ama",
+    aF: "Estás en buena compañía",
+    aG: "¡Vea por qué más de",
+    aH: "150,000",
+    aI: "personas influyentes usan",
+    aJ: "BrandChackras para administrar su contenido!",
+    aK: "Agregar Testimonials",
+    aL: "Profesión o Empresa",
+    aLL: "Comentario",
+    aM: "Testimonios",
   },
   auth: {
     aA: "Iniciar sesión",
