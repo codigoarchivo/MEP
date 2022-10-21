@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import { useRouter } from "next/router";
+
 import {
   Box,
   Heading,
@@ -14,7 +16,11 @@ import PropTypes from "prop-types";
 
 import { backgrounds } from "../../data/dbSeed";
 
+import { es } from "../../translations/es";
+import { en } from "../../translations/en";
+
 export const BlogEdgar = () => {
+  const { locale } = useRouter();
   return (
     <VStack spacing={20}>
       <Box
@@ -29,7 +35,7 @@ export const BlogEdgar = () => {
           textTransform={"uppercase"}
           color={"purple.400"}
         >
-          {"I'm ready"}
+          {locale === "en-US" ? en.about.aC : es.about.aC}
         </chakra.h3>
         <chakra.h1
           py={5}
@@ -38,7 +44,7 @@ export const BlogEdgar = () => {
           fontWeight={"bold"}
           color={useColorModeValue("gray.700", "gray.50")}
         >
-          To face any challenge
+          {locale === "en-US" ? en.about.aD : es.about.aD}
         </chakra.h1>
       </Box>
       <Stack
