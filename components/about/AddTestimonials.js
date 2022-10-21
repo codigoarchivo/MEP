@@ -31,12 +31,10 @@ import { Toast } from "../../helpers/Toast";
 import { es } from "../../translations/es";
 import { en } from "../../translations/en";
 
-const initialStates = { profession: "", coment: "" };
+const initialStates = { role: "", coment: "" };
 
 export const AddTestimonials = () => {
   const { activeSelect } = useSelector(({ auth }) => auth);
-
-  const { testimonials } = useSelector(({ message }) => message);
 
   const { replace, locale } = useRouter();
 
@@ -53,7 +51,7 @@ export const AddTestimonials = () => {
 
   const { values, reset, handleInputChange } = useFormAll(initialStates);
 
-  const { coment, profession } = values;
+  const { coment, role } = values;
 
   const { photoURL, displayName, uid } = activeSelect;
 
@@ -69,7 +67,7 @@ export const AddTestimonials = () => {
       );
     }
 
-    if ([coment, profession].includes("")) {
+    if ([coment, role].includes("")) {
       return Toast(locale === "en-US" ? en.fields : es.fields, "error", 3000);
     }
 
@@ -79,9 +77,10 @@ export const AddTestimonials = () => {
       testimonialsAdd(
         {
           coment,
-          profession,
+          role,
           photo: photoURL,
           name: displayName,
+          cre: Date.now(),
         },
         uid,
         err
@@ -96,7 +95,7 @@ export const AddTestimonials = () => {
   return (
     <>
       <Button mt={10} onClick={onOpen}>
-        Add Testimonials
+        {locale === "en-US" ? en.about.aK : es.about.aK}
       </Button>
       <Modal
         initialFocusRef={initialRef}
@@ -106,23 +105,29 @@ export const AddTestimonials = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Testimonials</ModalHeader>
+          <ModalHeader>
+            {locale === "en-US" ? en.about.aM : es.about.aM}
+          </ModalHeader>
           <ModalCloseButton />
           <chakra.form onSubmit={handleSubmit}>
             <ModalBody pb={6}>
               <FormControl>
-                <FormLabel>Profesion</FormLabel>
+                <FormLabel>
+                  {locale === "en-US" ? en.about.aL : es.about.aL}
+                </FormLabel>
                 <Input
-                  value={profession}
+                  value={role}
                   onChange={handleInputChange}
-                  name="profession"
+                  name="role"
                   ref={initialRef}
-                  placeholder="Profesion"
+                  placeholder={locale === "en-US" ? en.about.aL : es.about.aL}
                 />
               </FormControl>
 
               <FormControl mt={4}>
-                <FormLabel>Comentario</FormLabel>
+                <FormLabel>
+                  {locale === "en-US" ? en.about.aLL : es.about.aLL}
+                </FormLabel>
                 <Textarea
                   value={coment}
                   onChange={handleInputChange}
@@ -134,7 +139,7 @@ export const AddTestimonials = () => {
                   _focus={{ border: modelA }}
                   borderColor={bg6}
                   rounded="none"
-                  placeholder="Agregar un  comentario"
+                  placeholder={locale === "en-US" ? en.about.aLL : es.about.aLL}
                   size="sm"
                 />
               </FormControl>
@@ -142,9 +147,11 @@ export const AddTestimonials = () => {
 
             <ModalFooter>
               <Button type="submit" colorScheme="blue" mr={3}>
-                Save
+                {locale === "en-US" ? en.save : es.save}
               </Button>
-              <Button onClick={onClose}>Cancel</Button>
+              <Button onClick={onClose}>
+                {locale === "en-US" ? en.close : es.close}
+              </Button>
             </ModalFooter>
           </chakra.form>
         </ModalContent>
