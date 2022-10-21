@@ -7,14 +7,24 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
+import PropTypes from "prop-types";
+
 import { DownloadIcon } from "@chakra-ui/icons";
+
+import { useRouter } from "next/router";
 
 import { testimonials } from "../../data/dbSeed";
 
 import { TestimonialCard } from "./TestimonialCard";
+
 import { AddTestimonials } from "./AddTestimonials";
 
-export const ScreenAbout = () => {
+import { es } from "../../translations/es";
+import { en } from "../../translations/en";
+
+export const ScreenAbout = ({ coments }) => {
+  const { locale } = useRouter();
+
   return (
     <>
       <Flex
@@ -32,7 +42,7 @@ export const ScreenAbout = () => {
             textTransform={"uppercase"}
             color={"purple.400"}
           >
-            People love us
+            {locale === "en-US" ? en.about.aE : es.about.aE}
           </chakra.h3>
           <chakra.h1
             py={5}
@@ -41,7 +51,7 @@ export const ScreenAbout = () => {
             fontWeight={"bold"}
             color={useColorModeValue("gray.700", "gray.50")}
           >
-            {"You're in good company"}
+            {locale === "en-US" ? en.about.aF : es.about.aF}
           </chakra.h1>
           <chakra.h2
             margin={"auto"}
@@ -50,11 +60,11 @@ export const ScreenAbout = () => {
             fontWeight={"medium"}
             color={useColorModeValue("gray.500", "gray.400")}
           >
-            See why over{" "}
+            {locale === "en-US" ? en.about.aG : es.about.aG}{" "}
             <chakra.strong color={useColorModeValue("gray.700", "gray.50")}>
-              150,000+
+              {locale === "en-US" ? en.about.aH : es.about.aH}{" "}
             </chakra.strong>{" "}
-            influencers use BrandChackras to manage their content!
+            {locale === "en-US" ? en.about.aI : es.about.aI}
           </chakra.h2>
           <AddTestimonials />
         </Box>
@@ -64,7 +74,7 @@ export const ScreenAbout = () => {
           mt={16}
           mx={"auto"}
         >
-          {testimonials.map((cardInfo, index) => (
+          {coments.map((cardInfo, index) => (
             <TestimonialCard {...cardInfo} index={index} key={index} />
           ))}
         </SimpleGrid>
@@ -76,4 +86,8 @@ export const ScreenAbout = () => {
       </Flex>
     </>
   );
+};
+
+ScreenAbout.propTypes = {
+  coments: PropTypes.array,
 };
