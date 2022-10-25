@@ -94,7 +94,13 @@ export const AddTestimonials = () => {
 
   return (
     <>
-      <Button mt={10} onClick={onOpen}>
+      <Button
+        mt={10}
+        onClick={onOpen}
+        display={
+          [photoURL, displayName, uid].includes(undefined) ? "none" : "initial"
+        }
+      >
         {locale === "en-US" ? en.about.aK : es.about.aK}
       </Button>
       <Modal
