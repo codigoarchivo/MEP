@@ -4,6 +4,11 @@ import { Toast } from "../helpers/Toast";
 
 import { types } from "../type";
 
+export const testimonialsList = (data) => ({
+  type: types.userTestimonials,
+  payload: data,
+});
+
 export const testimonialsAdd = (data, uid, err) => {
   return async (dispatch) => {
     try {
