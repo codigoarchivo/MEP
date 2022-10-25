@@ -1,5 +1,7 @@
 import React, { useMemo, useState } from "react";
 
+import { useRouter } from "next/router";
+
 import PropTypes from "prop-types";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -27,6 +29,7 @@ import { saveSale } from "../../actions/product";
 import { Toast } from "../../helpers/Toast";
 
 import { ModeColor } from "../../helpers/ModeColor";
+import { userById } from "../../data/dbUser";
 
 export const SerchCartModal = ({
   isOpen,
@@ -45,6 +48,8 @@ export const SerchCartModal = ({
   const { activeCartSelect: active = [] } = useSelector(({ cart }) => cart);
   // useDispatch
   const dispatch = useDispatch();
+
+  const { asPath, replace } = useRouter();
 
   const OverlayOne = () => (
     <ModalOverlay
@@ -85,14 +90,22 @@ export const SerchCartModal = ({
     [active]
   );
 
-  const confirmSale = () => {
+  const confirmSale = async () => {
     const u = a.uid;
+
+    const user = await userById(u);
+    
+    if (!user) {
+      return replace(`/auth?d=${asPath}`);
+    }
     // save cart
     dispatch(saveSale(data, del, u));
 
     Toast(locale === "en-US" ? en.cart.cF : es.cart.cF, "success", 5000);
 
     push(`/checkout?q=${a.uid}`);
+
+    setOverlay(<OverlayOne />);
   };
 
   const { modelC } = ModeColor();
@@ -123,13 +136,7 @@ export const SerchCartModal = ({
             <Button variant={"tertiary"} mr={3} onClick={onClose}>
               {close}
             </Button>
-            <Button
-              variant="primary"
-              onClick={() => {
-                confirmSale(), setOverlay(<OverlayOne />);
-              }}
-              mr={3}
-            >
+            <Button variant="primary" onClick={confirmSale} mr={3}>
               {toBuy}
             </Button>
           </ModalFooter>
