@@ -44,7 +44,15 @@ const initialStates = {
 const data = {
   pass: false,
 };
-export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
+export const LoginUser = ({
+  handleReview,
+  locale,
+  es,
+  en,
+  back,
+  push,
+  query,
+}) => {
   // selector
   const { loading } = useSelector(({ ui }) => ui);
   // dispatch
@@ -80,6 +88,7 @@ export const LoginUser = ({ handleReview, locale, es, en, back, push }) => {
       return Toast(locale === "en-US" ? en.check : es.check, "error", 5000);
     } else {
       dispatch(startLoginEmailPassword(email, password, err, data));
+      query.d && push(query.d);
     }
   };
   // handleGooglelogin
