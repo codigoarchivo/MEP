@@ -17,7 +17,7 @@ const Account = () => {
   // selector
   const { activeSelect } = useSelector(({ auth }) => auth);
   // router
-  const { locale, push, back } = useRouter();
+  const { locale, push, back, query } = useRouter();
 
   if (activeSelect.uid !== undefined) push("/");
 
@@ -42,6 +42,7 @@ const Account = () => {
           locale={locale}
           back={back}
           push={push}
+          query={query}
           es={es}
           en={en}
         />
