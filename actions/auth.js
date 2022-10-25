@@ -10,13 +10,16 @@ import {
   updateProfile,
 } from "firebase/auth";
 
-import { auth, provider } from "../firebase/config";
+import { auth, db, provider } from "../firebase/config";
 
 import { types } from "../type";
 
 import { finishLoading, startLoading } from "./ui";
 
 import { Toast } from "../helpers/Toast";
+
+import { userById } from "../data/dbUser";
+import { doc, setDoc } from "firebase/firestore";
 
 const dA = process.env.NEXT_PUBLIC_ROL_A;
 
@@ -105,6 +108,12 @@ export const startRegisterWithNameEmailPassword = (
                 user.emailVerified
               )
             );
+            await setDoc(
+              doc(db, "users", user.uid, {
+                co: user.email,
+                rol: "user",
+              })
+            );
           } else {
             sendEmailVerification(auth.currentUser).then(() => {
               Toast(data, "success", 5000);
@@ -132,7 +141,18 @@ export const startGoogleLogin = (err) => {
   return async (dispatch) => {
     try {
       await signInWithPopup(auth, provider)
-        .then(({ user }) => {
+        .then(async ({ user }) => {
+          const userData = await userById(user.uid);
+
+          if (!userData) {
+            await setDoc(
+              doc(db, "users", user.uid, {
+                co: user.email,
+                rol: "user",
+              })
+            );
+          }
+
           if (user) {
             dispatch(
               login(
