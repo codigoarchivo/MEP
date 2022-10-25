@@ -40,7 +40,7 @@ export const SerchCart = ({ active, save }) => {
   // selector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // useRouter
-  const { locale, push } = useRouter();
+  const { locale, push, replace, asPath } = useRouter();
   // Breakpoints
   const { bordes, full, content7 } = Breakpoints();
   // useRef
@@ -54,15 +54,17 @@ export const SerchCart = ({ active, save }) => {
     [active]
   );
 
+  const { photoURL, displayName, uid } = a;
+
   const handlecartActive = () => {
-    if (!a.ui) {
-      onOpen();
+    if ([photoURL, displayName, uid].includes(undefined)) {
+     return replace(`/auth?d=${asPath}`);
     } else {
-      push("/auth");
+      onOpen();
     }
   };
 
-  const { modelE } = ModeColor();
+  const { modelF } = ModeColor();
 
   return (
     <>
@@ -86,13 +88,13 @@ export const SerchCart = ({ active, save }) => {
               border={bordes}
             >
               <Table colorScheme="brand">
-                <TableCaption color={modelE}>
+                <TableCaption color={modelF}>
                   {locale === "en-US" ? en.cart.cA : es.cart.cA}
                 </TableCaption>
                 <Thead>
                   <Tr>
                     <Th></Th>
-                    <Th color={modelE} isNumeric>
+                    <Th color={modelF} isNumeric>
                       {locale === "en-US" ? en.action : es.action}
                     </Th>
                   </Tr>
@@ -159,16 +161,16 @@ export const SerchCart = ({ active, save }) => {
       ) : (
         <TableContainer variant="striped" w={full} my={10} border={bordes}>
           <Table variant="simple" colorScheme="brand">
-            <TableCaption color={modelE}>
+            <TableCaption color={modelF}>
               {locale === "en-US" ? en.cart.cI : en.cart.cI}
             </TableCaption>
             <Thead>
               <Tr>
                 <Th></Th>
-                <Th color={modelE}>
+                <Th color={modelF}>
                   {locale === "en-US" ? en.quantity : en.quantity}
                 </Th>
-                <Th color={modelE}>Total</Th>
+                <Th color={modelF}>Total</Th>
                 <Th></Th>
               </Tr>
             </Thead>
