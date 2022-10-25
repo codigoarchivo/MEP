@@ -1,4 +1,13 @@
 import {
+  collection,
+  limit,
+  onSnapshot,
+  orderBy,
+  query,
+  startAfter,
+} from "firebase/firestore";
+
+import {
   Box,
   chakra,
   Flex,
@@ -7,23 +16,53 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
+import { useDispatch } from "react-redux";
+
 import PropTypes from "prop-types";
 
 import { DownloadIcon } from "@chakra-ui/icons";
 
 import { useRouter } from "next/router";
 
-import { testimonials } from "../../data/dbSeed";
-
 import { TestimonialCard } from "./TestimonialCard";
 
 import { AddTestimonials } from "./AddTestimonials";
 
+import { testimonialsList } from "../../actions/user";
+
+import { db } from "../../firebase/config";
+
 import { es } from "../../translations/es";
 import { en } from "../../translations/en";
 
-export const ScreenAbout = ({ coments }) => {
+export const ScreenAbout = ({ coments, activeSelect }) => {
+  const dispatch = useDispatch();
+
+  const { photoURL, displayName, uid } = activeSelect;
+
   const { locale } = useRouter();
+
+  const next = () => {
+    const q = query(
+      collection(db, "coments"),
+      orderBy("cre", "desc"),
+      startAfter(coments[coments.length - 1]?.cre),
+      limit(4)
+    );
+
+    onSnapshot(q, (snapshot) => {
+      const coments = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      if (coments.length === 0) {
+        return coments;
+      }
+
+      dispatch(testimonialsList(coments));
+    });
+  };
 
   return (
     <>
@@ -78,8 +117,21 @@ export const ScreenAbout = ({ coments }) => {
             <TestimonialCard {...cardInfo} index={index} key={index} />
           ))}
         </SimpleGrid>
-        <Box>
-          <Icon viewBox="0 0 40 35" mt={14} boxSize={10} color={"purple.400"}>
+        <Box
+          display={
+            [photoURL, displayName, uid].includes(undefined)
+              ? "none"
+              : "initial"
+          }
+        >
+          <Icon
+            viewBox="0 0 40 35"
+            onClick={next}
+            mt={14}
+            boxSize={10}
+            color={"purple.400"}
+            cursor={"pointer"}
+          >
             <DownloadIcon />
           </Icon>
         </Box>
@@ -90,4 +142,5 @@ export const ScreenAbout = ({ coments }) => {
 
 ScreenAbout.propTypes = {
   coments: PropTypes.array,
+  activeSelect: PropTypes.object,
 };
