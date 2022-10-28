@@ -49,7 +49,7 @@ export const LoginUser = ({
   locale,
   es,
   en,
-  back,
+  valid,
   push,
   query,
 }) => {
@@ -88,7 +88,6 @@ export const LoginUser = ({
       return Toast(locale === "en-US" ? en.check : es.check, "error", 5000);
     } else {
       dispatch(startLoginEmailPassword(email, password, err, data));
-      query.d && push(query.d);
     }
   };
   // handleGooglelogin
@@ -112,7 +111,7 @@ export const LoginUser = ({
             <Heading size={"md"} textTransform={"uppercase"}>
               {locale === "en-US" ? en.auth.aA : es.auth.aA}
             </Heading>
-            <CloseButton size="sm" onClick={() => push("/")} />
+            <CloseButton size="sm" onClick={() => push(query.d || "/")} />
           </HStack>
           <FormControl>
             <FormLabel htmlFor="email" color={modelC}>
