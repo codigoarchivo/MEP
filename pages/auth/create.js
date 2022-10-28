@@ -1,4 +1,6 @@
-import React from "react";
+import { useEffect } from "react";
+
+import { useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
 
@@ -12,10 +14,18 @@ import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
 const Create = () => {
+  // selector
+  const { activeSelect: a } = useSelector(({ auth }) => auth);
   // router
-  const { locale, back, push } = useRouter();
+  const { locale, back, push, query } = useRouter();
   // Breakpoints
   const { calc } = Breakpoints();
+
+  const valid = [a.uid, a.email].includes(undefined);
+
+  useEffect(() => {
+    !valid ? push(query.d || "/") : "";
+  }, [push, query, valid]);
 
   return (
     <Container maxW={"container.sm"} px={{ base: 2, md: 4 }}>
