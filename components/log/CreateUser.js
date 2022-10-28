@@ -45,7 +45,7 @@ const data = {
   pass: false,
   rPass: false,
 };
-export const CreateUser = ({ locale, es, en, back, push }) => {
+export const CreateUser = ({ locale, es, en, back }) => {
   // selector
   const { loading } = useSelector(({ ui }) => ui);
 
