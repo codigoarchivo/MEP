@@ -79,7 +79,7 @@ export function WithSubnavigation() {
   // Modality
   const { modality, setModality } = useModality();
   // dispatch
-  const { locale, pathname } = useRouter();
+  const { locale, pathname, asPath } = useRouter();
 
   const { dataRoute } = ListRoute();
 
@@ -248,7 +248,7 @@ export function WithSubnavigation() {
               fontSize={{ base: "xs", md: "1rem" }}
               px={0}
               variant={"tertiary"}
-              href={a.uid ? `/checkout?q=${a.uid}` : "/auth"}
+              href={a.uid ? `/checkout?q=${a.uid}` : `/auth?d=${asPath}`}
               name={
                 a.uid ? (
                   <OrdenpagoIcon boxSize={{ base: 6, sm: 7 }} />
@@ -285,7 +285,7 @@ export function WithSubnavigation() {
               px={0}
               fontSize={{ base: "xs", md: "1rem" }}
               variant={"tertiary"}
-              href={a.uid ? "/cart" : "/auth/create"}
+              href={a.uid ? "/cart" : `/auth/create?d=${asPath}`}
               name={
                 a.uid ? (
                   <LoveIcon boxSize={{ base: 6, sm: 7 }} />
