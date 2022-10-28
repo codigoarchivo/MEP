@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 
 import { useSelector } from "react-redux";
 
@@ -15,11 +15,15 @@ import { es } from "../../translations/es";
 
 const Account = () => {
   // selector
-  const { activeSelect } = useSelector(({ auth }) => auth);
+  const { activeSelect: a } = useSelector(({ auth }) => auth);
   // router
   const { locale, push, back, query } = useRouter();
 
-  if (activeSelect.uid !== undefined) push("/");
+  const valid = [a.uid, a.email].includes(undefined);
+
+  useEffect(() => {
+    !valid ? push(query.d || "/") : "";
+  }, [push, query, valid]);
 
   // handleReview
   const handleReview = () => {
@@ -43,6 +47,7 @@ const Account = () => {
           back={back}
           push={push}
           query={query}
+          valid={valid}
           es={es}
           en={en}
         />
