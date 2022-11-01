@@ -73,7 +73,7 @@ const List = ({ product = [] }) => {
   // router
   const { push, locale } = useRouter();
   // breakpoints
-  const { bordes } = Breakpoints();
+  const { bordes, fondo } = Breakpoints();
   // dispatch
   const dispatch = useDispatch();
 
@@ -123,7 +123,7 @@ const List = ({ product = [] }) => {
   return (
     <ShopLayout title={locale === "en-US" ? en.major.mG : es.major.mG}>
       <Container maxW={"container.lg"} px={{ base: 2, md: 4 }} my={10}>
-        <Box p={{ base: 0, md: 5 }}>
+        <Box boxShadow={'lg'} bg={fondo} p={{ base: 0, md: 5 }}>
           {!list[0] && (
             <Center border={bordes} py={30}>
               <Heading size={"sm"} textTransform={"uppercase"}>
