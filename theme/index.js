@@ -20,7 +20,7 @@ const config = {
 };
 const colors = {
   brand: {
-    50: "#5965",
+    50: "#b3b2b0",
     100: "#1b2232",
     200: "#c1c2c343",
     300: "#94979e43",
@@ -67,7 +67,7 @@ const buttonStyles = {
     primary: (props) => ({
       rounded: "none",
       textDecoration: "none",
-      backgroundColor: mode("brand.900", "brand.800")(props),
+      backgroundColor: mode("brand.900", "brand.500")(props),
       color: mode("brand.500", "brand.900")(props),
       _hover: {
         backgroundColor: mode("brand.600", "brand.200")(props),
@@ -87,7 +87,7 @@ const buttonStyles = {
       backgroundColor: "transparent",
       color: mode("brand.500", "brand.900")(props),
       _hover: {
-        color: mode("brand.500", "brand.300")(props),
+        color: mode("brand.50", "brand.300")(props),
       },
       _focus: {
         ring: 2,
@@ -98,7 +98,7 @@ const buttonStyles = {
       backgroundColor: "transparent",
       color: mode("brand.900", "brand.500")(props),
       _hover: {
-        color: mode("brand.300", "brand.800")(props),
+        color: mode("brand.50", "brand.50")(props),
       },
       _focus: {
         ring: 2,
