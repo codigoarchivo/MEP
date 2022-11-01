@@ -23,10 +23,18 @@ export const SerchCategory = ({ locale, en, es }) => {
   // selector
   const { listData = [] } = useSelector(({ listca }) => listca);
   // Breakpoints
-  const { bordes } = Breakpoints();
+  const { bordes, fondo } = Breakpoints();
 
   return (
-    <Stack w={"full"} spacing={"5"} border={bordes} rounded="md" p={4}>
+    <Stack
+      backgroundColor={fondo}
+      boxShadow="dark-lg"
+      w={"full"}
+      spacing={"5"}
+      border={bordes}
+      rounded="md"
+      p={4}
+    >
       <Box borderBottom={bordes} py={5} w={"full"}>
         <Heading size={"sm"} textTransform={"uppercase"} fontWeight={"normal"}>
           {locale === "en-US" ? en.search.sB : es.search.sB}
@@ -35,7 +43,7 @@ export const SerchCategory = ({ locale, en, es }) => {
       <List spacing={3}>
         {listData.map(({ na, id }) => (
           <ListItem key={id}>
-            <ListIcon as={CheckCircleIcon}/>
+            <ListIcon as={CheckCircleIcon} />
             <NavLink
               href={{
                 pathname: "/search",

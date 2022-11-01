@@ -61,7 +61,7 @@ export const SerchScreen = ({
   // useRef
   const matchValid = useRef();
   // Breakpoints
-  const { bordes } = Breakpoints();
+  const { bordes, fondo } = Breakpoints();
   // Breakpoints
   const { push, locale } = useRouter();
   // dispatch
@@ -210,6 +210,8 @@ export const SerchScreen = ({
             w="250px"
             position={"absolute"}
             border={bordes}
+            boxShadow={"dark-lg"}
+            backgroundColor={fondo}
             rounded="md"
             _hover={{
               maxHeight: "410px",

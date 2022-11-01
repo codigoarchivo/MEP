@@ -25,7 +25,7 @@ import { ModeColor } from "../../helpers/ModeColor";
 
 export const SerchRange = ({ product, locale, en, es }) => {
   // Breakpoints
-  const { bordes } = Breakpoints();
+  const { bordes, fondo } = Breakpoints();
 
   const [resRange, setResRange] = useState({});
 
@@ -63,7 +63,15 @@ export const SerchRange = ({ product, locale, en, es }) => {
   const { modelC, modelD, modelA } = ModeColor();
 
   return (
-    <Stack w={"full"} spacing={5} border={bordes} rounded="md" p={3}>
+    <Stack
+      backgroundColor={fondo}
+      boxShadow="dark-lg"
+      w={"full"}
+      spacing={5}
+      border={bordes}
+      rounded="md"
+      p={3}
+    >
       <Box borderBottom={bordes} py={5} w={"full"}>
         <Heading size={"sm"} textTransform={"uppercase"} fontWeight={"normal"}>
           {locale === "en-US" ? en.search.sA : es.search.sA}
