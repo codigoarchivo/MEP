@@ -1,7 +1,8 @@
 import { useColorModeValue } from "@chakra-ui/react";
 
 export const Breakpoints = () => {
-  const bordes = useColorModeValue("1px solid #1b2232", "1px solid #E5E4E2");
+  const bordes = useColorModeValue("1px solid #E5E4E2", "1px solid #1b2232");
+  const fondo = useColorModeValue("#ffffff", "#43495b");
 
   const displayOn1 = { base: "block", sm: "none" };
   const displayOn2 = { base: "block", md: "none" };
@@ -130,5 +131,6 @@ export const Breakpoints = () => {
     all1,
     all2,
     all3,
+    fondo,
   };
 };
