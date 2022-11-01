@@ -99,7 +99,7 @@ export const CreateUser = ({ locale, es, en, back }) => {
     }
   };
 
-  const { bordes } = Breakpoints();
+  const { bordes, fondo } = Breakpoints();
 
   return (
     <>
@@ -110,6 +110,7 @@ export const CreateUser = ({ locale, es, en, back }) => {
         w={{ base: "100%", sm: "70%", md: "60%", lg: "70%" }}
         h={"min-content"}
         border={bordes}
+        bg={fondo}
       >
         <VStack spacing={{ base: 3, sm: 5 }}>
           <HStack w={"full"} justifyContent="space-between">
@@ -119,7 +120,7 @@ export const CreateUser = ({ locale, es, en, back }) => {
             <CloseButton size="sm" onClick={() => back()} />
           </HStack>
           <FormControl>
-            <FormLabel htmlFor="name" color={modelE}>
+            <FormLabel htmlFor="name">
               {locale === "en-US" ? en.name : es.name}{" "}
               <Tooltip
                 color={textError}
@@ -143,11 +144,11 @@ export const CreateUser = ({ locale, es, en, back }) => {
           </FormControl>
           <FormControl>
             {!emailE && (
-              <FormHelperText mt={0} color={modelE}>
+              <FormHelperText mt={0}>
                 {locale === "en-US" ? en.auth.aI : es.auth.aI}
               </FormHelperText>
             )}
-            <FormLabel htmlFor="email" color={modelE}>
+            <FormLabel htmlFor="email">
               {locale === "en-US" ? en.mail : es.mail}{" "}
               <Tooltip
                 color={textError}
@@ -170,7 +171,7 @@ export const CreateUser = ({ locale, es, en, back }) => {
             />
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor="password" color={modelE}>
+            <FormLabel htmlFor="password">
               {locale === "en-US" ? en.password : es.password}{" "}
               <Tooltip
                 color={textError}
@@ -204,7 +205,7 @@ export const CreateUser = ({ locale, es, en, back }) => {
             </InputGroup>
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor="rePassword" color={modelE}>
+            <FormLabel htmlFor="rePassword">
               {locale === "en-US" ? en.auth.aR : es.auth.aR}{" "}
               <Tooltip
                 color={textError}

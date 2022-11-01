@@ -58,7 +58,7 @@ export const ResetPassword = ({ locale, es, en }) => {
   // validar
   const { field, passwordV } = Validator(values, aM, "", aK);
   // mode Color
-  const { textError, bgTextError, modelC } = ModeColor();
+  const { textError, bgTextError } = ModeColor();
   // valores
   const { password, pass } = values;
 
@@ -84,7 +84,7 @@ export const ResetPassword = ({ locale, es, en }) => {
   };
 
   // Breakpoints
-  const { bordes } = Breakpoints();
+  const { bordes, fondo } = Breakpoints();
 
   return (
     <>
@@ -96,6 +96,7 @@ export const ResetPassword = ({ locale, es, en }) => {
         w={{ base: "100%", sm: "70%", md: "60%", lg: "70%" }}
         h={"min-content"}
         mt={3}
+        bg={fondo}
       >
         <VStack
           py={5}
@@ -126,7 +127,7 @@ export const ResetPassword = ({ locale, es, en }) => {
             {locale === "en-US" ? en.auth.aV : es.auth.aV}
           </Heading>
           <FormControl>
-            <FormLabel color={modelC} htmlFor="password">
+            <FormLabel htmlFor="password">
               {locale === "en-US" ? en.password : es.password}{" "}
               <Tooltip
                 color={textError}

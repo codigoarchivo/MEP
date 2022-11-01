@@ -65,7 +65,7 @@ export const ReviewUser = ({ locale, es, en }) => {
     }
   };
 
-  const { bordes } = Breakpoints();
+  const { bordes, fondo } = Breakpoints();
   return (
     <>
       <chakra.form
@@ -75,6 +75,7 @@ export const ReviewUser = ({ locale, es, en }) => {
         w={{ base: "100%", sm: "70%", md: "60%", lg: "70%" }}
         h={"min-content"}
         border={bordes}
+        bg={fondo}
       >
         <VStack spacing={5}>
           <Heading w={"full"} size={"md"} textTransform={"uppercase"}>
@@ -82,11 +83,11 @@ export const ReviewUser = ({ locale, es, en }) => {
           </Heading>
           <FormControl>
             {!emailE && (
-              <FormHelperText color={modelE}>
+              <FormHelperText>
                 {locale === "en-US" ? en.auth.aW : es.auth.aW}
               </FormHelperText>
             )}
-            <FormLabel htmlFor="email" color={modelE}>
+            <FormLabel htmlFor="email">
               {locale === "en-US" ? en.mail : es.mail}{" "}
               <Tooltip
                 color={textError}

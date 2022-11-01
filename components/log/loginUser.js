@@ -95,7 +95,7 @@ export const LoginUser = ({
     dispatch(startGoogleLogin(err));
   };
 
-  const { bordes } = Breakpoints();
+  const { bordes, fondo } = Breakpoints();
   return (
     <>
       <chakra.form
@@ -105,6 +105,7 @@ export const LoginUser = ({
         w={{ base: "100%", sm: "70%", md: "60%", lg: "70%" }}
         h={"min-content"}
         border={bordes}
+        bg={fondo}
       >
         <VStack spacing={5}>
           <HStack w={"full"} justifyContent="space-between">
@@ -114,7 +115,7 @@ export const LoginUser = ({
             <CloseButton size="sm" onClick={() => push(query.d || "/")} />
           </HStack>
           <FormControl>
-            <FormLabel htmlFor="email" color={modelC}>
+            <FormLabel htmlFor="email">
               {locale === "en-US" ? en.mail : es.mail}{" "}
               <Tooltip
                 color={textError}
@@ -137,7 +138,7 @@ export const LoginUser = ({
             />
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor="password" color={modelC}>
+            <FormLabel htmlFor="password">
               {locale === "en-US" ? en.password : es.password}{" "}
               <Tooltip
                 color={textError}
