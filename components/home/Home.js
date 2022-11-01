@@ -33,7 +33,14 @@ import { ModeColor } from "../../helpers/ModeColor";
 
 export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
   // Breakpoints
-  const { content5, bordes, displayOff1, all1, points25 } = Breakpoints();
+  const {
+    content5,
+    bordes,
+    displayOff1,
+    all1,
+    points25,
+    fondo,
+  } = Breakpoints();
   // use Carousel
   const variant = useBreakpointValue({ base: 1, sm: 2, md: 2, lg: 3, xl: 4 });
 
@@ -41,7 +48,7 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
 
   const valImgH = useBreakpointValue({ base: 300, md: 450, lg: 550 });
 
-  const { modelA, modelB, modelE } = ModeColor();
+  const { modelF } = ModeColor();
 
   return (
     <Container maxW={"container.xs"} px={{ base: 1, sm: 4 }}>
@@ -54,9 +61,11 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
         <VStack
           w={all1}
           border={bordes}
+          rounded={"lg"}
           p={{ base: 6, md: 8 }}
-          boxShadow={"lg"}
+          boxShadow={"dark-lg"}
           mb={{ base: 5, md: 0 }}
+          backgroundColor={fondo}
         >
           <Heading w={"full"} fontSize={points25} wordBreak={"break-word"}>
             {locale === "en-US" ? en.home.hA : es.home.hA}
@@ -81,12 +90,14 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
         p={5}
         w={"full"}
         flexDirection={"row"}
-        backgroundColor={modelA}
+        backgroundColor={fondo}
         alignItems={"center"}
         spacing={0}
+        rounded={"lg"}
+        boxShadow={"lg"}
       >
         <Heading
-          color={modelE}
+          color={modelF}
           display={displayOff1}
           textTransform={"capitalize"}
           w={"full"}
@@ -97,11 +108,11 @@ export const Home = ({ listData, latestCartSelect, locale, es, en }) => {
         </Heading>
         <Box>
           <NavLink
-            backgroundColor={modelB}
             size={"sm"}
-            variant={"tertiary"}
+            variant={"primary"}
             name={locale === "en-US" ? en.create : es.create}
             href={"/auth/create"}
+            rounded={"lg"}
           />
         </Box>
       </Stack>
