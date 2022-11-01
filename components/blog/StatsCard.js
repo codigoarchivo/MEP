@@ -4,8 +4,12 @@ import { Box, Flex, Stat, StatLabel, StatNumber } from "@chakra-ui/react";
 
 import { Breakpoints } from "../../helpers/Breakpoints";
 
+import { ModeColor } from "../../helpers/ModeColor";
+
 export const StatsCard = (props) => {
   const { bordes } = Breakpoints();
+
+  const { modelE } = ModeColor();
 
   const { title, stat, icon } = props;
 
@@ -16,6 +20,8 @@ export const StatsCard = (props) => {
       shadow={"xl"}
       border={bordes}
       rounded={"lg"}
+      bg={'brand.900'}
+      color={'brand.500'}
     >
       <Flex w={"full"} justifyContent={"space-between"}>
         <Box pl={{ base: 2, md: 4 }}>

@@ -2,10 +2,7 @@ import { Heading, Stack, Text } from "@chakra-ui/react";
 
 import PropTypes from "prop-types";
 
-import { ModeColor } from "../../helpers/ModeColor";
-
 export const BlogEdgar = ({ data }) => {
-  const { bg7 } = ModeColor();
   return (
     <Stack pt={20} spacing={10}>
       <Heading
@@ -14,7 +11,7 @@ export const BlogEdgar = ({ data }) => {
         lineHeight={"110%"}
       >
         Edgars{" "}
-        <Text as={"span"} color={bg7}>
+        <Text as={"span"} color={"brand.50"}>
           Pendulum
         </Text>
       </Heading>

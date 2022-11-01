@@ -9,7 +9,7 @@ import { ModeColor } from "../../helpers/ModeColor";
 import { NavLink } from "../../utils/Navlink";
 
 export const BlogOutstanding = (item) => {
-  const { modelC, modelE } = ModeColor();
+  const { modelE, modelF } = ModeColor();
 
   const { bordes } = Breakpoints();
   return (
@@ -20,6 +20,8 @@ export const BlogOutstanding = (item) => {
       rounded={"lg"}
       overflow={"hidden"}
       border={bordes}
+      bg={"brand.900"}
+      color={"brand.500"}
     >
       <Stack
         w={"full"}
@@ -29,8 +31,8 @@ export const BlogOutstanding = (item) => {
         spacing={10}
       >
         <Text
-          bg={modelC}
-          color={modelE}
+          bg={"brand.500"}
+          color={"brand.900"}
           fontSize={"sm"}
           fontWeight={500}
           w={"full"}
@@ -48,8 +50,9 @@ export const BlogOutstanding = (item) => {
         </Stack>
         <Box>
           <NavLink
+            backgroundColor={"brand.500"}
+            color={"brand.900"}
             w={"full"}
-            variant={"primary"}
             href={`/search/[id]`}
             as={`/search/${item.date5}`}
             name={item.nam}

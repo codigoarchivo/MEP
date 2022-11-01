@@ -14,7 +14,6 @@ import {
 
 import { BlogTags } from "./BlogTags";
 
-import { ModeColor } from "../../helpers/ModeColor";
 
 export const BlogEnergy = ({
   bAa,
@@ -27,13 +26,11 @@ export const BlogEnergy = ({
   bIi,
   points,
 }) => {
-  const { bg7 } = ModeColor();
-
   return (
     <Container maxW={"7xl"} p={{ base: 0, sm: "12" }}>
       <Heading fontWeight={600} lineHeight={"110%"} fontSize={points}>
         {bAa}{" "}
-        <Text as={"span"} color={bg7}>
+        <Text as={"span"} color={'brand.50'}>
           {bBb}
         </Text>
       </Heading>

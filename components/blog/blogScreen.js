@@ -39,7 +39,7 @@ export const BlogScreen = ({ categories, buys, product }) => {
   // selector
   const { listData: listp = [] } = useSelector(({ list }) => list);
   // Breakpoints
-  const { displayOff2, bordes, points25, content7 } = Breakpoints();
+  const { displayOff2, bordes, points25, content7, fondo } = Breakpoints();
   // router
   const { push, locale } = useRouter();
 
@@ -65,10 +65,12 @@ export const BlogScreen = ({ categories, buys, product }) => {
 
   const dThree = list.find((i) => i.id !== three?.ct);
 
-  const { bg7 } = ModeColor();
+  const { modelF } = ModeColor();
+
   return (
     <Stack flexDirection={content7} spacing={0}>
       <VStack
+        bg={fondo}
         mb={{ base: "50px", lg: "0px" }}
         w={{ base: "100%", lg: "75%" }}
         boxShadow={"lg"}
@@ -92,7 +94,7 @@ export const BlogScreen = ({ categories, buys, product }) => {
           <chakra.h1
             textAlign={"center"}
             fontSize={"4xl"}
-            py={10}
+            py={20}
             fontWeight={"bold"}
           >
             {locale === "en-US" ? en.blog.bF : es.blog.bF}
@@ -136,7 +138,7 @@ export const BlogScreen = ({ categories, buys, product }) => {
             py={20}
           >
             {locale === "en-US" ? en.blog.bG : es.blog.bG}{" "}
-            <Text as={"span"} color={bg7}>
+            <Text as={"span"} color={"brand.50"}>
               {locale === "en-US" ? en.blog.bH : es.blog.bH}
             </Text>
           </Heading>
@@ -161,7 +163,9 @@ export const BlogScreen = ({ categories, buys, product }) => {
               },
               {
                 title:
-                  dThree && locale === "en-US" ? dThree?.na?.en : dThree?.na?.es,
+                  dThree && locale === "en-US"
+                    ? dThree?.na?.en
+                    : dThree?.na?.es,
                 name: locale === "en-US" ? three?.na?.en : three?.na?.es,
                 price: `${three?.pr}$`,
                 date5: `${three?.id}`,
@@ -177,10 +181,10 @@ export const BlogScreen = ({ categories, buys, product }) => {
         </Stack>
         {/* trabajo */}
         <Box>
-          <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
+          <Stack pt={20} spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
             <Heading fontWeight={600} lineHeight={"110%"} fontSize={points25}>
               {locale === "en-US" ? en.blog.bJ : es.blog.bJ}{" "}
-              <Text as={"span"} color={bg7}>
+              <Text as={"span"} color={"brand.50"}>
                 {locale === "en-US" ? en.blog.bK : es.blog.bK}
               </Text>
             </Heading>
@@ -241,6 +245,7 @@ export const BlogScreen = ({ categories, buys, product }) => {
         />
       </VStack>
       <Stack
+        bg={fondo}
         w={{ base: "100%", lg: "25%" }}
         boxShadow={"lg"}
         height={"min-content"}
