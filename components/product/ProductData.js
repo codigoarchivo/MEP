@@ -75,7 +75,7 @@ export const ProductData = ({
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
-  const { bordes } = Breakpoints();
+  const { bordes, fondo } = Breakpoints();
   // useState
   const [urlImage, setUrlImage] = useState("");
   // useState
@@ -235,6 +235,8 @@ export const ProductData = ({
         border={bordes}
         p={{ base: 3, md: 6 }}
         boxShadow={"xl"}
+        rounded={"lg"}
+        bg={fondo}
       >
         <Stack
           flexDirection={"row"}
@@ -260,14 +262,14 @@ export const ProductData = ({
 
           <HStack>
             <Button
-              color={change === false ? "brand.300" : modelF}
+              color={change === false ? "brand.50" : modelF}
               variant={"tertiary"}
               onClick={enRes}
             >
               en
             </Button>
             <Button
-              color={change === true ? "brand.300" : modelF}
+              color={change === true ? "brand.50" : modelF}
               variant={"tertiary"}
               onClick={esRes}
             >
