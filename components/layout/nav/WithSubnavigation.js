@@ -83,10 +83,12 @@ export function WithSubnavigation() {
 
   const { dataRoute } = ListRoute();
 
-  const { modelC, modelD } = ModeColor();
+  const { modelF, modelE } = ModeColor();
 
   // toogle color
   const { toggleColorMode, colorMode } = useColorMode();
+
+  const valid = [a.uid, a.email].includes(undefined);
 
   return (
     <Box>
@@ -151,73 +153,38 @@ export function WithSubnavigation() {
           alignItems={"center"}
           ml={{ base: 0, sm: 3 }}
         >
-          <Flex alignItems={"center"} display={displayOn2}>
-            <Box
-              position={"relative"}
-              onClick={() =>
-                check.length > 0 &&
-                Toast(locale === "en-US" ? en.you : es.you, "info", 5000)
-              }
-            >
-              <NavLink
-                px={0}
-                fontWeight={400}
-                variant={"tertiary"}
-                href={
-                  pathname !== "/cart"
-                    ? check.length > 0
-                      ? "/search"
-                      : "/cart"
-                    : "/search"
-                }
-                name={
-                  pathname !== "/cart" ? (
-                    <CartIcon boxSize={{ base: 6, sm: 7 }} />
-                  ) : (
-                    <ShopAll boxSize={{ base: 6, sm: 7 }} />
-                  )
-                }
-              />
-              <Flex
-                backgroundColor={modelC}
-                color={modelD}
-                right={{ base: 0, sm: -2 }}
-                top={0}
-                zIndex={-10}
-                border={bordes}
-                alignItems={"center"}
-                justifyContent="center"
-                borderRadius={"full"}
-                position={"absolute"}
-                w={{ base: 4, sm: 5 }}
-                h={{ base: 4, sm: 5 }}
-                fontWeight={"bold"}
-                fontSize={{ base: "x-small", sm: "smaller" }}
-              >
-                {!activeCartSelect[0] ? 0 : activeCartSelect.length}
-              </Flex>
-            </Box>
-          </Flex>
-          <Flex alignItems={"center"} display={displayOff2}>
-            <Menu>
-              <MenuButton
-                as={Button}
-                rounded={"full"}
-                variant={"tertiary"}
+          <div style={{ display: valid ? "none" : "block" }}>
+            <Flex alignItems={"center"} display={displayOn2}>
+              <Box
                 position={"relative"}
-                px={0}
-                cursor={"pointer"}
-                minW={0}
                 onClick={() =>
                   check.length > 0 &&
                   Toast(locale === "en-US" ? en.you : es.you, "info", 5000)
                 }
               >
-                <CartIcon boxSize={points11} />
+                <NavLink
+                  px={0}
+                  fontWeight={400}
+                  variant={"tertiary"}
+                  href={
+                    pathname !== "/cart"
+                      ? check.length > 0
+                        ? "/search"
+                        : "/cart"
+                      : "/search"
+                  }
+                  name={
+                    pathname !== "/cart" ? (
+                      <CartIcon boxSize={{ base: 6, sm: 7 }} />
+                    ) : (
+                      <ShopAll boxSize={{ base: 6, sm: 7 }} />
+                    )
+                  }
+                />
                 <Flex
-                  backgroundColor={modelC}
-                  color={modelD}
-                  right={{ base: -3, sm: -4 }}
+                  backgroundColor={modelF}
+                  color={modelE}
+                  right={{ base: 0, sm: -2 }}
                   top={0}
                   zIndex={-10}
                   border={bordes}
@@ -232,16 +199,56 @@ export function WithSubnavigation() {
                 >
                   {!activeCartSelect[0] ? 0 : activeCartSelect.length}
                 </Flex>
-              </MenuButton>
+              </Box>
+            </Flex>
+          </div>
 
-              <MenuList
-                zIndex={1000}
-                display={check.length > 0 ? "none" : "block"}
-              >
-                <NavbarCart />
-              </MenuList>
-            </Menu>
-          </Flex>
+          <div style={{ display: valid ? "none" : "block" }}>
+            <Flex alignItems={"center"} display={displayOff2}>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rounded={"full"}
+                  variant={"tertiary"}
+                  position={"relative"}
+                  px={0}
+                  cursor={"pointer"}
+                  minW={0}
+                  onClick={() =>
+                    check.length > 0 &&
+                    Toast(locale === "en-US" ? en.you : es.you, "info", 5000)
+                  }
+                >
+                  <CartIcon boxSize={points11} />
+                  <Flex
+                    backgroundColor={modelF}
+                    color={modelE}
+                    right={{ base: -3, sm: -4 }}
+                    top={0}
+                    zIndex={-10}
+                    border={bordes}
+                    alignItems={"center"}
+                    justifyContent="center"
+                    borderRadius={"full"}
+                    position={"absolute"}
+                    w={{ base: 4, sm: 5 }}
+                    h={{ base: 4, sm: 5 }}
+                    fontWeight={"bold"}
+                    fontSize={{ base: "x-small", sm: "smaller" }}
+                  >
+                    {!activeCartSelect[0] ? 0 : activeCartSelect.length}
+                  </Flex>
+                </MenuButton>
+
+                <MenuList
+                  zIndex={1000}
+                  display={check.length > 0 ? "none" : "block"}
+                >
+                  <NavbarCart />
+                </MenuList>
+              </Menu>
+            </Flex>
+          </div>
 
           <Box position={"relative"}>
             <NavLink
@@ -261,8 +268,8 @@ export function WithSubnavigation() {
             />
 
             <Text
-              backgroundColor={modelC}
-              color={modelD}
+              backgroundColor={modelF}
+              color={modelE}
               display={a.uid ? "block" : "none"}
               right={{ base: -1, sm: -2 }}
               zIndex={-10}
@@ -297,8 +304,8 @@ export function WithSubnavigation() {
               }
             />
             <Text
-              backgroundColor={modelC}
-              color={modelD}
+              backgroundColor={modelF}
+              color={modelE}
               display={a.uid ? "block" : "none"}
               right={{ base: -1, sm: -3 }}
               zIndex={-10}

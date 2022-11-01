@@ -18,17 +18,23 @@ export const BreadcrumbNavbar = ({ NavLink, Box, locale, es, en }) => {
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // Breakpoints
-  const { displayOff2, bordes, content5 } = Breakpoints();
+  const { displayOff2, bordes, content5, fondo } = Breakpoints();
   // ListRoute
   const { dataRoute } = ListRoute();
   // useBreakpointValue
   const valSpace = useBreakpointValue({ base: "6px", lg: "16px" });
 
-  const { modelA } = ModeColor()
+  const { modelF } = ModeColor();
 
   return (
-    <Box display={displayOff2} mb={5} borderTop={bordes}>
-      <chakra.nav boxShadow="md" backgroundColor={modelA}>
+    <Box
+      boxShadow={"lg"}
+      backgroundColor={fondo}
+      display={displayOff2}
+      mb={10}
+      borderTop={bordes}
+    >
+      <chakra.nav>
         <Stack
           spacing={0}
           as={"ul"}
@@ -44,6 +50,7 @@ export const BreadcrumbNavbar = ({ NavLink, Box, locale, es, en }) => {
                 fontWeight={"normal"}
                 variant={"secondary"}
                 href={ref}
+                color={modelF}
                 as={as}
                 name={nam}
                 px={`${valSpace}`}

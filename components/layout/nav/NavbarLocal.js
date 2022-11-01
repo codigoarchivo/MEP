@@ -14,12 +14,8 @@ export const NavbarLocal = () => {
   const { locale, locales, asPath } = useRouter();
 
   return (
-    <HStack w={"full"} alignItems={"center"} py={5}>
-      <Heading textTransform={"uppercase"} size="sm">
-        <Box w={6} h={6} as={Global} />{" "}
-        {locale === "en-US" ? en.language : es.language}
-      </Heading>
-
+    <HStack spacing={0} w={"full"} alignItems={"flex-end"} py={5}>
+      <Box ml={4} w={6} h={6} as={Global} />{" "}
       {locales.map((lo, i) => (
         <chakra.li key={i} sx={{ listStyle: "none" }}>
           <NavLink
