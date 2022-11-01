@@ -49,6 +49,7 @@ export const Footer = () => {
     points14,
     content3,
     bordes,
+    fondo,
   } = Breakpoints();
 
   const { dataRoute } = ListRoute();
@@ -66,14 +67,16 @@ export const Footer = () => {
         alignItems={"center"}
         py={3}
         border={bordes}
-        boxShadow={"lg"}
+        boxShadow={"dark-lg"}
+        rounded={"lg"}
+        backgroundColor={fondo}
       >
         <GridItem colSpan={points8} px={5}>
           <VStack spacing={5}>
             <Box
               position={"relative"}
               w={200}
-              h={110}
+              h={41}
               display={"flex"}
               alignItems={"center"}
             >
