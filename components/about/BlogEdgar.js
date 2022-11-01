@@ -10,17 +10,26 @@ import {
   useColorModeValue,
   chakra,
   VStack,
+  useColorMode,
+  HStack,
 } from "@chakra-ui/react";
 
 import PropTypes from "prop-types";
 
 import { backgrounds } from "../../data/dbSeed";
 
+import { Breakpoints } from "../../helpers/Breakpoints";
+
 import { es } from "../../translations/es";
 import { en } from "../../translations/en";
 
 export const BlogEdgar = () => {
   const { locale } = useRouter();
+
+  const { fondo } = Breakpoints();
+
+  // toogle color
+  const { colorMode } = useColorMode();
   return (
     <VStack spacing={20}>
       <Box
@@ -54,7 +63,7 @@ export const BlogEdgar = () => {
         rounded={"xl"}
         p={10}
         position={"relative"}
-        bg={useColorModeValue("white", "gray.800")}
+        bg={fondo}
         _before={{
           content: '""',
           position: "absolute",
@@ -71,17 +80,29 @@ export const BlogEdgar = () => {
           backgroundImage: backgrounds[2 % 4],
         }}
       >
-        <Heading
-          fontFamily={"Work Sans"}
-          fontWeight={600}
-          fontSize={{ base: "3xl", sm: "4xl", md: "5xl" }}
-          lineHeight={"110%"}
-        >
-          Edgars{" "}
-          <Text as={"span"} color={"gray.500"}>
-            Pendulum
-          </Text>
-        </Heading>
+        <HStack w={"full"} justifyContent={"space-between"}>
+          <Heading
+            fontFamily={"Work Sans"}
+            fontWeight={600}
+            fontSize={{ base: "3xl", sm: "4xl", md: "5xl" }}
+            lineHeight={"110%"}
+          >
+            Edgars{" "}
+            <Text as={"span"} color={"gray.500"}>
+              Pendulum
+            </Text>
+          </Heading>
+          <Box w={200} h={100} position={"relative"}>
+            <Image
+              src={`/img/${colorMode === "dark" ? "logo" : "logob"}.png`}
+              alt="Picture of the author"
+              layout="fill"
+              objectFit="contain"
+              priority={true}
+            />
+          </Box>
+        </HStack>
+
         <Box w={"full"} position={"relative"} textAlign="center">
           <Image
             src={

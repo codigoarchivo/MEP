@@ -2,8 +2,12 @@ import { Avatar, chakra, Flex, useColorModeValue } from "@chakra-ui/react";
 
 import { backgrounds } from "../../data/dbSeed";
 
+import { Breakpoints } from "../../helpers/Breakpoints";
+
 export const TestimonialCard = (props) => {
   const { name, role, coment, index, photo } = props;
+
+  const { fondo } = Breakpoints();
   return (
     <Flex
       boxShadow={"lg"}
@@ -14,7 +18,7 @@ export const TestimonialCard = (props) => {
       p={10}
       justifyContent={"space-between"}
       position={"relative"}
-      bg={useColorModeValue("white", "gray.800")}
+      bg={fondo}
       _after={{
         content: '""',
         position: "absolute",
