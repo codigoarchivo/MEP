@@ -42,7 +42,7 @@ const About = ({ coments }) => {
 
   useEffect(() => {
     dispatch(testimonialsList(comentsData));
-  }, [testimonialsList, comentsData]);
+  }, [dispatch, comentsData]);
 
   return (
     <ShopLayout>
