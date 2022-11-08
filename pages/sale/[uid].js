@@ -45,7 +45,7 @@ const SaleData = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
   // Breakponts
-  const { bordes, full } = Breakpoints();
+  const { bordes, full, fondo } = Breakpoints();
 
   useEffect(() => {
     if (a.rol === "owner") {
@@ -66,7 +66,15 @@ const SaleData = ({ data }) => {
       title={locale === "en-US" ? en.historySale.sA : es.historySale.sA}
     >
       <Container maxW={"container.lg"} px={{ base: 2, md: 4 }}>
-        <Stack flexDirection={"column"} my={{ base: 10, md: 20 }} w={full}>
+        <Stack
+          backgroundColor={fondo}
+          rounded={"lg"}
+          boxShadow={"dark-lg"}
+          flexDirection={"column"}
+          p={{ base: 3, md: 10 }}
+          my={{ base: 10, md: 20 }}
+          w={full}
+        >
           <Heading w={full} as="h2" size="lg" fontWeight="semibold">
             {locale === "en-US" ? en.historySale.sA : es.historySale.sA}
           </Heading>

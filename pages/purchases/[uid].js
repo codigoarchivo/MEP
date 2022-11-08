@@ -43,7 +43,7 @@ const BuyData = ({ product = [] }) => {
   // useDispatch
   const dispatch = useDispatch();
   // Breakpoints
-  const { bordes, full } = Breakpoints();
+  const { bordes, full, fondo } = Breakpoints();
 
   useEffect(() => {
     if (!!product[0]) {
@@ -55,7 +55,14 @@ const BuyData = ({ product = [] }) => {
     <ShopLayout title={"buys"}>
       <Container maxW={"container.lg"} px={{ base: 2, md: 4 }}>
         <Stack flexDirection={"row"} my={{ base: 0, md: 20 }} w={full}>
-          <VStack w={full} spacing={5}>
+          <VStack
+            backgroundColor={fondo}
+            rounded={"lg"}
+            boxShadow={"dark-lg"}
+            p={{ base: 3, md: 10 }}
+            w={full}
+            spacing={5}
+          >
             <Heading w={full} as="h2" size="lg" fontWeight="semibold">
               {locale === "en-US" ? en.historyBuy.sA : es.historyBuy.sA}
             </Heading>

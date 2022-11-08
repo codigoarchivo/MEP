@@ -56,7 +56,7 @@ const Category = ({ data = [] }) => {
   // router
   const { locale, push } = useRouter();
   // breakpoints
-  const { center, bordes } = Breakpoints();
+  const { center, bordes, fondo } = Breakpoints();
 
   useEffect(() => {
     if (a?.rol === "user") {
@@ -83,7 +83,12 @@ const Category = ({ data = [] }) => {
     <ShopLayout title={locale === "en-US" ? en.categories : es.categories}>
       {a?.rol === "owner" ? (
         <Container maxW={"container.sm"} my={10} px={{ base: 2, md: 4 }}>
-          <Box p={{ base: 0, md: 5 }}>
+          <Box
+            p={{ base: 0, md: 5 }}
+            backgroundColor={fondo}
+            rounded={"lg"}
+            boxShadow={"dark-lg"}
+          >
             {!list[0] && (
               <Center border={bordes} py={30}>
                 <Heading size={"sm"} textTransform={"uppercase"}>

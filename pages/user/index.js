@@ -44,7 +44,7 @@ const User = () => {
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
-  const { content5, porcent3, porcent4, bordes } = Breakpoints();
+  const { content5, porcent3, porcent4, bordes, fondo } = Breakpoints();
   // useState
   const [urlImage, setUrlImage] = useState("");
   // useState
@@ -103,11 +103,21 @@ const User = () => {
         </VStack>
         <Stack
           flexDirection={content5}
-          justifyContent={"space-around"}
+          justifyContent={"center"}
           alignItems={"center"}
           spacing={0}
         >
-          <VStack spacing={12} h={"full"} mb={{ base: 5, md: 0 }} w={porcent4}>
+          <VStack
+            spacing={12}
+            h={"full"}
+            mb={{ base: 5, md: 0 }}
+            w={porcent4}
+            backgroundColor={fondo}
+            rounded={"lg"}
+            boxShadow={"dark-lg"}
+            py={10}
+            mr={{ base: 0, md: 10 }}
+          >
             <Box p={{ base: 0, md: 5 }}>
               {displayName !== undefined || photoURL !== undefined ? (
                 <Avatar size="2xl" name={displayName} src={photoURL} />
@@ -129,6 +139,9 @@ const User = () => {
             </VStack>
           </VStack>
           <chakra.form
+            backgroundColor={fondo}
+            rounded={"lg"}
+            boxShadow={"dark-lg"}
             w={porcent3}
             p={{ base: 2, sm: 5 }}
             border={bordes}

@@ -56,7 +56,7 @@ const Sale = ({ data }) => {
   // useSelector
   const { history = [] } = useSelector(({ history }) => history);
   // Breakpoints
-  const { bordes, full } = Breakpoints();
+  const { bordes, full, fondo } = Breakpoints();
 
   useEffect(() => {
     if (!!data[0]) {
@@ -69,7 +69,15 @@ const Sale = ({ data }) => {
       title={locale === "en-US" ? en.historySale.sB : es.historySale.sB}
     >
       <Container maxW={"container.lg"} px={{ base: 2, md: 4 }}>
-        <Stack flexDirection={"column"} my={{ base: 10, md: 20 }} w={full}>
+        <Stack
+          backgroundColor={fondo}
+          rounded={"lg"}
+          boxShadow={"dark-lg"}
+          flexDirection={"column"}
+          p={10}
+          my={{ base: 10, md: 20 }}
+          w={full}
+        >
           <Heading w={full} as="h2" size="lg" fontWeight="semibold">
             {locale === "en-US" ? en.historySale.sA : es.historySale.sA}
           </Heading>

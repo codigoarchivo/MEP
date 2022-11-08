@@ -56,7 +56,7 @@ const Checkout = ({ product = [] }) => {
   // useDispatch
   const dispatch = useDispatch();
   // Breakpoints
-  const { bordes, full, content3, points25 } = Breakpoints();
+  const { bordes, full, content3, points25, fondo } = Breakpoints();
 
   useEffect(() => {
     // path: /cart
@@ -96,7 +96,15 @@ const Checkout = ({ product = [] }) => {
       title={locale === "en-US" ? en.historyBuy.sL : es.historyBuy.sL}
     >
       <Container maxW={"container.lg"} px={{ base: 2, md: 4 }}>
-        <Stack flexDirection={"column"} my={{ base: 0, md: 20 }} w={full}>
+        <Stack
+          boxShadow={"dark-lg"}
+          rounded={"lg"}
+          bg={fondo}
+          flexDirection={"column"}
+          my={{ base: 0, md: 20 }}
+          w={full}
+          p={{ base: 3, md: 10 }}
+        >
           <Heading
             overflowY={"hidden"}
             w={full}
