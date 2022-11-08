@@ -10,7 +10,7 @@ export const TestimonialCard = (props) => {
   const { fondo } = Breakpoints();
   return (
     <Flex
-      boxShadow={"lg"}
+      boxShadow={"dark-lg"}
       maxW={"640px"}
       direction={{ base: "column-reverse", md: "row" }}
       width={"full"}

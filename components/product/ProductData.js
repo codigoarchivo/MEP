@@ -234,7 +234,7 @@ export const ProductData = ({
         w={"full"}
         border={bordes}
         p={{ base: 3, md: 6 }}
-        boxShadow={"xl"}
+        boxShadow={"dark-lg"}
         rounded={"lg"}
         bg={fondo}
       >
@@ -245,7 +245,6 @@ export const ProductData = ({
         >
           <HStack>
             <CloseButton
-              color={modelC}
               display={"inline"}
               size="md"
               onClick={onClose}

@@ -42,7 +42,7 @@ export const SerchCart = ({ active, save }) => {
   // useRouter
   const { locale, push, replace, asPath } = useRouter();
   // Breakpoints
-  const { bordes, full, content7 } = Breakpoints();
+  const { bordes, full, content7, fondo } = Breakpoints();
   // useRef
   const inc = useRef(0);
   // useDisclosure
@@ -58,7 +58,7 @@ export const SerchCart = ({ active, save }) => {
 
   const handlecartActive = () => {
     if ([photoURL, displayName, uid].includes(undefined)) {
-     return replace(`/auth?d=${asPath}`);
+      return replace(`/auth?d=${asPath}`);
     } else {
       onOpen();
     }
@@ -86,6 +86,9 @@ export const SerchCart = ({ active, save }) => {
               mb={{ base: 5, lg: 0 }}
               w={{ base: "100%", lg: "70%" }}
               border={bordes}
+              boxShadow={"dark-lg"}
+              rounded={"lg"}
+              bg={fondo}
             >
               <Table colorScheme="brand">
                 <TableCaption color={modelF}>
@@ -114,7 +117,15 @@ export const SerchCart = ({ active, save }) => {
               </Table>
             </TableContainer>
             <VStack w={{ base: "100%", md: "70%", lg: "30%" }} spacing={0}>
-              <Stack w={full} p={3} spacing={5} border={bordes}>
+              <Stack
+                boxShadow={"dark-lg"}
+                rounded={"lg"}
+                bg={fondo}
+                w={full}
+                p={3}
+                spacing={5}
+                border={bordes}
+              >
                 <HStack w={full} justifyContent={"space-between"}>
                   <Heading size={"md"}>Total:</Heading>
                   <Heading>{inc.current}$</Heading>

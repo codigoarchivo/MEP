@@ -54,7 +54,7 @@ export const ReviewScreen = ({
   // mode Color
   const { bg } = ModeColor();
   // Breakpoints
-  const { full, bordes, points26 } = Breakpoints();
+  const { full, bordes, points26, fondo } = Breakpoints();
 
   // usuario del store
   const { uid, displayName, photoURL } = activeSelect;
@@ -165,6 +165,9 @@ export const ReviewScreen = ({
         w={full}
         border={bordes}
         p={{ base: 2, md: 5 }}
+        backgroundColor={fondo}
+        rounded={"lg"}
+        boxShadow={"dark-lg"}
       >
         <HStack justifyContent={"space-between"} mb={5}>
           <Heading

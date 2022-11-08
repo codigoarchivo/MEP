@@ -44,7 +44,7 @@ export const SaleScreenAll = ({
       alignItems={{ base: "start", sm: "flex-end" }}
       borderBottom={bordes}
     >
-      <VStack w={full} spacing={0} overflow={"auto"}>
+      <VStack mb={5} w={full} spacing={1} overflow={"auto"}>
         {[
           {
             all: name,

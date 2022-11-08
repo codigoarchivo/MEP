@@ -61,7 +61,7 @@ export const SerchDetails = ({
   // selector
   const { listData: list = [] } = useSelector(({ listca }) => listca);
   // Breakpoints
-  const { content5, full, bordes, points25 } = Breakpoints();
+  const { content5, full, bordes, points25, fondo } = Breakpoints();
   // list Category
   const listCt = useMemo(() => list.filter((i) => i.id === product.ct), [
     list,
@@ -193,7 +193,7 @@ export const SerchDetails = ({
               <Button fontSize={20} variant={"primary"} {...dec}>
                 -
               </Button>
-              <Input  _placeholder={{ color: 'inherit' }} {...input} />
+              <Input _placeholder={{ color: "inherit" }} {...input} />
               <Button fontSize={20} variant={"primary"} {...inc}>
                 +
               </Button>
@@ -219,7 +219,14 @@ export const SerchDetails = ({
         </VStack>
       </Stack>
 
-      <HStack mt={10} border={bordes} p={{ base: 1, md: 5 }}>
+      <HStack
+        boxShadow={"dark-lg"}
+        rounded={"lg"}
+        bg={fondo}
+        mt={10}
+        border={bordes}
+        p={{ base: 1, md: 5 }}
+      >
         <Tabs w={"full"}>
           <TabList>
             <Tab>{locale === "en-US" ? en.details : es.details}</Tab>

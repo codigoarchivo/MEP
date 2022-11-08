@@ -41,7 +41,7 @@ export const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
   // useSelector
   const { activeSelect: a = {} } = useSelector(({ auth }) => auth);
   // Breakpoints
-  const { repeat1, points3, bordes } = Breakpoints();
+  const { repeat1, points3, bordes, fondo } = Breakpoints();
   // mode Color
   const { modelE } = ModeColor();
 
@@ -85,6 +85,9 @@ export const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
       spacing={0}
       my={10}
       p={2}
+      backgroundColor={fondo}
+      rounded={"lg"}
+      boxShadow={"dark-lg"}
     >
       <HStack w={"full"} alignItems={"center"} justifyContent={"space-between"}>
         <Heading
@@ -95,7 +98,7 @@ export const UserScreen = ({ user = {}, locale, back, es, en, push }) => {
         >
           {locale === "en-US" ? en.user.uF : es.user.uF}
         </Heading>
-        <CloseButton color={modelE} onClick={onCloseSelling} />
+        <CloseButton  onClick={onCloseSelling} />
       </HStack>
       <chakra.form
         onSubmit={handleSubmit}

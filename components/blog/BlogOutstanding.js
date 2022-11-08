@@ -16,7 +16,7 @@ export const BlogOutstanding = (item) => {
     <Box
       maxW={{ base: "240px", sm: "470px", lg: "240px" }}
       w={"full"}
-      boxShadow={"lg"}
+      boxShadow={"dark-lg"}
       rounded={"lg"}
       overflow={"hidden"}
       border={bordes}

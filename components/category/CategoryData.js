@@ -48,7 +48,7 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
-  const { bordes } = Breakpoints();
+  const { bordes, fondo } = Breakpoints();
 
   // useForm
   const { values, reset, handleInputChangeEnEs } = useFormAll(
@@ -123,7 +123,15 @@ export const CategoryData = ({ back, category, pid, es, en, locale }) => {
 
   return (
     <>
-      <VStack spacing={5} w={"full"} border={bordes} p={{ base: 0, md: 3 }}>
+      <VStack
+        boxShadow={"dark-lg"}
+        rounded={"lg"}
+        bg={fondo}
+        spacing={5}
+        w={"full"}
+        border={bordes}
+        p={{ base: 0, md: 3 }}
+      >
         <Stack
           flexDirection={"row"}
           w={"full"}

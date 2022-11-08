@@ -73,7 +73,7 @@ export const BlogScreen = ({ categories, buys, product }) => {
         bg={fondo}
         mb={{ base: "50px", lg: "0px" }}
         w={{ base: "100%", lg: "75%" }}
-        boxShadow={"lg"}
+        boxShadow={"dark-lg"}
         border={bordes}
         p={{ base: 2, lg: 5 }}
         mr={{ base: 0, lg: 5 }}
@@ -247,7 +247,7 @@ export const BlogScreen = ({ categories, buys, product }) => {
       <Stack
         bg={fondo}
         w={{ base: "100%", lg: "25%" }}
-        boxShadow={"lg"}
+        boxShadow={"dark-lg"}
         height={"min-content"}
         as={"aside"}
         border={bordes}

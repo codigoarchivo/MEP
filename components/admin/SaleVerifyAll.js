@@ -49,7 +49,7 @@ export const SaleVerifyAll = ({
   // dispatch
   const dispatch = useDispatch();
   // Breakpoints
-  const { full, content7 } = Breakpoints();
+  const { full, content7, fondo } = Breakpoints();
 
   const handleUser = (uid) => {
     push({
@@ -144,7 +144,9 @@ export const SaleVerifyAll = ({
       </Stack>
       <Stack flexDirection={content7} w={full} spacing={0} mb={20}>
         <VStack
-          shadow={"lg"}
+          backgroundColor={fondo}
+          rounded={"lg"}
+          boxShadow={"dark-lg"}
           w={full}
           mr={{ base: 0, lg: 5 }}
           mb={{ base: 5, lg: 0 }}
@@ -196,7 +198,9 @@ export const SaleVerifyAll = ({
         </VStack>
         <VStack
           h={"min-content"}
-          shadow={"lg"}
+          backgroundColor={fondo}
+          rounded={"lg"}
+          boxShadow={"dark-lg"}
           w={full}
           spacing={5}
           p={{ base: 3, sm: 5 }}

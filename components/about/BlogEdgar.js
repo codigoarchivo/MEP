@@ -59,7 +59,7 @@ export const BlogEdgar = () => {
       <Stack
         maxW={"1000px"}
         spacing={10}
-        boxShadow={"lg"}
+        boxShadow={"dark-lg"}
         rounded={"xl"}
         p={10}
         position={"relative"}
@@ -82,7 +82,7 @@ export const BlogEdgar = () => {
       >
         <HStack w={"full"} justifyContent={"space-between"}>
           <Heading
-            fontFamily={"Work Sans"}
+            fontFamily={"Brush Script MT"}
             fontWeight={600}
             fontSize={{ base: "3xl", sm: "4xl", md: "5xl" }}
             lineHeight={"110%"}

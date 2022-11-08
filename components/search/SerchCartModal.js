@@ -95,7 +95,7 @@ export const SerchCartModal = ({
     const u = a.uid;
 
     const user = await userById(u);
-    
+
     if (!user) {
       return replace(`/auth?d=${asPath}`);
     }
@@ -122,7 +122,7 @@ export const SerchCartModal = ({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader color={modelC}>{a.displayName}</ModalHeader>
-          <ModalCloseButton color={modelC} />
+          <ModalCloseButton />
           <ModalBody textAlign={"center"}>
             <Box textAlign={"center"} mb={10} w={"full"}>
               <QuestionOutlineIcon w={20} h={20} color="red.500" />
