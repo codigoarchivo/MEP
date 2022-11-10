@@ -21,20 +21,33 @@ import { dbSerchAll } from "../data/dbSerch";
 import { en } from "../translations/en";
 import { es } from "../translations/es";
 
-export async function getServerSideProps(context) {
-  context.res.setHeader(
-    "Cache-Control",
-    "public, max-age=86400, must-revalidate"
-  );
+import { logout } from "../actions/auth";
 
-  const product = await dbSerchAll(50);
+export async function getServerSideProps(ctx) {
+  ctx.res.setHeader("Cache-Control", "public, max-age=86400, must-revalidate");
 
-  const category = await dbcategoryAll(15);
+  const [product, category] = await Promise.all([
+    dbSerchAll(50),
+    dbcategoryAll(15),
+  ]);
 
-  if (!product || !category) {
+  if (product.length === 0 && category.length === 0) {
     return {
       redirect: {
-        notFound: true,
+        destination: "/404",
+        permanent: false,
+      },
+    };
+  }
+
+  if (!product || !category) {
+    const err = ctx.locale === "en-US" ? en.error : es.error;
+    logout(err);
+
+    return {
+      redirect: {
+        destination: "/auth",
+        permanent: false,
       },
     };
   }
@@ -71,13 +84,7 @@ const HomeL = ({ product = [], category = [] }) => {
 
   return (
     <ShopLayout title={locale === "en-US" ? en.major.mA : es.major.mA}>
-      <Home
-        listData={listData}
-        latestCartSelect={latestCartSelect}
-        locale={locale}
-        en={en}
-        es={es}
-      />
+      <Home listData={listData} latestCartSelect={latestCartSelect} />
     </ShopLayout>
   );
 };
