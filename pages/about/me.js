@@ -46,8 +46,8 @@ const About = ({ coments }) => {
 
   return (
     <ShopLayout>
-      <Container maxW={"container.xl"} py={32}>
-        <VStack spacing={20}>
+      <Container maxW={"container.xl"} py={{ base: 0, md: 32 }}>
+        <VStack spacing={{ base: 0, md: 20 }}>
           <BlogEdgar />
 
           <ScreenAbout coments={testimonials} activeSelect={activeSelect} />
