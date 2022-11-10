@@ -49,9 +49,7 @@ export async function getStaticPaths({ locales }) {
 export async function getStaticProps({ params }) {
   const id = await params.id.toString();
 
-  const product = await dbSerch(id);
-
-  const msg = await dbMessage(id);
+  const [product, msg] = await Promise.all([dbSerch(id), dbMessage(id)]);
 
   if (!product) {
     return {
