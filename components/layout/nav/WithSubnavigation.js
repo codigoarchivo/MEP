@@ -139,7 +139,7 @@ export function WithSubnavigation() {
           </Box>
 
           <Flex display={{ base: "none", md: "flex" }} ml={{ base: 0, md: 5 }}>
-            {/* Category */}
+            {/* serch y Category */}
             <DesktopNav />
           </Flex>
         </Flex>
