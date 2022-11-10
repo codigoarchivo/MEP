@@ -19,6 +19,7 @@ import { finishLoading, startLoading } from "./ui";
 import { Toast } from "../helpers/Toast";
 
 import { userById } from "../data/dbUser";
+
 import { doc, setDoc } from "firebase/firestore";
 
 const dA = process.env.NEXT_PUBLIC_ROL_A;
@@ -95,27 +96,28 @@ export const startRegisterWithNameEmailPassword = (
       // create
       createUserWithEmailAndPassword(auth, email, password)
         .then(async ({ user }) => {
-          await updateProfile(auth.currentUser, { displayName: name });
+          await Promise.all([
+            updateProfile(auth.currentUser, { displayName: name }),
+            setDoc(doc(db, "users", user.uid.toString()), {
+              co: user.email,
+              na: name,
+              rol: "user",
+            }),
+          ]);
 
           if (user.emailVerified === true) {
-            dispatch(
+            await dispatch(
               login(
                 user.uid,
                 user.displayName,
                 user.photoURL,
                 user.email,
-                user.uid === dA.toString() ? "owner" : "user",
+                "user",
                 user.emailVerified
               )
             );
-            await setDoc(
-              doc(db, "users", user.uid, {
-                co: user.email,
-                rol: "user",
-              })
-            );
           } else {
-            sendEmailVerification(auth.currentUser).then(() => {
+            await sendEmailVerification(auth.currentUser).then(() => {
               Toast(data, "success", 5000);
               dispatch(logout());
             });
@@ -126,6 +128,7 @@ export const startRegisterWithNameEmailPassword = (
         .catch(({ message }) => {
           // end
           dispatch(finishLoading());
+          dispatch(logout());
           // error
           Toast(message, "error", 5000);
         });
@@ -145,12 +148,13 @@ export const startGoogleLogin = (err) => {
           const userData = await userById(user.uid);
 
           if (!userData) {
-            await setDoc(
-              doc(db, "users", user.uid, {
-                co: user.email,
-                rol: "user",
-              })
-            );
+            await setDoc(doc(db, "users", user.uid), {
+              co: user.email,
+              na: user.displayName,
+              rol: "user",
+            });
+          } else {
+            await setDoc(doc(db, "users", user.uid), userData);
           }
 
           if (user) {
