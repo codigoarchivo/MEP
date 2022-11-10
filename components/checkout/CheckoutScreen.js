@@ -134,6 +134,7 @@ export const CheckoutScreen = ({
           {`${sE} $${product.to}`}
         </Button>
         <Button
+          display={process ? "block" : "none"}
           size={"xs"}
           fontWeight={"normal"}
           variant={"primary"}
@@ -147,6 +148,7 @@ export const CheckoutScreen = ({
         </Button>
 
         <Button
+          display={process ? "block" : "none"}
           size={"xs"}
           fontWeight={"normal"}
           variant={"primary"}
