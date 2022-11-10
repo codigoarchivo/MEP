@@ -52,11 +52,17 @@ const Checkout = ({ product = [] }) => {
     ({ process }) => process
   );
   // dispatch
-  const { push, locale } = useRouter();
+  const { push, locale, replace, asPath } = useRouter();
   // useDispatch
   const dispatch = useDispatch();
   // Breakpoints
   const { bordes, full, content3, points25, fondo } = Breakpoints();
+
+  const valid = [a.uid, a.email].includes(undefined);
+
+  useEffect(() => {
+    valid ? replace(`/auth?d=${asPath}`) : "";
+  }, [replace, valid]);
 
   useEffect(() => {
     // path: /cart
