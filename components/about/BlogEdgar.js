@@ -31,12 +31,8 @@ export const BlogEdgar = () => {
   // toogle color
   const { colorMode } = useColorMode();
   return (
-    <VStack spacing={20}>
-      <Box
-        width={{ base: "full", sm: "lg", lg: "xl" }}
-        margin={"auto"}
-        textAlign={"center"}
-      >
+    <VStack spacing={{ base: 0, md: 20 }}>
+      <Box margin={"auto"} textAlign={"center"}>
         <chakra.h3
           fontFamily={"Work Sans"}
           fontWeight={"bold"}
@@ -57,11 +53,12 @@ export const BlogEdgar = () => {
         </chakra.h1>
       </Box>
       <Stack
+        width={"97vw"}
         maxW={"1000px"}
-        spacing={10}
+        spacing={{ base: 0, md: 10 }}
         boxShadow={"dark-lg"}
         rounded={"xl"}
-        p={10}
+        p={{ base: 5, md: 10 }}
         position={"relative"}
         bg={fondo}
         _before={{
