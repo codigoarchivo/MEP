@@ -52,11 +52,20 @@ const Sale = ({ data }) => {
   // dispatch
   const dispatch = useDispatch();
   // useRouter
-  const { locale, query } = useRouter();
+  const { locale, replace, asPath, query } = useRouter();
   // useSelector
   const { history = [] } = useSelector(({ history }) => history);
   // Breakpoints
   const { bordes, full, fondo } = Breakpoints();
+
+  // selector
+  const { activeSelect: a } = useSelector(({ auth }) => auth);
+
+  const valid = [a.uid, a.email].includes(undefined);
+
+  useEffect(() => {
+    valid ? replace(`/auth?d=${asPath}`) : "";
+  }, [replace, valid]);
 
   useEffect(() => {
     if (!!data[0]) {

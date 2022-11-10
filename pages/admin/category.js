@@ -54,9 +54,15 @@ const Category = ({ data = [] }) => {
   // dispatch
   const dispatch = useDispatch();
   // router
-  const { locale, push } = useRouter();
+  const { locale, replace, asPath, push } = useRouter();
   // breakpoints
   const { center, bordes, fondo } = Breakpoints();
+
+  const valid = [a.uid, a.email].includes(undefined);
+
+  useEffect(() => {
+    valid ? replace(`/auth?d=${asPath}`) : "";
+  }, [replace, valid]);
 
   useEffect(() => {
     if (a?.rol === "user") {

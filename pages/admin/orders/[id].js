@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import { collection, getDocs } from "firebase/firestore";
 
@@ -66,9 +67,17 @@ export async function getStaticProps({ params }) {
 
 const Orders = ({ active }) => {
   // dispatch
-  const { push, locale, back } = useRouter();
+  const { push, locale, back, asPath, replace } = useRouter();
+  // selector
+  const { activeSelect: a } = useSelector(({ auth }) => auth);
   // Breakpoints
   const { bordes } = Breakpoints();
+
+  const valid = [a.uid, a.email].includes(undefined);
+
+  useEffect(() => {
+    valid ? replace(`/auth?d=${asPath}`) : "";
+  }, [replace, valid]);
 
   return (
     <ShopLayout

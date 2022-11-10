@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { collection, getDocs } from "firebase/firestore";
 
@@ -18,6 +18,7 @@ import { dbcategoryById } from "../../../data/dbCategory";
 
 import { en } from "../../../translations/en";
 import { es } from "../../../translations/es";
+import { useSelector } from "react-redux";
 
 export async function getStaticPaths({ locales }) {
   const { docs } = await getDocs(collection(db, "categories"));
@@ -64,7 +65,16 @@ export async function getStaticProps({ params }) {
 
 const ConfigCategory = ({ category }) => {
   // router
-  const { locale, back, query } = useRouter();
+  const { locale, back, query, replace, asPath } = useRouter();
+  // selector
+  const { activeSelect: a } = useSelector(({ auth }) => auth);
+
+  const valid = [a.uid, a.email].includes(undefined);
+
+  useEffect(() => {
+    valid ? replace(`/auth?d=${asPath}`) : "";
+  }, [replace, valid]);
+  
   return (
     <ShopLayout title={locale === "en-US" ? en.major.mF : es.major.mF}>
       <Container
