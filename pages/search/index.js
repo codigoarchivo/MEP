@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useRouter } from "next/router";
 
@@ -6,18 +6,7 @@ import PropTypes from "prop-types";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  Box,
-  Center,
-  Container,
-  Heading,
-  Spinner,
-  Stack,
-  VStack,
-  Wrap,
-} from "@chakra-ui/react";
-
-import { SerchScreen } from "../../components/search/SerchScreen";
+import { Box, Container } from "@chakra-ui/react";
 
 import ShopLayout from "../../components/layout/ShopLayout";
 
@@ -27,24 +16,31 @@ import { Paginator } from "../../utils/Paginator";
 
 import { dbProducts } from "../../data/dbProducts";
 
-import { SerchCategory } from "../../components/search/SerchCategory";
+import { dbSerchAll, dbSerchSelect } from "../../data/dbSerch";
 
-import { SerchRange } from "../../components/search/SerchRange";
-
-import { Breakpoints } from "../../helpers/Breakpoints";
-
-import { dbSerchAll } from "../../data/dbSerch";
+import SearchBase from "../../components/search/SerchBase";
 
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
 
-export async function getServerSideProps(context) {
-  context.res.setHeader(
-    "Cache-Control",
-    "public, max-age=86400, must-revalidate"
-  );
+export async function getServerSideProps(ctx) {
+  const locale = ctx.locale === "en-US" ? "na.en" : "na.es";
 
-  const product = await dbSerchAll(15);
+  ctx.res.setHeader("Cache-Control", "public, max-age=86400, must-revalidate");
+
+  const [productSelect, product] = await Promise.all([
+    dbSerchSelect(locale, ctx.query.q),
+    dbSerchAll(15),
+  ]);
+
+  if (product.length === 0 && productSelect.length === 0) {
+    return {
+      redirect: {
+        destination: "/404",
+        permanent: false,
+      },
+    };
+  }
 
   if (!product) {
     return {
@@ -57,7 +53,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      product,
+      product: productSelect !== null ? productSelect : product,
     },
   };
 }
@@ -73,8 +69,6 @@ const Search = ({ product }) => {
   const { locale, query } = useRouter();
   // data
   const [dataAll, setDataAll] = useState([]);
-  // Breakpoints
-  const { displayOff4 } = Breakpoints();
 
   useEffect(() => {
     if (Object.entries(query).length === 0) {
@@ -114,56 +108,8 @@ const Search = ({ product }) => {
   return (
     <ShopLayout title={locale === "en-US" ? en.search.sI : es.search.sI}>
       <Container maxW="container.xs">
-        <Stack flexDirection={"row"} p={{ base: 0, sm: 5 }}>
-          <VStack
-            as={"aside"}
-            display={displayOff4}
-            w={{ base: "0%", lg: "25%" }}
-            h={"full"}
-            spacing={"10"}
-            mt={2}
-            mr={20}
-          >
-            {/* Rangos de precio */}
-            <SerchRange locale={locale} en={en} es={es} product={product} />
+        <SearchBase product={product} />
 
-            {/* Todas las categorias */}
-            <SerchCategory locale={locale} en={en} es={es} />
-          </VStack>
-          {!listSerch[0] ? (
-            <VStack spacing={0}>
-              <Center py={"10"} w={"full"}>
-                <Heading size={"sm"} textTransform={"uppercase"}>
-                  {locale === "en-US" ? en.search.sC : es.search.sC}
-                </Heading>
-              </Center>
-              <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.300"
-                color="brand.500"
-                size="xl"
-              />
-            </VStack>
-          ) : (
-            <Wrap
-              justify={{ base: "center", lg: "start" }}
-              w={{ base: "100%", lg: "75%" }}
-              align="start"
-            >
-              {!product[0] && (
-                <Center py={"48"} w={"full"}>
-                  <Heading size={"sm"} textTransform={"uppercase"}>
-                    {locale === "en-US" ? en.search.sC : es.search.sC}
-                  </Heading>
-                </Center>
-              )}
-              {listSerch.map((data) => (
-                <SerchScreen key={data.id} {...data} />
-              ))}
-            </Wrap>
-          )}
-        </Stack>
         <Box>
           {listSerch.length > 0 && (
             <Paginator
