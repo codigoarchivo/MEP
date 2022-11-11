@@ -1,5 +1,6 @@
 import {
   collection,
+  collectionGroup,
   doc,
   getDoc,
   getDocs,
@@ -37,6 +38,23 @@ export const dbSerchAll = async (li) => {
     }));
 
     return product;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const dbSerchSelect = async (locale, data) => {
+  try {
+    const { docs } = await getDocs(
+      query(collectionGroup(db, "serchs"), where(locale, "==", data))
+    );
+
+    const productSelect = docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return productSelect;
   } catch (error) {
     return null;
   }
