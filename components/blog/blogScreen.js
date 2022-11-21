@@ -19,7 +19,6 @@ import {
 
 import { Breakpoints } from "../../helpers/Breakpoints";
 import { CategoryAll, Product, ShopAll } from "../../helpers/IconNew";
-import { ModeColor } from "../../helpers/ModeColor";
 
 import { StatsCard } from "./StatsCard";
 import { BlogWork } from "./BlogWork";
@@ -27,6 +26,7 @@ import { BlogEdgar } from "./BlogEdgar";
 import { BlogOutstanding } from "./BlogOutstanding";
 import { BlogCategory } from "./BlogCategory";
 import { BlogEnergy } from "./BlogEnergy";
+import { shuffle } from "../../helpers/shuffle";
 
 import { en } from "../../translations/en";
 import { es } from "../../translations/es";
@@ -47,25 +47,7 @@ export const BlogScreen = ({ categories, buys, product }) => {
     push("/");
   }
 
-  const one = useMemo(() => listp[Math.floor(Math.random() * listp.length)], [
-    listp,
-  ]);
-
-  const dOne = list.find((i) => i.id !== one?.ct);
-
-  const two = useMemo(() => listp[Math.floor(Math.random() * listp.length)], [
-    listp,
-  ]);
-
-  const dTwo = list.find((i) => i.id !== two?.ct);
-
-  const three = useMemo(() => listp[Math.floor(Math.random() * listp.length)], [
-    listp,
-  ]);
-
-  const dThree = list.find((i) => i.id !== three?.ct);
-
-  const { modelF } = ModeColor();
+  const resp = useMemo(() => shuffle(listp), [shuffle, listp]);
 
   return (
     <Stack flexDirection={content7} spacing={0}>
@@ -121,11 +103,7 @@ export const BlogScreen = ({ categories, buys, product }) => {
           </SimpleGrid>
         </Box>
         <Stack
-          display={
-            !!listp[0] && one !== "" && two !== "" && three !== ""
-              ? "block"
-              : "none"
-          }
+          display={resp.length === 3 ? "block" : "none"}
           w={"full"}
           justifyContent={"center"}
           textAlign={"center"}
@@ -148,30 +126,9 @@ export const BlogScreen = ({ categories, buys, product }) => {
             spacing={{ base: 5, lg: 6 }}
             justifyItems={"center"}
           >
-            {[
-              {
-                title: dOne && locale === "en-US" ? dOne?.na?.en : dOne?.na?.es,
-                name: locale === "en-US" ? one?.na?.en : one?.na?.es,
-                price: `${one?.pr}$`,
-                date5: `${one?.id}`,
-              },
-              {
-                title: dTwo && locale === "en-US" ? dTwo?.na?.en : dTwo?.na?.es,
-                name: locale === "en-US" ? two?.na?.en : two?.na?.es,
-                price: `${two?.pr}$`,
-                date5: `${two?.id}`,
-              },
-              {
-                title:
-                  dThree && locale === "en-US"
-                    ? dThree?.na?.en
-                    : dThree?.na?.es,
-                name: locale === "en-US" ? three?.na?.en : three?.na?.es,
-                price: `${three?.pr}$`,
-                date5: `${three?.id}`,
-              },
-            ].map((item, index) => (
+            {resp.map((item, index) => (
               <BlogOutstanding
+                locale={locale}
                 key={index}
                 {...item}
                 nam={locale === "en-US" ? en.blog.bI : es.blog.bI}
@@ -181,7 +138,13 @@ export const BlogScreen = ({ categories, buys, product }) => {
         </Stack>
         {/* trabajo */}
         <Box>
-          <Stack pt={20} spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
+          <Stack
+            pt={20}
+            spacing={4}
+            as={Container}
+            maxW={"3xl"}
+            textAlign={"center"}
+          >
             <Heading fontWeight={600} lineHeight={"110%"} fontSize={points25}>
               {locale === "en-US" ? en.blog.bJ : es.blog.bJ}{" "}
               <Text as={"span"} color={"brand.50"}>
