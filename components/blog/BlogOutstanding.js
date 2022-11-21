@@ -1,17 +1,25 @@
+import { useMemo } from "react";
+
 import { Box, Heading, Stack, Text } from "@chakra-ui/react";
+
+import { useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
 
 import { Breakpoints } from "../../helpers/Breakpoints";
 
-import { ModeColor } from "../../helpers/ModeColor";
-
 import { NavLink } from "../../utils/Navlink";
 
 export const BlogOutstanding = (item) => {
-  const { modelE, modelF } = ModeColor();
+  const { listData: list = [] } = useSelector(({ listca }) => listca);
+
+  const resp = useMemo(() => list.filter((i) => i.id === item.ct), [
+    list,
+    item.id,
+  ])[0];
 
   const { bordes } = Breakpoints();
+
   return (
     <Box
       maxW={{ base: "240px", sm: "470px", lg: "240px" }}
@@ -40,12 +48,14 @@ export const BlogOutstanding = (item) => {
           px={3}
           rounded={"full"}
         >
-          {item.title}
+          {resp.na[item.locale !== "en-US" ? item.locale : "en"]}
         </Text>
-        <Heading size={"md"}>{item.name}</Heading>
+        <Heading size={"md"}>
+          {item.na[item.locale !== "en-US" ? item.locale : "en"]}
+        </Heading>
         <Stack direction={"row"} align={"center"} justify={"center"}>
           <Text fontSize={"6xl"} fontWeight={100}>
-            {item.price}
+            {item.pr}
           </Text>
         </Stack>
         <Box>
@@ -54,7 +64,7 @@ export const BlogOutstanding = (item) => {
             color={"brand.900"}
             w={"full"}
             href={`/search/[id]`}
-            as={`/search/${item.date5}`}
+            as={`/search/${item.id}`}
             name={item.nam}
             boxShadow={"dark-lg"}
           />
